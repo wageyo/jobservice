@@ -1,0 +1,30 @@
+BODY {
+	FONT: 12px Arial, Helvetica, sans-serif; COLOR: #ffffff; PADDING-TOP: 0px; BACKGROUND-COLOR: #fff
+}
+DIV#MainPromotionBanner {
+	BACKGROUND: #fff; WIDTH: 462px; HEIGHT: 117px
+}
+#MainPromotionBanner #SlidePlayer {
+	MARGIN: 0px auto; POSITION: relative
+}
+#MainPromotionBanner .Slides {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; OVERFLOW: hidden; PADDING-TOP: 0px; LIST-STYLE-TYPE: none; HEIGHT: 162px
+}
+#MainPromotionBanner .Slides LI {
+	FLOAT: left; WIDTH: 462px; HEIGHT: 162px
+}
+#MainPromotionBanner .Slides IMG {
+	BORDER-TOP-WIDTH: 0px; DISPLAY: block; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; WIDTH: 462px; HEIGHT: 162px; BORDER-RIGHT-WIDTH: 0px
+}
+#MainPromotionBanner .SlideTriggers {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; Z-INDEX: 10; RIGHT: 5px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none; POSITION: absolute; TOP: 137px; HEIGHT: 25px
+}
+#MainPromotionBanner P {
+	CLEAR: left; MARGIN-TOP: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; HEIGHT: 12px; TEXT-ALIGN: left
+}
+#MainPromotionBanner .SlideTriggers LI {
+	BORDER-RIGHT: #9b0583 1px solid; BORDER-TOP: #9b0583 1px solid; DISPLAY: inline; FONT-SIZE: 12px; FLOAT: left; MARGIN: 3px; OVERFLOW: hidden; BORDER-LEFT: #9b0583 1px solid; WIDTH: 16px; CURSOR: pointer; COLOR: #9b0583; LINE-HEIGHT: 16px; BORDER-BOTTOM: #9b0583 1px solid; FONT-FAMILY: Arial, Helvetica, sans-serif; HEIGHT: 16px; BACKGROUND-COLOR: #fff; TEXT-ALIGN: center
+}
+#MainPromotionBanner .SlideTriggers LI.Current {
+	BORDER-RIGHT: #9b0583 1px solid; BORDER-TOP: #9b0583 1px solid; FONT-WEIGHT: bold; FONT-SIZE: 13px; MARGIN: 0px 3px; BORDER-LEFT: #9b0583 1px solid; WIDTH: 21px; COLOR: #fff; LINE-HEIGHT: 21px; BORDER-BOTTOM: #9b0583 1px solid; HEIGHT: 21px; BACKGROUND-COLOR: #9b0583
+}

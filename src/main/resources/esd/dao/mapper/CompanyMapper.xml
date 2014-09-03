@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 实现esd.dao.CompanyDao接口 -->
+<mapper namespace="esd.dao.CompanyDao">
+
+	<!-- 查询 User 账户 -->
+	<resultMap type="User" id="ResultUser">
+		<id column="u_id" property="id" />
+		<result column="u_loginName" property="loginName" />
+		<result column="u_passWord" property="passWord" />
+		<result column="u_identity" property="identity" />
+	</resultMap>
+	
+	<!-- 查询Area 地名 -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" />
+		<result column="a_name" property="name" />
+		<result column="a_pyName" property="pyName" />
+		<result column="a_abbr" property="abbr" />
+		<result column="a_mark" property="mark" />
+	</resultMap>
+	
+	<!-- 查询 BusinessScope 经营范围 -->
+	<resultMap id="ResultBusinessScope" type="BusinessScope">
+		<id column="b_id" property="id" />
+		<result column="b_name" property="name" />
+		<result column="b_code" property="code" />
+		<result column="b_mark" property="mark" />
+	</resultMap>
+	
+	<!-- 查询 Company 公司 -->
+	<resultMap id="ResultCompany" type="Company">
+		<id column="c_id" property="id" />
+		<result column="c_createDate" property="createDate" />
+		<result column="c_updateCheck" property="updateCheck" />
+		<result column="c_updateDate" property="updateDate" />
+		<result column="c_name" property="name" />
+		<result column="c_corporateRepresentative" property="corporateRepresentative" />
+		<result column="c_contactPerson" property="contactPerson" />
+		<result column="c_telephone" property="telephone" />
+		<result column="c_contactDept" property="contactDept" />
+		<result column="c_fax" property="fax" />
+		<result column="c_email" property="email" />
+		<result column="c_address" property="address" />
+		<result column="c_introduction" property="introduction" />
+		<result column="c_organizationCode" property="organizationCode" />
+		<result column="c_commercialCode" property="commercialCode" />
+		<result column="c_taxCode" property="taxCode" />
+		<result column="c_socialSecurityCode" property="socialSecurityCode" />
+		<result column="c_webSiteId" property="webSiteId" />
+		<result column="c_laoWangCode" property="laoWangCode" />
+		<result column="c_scale" property="scale" />
+		<result column="c_nature" property="nature" />
+		<result column="c_economyType" property="economyType" />
+		<result column="c_remark" property="remark" />
+		<result column="c_viewCount" property="viewCount" />
+		<result column="c_checkStatus" property="checkStatus" />
+		<association property="user" javaType="User" resultMap="ResultUser"/>
+		<association property="area" javaType="Area" resultMap="ResultArea"/>
+		<association property="businessScope" javaType="BusinessScope" resultMap="ResultBusinessScope" />
+	</resultMap>
+	
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="Company"
+		useGeneratedKeys="true" keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into 
+		company(createDate,updateCheck,updateDate,name,corporateRepresentative,contactPerson,telephone,contactDept,fax,email,address,introduction,organizationCode,commercialCode,taxCode,socialSecurityCode,webSiteId,laoWangCode,scale,nature,economyType,remark,viewCount,checkstatus,uid,acode,bid)
+		values(now(),0,now(),#{name},#{corporateRepresentative},#{contactPerson},#{telephone},#{contactDept},#{fax},#{email},#{address},#{introduction},#{organizationCode},#{commercialCode},#{taxCode},#{socialSecurityCode},#{webSiteId},#{laoWangCode},#{scale},#{nature},#{economyType},#{remark},#{viewCount},#{checkStatus},#{user.id},#{area.code},#{businessScope.id})
+	</insert>	
+	
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from company where id = #{id}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="Company">
+		update company
+		<trim prefix="set" suffixOverrides=",">
+			updateDate=now(),
+			<if test="updateCheck != null ">
+				updateCheck=#{updateCheck},
+			</if>
+			<if test="name != null ">
+				name=#{name},
+			</if>
+			<if test="corporateRepresentative != null ">
+				corporateRepresentative=#{corporateRepresentative},
+			</if>
+			<if test="contactPerson != null ">
+				contactPerson=#{contactPerson},
+			</if>
+			<if test="telephone != null ">
+				telephone=#{telephone},
+			</if>
+			<if test="contactDept != null ">
+				contactDept=#{contactDept},
+			</if>
+			<if test="fax != null ">
+				fax=#{fax},
+			</if>
+			<if test="email != null ">
+				email=#{email},
+			</if>
+			<if test="address != null ">
+				address=#{address},
+			</if>
+			<if test="introduction != null ">
+				introduction=#{introduction},
+			</if>
+			<if test="organizationCode != null ">
+				organizationCode=#{organizationCode},
+			</if>
+			<if test="taxCode != null ">
+				taxCode=#{taxCode},
+			</if>
+			<if test="commercialCode != null ">
+				commercialCode=#{commercialCode},
+			</if>
+			<if test="socialSecurityCode != null ">
+				socialSecurityCode=#{socialSecurityCode},
+			</if>
+			<if test="webSiteId != null ">
+				webSiteId=#{webSiteId},
+			</if>
+			<if test="laoWangCode != null ">
+				laoWangCode=#{laoWangCode},
+			</if>
+			<if test="scale != null ">
+				scale=#{scale},
+			</if>
+			<if test="nature != null ">
+				nature=#{nature},
+			</if>
+			<if test="economyType != null ">
+				economyType=#{economyType},
+			</if>
+			<if test="remark != null ">
+				remark=#{remark},
+			</if>
+			<if test="viewCount != null and viewCount > 0">
+				viewCount=#{viewCount},
+			</if>
+			<if test="checkStatus != null">
+				checkStatus=#{checkStatus},
+			</if>
+			<if test="user != null">
+				<if test="user.id != null and user.id >0">
+					uid=#{user.id},
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode=#{area.code},
+				</if>
+			</if>
+			<if test="businessScope != null">
+				<if test="businessScope.id != null and businessScope.id > 0">
+					bid = #{businessScope.id},
+				</if>
+			</if>
+		</trim>
+		where id= #{id}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultCompany" parameterType="int">
+		select c.id as c_id, c.createDate as c_createDate, c.updateCheck as c_updateCheck, c.updateDate as c_updateDate, c.name as c_name, c.corporateRepresentative as c_corporateRepresentative, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.contactDept as c_contactDept, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.taxCode as c_taxCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.economyType as c_economyType, c.remark c_remark, c.viewCount as c_viewCount, c.checkStatus as c_checkStatus,
+				u.id as u_id, u.loginName as u_loginName, u.passWord as u_passWord, u.identity as u_identity,
+				a.code as a_code, a.name as a_name, a.pyname as a_pyName,
+				b.id as b_id, b.code as b_code, b.name as b_name
+		from company as c, user as u, area as a, businessscope as b
+		where c.uid = u.id and c.acode = a.code and c.bid = b.id and c.id = #{id}
+	</select>
+
+	<!-- get by 账号外键 -->
+	<select id="getByAccount" resultMap="ResultCompany" parameterType="int">
+		select c.id as c_id, c.createDate as c_createDate, c.updateCheck as c_updateCheck, c.updateDate as c_updateDate, c.name as c_name, c.corporateRepresentative as c_corporateRepresentative, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.contactDept as c_contactDept, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.taxCode as c_taxCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.economyType as c_economyType, c.remark c_remark, c.viewCount as c_viewCount, c.checkStatus as c_checkStatus,
+				u.id as u_id, u.loginName as u_loginName, u.passWord as u_passWord, u.identity as u_identity,
+				a.code as a_code, a.name as a_name, a.pyname as a_pyName,
+				b.id as b_id, b.code as b_code, b.name as b_name
+		from company as c, user as u, area as a, businessscope as b
+		where c.uid = u.id and c.acode = a.code and c.bid = b.id and c.uid = #{uid}
+	</select>
+
+	<!-- 按多个条件模糊查询简历 传递一个map,里面的参数key为condition, 值为拼接的sql语句条件-->
+	<!-- where条件后待完善 -->
+	<select id="getByObj" resultMap="ResultCompany" parameterType="Company">
+		select c.id as c_id, c.createDate as c_createDate, c.updateCheck as c_updateCheck, c.updateDate as c_updateDate, c.name as c_name, c.corporateRepresentative as c_corporateRepresentative, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.contactDept as c_contactDept, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.taxCode as c_taxCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.economyType as c_economyType, c.remark c_remark, c.viewCount as c_viewCount, c.checkStatus as c_checkStatus,
+				a.code as a_code, a.name as a_name, a.pyname as a_pyName,
+				b.id as b_id, b.code as b_code, b.name as b_name
+		from company as c, area as a, businessscope as b
+		<trim prefix="where" prefixOverrides="and|or">
+			where c.acode = a.code and c.bid = b.id 
+			<if test="name != null and name != ''">
+				and c.name like concat('%',#{name},'%')
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					and c.acode like concat('%',#{area.code},'%')
+				</if>
+			</if>
+			<if test="businessScope != null">
+				<if test="businessScope.id != null and businessScope.id > 0">
+					and c.bid = #{businessScope.id} 
+				</if>
+			</if>
+			<if test="checkStatus != null">
+				and c.checkstatus = #{checkStatus}
+			</if>
+		</trim>
+		limit #{start},#{size};
+	</select>
+	
+	<!-- getByPage -->
+	<!-- where条件后待完善 -->
+	<select id="getByPage" parameterType="map" resultMap="ResultCompany">
+		select c.id as c_id, c.createDate as c_createDate, c.updateCheck as c_updateCheck, c.updateDate as c_updateDate, c.name as c_name, c.corporateRepresentative as c_corporateRepresentative, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.contactDept as c_contactDept, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.taxCode as c_taxCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.economyType as c_economyType, c.remark c_remark, c.viewCount as c_viewCount, c.checkStatus as c_checkStatus,
+				a.code as a_code, a.name as a_name, a.pyname as a_pyName,
+				b.id as b_id, b.code as b_code, b.name as b_name
+		from company as c, area as a, businessscope as b
+		<trim prefix="where" prefixOverrides="and|or">
+			c.acode = a.code and c.bid = b.id 
+			<if test="company != null">
+				<if test="company.name != null and company.name != ''">
+					and c.name like concat('%',#{company.name},'%')
+				</if>
+				<if test="company.area != null">
+					<if test="company.area.code != null and company.area.code != ''">
+						and c.acode like concat('%',#{company.area.code},'%') 
+					</if>
+				</if>
+				<if test="company.businessScope != null">
+					<if test="company.businessScope.id != null and company.businessScope.id > 0">
+						and c.bid = #{company.businessScope.id} 
+					</if>
+				</if>
+		 		<if test="company.checkStatus != null">
+					and c.checkstatus = #{company.checkStatus}
+				</if>
+			</if>
+		</trim>
+		order by c.createdate desc 
+		limit #{start},#{size}
+	</select>
+
+	<!-- getTotalCount -->
+	<!-- where条件后待完善 -->
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(*) 
+		from company as c, area as a, businessscope as b
+		<trim prefix="where" prefixOverrides="and|or">
+			c.acode = a.code and c.bid = b.id 
+			<if test="company != null">
+				<if test="company.name != null and company.name != ''">
+					and c.name like concat('%',#{company.name},'%')
+				</if>
+				<if test="company.area != null">
+					<if test="company.area.code != null and company.area.code != ''">
+						and c.acode like concat('%',#{company.area.code},'%') 
+					</if>
+				</if>
+				<if test="company.businessScope != null">
+					<if test="company.businessScope.id != null and company.businessScope.id > 0">
+						and c.bid = #{company.businessScope.id} 
+					</if>
+				</if>
+		 		<if test="company.checkStatus != null">
+					and c.checkstatus = #{company.checkStatus}
+				</if>
+			</if>
+		</trim>
+		
+	</select> 
+	
+	
+</mapper>

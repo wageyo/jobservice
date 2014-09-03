@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.BusinessScopeDao">
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="BusinessScope"
+		useGeneratedKeys="true" keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into 
+		businessscope(code,name,mark) 
+		values(#{code},#{name},#{mark})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from businessscope where id = #{id}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="BusinessScope">
+		update businessscope
+		<trim prefix="set" suffixOverrides=",">
+			<if test="code != null and code != ''">
+				code=#{code},
+			</if>
+			<if test="name != null and name != ''">
+				name=#{name},
+			</if>
+			<if test="mark != null and mark != ''">
+				mark=#{mark}
+			</if>		
+		</trim>
+		where id= #{id}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultType="BusinessScope" parameterType="int">
+		select * from businessscope where id = #{id}
+	</select>
+
+	<!-- get by obj -->
+	<select id="getByObj" resultType="BusinessScope" parameterType="BusinessScope">
+		select * from businessscope  
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="code != null and code != ''">
+				code = #{code}
+			</if>
+			<if test="name != null and name != ''">
+				and name like concat('%',#{name},'%')
+			</if>
+			<if test="mark != null and mark != ''">
+				and mark = #{mark}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map"
+		resultType="BusinessScope">
+		select * from businessscope 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="businessScope != null">
+				<if test="code != null and code != ''">
+					code = #{code}
+				</if>
+				<if test="name != null and name != ''">
+					and name like concat('%',#{name},'%')
+				</if>
+				<if test="mark != null and mark != ''">
+					and mark = #{mark}
+				</if>
+			</if>
+		</trim>
+		 limit #{start},#{size};
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from businessscope;
+	</select> 
+	
+	<!-- get all -->
+	<select id="getAll" parameterType="BusinessScope" resultType="BusinessScope">
+		select  * from businessscope;
+	</select>
+</mapper>

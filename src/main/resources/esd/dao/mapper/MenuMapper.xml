@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.MenuDao">
+
+	<!-- insert -->
+	<insert id="save" parameterType="Menu" useGeneratedKeys="false" keyProperty="id">
+		insert into menu (id,text, state, url, checked, iconcls, enable,typename,authority)
+		values (#{id},#{text}, #{state}, #{url}, #{checked}, #{iconCls},#{enable},#{typeName},#{authority})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from menu
+		where id = #{id}
+	</delete>
+
+	<!-- update -->
+	<update id="update" parameterType="Menu">
+		update menu
+		<set>
+			<if test="text != null">
+				text = #{text},
+			</if>
+			<if test="state != null">
+				state = #{state},
+			</if>
+			<if test="url != null">
+				url = #{url},
+			</if>
+			<if test="checked != null">
+				checked = #{checked},
+			</if>
+			<if test="iconCls != null">
+				iconcls = #{iconCls},
+			</if>
+			<if test="enable != null">
+				enable = #{enable},
+			</if>
+			<if test="typeName != null">
+				typename = #{typeName},
+			</if>
+			<if test="authority != null and authority > 0">
+				authority = #{authority}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- getById -->
+	<select id="getById" parameterType="java.lang.String" resultType="Menu">
+		select *
+		from menu
+		where id = #{id}
+	</select>
+	
+	<!--  get by page -->
+	<select id="getByPage" resultType="Menu" parameterType="map">
+		select *
+		from menu
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="menu != null">
+				<if test="menu.state != null">
+					state = #{menu.state}
+				</if>
+				<if test="menu.checked != null">
+					and checked = #{menu.checked},
+				</if>
+				<if test="menu.enable != null">
+					and enable = #{menu.enable}
+				</if>
+				<if test="menu.typeName != null">
+					and typeName = #{menu.typeName}
+				</if>
+				<if test="menu.authority != null and menu.authority > 0">
+				 	and authority &lt;= #{menu.authority}	
+				</if>
+			</if>
+		</trim>
+		limit #{start},#{size}
+	</select>
+	
+	<!--  get menu checked  -->
+	<select id="getMenuChecked" resultType="Menu" parameterType="java.lang.String">
+		select text,enable
+		from menu
+	</select>
+</mapper>

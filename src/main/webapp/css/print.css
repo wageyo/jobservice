@@ -1,0 +1,37 @@
+* { padding: 0px; margin: 0px; }
+    body { font-family: Arial,"����"; background-color: #fff; font-size: 12px; color: #2F2F2F; }
+    a { text-decoration: none; }
+    .txt { text-indent: 20px; }
+    .txt2 { text-indent: 10px; }
+    .p1 { text-indent: 20px; font-size: 20px; font-weight: bold; color: #26713a; }
+    .span1 { font-size: 16px; font-family: '΢���ź�'; font-weight: bold; color: #088E37; }
+    .span2 { font-size: 14px; font-weight: bold; color: #088E37; }
+    .span3 { font-size: 14px; font-weight: bold; }
+    .span4 { font-size: 14px; font-weight: bold; color: #26713a; }
+    .span5 { color: #26713a; }
+    .contact_show { display: none; }
+    .contact_display { width: 500px; margin-left: 20px; height: 71px; text-align: center; }
+	.contact_display .telimg{ width:46px; height:44px; float:left; text-align:center; padding:20px 8px 10px 20px;}
+	.contact_display .tel{padding-top:15px; text-align:left; width:412px; height:33px; line-height:33px; float:left; color: #FF6600; letter-spacing: 2px; font-size: 14px; font-weight: bold; }
+	.contact_display .tel img{ padding-top:10px;}
+	.contact_display .tel a:link {color: rgb(255, 0, 0);font-size: 14px;font-weight: bold;}
+	.contact_display .tel a {text-decoration: underline;}
+
+	.contact_display .tel a:visited{text-decoration: underline;}
+	.contact_display .tel a:active{color: #FF6600; font-size: 14px; font-weight: bold;text-decoration: none;}
+	.contact_display .telcontent{ text-align:left; width:412px; height:16px; line-height:16px; float:left; color:#777777; }
+	
+	/*������¼����ʽ*/
+	.popLogin_Main { width: 320px; border: 1px #D1E39B solid; padding: 1px; background-color: #fff; overflow: hidden;}
+	.popLogin_title { font-size: 14px; text-indent: 20px; line-height: 30px; border-bottom: 1px #D1E39B solid;  }
+	.popLogin { background-color: #F5FAE3; padding: 15px; }
+	.popLogin td { padding-bottom: 10px; }
+	.popLogin td input { width: 150px; padding: 5px; }
+	.popLogin td span { padding-left: 15px; }
+	/*������¼����ʽ*/
+	.popQuick_Main { width: 550px; border: 1px #D1E39B solid; padding: 1px; background-color: #fff; overflow: hidden;}
+	.popQuick_title { font-size: 14px; text-indent: 20px; line-height: 30px; border-bottom: 1px #D1E39B solid;  }
+	.popQuick { background-color: #F5FAE3; padding: 15px; }
+	.popQuick td { padding-bottom: 10px; }
+	.popQuick td input { width: 150px; padding: 5px; }
+	.popQuick td span { padding-left: 15px; }

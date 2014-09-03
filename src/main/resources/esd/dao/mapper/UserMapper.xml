@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 实现UserDao接口 -->
+<mapper namespace="esd.dao.UserDao">
+
+	<resultMap type="User" id="ResultUser">
+		<id column="u_id" property="id" jdbcType="INTEGER" />
+		<result column="u_createdate" property="createDate" />
+		<result column="u_updatecheck" property="updateCheck" />
+		<result column="u_updatedate" property="updateDate" />
+		<result column="u_loginname" property="loginName" />
+		<result column="u_password" property="passWord" />
+		<result column="u_email" property="email" />
+		<result column="u_phone" property="phone" />
+		<result column="u_identity" property="identity" />
+		<result column="u_checkStatus" property="checkStatus" />
+		<result column="u_authority" property="authority" />
+		<result column="u_title" property="title" />
+		<result column="u_nickName" property="nickName" />
+		<association property="area" javaType="Area" resultMap="ResultArea" />
+	</resultMap>
+
+	<!-- 查询Area 地名 -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" />
+		<result column="a_name" property="name" />
+		<result column="a_pyName" property="pyName" />
+		<result column="a_abbr" property="abbr" />
+		<result column="a_mark" property="mark" />
+	</resultMap>
+
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="User" useGeneratedKeys="true"
+		keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到 -->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into user
+		(createdate,updatecheck,updatedate,loginname,password,email,phone,acode,identity,checkstatus,authority,title,nickname)
+		values
+		(now(),0,now(),#{loginName,jdbcType=VARCHAR},#{passWord,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},
+			#{phone,jdbcType=VARCHAR},#{area.code,jdbcType=VARCHAR},#{identity,jdbcType=VARCHAR},#{checkStatus,jdbcType=VARCHAR},
+			#{authority,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from user where id =
+		#{id}
+	</delete>
+
+	<!-- update -->
+	<update id="update" parameterType="User">
+		update user
+		<trim prefix="set" suffixOverrides=",">
+			updatedate=now(),
+			<if test="updateCheck != '' and updateCheck > 0">
+				updatecheck = #{updateCheck},
+			</if>
+			<if test="loginName != '' and loginName != null">
+				loginname = #{loginName},
+			</if>
+			<if test="passWord != '' and passWord != null">
+				password = #{passWord},
+			</if>
+			<if test="email != '' and email != null">
+				email = #{email},
+			</if>
+			<if test="phone != '' and phone != null">
+				phone = #{phone},
+			</if>
+			<if test="area !=null">
+				<if test="area.code != null and area.code != ''">
+					acode = #{area.code},
+				</if>
+			</if>
+			<if test="identity != null">
+				identity = #{identity},
+			</if>
+			<if test="checkStatus != null">
+				checkStatus = #{checkStatus},
+			</if>
+			<if test="authority != null and authority > 0">
+				authority = #{authority},
+			</if>
+			<if test="title != null">
+				title = #{title},
+			</if>
+			<if test="nickName != null">
+				nickname = #{nickName},
+			</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<!-- 根据id得到一个User对象 -->
+	<select id="getById" resultMap="ResultUser" parameterType="int">
+		select u.id as u_id, u.createdate as u_createdate, u.updatecheck as
+		u_updatecheck, u.updatedate as u_updatedate, u.loginname as
+		u_loginname, u.password as u_password, u.email as u_email, u.phone as
+		u_phone, u.identity as u_identity, u.checkStatus as u_checkStatus,
+		u.authority as u_authority, u.title as u_title, u.nickname as
+		u_nickName,
+		a.code as a_code,a.name as a_name, a.pyname as a_pyname,
+		a.abbr as a_abbr,
+		a.mark as a_mark
+		from user as u, area as a
+		where
+		u.acode = a.code and u.id = #{id}
+	</select>
+
+	<!-- get by user -->
+	<select id="getByUser" resultMap="ResultUser" parameterType="User">
+		select u.id as u_id, u.createdate as u_createdate, u.updatecheck as
+		u_updatecheck, u.updatedate as u_updatedate, u.loginname as
+		u_loginname, u.password as u_password, u.email as u_email, u.phone as
+		u_phone, u.identity as u_identity, u.checkStatus as u_checkStatus,
+		u.authority as u_authority, u.title as u_title, u.nickname as
+		u_nickName,
+		a.code as a_code, a.name as a_name, a.pyname as a_pyname,
+		a.abbr as a_abbr,
+		a.mark as a_mark
+		from user as u, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			u.acode = a.code
+			<if test="loginName != null and loginName != ''">
+				and u.loginname = #{loginName, jdbcType=VARCHAR}
+			</if>
+			<if test="passWord != null and passWord != ''">
+				and u.password = #{passWord, jdbcType=VARCHAR}
+			</if>
+			<if test="identity != null">
+				and u.identity = #{identity, jdbcType=VARCHAR}
+			</if>
+			<if test="email != null">
+				and u.email = #{email, jdbcType=VARCHAR}
+			</if>
+			<if test="area != null">
+				<if test="area.code != null">
+					and u.acode = #{area.code, jdbcType=VARCHAR}
+				</if>
+			</if>
+			<if test="checkStatus != null">
+				and u.checkstatus = #{checkStatus, jdbcType=VARCHAR}
+			</if>
+			<if test="authority != null and authority > 0">
+				and u.authority = #{authority, jdbcType=INTEGER}
+			</if>
+			<if test="title != null">
+				and u.title = #{title, jdbcType=VARCHAR}
+			</if>
+			<if test="nickName != null">
+				and u.nickname = #{nickName, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map" resultMap="ResultUser">
+		select u.id as u_id, u.createdate as u_createdate, u.updatecheck as
+		u_updatecheck, u.updatedate as u_updatedate, u.loginname as
+		u_loginname, u.password as u_password, u.email as u_emial, u.phone as
+		u_phone, u.identity as u_identity, u.checkstatus as u_checkStatus,
+		u.title as u_title, u.nickname as u_nickName,
+		a.code as a_code, a.name
+		as a_name, a.pyname as a_pyname, a.abbr as a_abbr,
+		a.mark as a_mark
+		from user as u, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			u.acode = a.code
+			<if test="user != null">
+				<if test="user.loginName != '' and user.loginName != null">
+					and u.loginname = #{user.loginName}
+				</if>
+				<if test="user.passWord != '' and user.passWord != null">
+					and u.password = #{user.passWord}
+				</if>
+				<if test="user.area != null">
+					<if test="user.area.code != null and user.area.code != ''">
+							and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<if test="user.identity != null">
+					and u.identity = #{user.identity}
+				</if>
+				<if test="user.email != null">
+					and u.email = #{user.email}
+				</if>
+				<if test="user.checkStatus != null">
+					and u.checkStatus = #{user.checkStatus}
+				</if>
+				<if test="user.authority != null and user.authority > 0">
+					and u.authority = #{user.authority}
+				</if>
+				<if test="user.title != null">
+					and u.title = #{user.title}
+				</if>
+				<if test="user.nickName != null">
+					and u.nickname = #{user.nickName}
+				</if>
+			</if>
+		</trim>
+		order by u.createdate
+		<if test="start != null and size != null">
+			limit #{start},#{size}
+		</if>
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(*)
+		from user as u, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			u.acode = a.code
+			<if test="user != null">
+				<if test="user.loginName != '' and user.loginName != null">
+					and u.loginname = #{user.loginName}
+				</if>
+				<if test="user.passWord != '' and user.passWord != null">
+					and u.password = #{user.passWord}
+				</if>
+				<if test="user.area != null">
+					<if test="user.area.code != null and user.area.code != ''">
+							and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<if test="user.identity != null">
+					and u.identity = #{user.identity}
+				</if>
+				<if test="user.email != null">
+					and u.email = #{user.email}
+				</if>
+				<if test="user.phone != null">
+					and u.phone = #{user.phone}
+				</if>
+				<if test="user.checkStatus != null">
+					and u.checkStatus = #{user.checkStatus}
+				</if>
+				<if test="user.authority != null and user.authority > 0">
+					and u.authority = #{user.authority}
+				</if>
+				<if test="user.title != null">
+					and u.title = #{user.title}
+				</if>
+				<if test="user.nickName != null">
+					and u.nickname = #{user.nickName}
+				</if>
+			</if>
+		</trim>
+	</select>
+
+	<select id="getAdminByPage" parameterType="map" resultMap="ResultUser">
+		select u.id as u_id, u.createdate as u_createdate, u.updatecheck as
+		u_updatecheck, u.updatedate as u_updatedate, u.loginname as
+		u_loginname, u.password as u_password, u.email as u_emial, u.phone as
+		u_phone, u.identity as u_identity, u.checkstatus as u_checkStatus,
+		u.title as u_title, u.nickname as u_nickName,
+		a.code as a_code, a.name
+		as a_name, a.pyname as a_pyname, a.abbr as a_abbr,
+		a.mark as a_mark
+		from user as u, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			u.acode = a.code
+			<if test="user != null">
+				<if test="user.loginName != '' and user.loginName != null">
+					and u.loginname = #{user.loginName}
+				</if>
+				<if test="user.passWord != '' and user.passWord != null">
+					and u.password = #{user.passWord}
+				</if>
+				<if test="user.identity != null">
+					and u.identity = #{user.identity}
+				</if>
+				<if test="user.email != null">
+					and u.email = #{user.email}
+				</if>
+				<if test="user.checkStatus != null">
+					and u.checkStatus = #{user.checkStatus}
+				</if>
+				<if test="user.authority != null and user.authority > 0">
+					and u.authority &lt;= #{user.authority}
+				</if>
+				<if test="user.title != null">
+					and u.title = #{user.title}
+				</if>
+				<if test="user.nickName != null">
+					and u.nickname = #{user.nickName}
+				</if>
+			</if>
+		</trim>
+		order by u.createdate
+		<if test="start != null and size != null">
+			limit #{start},#{size}
+		</if>
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getAdminTotalCount" parameterType="map" resultType="int">
+		select count(*)
+		from user as u, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			u.acode = a.code
+			<if test="user != null">
+				<if test="user.loginName != '' and user.loginName != null">
+					and u.loginname = #{user.loginName}
+				</if>
+				<if test="user.passWord != '' and user.passWord != null">
+					and u.password = #{user.passWord}
+				</if>
+				<if test="user.identity != null">
+					and u.identity = #{user.identity}
+				</if>
+				<if test="user.email != null">
+					and u.email = #{user.email}
+				</if>
+				<if test="user.phone != null">
+					and u.phone = #{user.phone}
+				</if>
+				<if test="user.checkStatus != null">
+					and u.checkStatus = #{user.checkStatus}
+				</if>
+				<if test="user.authority != null and user.authority > 0">
+					and u.authority &lt;= #{user.authority}
+				</if>
+				<if test="user.title != null">
+					and u.title = #{user.title}
+				</if>
+				<if test="user.nickName != null">
+					and u.nickname = #{user.nickName}
+				</if>
+			</if>
+		</trim>
+	</select>
+</mapper>

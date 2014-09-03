@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.FamilyMemberDao">
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="FamilyMember"
+		useGeneratedKeys="true" keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into 
+		familymember(relation,name,age,unit,position,phone,rid) 
+		values(#{relation},#{name},#{age},#{unit},#{position},#{phone},#{resume.id})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from familymember where id = #{id}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="FamilyMember">
+		update familymember
+		<trim prefix="set" suffixOverrides=",">
+			<if test="relation != null and relation != ''">
+				relation=#{relation},
+			</if>
+			<if test="name != null and name != ''">
+				name=#{name},
+			</if>
+			<if test="age != null and age != ''">
+				age=#{age}
+			</if>
+			<if test="unit != null and unit != ''">
+				unit=#{unit}
+			</if>
+			<if test="position != null and position != ''">
+				position=#{position}
+			</if>
+			<if test="phone != null and phone!= ''">
+				phone = #{phone}
+			</if>	
+		</trim>
+		where id= #{id}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultType="FamilyMember" parameterType="int">
+		select * from familymember where id = #{id}
+	</select>
+
+	<!-- get By Resume -->
+	<select id="getByResume" resultType="FamilyMember" parameterType="int">
+		select * from familymember where rid = #{rid}
+	</select>
+</mapper>

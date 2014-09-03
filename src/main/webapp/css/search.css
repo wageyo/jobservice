@@ -1,0 +1,131 @@
+﻿.sousuo {
+	width: 90px;
+	float: left;
+	text-align: right;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 2px 0 0 0;
+	height: 40px;
+	background-image: url(/images/zc_rl.jpg);
+}
+
+.job_list {
+	width: 100%;
+	overflow: hidden;
+}
+
+.paginator {
+	font: 12px Arial, Helvetica, sans-serif;
+	padding: 10px 20px 10px 0;
+	margin: 0px;
+}
+
+.paginator a {
+	border: solid 1px #ccc;
+	color: #0063dc;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.paginator a:visited {
+	padding: 1px 6px;
+	border: solid 1px #ddd;
+	background: #fff;
+	text-decoration: none;
+}
+
+.paginator .cpb {
+	border: 1px solid #F50;
+	font-weight: 700;
+	color: #F50;
+	background-color: #ffeee5;
+}
+
+.paginator a:hover {
+	border: solid 1px #F50;
+	color: #f60;
+	text-decoration: none;
+}
+
+.paginator a,.paginator a:visited,.paginator .cpb,.paginator a:hover {
+	float: left;
+	height: 16px;
+	line-height: 16px;
+	min-width: 10px;
+	_width: 10px;
+	margin-right: 5px;
+	text-align: center;
+	white-space: nowrap;
+	font-size: 12px;
+	padding: 0 3px;
+}
+
+.span1 {
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.style2 {
+	width: 121px;
+}
+
+.style3 {
+	width: 114px;
+}
+
+.style4 {
+	width: 122px;
+}
+
+.style5 {
+	width: 112px;
+}
+
+.span1 a {
+	color: White;
+}
+
+.span1 a:link {
+	color: White;
+	text-decoration: none;
+}
+
+.span1 a:visited {
+	color: White;
+	text-decoration: none;
+}
+
+.span1 a:hover {
+	color: White;
+	text-decoration: none;
+}
+
+.span1a:active {
+	color: White;
+	text-decoration: none;
+}
+
+.imga a {
+	
+}
+
+.imga a:link {
+	text-decoration: none;
+	margin-left: 0px;
+}
+
+.imga a:visited {
+	text-decoration: none;
+	margin-left: 0px;
+}
+
+.imga a:hover {
+	text-decoration: none;
+	margin-left: 0px;
+}
+
+.imga a:active {
+	text-decoration: none;
+	margin-left: 0px;
+}

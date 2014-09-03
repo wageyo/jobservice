@@ -1,0 +1,184 @@
+/*
+显示页面标题
+*/
+.manage .viwe-title {
+	color:#417AC1;
+	font-size: 20pt;
+	font-family: 黑体;
+	font-weight: bold;
+	text-align: center;
+
+}
+.loginError{
+	font-size: 15pt;
+	font-family: 黑体;
+	color: red;
+	
+}
+.red{
+		color: red;
+	
+}
+.manager-botton{
+	height:40px;
+	text-align:center; 
+	background-image: url("../../images/manager/bottombg.gif");
+    color: #93D2EF;
+    width: 100%;
+    margin-top: 2px;
+}
+
+
+.name-link{
+	font-weight: bold;
+	color: #417AC1;
+}
+
+/*全局样式*/
+.manage  {
+	font-size: 14px;
+	margin-top: 20px;
+}
+
+
+/*
+	长文本
+*/
+.manage .longText {
+	width: 600px;
+}
+
+/*
+	文本域
+*/
+.manage .textField {
+	border: 1px solid #A0A0A0;
+	width: 800px;
+	height: 100px;
+	overflow-y: scroll;
+}
+/*
+	高文本域
+*/
+.newtextField {
+	border: 1px solid #A0A0A0;
+	width: 800px;
+	height: 330px;
+	overflow-y: scroll;
+}
+
+/*显示详细信息 标题*/
+.manage  .textTitle{
+	
+	color: #666666;
+	font-family: 黑体;
+	font-size: 17px;
+}
+
+
+/*显示详细信息 区域样式*/
+.manage dt,.manage dd {
+	margin-top: 5px;
+}
+.manage dt {
+	float: left;
+	/*
+		margin-left: 40px;
+	*/
+	text-align: right;
+	width: 150px;
+	color: #417AC1;
+	font-weight: bold;
+}
+.manage dl {
+	clear: both;
+}
+.manage dd {
+	color:#444444;
+	float: left;
+	width: 110px;
+	margin-left: 10px;
+}
+
+/*审核数据状态 区域*/
+.manage .audit-area {
+	 margin-top: 12px;
+	 margin-left: 20px;
+}
+.manage .audit-area .audit-text{
+	font-size: 14px;
+    font-weight: bold;
+}
+.manage .audit-area .audit-select{
+	font-size: 14px;
+}
+.auditLink{
+	 color: #FF0101;
+    font-weight: bold;
+	
+}
+
+/*
+	系统设置
+*/
+.manage .system {
+	margin: auto;
+	
+}
+
+.manage .system  dd{
+		float: left;
+		width: 150px;
+		margin-left: 10px;
+}
+
+
+.blocklink{
+	background-color: #1F75CC;
+	color: white;
+	padding: 5px 24px;
+	font-size: 14px;
+	margin-right: 9px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	  background-color: #1F75CC;
+	  
+  
+    float: left;
+  
+    margin-left: 15px;
+;
+	
+	
+}
+
+
+
+a:hover {
+text-decoration: underline;
+}
+
+/*========================文章列表=========================*/
+.news-list-editor{
+	margin-left: 80px;
+	width:900px;
+}
+
+.news-list-editor dt{
+	 height: 30px;
+}
+.news-list-editor input{
+    height: 20px;
+    width: 300px;
+}
+ .news-list-editor select {
+  height: 20px;
+}
+
+.news-list-editor .publish-title{
+ 	  color: #417AC1;
+    font-family: 黑体;
+    font-size: 20pt;
+    font-weight: bold;
+    text-align: center;
+ }

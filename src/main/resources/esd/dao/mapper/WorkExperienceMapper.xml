@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.WorkExperienceDao">
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="WorkExperience"
+		useGeneratedKeys="true" keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into 
+		workexperience(companyname,jobname,jobcontent,worktime,leavereason,evaluation,rid) 
+		values(#{companyName},#{jobName},#{jobContent},#{workTime},#{leaveReason},#{evaluation},#{resume.id})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from workexperience where id = #{id}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="WorkExperience">
+		update workexperience
+		<trim prefix="set" suffixOverrides=",">
+			<if test="companyName != null and companyName != ''">
+				companyName=#{companyName},
+			</if>
+			<if test="jobName != null and jobName != ''">
+				jobName=#{jobName},
+			</if>
+			<if test="jobContent != null and jobContent != ''">
+				jobContent=#{jobContent},
+			</if>
+			<if test="workTime != null and workTime != ''">
+				workTime=#{workTime},
+			</if>
+			<if test="leaveReason != null and leaveReason != ''">
+				leaveReason=#{leaveReason},
+			</if>
+			<if test="evaluation != null and evaluation != ''">
+				evaluation=#{evaluation}
+			</if>		
+		</trim>
+		where id= #{id}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultType="WorkExperience" parameterType="int">
+		select * from workexperience where id = #{id}
+	</select>
+
+	<!-- get By Resume -->
+	<select id="getByResume" resultType="WorkExperience" parameterType="int">
+		select * from workexperience where rid = #{rid}
+	</select>
+</mapper>

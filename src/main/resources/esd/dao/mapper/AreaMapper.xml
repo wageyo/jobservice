@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.AreaDao">
+	<!-- insert -->
+	<insert id="save" parameterType="Area"
+		useGeneratedKeys="false" keyProperty="code">
+		insert into 
+		area(code,name,pyname,abbr,mark) 
+		values(#{code},#{name},#{pyname},#{abbr},#{mark})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from area where code = #{code}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="Area">
+		update area
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null and name != ''">
+				name=#{name},
+			</if>
+			<if test="pyname != null and pyname != ''">
+				mark=#{pyname},
+			</if>
+			<if test="abbr != null and abbr != ''">
+				mark=#{abbr},
+			</if>
+			<if test="mark != null and mark != ''">
+				mark=#{mark},
+			</if>		
+		</trim>
+		where code= #{code}
+	</update>
+
+	<!-- get by code -->
+	<select id="getByCode" resultType="Area" parameterType="java.lang.String">
+		select * from area where code = #{code}
+	</select>
+
+	<!-- get by obj -->
+	<select id="getByObj" resultType="Area" parameterType="Area">
+		select * from area 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="code != null and code != ''">
+				code like #{code}
+			</if>
+			<if test="name != null and name != ''">
+				and name like concat('%',#{name},'%')
+			</if>
+			<if test="pyName != null and pyName != ''">
+				and pyname like concat('%',#{pyName},'%')
+			</if>
+			<if test="abbr != null and abbr != ''">
+				and abbr like concat('%',#{abbr},'%')
+			</if>
+			<if test="mark != null and mark != ''">
+				and mark = #{mark}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from area;
+	</select> 
+	
+	<!-- get all -->
+	<select id="getAll" parameterType="int" resultType="Area">
+		select  * from area;
+	</select>
+	
+	<!-- getSubArea -->
+	<select id="getSubArea" parameterType="java.lang.String" resultType="Area">
+		select * from area
+		where code like concat ('%',#{code},'%')
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

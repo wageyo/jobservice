@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.EducationBackgroundDao">
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="EducationBackground"
+		useGeneratedKeys="true" keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into 
+		educationbackground(time,school,major,education,certificate,rid) 
+		values(#{time},#{school},#{major},#{education},#{certificate},#{resume.id})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from educationbackground where id = #{id}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="EducationBackground">
+		update educationbackground
+		<trim prefix="set" suffixOverrides=",">
+			<if test="time != null and time != ''">
+				time=#{time},
+			</if>
+			<if test="school != null and school != ''">
+				school=#{school},
+			</if>
+			<if test="major != null and major != ''">
+				major=#{major}
+			</if>
+			<if test="education != null and education != ''">
+				education=#{education}
+			</if>
+			<if test="certificate != null and certificate != ''">
+				certificate=#{certificate}
+			</if>		
+		</trim>
+		where id= #{id}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultType="EducationBackground" parameterType="int">
+		select * from educationbackground where id = #{id}
+	</select>
+
+	<!-- get By Resume -->
+	<select id="getByResume" resultType="EducationBackground" parameterType="int">
+		select * from educationbackground where rid = #{rid}
+	</select>
+</mapper>

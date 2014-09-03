@@ -1,0 +1,932 @@
+ol.tipBorder
+{
+    display: inline-block;
+    line-height: 20px;
+}
+ol.tipBorder a#tip
+{
+    position: absolute;
+    margin-top: -12px;
+}
+ol.tipBorder a#tip:link, ol.tipBorder a#tip:hover
+{
+    position: absolute;
+    color: #000;
+    display: block;
+    text-decoration: none;
+}
+ol.tipBorder a#tip ol
+{
+    display: none;
+}
+ol.tipBorder a#tip:hover #tip_info
+{
+    width: 310px;
+    display: block;
+    background: url(../../../images/tip_bottom.gif) no-repeat left bottom;
+    padding-bottom: 13px;
+    position: absolute;
+    bottom: 15px;
+    left: -65px;
+    color: #009933;
+}
+ol.tipBorder a#tip:hover #tip_info ol
+{
+    display: block;
+    background: url(../../images/tip_top.gif) no-repeat left top;
+    padding: 10px;
+}
+
+#KinSlideshow
+{
+    visibility: hidden;
+    line-height: 1.5em;
+}
+
+
+/*��ǰλ��*/
+.AntLocaIco
+{
+    background-image: url(../../images/AntHome-Ico.gif);
+    background-repeat: no-repeat;
+}
+.AntLocaIco
+{
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.AntLocaIco
+{
+    height: 26px;
+    overflow: hidden;
+    border: solid 1px #c6d8e0;
+    width: 950px;
+    margin: 0 auto;
+    margin-bottom: 7px;
+}
+.AntLocaIco
+{
+    line-height: 2.3em;
+    background-position: 12px -487px;
+}
+.AntLocaIco .Time
+{
+    float: right;
+    line-height: 2em;
+    padding-right: 10px;
+    color: #0000FF;
+}
+.AntLocaIco em
+{
+    margin: 0px 5px 0px 35px;
+    color: #5f5f5f;
+    font-style: normal;
+}
+
+a
+{
+    text-decoration: none;
+}
+a:hover
+{
+    text-decoration: underline;
+}
+a
+{
+    color: #2b2b2b;
+    text-decoration: none;
+}
+a:visited
+{
+    color: #2b2b2b;
+    text-decoration: none;
+}
+a:hover
+{
+    color: #ba2636;
+    text-decoration: underline;
+}
+a:active
+{
+    color: #ba2636;
+}
+
+/*��Ȩ��Ϣ*/
+.AntFooter
+{
+    width: 950px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px 0px 10px;
+    line-height: 1.8em;
+    color: #666666;
+}
+.AntFooter li a, .AntFooter li a:link, .AntFooter li a:visited
+{
+    color: #666666;
+}
+.AntFooter .Nav a
+{
+    margin: 0px 5px 0px 5px;
+}
+.AntFooter .Nav a, .AntFooter .Nav a:link, .AntFooter .Nav a:visited
+{
+    color: #307eb9;
+    text-decoration: underline;
+}
+.AntFooter .Nav a:hover, .AntFooter li a:hover
+{
+    color: #CC0000;
+}
+
+
+
+.Aop, .AoM, .AoM dl, .Ate, .AIm, .AIm .Ail, .Air, .Lim
+{
+    height: auto;
+    overflow: hidden;
+}
+.AoM dl, .AoM dl dt, .AoM dl dt div, .AoM dl dd, .Ate, .Ate div
+{
+    background-image: url(../../images/tab_sprites_01.gif);
+    background-repeat: no-repeat;
+}
+/*
+���1. reset ��Ŀ�Ĳ���������������Ĭ����ʽ�������ǲ��ֹ����������������ǽ��ܲ��ɷֵġ�
+     2. reset ��Ŀ�Ĳ�����Ĭ����ʽ��������������һ�£����Ǽ���Ĭ����ʽ�п��ܴ��������⡣
+     3. reset �����ṩһ������ͨ�õĻ�����ʽ����û���������Ƽ����ݾ������󣬲ü����޸ĺ���ʹ�á�
+��ɫ��1. ��Ӧ���ģ�2. ��������������������
+*/
+
+/** ���������߾� **/
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements �ṹԪ�� */ dl, dt, dd, ul, ol, li, /* list elements �б�Ԫ�� */ pre, /* text formatting elements �ı���ʽԪ�� */ form, fieldset, legend, button, input, textarea, /* form elements ����Ԫ�� */ th, td
+{
+    margin: 0;
+    padding: 0;
+}
+/* table elements ����Ԫ�� */
+
+/** ����Ĭ������ **/
+body, button, input, select, textarea
+{
+    font: 12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+}
+/* for ie */
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 100%;
+}
+address, cite, dfn, em, var
+{
+    font-style: normal;
+}
+/* ��б������ */
+code, kbd, pre, samp
+{
+    font-family: courier new, courier, monospace;
+}
+/* ͳһ�ȿ����� */
+small
+{
+    font-size: 12px;
+}
+/* С�� 12px �����ĺ����Ķ����� small ������ */
+
+/** �����б�Ԫ�� **/
+ul, ol
+{
+    list-style: none;
+}
+
+/** �����ı���ʽԪ�� **/
+a
+{
+    text-decoration: none;
+}
+a:hover
+{
+    text-decoration: underline;
+    color:#c00;
+}
+
+sup
+{
+    vertical-align: text-top;
+}
+/* ���ã����ٶ��иߵ�Ӱ�� */
+sub
+{
+    vertical-align: text-bottom;
+}
+
+/** ���ñ���Ԫ�� **/
+legend
+{
+    color: #000;
+}
+/* for ie6 */
+fieldset, img
+{
+    border: 0;
+}
+/* img ������������� img �ޱ߿� */
+button, input, select, textarea
+{
+    font-size: 100%;
+}
+/* ʹ�ñ���Ԫ���� ie ���ܼ̳�������С */
+/* ע��optgroup �޷����� */
+
+/** ���ñ���Ԫ��
+table { border-collapse: collapse; border-spacing: 0; } **/
+
+/* ���� */
+.hidden
+{
+    display: none;
+}
+.invisible
+{
+    visibility: hidden;
+}
+
+/* �������� */
+.AntClear:after
+{
+    content: '\20';
+    display: block;
+    height: 0;
+    clear: both;
+}
+.AntClear
+{ *zoom:1;}
+
+.AntBr
+{
+    text-align: justify;
+    text-justify: inter-ideograph;
+}
+
+.money
+{
+    color: #ff0000;
+}
+
+/* CSS Document */
+
+/*----------��Ա����ҳ��----------*/
+/*Accout_Left*/
+.AntAccout
+{
+    width: 950px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.AntAccout_Left
+{
+    width: 152px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+}
+.AntAccout_Left .AntAccout_Title
+{
+    width: 145px;
+    height: 46px;
+    overflow: hidden;
+    background: url(../../images/AntAccout.gif) left top;
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFFFFF;
+    line-height: 3em;
+    text-align: center;
+    padding-left: 7px;
+}
+.AntAccout_Left .AntAccout_Title a
+{
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+.AntAccout_Left .AntAccout_Title a, .AntAccout_Left .AntAccout_Title a:link, .AntAccout_Left .AntAccout_Title a:visited
+{
+    color: #ffffff;
+    text-decoration: none;
+}
+.AntAccout_Left .AntAccout_Title a:Hover
+{
+    text-decoration: underline;
+}
+
+.AntAccout_Left .AntAccout_Content .AntAccout_Bottom
+{
+    width: 153px;
+    height: 3px;
+    background: url(../../images/AntAccout.gif) left -118px;
+}
+.AntAccout_Left .AntAccout_Content .AntAccout_ClassYes
+{
+    display: block;
+    width: 120px;
+    height: 26px;
+    overflow: hidden;
+    background: url(../../images/AntAccout.gif) left -167px;
+    clear: both;
+    color: #333333;
+    padding-left: 32px;
+    line-height: 2.2em;
+    cursor: pointer;
+}
+.AntAccout_Left .AntAccout_Content .AntAccout_ClassNo
+{
+    display: block;
+    width: 120px;
+    height: 26px;
+    overflow: hidden;
+    background: url(../../images/AntAccout.gif) left -136px;
+    clear: both; /*font-weight:bold;*/
+    color: #333333;
+    line-height: 2.2em;
+    padding-left: 32px;
+    cursor: pointer;
+}
+.AntAccout_Left .AntAccout_Content a
+{
+    clear: both;
+    display: block;
+    width: 135px;
+    height: 31px;
+    color: #333333;
+    overflow: hidden;
+    background: url(../../images/AntAccout.gif) left -46px;
+    padding: 4px 0px 0px 22px;
+    padding-top: 8px;
+}
+.AntAccout_Left .AntAccout_Content a span
+{
+    display: block;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    float: left;
+    margin: 2px 8px 0px 0px;
+}
+.AntAccout_Left .AntAccout_Content a:hover
+{
+    background: url(../../images/AntAccout.gif) left -81px;
+    text-decoration: underline;
+    color: #0099ff;
+}
+.AntAccout_Left .AntAccout_Content .current
+{
+    background: url(../../images/AntAccout.gif) left -81px;
+    text-decoration: underline;
+    color: #0099ff;
+}
+
+/*Accout_Center*/
+
+/*Warning*/
+.AntAccout_Center
+{
+	border-top:none;
+	width:746px;
+    height: auto;
+    overflow: hidden;
+	color:#000000
+}
+.AntAccout_Center_Warning
+{
+    height: auto;
+    overflow: hidden;
+    clear: both;
+    border: solid 1px #fae2b9;
+    background: #ffffe3;
+    font-size: 12px;
+    color: #404040;
+    padding:5px 0 5px 15px;
+}
+.AntAccout_Center_Warning span
+{
+    color: #333333;
+    float: left;
+    display: block;
+    width:auto;
+    padding-left: 17px;
+    background: url(../../images/AntAccout.gif) -5px -210px;
+}
+.AntAccout_Center_Warning div
+{
+    float: left;
+    width: auto;
+    height: 20px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.AntAccout_Center_Warning div ul
+{
+    margin: 0;
+    padding: 0;
+}
+.AntAccout_Center_Warning div ul li
+{
+    height: 20px;
+    line-height: 20px;
+    width: auto;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    clear: both;
+}
+.AntAccout_Center_Warning div ul li a{ color:#069;}
+.AntAccout_Center_Warning a
+{
+    color: #404040;
+}
+.AntAccout_Center_Warning a:hover
+{
+    color: #ff6600;
+}
+
+
+
+/*User*/
+.right_btn{ float:right; width:215px;}
+.right_btn a{ padding-left:45px; margin:auto; font:bold 14px/64px ''; text-align:center; display:block; width:130px; height:64px; background:url(../../images/user_btn.gif) no-repeat left top;}
+.right_btn a:hover{ text-decoration:none;}
+.right_btn a.check_job{ background-position:0 -130px; }
+.right_btn a.search_job{ background-position:0 -65px; }
+.AntAccout_Center .AntAccout_Center_User
+{
+	float:left;
+    width: 500px;
+    margin: 10px 0px 0px 0px;
+    height: 170px;
+    overflow: hidden;
+    border: solid 1px #D4DCE5;
+    padding: 20px 0px 0px 18px;
+}
+.AntAccout_Center_User .AntAccout_Center_Left
+{
+    width: 142px;
+    height: 143px;
+    overflow: hidden;
+    float: left;
+    background: url(../../images/AntAccout.gif) -714px -42px;
+    text-align: center;
+}
+.AntAccout_Center_User .AntAccout_Center_Left img
+{
+    width: 90px;
+    height: 90px;
+    padding: 1px;
+    border: solid 1px #CCCCCC;
+    margin: 17px 0px 0px 0px; ;}
+.AntAccout_Center_Left p
+{
+    width: 80px;
+    margin: 0 auto;
+}
+.AntAccout_Center_Left p a
+{
+    color: #f57f23;
+    line-height: 2.5em;
+}
+.AntAccout_Center_Left p a:hover
+{
+    color: #c00;
+    text-decoration: none;
+}
+.AntAccout_Center_Left span
+{
+    display: block;
+    width: 16px;
+    height: 12px;
+    background: url(../../images/AntAccout.gif) -733px -197px;
+    float: left;
+    margin-top: 7px;
+}
+.AntAccout_Center_Rithg
+{
+    width: 338px;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    padding-left: 15px;
+    color: #404040;
+    line-height: 2em;
+}
+.AntAccout_Center_Rithg li
+{
+    clear: both;
+}
+.AntAccout_Center_Rithg .A
+{
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+}
+.AntAccout_Center_Rithg .B span
+{
+    color: #069;
+    font-weight:bold;
+}
+.AntAccout_Center_Rithg .C
+{
+    width: 360px;
+}
+.AntAccout_Center_Rithg .D a
+{
+    color: #0066cc;
+}
+.AntAccout_Center_Rithg .D a:hover
+{
+}
+.AntAccout_Center_Rithg .E span
+{
+    color: #ff0000;
+}
+.AntAccout_Center_Rithg .E a
+{
+    color: #0033cc;
+}
+.AntAccout_Center_Rithg .F .Integral
+{
+    float: left;
+}
+.AntAccout_Center_Rithg .F .SMS
+{
+    float: left;
+    display: block;
+    width: 13px;
+    height: 11px;
+    background: url(../../images/AntAccout.gif) -861px -50px;
+    margin: 6px 5px 0px 20px;
+}
+.AntAccout_Center_Rithg .F .SMS_
+{
+    margin-right: 30px;
+    float: left;
+}
+.AntAccout_Center_Rithg .F .SMS_:hover
+{
+    color: #207cf5;
+}
+.AntAccout_Center_Rithg .F .NewSMS
+{
+    display: block;
+    width: 88px;
+    height: 22px;
+    overflow: hidden;
+    background: url(../../images/AntAccout.gif) -853px -196px;
+    float: left;
+    padding: 3px 0px 0px 10px;
+    margin-top: -3px;
+}
+.AntAccout_Center_Rithg .F .NewSMS span
+{
+    color: #FF0000;
+}
+
+/*NewSms*/
+.AntAccout_Center_NewSms
+{
+    width: auto;
+    height: 103px;
+    overflow: hidden;
+    background: url(../../images/AntAccout.gif) no-repeat -907px -79px;
+    border-top: solid 1px #aaccee;
+    border-bottom: solid 1px #aaccee;
+    border-right: solid 1px #aaccee;
+    margin: 5px 0px 0px 2px;
+    padding: 7px 0px 0px 40px;
+    line-height: 2em;
+    color: #5f5f5f;
+}
+.AntAccout_Center_NewSms a
+{
+    height: 25px;
+    line-height: 25px;
+	text-align:left;
+    overflow: hidden;
+    width: 250px;
+    float: left;
+}
+.AntAccout_Center_NewSms a span
+{
+    color: #b0171a;
+}
+
+/*Quick Menu*/
+.AntAccout_Center_QuickMenu
+{
+    width: 552px;
+    height: auto;
+    margin: 5px 0px 5px 0px;
+    background: url(../../images/AntAccout.gif) -160px -40px;
+}
+.AntAccout_Center_QuickMenuEnd
+{
+    width: 552px;
+    height: 23px;
+    overflow: hidden;
+    clear: both;
+    background: url(../../images/AntAccout.gif) -160px -203px;
+}
+.AntAccout_Center_QuickMenu .AntAccout_Content
+{
+    width: 510px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-left: 25px;
+    padding-top: 27px;
+}
+.AntAccout_Center_QuickMenu .AntAccout_Content .A, .B, .C, .D
+{
+    float: left;
+}
+.AntAccout_Center_QuickMenu .AntAccout_Content .A
+{
+    padding-left: 30px;
+}
+.AntAccout_Center_QuickMenu .AntAccout_Content .B
+{
+    color: #3366cc;
+    padding-right: 10px;
+}
+.AntAccout_Center_QuickMenu .AntAccout_Content .C
+{
+    width: 110px;
+    display: block;
+    color: #FF0000;
+    float: left;
+}
+.AntAccout_Center_QuickMenu .AntAccout_Content .D
+{
+    display: block;
+    width: 30px;
+    height: 17px;
+    background: url(../../images/AntAccout.gif) -908px -47px;
+    overflow: hidden;
+    position: relative;
+    top: -8px;
+}
+.AntAccout_Center_QuickMenu .AntAccout_Content_Bottom
+{
+    width: 510px;
+    height: auto;
+    clear: both;
+    padding: 15px 0px 10px 0px;
+}
+.AntAccout_Center_QuickMenu .AntAccout_Content_Bottom a
+{
+	display: block;
+	width: 60px;
+	height: 21px;
+	line-height: 2em;
+	_line-height: 1.7em;
+	overflow: hidden;
+	float: left;
+	color: #FFFFFF;
+	text-indent: -2px;
+	padding-left: 29px;
+	margin-left: 10px;
+	background-image: url(../../images/AntAccout.gif);
+	background-repeat: no-repeat;
+	background-position: -861px -244px;
+}
+.AntAccout_Content_Bottom a, .AntAccout_Content_Bottom a:link, .AntAccout_Content_Bottom a:visited, .AntAccout_Content_Bottom a:hover
+{
+    color: #FFFFFF;
+}
+
+/*Statistics*/
+.AntAccout_MarginLeft2
+{
+    margin-left: 2px;
+}
+.AntAccout_Center_InfoTitle
+{
+    height: 35px;
+    overflow: hidden;
+    background: url(../../images/AntAccout.gif) -164px top;
+    font-size: 14px;
+    color: #333333;
+    padding-left: 20px;
+    font-weight: bold;
+    line-height: 2.5em;
+}
+.AntAccout_Center_InfoTitle span .AntMore
+{
+}
+.AntAccout_Center_InfoTitle span
+{
+    display: block;
+    z-index: 10;
+    height: 35px;
+    width: 20px;
+    float: right;
+    background: url(../../images/AntAccout.gif) -930px top;
+}
+.AntAccout_Center_InfoTitle #right
+{
+    float: left;
+    padding-left: 105px;
+    z-index: 100;
+    font-weight: normal;
+    font-size: 12px;
+}
+.AntAccout_Center_InfoTitle #left
+{
+    float: left;
+}
+.AntAccout_Center_InfoEndiTgb
+{
+    width: auto;
+    height: 3px;
+    overflow: hidden;
+    background: url(../../images/quanbg.gif);
+    clear: both;
+}
+.AntAccout_Center_InfoEndiT
+{
+    width: auto;
+    height: 3px;
+    overflow: hidden;
+    background: url(../../images/AntAccout.gif) -162px -230px;
+    clear: both;
+}
+.AntAccout_Center_InfoEndiT span
+{
+    display: block;
+    height: 3px;
+    width: 20px;
+    float: right;
+    background: url(../../images/AntAccout.gif) -692px -230px;
+}
+.AntAccout_Center_InfoBorder
+{
+    width: 546px;
+    height: auto;
+    clear: both;
+    line-height: 2em;
+    padding: 15px 0px 0px 0px;
+}
+.AntAccout_Center_InfoBorder .Li
+{
+    color: #404040;
+    width: 250px;
+    float: left;
+    padding-left: 10px;
+    text-align: left;
+}
+.AntAccout_Center_InfoBorder .Li a
+{
+    color: #3366cc;
+    text-align: left;
+}
+.AntAccout_Center_InfoBorder .Li a font
+{
+    color: #ff6600;
+    font-size: 12px;
+    font-weight: bold;
+}
+.rightquan
+{
+    padding: 15px;
+    overflow: hidden;
+    border-left: solid 1px #bbd2de;
+    border-right: solid 1px #bbd2de;
+    color: #666666;
+    font-size: 14px;
+    text-indent: 2em;
+    line-height: 25px;
+}
+.rightquan p
+{
+    padding-top: 10px;
+    margin: 0;
+}
+.rightquanp object
+{
+    margin: 0;
+    padding: 0;
+}
+/*Accout_Right*/
+.AntAccout_Right
+{
+    width: 231px;
+    height: auto;
+    overflow: hidden;
+    float: right;
+}
+.AntAccout_Right .AntAccout_Right_List_
+{
+    width: 221px;
+    padding: 12px 0px 7px 8px;
+    overflow: hidden;
+    border-left: solid 1px #bbd2de;
+    border-right: solid 1px #bbd2de;
+}
+.AntAccout_Right .AntAccout_Right_List
+{
+    width: 210px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.AntAccout_Right .AntAccout_Right_List li
+{
+    width: 205px;
+    line-height: 25px;
+    height: 25px;
+    overflow: hidden;
+    text-align: left;
+    background: url(../../images/AntAccout.gif) left -240px;
+}
+.AntAccout_Right .AntAccout_Right_List a
+{
+    color: #4c4c4c;
+    text-align: left;
+}
+.AntAccout_Right .AntAccout_Right_List a:hover
+{
+    color: #FF3300;
+}
+
+/*Accout_Right_Service*/
+/*
+.AntAcout_Right_Service_1 {width:56px; height:56px; float:left; overflow:hidden;/*background:url(../../images/AntAccout.gif) -770px -198px; padding-left:5px; margin-top:10px;}*/
+.AntAcout_Right_Service_2
+{
+    background: none;
+    overflow: hidden;
+    float: left;
+    clear: both;
+    color: #333333;
+    margin-left: 20px; +margin-left:25px;_margin-left:10px;}
+.AntAcout_Right_Service_2 li
+{
+	clear: both;
+	white-space: nowrap;
+	padding-left: 20px;
+	width: 180px;
+	text-align: left;
+}
+.AntAcout_Right_Service_2 .A
+{
+    width: auto;
+    background: url(../../images/AntAccout.gif) no-repeat -256px -242px;
+    height: 25px;
+	text-align: left;
+}
+.AntAcout_Right_Service_2 .B
+{
+    width: auto;
+    background: url(../../images/AntAccout.gif) no-repeat -467px -242px;
+    height: 25px;
+	text-align: left;
+}
+.AntAcout_Right_Service_2 .C
+{
+	width: auto;
+	height: 16px;
+	background-image: url(../../images/48_icon10.gif);
+	background-repeat: no-repeat;
+	background-position: left center;
+	line-height: 16px;
+	text-align: left;
+}
+
+/*��Ҫ*/
+.AIm
+{
+    width: 950px;
+    margin: auto;
+}
+.AIm .Ail
+{
+    float: left;
+    width: 150px;
+}
+.Air
+{
+	width: 770px;
+	margin: 0px;
+	padding: 0px;
+	float: right;
+}
+
+#send101{
+	padding-top:20px;
+	padding-left:20px;
+	padding-bottom:20px;
+}
+.cdaaassdf{
+	display: none;
+}

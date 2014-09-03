@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.IP2CityDao">
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="IP2City"
+		useGeneratedKeys="true" keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into 
+		ip2city(ipstart,ipend,city,provider) 
+		values(#{ipStart},#{ipEnd},#{city},#{provider})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from ip2city where id = #{id}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="IP2City">
+		update ip2city
+		<trim prefix="set" suffixOverrides=",">
+			<if test="ipStart != null and ipStart != ''">
+				ipStart=#{ipStart},
+			</if>
+			<if test="ipEnd != null and ipEnd != ''">
+				ipEnd=#{ipEnd},
+			</if>
+			<if test="city != null and city != ''">
+				city=#{city}
+			</if>
+			<if test="provider != null and provider != ''">
+				provider=#{provider}
+			</if>
+		</trim>
+		where id= #{id}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultType="IP2City" parameterType="int">
+		select * from ip2city where id = #{id}
+	</select>
+
+	<!-- get by obj -->
+	<select id="getByObj" resultType="IP2City" parameterType="IP2City">
+		select * from ip2city 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="ipStart != null and ipStart != ''">
+				ipstart = #{ipStart}
+			</if>
+			<if test="ipEnd != null and ipEnd != ''">
+				and ipEnd = #{ipEnd}
+			</if>
+			<if test="city != null and city != ''">
+				and city = #{city}
+			</if>
+			<if test="provider != null and provider != ''">
+				and provider = #{provider}
+			</if>
+		</trim>
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map"
+		resultType="IP2City">
+		select * from ip2city
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="ip2city != null">
+				<if test="ipStart != null and ipStart != ''">
+					ipstart = #{ipStart}
+				</if>
+				<if test="ipEnd != null and ipEnd != ''">
+					and ipEnd = #{ipEnd}
+				</if>
+				<if test="city != null and city != ''">
+					and city = #{city}
+				</if>
+				<if test="provider != null and provider != ''">
+					and provider = #{provider}
+				</if>
+			</if>
+		</trim> limit #{start},#{size};
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from ip2city;
+	</select> 
+	
+	<!-- get all -->
+	<select id="getAll" parameterType="IP2City" resultType="IP2City">
+		select  * from ip2city;
+	</select>
+</mapper>

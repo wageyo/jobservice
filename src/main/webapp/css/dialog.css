@@ -1,0 +1,18 @@
+#floatBoxBg {
+	POSITION: absolute; FILTER: alpha(opacity=50); WIDTH: 100%; BACKGROUND: #000; HEIGHT: 100%; TOP: 0px; LEFT: 0px; opacity: 0.5
+}
+.floatBox {
+	BORDER-BOTTOM: #f07611 5px solid; POSITION: absolute; BORDER-LEFT: #f07611 5px solid; WIDTH: 300px; BORDER-TOP: #f07611 5px solid; TOP: 100px; BORDER-RIGHT: #f07611 5px solid; LEFT: 40%
+}
+.floatBox .title {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: #eacb60; HEIGHT: 23px; COLOR: #fff; PADDING-TOP: 7px
+}
+.floatBox .title H4 {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 16px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 150px; PADDING-RIGHT: 0px; FLOAT: left; FONT-SIZE: 14px; PADDING-TOP: 0px
+}
+.floatBox .title SPAN {
+	FLOAT: right; CURSOR: pointer
+}
+.floatBox .content {
+	PADDING-BOTTOM: 20px; PADDING-LEFT: 15px; PADDING-RIGHT: 15px; BACKGROUND: #fff; PADDING-TOP: 20px
+}

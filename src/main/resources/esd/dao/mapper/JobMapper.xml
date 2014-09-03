@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.JobDao">
+
+	<!-- 查询Area 地名 -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" />
+		<result column="a_name" property="name" />
+		<result column="a_pyName" property="pyName" />
+		<result column="a_abbr" property="abbr" />
+		<result column="a_mark" property="mark" />
+	</resultMap>
+	
+	<!-- 查询JobCategory 职位种类 -->
+	<resultMap id="ResultJobCategory" type="JobCategory">
+		<id column="jc_code" property="code" />
+		<result column="jc_name" property="name" />
+		<result column="jc_mark" property="mark" />
+	</resultMap>
+	
+	<!-- 查询Job 职位  -->
+	<resultMap id="ResultJob" type="Job">
+		<id column="j_id" property="id" />
+		<result column="j_createDate" property="createDate" />
+		<result column="j_updateCheck" property="updateCheck" />
+		<result column="j_updateDate" property="updateDate" />
+		<result column="j_name" property="name" />
+		<result column="j_hireNumber" property="hireNumber" />
+		<result column="j_salary" property="salary" />
+		<result column="j_education" property="education" />
+		<result column="j_experience" property="experience" />
+		<result column="j_gender" property="gender" />
+		<result column="j_description" property="description"/>
+		<result column="j_provideBenefit" property="provideBenefit"/>
+		<result column="j_contactPerson" property="contactPerson" />
+		<result column="j_contactTel" property="contactTel" />
+		<result column="j_contactEmail" property="contactEmail" />
+		<result column="j_viewCount" property="viewCount" />
+		<result column="j_nature" property="nature" />
+		<result column="j_effectiveTime" property="effectiveTime" />
+		<result column="j_workPlace" property="workPlace" />
+		<result column="j_bed" property="bed" />
+		<result column="j_lunch" property="lunch" />
+		<result column="j_checkStatus" property="checkStatus" />
+		<result column="j_mark" property="mark" />
+		<association property="company" javaType="Company" resultMap="ResultCompany" />
+		<association property="area" javaType="Area" resultMap="ResultArea" />
+		<association property="jobCategory" javaType="JobCategory" resultMap="ResultJobCategory" />
+	</resultMap>
+	
+	<!-- 查询 Company 公司 -->
+	<resultMap id="ResultCompany" type="Company">
+		<id column="c_id" property="id" />
+		<result column="c_name" property="name" />
+		<result column="c_contactPerson" property="contactPerson" />
+		<result column="c_telephone" property="telephone" />
+		<result column="c_fax" property="fax" />
+		<result column="c_email" property="email" />
+		<result column="c_address" property="address" />
+		<result column="c_introduction" property="introduction" />
+		<result column="c_organizationCode" property="organizationCode" />
+		<result column="c_commercialCode" property="commercialCode" />
+	 	<result column="c_socialSecurityCode" property="socialSecurityCode" />
+		<result column="c_webSiteId" property="webSiteId" />
+		<result column="c_laoWangCode" property="laoWangCode" />
+		<result column="c_scale" property="scale" />
+		<result column="c_nature" property="nature" />
+		<result column="c_viewCount" property="viewCount" />
+	</resultMap>
+	
+	<sql id="base_column">
+		job.id as j_id,	job.createDate as j_createDate, job.updateCheck as j_updateCheck, job.updateDate as j_updateDate, job.name as j_name, job.hireNumber as j_hireNumber, job.salary as j_salary, job.education as j_education, job.experience as j_experience, job.gender as j_gender, job.description as j_description, job.provideBenefit as j_provideBenefit,job.contactPerson as j_contactPerson, job.contactTel as j_contactTel, job.contactEmail as j_contactEmail, job.viewCount as j_viewCount, job.nature as j_nature, job.effectiveTime as j_effectiveTime, job.workPlace as j_workPlace, job.bed as j_bed, job.lunch as j_lunch, job.checkstatus as j_checkStatus, job.mark as j_mark,  
+			c.id as c_id, c.name as c_name, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.viewCount as c_viewCount, 
+			a.code as a_code, a.name as a_name, a.mark as a_mark, 
+			jc.code as jc_code, jc.name as jc_name, jc.mark as jc_mark
+	</sql>
+	
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="Job"
+		useGeneratedKeys="true" keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into 
+		job(createDate,updateCheck,updateDate,name,hireNumber,salary,education,experience,gender,description,provideBenefit, contactPerson,contactTel,contactEmail,viewCount,nature,effectiveTime,workPlace,bed,lunch,checkstatus,mark,cid,acode,jccode)
+		values(now(),0,now(),#{name},#{hireNumber},#{salary},#{education},#{experience},#{gender},#{description},#{provideBenefit},#{contactPerson},#{contactTel},#{contactEmail},#{viewCount},#{nature},#{effectiveTime},#{workPlace},#{bed},#{lunch},#{checkStatus},#{mark},#{company.id},#{area.code},#{jobCategory.code})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from job where id = #{id}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="Job">
+		update job
+		<trim prefix="set" suffixOverrides=",">
+			updateDate=now(),
+			<if test="name != null ">
+				name=#{name},
+			</if>
+			<if test="hireNumber != null ">
+				hireNumber=#{hireNumber},
+			</if>
+			<if test="salary != null ">
+				salary=#{salary},
+			</if>
+			<if test="education != null ">
+				education=#{education},
+			</if>
+			<if test="experience != null ">
+				experience=#{experience},
+			</if>
+			<if test="gender != null ">
+				gender=#{gender},
+			</if>
+			<if test="description != null ">
+				description=#{description},
+			</if>
+			<if test="provideBenefit != null ">
+				provideBenefit=#{provideBenefit},
+			</if>
+			<if test="contactPerson != null ">
+				contactPerson=#{contactPerson},
+			</if>
+			<if test="contactTel != null ">
+				contactTel=#{contactTel},
+			</if>
+			<if test="contactEmail != null ">
+				contactEmail=#{contactEmail},
+			</if>
+			<if test="viewCount != null ">
+				viewCount=#{viewCount},
+			</if>
+			<if test="nature != null ">
+				nature=#{nature},
+			</if>
+			<if test="effectiveTime != null ">
+				effectiveTime=#{effectiveTime},
+			</if>
+			<if test="workPlace != null">
+				workPlace = #{workPlace},
+			</if>
+			<if test="bed != null">
+				bed = #{bed},
+			</if>
+			<if test="lunch != null">
+				lunch = #{lunch},
+			</if>
+			<if test="checkStatus != null">
+				checkstatus = #{checkStatus},
+			</if>
+			<if test="mark != null ">
+				mark=#{mark},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode=#{area.code},
+				</if>
+			</if>
+			<if test="jobCategory != null">
+				<if test="jobCategory.code != null and jobCategory.code != ''">
+					jccode=#{jobCategory.code}
+				</if>
+			</if>
+		</trim>
+		where id= #{id}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultJob" parameterType="int">
+		select
+			<include refid="base_column"/>
+		from job,area as a,company as c, jobcategory as jc
+		where job.acode = a.code and job.cid = c.id and job.jccode = jc.code and job.id = #{id}
+	</select>
+
+	<!-- get By Obj -->
+	<select id="getByObj" resultMap="ResultJob" parameterType="Job">
+		select
+			<include refid="base_column"/> 
+		from job,area as a,company as c, jobcategory as jc
+		<trim prefix="where" prefixOverrides="and|or">
+			job.acode = a.code and job.cid = c.id and job.jccode = jc.code
+			<if test="name != null and name != ''">
+				and job.name like concat('%',#{name},'%')
+			</if>
+			<if test="education != null and education !=''">
+				and job.education = #{education}
+			</if>
+			<if test="experience != null and experience != ''">
+				and job.experience = #{experience}
+			</if>
+			<if test="salary != null and salary != ''">
+				and job.salary = #{salary}
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					and a.code like concat('',#{area.code},'')
+				</if>
+			</if>
+<!--			<if test="jobCategory != null and jobCategory.code != null and jobCategory.code != '' and jobCategory.code != '不限'">-->
+<!--				and jc.code like concat('%',#{jobCategory.code},'%') -->
+<!--			</if>-->
+		</trim>
+		order by job.createDate desc
+	</select>
+
+	<!-- 多条件模糊查询职位信息 传递一个Job对象,里面的其中必要的属性值为条件-->
+	<select id="getByPage" resultMap="ResultJob" parameterType="map">
+		select
+			<include refid="base_column"/>
+		from job,area as a,company as c, jobcategory as jc
+		<trim prefix="where" prefixOverrides="and|or">
+			job.acode = a.code and job.cid = c.id and job.jccode = jc.code 
+			<if test="job != null">
+				<if test="job.name != null and job.name != ''">
+ 					and job.name like concat('%',#{job.name},'%')
+ 				</if>
+				<if test="job.jobCategory != null ">
+					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
+						and jc.code like concat('%',#{job.jobCategory.code},'%')
+					</if>
+				</if>
+ 				<if test="job.education != null and job.education !=''">
+ 					and job.education >= #{job.education}
+ 				</if>
+ 				<if test="job.area != null">
+					<if test="job.area.code != null and job.area.code != ''">
+						and job.acode like concat('%',#{job.area.code},'%')
+					</if>
+				</if>
+				<if test="job.nature != null and job.nature != ''">
+ 					and job.nature = #{job.nature}
+ 				</if>
+ 				<if test="job.experience != null and job.experience != ''">
+ 					and job.experience = #{job.experience}
+ 				</if>
+ 				<if test="job.salary != null and job.salary != ''">
+ 					and job.salary = #{job.salary}
+ 				</if>
+ 				<if test="job.checkStatus != null and job.checkStatus != ''">
+ 					and job.checkstatus = #{job.checkStatus} 
+ 				</if>
+ 				<if test="job.company != null">
+ 					<if test="job.company.id > 0">
+ 						and job.cid = #{job.company.id}
+ 					</if>
+ 				</if>
+			</if>
+		</trim>
+		order by job.createDate desc
+		limit #{start},#{size}
+	</select>
+	
+	<!-- 查询有多少条数据 条件与getByPage一样-->
+	<select id="getTotalCount" resultType="int" parameterType="map">
+		select count(*)
+		from job,area as a,company as c, jobcategory as jc
+		<trim prefix="where" prefixOverrides="and|or">
+			job.acode = a.code and job.cid = c.id and job.jccode = jc.code 
+			<if test="job != null">
+				<if test="job.name != null and job.name != ''">
+ 					and job.name like concat('%',#{job.name},'%')
+ 				</if>
+				<if test="job.jobCategory != null ">
+					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
+						and jc.code like concat('%',#{job.jobCategory.code},'%')
+					</if>
+				</if>
+ 				<if test="job.education != null and job.education !=''">
+ 					and job.education >= #{job.education}
+ 				</if>
+ 				<if test="job.area != null">
+					<if test="job.area.code != null and job.area.code != ''">
+						and job.acode like concat('%',#{job.area.code},'%')
+					</if>
+				</if>
+				<if test="job.nature != null and job.nature != ''">
+ 					and job.nature = #{job.nature}
+ 				</if>
+ 				<if test="job.experience != null and job.experience != ''">
+ 					and job.experience = #{job.experience}
+ 				</if>
+ 				<if test="job.salary != null and job.salary != ''">
+ 					and job.salary = #{job.salary}
+ 				</if>
+ 				<if test="job.checkStatus != null and job.checkStatus != ''">
+ 					and job.checkstatus = #{job.checkStatus} 
+ 				</if>
+ 				<if test="job.company != null">
+ 					<if test="job.company.id > 0">
+ 						and job.cid = #{job.company.id}
+ 					</if>
+ 				</if>
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 根据Company id，获得该对象的所有Job-->
+	<!-- get by company -->
+	<select id="getByCompany" resultMap="ResultJob" parameterType="int">
+		select
+			<include refid="base_column"/>
+		from job,area as a,company as c, jobcategory as jc
+		where job.acode = a.code and job.cid = c.id and job.jccode = jc.code and job.cid = #{cid}
+	</select>
+</mapper>

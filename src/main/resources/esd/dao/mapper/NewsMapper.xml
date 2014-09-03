@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.NewsDao">
+	
+	<!-- 查询News 地名 -->
+	<resultMap id="ResultNews" type="News">
+		<id column="n_id" property="id" />
+		<result column="n_createDate" property="createDate" />
+		<result column="n_updateDate" property="updateDate" />
+		<result column="n_updateCheck" property="updateCheck" />
+		<result column="n_title" property="title" />
+		<result column="n_content" property="content" />
+		<result column="n_author" property="author" />
+		<result column="n_source" property="source" />
+		<result column="n_type" property="type" />
+		<association property="area" resultMap="ResultArea"  javaType="Area" />
+	</resultMap>
+
+
+	<!-- 查询Area 地名 -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" />
+		<result column="a_name" property="name" />
+		<result column="a_pyName" property="pyName" />
+		<result column="a_abbr" property="abbr" />
+		<result column="a_mark" property="mark" />
+	</resultMap>
+	<!-- insert -->
+	<insert id="save" parameterType="News" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into
+		news(createdate,updatedate,updatecheck,title,content,author,source,type,acode)
+		values(now(),now(),0,#{title},#{content},#{author},#{source},#{type},#{area.code})
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from news where id = #{id}
+	</delete>
+
+	<!-- update -->
+	<update id="update" parameterType="News">
+		update news
+		<trim prefix="set" suffixOverrides=",">
+			updatedate = now(),
+			<if test="title != null and title != ''">
+				title = #{title},
+			</if>
+			<if test="content != null ">
+				content = #{content},
+			</if>
+			<if test="author != null ">
+				author = #{author},
+			</if>
+			<if test="source != null ">
+				source = #{source},
+			</if>
+			<if test="type != null and type != ''">
+				type = #{type},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != '' ">
+					acode = #{area.code}
+				</if>
+			</if>
+		</trim>
+		where id= #{id}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultNews" parameterType="int">
+		select n.id as n_id, n.createdate as n_createDate, n.updatedate as n_updateDate, n.updatecheck as n_updateCheck, n.title as n_title, n.content as n_content, n.author as n_author,n.source as n_source,n.type as n_type,
+				a.code as a_code, a.name as a_name,a.pyname as a_pyName, a.abbr as a_abbr
+		from news as n, area as a
+		where n.acode = a.code and id = #{id}
+	</select>
+
+	<!-- get by obj -->
+	<select id="getByObj" resultType="News" parameterType="News">
+		select * from news
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="createDate != null and createDate != ''">
+				createdate = #{createDate}
+			</if>
+			<if test="title != null and title != ''">
+				and title like concat('%',#{title},'%')
+			</if>
+			<if test="author != null and author != ''">
+				and author = #{author}
+			</if>
+			<if test="type != null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != '' ">
+					and acode = #{area.code}
+				</if>
+			</if>
+		</trim>
+	</select>
+
+	<!-- get by page -->
+	<select id="getByPage" resultMap="ResultNews" parameterType="map">
+		select n.id as n_id, n.createdate as n_createDate, n.updatedate as n_updateDate, n.updatecheck as n_updateCheck, n.title as n_title, n.content as n_content, n.author as n_author,n.source as n_source,n.type as n_type,
+				a.code as a_code, a.name as a_name,a.pyname as a_pyName
+		from news as n, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			n.acode = a.code 
+			<if test="news != null">
+				<if test="news.createDate != null and news.createDate != ''">
+					and n.createdate = #{news.createDate} 
+				</if>
+				<if test="news.title != null and news.title != ''">
+					and n.title like concat('%',#{news.title},'%')
+				</if>
+				<if test="news.author != null and news.author != ''">
+					and n.author like concat('%',#{news.author},'%')
+				</if>
+				<if test="news.type != null and news.type != ''">
+					and n.type = #{news.type}
+				</if>
+				<if test="news.area != null">
+					<if test="news.area.code != null and news.area.code != '' ">
+						and n.acode like concat('%',#{news.area.code},'%')
+					</if>
+				</if>
+			</if>
+		</trim>
+		order by createdate desc
+		limit #{start},#{size}
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int" parameterType="map">
+		select count(*)
+		from news as n, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			n.acode = a.code 
+			<if test="news != null">
+				<if test="news.createDate != null and news.createDate != ''">
+					and n.createdate = #{news.createDate} 
+				</if>
+				<if test="news.title != null and news.title != ''">
+					and n.title like concat('%',#{news.title},'%')
+				</if>
+				<if test="news.author != null and news.author != ''">
+					and n.author like concat('%',#{news.author},'%')
+				</if>
+				<if test="news.type != null and news.type != ''">
+					and n.type = #{news.type}
+				</if>
+				<if test="news.area != null">
+					<if test="news.area.code != null and news.area.code != '' ">
+						and n.acode like concat('%',#{news.area.code},'%')
+					</if>
+				</if>
+			</if>
+		</trim>
+	</select>
+
+	<!-- get title list -->
+	<select id="getTitleList" resultType="News" parameterType="map">
+		select id,title,createdate,updatedate,updatecheck,author,source from news
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="news != null">
+				<if test="news.createDate != null and news.createDate != ''">
+					createdate = #{news.createDate} 
+				</if>
+				<if test="news.title != null and news.title != ''">
+					and title like concat('%',#{news.title},'%')
+				</if>
+				<if test="news.author != null and news.author != ''">
+					and author like concat('%',#{news.author},'%')
+				</if>
+				<if test="news.type != null and news.type != ''">
+					and type = #{news.type}
+				</if>
+				<if test="news.area != null">
+					<if test="news.area.code != null and news.area.code != '' ">
+						acode like concat('%',#{area.code},'%')
+					</if>
+				</if>
+			</if>
+		</trim>
+		order by createdate desc
+		limit #{start},#{size}
+	</select>
+</mapper>

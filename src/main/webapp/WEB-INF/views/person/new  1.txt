@@ -1,0 +1,6 @@
+String url = req.getRealPath("/");
+String url = req.getServletContext().getRealPath("/");
+=====================
+
+Description	Resource	Path	Location	Type
+The method getLocalAddr() is undefined for the type HttpServletRequest	CompanyController.java	/jobservice/src/main/java/com/esd/controller	line 88	Java Problem

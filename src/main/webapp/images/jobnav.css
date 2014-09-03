@@ -1,0 +1,50 @@
+﻿ul,li{ list-style:none;}
+
+
+#menu
+{
+	width:980px;
+    height: 42px;
+    margin: 0 auto;
+    background: url(../images/nav_bg.jpg)  no-repeat;
+}
+#menu_right
+{
+    float: left;
+}
+#menu_right li
+{
+    color: #FFF;
+    font-size: 14px;
+    float: left;
+    width: 124px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    background: url(../images/nav_menu_line.jpg) no-repeat right 6px;
+    font-weight: bold;
+}
+#menu_right li a
+{
+    color: #FFFFFF;
+    font:bold 14px/42px '';
+}
+#menu_right li a:hover
+{
+    color: #FFFFFF;
+}
+#menu_left
+{
+    float: left;
+    background: url(../new_images/tel.jpg) no-repeat 0px 10px;
+    width: 263px;
+    height: 23px;
+    padding-top: 11px;
+    padding-left: 7px;
+    font-size: 12px;
+}
+#menu_left span
+{
+    color: #056ECA;
+    font-weight: bold;
+}

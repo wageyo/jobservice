@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 实现esd.dao.ResumeDao接口 -->
+<mapper namespace="esd.dao.ResumeDao">
+
+	<!-- 查询 Resume 简历 -->
+	<resultMap type="Resume" id="ResultResume">
+		<id column="r_id" property="id" />
+		<result column="r_createDate" property="createDate" />
+		<result column="r_updateCheck" property="updateCheck" />
+		<result column="r_updateDate" property="updateDate" />
+		<result column="r_title" property="title" />
+		<result column="r_name" property="name" />
+		<result column="r_gender" property="gender" />
+		<result column="r_birth" property="birth" />
+		<result column="r_identityCard" property="identityCard" />
+		<result column="r_race" property="race" />
+		<result column="r_marriage" property="marriage" />
+		<result column="r_hukou" property="hukou" />
+		<result column="r_hukouAddress" property="hukouAddress" />
+		<result column="r_hukouStatus" property="hukouStatus" />
+		<result column="r_address" property="address" />
+		<result column="r_zipCode" property="zipCode" />
+		<result column="r_phone" property="phone" />
+		<result column="r_email" property="email" />
+		<result column="r_qq" property="qq" />
+		<result column="r_disabilityCategory" property="disabilityCategory" />
+		<result column="r_disabilityCard" property="disabilityCard" />
+		<result column="r_disabilityLevel" property="disabilityLevel" />
+		<result column="r_disabilityPart" property="disabilityPart" />
+		<result column="r_workAbility" property="workAbility" />
+		<result column="r_homeTown" property="homeTown" />
+		<result column="r_politicalStatus" property="politicalStatus" />
+		<result column="r_age" property="age" />
+		<result column="r_height" property="height" />
+		<result column="r_weight" property="weight" />
+		<result column="r_education" property="education" />
+		<result column="r_major" property="major" />
+		<result column="r_school" property="school" /> 
+		<result column="r_zhiCheng" property="zhiCheng" />
+		<result column="r_experience" property="experience" />
+		<result column="r_workExperience" property="workExperience" />
+		<result column="r_shiYeHao" property="shiYeHao" />
+		<result column="r_experts" property="experts" />
+		<result column="r_training" property="training" />
+		<result column="r_selfEvaluation" property="selfEvaluation" />
+		<!-- Blob类型 -->
+<!-- 		<result column="r_attachment" property="attachment" javaType="java.sql.Blob" jdbcType="BLOB" />	 -->
+		<result column="r_jobNature" property="jobNature" />
+		<result column="r_desireJob" property="desireJob" />
+		<result column="r_desireAddress" property="desireAddress" />
+		<result column="r_desireSalary" property="desireSalary" />
+		<result column="r_provideFoodAndRoom" property="provideFoodAndRoom" />
+		<result column="r_provideRoom" property="provideRoom" />
+		<result column="r_provideFood" property="provideFood" />
+		<result column="r_provideInsurance" property="provideInsurance" />
+		<result column="r_provideOther" property="provideOther" />
+		<result column="r_workShift" property="workShift" />
+		<result column="r_state" property="state" />
+		<result column="r_isDefault" property="isDefault" />
+		<result column="r_checkStatus" property="checkStatus" />
+		<result column="r_viewCount" property="viewCount" />
+		<result column="r_careerTest" property="careerTest" />
+		<result column="r_processState" property="processState" />
+		<association property="user" javaType="User" resultMap="ResultUser" />
+		<association property="area" javaType="Area" resultMap="ResultArea" />
+	</resultMap>
+
+	<!-- 查询 User 账号 -->
+	<resultMap type="User" id="ResultUser">
+		<id column="u_id" property="id" />
+		<result column="u_loginname" property="loginName" />
+		<result column="u_password" property="passWord" />
+		<result column="u_identity" property="identity" />
+	</resultMap>
+	
+	<!-- 查询 Area 地区 -->
+	<resultMap type="Area"  id="ResultArea">
+		<id column="a_code" property="code" />
+		<result column="a_name" property="name" />
+		<result column="a_pyname" property="pyName" />
+		<result column="a_abbr" property="abbr" />
+		<result column="a_mark" property="mark" />
+	</resultMap>
+	
+	<!-- insert -->
+	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
+	<insert id="save" parameterType="Resume" useGeneratedKeys="true"
+		keyProperty="id">
+		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+		<selectKey resultType="java.lang.Integer" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		resume(createdate,updatecheck,updatedate,title,name,gender,birth,identitycard,race,marriage,hukou,hukouaddress,hukoustatus,address,zipcode,phone,email,qq,disabilitycategory,disabilitycard,disabilitylevel,disabilitypart,workability,hometown,politicalstatus,age,height,weight,education,major,school,zhicheng,experience,workExperience,shiyehao,experts,training,selfevaluation,jobnature,desirejob,desireaddress,desiresalary,providefoodandroom,provideroom,providefood,provideinsurance,provideOther,workshift,state,isdefault,checkstatus,viewcount,careertest,processstate,uid,acode)
+		values(now(),0,now(),#{title},#{name},#{gender},#{birth},#{identityCard},#{race},#{marriage},#{hukou},#{hukouAddress},#{hukouStatus},#{address},#{zipCode},#{phone},#{email},#{qq},#{disabilityCategory},#{disabilityCard},#{disabilityLevel},#{disabilityPart},#{workAbility},#{homeTown},#{politicalStatus},#{age},#{height},#{weight},#{education},#{major},#{school},#{zhiCheng},#{experience},#{workExperience},#{shiYeHao},#{experts},#{training},#{selfEvaluation},#{jobNature},#{desireJob},#{desireAddress},#{desireSalary},#{provideFoodAndRoom},#{provideRoom},#{provideFood},#{provideInsurance},#{provideOther},#{workShift},#{state},#{isDefault},#{checkStatus},0,#{careerTest},#{processState},#{user.id},#{area.code});
+	</insert>
+	
+	<!-- delete -->
+	<delete id="delete" parameterType="int">
+		delete from resume where id = #{id}
+	</delete>
+
+	<!-- update -->
+	<update id="update" parameterType="Resume">
+		update resume
+		<trim prefix="set" suffixOverrides=",">
+			updateDate = now(),
+			<if test="updateCheck != null">
+				updateCheck = #{updateCheck},
+			</if>
+			<if test="title != null and title != ''">
+				title = #{title},
+			</if>
+			<if test="name != null and name != ''">
+				name = #{name},
+			</if>
+			<if test="gender != null">
+				gender = #{gender},
+			</if>
+			<if test="birth != null and birth != ''">
+				birth = #{birth},
+			</if>
+			<if test="identityCard != null ">
+				identityCard = #{identityCard},
+			</if>
+			<if test="race != null ">
+				race = #{race},
+			</if>
+			<if test="marriage != null ">
+				marriage = #{marriage},
+			</if>
+			<if test="hukou != null ">
+				hukou = #{hukou},
+			</if>
+			<if test="hukouAddress != null ">
+				hukouAddress = #{hukouAddress},
+			</if>
+			<if test="hukouStatus != null ">
+				hukouStatus = #{hukouStatus},
+			</if>
+			<if test="address != null ">
+				address = #{address},
+			</if>
+			<if test="zipCode != null ">
+				zipCode = #{zipCode},
+			</if>
+			<if test="phone != null ">
+				phone = #{phone},
+			</if>
+			<if test="email != null ">
+				email = #{email},
+			</if>
+			<if test="qq != null">
+				qq = #{qq},
+			</if>
+			<if test="disabilityCategory != null ">
+				disabilityCategory = #{disabilityCategory},
+			</if>
+			<if test="disabilityCard != null ">
+				disabilityCard = #{disabilityCard},
+			</if>
+			<if test="disabilityLevel != null ">
+				disabilityLevel = #{disabilityLevel},
+			</if>
+			<if test="disabilityPart != null ">
+				disabilityPart = #{disabilityPart},
+			</if>
+			<if test="workAbility != null ">
+				workAbility = #{workAbility},
+			</if>
+			<if test="homeTown != null ">
+				homeTown = #{homeTown},
+			</if>
+			<if test="politicalStatus != null ">
+				politicalStatus = #{politicalStatus},
+			</if>
+			<if test="age != null and age > 0">
+				age = #{age},
+			</if>
+			<if test="height != null ">
+				height = #{height},
+			</if>
+			<if test="weight != null ">
+				weight = #{weight},
+			</if>
+			<if test="education != null and education != ''">
+				education = #{education},
+			</if>
+			<if test="major != null ">
+				major = #{major},
+			</if>
+			<if test="school != null ">
+				school = #{school},
+			</if>
+			<if test="zhiCheng != null ">
+				zhiCheng = #{zhiCheng},
+			</if>
+			<if test="shiYeHao != null ">
+				shiYeHao = #{shiYeHao},
+			</if>
+			<if test="experts != null ">
+				experts = #{experts},
+			</if>
+			<if test="training != null ">
+				training = #{training},
+			</if>
+			<if test="experience != null ">
+				experience = #{experience},
+			</if>
+			<if test="workExperience != null ">
+				workExperience = #{workExperience},
+			</if>
+			<if test="selfEvaluation != null ">
+				selfEvaluation = #{selfEvaluation},
+			</if>
+<!--			blob类型-->
+<!--			<if test="attachment != null and attachment != ''">-->
+<!--				attachment = #{attachment},-->
+<!--			</if>-->
+			<if test="jobNature != null and jobNature != ''">
+				jobNature = #{jobNature},
+			</if>
+			<if test="desireJob != null and desireJob != ''">
+				desireJob = #{desireJob},
+			</if>
+			<if test="desireAddress != null and desireAddress != ''">
+				desireAddress = #{desireAddress},
+			</if>
+			<if test="desireSalary != null and desireSalary != ''">
+				desireSalary = #{desireSalary},
+			</if>
+			<if test="provideFoodAndRoom != null">
+				provideFoodAndRoom = #{provideFoodAndRoom},
+			</if>
+			<if test="provideRoom != null ">
+				provideRoom = #{provideRoom},
+			</if>
+			<if test="provideFood != null ">
+				provideFood = #{provideFood},
+			</if>
+			<if test="provideInsurance != null ">
+				provideInsurance = #{provideInsurance},
+			</if>
+			<if test="provideOther != null ">
+				provideOther = #{provideOther},
+			</if>
+			<if test="workShift != null">
+				workShift = #{workShift},
+			</if>
+			<if test="state != null and state != ''">
+				state = #{state},
+			</if>
+			<if test="isDefault != null">
+				isdefault = #{isDefault},
+			</if>
+			<if test="checkStatus != null">
+				checkStatus = #{checkStatus},
+			</if>
+			<if test="viewCount != null and viewCount > 0">
+				viewCount = #{viewCount},
+			</if>
+			<if test="careerTest != null ">
+				careerTest = #{careerTest},
+			</if>
+			<if test="processState != null ">
+				processState = #{processState},
+			</if>
+			<if test="user != null and user.id > 0">
+				uid = #{user.id},
+			</if>
+			<if test="area != null and area.code != null and area.code != ''">
+				acode = #{area.code},
+			</if>
+		</trim>
+		where id= #{id}
+	</update>
+	
+	<!-- get by obj -->
+	<select id="getByObj" resultMap="ResultResume" parameterType="Resume">
+		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukouaddress as r_hukouAddress, r.hukoustatus as r_hukouStatus, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.qq as r_qq,r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.disabilityPart as r_disabilityPart, r.workability as r_workAbility, r.homeTown as r_homeTown, r.politicalStatus as r_politicalStatus, r.age as r_age, r.height as r_height, r.weight as r_weight, r.education as r_education, r.major as r_major, r.school as r_school, r.zhiCheng as r_zhiCheng, r.experience as r_experience, r.workExperience as r_workExperience, r.shiYeHao as r_shiYeHao, r.experts as r_experts, r.training as r_training, r.selfevaluation as r_selfEvaluation, r.jobnature as r_jobNature, r.desireJob as r_desireJob, r.desireAddress r_desireAddress, r.desiresalary as r_desireSalary, r.provideFoodAndRoom as r_provideFoodAndRoom,  r.provideroom as r_provideRoom, r.provideFood as r_provideFood, r.provideInsurance as r_provideInsurance, r.provideOther as r_provideOther, r.workshift as r_workShift, r.state as r_state,  r.viewcount as r_viewCount, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.careerTest r_careerTest, r.processState as r_processState,
+				u.id as u_id, u.loginname as u_loginname, u.password as u_password, u.identity as u_identity, 
+				a.code as a_code, a.name as a_name, a.pyName as a_pyname, a.abbr as a_abbr, a.mark as a_mark
+		from resume as r , user as u, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			r.uid = u.id and r.acode = a.code 
+			<if test="title !=null and title != ''">
+				and r.title like concat('%',#{title},'%')
+			</if>
+			<if test="isDefault != null">
+				and r.isdefault = #{isDefault}
+			</if>
+			<if test="user != null">
+				<if test="user.id != null and user.id > 0">
+					and r.uid = #{user.id}
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					and r.acode = #{area.code}
+				</if>
+			</if>
+		</trim>
+	</select>
+
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultResume" parameterType="int">
+		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukouaddress as r_hukouAddress, r.hukoustatus as r_hukouStatus, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.qq as r_qq,r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.disabilityPart as r_disabilityPart, r.workability as r_workAbility, r.homeTown as r_homeTown, r.politicalStatus as r_politicalStatus, r.age as r_age, r.height as r_height, r.weight as r_weight, r.education as r_education, r.major as r_major, r.school as r_school, r.zhiCheng as r_zhiCheng, r.experience as r_experience, r.workExperience as r_workExperience, r.shiYeHao as r_shiYeHao, r.experts as r_experts, r.training as r_training, r.selfevaluation as r_selfEvaluation, r.jobnature as r_jobNature, r.desireJob as r_desireJob, r.desireAddress r_desireAddress, r.desiresalary as r_desireSalary, r.provideFoodAndRoom as r_provideFoodAndRoom,  r.provideroom as r_provideRoom, r.provideFood as r_provideFood, r.provideInsurance as r_provideInsurance, r.provideOther as r_provideOther, r.workshift as r_workShift, r.state as r_state,  r.viewcount as r_viewCount, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.careerTest r_careerTest, r.processState as r_processState,
+				u.id as u_id, u.loginname as u_loginname, u.password as u_password, u.identity as u_identity, 
+				a.code as a_code, a.name as a_name, a.pyName as a_pyname, a.abbr as a_abbr, a.mark as a_mark
+		from resume as r, user as u, area as a
+		where r.uid = u.id and r.acode = a.code and r.id =#{id}
+	</select>
+
+	<!-- 按多个条件模糊查询简历  传递一个Resume对象,里面的其中必要的属性值为条件-->
+	<select id="getByPage" resultMap="ResultResume" parameterType="map">
+		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukouaddress as r_hukouAddress, r.hukoustatus as r_hukouStatus, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.qq as r_qq,r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.disabilityPart as r_disabilityPart, r.workability as r_workAbility, r.homeTown as r_homeTown, r.politicalStatus as r_politicalStatus, r.age as r_age, r.height as r_height, r.weight as r_weight, r.education as r_education, r.major as r_major, r.school as r_school, r.zhiCheng as r_zhiCheng, r.experience as r_experience, r.workExperience as r_workExperience, r.shiYeHao as r_shiYeHao, r.experts as r_experts, r.training as r_training, r.selfevaluation as r_selfEvaluation, r.jobnature as r_jobNature, r.desireJob as r_desireJob, r.desireAddress r_desireAddress, r.desiresalary as r_desireSalary, r.provideFoodAndRoom as r_provideFoodAndRoom,  r.provideroom as r_provideRoom, r.provideFood as r_provideFood, r.provideInsurance as r_provideInsurance, r.provideOther as r_provideOther, r.workshift as r_workShift, r.state as r_state,  r.viewcount as r_viewCount, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.careerTest r_careerTest, r.processState as r_processState,
+				a.code as a_code, a.name as a_name, a.pyName as a_pyname, a.abbr as a_abbr, a.mark as a_mark
+		from resume as r, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			r.acode = a.code
+			<if test="resume != null">
+				<if test="resume.title != null and resume.title != ''">
+					and r.title like concat('%',#{resume.title},'%')
+				</if>
+				<!-- 学历 -->
+				<if test="resume.education != null and resume.education != ''">
+					and r.education >= #{resume.education}
+				</if>
+				<!-- 专业 -->
+				<if test="resume.major != null and resume.major != ''">
+					and r.major = #{resume.major}
+				</if>
+				<!-- 经验年限 -->
+				<if test="resume.experience != null and resume.experience !=''">
+					and r.experience = #{resume.experience}
+				</if>
+				<!-- 残疾类别 -->
+				<if test="resume.disabilityCategory != null and resume.disabilityCategory != ''">
+					and r.disabilitycategory = #{resume.disabilityCategory}
+				</if>
+				<!-- 地区 -->
+				<if test="resume.area != null">
+					<if test="resume.area.code != null and resume.area.code !='' ">
+						and a.code like concat('%',#{resume.area.code},'%')
+					</if>
+				</if>
+				<!-- 目标职位 -->
+				<if test="resume.desireJob != null and resume.desireJob != ''">
+					and r.desirejob like concat('%',#{resume.desireJob},'%') 
+				</if>
+				<!-- 期望工作地 -->
+				<if test="resume.desireAddress != null and resume.desireAddress != ''">
+					and r.desireAddress like concat('%',#{resume.desireAddress},'%') 
+				</if>
+				<!-- 工作性质 -->
+				<if test="resume.jobNature != null and resume.jobNature != ''">
+					and r.jobnature = #{resume.jobNature} 
+				</if>
+				<!-- 性别 -->
+				<if test="resume.gender != null and resume.gender != ''">
+					and r.gender = #{resume.gender} 
+				</if>
+				<if test="resume.checkStatus != null and resume.checkStatus != ''">
+ 					and r.checkstatus = #{resume.checkStatus} 
+ 				</if>
+				<!-- 薪水范围 -->
+			</if>
+		</trim>
+		order by r.createDate desc limit #{start},#{size};
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int" parameterType="map">
+		select count(*)
+		from resume as r, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			r.acode = a.code
+			<if test="resume != null">
+				<if test="resume.title != null and resume.title != ''">
+					and r.title like concat('%',#{resume.title},'%')
+				</if>
+				<!-- 学历 -->
+				<if test="resume.education != null and resume.education != ''">
+					and r.education >= #{resume.education}
+				</if>
+				<!-- 专业 -->
+				<if test="resume.major != null and resume.major != ''">
+					and r.major = #{resume.major}
+				</if>
+				<!-- 经验年限 -->
+				<if test="resume.experience != null and resume.experience !=''">
+					and r.experience = #{resume.experience}
+				</if>
+				<!-- 残疾类别 -->
+				<if test="resume.disabilityCategory != null and resume.disabilityCategory != ''">
+					and r.disabilitycategory = #{resume.disabilityCategory}
+				</if>
+				<!-- 地区 -->
+				<if test="resume.area != null">
+					<if test="resume.area.code != null and resume.area.code !='' ">
+						and a.code like concat('%',#{resume.area.code},'%')
+					</if>
+				</if>
+				<!-- 目标职位 -->
+				<if test="resume.desireJob != null and resume.desireJob != ''">
+					and r.desirejob like concat('%',#{resume.desireJob},'%') 
+				</if>
+				<!-- 工作性质 -->
+				<if test="resume.jobNature != null and resume.jobNature != ''">
+					and r.jobnature = #{resume.jobNature} 
+				</if>
+				<!-- 性别 -->
+				<if test="resume.gender != null and resume.gender != ''">
+					and r.gender = #{resume.gender} 
+				</if>
+				<if test="resume.checkStatus != null and resume.checkStatus != ''">
+ 					and r.checkstatus = #{resume.checkStatus} 
+ 				</if>
+				<!-- 薪水范围 -->
+			</if>
+		</trim>
+	</select> 
+
+	<!-- getByUser-->
+	<select id="getByUser" resultType="Resume" parameterType="int">
+		select *
+		from resume
+		where uid = #{uid}
+	</select>
+
+	<!-- get user's default resume for vote -->
+	<select id="getDefaultResume" resultMap="ResultResume" parameterType="int">
+		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukouaddress as r_hukouAddress, r.hukoustatus as r_hukouStatus, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.qq as r_qq,r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.disabilityPart as r_disabilityPart, r.workability as r_workAbility, r.homeTown as r_homeTown, r.politicalStatus as r_politicalStatus, r.age as r_age, r.height as r_height, r.weight as r_weight, r.education as r_education, r.major as r_major, r.school as r_school, r.zhiCheng as r_zhiCheng, r.experience as r_experience, r.workExperience as r_workExperience, r.shiYeHao as r_shiYeHao, r.experts as r_experts, r.training as r_training, r.selfevaluation as r_selfEvaluation, r.jobnature as r_jobNature, r.desireJob as r_desireJob, r.desireAddress r_desireAddress, r.desiresalary as r_desireSalary, r.provideFoodAndRoom as r_provideFoodAndRoom,  r.provideroom as r_provideRoom, r.provideFood as r_provideFood, r.provideInsurance as r_provideInsurance, r.provideOther as r_provideOther, r.workshift as r_workShift, r.state as r_state,  r.viewcount as r_viewCount, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.careerTest r_careerTest, r.processState as r_processState,
+				u.id as u_id, u.loginname as u_loginname, u.password as u_password, u.identity as u_identity 
+		from resume as r, user as u
+		where r.uid = u.id and r.isdefault = 1 and r.uid = #{uid}
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- get Count By Area Code-->
+	<select id="getCountByAreaCode" resultType="int" parameterType="int">
+		select count(*)
+		from resume as r , area as a
+		where r.acode = a.code and a.code like #{code}
+	</select> 
+	
+	<!-- get by area code -->
+	<select id="getByAreaCode" resultMap="ResultResume" parameterType="java.lang.String">
+		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.workability as r_workAbility, r.education as r_education, r.major as r_major, r.school as r_school, r.companyname as r_companyName,r.jobname as r_jobName, r.jobcontent as r_jobContent, r.worktime as r_workTime, r.experience as r_experience, r.workExperience as r_workExperience, r.selfevaluation as r_selfEvaluation, r.attachment as r_attachment, r.jobnature as r_jobNature, r.desirecity1 as r_desireCity1, r.desirecity2 as r_desireCity2,r.desirecity3 as r_desireCity3, r.desirecity4 as r_desireCity4, r.desirecity5 as r_desireCity5, r.desirejob1 as r_desireJob1, r.desirejob2 as r_desireJob2, r.desirejob3 as r_desireJob3, r.desirejob4 as r_desireJob4, r.desirejob5 as r_desireJob5,r.desirescope1 as r_desireScope1, r.desirescope2 as r_desireScope2, r.desirescope3 as r_desireScope3, r.desirescope4 as r_desireScope4, r.desirescope5 as r_desireScope5, r.desiresalary as r_desireSalary, r.state as r_state, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.viewcount as r_viewCount
+			, a.code as a_code, a.code as a_code, a.name as a_name, a.pyName as a_pyname, a.abbr as a_abbr, a.mark as a_mark
+		from resume as r , area as a
+		where r.acode = a.code and a.code like #{code}
+	</select>
+</mapper>

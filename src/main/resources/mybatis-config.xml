@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 类名缩写 -->
+	<typeAliases>
+		<package name="esd.bean" />
+	</typeAliases>
+
+	<!-- 加载mapper映射文件, 注意路径用 / 不是用. -->
+	<mappers>
+		<mapper resource="esd/dao/mapper/AdminInfoMapper.xml" />
+		<mapper resource="esd/dao/mapper/AreaMapper.xml" />
+		<mapper resource="esd/dao/mapper/BusinessScopeMapper.xml" />
+		<mapper resource="esd/dao/mapper/CompanyMapper.xml" />
+		<mapper resource="esd/dao/mapper/EducationBackgroundMapper.xml" />
+		<mapper resource="esd/dao/mapper/FamilyMemberMapper.xml" />
+		<mapper resource="esd/dao/mapper/IP2CityMapper.xml" />
+		<mapper resource="esd/dao/mapper/JobCategoryMapper.xml" />
+	 	<mapper resource="esd/dao/mapper/JobMapper.xml" />
+	 	<mapper resource="esd/dao/mapper/MenuMapper.xml" />
+	 	<mapper resource="esd/dao/mapper/NewsMapper.xml" />	 	
+		<mapper resource="esd/dao/mapper/ParameterMapper.xml" />
+		<mapper resource="esd/dao/mapper/RecordMapper.xml" />
+		<mapper resource="esd/dao/mapper/ResumeMapper.xml" />
+		<mapper resource="esd/dao/mapper/UserMapper.xml" />
+		<mapper resource="esd/dao/mapper/WorkExperienceMapper.xml" /> 
+	</mappers>
+
+</configuration>
