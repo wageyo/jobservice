@@ -142,10 +142,10 @@
 							</tr>
 
 							<tr>
-								<td <td="" colspan="2" class="line50">您企业的联系方式&nbsp;&nbsp;<span class="red">*号为必须填写项</span></td>
+								<td colspan="2" class="line50">您企业的联系方式&nbsp;&nbsp;<span class="red">*号为必须填写项</span></td>
 							</tr>
 							<tr>
-								<td <td="" colspan="2" height="20">&nbsp;</td>
+								<td colspan="2" height="20">&nbsp;</td>
 							</tr>
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span><b>联系电话 ：</b></td>

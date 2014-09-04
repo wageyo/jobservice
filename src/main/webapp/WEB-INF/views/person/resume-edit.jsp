@@ -499,7 +499,7 @@
 						<td colspan="2">
 							<p><span class="span_assign_width" style="width:250px;">公司 : <input type="text" size="35" id="new_companyName" /></span>在职时间 : <input type="text" id="new_workTime" "/> <span style="color:red;"> (格式:2003.2-2005.8)</span></p>
 							<p><span class="span_assign_width" style="width:250px;">职位 : <input type="text" size="35" id="new_jobName" /></span>离职原因 : <input type="text" size="45" id="new_leaveReason"/></p>
-							<p><span class="span_assign_width" style="width:36px;">&nbsp;</span><textarea rows="4" cols="100" id="new_jobContent" onfocus="if (this.value == &#39;自我评价,所负责的事物等等.&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;自我评价,所负责的事物等等.&#39;;}">自我评价,所负责的事物等等.</textarea></p>
+							<p><span class="span_assign_width" style="width:36px;">&nbsp;</span><textarea rows="4" cols="100" id="new_jobContent" onfocus="if (this.value == '自我评价,所负责的事物等等.') {this.value = '';}" onblur="if (this.value == '') {this.value = '自我评价,所负责的事物等等.';}">自我评价,所负责的事物等等.</textarea></p>
 						</td>
 					</tr>
 				</table>
