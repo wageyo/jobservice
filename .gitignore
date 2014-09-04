@@ -1,0 +1,8 @@
+# ignore files list
+/.classpath
+/.mymetadata
+/.project
+/.settings/
+
+# target file folder
+/target/
