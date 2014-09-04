@@ -73,25 +73,24 @@
 								</c:forEach>
 							</td>
 						</tr>
+					</tbody>
+				</table>
 						<script type="text/javascript">
                        		function deletejob(id,title){
                        			var bl = window.confirm('确实要删除 '+title+' 这份简历吗?');
                        			if(bl){
                        				location.href = '${contextPath }/secure/job/delete?id=' + id;
-                       			}
+                       			};
                        		}
                        	</script>
-					</tbody>
-				</table>
 			</div>
-
-
 		</div>
 
 		<div style="clear: both;"></div>
 	</div>
 
 	<jsp:include page="../footer.jsp" />
+	
 	<c:if test="${notice == 'success' }">
 		<script type="text/javascript">
 			alert('操作成功!');
