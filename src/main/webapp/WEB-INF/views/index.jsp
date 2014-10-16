@@ -38,12 +38,14 @@ function getimgcode(){
 					<form action="${contextPath }/user/login" method="post" onSubmit="return check();">
 						<div id="ctl00_ContentPlaceHolder1_login_1" class="login_1">
 							<ul style="width: 160px;">
-								<li class="login_li"><input name="loginName" type="text" value="" id="loginName" maxlength="20" class="login_nput" value="请输入您的用户名"
-									onfocus="if (this.value == &#39;请输入您的用户名&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;请输入您的用户名&#39;;}" /></li>
-								<li class="login_li"><input name="passWord" type="password" value="" id="passWord" maxlength="20" class="login_nput"
-									onfocus="if (this.value == &#39;请输入您的密码&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;请输入您的密码&#39;;}" /></li>
-								<li class="login_li"><input style="margin-top: 10px" name="LoginVerifyCode" type="text" id="LoginVerifyCode" maxlength="5" class="login_nput" value="请输入验证码"
-									onfocus="if (this.value == &#39;请输入验证码&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;请输入验证码&#39;;}" /></li>
+								<li class="login_li">
+									<input name="loginName" type="text" value="请输入您的用户名" id="loginName" maxlength="20" class="login_nput" 
+										onfocus="focus_login_name(this)" onblur="blur_login_name(this)" /></li>
+								<li class="login_li">
+									<input name="passWord" type="password" value="" id="passWord" maxlength="20" class="login_nput" /></li>
+								<li class="login_li">
+									<input style="margin-top: 10px" name="LoginVerifyCode" type="text" id="LoginVerifyCode" maxlength="5" class="login_nput" value="请输入验证码"
+										onfocus="focus_check_code(this)" onblur="blur_check_code(this)" /></li>
 							</ul>
 							<ul>
 								<li id="login_an"><input type="image" id="ctl00_ContentPlaceHolder1_ImageButton1" src="${contextPath}/images/an.jpg" style="border-width:0px;">
@@ -56,6 +58,30 @@ function getimgcode(){
 						</div>
 					</form>
 					<script type="text/javascript">
+						//用户名校验
+						function focus_login_name(object){
+							if (object.value == '请输入您的用户名'){
+								object.value = '';
+							}
+						}
+						function blur_login_name(object){
+							if (object.value == ''){
+								object.value = '请输入您的用户名';
+							}
+						}
+						
+						//验证码校验
+						function focus_check_code(object){
+							if (object.value == '请输入验证码'){
+								object.value = '';
+							}
+						}
+						function blur_check_code(object){
+							if (object.value == ''){
+								object.value = '请输入验证码';
+							}
+						}
+						
 						function check(){
 							//用户名
 							var loginName = $('#loginName').val();

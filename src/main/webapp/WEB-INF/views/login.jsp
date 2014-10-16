@@ -48,9 +48,9 @@ function getimgcode(){
 							</li>
 							<li style="clear: both" class="AntUserLoginPageSave">
 							</li>
-							<li class="AntUserLoginPageBottom"><input type="submit" name="InfoAccountLoginSubmit" value="确认登录"
-								onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;InfoAccountLoginSubmit&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))"
-								id="InfoAccountLoginSubmit">
+							<li class="AntUserLoginPageBottom">
+								<input type="submit" name="InfoAccountLoginSubmit" value="确认登录" id="InfoAccountLoginSubmit">
+								<!-- onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;InfoAccountLoginSubmit&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" -->
 							</li>
 						</ul>
 					</div>
