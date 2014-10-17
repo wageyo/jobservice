@@ -77,6 +77,10 @@ public class IndexController {
 		if(obj!=null){
 			acode = ((Area)obj).getCode();
 		}
+		//如果acode为空, 则说明首次进首页, 再查看request中有没有传过来的acode
+		if(acode == null){
+			acode = request.getParameter("acode");
+		}
 		ModelAndView mav = new ModelAndView("index");
 		// 得到最新的10个公司
 		List<Company> companyList = companyService.getByNew(KitService.getProvinceCode(acode),10);
