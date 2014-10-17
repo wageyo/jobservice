@@ -97,7 +97,7 @@
 					</p>
 					<p>
 						工作地区：
-						<select name="areaCode" id="areaCode" style="width: 100px">
+						<select name="areaCode" id="areaCode" style="width: 130px">
 							<option value="">请选择</option>
 							<c:forEach items="${areaList }" var="t">
 								<option value="${t.code }"  <c:if test="${fn:substring(area.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>

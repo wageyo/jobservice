@@ -146,7 +146,7 @@ public class IndexController {
 
 	//职位列表浏览页面
 	@RequestMapping("/work")
-	public ModelAndView work(HttpServletRequest request) {
+	public ModelAndView work(HttpServletRequest request,HttpSession session) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("work/work");
 		List<Parameter> plist = parameterService.getAll();
@@ -161,12 +161,23 @@ public class IndexController {
 		// 获得职位总数
 		int totalCount = jobService.getTotalCount(null);
 		mav.addObject("totalCount", totalCount);
+		// 读取地区码,放入到session中
+		String acode = request.getParameter("acode");
+		log.info("acode [" + acode + "]");
+		if (acode != null && !"".equals(acode)) {
+//			// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
+//			if(acode.startsWith("30")){
+//				acode = KitService.getProvinceCode(acode);
+//			}
+			Area area = areaService.getByCode(acode);
+			session.setAttribute("area", area);
+		}
 		return mav;
 	}
 
 	//简历列表浏览页面
 	@RequestMapping("/emp")
-	public ModelAndView emp(HttpServletRequest request) {
+	public ModelAndView emp(HttpServletRequest request,HttpSession session) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("emp/emp");
 		List<Parameter> plist = parameterService.getAll();
@@ -182,6 +193,17 @@ public class IndexController {
 		int totalCount = resumeService.getTotalCount(null);
 		log.info("*********************************************" + totalCount);
 		mav.addObject("totalCount", totalCount);
+		// 读取地区码,放入到session中
+		String acode = request.getParameter("acode");
+		log.info("acode [" + acode + "]");
+		if (acode != null && !"".equals(acode)) {
+			// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
+			if(acode.startsWith("30")){
+				acode = KitService.getProvinceCode(acode);
+			}
+		Area area = areaService.getByCode(acode);
+		session.setAttribute("area", area);
+		}
 		return mav;
 	}
 

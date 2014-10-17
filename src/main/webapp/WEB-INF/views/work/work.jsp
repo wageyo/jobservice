@@ -84,10 +84,10 @@
 					</p>
 					<p>
 						工作地点：
-						<select name="areaCode" id="areaCode" class="dropdownlist" style="width: 65px; margin-right:150px;">
+						<select name="areaCode" id="areaCode" class="dropdownlist" style="width: 130px; margin-right:100px;">
 							<option value="">请选择</option>
 							<c:forEach items="${areaList }" var="t">
-								<option value="${t.code }" <c:if test="${fn:substring(a.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
+								<option value="${t.code }" <c:if test="${fn:substring(area.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
 							</c:forEach>
 						</select>
 					</p>
