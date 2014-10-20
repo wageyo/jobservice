@@ -14,7 +14,7 @@
 			request.getSession().setAttribute("acode", acode);
 		%>
 		<script type="text/javascript">
-			window.top.location.href = '${contextPath}/index?acode=<%=acode %>';
+			window.top.location.href = '${contextPath}/index';
 		</script>
 </body>
 </html>
