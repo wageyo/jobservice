@@ -54,7 +54,13 @@
 	<div id="ctl00_Myheader_default71dacom" class="header_cnt">
 		<div id="logoheader">
 			<div id="logoopen">
-				<a href="${contextPath}/index" title="残疾人就业信息网"><img alt="残疾人就业信息网" src="${contextPath}/images/079ca6fff71c4afca9f53e522b9523bd_b191d14118f346dcb84864371beb4cb3_logo.png" id="bg2" /> </a>
+			<!-- 显示全国logo -->
+			<c:if test="${area.code == null || area.code  == '' || area.code =='10000000' }">
+				<a href="${contextPath}/index" title="残疾人就业信息网"><img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" /> </a>
+			</c:if>
+			<c:if test="${area.code == '10420000' }">
+				<a href="${contextPath}/index" title="残疾人就业信息网"><img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/hubei.png" id="bg2" /> </a>
+			</c:if>
 			</div>
 			<div id="headertext">
 				<a href="javascript:void(0);"><img src="${contextPath}/images/7b2b5940424144e8bb123fd92a85f613_top[1].jpg" /> </a>

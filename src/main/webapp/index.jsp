@@ -10,8 +10,8 @@
 <body>
 		<%
 			//将网站群传过来的地区code放入到session中
-			String acode = (String)request.getAttribute("acode");
-			request.getSession().setAttribute("acode", acode);
+		//	String acode = (String)request.getAttribute("acode");
+		//	request.getSession().setAttribute("acode", acode);
 		%>
 		<script type="text/javascript">
 			window.top.location.href = '${contextPath}/index';
