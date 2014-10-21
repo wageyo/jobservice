@@ -124,7 +124,7 @@
 		<jsp:include page="left-nav.jsp" />
 
 		<div class="Air">
-			<form action="${contextPath }/secure/resume/update" method="post" onSubmit="return resume_check();">
+			<form action="${contextPath }/secure/resume/update" method="post" onsubmit="return resume_check();">
 				<table class="w770" border="0" cellspacing="0" cellpadding="0" align="center">
 					<tbody>
 						<tr valign="top">
@@ -149,13 +149,15 @@
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span> <b>标题 ：</b></td>
 								<td align="left"><input name="title" type="text" id="title" class="input_border" style="width:200px;" value="${resume.title }" /> <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1"
-										style="color:Red;font-style:italic;visibility:hidden;">求职者姓名不能为空</span>
+										style="color:Red;font-style:italic;visibility:hidden;">标题不能为空</span>
 										<input type="hidden" name="id" id="rid" value="${resume.id }" />
 								</td>
 							</tr>
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span> <b>姓名 ：</b></td>
-								<td align="left"><input name="name" type="text" id="name" class="input_border" style="width:200px;" value="${resume.name }" /> <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1"
+								<td align="left"><input name="name" type="text" id="name" class="input_border" style="width:200px;" value="${resume.name }" />
+									<span style="color:blue;font-style:微软雅黑;">请填写个人真实姓名，以便求职</span>
+									 <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1"
 										style="color:Red;font-style:italic;visibility:hidden;">求职者姓名不能为空</span>
 								</td>
 							</tr>
@@ -173,11 +175,6 @@
 								<td align="right" class="line35"><b> 民族 ：</b></td>
 								<td align="left"><input name="race" type="text" id="ctl00_ContentPlaceHolder1_TextBox14" class="input_border" style="width:200px;" value="${resume.race }" /> <span
 										id="ctl00_ContentPlaceHolder1_RequiredFieldValidator3" style="display:inline-block;color:Red;border-width:1px;border-style:solid;font-style:italic;visibility:hidden;">年龄不能为空</span>
-								</td>
-							</tr>
-							<tr>
-								<td align="right" class="line35"><b>籍贯 ：</b></td>
-								<td align="left"><input name="homeTown" type="text" id="ctl00_ContentPlaceHolder1_TextBox21" class="input_border" style="width:200px;" value="${resume.homeTown }" />
 								</td>
 							</tr>
 							<tr>
@@ -215,6 +212,23 @@
 								</select></td>
 							</tr>
 							<tr>
+								<td align="right" class="line35"><b>户籍所在地 ：</b></td>
+								<td align="left">
+									<select name="area_lv12" id="area_lv12" class="select_border" style="width:150px;">
+										<c:forEach items="${provinceList }" var="area">
+												<option value="${area.code }">${area.name }</option>
+										</c:forEach>
+									</select>
+									<select name="area_lv22" id="area_lv22" class="select_border" style="width:150px;">
+										<option value="">请选择城市</option>
+									</select>
+									<select name="homeTown" id="area_lv32" class="select_border" style="width:150px;">
+										<option value="${resume.homeTown }">请选择区域</option>
+									</select>
+									<p style="color:red;text-indent: 1em;">请精确到区县级</p>
+								</td>
+							</tr>
+							<tr>
 								<td align="right" class="line35"><b>婚姻状况 ：</b></td>
 								<td align="left"><select name="marriage" id="ctl00_ContentPlaceHolder1_DropDownList7" class="select_border">
 										<c:forEach items="${params }" var="p">
@@ -238,7 +252,7 @@
 								<td colspan="2" align="center" class="line35" id="title55"><b>联系方式</b></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><span class="red line35_r">*</span><b> 电话/手机 ：</b></td>
+								<td align="right" class="line35"><b> 电话/手机 ：</b></td>
 								<td align="left"><input name="phone" type="text" id="phone" class="input_border" style="width:200px;" value="${resume.phone }" /> <span
 										id="ctl00_ContentPlaceHolder1_RequiredFieldValidator2" style="display:inline-block;color:Red;border-width:1px;border-style:solid;font-style:italic;margin-bottom:0px;visibility:hidden;">手机不能为空</span>
 								</td>
@@ -259,7 +273,7 @@
 								<td colspan="2" align="center" class="line35" id="title55"><b>残疾情况</b></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><b>残疾证号 ：</b></td>
+								<td align="right" class="line35"><span class="red line35_r">*</span><b>残疾证号 ：</b></td>
 								<td align="left"><input name="disabilityCard" type="text" value="${resume.disabilityCard }" id="disabilityCard" class="input_border" style="width:200px;" />
 								</td>
 							</tr>
@@ -274,8 +288,8 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><b> 残疾等级 ：</b></td>
-								<td align="left"><select name="disabilityLevel" id="ctl00_ContentPlaceHolder1_DropDownList6" class="select_border">
+								<td align="right" class="line35"><span class="red line35_r">*</span><b> 残疾等级 ：</b></td>
+								<td align="left"><select name="disabilityLevel" id="disabilityLevel" class="select_border">
 										<c:forEach items="${params }" var="p">
 											<c:if test="${p.type == 'disabilityLevel' }">
 												<option value="${p.value }" <c:if test="${resume.disabilityLevel == p.value }">selected="selected"</c:if>>${p.name }</option>
@@ -284,9 +298,9 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><b>残疾部位 ：</b></td>
+								<td align="right" class="line35"><span class="red line35_r">*</span><b>残疾部位 ：</b></td>
 								<td align="left">
-									<select name="disabilityPart" id="ctl00_ContentPlaceHolder1_DropDownList7" class="select_border">
+									<select name="disabilityPart" id="disabilityPart" class="select_border">
 										<c:forEach items="${params }" var="p">
 											<c:if test="${p.type == 'disabilityPart' }">
 												<option value="${p.value }" <c:if test="${resume.disabilityPart == p.value }">selected="selected"</c:if>>${p.name }</option>
@@ -381,9 +395,9 @@
 									</c:forEach></td>
 							</tr>
 
-							<!-- 教育经历 -->
+							<!-- 教育培训 -->
 							<tr>
-								<td colspan="2" align="center" class="line35" id="title55"><b>教育经历</b></td>
+								<td colspan="2" align="center" class="line35" id="title55"><b>教育培训</b></td>
 							</tr>
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span><b>学历 ：</b></td>
@@ -396,7 +410,7 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><span class="red line35_r">*</span><b>专业 ：</b></td>
+								<td align="right" class="line35"><b>专业 ：</b></td>
 								<td align="left"><input name="major" type="text"  value="${resume.major }" id="major" class="input_border" style="width:200px;" />
 								</td>
 							</tr>

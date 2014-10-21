@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	/**
-	 * 地区三联动按钮
+	 * 地区三联动按钮-1
 	 */
 	// 省级onchange事件
 	$('#area_lv1').change(function() {
@@ -53,6 +53,59 @@ $(document).ready(function() {
 		});
 	});
 
+	/**
+	 * 地区三联动按钮-2
+	 */
+	// 省级onchange事件
+	$('#area_lv12').change(function() {
+		var provinceID = $("#area_lv12 option:selected").val();
+		var url = server.url + 'widget/getSubArea';
+		$.ajax({
+			url : url,
+			type : 'GET',
+			dataType : 'json',
+			data : {
+				'code' : provinceID
+			},
+			success : function(json) {
+				$('#area_lv22 option:not(:first)').remove();
+				$('#area_lv32 option:not(:first)').remove();
+				$.each(json.areaList, function(i, area) {
+					$('#area_lv22').append('<option value="' + area.code + '">' + area.name + '</option>');
+				});
+			},
+			error : function() {
+				alert('操作失败!');
+			}
+		});
+	});
+
+	// 市级onchange事件
+	$('#area_lv22').change(function() {
+		var provinceID = $("#area_lv22 option:selected").val();
+		if(provinceID == null || provinceID == ''){
+			$('#area_lv32 option:not(:first)').remove();
+			return false;
+		}
+		var url = server.url + 'widget/getSubArea';
+		$.ajax({
+			url : url,
+			type : 'GET',
+			dataType : 'json',
+			data : {
+				'code' : provinceID
+			},
+			success : function(json) {
+				$('#area_lv32 option:not(:first)').remove();
+				$.each(json.areaList, function(i, area) {
+					$('#area_lv32').append('<option value="' + area.code + '">' +area.name + '</option>');
+				});
+			},
+			error : function() {
+				alert('操作失败!');
+			}
+		});
+	});
 	/**
 	 * 职位类别三联动按钮
 	 */

@@ -34,10 +34,17 @@ function resume_check() {
 		return false;
 	}
 	// 电话/手机
-	var phone = $('#phone').val();
+/*	var phone = $('#phone').val();
 	if (!verify.checkTel(phone)) {
 		alert('请检查你输入的电话/手机号码!');
 		$('#phone').focus();
+		return false;
+	}	*/
+	// 残疾证号 
+	var disabilityCard = $('#disabilityCard').val();
+	if (disabilityCard == null || disabilityCard == '') {
+		alert('请填写残疾证号!');
+		$('#disabilityCard').focus();
 		return false;
 	}
 	// 残疾情况
@@ -45,6 +52,20 @@ function resume_check() {
 	if (disabilityCategory == null || disabilityCategory == '') {
 		alert('请确定您的残疾情况!');
 		$('#disabilityCategory').focus();
+		return false;
+	}
+	// 残疾等级
+	var disabilityLevel = $('#disabilityLevel').val();
+	if (disabilityLevel == null || disabilityLevel == '') {
+		alert('请确定您的残疾等级!');
+		$('#disabilityLevel').focus();
+		return false;
+	}
+	// 残疾部位
+	var disabilityPart = $('#disabilityPart').val();
+	if (disabilityPart == null || disabilityPart == '') {
+		alert('请确定您的残疾部位!');
+		$('#disabilityPart').focus();
 		return false;
 	}
 	// 职位类别
@@ -69,12 +90,12 @@ function resume_check() {
 		return false;
 	}
 	// 专业
-	var major = $('#major').val();
+/*	var major = $('#major').val();
 	if (major == null || major == '') {
 		alert('请填写您的专业!');
 		$('#major').focus();
 		return false;
-	}
+	}	*/
 	return true;
 }
 
