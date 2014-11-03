@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.UnempManageDao">
+
+	<!-- result map of UnempManage -->
+	<resultMap type="UnempManage" id="ResultUnempManage">
+		<id column="um_id" property="id" jdbcType="INTEGER"/>
+		<result column="um_create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="um_update_check" property="updateCheck" jdbcType="INTEGER"/>
+		<result column="um_update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="um_log_user" property="logUser" jdbcType="VARCHAR"/>
+		<result column="um_assessment" property="assessment" jdbcType="VARCHAR"/>
+		<result column="um_procedure" property="procedure" jdbcType="VARCHAR"/>
+		<result column="um_status" property="status" jdbcType="VARCHAR"/>
+		<result column="um_rid" property="resume.id" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="base_column">
+		um.id as um_id, um.create_date as um_create_date, um.update_check as um_update_check, 
+		um.log_user as um_log_user, um.assessment as um_assessment, um.procedure as um_procedure,
+		um.status as um_status, um.rid as um_rid
+	</sql>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="UnempManage" useGeneratedKeys="true" keyProperty="id">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into unemp_manage
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="assessment != null and assessment != ''">
+				assessment,
+			</if>
+			<if test="procedure != null and procedure != ''">
+				procedure,
+			</if>
+			<if test="status != null and status != ''">
+				status,
+			</if>
+			<if test="resume != null">
+				<if test="resume.id != null and resume.id > 0">
+					rid
+				</if>
+			</if>
+		</trim>	
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="assessment != null and assessment != ''">
+				#{assessment, jdbcType=VARCHAR},
+			</if>
+			<if test="procedure != null and procedure != ''">
+				#{procedure, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null and status != ''">
+				#{status, jdbcType=VARCHAR},
+			</if>
+			<if test="resume != null">
+				<if test="resume.id != null and resume.id > 0">
+					#{resume.id, jdbcType=INTEGER}
+				</if>
+			</if>
+		</trim>
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from unemp_manage where id = #{id}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="UnempManage">
+		update unemp_manage
+		<trim prefix="set" suffixOverrides=",">
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="assessment != null and assessment != ''">
+				assessment = #{assessment, jdbcType=VARCHAR},
+			</if>
+			<if test="procedure != null and procedure != ''">
+				procedure = #{procedure, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null and status != ''">
+				status = #{status, jdbcType=VARCHAR},
+			</if>
+			<if test="resume != null">
+				<if test="resume.id != null and resume.id > 0">
+					rid = #{resume.id, jdbcType=INTEGER},
+				</if>
+			</if>
+			update_check = update_check + 1
+		</trim>
+		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
+	</update>
+
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultUnempManage" parameterType="java.lang.Integer">
+		select <include refid="base_column"/> 
+		from unemp_manage as um 
+		where um.id = #{id, jdbcType=INTEGER}
+	</select>
+
+</mapper>
