@@ -23,12 +23,14 @@
 		</h3>
 		<div id="ctl00_user_left_q8" class="qyd_t3">
 			<ul>
-				<li><a href="${contextPath }/secure/resume/getSentJob/1">我的应聘记录</a>
+				<li>
+					<a href="${contextPath }/secure/resume/getSentJob/1">我的应聘记录</a>
 				</li>
-			<!-- 	<li><a href="#">收藏的职位</a>
-				</li>
-				<li><a href="#">面试邀请通知</a>
+			<!--  	<li><a href="#">收藏的职位</a>
 				</li> -->
+				<li>
+					<a href="${contextPath }/secure/resume/getReceivedInvite/1">面试邀请通知</a>
+				</li> 
 			</ul>
 		</div>
 		<h3 id="ctl00_user_left_H1" class="qyd_t2">
@@ -48,7 +50,7 @@
 				<li>
 					<p>招聘咨询电话：</p>
 					<p class="red">
-						<strong style="color:Red">0574-23670051</strong>
+						<strong style="color:Red">0451-55664482</strong>
 					</p></li>
 			</ul>
 		</div>

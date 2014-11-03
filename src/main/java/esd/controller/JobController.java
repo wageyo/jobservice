@@ -88,6 +88,7 @@ public class JobController {
 		if (jobNature != null && !"".equals(jobNature)) {
 			job.setNature(jobNature);
 		}
+		job.setIsActiveEffectiveTime(true);
 		List<Job> jobList = jobService
 				.getForListShow(job, page, Constants.SIZE);
 		Integer records = jobService.getTotalCount(job);
@@ -105,7 +106,7 @@ public class JobController {
 					map.put("companyid", it.getCompany().getId() + "");
 					map.put("area", it.getArea().getName());
 					map.put("experience", it.getExperience());
-					map.put("date", it.getUpdateDate());
+					map.put("date", KitService.dateForShow(it.getUpdateDate()));
 					list.add(map);
 				}
 			} catch (Exception e) {

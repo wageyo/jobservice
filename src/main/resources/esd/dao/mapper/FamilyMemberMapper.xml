@@ -12,18 +12,18 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 		insert into 
-		familymember(relation,name,age,unit,position,phone,rid) 
+		family_member(relation,name,age,unit,position,phone,rid) 
 		values(#{relation},#{name},#{age},#{unit},#{position},#{phone},#{resume.id})
 	</insert>
 
 	<!-- delete -->
 	<delete id="delete" parameterType="int">
-		delete from familymember where id = #{id}
+		delete from family_member where id = #{id}
 	</delete>
 	
 	<!-- update -->
 	<update id="update" parameterType="FamilyMember">
-		update familymember
+		update family_member
 		<trim prefix="set" suffixOverrides=",">
 			<if test="relation != null and relation != ''">
 				relation=#{relation},
@@ -49,11 +49,11 @@
 
 	<!-- get by id -->
 	<select id="getById" resultType="FamilyMember" parameterType="int">
-		select * from familymember where id = #{id}
+		select * from family_member where id = #{id}
 	</select>
 
 	<!-- get By Resume -->
 	<select id="getByResume" resultType="FamilyMember" parameterType="int">
-		select * from familymember where rid = #{rid}
+		select * from family_member where rid = #{rid}
 	</select>
 </mapper>

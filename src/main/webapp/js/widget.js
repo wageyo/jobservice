@@ -106,6 +106,7 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
 	/**
 	 * 职位类别三联动按钮
 	 */
@@ -126,6 +127,7 @@ $(document).ready(function() {
 				$.each(json.jcList, function(i, jc) {
 					$('#jobCategory_lv2').append('<option value="' + jc.code + '">' + jc.name + '</option>');
 				});
+				$('#jobCategoryCode').val(jcCode);
 			},
 			error : function() {
 				alert('操作失败!');
@@ -149,6 +151,7 @@ $(document).ready(function() {
 				$.each(json.jcList, function(i, jc) {
 					$('#jobCategory_lv3').append('<option value="' + jc.code + '">' + jc.name + '</option>');
 				});
+				$('#jobCategoryCode').val(jcCode);
 			},
 			error : function() {
 				alert('操作失败!');
@@ -156,6 +159,11 @@ $(document).ready(function() {
 		});
 	});
 	
+	//三级onchange事件
+	$('#jobCategory_lv3').change(function() {
+		var jcCode = $("#jobCategory_lv3 option:selected").val();
+		$('#jobCategoryCode').val(jcCode);
+	});
 	
 
 });

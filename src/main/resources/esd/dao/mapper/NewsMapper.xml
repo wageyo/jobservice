@@ -3,98 +3,162 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="esd.dao.NewsDao">
 	
-	<!-- 查询News 地名 -->
+	<!-- result map of News -->
 	<resultMap id="ResultNews" type="News">
-		<id column="n_id" property="id" />
-		<result column="n_createDate" property="createDate" />
-		<result column="n_updateDate" property="updateDate" />
-		<result column="n_updateCheck" property="updateCheck" />
-		<result column="n_title" property="title" />
-		<result column="n_content" property="content" />
-		<result column="n_author" property="author" />
-		<result column="n_source" property="source" />
-		<result column="n_type" property="type" />
-		<association property="area" resultMap="ResultArea"  javaType="Area" />
+		<id column="n_id" property="id" jdbcType="INTEGER"  />
+		<result column="n_create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="n_update_check" property="updateCheck" jdbcType="VARCHAR"  />
+		<result column="n_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="n_title" property="title" jdbcType="VARCHAR" />
+		<result column="n_title" property="title" jdbcType="VARCHAR" />
+		<result column="n_content" property="content" jdbcType="VARCHAR" />
+		<result column="n_author" property="author" jdbcType="VARCHAR" />
+		<result column="n_source" property="source" jdbcType="VARCHAR" />
+		<result column="n_type" property="type" jdbcType="VARCHAR" />
+		<association property="area" javaType="Area" resultMap="ResultArea"/>
 	</resultMap>
 
-
-	<!-- 查询Area 地名 -->
+	<!-- result map of Area -->
 	<resultMap id="ResultArea" type="Area">
-		<id column="a_code" property="code" />
-		<result column="a_name" property="name" />
-		<result column="a_pyName" property="pyName" />
-		<result column="a_abbr" property="abbr" />
-		<result column="a_mark" property="mark" />
+		<id column="a_code" property="code" jdbcType="VARCHAR"  />
+		<result column="a_name" property="name" jdbcType="VARCHAR"  />
 	</resultMap>
+	
+	<sql id="base_column">
+		n.id as n_id, n.create_date as n_create_date, n.update_check as n_update_check, n.update_date as n_update_date, 
+		n.title as n_title, n.title as n_title, n.content as n_content, n.source as n_source, n.type as n_type,
+		a.code as a_code, a.name as a_name
+	</sql>
+	
+	<sql id="from_table">
+		news as n left join area as a on n.acode = a.code
+	</sql>
+	
 	<!-- insert -->
 	<insert id="save" parameterType="News" useGeneratedKeys="true"
 		keyProperty="id">
-		insert into
-		news(createdate,updatedate,updatecheck,title,content,author,source,type,acode)
-		values(now(),now(),0,#{title},#{content},#{author},#{source},#{type},#{area.code})
+		insert into news
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="title != null and title != ''">
+				title,
+			</if>
+			<if test="content != null and content != ''">
+				content,
+			</if>
+			<if test="author != null and author != ''">
+				author,
+			</if>
+			<if test="source != null and source != ''">
+				source,
+			</if>
+			<if test="type != null and type != ''">
+				type,
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode
+				</if>
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="title != null and title != ''">
+				#{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null and content != ''">
+				#{content, jdbcType=VARCHAR},
+			</if>
+			<if test="author != null and author != ''">
+				#{author, jdbcType=VARCHAR},
+			</if>
+			<if test="source != null and source != ''">
+				#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null and type != ''">
+				#{type, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR}
+				</if>
+			</if>
+		</trim>	
 	</insert>
 
 	<!-- delete -->
 	<delete id="delete" parameterType="java.lang.String">
-		delete from news where id = #{id}
+		delete from news where id = #{id, jdbcType=INTEGER}
 	</delete>
 
 	<!-- update -->
 	<update id="update" parameterType="News">
 		update news
 		<trim prefix="set" suffixOverrides=",">
-			updatedate = now(),
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
 			<if test="title != null and title != ''">
-				title = #{title},
+				title = #{title, jdbcType=VARCHAR},
 			</if>
-			<if test="content != null ">
-				content = #{content},
+			<if test="content != null and content != ''">
+				content = #{content, jdbcType=VARCHAR},
 			</if>
-			<if test="author != null ">
-				author = #{author},
+			<if test="author != null and author != ''">
+				author = #{author, jdbcType=VARCHAR},
 			</if>
-			<if test="source != null ">
-				source = #{source},
+			<if test="source != null and source != ''">
+				source = #{source, jdbcType=VARCHAR},
 			</if>
 			<if test="type != null and type != ''">
-				type = #{type},
+				type = #{type, jdbcType=VARCHAR},
 			</if>
 			<if test="area != null">
-				<if test="area.code != null and area.code != '' ">
-					acode = #{area.code}
+				<if test="area.code != null and area.code != ''">
+					acode = #{area.code, jdbcType=VARCHAR}
 				</if>
 			</if>
+			update_check = update_check + 1 	
 		</trim>
-		where id= #{id}
+		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
 	<!-- get by id -->
 	<select id="getById" resultMap="ResultNews" parameterType="int">
-		select n.id as n_id, n.createdate as n_createDate, n.updatedate as n_updateDate, n.updatecheck as n_updateCheck, n.title as n_title, n.content as n_content, n.author as n_author,n.source as n_source,n.type as n_type,
-				a.code as a_code, a.name as a_name,a.pyname as a_pyName, a.abbr as a_abbr
-		from news as n, area as a
-		where n.acode = a.code and id = #{id}
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		where n.acode = a.code and id = #{id, jdbcType=INTEGER}
 	</select>
 
 	<!-- get by obj -->
-	<select id="getByObj" resultType="News" parameterType="News">
-		select * from news
+	<select id="getByObj" resultMap="ResultNews" parameterType="News">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="createDate != null and createDate != ''">
-				createdate = #{createDate}
+				n.create_date = #{createDate, jdbcType=TIMESTAMP}
 			</if>
 			<if test="title != null and title != ''">
-				and title like concat('%',#{title},'%')
+				and n.title like concat('%',#{title,jdbcType=VARCHAR},'%')
 			</if>
 			<if test="author != null and author != ''">
-				and author = #{author}
+				and n.author = #{author, jdbcType=VARCHAR}
 			</if>
 			<if test="type != null and type != ''">
-				and type = #{type}
+				and n.type = #{type, jdbcType=VARCHAR}
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != '' ">
-					and acode = #{area.code}
+					and n.acode = #{area.code, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
@@ -102,57 +166,54 @@
 
 	<!-- get by page -->
 	<select id="getByPage" resultMap="ResultNews" parameterType="map">
-		select n.id as n_id, n.createdate as n_createDate, n.updatedate as n_updateDate, n.updatecheck as n_updateCheck, n.title as n_title, n.content as n_content, n.author as n_author,n.source as n_source,n.type as n_type,
-				a.code as a_code, a.name as a_name,a.pyname as a_pyName
-		from news as n, area as a
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
 		<trim prefix="where" prefixOverrides="and|or">
-			n.acode = a.code 
 			<if test="news != null">
 				<if test="news.createDate != null and news.createDate != ''">
-					and n.createdate = #{news.createDate} 
+					n.create_date = #{news.createDate, jdbcType=TIMESTAMP}
 				</if>
 				<if test="news.title != null and news.title != ''">
-					and n.title like concat('%',#{news.title},'%')
+					and n.title like concat('%',#{news.title,jdbcType=VARCHAR},'%')
 				</if>
 				<if test="news.author != null and news.author != ''">
-					and n.author like concat('%',#{news.author},'%')
+					and n.author like concat('%',#{news.author,jdbcType=VARCHAR},'%')
 				</if>
 				<if test="news.type != null and news.type != ''">
-					and n.type = #{news.type}
+					and n.type = #{news.type,jdbcType=VARCHAR}
 				</if>
 				<if test="news.area != null">
 					<if test="news.area.code != null and news.area.code != '' ">
-						and n.acode like concat('%',#{news.area.code},'%')
+						and n.acode like concat('%',#{news.area.code,jdbcType=VARCHAR},'%')
 					</if>
 				</if>
 			</if>
 		</trim>
-		order by createdate desc
-		limit #{start},#{size}
+		order by n.create_date
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 
 	<!-- getTotalCount -->
-	<select id="getTotalCount" resultType="int" parameterType="map">
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="map">
 		select count(*)
-		from news as n, area as a
+		from <include refid="from_table"/> 
 		<trim prefix="where" prefixOverrides="and|or">
-			n.acode = a.code 
 			<if test="news != null">
 				<if test="news.createDate != null and news.createDate != ''">
-					and n.createdate = #{news.createDate} 
+					n.create_date = #{news.createDate, jdbcType=TIMESTAMP}
 				</if>
 				<if test="news.title != null and news.title != ''">
-					and n.title like concat('%',#{news.title},'%')
+					and n.title like concat('%',#{news.title,jdbcType=VARCHAR},'%')
 				</if>
 				<if test="news.author != null and news.author != ''">
-					and n.author like concat('%',#{news.author},'%')
+					and n.author like concat('%',#{news.author,jdbcType=VARCHAR},'%')
 				</if>
 				<if test="news.type != null and news.type != ''">
-					and n.type = #{news.type}
+					and n.type = #{news.type,jdbcType=VARCHAR}
 				</if>
 				<if test="news.area != null">
 					<if test="news.area.code != null and news.area.code != '' ">
-						and n.acode like concat('%',#{news.area.code},'%')
+						and n.acode like concat('%',#{news.area.code,jdbcType=VARCHAR},'%')
 					</if>
 				</if>
 			</if>
@@ -161,29 +222,30 @@
 
 	<!-- get title list -->
 	<select id="getTitleList" resultType="News" parameterType="map">
-		select id,title,createdate,updatedate,updatecheck,author,source from news
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="news != null">
 				<if test="news.createDate != null and news.createDate != ''">
-					createdate = #{news.createDate} 
+					n.create_date = #{news.createDate, jdbcType=TIMESTAMP} 
 				</if>
 				<if test="news.title != null and news.title != ''">
-					and title like concat('%',#{news.title},'%')
+					and n.title like concat('%',#{news.title, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="news.author != null and news.author != ''">
-					and author like concat('%',#{news.author},'%')
+					and n.author like concat('%',#{news.author, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="news.type != null and news.type != ''">
-					and type = #{news.type}
+					and n.type = #{news.type, jdbcType=VARCHAR}
 				</if>
 				<if test="news.area != null">
 					<if test="news.area.code != null and news.area.code != '' ">
-						acode like concat('%',#{area.code},'%')
+						n.acode like concat('%',#{area.code, jdbcType=VARCHAR},'%')
 					</if>
 				</if>
 			</if>
 		</trim>
-		order by createdate desc
-		limit #{start},#{size}
+		order by n.create_date desc
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 </mapper>

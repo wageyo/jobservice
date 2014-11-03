@@ -26,7 +26,7 @@ public class Resume extends PrimaryKey {
 	private String hukouAddress; // 户籍地址--即身份证上的地址
 	private String hukouStatus; // 户口状况 --本市,农村等类别
 	private String address; // 详细住址/现居住地
-	private String zipCode; // 邮政编码
+	private String zipcode; // 邮政编码
 	private String phone; // 电话
 	private String email;
 	private String qq;
@@ -81,19 +81,29 @@ public class Resume extends PrimaryKey {
 	private User user; // 账户表外键
 	private Area area; // 简历所属地区code
 
-	// 教育背景, 家庭成员, 工作经历
-	private List<EducationBackground> educationBackgroundList = new ArrayList<EducationBackground>();
-	private List<FamilyMember> familyMemberList = new ArrayList<FamilyMember>();
-	private List<WorkExperience> workExperienceList = new ArrayList<WorkExperience>();
+	// 教育背景, 家庭成员, 工作经历, 就业管理
+	// private List<EducationBackground> educationBackgroundList = new
+	// ArrayList<EducationBackground>();
+	// private List<FamilyMember> familyMemberList = new
+	// ArrayList<FamilyMember>();
+	private List<WorkExperience> workExperienceList = new ArrayList<WorkExperience>(); // 工作经历
+	private List<UnempManage> unempManageList = new ArrayList<UnempManage>(); // 就业管理
+
+	public Resume() {
+	}
+
+	public Resume(Integer id) {
+		super.setId(id);
+	}
 
 	@Override
 	public String toString() {
-		return "Resume [id = " + super.getId() + ", title=" + title + ", name="
-				+ name + ", gender=" + gender + ", birth=" + birth
-				+ ", identityCard=" + identityCard + ", race=" + race
-				+ ", marriage=" + marriage + ", hukou=" + hukou
-				+ ", hukouAddress=" + hukouAddress + ", address=" + address
-				+ ", zipCode=" + zipCode + ", phone=" + phone + ", email="
+		return "Resume [title=" + title + ", name=" + name + ", gender="
+				+ gender + ", birth=" + birth + ", identityCard="
+				+ identityCard + ", race=" + race + ", marriage=" + marriage
+				+ ", hukou=" + hukou + ", hukouAddress=" + hukouAddress
+				+ ", hukouStatus=" + hukouStatus + ", address=" + address
+				+ ", zipcode=" + zipcode + ", phone=" + phone + ", email="
 				+ email + ", qq=" + qq + ", disabilityCategory="
 				+ disabilityCategory + ", disabilityCard=" + disabilityCard
 				+ ", disabilityLevel=" + disabilityLevel + ", disabilityPart="
@@ -101,27 +111,21 @@ public class Resume extends PrimaryKey {
 				+ ", homeTown=" + homeTown + ", politicalStatus="
 				+ politicalStatus + ", age=" + age + ", height=" + height
 				+ ", weight=" + weight + ", education=" + education
-				+ ", major = " + major + ", school=" + school + ", zhiCheng="
+				+ ", major=" + major + ", school=" + school + ", zhiCheng="
 				+ zhiCheng + ", shiYeHao=" + shiYeHao + ", experts=" + experts
 				+ ", training=" + training + ", experience=" + experience
-				+ ", selfEvaluation=" + selfEvaluation + ", attachment="
-				+ attachment + ", jobNature=" + jobNature + ", desireJob="
-				+ desireJob + ", desireAddress=" + desireAddress
-				+ ", desireSalary=" + desireSalary + ", provideFoodAndRoom="
-				+ provideFoodAndRoom + ", provideRoom=" + provideRoom
-				+ ", provideFood=" + provideFood + ", provideInsurance="
-				+ provideInsurance + ", provideOther=" + provideOther
-				+ ", workShift=" + workShift + ", state=" + state
-				+ ", isDefault=" + isDefault + ", viewCount=" + viewCount
+				+ ", workExperience=" + workExperience + ", selfEvaluation="
+				+ selfEvaluation + ", attachment=" + attachment
+				+ ", jobNature=" + jobNature + ", desireJob=" + desireJob
+				+ ", desireAddress=" + desireAddress + ", desireSalary="
+				+ desireSalary + ", provideFoodAndRoom=" + provideFoodAndRoom
+				+ ", provideRoom=" + provideRoom + ", provideFood="
+				+ provideFood + ", provideInsurance=" + provideInsurance
+				+ ", provideOther=" + provideOther + ", workShift=" + workShift
+				+ ", state=" + state + ", isDefault=" + isDefault
+				+ ", checkStatus=" + checkStatus + ", viewCount=" + viewCount
 				+ ", careerTest=" + careerTest + ", processState="
 				+ processState + ", user=" + user + ", area=" + area + "]";
-	}
-
-	public Resume() {
-	}
-
-	public Resume(Integer id) {
-		super.setId(id);
 	}
 
 	public String getTitle() {
@@ -212,12 +216,12 @@ public class Resume extends PrimaryKey {
 		this.address = address;
 	}
 
-	public String getZipCode() {
-		return zipCode;
+	public String getZipcode() {
+		return zipcode;
 	}
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 
 	public String getPhone() {
@@ -556,29 +560,20 @@ public class Resume extends PrimaryKey {
 		this.area = area;
 	}
 
-	public List<EducationBackground> getEducationBackgroundList() {
-		return educationBackgroundList;
-	}
-
-	public void setEducationBackgroundList(
-			List<EducationBackground> educationBackgroundList) {
-		this.educationBackgroundList = educationBackgroundList;
-	}
-
-	public List<FamilyMember> getFamilyMemberList() {
-		return familyMemberList;
-	}
-
-	public void setFamilyMemberList(List<FamilyMember> familyMemberList) {
-		this.familyMemberList = familyMemberList;
-	}
-
 	public List<WorkExperience> getWorkExperienceList() {
 		return workExperienceList;
 	}
 
 	public void setWorkExperienceList(List<WorkExperience> workExperienceList) {
 		this.workExperienceList = workExperienceList;
+	}
+
+	public List<UnempManage> getUnempManageList() {
+		return unempManageList;
+	}
+
+	public void setUnempManageList(List<UnempManage> unempManageList) {
+		this.unempManageList = unempManageList;
 	}
 
 }

@@ -73,7 +73,7 @@ public class NewsController {
 					log.debug(it.toString());
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", String.valueOf(it.getId()));
-					map.put("createDate", it.getCreateDate());
+					map.put("createDate", KitService.dateForShow(it.getCreateDate()));
 					map.put("title", it.getTitle());
 					map.put("areaName", it.getArea().getName());
 					map.put("author", it.getAuthor());

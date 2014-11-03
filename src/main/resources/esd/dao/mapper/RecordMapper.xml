@@ -3,46 +3,208 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="esd.dao.RecordDao">
 
+	<!-- result map of Record -->
+	<resultMap id="ResultRecord" type="Record">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_check" property="updateCheck" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="rid" property="rID" jdbcType="INTEGER" />
+		<result column="rtitle" property="rTitle" jdbcType="VARCHAR" />
+		<result column="rname" property="rName" jdbcType="VARCHAR" />
+		<result column="rgender" property="rGender" jdbcType="VARCHAR" />
+		<result column="rdisabilitycategory" property="rDisabilityCategory" jdbcType="VARCHAR" />
+		<result column="rage" property="rAge" jdbcType="INTEGER" />
+		<result column="reducation" property="rEducation" jdbcType="VARCHAR" />
+		<result column="rmajor" property="rMajor" jdbcType="VARCHAR" />
+		<result column="rschool" property="rSchool" jdbcType="VARCHAR" />
+		<result column="uid" property="uID" jdbcType="INTEGER" />
+		<result column="jid" property="jID" jdbcType="INTEGER" />
+		<result column="jname" property="jName" jdbcType="VARCHAR" />
+		<result column="jsalary" property="jSalary" jdbcType="VARCHAR" />
+		<result column="jdescription" property="jDescription" jdbcType="VARCHAR" />
+		<result column="jcontacttel" property="jContactTel" jdbcType="VARCHAR" />
+		<result column="jcontactperson" property="jContactPerson" jdbcType="VARCHAR" />
+		<result column="jnature" property="jNature" jdbcType="VARCHAR" />
+		<result column="cid" property="cID" jdbcType="INTEGER" />
+		<result column="direction" property="direction" jdbcType="TINYINT" />
+		<result column="comment" property="comment" jdbcType="VARCHAR" />
+	</resultMap>
+	
 	<!-- insert -->
-	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
-	<insert id="save" parameterType="Record"
-		useGeneratedKeys="true" keyProperty="id">
-		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
-		<selectKey resultType="java.lang.Integer" order="AFTER"
-			keyProperty="id">
+	<insert id="save" parameterType="Record" useGeneratedKeys="true" keyProperty="id">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into 
-		record(createDate,rid,rtitle,rname,rgender,rdisabilitycategory,rage,reducation,rmajor,rschool,uid,jid,jname,jsalary,jdescription,jcontacttel,jcontactperson,jnature,cid)
-		values(now(),#{rID},#{rTitle},#{rName},#{rGender},#{rDisabilityCategory},#{rAge},#{rEducation},#{rMajor},#{rSchool},#{uID},#{jID},#{jName},#{jSalary},#{jDescription},#{jContactTel},#{jContactPerson},#{jNature},#{cID})
+		insert into  record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="rID != null and rID > 0">
+				rid,
+			</if>
+			<if test="rTitle != null and rTitle != ''">
+				rtitle,
+			</if>
+			<if test="rName != null and rName != ''">
+				rname,
+			</if>
+			<if test="rGender != null and rGender != ''">
+				rgender,
+			</if>
+			<if test="rDisabilityCategory != null and rDisabilityCategory != ''">
+				rdisabilitycategory,
+			</if>
+			<if test="rAge != null and rAge > 0">
+				rage,
+			</if>
+			<if test="rEducation != null and rEducation != ''">
+				reducation,
+			</if>
+			<if test="rMajor != null and rMajor != ''">
+				rmajor,
+			</if>
+			<if test="rSchool != null and rSchool != ''">
+				rschool,
+			</if>
+			<if test="uID != null and uID > 0">
+				uid,
+			</if>
+			<if test="jID != null and jID > 0">
+				jid,
+			</if>
+			<if test="jName != null and jName != ''">
+				jname,
+			</if>
+			<if test="jSalary != null and jSalary != ''">
+				jsalary,
+			</if>
+			<if test="jDescription != null and jDescription != ''">
+				jdescription,
+			</if>
+			<if test="jContactTel != null and jContactTel != ''">
+				jcontacttel,
+			</if>
+			<if test="jContactPerson != null and jContactPerson != ''">
+				jcontactperson,
+			</if>
+			<if test="jNature != null and jNature != ''">
+				jnature,
+			</if>
+			<if test="cID != null and cID > 0">
+				cid,
+			</if>
+			<if test="direction != null">
+				direction,
+			</if>
+			<if test="comment != null and comment != ''">
+				comment
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="rID != null and rID > 0">
+				#{rID, jdbcType=VARCHAR},
+			</if>
+			<if test="rTitle != null and rTitle != ''">
+				#{rTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="rName != null and rName != ''">
+				#{rName, jdbcType=VARCHAR},
+			</if>
+			<if test="rGender != null and rGender != ''">
+				#{rGender, jdbcType=VARCHAR},
+			</if>
+			<if test="rDisabilityCategory != null and rDisabilityCategory != ''">
+				#{rDisabilityCategory, jdbcType=VARCHAR},
+			</if>
+			<if test="rAge != null and rAge > 0">
+				#{rAge, jdbcType=VARCHAR},
+			</if>
+			<if test="rEducation != null and rEducation != ''">
+				#{rEducation, jdbcType=VARCHAR},
+			</if>
+			<if test="rMajor != null and rMajor != ''">
+				#{rMajor, jdbcType=VARCHAR},
+			</if>
+			<if test="rSchool != null and rSchool != ''">
+				#{rSchool, jdbcType=VARCHAR},
+			</if>
+			<if test="uID != null and uID > 0">
+				#{uID, jdbcType=VARCHAR},
+			</if>
+			<if test="jID != null and jID > 0">
+				#{jID, jdbcType=INTEGER},
+			</if>
+			<if test="jName != null and jName != ''">
+				#{jName, jdbcType=VARCHAR},
+			</if>
+			<if test="jSalary != null and jSalary != ''">
+				#{jSalary, jdbcType=VARCHAR},
+			</if>
+			<if test="jDescription != null and jDescription != ''">
+				#{jDescription, jdbcType=VARCHAR},
+			</if>
+			<if test="jContactTel != null and jContactTel != ''">
+				#{jContactTel, jdbcType=VARCHAR},
+			</if>
+			<if test="jContactPerson != null and jContactPerson != ''">
+				#{jContactPerson, jdbcType=VARCHAR},
+			</if>
+			<if test="jNature != null and jNature != ''">
+				#{jNature, jdbcType=VARCHAR},
+			</if>
+			<if test="cID != null and cID > 0">
+				#{cID, jdbcType=INTEGER},
+			</if>
+			<if test="direction != null">
+				#{direction, jdbcType=TINYINT},
+			</if>
+			<if test="comment != null and comment != ''">
+				#{comment, jdbcType=VARCHAR}
+			</if>
+		</trim>	
 	</insert>
 
 	<!-- delete -->
-	<delete id="delete" parameterType="int">
-		delete from record where id = #{id}
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from record 
+		where id = #{id, jdbcType=INTEGER}
 	</delete>
 	
 	<!-- getByPage -->
-	<select id="getByPage" parameterType="map" resultType="Record">
+	<select id="getByPage" parameterType="map" resultMap="ResultRecord">
 		select *
 		from record
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="record != null">
 				<if test="record.rID != null and record.rID > 0 ">
-					rid = #{record.rID}
+					rid = #{record.rID, jdbcType=INTEGER}
 				</if>
 				<if test="record.uID != null and record.uID > 0">
-					and uid = #{record.uID} 
+					and uid = #{record.uID, jdbcType=INTEGER} 
 				</if>
 				<if test="record.jID != null and record.jID > 0 ">
-					and jid = #{record.jID}
+					and jid = #{record.jID, jdbcType=INTEGER}
 				</if>
 				<if test="record.cID != null and record.cID > 0">
-					and cid = #{record.cID}
+					and cid = #{record.cID, jdbcType=INTEGER}
+				</if>
+				<if test="record.direction != null">
+					and direction = #{record.direction, jdbcType=TINYINT}
 				</if>
 			</if>
 		</trim>
-		limit #{start},#{size};
+		order by create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 	
 	<!-- getTotalCount -->
@@ -52,18 +214,42 @@
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="record != null">
 				<if test="record.rID != null and record.rID > 0 ">
-					rid = #{record.rID}
+					rid = #{record.rID, jdbcType=INTEGER}
 				</if>
 				<if test="record.uID != null and record.uID > 0">
-					and uid = #{record.uID} 
+					and uid = #{record.uID, jdbcType=INTEGER} 
 				</if>
 				<if test="record.jID != null and record.jID > 0 ">
-					and jid = #{record.jID}
+					and jid = #{record.jID, jdbcType=INTEGER}
 				</if>
 				<if test="record.cID != null and record.cID > 0">
-					and cid = #{record.cID}
+					and cid = #{record.cID, jdbcType=INTEGER}
+				</if>
+				<if test="record.direction != null">
+					and direction = #{record.direction, jdbcType=TINYINT}
 				</if>
 			</if>
 		</trim>
 	</select> 
+
+	<select id="checkSentInSomeDays" resultType="int" parameterType="map">
+		select count(*) from record 
+		<where>
+			create_date &gt;= #{someDaysAgo, jdbcType=TIMESTAMP} 
+			<if test="uid != null and uid > 0">
+				and uid = #{uid, jdbcType=INTEGER}
+			</if>
+			<if test="jid != null and jid > 0">
+				and jid = #{jid, jdbcType=INTEGER}
+			</if>
+			<if test="rid != null and rid > 0">
+				and rid =#{rid, jdbcType=INTEGER}
+			</if>
+			<if test="cid != null and cid > 0">
+				and cid =#{cid, jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+	
+	
 </mapper>

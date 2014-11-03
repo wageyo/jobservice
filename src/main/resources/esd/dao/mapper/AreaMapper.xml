@@ -2,17 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="esd.dao.AreaDao">
+
 	<!-- insert -->
-	<insert id="save" parameterType="Area"
-		useGeneratedKeys="false" keyProperty="code">
+	<insert id="save" parameterType="Area" useGeneratedKeys="false" keyProperty="code">
 		insert into 
-		area(code,name,pyname,abbr,mark) 
-		values(#{code},#{name},#{pyname},#{abbr},#{mark})
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null and code != ''">
+				code,
+			</if>
+			<if test="name != null and name != ''">
+				name,
+			</if>
+			<if test="pyname != null and pyname != ''">
+				pyname,
+			</if>
+			<if test="abbr != null and abbr != ''">
+				abbr,
+			</if>
+			<if test="mark != null and mark != ''">
+				mark
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null and code != ''">
+				#{code, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null and name != ''">
+				#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="pyname != null and pyname != ''">
+				#{pyname, jdbcType=VARCHAR},
+			</if>
+			<if test="abbr != null and abbr != ''">
+				#{abbr, jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null and mark != ''">
+				#{mark, jdbcType=VARCHAR}
+			</if>
+		</trim>
 	</insert>
 
 	<!-- delete -->
 	<delete id="delete" parameterType="java.lang.String">
-		delete from area where code = #{code}
+		delete from area where code = #{code, jdbcType=VARCHAR}
 	</delete>
 	
 	<!-- update -->
@@ -20,24 +52,24 @@
 		update area
 		<trim prefix="set" suffixOverrides=",">
 			<if test="name != null and name != ''">
-				name=#{name},
+				name = #{name, jdbcType=VARCHAR},
 			</if>
 			<if test="pyname != null and pyname != ''">
-				mark=#{pyname},
+				pyname = #{pyname, jdbcType=VARCHAR},
 			</if>
 			<if test="abbr != null and abbr != ''">
-				mark=#{abbr},
+				abbr = #{abbr, jdbcType=VARCHAR},
 			</if>
 			<if test="mark != null and mark != ''">
-				mark=#{mark},
+				mark = #{mark, jdbcType=VARCHAR}
 			</if>		
 		</trim>
-		where code= #{code}
+		where code= #{code, jdbcType=VARCHAR}
 	</update>
 
 	<!-- get by code -->
 	<select id="getByCode" resultType="Area" parameterType="java.lang.String">
-		select * from area where code = #{code}
+		select * from area where code = #{code, jdbcType=VARCHAR}
 	</select>
 
 	<!-- get by obj -->
@@ -45,19 +77,13 @@
 		select * from area 
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="code != null and code != ''">
-				code like #{code}
+				code like concat('%',#{code, jdbcType=VARCHAR},'%')
 			</if>
 			<if test="name != null and name != ''">
-				and name like concat('%',#{name},'%')
+				and name like concat('%',#{name, jdbcType=VARCHAR},'%')
 			</if>
-			<if test="pyName != null and pyName != ''">
-				and pyname like concat('%',#{pyName},'%')
-			</if>
-			<if test="abbr != null and abbr != ''">
-				and abbr like concat('%',#{abbr},'%')
-			</if>
-			<if test="mark != null and mark != ''">
-				and mark = #{mark}
+			<if test="pyname != null and pyname != ''">
+				and pyname like concat('%',#{pyname, jdbcType=VARCHAR},'%')
 			</if>
 		</trim>
 	</select>
@@ -75,7 +101,7 @@
 	<!-- getSubArea -->
 	<select id="getSubArea" parameterType="java.lang.String" resultType="Area">
 		select * from area
-		where code like concat ('%',#{code},'%')
+		where code like concat ('%',#{code, jdbcType=INTEGER},'%')
 	</select>
 	
 	

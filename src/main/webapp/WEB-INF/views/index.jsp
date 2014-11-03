@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -135,7 +136,9 @@ function getimgcode(){
 						<ul class="AntAccout_Center_Rithg">
 							<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable">${user.loginName }</span>：欢迎您！</li>
 							<li class="B">您的用户等级：<span> <span id="ctl00_ContentPlaceHolder1_tag">个人</span>会员 </span></li>
-							<li class="C" style="text-align: left">注册时间：<span id="ctl00_ContentPlaceHolder1_addtime">${user.createDate }</span>
+							<li class="C" style="text-align: left">注册时间：
+								<fmt:formatDate value="${user.createDate }" pattern="yyyy-MM-dd hh:mm:ss" var="createDate" />
+								<span id="ctl00_ContentPlaceHolder1_addtime">${createDate }</span>
 							</li>
 							<li class="D">现在您可以进入<span id="ctl00_ContentPlaceHolder1_uemail"><a href="${contextPath }/user/goCenter" style="font-size:13px;color:red;font-weight:700px;">个人中心</a> </span>来管理您的个人信息或简历</li>
 
@@ -149,7 +152,9 @@ function getimgcode(){
 						<ul class="AntAccout_Center_Rithg">
 							<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable">${user.loginName }</span>：欢迎您！</li>
 							<li class="B">您的用户等级：<span> <span id="ctl00_ContentPlaceHolder1_tag">企业</span>会员 </span></li>
-							<li class="C" style="text-align: left">注册时间：<span id="ctl00_ContentPlaceHolder1_addtime">${user.createDate }</span>
+							<li class="C" style="text-align: left">注册时间：
+								<fmt:formatDate value="${user.createDate }" pattern="yyyy-MM-dd hh:mm:ss" var="createDate" />
+								<span id="ctl00_ContentPlaceHolder1_addtime">${createDate }</span>
 							</li>
 							<li class="D">现在您可以进入<span id="ctl00_ContentPlaceHolder1_uemail"><a href="${contextPath }/user/goCenter" style="font-size:13px;color:red;font-weight:700px;">管理中心</a> </span>来管理您发布的招聘信息或者查看收到的简历</li>
 
@@ -268,8 +273,14 @@ function getimgcode(){
 		<div class="redline_con">
 			<ul class="latJobs">
 				<c:forEach items="${jobList }" var="job">
-					<li><span class="fl"> <a class="cBlock" href="${contextPath }/job/getOneForShow?id=${job.id}" target="_blank"> ${job.name }</a>&nbsp; [${job.area.name }]&nbsp;&nbsp; <a
-							class="job_jobs" href="${contextPath }/work" title="${job.jobCategory.name }">${job.jobCategory.name }</a>&nbsp; </span> <span class="fr"> ${job.updateDate }</span></li>
+					<li>
+						<span class="fl">
+							<a class="cBlock" href="${contextPath }/job/getOneForShow?id=${job.id}" target="_blank"> ${job.name }</a>&nbsp; [${job.area.name }]&nbsp;&nbsp; 
+							<a class="job_jobs" href="${contextPath }/work" title="${job.jobCategory.name }">${job.jobCategory.name }</a>&nbsp; </span> 
+							<c:if test="${job.updateDate != null}">
+								<fmt:formatDate value="${job.updateDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd" var="updateDate" />
+							</c:if> 
+							<span class="fr"> ${updateDate }</span></li>
 				</c:forEach>
 
 

@@ -26,12 +26,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import esd.bean.Area;
+import esd.bean.Company;
+import esd.bean.Job;
 import esd.bean.Resume;
+import esd.bean.User;
 import esd.service.AreaService;
+import esd.service.CompanyService;
+import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ResumeService;
 
@@ -49,8 +55,14 @@ public class ResumeController {
 	private ResumeService resumeService;
 
 	@Autowired
+	private JobService jobService;
+
+	@Autowired
+	private CompanyService companyService;
+
+	@Autowired
 	private AreaService areaService;
-	
+
 	private static Logger log = Logger.getLogger(ResumeController.class);
 
 	@RequestMapping("/search")
@@ -150,8 +162,8 @@ public class ResumeController {
 		String acode = req.getParameter("acode");
 		String pageSizeStr = req.getParameter("pageSize");
 		// 初始化为10
-		Integer pageSize =10;
-		if(pageSizeStr != null && !"".equals(pageSizeStr)){
+		Integer pageSize = 10;
+		if (pageSizeStr != null && !"".equals(pageSizeStr)) {
 			pageSize = Integer.parseInt(pageSizeStr);
 		}
 		ModelMap map = new ModelMap();
@@ -164,14 +176,14 @@ public class ResumeController {
 
 	// 根据id得到一个简历返回前台
 	@RequestMapping("/getOneForShow")
-	public String getOneForShow(HttpServletRequest req, HttpSession session) {
+	public String getOneForShow(HttpServletRequest req, HttpSession session,RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
 		// 读取地区码
 		String acode = req.getParameter("acode");
 		log.info("acode [" + acode + "]");
 		if (acode != null && !"".equals(acode)) {
 			// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-//			acode = KitService.getProvinceCode(acode);
+			// acode = KitService.getProvinceCode(acode);
 			Area area = areaService.getByCode(acode);
 			session.setAttribute("area", area);
 		}
@@ -183,6 +195,41 @@ public class ResumeController {
 		}
 		Resume resume = resumeService.getOneForShow(id);
 		req.setAttribute("resume", resume);
+		// 如果为公司用户访问该简历, 则查询出公司的基本信息
+		User user = (User) session.getAttribute(Constants.USER);
+		if (user != null) {
+			if (Constants.Identity.COMPANY.toString()
+					.equals(user.getIdentity())) {
+				// 公司基本信息
+				Company company = companyService.getByAccount(user.getId());
+				if (company == null) {
+					ra.addFlashAttribute("messageType", "0");
+					ra.addFlashAttribute("message", "请先完善公司信息");
+					return "forward:/secure/company/save";
+				}
+				Company model = new Company();
+				model.setId(company.getId());
+				model.setContactPerson(company.getContactPerson());
+				model.setContactDept(company.getContactDept());
+				model.setTelephone(company.getTelephone());
+				// 发布的职位信息
+				List<Job> list = jobService.getByCompany(company.getId(),
+						Constants.START, Constants.SIZE);
+				List<Job> jobList = new ArrayList<Job>();
+				Job head = new Job();
+				head.setId(0);
+				head.setName("请选择");
+				jobList.add(head);
+				for (Job job : list) {
+					Job j = new Job();
+					j.setId(job.getId());
+					j.setName(job.getName());
+					jobList.add(j);
+				}
+				req.setAttribute("company", model);
+				req.setAttribute("jobList", jobList);
+			}
+		}
 		return "emp/emp-detail";
 	}
 
@@ -219,11 +266,11 @@ public class ResumeController {
 		String url = req.getRealPath("/");
 		log.info("****************************");
 		String filePath = resumeService.getBuildResume(id, url);
-		if(filePath == null){
+		if (filePath == null) {
 			return null;
 		}
-		log.info("filePath  "+filePath);
-		if (new File(url+filePath).exists()) {
+		log.info("filePath  " + filePath);
+		if (new File(url + filePath).exists()) {
 			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
 					+ req.getContextPath();
 			log.info("redirect:http://" + destPath + "/" + filePath);
@@ -238,10 +285,10 @@ public class ResumeController {
 		log.info("--------  down_multi ----------");
 		String url = req.getRealPath("/");
 		log.info("url : " + url);
-		int[] ids = { 152, 153,154 };
+		int[] ids = { 152, 153, 154 };
 		String filePath = resumeService.getBuildResume(ids, url);
 		log.info("filePath : " + filePath);
-		if (new File(url+filePath).exists()) {
+		if (new File(url + filePath).exists()) {
 			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
 					+ req.getContextPath();
 			log.info("destPath : " + destPath);

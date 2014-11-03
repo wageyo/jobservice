@@ -343,7 +343,7 @@
 									<select name="desireJob" id="jobCategory_lv3" class="select_border" style="width:150px;">
 										<option value="">请选择</option>
 									</select>
-									<p style="color:red;text-indent: 1em;">请选择具体职位</p>
+								<!-- 	<p style="color:red;text-indent: 1em;">请选择具体职位</p>	 -->
 								</td>
 							</tr>
 							<tr>
@@ -360,7 +360,7 @@
 									<select name="desireAddress" id="area_lv3" class="select_border" style="width:150px;">
 										<option value="">请选择区域</option>
 									</select>
-									<p style="color:red;text-indent: 1em;">请精确到区县级</p>
+								<!-- 	<p style="color:red;text-indent: 1em;">请精确到区县级</p>	 -->
 								</td>
 							</tr>
 							<tr>

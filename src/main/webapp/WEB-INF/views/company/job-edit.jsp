@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -111,14 +112,20 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><span class="red line35_r">*</span><b> 有效期 ：</b></td>
-								<td align="left"><select name="effectiveTime" id="effectiveTime" class="select_border">
+								<td align="right" class="line35"><span class="red line35_r">*</span><b> 有效期至 ：</b></td>
+								<td align="left">
+									<c:if test="${job.effectiveTime!= null }">
+										<fmt:formatDate value="${job.effectiveTime }" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="effectiveTime" />
+									</c:if>
+									<input type="text" value="${effectiveTime }" id="effectiveTime" class="input_border" style="width:200px;" readonly="readonly" />
+								<!-- 	<select name="effectiveDays" id="effectiveDays" class="select_border">
 										<c:forEach items="${params }" var="p">
 											<c:if test="${p.type == 'effectiveTime' }">
 												<option value="${p.value }" <c:if test="${job.effectiveTime == p.value }">selected="selected"</c:if>>${p.name }</option>
 											</c:if>
 										</c:forEach>
-								</select></td>
+									</select> -->
+								</td>
 							</tr>
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span><b> 工作地点 ：</b></td>
@@ -136,17 +143,20 @@
 							</tr>
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span><b> 工作种类 ：</b></td>
-								<td align="left"><select name="jobCategory_lv1" id="jobCategory_lv1" class="select_border" style="width:150px;">
+								<td align="left">
+									<select name="jobCategory_lv1" id="jobCategory_lv1" class="select_border" style="width:150px;">
 										<c:forEach items="${jcList }" var="p">
 											<option value="${p.code }">${p.name }</option>
 										</c:forEach>
-								</select> <select name="jobCategory_lv2" id="jobCategory_lv2" class="select_border" style="width:150px;">
+									</select> 
+									<select name="jobCategory_lv2" id="jobCategory_lv2" class="select_border" style="width:150px;">
 										<option value="">请选择</option>
-								</select> <select name="jobCategory.code" id="jobCategory_lv3" class="select_border" style="width:150px;">
+									</select> 
+									<select name="jobCategory.code" id="jobCategory_lv3" class="select_border" style="width:150px;">
 										<option value="">请选择</option>
-								</select> <br />
-									<p style="color:red;text-indent: 1em;">请选择具体的职位</p>
-									</td>
+									</select> <br />
+								<!-- 	<p style="color:red;text-indent: 1em;">请选择具体的职位</p>	 -->
+								</td>
 							</tr>
 							<tr>
 								<td align="right" class="line35"><b> 其他福利 ：</b></td>

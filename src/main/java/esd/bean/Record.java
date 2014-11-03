@@ -31,6 +31,10 @@ public class Record extends PrimaryKey {
 	private String jNature; // 工作性质
 	private Integer cID; // 公司ID
 
+	private Boolean direction; // 投递方向标示符, true-简历投像职位, false-公司发送某职位的邀请到简历,
+								// 必填项, 任何增删改的操作都不得缺少!!!!!!!
+	private String comment; // 评论/备注
+
 	public Record() {
 	}
 
@@ -193,6 +197,22 @@ public class Record extends PrimaryKey {
 
 	public void setcID(Integer cID) {
 		this.cID = cID;
+	}
+
+	public Boolean getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Boolean direction) {
+		this.direction = direction;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

@@ -196,7 +196,7 @@ public class ResumeService {
 			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				resume.setDesireJob(KitService.jobCategoryCodeForSql(resume
+				resume.setDesireJob(KitService.jobCategoryCodeForResumeSql(resume
 						.getDesireJob()));
 			}
 		}
@@ -206,11 +206,11 @@ public class ResumeService {
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
 		List<Resume> list = dao.getByPage(map);
-		for (Resume r : list) {
-			if (r.getUpdateDate() != null) {
-				r.setUpdateDate(KitService.dateForShow(r.getUpdateDate()));
-			}
-		}
+//		for (Resume r : list) {
+//			if (r.getUpdateDate() != null) {
+//				r.setUpdateDate(KitService.dateForShow(r.getUpdateDate()));
+//			}
+//		}
 		System.out.println("resumeList.size() = " + list.size());
 		return list;
 	}
@@ -229,7 +229,7 @@ public class ResumeService {
 			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				resume.setDesireJob(KitService.jobCategoryCodeForSql(resume
+				resume.setDesireJob(KitService.jobCategoryCodeForResumeSql(resume
 						.getDesireJob()));
 			}
 		}
@@ -262,7 +262,7 @@ public class ResumeService {
 			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				resume.setDesireJob(KitService.jobCategoryCodeForSql(resume
+				resume.setDesireJob(KitService.jobCategoryCodeForResumeSql(resume
 						.getDesireJob()));
 			}
 			// 如为特殊声明, 则只显示审核通过的
@@ -317,7 +317,7 @@ public class ResumeService {
 			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				resume.setDesireJob(KitService.jobCategoryCodeForSql(resume
+				resume.setDesireJob(KitService.jobCategoryCodeForResumeSql(resume
 						.getDesireJob()));
 			}
 			// 如为特殊声明, 则只显示审核通过的

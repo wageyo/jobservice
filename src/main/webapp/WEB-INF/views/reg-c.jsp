@@ -32,22 +32,23 @@ function getimgcode(){
 		<div class="clear" style=" height:10px;">&nbsp;</div>
 		<div align="center">
 			<div id="G_Ys">
-				<img src="${contextPath}/images/regstep.gif"><br>
+				<img src="${contextPath}/images/regstep.gif" /><br/>
 						<div style="height: 7px;">&nbsp;</div>
 			</div>
 			<div class="topt"></div>
-			<form action="${contextPath }/user/save" method="post" onSubmit="return check()">
+			<form action="${contextPath }/user/save" method="post" onsubmit="return check()">
 				<div class="content8">
 					<div class="centent_left">
 						<div id="font_sj" style="padding-left: 10px;">
 							免费注册<span id="ctl00_ContentPlaceHolder1_Labelh">企业</span>会员
+							<span style="font-size: 10px;">(账号注册完毕后, 别忘了进管理中心填写公司资料喔, 只有填写了公司资料才能进行进一步操作.)</span>
 						</div>
 						<div id="width">
 							<div id="F_left">
 								<span class="STYLE1">*&nbsp;</span>用户账号： <input type="hidden" value="company" name="identity" />
 							</div>
 							<div id="F_left_0">
-								<input name="loginName" type="text" id="loginName" class="text_tex" onblur="blur_loginName()" onfocus="focus_loginName()">
+								<input name="loginName" type="text" id="loginName" class="text_tex" onblur="blur_loginName()" onfocus="focus_loginName()" />
 								<span id="loginNameNotice" style="color:red;">用户名只能为字母, 数字和下划线_, 长度为5-20位 </span>
 							</div>
 						</div>
@@ -111,29 +112,32 @@ function getimgcode(){
 								<span class="STYLE1">*&nbsp;</span>验&nbsp;证&nbsp;码：
 							</div>
 							<div id="F_left_0">
-								<input name="LoginVerifyCode" type="text" id="LoginVerifyCode" class="text_tex_Yz" style="color:#C6C6C6;border-width:1px;border-style:solid;height:20px;"> <a
-									href="javascript:getimgcode()"> <img id="verifyCode" src="${contextPath}/checkcode/create" alt="验证码,看不清楚?请点击刷新验证码" style="padding-top: 4px; width: 100px;" border="0"
-										onclick="return getimgcode()">
+								<input name="LoginVerifyCode" type="text" id="LoginVerifyCode" class="text_tex_Yz" style="color:#C6C6C6;border-width:1px;border-style:solid;height:20px;" /> 
+								<a href="javascript:getimgcode()"> 
+									<img id="verifyCode" src="${contextPath}/checkcode/create" alt="验证码,看不清楚?请点击刷新验证码" style="padding-top: 4px; width: 100px;" border="0"
+										onclick="return getimgcode()" />
 								</a>
 								<span id="LoginVerifyCodeNotice" style="color:Red;">*请正确输入验证码</span>
 							</div>
 						</div>
-						<br>
+						
+						<br />
 							<div id="width_bou" style="padding-left: 110px; clear: both;">
-								<input type="submit" name="btn-submit" value="立即注册" id="btn-submit" tabindex="-1" class="button blue"><br> 
-								<input id="ckb-agree" type="checkbox" name="ckb-agree" checked="checked" onclick="ckb_agree()">阅读并同意用户协议 
+								<input type="submit" name="btn-submit" value="立即注册" id="btn-submit" tabindex="-1" class="button blue"/><br/> 
+								<input id="ckb-agree" type="checkbox" name="ckb-agree" checked="checked" onclick="ckb_agree()" />阅读并同意用户协议 
 							</div>
 					</div>
 					<div class="centent_right">
-						已有账号,&nbsp;<a id="ctl00_ContentPlaceHolder1_HyperLink1" href="${contextPath}/login" style="color:#ED7B2B;">登录</a><br> <br> <img id="ctl00_ContentPlaceHolder1_Image1"
-								src="${contextPath}/images/a1.jpg" style="border-width:0px;">
+						已有账号,&nbsp;
+						<a id="ctl00_ContentPlaceHolder1_HyperLink1" href="${contextPath}/login" style="color:#ED7B2B;">登录</a><br/> <br/> 
+						<img id="ctl00_ContentPlaceHolder1_Image1" src="${contextPath}/images/a1.jpg" style="border-width:0px;" />
 					</div>
 				</div>
 			</form>
 		</div>
 
 		<div>
-			<img src="${contextPath}/images/hjt3.png">
+			<img src="${contextPath}/images/hjt3.png" />
 		</div>
 	</div>
 

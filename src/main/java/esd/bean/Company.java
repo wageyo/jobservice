@@ -20,7 +20,7 @@ public class Company extends PrimaryKey {
 	private String fax; // 传真
 	private String email; // 公司邮箱
 	private String address; // 公司详细地址
-	private String Integerroduction; // 公司简介
+	private String introduction; // 公司简介
 
 	private String organizationCode; // 组织机构代码
 	private String commercialCode; // 工商登记号码
@@ -46,7 +46,7 @@ public class Company extends PrimaryKey {
 				+ corporateRepresentative + ", contactPerson=" + contactPerson
 				+ ", telephone=" + telephone + ", contactDept=" + contactDept
 				+ ", fax=" + fax + ", email=" + email + ", address=" + address
-				+ ", Integerroduction=" + Integerroduction + ", organizationCode="
+				+ ", introduction=" + introduction + ", organizationCode="
 				+ organizationCode + ", commercialCode=" + commercialCode
 				+ ", taxCode=" + taxCode + ", socialSecurityCode="
 				+ socialSecurityCode + ", webSiteId=" + webSiteId
@@ -129,11 +129,11 @@ public class Company extends PrimaryKey {
 	}
 
 	public String getIntroduction() {
-		return Integerroduction;
+		return introduction;
 	}
 
-	public void setIntroduction(String Integerroduction) {
-		this.Integerroduction = Integerroduction;
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
 	}
 
 	public String getOrganizationCode() {

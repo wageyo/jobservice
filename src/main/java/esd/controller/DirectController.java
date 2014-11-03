@@ -31,9 +31,9 @@ import esd.service.NewsService;
  */
 @Controller
 @RequestMapping("/direct")
-public class DirectionController {
+public class DirectController {
 
-	private static Logger log = Logger.getLogger(DirectionController.class);
+	private static Logger log = Logger.getLogger(DirectController.class);
 
 	@Autowired
 	private NewsService newsService;
@@ -74,7 +74,7 @@ public class DirectionController {
 					log.debug(it.toString());
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", String.valueOf(it.getId()));
-					map.put("createDate", it.getCreateDate());
+					map.put("createDate", KitService.dateForShow(it.getCreateDate()));
 					map.put("title", it.getTitle());
 					map.put("areaName", it.getArea().getName());
 					map.put("author", it.getAuthor());

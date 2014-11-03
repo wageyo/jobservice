@@ -2,55 +2,135 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="esd.dao.EducationBackgroundDao">
+
+	<!-- result map of WorkExperience -->
+	<resultMap id="ResultEducationBackground" type="EducationBackground">
+		<id column="eb_id" property="id" jdbcType="INTEGER"  />
+		<result column="eb_create_date" property="createDate" jdbcType="TIMESTAMP"  />
+		<result column="eb_update_check" property="updateCheck" jdbcType="VARCHAR"  />
+		<result column="eb_update_date" property="updateDate"  jdbcType="TIMESTAMP" />
+		<result column="eb_log_user" property="logUser"  jdbcType="VARCHAR" />
+		<result column="eb_time" property="time" jdbcType="VARCHAR" />
+		<result column="eb_school" property="school" jdbcType="VARCHAR" />
+		<result column="eb_major" property="major" jdbcType="VARCHAR" />
+		<result column="eb_education" property="education" jdbcType="VARCHAR" />
+		<result column="eb_certificate" property="certificate" jdbcType="VARCHAR" />
+		<result column="eb_rid" property="resume.id" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="base_column">
+		eb.id as eb_id, eb.create_date as eb_create_date, eb.update_check as eb_update_check, eb.update_date as eb_update_date,
+		eb.log_user as eb_log_user, eb.time as eb_time, eb.school as eb_school, eb.major as eb_major,
+		eb.education as eb_education, eb.certificate as eb_certificate, eb.rid as eb_rid
+	</sql>
+	
 	<!-- insert -->
-	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
-	<insert id="save" parameterType="EducationBackground"
-		useGeneratedKeys="true" keyProperty="id">
-		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+	<insert id="save" parameterType="EducationBackground" useGeneratedKeys="true" keyProperty="id">
 		<selectKey resultType="java.lang.Integer" order="AFTER"
 			keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into 
-		educationbackground(time,school,major,education,certificate,rid) 
-		values(#{time},#{school},#{major},#{education},#{certificate},#{resume.id})
+		insert into education_background
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="time != null and time != ''">
+				time,
+			</if>
+			<if test="school != null and school != ''">
+				school,
+			</if>
+			<if test="major != null and major != ''">
+				major,
+			</if>
+			<if test="education != null and education != ''">
+				education,
+			</if>
+			<if test="certificate != null and certificate != ''">
+				certificate,
+			</if>
+			<if test="resume != null">
+				<if test="resume.id != null and resume.id > 0">
+					rid
+				</if>
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="time != null and time != ''">
+				#{time, jdbcType=VARCHAR},
+			</if>
+			<if test="school != null and school != ''">
+				#{school, jdbcType=VARCHAR},
+			</if>
+			<if test="major != null and major != ''">
+				#{major, jdbcType=VARCHAR},
+			</if>
+			<if test="education != null and education != ''">
+				#{education, jdbcType=VARCHAR},
+			</if>
+			<if test="certificate != null and certificate != ''">
+				#{certificate, jdbcType=VARCHAR},
+			</if>
+			<if test="resume != null">
+				<if test="resume.id != null and resume.id > 0">
+					#{resume.id, jdbcType=INTEGER}
+				</if>
+			</if>
+		</trim>	
 	</insert>
 
 	<!-- delete -->
-	<delete id="delete" parameterType="int">
-		delete from educationbackground where id = #{id}
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from education_background where id = #{id, jdbcType=INTEGER}
 	</delete>
 	
 	<!-- update -->
 	<update id="update" parameterType="EducationBackground">
-		update educationbackground
+		update education_background
 		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
 			<if test="time != null and time != ''">
-				time=#{time},
+				time = #{time, jdbcType=VARCHAR},
 			</if>
 			<if test="school != null and school != ''">
-				school=#{school},
+				school = #{school, jdbcType=VARCHAR},
 			</if>
 			<if test="major != null and major != ''">
-				major=#{major}
+				major = #{major, jdbcType=VARCHAR},
 			</if>
 			<if test="education != null and education != ''">
-				education=#{education}
+				education = #{education, jdbcType=VARCHAR},
 			</if>
 			<if test="certificate != null and certificate != ''">
-				certificate=#{certificate}
-			</if>		
+				certificate = #{certificate, jdbcType=VARCHAR}
+			</if>
+			update_check = update_check + 1 	
 		</trim>
-		where id= #{id}
+		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
 	<!-- get by id -->
-	<select id="getById" resultType="EducationBackground" parameterType="int">
-		select * from educationbackground where id = #{id}
+	<select id="getById" resultType="EducationBackground" parameterType="java.lang.Integer">
+		select <include refid="base_column"/> 
+		from education_background as eb
+		where eb.id= #{id, jdbcType=INTEGER}
 	</select>
 
 	<!-- get By Resume -->
-	<select id="getByResume" resultType="EducationBackground" parameterType="int">
-		select * from educationbackground where rid = #{rid}
+	<select id="getByResume" resultType="EducationBackground" parameterType="java.lang.Integer">
+		select <include refid="base_column"/> 
+		from education_background as eb
+		where eb.rid= #{id, jdbcType=INTEGER}
 	</select>
 </mapper>

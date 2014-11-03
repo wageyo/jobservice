@@ -2,58 +2,150 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="esd.dao.WorkExperienceDao">
+
+	<!-- result map of WorkExperience -->
+	<resultMap id="ResultWorkExperience" type="WorkExperience">
+		<id column="we_id" property="id" jdbcType="INTEGER"  />
+		<result column="we_create_date" property="createDate" jdbcType="TIMESTAMP"  />
+		<result column="we_update_check" property="updateCheck" jdbcType="VARCHAR"  />
+		<result column="we_update_date" property="updateDate"  jdbcType="TIMESTAMP" />
+		<result column="we_log_user" property="logUser"  jdbcType="VARCHAR" />
+		<result column="we_company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="we_job_name" property="jobName" jdbcType="VARCHAR" />
+		<result column="we_job_content" property="jobContent" jdbcType="VARCHAR" />
+		<result column="we_work_time" property="workTime" jdbcType="VARCHAR" />
+		<result column="we_leave_reason" property="leaveReason" jdbcType="VARCHAR" />
+		<result column="we_evaluation" property="evaluation" jdbcType="VARCHAR" />
+		<result column="we_rid" property="resume.id" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="base_column">
+		we.id as we_id, we.create_date as we_create_date, we.update_check as we_update_check, we.update_date as we_update_date,
+		we.log_user as we_log_user, we.company_name as we_company_name, we.job_name as we_job_name, we.job_content as we_job_content,
+		we.work_time as we_work_time, we.leave_reason as we_leave_reason, we.evaluation as we_evaluation, we.rid as we_rid
+	</sql>
+	
 	<!-- insert -->
-	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
-	<insert id="save" parameterType="WorkExperience"
-		useGeneratedKeys="true" keyProperty="id">
-		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+	<insert id="save" parameterType="WorkExperience" useGeneratedKeys="true" keyProperty="id">
 		<selectKey resultType="java.lang.Integer" order="AFTER"
 			keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into 
-		workexperience(companyname,jobname,jobcontent,worktime,leavereason,evaluation,rid) 
-		values(#{companyName},#{jobName},#{jobContent},#{workTime},#{leaveReason},#{evaluation},#{resume.id})
+		insert into work_experience
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="companyName != null and companyName != ''">
+				company_name,
+			</if>
+			<if test="jobName != null and jobName != ''">
+				job_name,
+			</if>
+			<if test="jobContent != null and jobContent != ''">
+				job_content,
+			</if>
+			<if test="workTime != null and workTime != ''">
+				work_time,
+			</if>
+			<if test="leaveReason != null and leaveReason != ''">
+				leave_reason,
+			</if>
+			<if test="evaluation != null and evaluation != ''">
+				evaluation,
+			</if>
+			<if test="resume != null">
+				<if test="resume.id != null and resume.id > 0">
+					rid
+				</if>
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="companyName != null and companyName != ''">
+				#{companyName, jdbcType=VARCHAR},
+			</if>
+			<if test="jobName != null and jobName != ''">
+				#{jobName, jdbcType=VARCHAR},
+			</if>
+			<if test="jobContent != null and jobContent != ''">
+				#{jobContent, jdbcType=VARCHAR},
+			</if>
+			<if test="workTime != null and workTime != ''">
+				#{workTime, jdbcType=VARCHAR},
+			</if>
+			<if test="leaveReason != null and leaveReason != ''">
+				#{leaveReason, jdbcType=VARCHAR},
+			</if>
+			<if test="evaluation != null and evaluation != ''">
+				#{evaluation, jdbcType=VARCHAR},
+			</if>
+			<if test="resume != null">
+				<if test="resume.id != null and resume.id > 0">
+					#{resume.id, jdbcType=INTEGER}
+				</if>
+			</if>
+		</trim>	
 	</insert>
 
 	<!-- delete -->
-	<delete id="delete" parameterType="int">
-		delete from workexperience where id = #{id}
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from work_experience where id = #{id, jdbcType=INTEGER}
 	</delete>
 	
 	<!-- update -->
 	<update id="update" parameterType="WorkExperience">
-		update workexperience
+		update work_experience
 		<trim prefix="set" suffixOverrides=",">
+			update_date=now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
 			<if test="companyName != null and companyName != ''">
-				companyName=#{companyName},
+				company_name = #{logUser, jdbcType=VARCHAR},
 			</if>
 			<if test="jobName != null and jobName != ''">
-				jobName=#{jobName},
+				job_name = #{logUser, jdbcType=VARCHAR},
 			</if>
 			<if test="jobContent != null and jobContent != ''">
-				jobContent=#{jobContent},
+				job_content = #{logUser, jdbcType=VARCHAR},
 			</if>
 			<if test="workTime != null and workTime != ''">
-				workTime=#{workTime},
+				work_time = #{logUser, jdbcType=VARCHAR},
 			</if>
 			<if test="leaveReason != null and leaveReason != ''">
-				leaveReason=#{leaveReason},
+				leave_reason = #{logUser, jdbcType=VARCHAR},
 			</if>
 			<if test="evaluation != null and evaluation != ''">
-				evaluation=#{evaluation}
-			</if>		
+				name = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="resume != null">
+				<if test="resume.id != null and resume.id > 0">
+					rid = #{logUser, jdbcType=INTEGER},
+				</if>
+			</if>
+			update_check = update_check + 1 
 		</trim>
-		where id= #{id}
+		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
 	<!-- get by id -->
-	<select id="getById" resultType="WorkExperience" parameterType="int">
-		select * from workexperience where id = #{id}
+	<select id="getById" resultMap="ResultWorkExperience" parameterType="java.lang.Integer">
+		select <include refid="base_column"/> 
+		from work_experience as we 
+		where we.id= #{id, jdbcType=INTEGER}
 	</select>
 
 	<!-- get By Resume -->
-	<select id="getByResume" resultType="WorkExperience" parameterType="int">
-		select * from workexperience where rid = #{rid}
+	<select id="getByResume" resultMap="ResultWorkExperience" parameterType="java.lang.Integer">
+		select <include refid="base_column"/> 
+		from work_experience as we 
+		where rid= #{rid, jdbcType=INTEGER}
 	</select>
 </mapper>

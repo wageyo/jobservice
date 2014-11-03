@@ -4,7 +4,7 @@ function job_check(){
 	//职位名称
 	var name = $('#name').val();
 	if(name == null || name == ''){
-		alert('姓名不能为空!');
+		alert('职位名称不能为空!');
 		$('#name').focus();
 		return false;
 	}
@@ -38,10 +38,10 @@ function job_check(){
 		return false;
 	}
 	//有效时间
-	var effectiveTime = $('#effectiveTime').val();
-	if(effectiveTime == null || effectiveTime == ''){
+	var effectiveDays = $('#effectiveDays').val();
+	if(effectiveDays == null || effectiveDays == ''){
 		alert('请选择职位有效期!');
-		$('#effectiveTime').focus();
+		$('#effectiveDays').focus();
 		return false;
 	}
 	//地区
@@ -52,9 +52,9 @@ function job_check(){
 		return false;
 	}
 	//职位类别
-	var jobCategory_lv3 = $('#jobCategory_lv3').val();
-	if(jobCategory_lv3 == null || jobCategory_lv3 == ''){
-		alert('请选择具体的工作类别!');
+	var jobCategory_lv1 = $('#jobCategory_lv1').val();
+	if(jobCategory_lv1 == null || jobCategory_lv1 == '' || jobCategory_lv1 == '不限'){
+		alert('请选择工作类别!');
 		$('#jobCategory_lv1').focus();
 		return false;
 	}

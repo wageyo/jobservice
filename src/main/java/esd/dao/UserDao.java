@@ -1,5 +1,6 @@
 package esd.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,4 +25,12 @@ public interface UserDao extends IDao<User> {
 	 * @return
 	 */
 	int getAdminTotalCount(Map<String, Object> map);
+	
+	
+	/**
+	 * 根据账号id, 获得他的头像图片
+	 * @param id
+	 * @return
+	 */
+	HashMap getHeadImage(Integer id);
 }

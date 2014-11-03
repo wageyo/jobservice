@@ -10,7 +10,7 @@ import esd.bean.JobCategory;
  * @author Administrator
  * 
  */
-public interface JobCategoryDao extends IDao {
+public interface JobCategoryDao extends IDao<JobCategory> {
 
 	// 根据code得到对象
 	public JobCategory getByCode(String code);

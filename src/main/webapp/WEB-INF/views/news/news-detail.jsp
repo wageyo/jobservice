@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -49,7 +50,10 @@
 					</div>
 					<!--news_title-->
 					<div class="news_info" style="background: url(${contextPath}/images/dot.gif) repeat-x 50% top;">
-						<div class="news_info_l">时间:${news.createDate }</div>
+						<c:if test="${news.createDate != null}">
+							<fmt:formatDate value="${news.createDate }" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="createDate" />
+						</c:if> 
+						<div class="news_info_l">时间:${createDate }</div>
 						<div class="news_info_c">责任编辑:${news.author }</div>
 						<div class="news_info_r">来源:${news.source }</div>
 					</div>
@@ -86,7 +90,11 @@
 										<td><div style="width: 150px;white-space: nowrap;text-overflow: ellipsis; -o-text-overflow: ellipsis; overflow: hidden;">
 												<a href="${contextPath }/news/getOneForShow?id=${news.id}" title="${news.title }"><span style="margin-left:10px;">${news.title }</span> </a>
 											</div></td>
-										<td style="width:62px"><span style="margin-right:10px;">${news.createDate }</span>
+										<td style="width:80px">
+											<c:if test="${news.createDate != null}">
+												<fmt:formatDate value="${news.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd" var="createDate" />
+											</c:if> 
+											<span style="margin-right:0px;">${createDate }</span>
 										</td>
 									</tr>
 								</c:forEach>

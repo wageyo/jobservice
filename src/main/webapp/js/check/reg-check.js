@@ -76,10 +76,14 @@ function blur_loginName(){
 			//存在时
 			if(json.notice == 'success'){
 				$('#loginNameNotice').html('√');
+				//选中时
+				$('#btn-submit').removeClass('gray').addClass('blue').removeAttr('disabled');
 				return false;
 			}
 			if(json.notice == 'failure'){
 				$('#loginNameNotice').html('该用户名已经存在, 请重新填写一个.');
+				//按钮变灰
+				$('#btn-submit').removeClass('blue').addClass('gray').attr('disabled','disabled');
 				return false;
 			}
 		},
@@ -175,7 +179,7 @@ function ckb_agree(){
 		$('#btn-submit').removeClass('gray').addClass('blue').removeAttr('disabled');
 	}else{
 		//没选中时
-		//按钮变黑
+		//按钮变灰
 		$('#btn-submit').removeClass('blue').addClass('gray').attr('disabled','disabled');
 	}
 }

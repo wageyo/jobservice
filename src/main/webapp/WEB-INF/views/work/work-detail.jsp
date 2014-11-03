@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -80,7 +81,12 @@
 							<td>招聘人数：</td>
 							<td style="width: 260px;"><span id="ctl00_ctl00_cph_cph_lb_n">${job.hireNumber }</span>名</td>
 							<td class="k1">更新日期：</td>
-							<td><span id="ctl00_ctl00_cph_cph_lb_vtime">${job.updateDate }</span></td>
+							<td>
+								<c:if test="${job.updateDate != null}">
+									<fmt:formatDate value="${job.updateDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="updateDate" />
+								</c:if>
+								<span id="ctl00_ctl00_cph_cph_lb_vtime">${updateDate }</span>
+							</td>
 						</tr>
 						<tr class="job_detail">
 							<td>学历要求：</td>
@@ -104,7 +110,7 @@
 				</table>
 				<div id="xxJbtns">
 					<c:if test="${user.identity == 'person' }">
-						<input type="image" name="ImageButton1" onclick="send_resume(${job.id })"src="${contextPath}/images/aduo01.gif" style="border-width:0px;">
+						<input type="image" name="ImageButton1" onclick="send_resume(${job.id })"src="${contextPath}/images/aduo01.gif" style="border-width:0px;" />
 					</c:if> 
 				</div>
 			</div>

@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -25,8 +26,8 @@
 		<div id="xdAL" style="width: 1px;"></div>
 		<!--内容页面开始-->
 		<div class="imga">
-			<a href="http://www.cxcnc.com/job" title="招聘频道" target="_blank"><img src="${contextPath}/images/c2e34940b08940b48f3255b493b4ba68_zph_2013_ad_full.gif" alt="招聘频道" width="980" height="80"
-				border='0'>
+			<a href="${contextPath }/work" title="招聘频道" target="_blank">
+				<img src="${contextPath}/images/c2e34940b08940b48f3255b493b4ba68_zph_2013_ad_full.gif" alt="招聘频道" width="980" height="80" border="0" />
 			</a>
 		</div>
 
@@ -49,7 +50,12 @@
 					</div>
 					<!--news_title-->
 					<div class="news_info" style="background: url(${contextPath}/images/dot.gif) repeat-x 50% top;">
-						<div class="news_info_l">时间:${news.createDate }</div>
+						<div class="news_info_l">
+							<c:if test="${news.createDate != null}">
+								<fmt:formatDate value="${news.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="createDate" />
+							</c:if>
+							时间:${createDate }
+						</div>
 						<div class="news_info_c">责任编辑:${news.author }</div>
 						<div class="news_info_r">来源:${news.source }</div>
 					</div>

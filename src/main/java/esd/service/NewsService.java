@@ -120,11 +120,11 @@ public class NewsService {
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
 		List<News> list = dao.getTitleList(map);
-		for (News n : list) {
-			if (n.getCreateDate() != null) {
-				n.setCreateDate(KitService.dateForShow(n.getCreateDate()));
-			}
-		}
+//		for (News n : list) {
+//			if (n.getCreateDate() != null) {
+//				n.setCreateDate(KitService.dateForShow(n.getCreateDate()));
+//			}
+//		}
 		return list;
 
 	}

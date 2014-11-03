@@ -7,7 +7,7 @@ public class Area {
 
 	private String code; // 地区代码 - 主键
 	private String name; // 地名
-	private String pyName; // 地名全拼
+	private String pyname; // 地名全拼
 	private String abbr; // 地名缩写
 	private String mark; // 标记，例如热点城市等等
 
@@ -17,9 +17,8 @@ public class Area {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "area [code = " + code + ", name = " + name + ", pyName = "
-				+ pyName + ", mark = " + mark + "]";
+		return "area [code = " + code + ", name = " + name + ", pyname = "
+				+ pyname + ", mark = " + mark + "]";
 	}
 
 	public Area() {
@@ -45,12 +44,12 @@ public class Area {
 		this.name = name;
 	}
 
-	public String getPyName() {
-		return pyName;
+	public String getPyname() {
+		return pyname;
 	}
 
-	public void setPyName(String pyName) {
-		this.pyName = pyName;
+	public void setPyname(String pyname) {
+		this.pyname = pyname;
 	}
 
 	public String getAbbr() {

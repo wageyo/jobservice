@@ -88,9 +88,13 @@ public class JobService {
 			if (job.getJobCategory() != null) {
 				if (job.getJobCategory().getCode() != null) {
 					job.setJobCategory(new JobCategory(KitService
-							.jobCategoryCodeForSql(job.getJobCategory()
+							.jobCategoryCodeForJobSql(job.getJobCategory()
 									.getCode())));
 				}
+			}
+			//如果未设定是否过滤掉过期的招聘信息, 则默认过滤掉
+			if(job.getIsActiveEffectiveTime() == null){
+				job.setIsActiveEffectiveTime(Boolean.TRUE);
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -118,7 +122,7 @@ public class JobService {
 			if (job.getJobCategory() != null) {
 				if (job.getJobCategory().getCode() != null) {
 					job.setJobCategory(new JobCategory(KitService
-							.jobCategoryCodeForSql(job.getJobCategory()
+							.jobCategoryCodeForJobSql(job.getJobCategory()
 									.getCode())));
 				}
 			}
@@ -149,7 +153,7 @@ public class JobService {
 			if (job.getJobCategory() != null) {
 				if (job.getJobCategory().getCode() != null) {
 					job.setJobCategory(new JobCategory(KitService
-							.jobCategoryCodeForSql(job.getJobCategory()
+							.jobCategoryCodeForJobSql(job.getJobCategory()
 									.getCode())));
 				}
 			}
@@ -205,7 +209,7 @@ public class JobService {
 			if (job.getJobCategory() != null) {
 				if (job.getJobCategory().getCode() != null) {
 					job.setJobCategory(new JobCategory(KitService
-							.jobCategoryCodeForSql(job.getJobCategory()
+							.jobCategoryCodeForJobSql(job.getJobCategory()
 									.getCode())));
 				}
 			}

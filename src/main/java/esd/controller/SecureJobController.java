@@ -31,6 +31,7 @@ import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ParameterService;
 import esd.service.PersonService;
+import esd.service.RecordService;
 
 @Controller
 @RequestMapping("/secure/job")
@@ -54,6 +55,9 @@ public class SecureJobController {
 
 	@Autowired
 	private AreaService areaService;
+
+	@Autowired
+	private RecordService recordService;
 
 	// 保存职位
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -79,6 +83,9 @@ public class SecureJobController {
 		// 所属公司
 		job.setCompany(company);
 		job.setArea(company.getArea());
+		// 转化有效天数为有效日期
+		job.setEffectiveTime(KitService.getEffectiveTime(job.getEffectiveDays()
+				.longValue()));
 		boolean bl = jobService.save(job);
 		if (!bl) {
 			ra.addFlashAttribute("messageType", "0");
@@ -123,8 +130,8 @@ public class SecureJobController {
 		}
 
 		// 查看企业信息审核开关是否打开
-		boolean bl = pService
-				.getSwitchStatus(Constants.Switch.COMPANY.toString(),company.getArea().getCode());
+		boolean bl = pService.getSwitchStatus(Constants.Switch.COMPANY
+				.toString(), company.getArea().getCode());
 		// 如果company审核开关打开的话,验证企业用户信息是否通过了审核
 		if (bl) {
 			if (company.getCheckStatus() != null) {
@@ -323,8 +330,15 @@ public class SecureJobController {
 			json.put("notice", "你还没有创建简历哦,创建一份简历后再进行操作!");
 			return json;
 		}
+		// 检查7天内是否投递过, 如果投递过则不可重复投递
+		int isSend = recordService.checkSentInSomeDays(user.getId(), jid, null,
+				null, Boolean.TRUE);
+		if (isSend > 0) {
+			json.put("notice", "7天内只能向同一职位投递一次简历, 请稍后操作.");
+			return json;
+		}
 		// 向职位投递简历
-		boolean bl = personService.sendResume(r, job);
+		boolean bl = recordService.sendResumeOrInvite(r, job, Boolean.TRUE);
 		if (!bl) {
 			json.put("notice", "投递简历失败,请重新操作!");
 			return json;

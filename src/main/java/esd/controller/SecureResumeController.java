@@ -330,6 +330,31 @@ public class SecureResumeController {
 						: (totalCount / Constants.SIZE + 1));
 		return "person/job-record";
 	}
+	
+	// 得到 收到的面试邀请
+	@RequestMapping(value = "/getReceivedInvite/{page}", method = RequestMethod.GET)
+	public String getReceivedInvite(HttpServletRequest req, HttpSession session,
+			RedirectAttributes ra, @PathVariable(value = "page") Integer page) {
+		log.info("----- getSentJob -----");
+		User user = (User) session.getAttribute(Constants.USER);
+		if (!user.getIdentity().equals(Identity.PERSON.toString())) {
+			ra.addFlashAttribute("message", "权限不足!");
+			ra.addFlashAttribute("messageType", "0");
+			return "/user/goCenter";
+		}
+		
+		List<Record> recordList = personService.getSengetReceivedInvitetJob(user.getId(), page,
+				Constants.SIZE);
+		req.setAttribute("recordList", recordList);
+		int totalCount = personService.getSengetReceivedInvitetJobCount(user.getId());
+		req.setAttribute("totalCount", totalCount);
+		req.setAttribute("currentPage", page);
+		req.setAttribute(
+				"totalPages",
+				totalCount % Constants.SIZE == 0 ? (totalCount / Constants.SIZE)
+						: (totalCount / Constants.SIZE + 1));
+		return "person/invite-record";
+	}
 
 	// 保存工作经历
 	@RequestMapping("/saveExperience")

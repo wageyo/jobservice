@@ -22,6 +22,10 @@
 		<association property="area" javaType="Parameter" resultMap="ResultArea" />
 	</resultMap>
 	
+	<sql id="base_column">
+		p.id as p_id, p.name as p_name, p.value as p_value, p.type as p_type, p.mark as p_mark,
+ 		a.code as a_code, a.name as a_name, a.pyname as a_pyName, a.abbr as a_abbr, a.mark as a_mark
+	</sql>
 	<!-- insert -->
 	<insert id="save" parameterType="Parameter" >
 		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
@@ -84,16 +88,14 @@
 	
 	<!-- get by id -->
 	<select id="getById" resultMap="ResultParameter" parameterType="java.lang.String">
-		select p.id as p_id, p.name as p_name, p.value as p_value, p.type as p_type, p.mark as p_mark,
-		 		a.code as a_code, a.name as a_name, a.pyname as a_pyName, a.abbr as a_abbr, a.mark as a_mark
+		select <include refid="base_column" />
 		from parameter as p, area as a 
 		where p.acode = a.code and p.id = #{id}
 	</select>
 	
 	<!-- get by param -->
 	<select id="getByParam" resultMap="ResultParameter" parameterType="Parameter">
-		select p.id as p_id, p.name as p_name, p.value as p_value, p.type as p_type, p.mark as p_mark,
-		 		a.code as a_code, a.name as a_name, a.pyname as a_pyName, a.abbr as a_abbr, a.mark as a_mark
+		select <include refid="base_column" />
 		from parameter as p, area as a 
 		<trim prefix="where" prefixOverrides="and|or">
 			p.acode = a.code 
@@ -112,12 +114,12 @@
 				</if>
 			</if>
 		</trim>
+		order by p.type, p.id asc;
 	</select>
 	
 	<!-- get by obj -->
 	<select id="getByObj" resultMap="ResultParameter" parameterType="Parameter">
-		select p.id as p_id, p.name as p_name, p.value as p_value, p.type as p_type, p.mark as p_mark,
-		 		a.code as a_code, a.name as a_name, a.pyname as a_pyName, a.abbr as a_abbr, a.mark as a_mark
+		select <include refid="base_column" />
 		from parameter as p, area as a 
 		<trim prefix="where" prefixOverrides="and|or">
 			p.acode = a.code 
@@ -136,12 +138,12 @@
 				</if>
 			</if>
 		</trim>
+		order by p.type, p.id asc;
 	</select>
 	
 	<!-- get by page -->
 	<select id="getByPage" resultMap="ResultParameter" parameterType="map">
-		select p.id as p_id, p.name as p_name, p.value as p_value, p.type as p_type, p.mark as p_mark,
-		 		a.code as a_code, a.name as a_name, a.pyname as a_pyName, a.abbr as a_abbr, a.mark as a_mark
+		select <include refid="base_column" />
 		from parameter as p, area as a 
 		<trim prefix="where" prefixOverrides="and|or">
 			p.acode = a.code 
@@ -162,7 +164,7 @@
 				</if>
 			</if>
 		</trim>
-		order by id desc;
+		order by type, id asc;
 	</select>
 	
 	<!-- get by type -->

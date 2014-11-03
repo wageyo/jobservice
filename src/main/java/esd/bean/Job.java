@@ -1,5 +1,7 @@
 package esd.bean;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,22 +23,30 @@ public class Job extends PrimaryKey {
 	private String provideBenefit; // 工资和其他福利
 	private String contactPerson; // 联系人
 	private String contactTel; // 联系电话
-	private String contactEmail; // 邮箱
+	private String contactEmail; // 联系邮箱
 	private Integer viewCount; // 被浏览次数
 	private String nature; // 职位性质
-	private String effectiveTime; // 有效期
+	private Integer effectiveDays; // 有效天数--提供给前台传递后台 数据使用,返回前台时, 则表示剩余天数
+	private Boolean isActiveEffectiveTime; // 是否查询 超过有效期--查询使用, 表示是否开启有效天数 使用
+	private Date effectiveTime; // 岗位有效日期截至
+
+	private String workPlace; // 工作地
 	private boolean bed; // 是否提供住宿
 	private boolean lunch; // 是否提供工作餐
 	private String checkStatus; // 是否显示/是否通过审核
 	private String mark; // 关键字
-	private String workPlace; // 工作地
 
-	private Area area; // 职位所属地区外键
 	private Company company; // 归属公司
+	private Area area; // 职位所属地区外键
 	private JobCategory jobCategory; // 职位类别
+
 	// 显示用
 	private String salaryScope; // 查询用的salary范围
 
+	public Job(){}
+	public Job(Integer id){
+		super.setId(id);
+	}
 	@Override
 	public String toString() {
 		return "Job [name=" + name + ", hireNumber=" + hireNumber + ", salary="
@@ -46,18 +56,12 @@ public class Job extends PrimaryKey {
 				+ ", contactPerson=" + contactPerson + ", contactTel="
 				+ contactTel + ", contactEmail=" + contactEmail
 				+ ", viewCount=" + viewCount + ", nature=" + nature
-				+ ", effectiveTime=" + effectiveTime + ", bed=" + bed
-				+ ", lunch=" + lunch + ", checkStatus=" + checkStatus
-				+ ", mark=" + mark + ", area=" + area + ", company=" + company
-				+ ", jobCategory=" + jobCategory + ", salaryScope="
-				+ salaryScope + "]";
-	}
-
-	public Job() {
-	}
-
-	public Job(Integer id) {
-		this.setId(id);
+				+ ", effectiveDays=" + effectiveDays + ", isActiveEffectiveTime="
+				+ isActiveEffectiveTime + ", effectiveTime=" + effectiveTime
+				+ ", workPlace=" + workPlace + ", bed=" + bed + ", lunch="
+				+ lunch + ", checkStatus=" + checkStatus + ", mark=" + mark
+				+ ", company=" + company + ", area=" + area + ", jobCategory="
+				+ jobCategory + ", salaryScope=" + salaryScope + "]";
 	}
 
 	public String getName() {
@@ -100,14 +104,6 @@ public class Job extends PrimaryKey {
 		this.experience = experience;
 	}
 
-	public String getProvideBenefit() {
-		return provideBenefit;
-	}
-
-	public void setProvideBenefit(String provideBenefit) {
-		this.provideBenefit = provideBenefit;
-	}
-
 	public String getGender() {
 		return gender;
 	}
@@ -122,6 +118,14 @@ public class Job extends PrimaryKey {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getProvideBenefit() {
+		return provideBenefit;
+	}
+
+	public void setProvideBenefit(String provideBenefit) {
+		this.provideBenefit = provideBenefit;
 	}
 
 	public String getContactPerson() {
@@ -164,12 +168,36 @@ public class Job extends PrimaryKey {
 		this.nature = nature;
 	}
 
-	public String getEffectiveTime() {
+	public Integer getEffectiveDays() {
+		return effectiveDays;
+	}
+
+	public void setEffectiveDays(Integer effectiveDays) {
+		this.effectiveDays = effectiveDays;
+	}
+
+	public Boolean getIsActiveEffectiveTime() {
+		return isActiveEffectiveTime;
+	}
+
+	public void setIsActiveEffectiveTime(Boolean isActiveEffectiveTime) {
+		this.isActiveEffectiveTime = isActiveEffectiveTime;
+	}
+
+	public Date getEffectiveTime() {
 		return effectiveTime;
 	}
 
-	public void setEffectiveTime(String effectiveTime) {
+	public void setEffectiveTime(Date effectiveTime) {
 		this.effectiveTime = effectiveTime;
+	}
+
+	public String getWorkPlace() {
+		return workPlace;
+	}
+
+	public void setWorkPlace(String workPlace) {
+		this.workPlace = workPlace;
 	}
 
 	public boolean isBed() {
@@ -204,20 +232,20 @@ public class Job extends PrimaryKey {
 		this.mark = mark;
 	}
 
-	public Area getArea() {
-		return area;
-	}
-
-	public void setArea(Area area) {
-		this.area = area;
-	}
-
 	public Company getCompany() {
 		return company;
 	}
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
 	}
 
 	public JobCategory getJobCategory() {
@@ -234,14 +262,6 @@ public class Job extends PrimaryKey {
 
 	public void setSalaryScope(String salaryScope) {
 		this.salaryScope = salaryScope;
-	}
-
-	public String getWorkPlace() {
-		return workPlace;
-	}
-
-	public void setWorkPlace(String workPlace) {
-		this.workPlace = workPlace;
 	}
 
 }

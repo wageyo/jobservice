@@ -1,23 +1,29 @@
 package esd.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.octo.captcha.service.CaptchaServiceException;
 
-import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.User;
 import esd.controller.Constants.Identity;
@@ -62,11 +68,11 @@ public class UserController {
 		}
 		log.info("areaCode " + req.getParameter("area.code") + " || "
 				+ user.getArea());
-//		if (user != null) {
-//			if (user.getArea() == null) {
-//				user.setArea(new Area("30230103"));
-//			}
-//		}
+		// if (user != null) {
+		// if (user.getArea() == null) {
+		// user.setArea(new Area("30230103"));
+		// }
+		// }
 		String identity = user.getIdentity();
 		if (Constants.Identity.SUPERADMIN.toString().equals(identity)) {
 			user.setAuthority(Constants.Authority.SUPERADMIN.getValue());
@@ -243,4 +249,81 @@ public class UserController {
 		return "/" + user.getIdentity() + "/index";
 	}
 
+	/**
+	 * 接收上传的的头像图片
+	 * 
+	 * @param pic
+	 * @param session
+	 */
+	@RequestMapping(value = "/uploadPic", method = RequestMethod.POST)
+	public void importPic(@RequestParam("pic") CommonsMultipartFile pic,
+			HttpServletResponse response, HttpSession session)
+			throws IOException {
+		// ① response 输出相应内容
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter writer = response.getWriter();
+		if (pic == null) {
+			writer.write(Constants.NOTICE + ":" + "网络发生错误, 上传照片失败.");
+			return;
+		}
+		User user = (User) session.getAttribute(Constants.USER);
+		user = userService.getById(user.getId());
+		//要更新的对象
+		User tempUser = new User();
+		tempUser.setId(user.getId());
+		tempUser.setUpdateCheck(user.getUpdateCheck());
+		tempUser.setHeadImage(pic.getBytes());
+		boolean bl = userService.update(tempUser);
+		if (bl) {
+			writer.write(Constants.Notice.SUCCESS.toString());
+		} else {
+			writer.write(Constants.NOTICE + ":" + "上传图片失败");
+		}
+	}
+
+	/**
+	 * 上传图片超出最大值时, 弹出的异常
+	 * 
+	 * @param ex
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@ExceptionHandler(Exception.class)
+	public void handlerException(Exception ex, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		response.setContentType("text/html;charset=utf8");
+		String notice = "error";
+		if (ex instanceof MaxUploadSizeExceededException) {
+			notice = "文件大小不超过"
+					+ getFileMB(((MaxUploadSizeExceededException) ex)
+							.getMaxUploadSize());
+		} else {
+			notice = "上传文件出现错误,错误信息:" + ex.getMessage();
+		}
+		PrintWriter writer = response.getWriter();
+		writer.write(notice);
+	}
+
+	/**
+	 * 字节转为MB 方法
+	 * 
+	 * @param byteFile
+	 * @return
+	 */
+	private String getFileMB(long byteFile) {
+		if (byteFile == 0) {
+			return "0MB";
+		}
+		long mb = 1024 * 1024;
+		return "" + byteFile / mb + "MB";
+	}
+	
+	// 得到上传头像图片的方法
+	@RequestMapping("/downloadPic/{id}")
+	@ResponseBody
+	public byte[] viewWorkerPicGet(@PathVariable(value="id") Integer id) {
+		byte[] entity = userService.getHeadImage(id);
+		return entity;
+	}
 }

@@ -13,14 +13,16 @@ public class User extends PrimaryKey {
 
 	private String loginName; // 账号
 	private String passWord; // 密码
-	private String identity; // 账号类型
 	private String email; // 注册的邮箱
 	private String phone; // 联系电话
-	private Area area;
+	private String identity; // 账号类型:admin-管理员用户,individual-个人用户,company-公司用户,sa-超级管理员账号
 	private String checkStatus; // 审核状态
-	private Integer authority; // 权限值
-	private String title; // 标题
-	private String nickName; // 昵称
+	private Integer authority; // 权限： 999为管理员权限
+	private String title; // 个性标题名
+	private String nickName; // 用户昵称
+	private String headTitle; // 用户头像图片名
+	private byte[] headImage;// 用户头像图片
+	private Area area;// 账号所属地地区外键
 
 	public User() {
 	}
@@ -36,15 +38,6 @@ public class User extends PrimaryKey {
 	public User(String loginName, String passWord) {
 		this.loginName = loginName;
 		this.passWord = passWord;
-	}
-
-	@Override
-	public String toString() {
-		return "User [loginName=" + loginName + ", passWord=" + passWord
-				+ ", identity=" + identity + ", email=" + email + ", phone="
-				+ phone + ", area=" + area + ", checkStatus=" + checkStatus
-				+ ", authority=" + authority + ", title=" + title
-				+ ", nickName=" + nickName + "]";
 	}
 
 	public String getLoginName() {
@@ -63,14 +56,6 @@ public class User extends PrimaryKey {
 		this.passWord = passWord;
 	}
 
-	public String getIdentity() {
-		return identity;
-	}
-
-	public void setIdentity(String identity) {
-		this.identity = identity;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -87,12 +72,12 @@ public class User extends PrimaryKey {
 		this.phone = phone;
 	}
 
-	public Area getArea() {
-		return area;
+	public String getIdentity() {
+		return identity;
 	}
 
-	public void setArea(Area area) {
-		this.area = area;
+	public void setIdentity(String identity) {
+		this.identity = identity;
 	}
 
 	public String getCheckStatus() {
@@ -125,6 +110,30 @@ public class User extends PrimaryKey {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public String getHeadTitle() {
+		return headTitle;
+	}
+
+	public void setHeadTitle(String headTitle) {
+		this.headTitle = headTitle;
+	}
+
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
+
+	public byte[] getHeadImage() {
+		return headImage;
+	}
+
+	public void setHeadImage(byte[] headImage) {
+		this.headImage = headImage;
 	}
 
 }

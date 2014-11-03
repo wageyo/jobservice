@@ -111,7 +111,7 @@
 							</tr>
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span><b> 有效期 ：</b></td>
-								<td align="left"><select name="effectiveTime" id="effectiveTime" class="select_border">
+								<td align="left"><select name="effectiveDays" id="effectiveDays" class="select_border">
 										<c:forEach items="${params }" var="p">
 											<c:if test="${p.type == 'effectiveTime' }">
 												<option value="${p.value }">${p.name }</option>
@@ -135,16 +135,21 @@
 							</tr>
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span><b> 工作种类 ：</b></td>
-								<td align="left"><select name="jobCategory_lv1" id="jobCategory_lv1" class="select_border" style="width:150px;">
+								<td align="left">
+									<select name="jobCategory_lv1" id="jobCategory_lv1" class="select_border" style="width:150px;">
 										<c:forEach items="${jcList }" var="p">
 											<option value="${p.code }">${p.name }</option>
 										</c:forEach>
-								</select> <select name="jobCategory_lv2" id="jobCategory_lv2" class="select_border" style="width:150px;">
+									</select> 
+									<select name="jobCategory_lv2" id="jobCategory_lv2" class="select_border" style="width:150px;">
 										<option value="">请选择</option>
-								</select> <select name="jobCategory.code" id="jobCategory_lv3" class="select_border" style="width:150px;">
+									</select> 
+									<select name="jobCategory_lv3" id="jobCategory_lv3" class="select_border" style="width:150px;">
 										<option value="">请选择</option>
-								</select>
-									<p style="color:red;text-indent: 1em;">请选择具体的职位</p>
+									</select>
+									<input type="hidden" name="jobCategory.code" id="jobCategoryCode" value="" />
+									
+								<!-- 	<p style="color:red;text-indent: 1em;">请选择具体的职位</p>	 -->
 								</td>
 							</tr>
 							<tr>

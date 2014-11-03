@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -52,8 +53,14 @@
 							<tr style="border-bottom: 1px solid rgb(164, 218, 183);">
 								<td align="center" height="30px;">${i.index + 1 }</td>
 								<td align="center"><a href="${contextPath }/resume/getOneForShow?id=${resume.id}">${resume.title }</a></td>
-								<td align="center">${resume.createDate }</td>
-								<td align="center">${resume.updateDate }</td>
+								<c:if test="${resume.createDate!=null}">
+									<fmt:formatDate value="${resume.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm" var="createDate" />
+								</c:if>
+								<c:if test="${resume.updateDate!=null}">
+									<fmt:formatDate value="${resume.updateDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm" var="updateDate" />
+								</c:if>
+								<td align="center">${createDate }</td>
+								<td align="center">${updateDate }</td>
 								<td align="center">${resume.checkStatus }</td>
 								<td align="center"><a href="${contextPath }/secure/resume/update?id=${resume.id}">修改</a>&nbsp;&nbsp; <a href="javascript:void(0);" onclick="deleteresume('${resume.id}','${resume.title }')">删除</a></td>
 							</tr>

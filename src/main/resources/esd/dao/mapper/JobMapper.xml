@@ -3,189 +3,369 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="esd.dao.JobDao">
 
-	<!-- 查询Area 地名 -->
+	<!-- result map of Area -->
 	<resultMap id="ResultArea" type="Area">
-		<id column="a_code" property="code" />
-		<result column="a_name" property="name" />
-		<result column="a_pyName" property="pyName" />
-		<result column="a_abbr" property="abbr" />
-		<result column="a_mark" property="mark" />
+		<id column="a_code" property="code" jdbcType="VARCHAR" />
+		<result column="a_name" property="name" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<!-- 查询JobCategory 职位种类 -->
+	<!-- result map of JobCategory -->
 	<resultMap id="ResultJobCategory" type="JobCategory">
-		<id column="jc_code" property="code" />
-		<result column="jc_name" property="name" />
-		<result column="jc_mark" property="mark" />
+		<id column="jc_code" property="code" jdbcType="VARCHAR" />
+		<result column="jc_name" property="name" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<!-- 查询Job 职位  -->
+	<!-- result map of Job -->
 	<resultMap id="ResultJob" type="Job">
-		<id column="j_id" property="id" />
-		<result column="j_createDate" property="createDate" />
-		<result column="j_updateCheck" property="updateCheck" />
-		<result column="j_updateDate" property="updateDate" />
-		<result column="j_name" property="name" />
-		<result column="j_hireNumber" property="hireNumber" />
-		<result column="j_salary" property="salary" />
-		<result column="j_education" property="education" />
-		<result column="j_experience" property="experience" />
-		<result column="j_gender" property="gender" />
-		<result column="j_description" property="description"/>
-		<result column="j_provideBenefit" property="provideBenefit"/>
-		<result column="j_contactPerson" property="contactPerson" />
-		<result column="j_contactTel" property="contactTel" />
-		<result column="j_contactEmail" property="contactEmail" />
-		<result column="j_viewCount" property="viewCount" />
-		<result column="j_nature" property="nature" />
-		<result column="j_effectiveTime" property="effectiveTime" />
-		<result column="j_workPlace" property="workPlace" />
-		<result column="j_bed" property="bed" />
-		<result column="j_lunch" property="lunch" />
-		<result column="j_checkStatus" property="checkStatus" />
-		<result column="j_mark" property="mark" />
-		<association property="company" javaType="Company" resultMap="ResultCompany" />
-		<association property="area" javaType="Area" resultMap="ResultArea" />
-		<association property="jobCategory" javaType="JobCategory" resultMap="ResultJobCategory" />
+		<id column="j_id" property="id" jdbcType="INTEGER" />
+		<result column="j_create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="j_update_check" property="updateCheck" jdbcType="VARCHAR" />
+		<result column="j_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="j_log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="j_name" property="name" jdbcType="VARCHAR" />
+		<result column="j_hire_number" property="hireNumber" jdbcType="INTEGER" />
+		<result column="j_salary" property="salary" jdbcType="VARCHAR" />
+		<result column="j_education" property="education" jdbcType="VARCHAR" />
+		<result column="j_experience" property="experience" jdbcType="VARCHAR" />
+		<result column="j_gender" property="gender" jdbcType="VARCHAR" />
+		<result column="j_description" property="description" jdbcType="VARCHAR" />
+		<result column="j_provide_benefit" property="provideBenefit" jdbcType="VARCHAR" />
+		<result column="j_contact_person" property="contactPerson" jdbcType="VARCHAR" />
+		<result column="j_contact_tel" property="contactTel" jdbcType="VARCHAR" />
+		<result column="j_contact_email" property="contactEmail" jdbcType="VARCHAR" />
+		<result column="j_view_count" property="viewCount" jdbcType="INTEGER" />
+		<result column="j_nature" property="nature" jdbcType="VARCHAR" />
+		<result column="j_effective_time" property="effectiveTime" jdbcType="TIMESTAMP" />
+		<result column="j_work_place" property="workPlace" jdbcType="VARCHAR" />
+		<result column="j_bed" property="bed" jdbcType="TINYINT" />
+		<result column="j_lunch" property="lunch" jdbcType="TINYINT" />
+		<result column="j_check_status" property="checkStatus" jdbcType="VARCHAR" />
+		<result column="j_mark" property="mark" jdbcType="VARCHAR" />
+		<association property="company" javaType="Company" resultMap="ResultCompany" jdbcType="VARCHAR" />
+		<association property="area" javaType="Area" resultMap="ResultArea" jdbcType="VARCHAR" />
+		<association property="jobCategory" javaType="JobCategory" resultMap="ResultJobCategory" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<!-- 查询 Company 公司 -->
+	<!-- result map of Company -->
 	<resultMap id="ResultCompany" type="Company">
-		<id column="c_id" property="id" />
-		<result column="c_name" property="name" />
-		<result column="c_contactPerson" property="contactPerson" />
-		<result column="c_telephone" property="telephone" />
-		<result column="c_fax" property="fax" />
-		<result column="c_email" property="email" />
-		<result column="c_address" property="address" />
-		<result column="c_introduction" property="introduction" />
-		<result column="c_organizationCode" property="organizationCode" />
-		<result column="c_commercialCode" property="commercialCode" />
-	 	<result column="c_socialSecurityCode" property="socialSecurityCode" />
-		<result column="c_webSiteId" property="webSiteId" />
-		<result column="c_laoWangCode" property="laoWangCode" />
-		<result column="c_scale" property="scale" />
-		<result column="c_nature" property="nature" />
-		<result column="c_viewCount" property="viewCount" />
+		<id column="c_id" property="id" jdbcType="INTEGER"  />
+		<result column="c_create_date" property="createDate" jdbcType="TIMESTAMP"  />
+		<result column="c_update_check" property="updateCheck" jdbcType="VARCHAR"  />
+		<result column="c_update_date" property="updateDate"  jdbcType="TIMESTAMP" />
+		<result column="c_log_user" property="logUser"  jdbcType="VARCHAR" />
+		<result column="c_name" property="name" jdbcType="VARCHAR"  />
+		<result column="c_corporate_representative" property="corporateRepresentative" jdbcType="VARCHAR"  />
+		<result column="c_contact_person" property="contactPerson" jdbcType="VARCHAR" />
+		<result column="c_telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="c_contact_dept" property="contactDept" jdbcType="VARCHAR" />
+		<result column="c_fax" property="fax" jdbcType="VARCHAR" />
+		<result column="c_email" property="email" jdbcType="VARCHAR" />
+		<result column="c_address" property="address" jdbcType="VARCHAR" />
+		<result column="c_introduction" property="introduction" jdbcType="VARCHAR" />
+		<result column="c_organization_code" property="organizationCode" jdbcType="VARCHAR" />
+		<result column="c_commercial_code" property="commercialCode" jdbcType="VARCHAR" />
+		<result column="c_tax_code" property="taxCode" jdbcType="VARCHAR" />
+		<result column="c_social_security_code" property="socialSecurityCode" jdbcType="VARCHAR" />
+		<result column="c_web_site_id" property="webSiteId" jdbcType="VARCHAR" />
+		<result column="c_lao_wang_code" property="laoWangCode" jdbcType="VARCHAR" />
+		<result column="c_scale" property="scale" jdbcType="VARCHAR" />
+		<result column="c_nature" property="nature" jdbcType="VARCHAR" />
+		<result column="c_economy_type" property="economyType" jdbcType="VARCHAR" />
+		<result column="c_remark" property="remark" jdbcType="VARCHAR" />
+		<result column="c_view_count" property="viewCount" jdbcType="INTEGER" />
+		<result column="c_check_status" property="checkStatus" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="base_column">
-		job.id as j_id,	job.createDate as j_createDate, job.updateCheck as j_updateCheck, job.updateDate as j_updateDate, job.name as j_name, job.hireNumber as j_hireNumber, job.salary as j_salary, job.education as j_education, job.experience as j_experience, job.gender as j_gender, job.description as j_description, job.provideBenefit as j_provideBenefit,job.contactPerson as j_contactPerson, job.contactTel as j_contactTel, job.contactEmail as j_contactEmail, job.viewCount as j_viewCount, job.nature as j_nature, job.effectiveTime as j_effectiveTime, job.workPlace as j_workPlace, job.bed as j_bed, job.lunch as j_lunch, job.checkstatus as j_checkStatus, job.mark as j_mark,  
-			c.id as c_id, c.name as c_name, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.viewCount as c_viewCount, 
-			a.code as a_code, a.name as a_name, a.mark as a_mark, 
-			jc.code as jc_code, jc.name as jc_name, jc.mark as jc_mark
+		job.id as j_id,	job.create_date as j_create_date, job.update_check as j_update_check, job.update_date as j_update_date, job.log_user as j_log_user,
+			job.name as j_name, job.hire_number as j_hire_number, job.salary as j_salary, job.education as j_education, 
+			job.experience as j_experience, job.gender as j_gender, job.description as j_description, 
+			job.provide_benefit as j_provide_benefit,job.contact_person as j_contact_person, job.contact_tel as j_contact_tel, 
+			job.contact_email as j_contact_email, job.view_count as j_view_count, job.nature as j_nature, job.effective_time as j_effective_time, 
+			job.work_place as j_work_place, job.bed as j_bed, job.lunch as j_lunch, job.check_status as j_check_status, job.mark as j_mark,  
+		c.id as c_id, c.create_date as c_create_date, c.update_check as c_update_check, c.update_date as c_update_date, c.log_user as c_log_user,
+			c.name as c_name, c.corporate_representative as c_corporate_representative, c.contact_person as c_contact_person, 
+			c.telephone as c_telephone, c.contact_dept as c_contact_dept, c.fax as c_fax, c.email as c_email, c.address as c_address, 
+			c.introduction as c_introduction, c.organization_code as c_organization_code, c.commercial_code as c_commercial_code, 
+			c.tax_code as c_tax_code, c.social_security_code as c_social_security_code, c.web_site_id as c_web_site_id, 
+			c.lao_wang_code as c_lao_wang_code, c.scale as c_scale, c.nature as c_nature, c.economy_type as c_economy_type, 
+			c.remark c_remark, c.view_count as c_view_count, c.check_status as c_check_status,
+		a.code as a_code, a.name as a_name,
+		jc.code as jc_code, jc.name as jc_name 
+	</sql>
+
+	<sql id="from_table">
+		job left join company as c on job.cid = c.id 
+			left join area as a on job.acode =a.code 
+			left join job_category as jc on job.jccode = jc.code  
 	</sql>
 	
 	<!-- insert -->
-	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
-	<insert id="save" parameterType="Job"
-		useGeneratedKeys="true" keyProperty="id">
-		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
+	<insert id="save" parameterType="Job" useGeneratedKeys="true" keyProperty="id">
 		<selectKey resultType="java.lang.Integer" order="AFTER"
 			keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into 
-		job(createDate,updateCheck,updateDate,name,hireNumber,salary,education,experience,gender,description,provideBenefit, contactPerson,contactTel,contactEmail,viewCount,nature,effectiveTime,workPlace,bed,lunch,checkstatus,mark,cid,acode,jccode)
-		values(now(),0,now(),#{name},#{hireNumber},#{salary},#{education},#{experience},#{gender},#{description},#{provideBenefit},#{contactPerson},#{contactTel},#{contactEmail},#{viewCount},#{nature},#{effectiveTime},#{workPlace},#{bed},#{lunch},#{checkStatus},#{mark},#{company.id},#{area.code},#{jobCategory.code})
+		insert into job
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="name != null and name != ''">
+				name,
+			</if>
+			<if test="hireNumber != null and hireNumber > 0">
+				hire_number,
+			</if>
+			<if test="salary != null and salary != ''">
+				salary,
+			</if>
+			<if test="education != null and education != ''">
+				education,
+			</if>
+			<if test="experience != null and experience != ''">
+				experience,
+			</if>
+			<if test="gender != null and gender != ''">
+				gender,
+			</if>
+			<if test="description != null and description != ''">
+				description,
+			</if>
+			<if test="provideBenefit != null and provideBenefit != ''">
+				provide_benefit,
+			</if>
+			<if test="contactPerson != null and contactPerson != ''">
+				contact_person,
+			</if>
+			<if test="contactTel != null and contactTel != ''">
+				contact_tel,
+			</if>
+			<if test="contactEmail != null and contactEmail != ''">
+				contact_email,
+			</if>
+			view_count,
+			<if test="nature != null and nature != ''">
+				nature,
+			</if>
+			<if test="effectiveTime != null">
+				effective_time,
+			</if>
+			<if test="workPlace != null and workPlace != ''">
+				work_place,
+			</if>
+			<if test="bed != null">
+				bed,
+			</if>
+			<if test="lunch != null">
+				lunch,
+			</if>
+			<if test="checkStatus != null and checkStatus != ''">
+				check_status,
+			</if>
+			<if test="mark != null and mark != ''">
+				mark,
+			</if>
+			<if test="company != null">
+				<if test="company.id != null and company.id > 0">
+					cid,
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode,
+				</if>
+			</if>
+			<if test="jobCategory != null">
+				<if test="jobCategory.code != null and jobCategory.code != ''">
+					jccode
+				</if>
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null and name != ''">
+				#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="hireNumber != null and hireNumber > 0">
+				#{hireNumber, jdbcType=INTEGER},
+			</if>
+			<if test="salary != null and salary != ''">
+				#{salary, jdbcType=VARCHAR},
+			</if>
+			<if test="education != null and education != ''">
+				#{education, jdbcType=VARCHAR},
+			</if>
+			<if test="experience != null and experience != ''">
+				#{experience, jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null and gender != ''">
+				#{gender, jdbcType=VARCHAR},
+			</if>
+			<if test="description != null and description != ''">
+				#{description, jdbcType=VARCHAR},
+			</if>
+			<if test="provideBenefit != null and provideBenefit != ''">
+				#{provideBenefit, jdbcType=VARCHAR},
+			</if>
+			<if test="contactPerson != null and contactPerson != ''">
+				#{contactPerson, jdbcType=VARCHAR},
+			</if>
+			<if test="contactTel != null and contactTel != ''">
+				#{contactTel, jdbcType=VARCHAR},
+			</if>
+			<if test="contactEmail != null and contactEmail != ''">
+				#{contactEmail, jdbcType=VARCHAR},
+			</if>
+			default,
+			<if test="nature != null and nature != ''">
+				#{nature, jdbcType=VARCHAR},
+			</if>
+			<if test="effectiveTime != null">
+				#{effectiveTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="workPlace != null and workPlace != ''">
+				#{workPlace, jdbcType=VARCHAR},
+			</if>
+			<if test="bed != null">
+				#{bed, jdbcType=TINYINT},
+			</if>
+			<if test="lunch != null">
+				#{lunch, jdbcType=TINYINT},
+			</if>
+			<if test="checkStatus != null and checkStatus != ''">
+				#{checkStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null and mark != ''">
+				#{mark, jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				<if test="company.id != null and company.id > 0">
+					#{company.id, jdbcType=INTEGER},
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR},
+				</if>
+			</if>
+			<if test="jobCategory != null">
+				<if test="jobCategory.code != null and jobCategory.code != ''">
+					#{jobCategory.code, jdbcType=VARCHAR}
+				</if>
+			</if>
+		</trim>
 	</insert>
 
 	<!-- delete -->
-	<delete id="delete" parameterType="int">
-		delete from job where id = #{id}
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from job where id = #{id, jdbcType=INTEGER}
 	</delete>
 	
 	<!-- update -->
 	<update id="update" parameterType="Job">
 		update job
 		<trim prefix="set" suffixOverrides=",">
-			updateDate=now(),
-			<if test="name != null ">
-				name=#{name},
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
 			</if>
-			<if test="hireNumber != null ">
-				hireNumber=#{hireNumber},
+			<if test="name != null and name != ''">
+				name = #{name, jdbcType=VARCHAR},
 			</if>
-			<if test="salary != null ">
-				salary=#{salary},
+			<if test="hireNumber != null and hireNumber > 0">
+				hire_number = #{hireNumber, jdbcType=INTEGER},
 			</if>
-			<if test="education != null ">
-				education=#{education},
+			<if test="salary != null and salary != ''">
+				salary = #{salary, jdbcType=VARCHAR},
 			</if>
-			<if test="experience != null ">
-				experience=#{experience},
+			<if test="education != null and education != ''">
+				education = #{education, jdbcType=VARCHAR},
 			</if>
-			<if test="gender != null ">
-				gender=#{gender},
+			<if test="experience != null and experience != ''">
+				experience = #{experience, jdbcType=VARCHAR},
 			</if>
-			<if test="description != null ">
-				description=#{description},
+			<if test="gender != null and gender != ''">
+				gender = #{gender, jdbcType=VARCHAR},
 			</if>
-			<if test="provideBenefit != null ">
-				provideBenefit=#{provideBenefit},
+			<if test="description != null and description != ''">
+				description = #{description, jdbcType=VARCHAR},
 			</if>
-			<if test="contactPerson != null ">
-				contactPerson=#{contactPerson},
+			<if test="provideBenefit != null and provideBenefit != ''">
+				provide_benefit = #{provideBenefit, jdbcType=VARCHAR},
 			</if>
-			<if test="contactTel != null ">
-				contactTel=#{contactTel},
+			<if test="contactPerson != null and contactPerson != ''">
+				contact_person = #{contactPerson, jdbcType=VARCHAR},
 			</if>
-			<if test="contactEmail != null ">
-				contactEmail=#{contactEmail},
+			<if test="contactTel != null and contactTel != ''">
+				contact_tel = #{contactTel, jdbcType=VARCHAR},
 			</if>
-			<if test="viewCount != null ">
-				viewCount=#{viewCount},
+			<if test="contactEmail != null and contactEmail != ''">
+				contact_email = #{contactEmail, jdbcType=VARCHAR},
 			</if>
-			<if test="nature != null ">
-				nature=#{nature},
+			<if test="viewCount != null and viewCount > 0">
+				view_count = #{viewCount, jdbcType=VARCHAR},
 			</if>
-			<if test="effectiveTime != null ">
-				effectiveTime=#{effectiveTime},
+			<if test="nature != null and nature != ''">
+				nature = #{nature, jdbcType=VARCHAR},
 			</if>
-			<if test="workPlace != null">
-				workPlace = #{workPlace},
+			<if test="effectiveTime != null">
+				effective_time = #{effectiveTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="workPlace != null and workPlace != ''">
+				work_place = #{workPlace, jdbcType=VARCHAR},
 			</if>
 			<if test="bed != null">
-				bed = #{bed},
+				bed = #{bed, jdbcType=TINYINT},
 			</if>
 			<if test="lunch != null">
-				lunch = #{lunch},
+				lunch = #{lunch, jdbcType=TINYINT},
 			</if>
-			<if test="checkStatus != null">
-				checkstatus = #{checkStatus},
+			<if test="checkStatus != null and checkStatus != ''">
+				check_status = #{checkStatus, jdbcType=VARCHAR},
 			</if>
-			<if test="mark != null ">
-				mark=#{mark},
+			<if test="mark != null and mark != ''">
+				mark = #{mark, jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				<if test="company.id != null and company.id > 0">
+					cid = #{company.id, jdbcType=INTEGER},
+				</if>
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode=#{area.code},
+					acode = #{area.code, jdbcType=VARCHAR},
 				</if>
 			</if>
 			<if test="jobCategory != null">
 				<if test="jobCategory.code != null and jobCategory.code != ''">
-					jccode=#{jobCategory.code}
+					jccode = #{jobCategory.code, jdbcType=VARCHAR},
 				</if>
 			</if>
+			update_check = update_check + 1 
 		</trim>
-		where id= #{id}
+		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
 	<!-- get by id -->
-	<select id="getById" resultMap="ResultJob" parameterType="int">
-		select
-			<include refid="base_column"/>
-		from job,area as a,company as c, jobcategory as jc
-		where job.acode = a.code and job.cid = c.id and job.jccode = jc.code and job.id = #{id}
+	<select id="getById" resultMap="ResultJob" parameterType="java.lang.Integer">
+		select <include refid="base_column"/>
+		from <include refid="from_table"/>
+		where job.id = #{id, jdbcType=INTEGER}
 	</select>
 
 	<!-- get By Obj -->
 	<select id="getByObj" resultMap="ResultJob" parameterType="Job">
 		select
 			<include refid="base_column"/> 
-		from job,area as a,company as c, jobcategory as jc
+		from <include refid="from_table"/>
 		<trim prefix="where" prefixOverrides="and|or">
-			job.acode = a.code and job.cid = c.id and job.jccode = jc.code
 			<if test="name != null and name != ''">
 				and job.name like concat('%',#{name},'%')
 			</if>
@@ -210,20 +390,19 @@
 		order by job.createDate desc
 	</select>
 
-	<!-- 多条件模糊查询职位信息 传递一个Job对象,里面的其中必要的属性值为条件-->
 	<select id="getByPage" resultMap="ResultJob" parameterType="map">
 		select
 			<include refid="base_column"/>
-		from job,area as a,company as c, jobcategory as jc
+		from <include refid="from_table"/>
 		<trim prefix="where" prefixOverrides="and|or">
-			job.acode = a.code and job.cid = c.id and job.jccode = jc.code 
 			<if test="job != null">
 				<if test="job.name != null and job.name != ''">
  					and job.name like concat('%',#{job.name},'%')
  				</if>
 				<if test="job.jobCategory != null ">
 					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
-						and jc.code like concat('%',#{job.jobCategory.code},'%')
+					<!-- 	and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
+						and ${job.jobCategory.code, jdbcType=VARCHAR}
 					</if>
 				</if>
  				<if test="job.education != null and job.education !=''">
@@ -244,32 +423,41 @@
  					and job.salary = #{job.salary}
  				</if>
  				<if test="job.checkStatus != null and job.checkStatus != ''">
- 					and job.checkstatus = #{job.checkStatus} 
+ 					and job.check_status = #{job.checkStatus} 
  				</if>
  				<if test="job.company != null">
  					<if test="job.company.id > 0">
  						and job.cid = #{job.company.id}
  					</if>
  				</if>
+ 				<choose>
+					<when test="job.isActiveEffectiveTime == null">
+						and job.effective_time &gt;= now() 
+					</when>
+					<otherwise>
+						<if test="job.isActiveEffectiveTime == true">
+							and job.effective_time &gt;= now()
+						</if>
+					</otherwise>
+				</choose>
 			</if>
 		</trim>
-		order by job.createDate desc
-		limit #{start},#{size}
+		order by job.create_date
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 	
-	<!-- 查询有多少条数据 条件与getByPage一样-->
 	<select id="getTotalCount" resultType="int" parameterType="map">
 		select count(*)
-		from job,area as a,company as c, jobcategory as jc
+		from <include refid="from_table"/>
 		<trim prefix="where" prefixOverrides="and|or">
-			job.acode = a.code and job.cid = c.id and job.jccode = jc.code 
 			<if test="job != null">
 				<if test="job.name != null and job.name != ''">
  					and job.name like concat('%',#{job.name},'%')
  				</if>
 				<if test="job.jobCategory != null ">
 					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
-						and jc.code like concat('%',#{job.jobCategory.code},'%')
+						<!-- and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
+						and ${job.jobCategory.code, jdbcType=VARCHAR}
 					</if>
 				</if>
  				<if test="job.education != null and job.education !=''">
@@ -290,23 +478,32 @@
  					and job.salary = #{job.salary}
  				</if>
  				<if test="job.checkStatus != null and job.checkStatus != ''">
- 					and job.checkstatus = #{job.checkStatus} 
+ 					and job.check_status = #{job.checkStatus} 
  				</if>
  				<if test="job.company != null">
  					<if test="job.company.id > 0">
  						and job.cid = #{job.company.id}
  					</if>
  				</if>
+ 				<choose>
+					<when test="job.isActiveEffectiveTime == null">
+						and job.effective_time &gt;= now() 
+					</when>
+					<otherwise>
+						<if test="job.isActiveEffectiveTime == true">
+							and job.effective_time &gt;= now()
+						</if>
+					</otherwise>
+				</choose>
 			</if>
 		</trim>
 	</select>
 	
-	<!-- 根据Company id，获得该对象的所有Job-->
 	<!-- get by company -->
-	<select id="getByCompany" resultMap="ResultJob" parameterType="int">
+	<select id="getByCompany" resultMap="ResultJob" parameterType="java.lang.Integer">
 		select
 			<include refid="base_column"/>
-		from job,area as a,company as c, jobcategory as jc
-		where job.acode = a.code and job.cid = c.id and job.jccode = jc.code and job.cid = #{cid}
+		from <include refid="from_table"/>
+		where job.cid = #{cid, jdbcType=INTEGER}
 	</select>
 </mapper>

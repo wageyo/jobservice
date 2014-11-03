@@ -68,17 +68,17 @@ function resume_check() {
 		$('#disabilityPart').focus();
 		return false;
 	}
-	// 职位类别
-	var jobCategory_lv3 = $('#jobCategory_lv3').val();
-	if (jobCategory_lv3 == null || jobCategory_lv3 == '') {
-		alert('请选择具体的工作类别!');
+	// 职位类别--修改为只有第一级为必填
+	var jobCategory_lv1 = $('#jobCategory_lv1').val();
+	if (jobCategory_lv1 == null || jobCategory_lv1 == '' || jobCategory_lv1 == '10000000') {
+		alert('请选择工作类别!');
 		$('#jobCategory_lv1').focus();
 		return false;
 	}
-	// 地区
-	var area_lv3 = $('#area_lv3').val();
-	if (area_lv3 == null || area_lv3 == '') {
-		alert('请选择具体的期望工作地!');
+	// 地区--修改为只有第一级为必填
+	var area_lv1 = $('#area_lv1').val();
+	if (area_lv1 == null || area_lv1 == '' || area_lv1 == '10000000') {
+		alert('请选择期望工作地!');
 		$('#area_lv1').focus();
 		return false;
 	}

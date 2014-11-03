@@ -4,67 +4,89 @@
 <mapper namespace="esd.dao.JobCategoryDao">
 	
 	<!-- insert -->
-	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
 	<insert id="save" parameterType="JobCategory"
 		useGeneratedKeys="false" keyProperty="code">
-		insert into jobcategory(code,name,mark) 
-		values(#{code},#{name},#{mark})
+		insert into job_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null and code != ''">
+				code,
+			</if>
+			<if test="name != null and name != ''">
+				name,
+			</if>
+			<if test="mark != null and mark != ''">
+				mark
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null and code != ''">
+				#{code, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null and name != ''">
+				#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null and mark != ''">
+				#{mark, jdbcType=VARCHAR}
+			</if>
+		</trim>
 	</insert>
 
 	<!-- delete -->
 	<delete id="delete" parameterType="java.lang.String">
-		delete from jobcategory where code = #{code}
+		delete from job_category where code = #{code, jdbcType=VARCHAR, jdbcType=VARCHAR}
 	</delete>
 	
 	<!-- update -->
 	<update id="update" parameterType="JobCategory">
-		update jobcategory
+		update job_category
 		<trim prefix="set" suffixOverrides=",">
 			<if test="name != null and name != ''">
-				name=#{name},
+				name = #{name, jdbcType=VARCHAR, jdbcType=VARCHAR},
 			</if>
 			<if test="mark != null and mark != ''">
-				mark=#{mark}
+				mark = #{mark, jdbcType=VARCHAR, jdbcType=VARCHAR}
 			</if>
 		</trim>
-		where code= #{code}
+		where code = #{code, jdbcType=VARCHAR, jdbcType=VARCHAR}
 	</update>
 
 	<!-- get by code -->
 	<select id="getByCode" resultType="JobCategory" parameterType="java.lang.String">
-		select code,name,mark from jobcategory where code = #{code}
+		select code, name, mark 
+		from job_category 
+		where code = #{code, jdbcType=VARCHAR}
 	</select>
 	
 	<!-- get by page -->
 	<select id="getByPage" resultType="JobCategory" parameterType="map" >
 		select * 
-		from jobcategory
+		from job_category
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="jobCategory !=null">
 				<if test="jobCategory.code !=null and jobCategory.code != ''">
-					code like concat('%',#{jobCategory.code},'%')
+					code like concat('%',#{jobCategory.code, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="jobCategory.name !=null and jobCategory.name != ''">
-					and name like concat('%',#{jobCategory.name},'%')
+					and name like concat('%',#{jobCategory.name, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="jobCategory.mark !=null and jobCategory.mark != ''">
-					and mark = #{jobCategory.mark}
+					and mark = #{jobCategory.mark, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
-		limit #{start},#{size}
+		limit #{start, jdbcType=VARCHAR}, #{size, jdbcType=VARCHAR}
 	</select>
 	
 	
 	<!-- get all -->
-	<select id="getAll" resultType="JobCategory" parameterType="int" >
-		select code,name,mark from jobcategory;
+	<select id="getAll" resultType="JobCategory" parameterType="java.lang.String" >
+		select code, name, mark from job_category;
 	</select>
 
 	<!-- get sub jc -->
 	<select id="getSubJc" resultType="JobCategory" parameterType="java.lang.String" >
-		select * from jobcategory 
-		where code like concat('%',#{code},'%');
+		select * from job_category 
+		where code like concat('%',#{code, jdbcType=VARCHAR},'%');
 	</select>
 	
 </mapper>

@@ -16,10 +16,14 @@ import esd.dao.AreaDao;
 import esd.dao.ParameterDao;
 import esd.dao.UserDao;
 
+/**
+ * 用户service类
+ * @author Administrator
+ *
+ * @param <T>
+ */
 @Service
 public class UserService<T> {
-
-	// private static Logger log = Logger.getLogger(UserController.class);
 
 	@Autowired
 	private UserDao dao;
@@ -212,4 +216,13 @@ public class UserService<T> {
 		return dao.getTotalCount(map);
 	}
 
+	// 获得账号的头像
+	public byte[] getHeadImage(Integer id) {
+		if (id == null || id <= 0) {
+			return null;
+		}
+		HashMap resultMap = dao.getHeadImage(id);
+		byte[] headImage = (byte[]) resultMap.get("head_image");
+		return headImage;
+	}
 }

@@ -12,7 +12,48 @@
 <link href="${contextPath}/css/user/style.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/css/user/StyleSheet.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+<script type="text/javascript" src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 <title>企业管理中心</title>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//定义绑定上传按钮事件
+		var button = $('#picFileImport');
+		/*
+		 * 异步 上传图片方法函数
+		 */
+		new AjaxUpload(button, {
+			action: '${contextPath}/user/uploadPic',
+			name: 'pic',// 更改上传的文件名
+			autoSubmit:true,
+			type:'POST',
+			data: {},
+			onSubmit : function(file , ext){
+				button.val('上传图片中ing...');
+				/**
+				 *	①验证上传文件格式
+				 **/
+				
+		/*		if(!(ext && /^(jpg|xlsx)$/.test(ext))){
+					$.messager.alert('提示','您上传的文件格式不对, 或者不是excel文件, 请重新选择','info');
+					$('#picfileTitle').val('');
+					return false;
+				}	*/
+				
+			},
+			onComplete : function(file,response){
+				if(response != 'success'){
+					alert('上传图片失败,'+response);
+				}else{
+					//刷新新上传的图片
+					$('#headImage').attr('src','');
+					$('#headImage').attr('src','${contextPath }/user/downloadPic/${user.id}');
+				}
+				button.val('上传图片');
+				this.enable();
+			}
+		});
+	});
+</script>
 </head>
 <body>
 	<jsp:include page="../header.jsp" />
@@ -50,11 +91,8 @@
 				</div>
 				<div class="AntAccout_Center_User" id="w726">
 					<div class="AntAccout_Center_Left">
-						<img id="ctl00_ContentPlaceHolder1_showImage" src="${contextPath}/images/noimg.png" style="border-width:0px;">
-						<p>
-							<span></span> <input id="Button4" type="button" value="选择" onclick="$('#ctl00_ContentPlaceHolder1_File1').click()"> <input type="submit" name="ctl00$ContentPlaceHolder1$Button2"
-								value="修改" id="ctl00_ContentPlaceHolder1_Button2">
-						</p>
+						<img id="headImage" src="${contextPath }/user/downloadPic/${user.id}" style="height:90px;width:90px;border-width:0px;" />
+								<input type="button" name="file" value="上传图片" id="picFileImport"/>
 					</div>
 
 					<input type="file" name="ctl00$ContentPlaceHolder1$File1" id="ctl00_ContentPlaceHolder1_File1" class="cdaaassdf" onchange="$('#File2').val($('#File1').val());"> <input id="File2"

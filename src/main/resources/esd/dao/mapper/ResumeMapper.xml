@@ -1,106 +1,468 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 实现esd.dao.ResumeDao接口 -->
 <mapper namespace="esd.dao.ResumeDao">
 
-	<!-- 查询 Resume 简历 -->
-	<resultMap type="Resume" id="ResultResume">
-		<id column="r_id" property="id" />
-		<result column="r_createDate" property="createDate" />
-		<result column="r_updateCheck" property="updateCheck" />
-		<result column="r_updateDate" property="updateDate" />
-		<result column="r_title" property="title" />
-		<result column="r_name" property="name" />
-		<result column="r_gender" property="gender" />
-		<result column="r_birth" property="birth" />
-		<result column="r_identityCard" property="identityCard" />
-		<result column="r_race" property="race" />
-		<result column="r_marriage" property="marriage" />
-		<result column="r_hukou" property="hukou" />
-		<result column="r_hukouAddress" property="hukouAddress" />
-		<result column="r_hukouStatus" property="hukouStatus" />
-		<result column="r_address" property="address" />
-		<result column="r_zipCode" property="zipCode" />
-		<result column="r_phone" property="phone" />
-		<result column="r_email" property="email" />
-		<result column="r_qq" property="qq" />
-		<result column="r_disabilityCategory" property="disabilityCategory" />
-		<result column="r_disabilityCard" property="disabilityCard" />
-		<result column="r_disabilityLevel" property="disabilityLevel" />
-		<result column="r_disabilityPart" property="disabilityPart" />
-		<result column="r_workAbility" property="workAbility" />
-		<result column="r_homeTown" property="homeTown" />
-		<result column="r_politicalStatus" property="politicalStatus" />
-		<result column="r_age" property="age" />
-		<result column="r_height" property="height" />
-		<result column="r_weight" property="weight" />
-		<result column="r_education" property="education" />
-		<result column="r_major" property="major" />
-		<result column="r_school" property="school" /> 
-		<result column="r_zhiCheng" property="zhiCheng" />
-		<result column="r_experience" property="experience" />
-		<result column="r_workExperience" property="workExperience" />
-		<result column="r_shiYeHao" property="shiYeHao" />
-		<result column="r_experts" property="experts" />
-		<result column="r_training" property="training" />
-		<result column="r_selfEvaluation" property="selfEvaluation" />
-		<!-- Blob类型 -->
-<!-- 		<result column="r_attachment" property="attachment" javaType="java.sql.Blob" jdbcType="BLOB" />	 -->
-		<result column="r_jobNature" property="jobNature" />
-		<result column="r_desireJob" property="desireJob" />
-		<result column="r_desireAddress" property="desireAddress" />
-		<result column="r_desireSalary" property="desireSalary" />
-		<result column="r_provideFoodAndRoom" property="provideFoodAndRoom" />
-		<result column="r_provideRoom" property="provideRoom" />
-		<result column="r_provideFood" property="provideFood" />
-		<result column="r_provideInsurance" property="provideInsurance" />
-		<result column="r_provideOther" property="provideOther" />
-		<result column="r_workShift" property="workShift" />
-		<result column="r_state" property="state" />
-		<result column="r_isDefault" property="isDefault" />
-		<result column="r_checkStatus" property="checkStatus" />
-		<result column="r_viewCount" property="viewCount" />
-		<result column="r_careerTest" property="careerTest" />
-		<result column="r_processState" property="processState" />
+	<!-- result map of Resume -->
+	<resultMap id="ResultResume" type="Resume">
+		<id column="r_id" property="id" jdbcType="INTEGER" />
+		<result column="r_create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="r_update_check" property="updateCheck" jdbcType="INTEGER" />
+		<result column="r_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="r_log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="r_title" property="title" jdbcType="VARCHAR" />
+		<result column="r_name" property="name" jdbcType="VARCHAR" />
+		<result column="r_gender" property="gender" jdbcType="VARCHAR" />
+		<result column="r_birth" property="birth" jdbcType="VARCHAR" />
+		<result column="r_identity_card" property="identityCard" jdbcType="VARCHAR" />
+		<result column="r_race" property="race" jdbcType="VARCHAR" />
+		<result column="r_marriage" property="marriage" jdbcType="VARCHAR" />
+		<result column="r_hukou" property="hukou" jdbcType="VARCHAR" />
+		<result column="r_hukou_address" property="hukouAddress" jdbcType="VARCHAR" />
+		<result column="r_hukou_status" property="hukouStatus" jdbcType="VARCHAR" />
+		<result column="r_address" property="address" jdbcType="VARCHAR" />
+		<result column="r_zipcode" property="zipcode" jdbcType="VARCHAR" />
+		<result column="r_phone" property="phone" jdbcType="VARCHAR" />
+		<result column="r_email" property="email" jdbcType="VARCHAR" />
+		<result column="r_qq" property="qq" jdbcType="VARCHAR" />
+		<result column="r_disability_category" property="disabilityCategory" jdbcType="VARCHAR" />
+		<result column="r_disability_card" property="disabilityCard" jdbcType="VARCHAR" />
+		<result column="r_disability_level" property="disabilityLevel" jdbcType="VARCHAR" />
+		<result column="r_disability_part" property="disabilityPart" jdbcType="VARCHAR" />
+		<result column="r_work_ability" property="workAbility" jdbcType="VARCHAR" />
+		<result column="r_home_town" property="homeTown" jdbcType="VARCHAR" />
+		<result column="r_political_status" property="politicalStatus" jdbcType="VARCHAR" />
+		<result column="r_age" property="age" jdbcType="INTEGER" />
+		<result column="r_height" property="height" jdbcType="FLOAT" />
+		<result column="r_weight" property="weight" jdbcType="FLOAT" />
+		<result column="r_education" property="education" jdbcType="VARCHAR" />
+		<result column="r_major" property="major" jdbcType="VARCHAR" />
+		<result column="r_school" property="school" jdbcType="VARCHAR" /> 
+		<result column="r_zhi_cheng" property="zhiCheng" jdbcType="VARCHAR" />
+		<result column="r_shi_ye_hao" property="shiYeHao" jdbcType="VARCHAR" />
+		<result column="r_experts" property="experts" jdbcType="VARCHAR" />
+		<result column="r_training" property="training" jdbcType="VARCHAR" />
+		<result column="r_experience" property="experience" jdbcType="VARCHAR" />
+		<result column="r_work_experience" property="workExperience" jdbcType="VARCHAR" />
+		<result column="r_self_evaluation" property="selfEvaluation" jdbcType="VARCHAR" />
+		<result column="r_job_nature" property="jobNature" jdbcType="VARCHAR" />
+		<result column="r_desire_job" property="desireJob" jdbcType="VARCHAR" />
+		<result column="r_desire_address" property="desireAddress" jdbcType="VARCHAR" />
+		<result column="r_desire_salary" property="desireSalary" jdbcType="VARCHAR" />
+		<result column="r_provide_food_and_room" property="provideFoodAndRoom" jdbcType="TINYINT" />
+		<result column="r_provide_room" property="provideRoom" jdbcType="TINYINT" />
+		<result column="r_provide_food" property="provideFood" jdbcType="TINYINT" />
+		<result column="r_provide_insurance" property="provideInsurance" jdbcType="TINYINT" />
+		<result column="r_provide_other" property="provideOther" jdbcType="VARCHAR" />
+		<result column="r_work_shift" property="workShift" jdbcType="TINYINT" />
+		<result column="r_state" property="state" jdbcType="VARCHAR" />
+		<result column="r_is_default" property="isDefault" jdbcType="VARCHAR" />
+		<result column="r_check_status" property="checkStatus" jdbcType="VARCHAR" />
+		<result column="r_view_count" property="viewCount" jdbcType="INTEGER" />
+		<result column="r_career_test" property="careerTest" jdbcType="VARCHAR" />
+		<result column="r_process_state" property="processState" jdbcType="VARCHAR" />
 		<association property="user" javaType="User" resultMap="ResultUser" />
 		<association property="area" javaType="Area" resultMap="ResultArea" />
 	</resultMap>
 
-	<!-- 查询 User 账号 -->
-	<resultMap type="User" id="ResultUser">
-		<id column="u_id" property="id" />
-		<result column="u_loginname" property="loginName" />
-		<result column="u_password" property="passWord" />
-		<result column="u_identity" property="identity" />
+	<!-- result map of User -->
+	<resultMap id="ResultUser" type="User">
+		<id column="u_id" property="id" jdbcType="INTEGER" />
+		<result column="u_login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="u_pass_word" property="passWord" jdbcType="VARCHAR" />
+		<result column="u_identity" property="identity" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<!-- 查询 Area 地区 -->
-	<resultMap type="Area"  id="ResultArea">
-		<id column="a_code" property="code" />
-		<result column="a_name" property="name" />
-		<result column="a_pyname" property="pyName" />
-		<result column="a_abbr" property="abbr" />
-		<result column="a_mark" property="mark" />
+	<!-- result map of Area -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" jdbcType="VARCHAR" />
+		<result column="a_name" property="name" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<sql id="base_column">
+		r.id as r_id, r.create_date as r_create_date, r.update_check as r_update_check, r.update_date as r_update_date, 
+			r.log_user as r_log_user, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identity_card as r_identity_card, 
+			r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukou_address as r_hukou_address, 
+			r.hukou_status as r_hukou_status, r.address as r_address, r.zipcode as r_zipcode, r.phone as r_phone, 
+			r.email as r_email, r.qq as r_qq, r.disability_category as r_disability_category, r.disability_card as r_disability_card, 
+			r.disability_level as r_disability_level, r.disability_part as r_disability_part, r.work_ability as r_work_ability, 
+			r.home_town as r_home_town, r.political_status as r_political_status, r.age as r_age, r.height as r_height, r.weight as r_weight, 
+			r.education as r_education, r.major as r_major, r.school as r_school, r.zhi_cheng as r_zhi_cheng, r.shi_ye_hao as r_shi_ye_hao, 
+			r.experts as r_experts, r.training as r_training, r.experience as r_experience, r.work_experience as r_work_experience, 
+			r.self_evaluation as r_self_evaluation, r.job_nature as r_job_nature, r.desire_job as r_desire_job, r.desire_address r_desire_address, 
+			r.desire_salary as r_desire_salary, r.provide_food_and_room as r_provide_food_and_room,  r.provide_room as r_provide_room, 
+			r.provide_food as r_provide_food, r.provide_insurance as r_provide_insurance, r.provide_other as r_provide_other, 
+			r.work_shift as r_work_shift, r.state as r_state, r.is_default as r_is_default, r.check_status as r_check_status, 
+			r.view_count as r_view_count, r.career_test r_career_test, r.process_state as r_process_state,
+		u.id as u_id, u.login_name as u_login_name, u.pass_word as u_pass_word, u.identity as u_identity, 
+		a.code as a_code, a.name as a_name 
+	</sql>
+	
+	<sql id="from_table">
+		resume as r , user as u, area as a 
+	</sql>
+	
+	<sql id="sql_condition">
+		r.uid = u.id and r.acode = a.code 
+	</sql>
 	
 	<!-- insert -->
-	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
-	<insert id="save" parameterType="Resume" useGeneratedKeys="true"
-		keyProperty="id">
-		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
-		<selectKey resultType="java.lang.Integer" order="AFTER"
-			keyProperty="id">
+	<insert id="save" parameterType="Resume" useGeneratedKeys="true" keyProperty="id">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into
-		resume(createdate,updatecheck,updatedate,title,name,gender,birth,identitycard,race,marriage,hukou,hukouaddress,hukoustatus,address,zipcode,phone,email,qq,disabilitycategory,disabilitycard,disabilitylevel,disabilitypart,workability,hometown,politicalstatus,age,height,weight,education,major,school,zhicheng,experience,workExperience,shiyehao,experts,training,selfevaluation,jobnature,desirejob,desireaddress,desiresalary,providefoodandroom,provideroom,providefood,provideinsurance,provideOther,workshift,state,isdefault,checkstatus,viewcount,careertest,processstate,uid,acode)
-		values(now(),0,now(),#{title},#{name},#{gender},#{birth},#{identityCard},#{race},#{marriage},#{hukou},#{hukouAddress},#{hukouStatus},#{address},#{zipCode},#{phone},#{email},#{qq},#{disabilityCategory},#{disabilityCard},#{disabilityLevel},#{disabilityPart},#{workAbility},#{homeTown},#{politicalStatus},#{age},#{height},#{weight},#{education},#{major},#{school},#{zhiCheng},#{experience},#{workExperience},#{shiYeHao},#{experts},#{training},#{selfEvaluation},#{jobNature},#{desireJob},#{desireAddress},#{desireSalary},#{provideFoodAndRoom},#{provideRoom},#{provideFood},#{provideInsurance},#{provideOther},#{workShift},#{state},#{isDefault},#{checkStatus},0,#{careerTest},#{processState},#{user.id},#{area.code});
+		insert into resume
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="title != null and title != ''">
+				title,
+			</if>
+			<if test="name != null and name != ''">
+				name,
+			</if>
+			<if test="gender != null and gender != ''">
+				gender,
+			</if>
+			<if test="birth != null and birth != ''">
+				birth,
+			</if>
+			<if test="identityCard != null and identityCard != ''">
+				identity_card,
+			</if>
+			<if test="race != null and race != ''">
+				race,
+			</if>
+			<if test="marriage != null and marriage != ''">
+				marriage,
+			</if>
+			<if test="hukou != null and hukou != ''">
+				hukou,
+			</if>
+			<if test="hukouAddress != null and hukouAddress != ''">
+				hukou_address,
+			</if>
+			<if test="hukouStatus != null and hukouStatus != ''">
+				hukou_status,
+			</if>
+			<if test="address != null and address != ''">
+				address,
+			</if>
+			<if test="zipcode != null and zipcode != ''">
+				zipcode,
+			</if>
+			<if test="phone != null and phone != ''">
+				phone,
+			</if>
+			<if test="email != null and email != ''">
+				email,
+			</if>
+			<if test="qq != null and qq != ''">
+				qq,
+			</if>
+			<if test="disabilityCategory != null and disabilityCategory != ''">
+				disability_category,
+			</if>
+			<if test="disabilityCard != null and disabilityCard != ''">
+				disability_card,
+			</if>
+			<if test="disabilityLevel != null and disabilityLevel != ''">
+				disability_level,
+			</if>
+			<if test="disabilityPart != null and disabilityPart != ''">
+				disability_part,
+			</if>
+			<if test="workAbility != null and workAbility != ''">
+				work_ability,
+			</if>
+			<if test="homeTown != null and homeTown != ''">
+				home_town,
+			</if>
+			<if test="politicalStatus != null and politicalStatus != ''">
+				political_status,
+			</if>
+			<if test="age != null and age > 0">
+				age,
+			</if>
+			<if test="height != null and height > 0">
+				height,
+			</if>
+			<if test="weight != null and weight > 0">
+				weight,
+			</if>
+			<if test="education != null and education != ''">
+				education,
+			</if>
+			<if test="major != null and major != ''">
+				major,
+			</if>
+			<if test="school != null and school != ''">
+				school,
+			</if>
+			<if test="zhiCheng != null and zhiCheng != ''">
+				zhi_cheng,
+			</if>
+			<if test="shiYeHao != null and shiYeHao != ''">
+				shi_ye_hao,
+			</if>
+			<if test="experts != null and experts != ''">
+				experts,
+			</if>
+			<if test="training != null and training != ''">
+				training,
+			</if>
+			<if test="experience != null and experience != ''">
+				experience,
+			</if>
+			<if test="workExperience != null and workExperience != ''">
+				work_experience,
+			</if>
+			<if test="selfEvaluation != null and selfEvaluation != ''">
+				self_evaluation,
+			</if>
+			<if test="attachment != null">
+				attachment,
+			</if>
+			<if test="jobNature != null and jobNature != ''">
+				job_nature,
+			</if>
+			<if test="desireJob != null and desireJob != ''">
+				desire_job,
+			</if>
+			<if test="desireAddress != null and desireAddress != ''">
+				desire_address,
+			</if>
+			<if test="desireSalary != null and desireSalary != ''">
+				desire_salary,
+			</if>
+			<if test="provideFoodAndRoom != null">
+				provide_food_and_room,
+			</if>
+			<if test="provideRoom != null">
+				provide_room,
+			</if>
+			<if test="provideFood != null">
+				provide_food,
+			</if>
+			<if test="provideInsurance != null">
+				provide_insurance,
+			</if>
+			<if test="provideOther != null and provideOther != ''">
+				provide_other,
+			</if>
+			<if test="workShift != null and workShift != ''">
+				work_shift,
+			</if>
+			<if test="state != null and state != ''">
+				state,
+			</if>
+			<if test="isDefault != null">
+				is_default,
+			</if>
+			<if test="checkStatus != null and checkStatus != ''">
+				check_status,
+			</if>
+			<if test="viewCount != null and viewCount > 0">
+				view_count,
+			</if>
+			<if test="careerTest != null and careerTest != ''">
+				career_test,
+			</if>
+			<if test="processState != null and processState != ''">
+				process_state,
+			</if>
+			<if test="user != null">
+				<if test="user.id != null and user.id > 0">
+					uid,
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode
+				</if>
+			</if>
+		</trim>	
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null and title != ''">
+				#{title, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null and name != ''">
+				#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null and gender != ''">
+				#{gender, jdbcType=VARCHAR},
+			</if>
+			<if test="birth != null and birth != ''">
+				#{birth, jdbcType=VARCHAR},
+			</if>
+			<if test="identityCard != null and identityCard != ''">
+				#{identityCard, jdbcType=VARCHAR},
+			</if>
+			<if test="race != null and race != ''">
+				#{race, jdbcType=VARCHAR},
+			</if>
+			<if test="marriage != null and marriage != ''">
+				#{marriage, jdbcType=VARCHAR},
+			</if>
+			<if test="hukou != null and hukou != ''">
+				#{hukou, jdbcType=VARCHAR},
+			</if>
+			<if test="hukouAddress != null and hukouAddress != ''">
+				#{hukouAddress, jdbcType=VARCHAR},
+			</if>
+			<if test="hukouStatus != null and hukouStatus != ''">
+				#{hukouStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="address != null and address != ''">
+				#{address, jdbcType=VARCHAR},
+			</if>
+			<if test="zipcode != null and zipcode != ''">
+				#{zipcode, jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null and phone != ''">
+				#{phone, jdbcType=VARCHAR},
+			</if>
+			<if test="email != null and email != ''">
+				#{email, jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null and qq != ''">
+				#{qq, jdbcType=VARCHAR},
+			</if>
+			<if test="disabilityCategory != null and disabilityCategory != ''">
+				#{disabilityCategory, jdbcType=VARCHAR},
+			</if>
+			<if test="disabilityCard != null and disabilityCard != ''">
+				#{disabilityCard, jdbcType=VARCHAR},
+			</if>
+			<if test="disabilityLevel != null and disabilityLevel != ''">
+				#{disabilityLevel, jdbcType=VARCHAR},
+			</if>
+			<if test="disabilityPart != null and disabilityPart != ''">
+				#{disabilityPart, jdbcType=VARCHAR},
+			</if>
+			<if test="workAbility != null and workAbility != ''">
+				#{workAbility, jdbcType=VARCHAR},
+			</if>
+			<if test="homeTown != null and homeTown != ''">
+				#{homeTown, jdbcType=VARCHAR},
+			</if>
+			<if test="politicalStatus != null and politicalStatus != ''">
+				#{politicalStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="age != null and age > 0">
+				#{age, jdbcType=INTEGER},
+			</if>
+			<if test="height != null and height > 0">
+				#{height, jdbcType=FLOAT},
+			</if>
+			<if test="weight != null and weight > 0">
+				#{weight, jdbcType=FLOAT},
+			</if>
+			<if test="education != null and education != ''">
+				#{education, jdbcType=VARCHAR},
+			</if>
+			<if test="major != null and major != ''">
+				#{major, jdbcType=VARCHAR},
+			</if>
+			<if test="school != null and school != ''">
+				#{school, jdbcType=VARCHAR},
+			</if>
+			<if test="zhiCheng != null and zhiCheng != ''">
+				#{zhiCheng, jdbcType=VARCHAR},
+			</if>
+			<if test="shiYeHao != null and shiYeHao != ''">
+				#{shiYeHao, jdbcType=VARCHAR},
+			</if>
+			<if test="experts != null and experts != ''">
+				#{experts, jdbcType=VARCHAR},
+			</if>
+			<if test="training != null and training != ''">
+				#{training, jdbcType=VARCHAR},
+			</if>
+			<if test="experience != null and experience != ''">
+				#{experience, jdbcType=VARCHAR},
+			</if>
+			<if test="workExperience != null and workExperience != ''">
+				#{workExperience, jdbcType=VARCHAR},
+			</if>
+			<if test="selfEvaluation != null and selfEvaluation != ''">
+				#{selfEvaluation, jdbcType=VARCHAR},
+			</if>
+			<if test="attachment != null">
+				#{attachment, jdbcType=BLOB},
+			</if>
+			<if test="jobNature != null and jobNature != ''">
+				#{jobNature, jdbcType=VARCHAR},
+			</if>
+			<if test="desireJob != null and desireJob != ''">
+				#{desireJob, jdbcType=VARCHAR},
+			</if>
+			<if test="desireAddress != null and desireAddress != ''">
+				#{desireAddress, jdbcType=VARCHAR},
+			</if>
+			<if test="desireSalary != null and desireSalary != ''">
+				#{desireSalary, jdbcType=VARCHAR},
+			</if>
+			<if test="provideFoodAndRoom != null">
+				#{provideFoodAndRoom, jdbcType=TINYINT},
+			</if>
+			<if test="provideRoom != null">
+				#{provideRoom, jdbcType=TINYINT},
+			</if>
+			<if test="provideFood != null">
+				#{provideFood, jdbcType=TINYINT},
+			</if>
+			<if test="provideInsurance != null">
+				#{provideInsurance, jdbcType=TINYINT},
+			</if>
+			<if test="provideOther != null and provideOther != ''">
+				#{provideOther, jdbcType=VARCHAR},
+			</if>
+			<if test="workShift != null and workShift != ''">
+				#{workShift, jdbcType=TINYINT},
+			</if>
+			<if test="state != null and state != ''">
+				#{state, jdbcType=VARCHAR},
+			</if>
+			<if test="isDefault != null">
+				#{isDefault, jdbcType=TINYINT},
+			</if>
+			<if test="checkStatus != null and checkStatus != ''">
+				#{checkStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="viewCount != null and viewCount > 0">
+				#{viewCount, jdbcType=INTEGER},
+			</if>
+			<if test="careerTest != null and careerTest != ''">
+				#{careerTest, jdbcType=VARCHAR},
+			</if>
+			<if test="processState != null and processState != ''">
+				#{processState, jdbcType=VARCHAR},
+			</if>
+			<if test="user != null">
+				<if test="user.id != null and user.id > 0">
+					#{user.id, jdbcType=INTEGER},
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR}
+				</if>
+			</if>
+		</trim>	
 	</insert>
 	
 	<!-- delete -->
-	<delete id="delete" parameterType="int">
-		delete from resume where id = #{id}
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from resume where id = #{id, jdbcType=INTEGER}
 	</delete>
 
 	<!-- update -->
@@ -108,361 +470,355 @@
 		update resume
 		<trim prefix="set" suffixOverrides=",">
 			updateDate = now(),
-			<if test="updateCheck != null">
-				updateCheck = #{updateCheck},
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
 			</if>
 			<if test="title != null and title != ''">
-				title = #{title},
+				title = #{title, jdbcType=VARCHAR},
 			</if>
 			<if test="name != null and name != ''">
-				name = #{name},
+				name = #{name, jdbcType=VARCHAR},
 			</if>
-			<if test="gender != null">
-				gender = #{gender},
+			<if test="gender != null and gender != ''">
+				gender = #{gender, jdbcType=VARCHAR},
 			</if>
 			<if test="birth != null and birth != ''">
-				birth = #{birth},
+				birth = #{birth, jdbcType=VARCHAR},
 			</if>
-			<if test="identityCard != null ">
-				identityCard = #{identityCard},
+			<if test="identityCard != null and identityCard != ''">
+				identity_card = #{identityCard, jdbcType=VARCHAR},
 			</if>
-			<if test="race != null ">
-				race = #{race},
+			<if test="race != null and race != ''">
+				race = #{race, jdbcType=VARCHAR},
 			</if>
-			<if test="marriage != null ">
-				marriage = #{marriage},
+			<if test="marriage != null and marriage != ''">
+				marriage = #{marriage, jdbcType=VARCHAR},
 			</if>
-			<if test="hukou != null ">
-				hukou = #{hukou},
+			<if test="hukou != null and hukou != ''">
+				hukou = #{hukou, jdbcType=VARCHAR},
 			</if>
-			<if test="hukouAddress != null ">
-				hukouAddress = #{hukouAddress},
+			<if test="hukouAddress != null and hukouAddress != ''">
+				hukou_address = #{hukouAddress, jdbcType=VARCHAR},
 			</if>
-			<if test="hukouStatus != null ">
-				hukouStatus = #{hukouStatus},
+			<if test="hukouStatus != null and hukouStatus != ''">
+				hukou_status = #{hukouStatus, jdbcType=VARCHAR},
 			</if>
-			<if test="address != null ">
-				address = #{address},
+			<if test="address != null and address != ''">
+				address = #{address, jdbcType=VARCHAR},
 			</if>
-			<if test="zipCode != null ">
-				zipCode = #{zipCode},
+			<if test="zipcode != null and zipcode != ''">
+				zipcode = #{zipcode, jdbcType=VARCHAR},
 			</if>
-			<if test="phone != null ">
-				phone = #{phone},
+			<if test="phone != null and phone != ''">
+				phone = #{phone, jdbcType=VARCHAR},
 			</if>
-			<if test="email != null ">
-				email = #{email},
+			<if test="email != null and email != ''">
+				email = #{email, jdbcType=VARCHAR},
 			</if>
-			<if test="qq != null">
-				qq = #{qq},
+			<if test="qq != null and qq != ''">
+				qq = #{qq, jdbcType=VARCHAR},
 			</if>
-			<if test="disabilityCategory != null ">
-				disabilityCategory = #{disabilityCategory},
+			<if test="disabilityCategory != null and disabilityCategory != ''">
+				disability_category = #{disabilityCategory, jdbcType=VARCHAR},
 			</if>
-			<if test="disabilityCard != null ">
-				disabilityCard = #{disabilityCard},
+			<if test="disabilityCard != null and disabilityCard != ''">
+				disability_card = #{disabilityCard, jdbcType=VARCHAR},
 			</if>
-			<if test="disabilityLevel != null ">
-				disabilityLevel = #{disabilityLevel},
+			<if test="disabilityLevel != null and disabilityLevel != ''">
+				disability_level = #{disabilityLevel, jdbcType=VARCHAR},
 			</if>
-			<if test="disabilityPart != null ">
-				disabilityPart = #{disabilityPart},
+			<if test="disabilityPart != null and disabilityPart != ''">
+				disability_part = #{disabilityPart, jdbcType=VARCHAR},
 			</if>
-			<if test="workAbility != null ">
-				workAbility = #{workAbility},
+			<if test="workAbility != null and workAbility != ''">
+				work_ability = #{workAbility, jdbcType=VARCHAR},
 			</if>
-			<if test="homeTown != null ">
-				homeTown = #{homeTown},
+			<if test="homeTown != null and homeTown != ''">
+				home_town = #{homeTown, jdbcType=VARCHAR},
 			</if>
-			<if test="politicalStatus != null ">
-				politicalStatus = #{politicalStatus},
+			<if test="politicalStatus != null and politicalStatus != ''">
+				political_status = #{politicalStatus, jdbcType=VARCHAR},
 			</if>
 			<if test="age != null and age > 0">
-				age = #{age},
+				age = #{age, jdbcType=INTEGER},
 			</if>
-			<if test="height != null ">
-				height = #{height},
+			<if test="height != null and height > 0">
+				height = #{height, jdbcType=FLOAT},
 			</if>
-			<if test="weight != null ">
-				weight = #{weight},
+			<if test="weight != null and weight > 0">
+				weight = #{weight, jdbcType=FLOAT},
 			</if>
 			<if test="education != null and education != ''">
-				education = #{education},
+				education = #{education, jdbcType=VARCHAR},
 			</if>
-			<if test="major != null ">
-				major = #{major},
+			<if test="major != null and major != ''">
+				major = #{major, jdbcType=VARCHAR},
 			</if>
-			<if test="school != null ">
-				school = #{school},
+			<if test="school != null and school != ''">
+				school = #{school, jdbcType=VARCHAR},
 			</if>
-			<if test="zhiCheng != null ">
-				zhiCheng = #{zhiCheng},
+			<if test="zhiCheng != null and zhiCheng != ''">
+				zhi_cheng = #{zhiCheng, jdbcType=VARCHAR},
 			</if>
-			<if test="shiYeHao != null ">
-				shiYeHao = #{shiYeHao},
+			<if test="shiYeHao != null and shiYeHao != ''">
+				shi_ye_hao = #{shiYeHao, jdbcType=VARCHAR},
 			</if>
-			<if test="experts != null ">
-				experts = #{experts},
+			<if test="experts != null and experts != ''">
+				experts = #{experts, jdbcType=VARCHAR},
 			</if>
-			<if test="training != null ">
-				training = #{training},
+			<if test="training != null and training != ''">
+				training = #{training, jdbcType=VARCHAR},
 			</if>
-			<if test="experience != null ">
-				experience = #{experience},
+			<if test="experience != null and experience != ''">
+				experience = #{experience, jdbcType=VARCHAR},
 			</if>
-			<if test="workExperience != null ">
-				workExperience = #{workExperience},
+			<if test="workExperience != null and workExperience != ''">
+				work_experience = #{workExperience, jdbcType=VARCHAR},
 			</if>
-			<if test="selfEvaluation != null ">
-				selfEvaluation = #{selfEvaluation},
+			<if test="selfEvaluation != null and selfEvaluation != ''">
+				self_evaluation = #{selfEvaluation, jdbcType=VARCHAR},
 			</if>
-<!--			blob类型-->
-<!--			<if test="attachment != null and attachment != ''">-->
-<!--				attachment = #{attachment},-->
-<!--			</if>-->
+			<if test="attachment != null">
+				attachment = #{attachment, jdbcType=BLOB},
+			</if>
 			<if test="jobNature != null and jobNature != ''">
-				jobNature = #{jobNature},
+				job_nature = #{jobNature, jdbcType=VARCHAR},
 			</if>
 			<if test="desireJob != null and desireJob != ''">
-				desireJob = #{desireJob},
+				desire_job = #{desireJob, jdbcType=VARCHAR},
 			</if>
 			<if test="desireAddress != null and desireAddress != ''">
-				desireAddress = #{desireAddress},
+				desire_address = #{desireAddress, jdbcType=VARCHAR},
 			</if>
 			<if test="desireSalary != null and desireSalary != ''">
-				desireSalary = #{desireSalary},
+				desire_salary = #{desireSalary, jdbcType=VARCHAR},
 			</if>
 			<if test="provideFoodAndRoom != null">
-				provideFoodAndRoom = #{provideFoodAndRoom},
+				provide_food_and_room = #{provideFoodAndRoom, jdbcType=TINYINT},
 			</if>
-			<if test="provideRoom != null ">
-				provideRoom = #{provideRoom},
+			<if test="provideRoom != null">
+				provide_room = #{provideRoom, jdbcType=TINYINT},
 			</if>
-			<if test="provideFood != null ">
-				provideFood = #{provideFood},
+			<if test="provideFood != null">
+				provide_food = #{provideFood, jdbcType=TINYINT},
 			</if>
-			<if test="provideInsurance != null ">
-				provideInsurance = #{provideInsurance},
+			<if test="provideInsurance != null">
+				provide_insurance = #{provideInsurance, jdbcType=TINYINT},
 			</if>
-			<if test="provideOther != null ">
-				provideOther = #{provideOther},
+			<if test="provideOther != null and provideOther != ''">
+				provide_other = #{provideOther, jdbcType=VARCHAR},
 			</if>
-			<if test="workShift != null">
-				workShift = #{workShift},
+			<if test="workShift != null and workShift != ''">
+				work_shift = #{workShift, jdbcType=TINYINT},
 			</if>
 			<if test="state != null and state != ''">
-				state = #{state},
+				state = #{state, jdbcType=VARCHAR},
 			</if>
 			<if test="isDefault != null">
-				isdefault = #{isDefault},
+				is_default = #{isDefault, jdbcType=TINYINT},
 			</if>
-			<if test="checkStatus != null">
-				checkStatus = #{checkStatus},
+			<if test="checkStatus != null and checkStatus != ''">
+				check_status = #{checkStatus, jdbcType=VARCHAR},
 			</if>
 			<if test="viewCount != null and viewCount > 0">
-				viewCount = #{viewCount},
+				view_count = #{viewCount, jdbcType=INTEGER},
 			</if>
-			<if test="careerTest != null ">
-				careerTest = #{careerTest},
+			<if test="careerTest != null and careerTest != ''">
+				career_test = #{careerTest, jdbcType=VARCHAR},
 			</if>
-			<if test="processState != null ">
-				processState = #{processState},
-			</if>
-			<if test="user != null and user.id > 0">
-				uid = #{user.id},
-			</if>
-			<if test="area != null and area.code != null and area.code != ''">
-				acode = #{area.code},
-			</if>
-		</trim>
-		where id= #{id}
-	</update>
-	
-	<!-- get by obj -->
-	<select id="getByObj" resultMap="ResultResume" parameterType="Resume">
-		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukouaddress as r_hukouAddress, r.hukoustatus as r_hukouStatus, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.qq as r_qq,r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.disabilityPart as r_disabilityPart, r.workability as r_workAbility, r.homeTown as r_homeTown, r.politicalStatus as r_politicalStatus, r.age as r_age, r.height as r_height, r.weight as r_weight, r.education as r_education, r.major as r_major, r.school as r_school, r.zhiCheng as r_zhiCheng, r.experience as r_experience, r.workExperience as r_workExperience, r.shiYeHao as r_shiYeHao, r.experts as r_experts, r.training as r_training, r.selfevaluation as r_selfEvaluation, r.jobnature as r_jobNature, r.desireJob as r_desireJob, r.desireAddress r_desireAddress, r.desiresalary as r_desireSalary, r.provideFoodAndRoom as r_provideFoodAndRoom,  r.provideroom as r_provideRoom, r.provideFood as r_provideFood, r.provideInsurance as r_provideInsurance, r.provideOther as r_provideOther, r.workshift as r_workShift, r.state as r_state,  r.viewcount as r_viewCount, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.careerTest r_careerTest, r.processState as r_processState,
-				u.id as u_id, u.loginname as u_loginname, u.password as u_password, u.identity as u_identity, 
-				a.code as a_code, a.name as a_name, a.pyName as a_pyname, a.abbr as a_abbr, a.mark as a_mark
-		from resume as r , user as u, area as a
-		<trim prefix="where" prefixOverrides="and|or">
-			r.uid = u.id and r.acode = a.code 
-			<if test="title !=null and title != ''">
-				and r.title like concat('%',#{title},'%')
-			</if>
-			<if test="isDefault != null">
-				and r.isdefault = #{isDefault}
+			<if test="processState != null and processState != ''">
+				process_state = #{processState, jdbcType=VARCHAR}, 
 			</if>
 			<if test="user != null">
 				<if test="user.id != null and user.id > 0">
-					and r.uid = #{user.id}
+					uid = #{user.id, jdbcType=INTEGER},
 				</if>
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					and r.acode = #{area.code}
+					acode = #{area.code, jdbcType=VARCHAR},
+				</if>
+			</if>
+			update_check = update_check + 1
+		</trim>
+		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
+	</update>
+	
+	<!-- get by obj -->
+	<select id="getByObj" resultMap="ResultResume" parameterType="Resume">
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		<trim prefix="where" prefixOverrides="and|or">
+			<include refid="sql_condition" />
+			<if test="title !=null and title != ''">
+				and r.title like concat('%',#{title, jdbcType=VARCHAR},'%')
+			</if>
+			<if test="isDefault != null">
+				and r.is_default = #{isDefault, jdbcType=TINYINT}
+			</if>
+			<if test="user != null">
+				<if test="user.id != null and user.id > 0">
+					and r.uid = #{user.id, jdbcType=INTEGER}
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					and r.acode = #{area.code, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
 	</select>
 
 	<!-- get by id -->
-	<select id="getById" resultMap="ResultResume" parameterType="int">
-		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukouaddress as r_hukouAddress, r.hukoustatus as r_hukouStatus, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.qq as r_qq,r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.disabilityPart as r_disabilityPart, r.workability as r_workAbility, r.homeTown as r_homeTown, r.politicalStatus as r_politicalStatus, r.age as r_age, r.height as r_height, r.weight as r_weight, r.education as r_education, r.major as r_major, r.school as r_school, r.zhiCheng as r_zhiCheng, r.experience as r_experience, r.workExperience as r_workExperience, r.shiYeHao as r_shiYeHao, r.experts as r_experts, r.training as r_training, r.selfevaluation as r_selfEvaluation, r.jobnature as r_jobNature, r.desireJob as r_desireJob, r.desireAddress r_desireAddress, r.desiresalary as r_desireSalary, r.provideFoodAndRoom as r_provideFoodAndRoom,  r.provideroom as r_provideRoom, r.provideFood as r_provideFood, r.provideInsurance as r_provideInsurance, r.provideOther as r_provideOther, r.workshift as r_workShift, r.state as r_state,  r.viewcount as r_viewCount, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.careerTest r_careerTest, r.processState as r_processState,
-				u.id as u_id, u.loginname as u_loginname, u.password as u_password, u.identity as u_identity, 
-				a.code as a_code, a.name as a_name, a.pyName as a_pyname, a.abbr as a_abbr, a.mark as a_mark
-		from resume as r, user as u, area as a
-		where r.uid = u.id and r.acode = a.code and r.id =#{id}
+	<select id="getById" resultMap="ResultResume" parameterType="java.lang.Integer">
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		where <include refid="sql_condition" />
+			 and r.id = #{id, jdbcType=INTEGER}
 	</select>
 
-	<!-- 按多个条件模糊查询简历  传递一个Resume对象,里面的其中必要的属性值为条件-->
 	<select id="getByPage" resultMap="ResultResume" parameterType="map">
-		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukouaddress as r_hukouAddress, r.hukoustatus as r_hukouStatus, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.qq as r_qq,r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.disabilityPart as r_disabilityPart, r.workability as r_workAbility, r.homeTown as r_homeTown, r.politicalStatus as r_politicalStatus, r.age as r_age, r.height as r_height, r.weight as r_weight, r.education as r_education, r.major as r_major, r.school as r_school, r.zhiCheng as r_zhiCheng, r.experience as r_experience, r.workExperience as r_workExperience, r.shiYeHao as r_shiYeHao, r.experts as r_experts, r.training as r_training, r.selfevaluation as r_selfEvaluation, r.jobnature as r_jobNature, r.desireJob as r_desireJob, r.desireAddress r_desireAddress, r.desiresalary as r_desireSalary, r.provideFoodAndRoom as r_provideFoodAndRoom,  r.provideroom as r_provideRoom, r.provideFood as r_provideFood, r.provideInsurance as r_provideInsurance, r.provideOther as r_provideOther, r.workshift as r_workShift, r.state as r_state,  r.viewcount as r_viewCount, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.careerTest r_careerTest, r.processState as r_processState,
-				a.code as a_code, a.name as a_name, a.pyName as a_pyname, a.abbr as a_abbr, a.mark as a_mark
-		from resume as r, area as a
+		select <include refid="base_column" />
+		from <include refid="from_table" />
 		<trim prefix="where" prefixOverrides="and|or">
-			r.acode = a.code
+			<include refid="sql_condition" />
 			<if test="resume != null">
 				<if test="resume.title != null and resume.title != ''">
-					and r.title like concat('%',#{resume.title},'%')
+					and r.title like concat('%',#{resume.title, jdbcType=VARCHAR},'%')
 				</if>
 				<!-- 学历 -->
 				<if test="resume.education != null and resume.education != ''">
-					and r.education >= #{resume.education}
+					and r.education >= #{resume.education, jdbcType=VARCHAR}
 				</if>
 				<!-- 专业 -->
 				<if test="resume.major != null and resume.major != ''">
-					and r.major = #{resume.major}
+					and r.major = #{resume.major, jdbcType=VARCHAR}
 				</if>
 				<!-- 经验年限 -->
 				<if test="resume.experience != null and resume.experience !=''">
-					and r.experience = #{resume.experience}
+					and r.experience = #{resume.experience, jdbcType=VARCHAR}
 				</if>
 				<!-- 残疾类别 -->
 				<if test="resume.disabilityCategory != null and resume.disabilityCategory != ''">
-					and r.disabilitycategory = #{resume.disabilityCategory}
+					and r.disability_category = #{resume.disabilityCategory, jdbcType=VARCHAR}
 				</if>
 				<!-- 地区 -->
 				<if test="resume.area != null">
 					<if test="resume.area.code != null and resume.area.code !='' ">
-						and a.code like concat('%',#{resume.area.code},'%')
+						and a.code like concat('%',#{resume.area.code, jdbcType=VARCHAR},'%')
 					</if>
 				</if>
 				<!-- 目标职位 -->
 				<if test="resume.desireJob != null and resume.desireJob != ''">
-					and r.desirejob like concat('%',#{resume.desireJob},'%') 
+				<!-- 	and r.desire_job like concat('%',#{resume.desireJob, jdbcType=VARCHAR},'%')	 --> 
+					and ${resume.desireJob, jdbcType=VARCHAR}
 				</if>
 				<!-- 期望工作地 -->
 				<if test="resume.desireAddress != null and resume.desireAddress != ''">
-					and r.desireAddress like concat('%',#{resume.desireAddress},'%') 
+					and r.desire_address like concat('%',#{resume.desireAddress, jdbcType=VARCHAR},'%') 
 				</if>
 				<!-- 工作性质 -->
 				<if test="resume.jobNature != null and resume.jobNature != ''">
-					and r.jobnature = #{resume.jobNature} 
+					and r.job_nature = #{resume.jobNature, jdbcType=VARCHAR} 
 				</if>
 				<!-- 性别 -->
 				<if test="resume.gender != null and resume.gender != ''">
-					and r.gender = #{resume.gender} 
+					and r.gender = #{resume.gender, jdbcType=VARCHAR} 
 				</if>
 				<if test="resume.checkStatus != null and resume.checkStatus != ''">
- 					and r.checkstatus = #{resume.checkStatus} 
+ 					and r.check_status = #{resume.checkStatus, jdbcType=VARCHAR} 
  				</if>
 				<!-- 薪水范围 -->
+				
 			</if>
 		</trim>
-		order by r.createDate desc limit #{start},#{size};
+		order by r.create_date
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 
 	<!-- getTotalCount -->
-	<select id="getTotalCount" resultType="int" parameterType="map">
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="map">
 		select count(*)
-		from resume as r, area as a
+		from <include refid="from_table" />
 		<trim prefix="where" prefixOverrides="and|or">
-			r.acode = a.code
+			<include refid="sql_condition" />
 			<if test="resume != null">
 				<if test="resume.title != null and resume.title != ''">
-					and r.title like concat('%',#{resume.title},'%')
+					and r.title like concat('%',#{resume.title, jdbcType=VARCHAR},'%')
 				</if>
 				<!-- 学历 -->
 				<if test="resume.education != null and resume.education != ''">
-					and r.education >= #{resume.education}
+					and r.education >= #{resume.education, jdbcType=VARCHAR}
 				</if>
 				<!-- 专业 -->
 				<if test="resume.major != null and resume.major != ''">
-					and r.major = #{resume.major}
+					and r.major = #{resume.major, jdbcType=VARCHAR}
 				</if>
 				<!-- 经验年限 -->
 				<if test="resume.experience != null and resume.experience !=''">
-					and r.experience = #{resume.experience}
+					and r.experience = #{resume.experience, jdbcType=VARCHAR}
 				</if>
 				<!-- 残疾类别 -->
 				<if test="resume.disabilityCategory != null and resume.disabilityCategory != ''">
-					and r.disabilitycategory = #{resume.disabilityCategory}
+					and r.disability_category = #{resume.disabilityCategory, jdbcType=VARCHAR}
 				</if>
 				<!-- 地区 -->
 				<if test="resume.area != null">
 					<if test="resume.area.code != null and resume.area.code !='' ">
-						and a.code like concat('%',#{resume.area.code},'%')
+						and a.code like concat('%',#{resume.area.code, jdbcType=VARCHAR},'%')
 					</if>
 				</if>
 				<!-- 目标职位 -->
 				<if test="resume.desireJob != null and resume.desireJob != ''">
-					and r.desirejob like concat('%',#{resume.desireJob},'%') 
+				<!-- 	and r.desire_job like concat('%',#{resume.desireJob, jdbcType=VARCHAR},'%')	 --> 
+					and ${resume.desireJob, jdbcType=VARCHAR}
+				</if>
+				<!-- 期望工作地 -->
+				<if test="resume.desireAddress != null and resume.desireAddress != ''">
+					and r.desire_address like concat('%',#{resume.desireAddress, jdbcType=VARCHAR},'%') 
 				</if>
 				<!-- 工作性质 -->
 				<if test="resume.jobNature != null and resume.jobNature != ''">
-					and r.jobnature = #{resume.jobNature} 
+					and r.job_nature = #{resume.jobNature, jdbcType=VARCHAR} 
 				</if>
 				<!-- 性别 -->
 				<if test="resume.gender != null and resume.gender != ''">
-					and r.gender = #{resume.gender} 
+					and r.gender = #{resume.gender, jdbcType=VARCHAR} 
 				</if>
 				<if test="resume.checkStatus != null and resume.checkStatus != ''">
- 					and r.checkstatus = #{resume.checkStatus} 
+ 					and r.check_status = #{resume.checkStatus, jdbcType=VARCHAR} 
  				</if>
 				<!-- 薪水范围 -->
+				
 			</if>
 		</trim>
 	</select> 
 
 	<!-- getByUser-->
-	<select id="getByUser" resultType="Resume" parameterType="int">
-		select *
-		from resume
-		where uid = #{uid}
+	<select id="getByUser" resultMap="ResultResume" parameterType="java.lang.Integer">
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		where <include refid="sql_condition" /> and r.uid = #{uid, jdbcType=INTEGER}
 	</select>
 
 	<!-- get user's default resume for vote -->
-	<select id="getDefaultResume" resultMap="ResultResume" parameterType="int">
-		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.hukouaddress as r_hukouAddress, r.hukoustatus as r_hukouStatus, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.qq as r_qq,r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.disabilityPart as r_disabilityPart, r.workability as r_workAbility, r.homeTown as r_homeTown, r.politicalStatus as r_politicalStatus, r.age as r_age, r.height as r_height, r.weight as r_weight, r.education as r_education, r.major as r_major, r.school as r_school, r.zhiCheng as r_zhiCheng, r.experience as r_experience, r.workExperience as r_workExperience, r.shiYeHao as r_shiYeHao, r.experts as r_experts, r.training as r_training, r.selfevaluation as r_selfEvaluation, r.jobnature as r_jobNature, r.desireJob as r_desireJob, r.desireAddress r_desireAddress, r.desiresalary as r_desireSalary, r.provideFoodAndRoom as r_provideFoodAndRoom,  r.provideroom as r_provideRoom, r.provideFood as r_provideFood, r.provideInsurance as r_provideInsurance, r.provideOther as r_provideOther, r.workshift as r_workShift, r.state as r_state,  r.viewcount as r_viewCount, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.careerTest r_careerTest, r.processState as r_processState,
-				u.id as u_id, u.loginname as u_loginname, u.password as u_password, u.identity as u_identity 
-		from resume as r, user as u
-		where r.uid = u.id and r.isdefault = 1 and r.uid = #{uid}
+	<select id="getDefaultResume" resultMap="ResultResume" parameterType="java.lang.Integer">
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		where <include refid="sql_condition" /> and  r.is_default = 1 and r.uid = #{uid, jdbcType=INTEGER}
 	</select>
 
-
-
-
-
-
-
-
-
-
-
-
-
 	<!-- get Count By Area Code-->
-	<select id="getCountByAreaCode" resultType="int" parameterType="int">
+	<select id="getCountByAreaCode" resultType="java.lang.Integer" parameterType="java.lang.String">
 		select count(*)
 		from resume as r , area as a
-		where r.acode = a.code and a.code like #{code}
+		where r.acode = a.code and a.code like #{code, jdbcType=VARCHAR}
 	</select> 
 	
 	<!-- get by area code -->
 	<select id="getByAreaCode" resultMap="ResultResume" parameterType="java.lang.String">
-		select r.id as r_id, r.createdate as r_createdate, r.updatecheck as r_updateCheck, r.updatedate as r_updateDate, r.title as r_title, r.name as r_name, r.gender as r_gender, r.birth as r_birth,r.identitycard as r_identityCard, r.race as r_race, r.marriage as r_marriage, r.hukou as r_hukou, r.address as r_address, r.zipcode as r_zipCode, r.phone as r_phone, r.email as r_email, r.disabilitycategory as r_disabilityCategory, r.disabilitycard as r_disabilityCard, r.disabilitylevel as r_disabilityLevel, r.workability as r_workAbility, r.education as r_education, r.major as r_major, r.school as r_school, r.companyname as r_companyName,r.jobname as r_jobName, r.jobcontent as r_jobContent, r.worktime as r_workTime, r.experience as r_experience, r.workExperience as r_workExperience, r.selfevaluation as r_selfEvaluation, r.attachment as r_attachment, r.jobnature as r_jobNature, r.desirecity1 as r_desireCity1, r.desirecity2 as r_desireCity2,r.desirecity3 as r_desireCity3, r.desirecity4 as r_desireCity4, r.desirecity5 as r_desireCity5, r.desirejob1 as r_desireJob1, r.desirejob2 as r_desireJob2, r.desirejob3 as r_desireJob3, r.desirejob4 as r_desireJob4, r.desirejob5 as r_desireJob5,r.desirescope1 as r_desireScope1, r.desirescope2 as r_desireScope2, r.desirescope3 as r_desireScope3, r.desirescope4 as r_desireScope4, r.desirescope5 as r_desireScope5, r.desiresalary as r_desireSalary, r.state as r_state, r.isdefault as r_isDefault, r.checkstatus as r_checkStatus, r.viewcount as r_viewCount
-			, a.code as a_code, a.code as a_code, a.name as a_name, a.pyName as a_pyname, a.abbr as a_abbr, a.mark as a_mark
-		from resume as r , area as a
-		where r.acode = a.code and a.code like #{code}
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		where <include refid="sql_condition" /> and r.acode like #{code, jdbcType=VARCHAR}
 	</select>
 </mapper>

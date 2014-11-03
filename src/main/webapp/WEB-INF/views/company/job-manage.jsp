@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -54,8 +55,14 @@
 								<td align="center" height="30px;">${i.index + 1 }</td>
 								<td align="center"><a href="${contextPath }/job/getOneForShow?id=${job.id}">${job.name }</a>
 								</td>
-								<td align="center">${job.createDate }</td>
-								<td align="center">${job.updateDate }</td>
+								<c:if test="${job.createDate!=null}">
+									<fmt:formatDate value="${job.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm" var="createDate" />
+								</c:if>
+								<td align="center">${createDate }</td>
+								<c:if test="${job.updateDate!=null}">
+									<fmt:formatDate value="${job.updateDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm" var="updateDate" />
+								</c:if>
+								<td align="center">${updateDate }</td>
 								<td align="center">${job.checkStatus }</td>
 								<td align="center"><a href="${contextPath }/secure/job/update?id=${job.id}">修改</a>&nbsp;&nbsp; <a href="javascript:void(0);" onclick="deletejob(${job.id},'${job.name }')">删除</a>
 								</td>

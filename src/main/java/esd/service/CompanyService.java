@@ -245,8 +245,15 @@ public class CompanyService<T> {
 
 	}
 
-	// 查询投递到某一固定职位的所有简历
-	public List<Resume> getResumeToJob(int jobid, int startPage, int size) {
+	/**
+	 * 查询投递到某一固定职位的所有简历
+	 * 
+	 * @param jobid
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Record> getResumeToJob(int jobid, int startPage, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Record r1 = new Record();
 		r1.setjID(jobid);
@@ -354,7 +361,6 @@ public class CompanyService<T> {
 				os.close();
 				log.info("生成excel文件成功");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				log.info("生成excel文件发生异常");
 			}
 		}
@@ -382,10 +388,8 @@ public class CompanyService<T> {
 			}
 			zos.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return destPath;

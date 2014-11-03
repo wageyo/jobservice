@@ -1,137 +1,212 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 实现UserDao接口 -->
 <mapper namespace="esd.dao.UserDao">
 
+	<!-- result map of user -->
 	<resultMap type="User" id="ResultUser">
-		<id column="u_id" property="id" jdbcType="INTEGER" />
-		<result column="u_createdate" property="createDate" />
-		<result column="u_updatecheck" property="updateCheck" />
-		<result column="u_updatedate" property="updateDate" />
-		<result column="u_loginname" property="loginName" />
-		<result column="u_password" property="passWord" />
-		<result column="u_email" property="email" />
-		<result column="u_phone" property="phone" />
-		<result column="u_identity" property="identity" />
-		<result column="u_checkStatus" property="checkStatus" />
-		<result column="u_authority" property="authority" />
-		<result column="u_title" property="title" />
-		<result column="u_nickName" property="nickName" />
+		<id column="u_id" property="id" jdbcType="INTEGER"/>
+		<result column="u_create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="u_update_check" property="updateCheck" jdbcType="INTEGER"/>
+		<result column="u_update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="u_log_user" property="logUser" jdbcType="VARCHAR"/>
+		<result column="u_login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="u_pass_word" property="passWord" jdbcType="VARCHAR" />
+		<result column="u_email" property="email" jdbcType="VARCHAR" />
+		<result column="u_phone" property="phone" jdbcType="VARCHAR" />
+		<result column="u_identity" property="identity" jdbcType="VARCHAR"  />
+		<result column="u_check_status" property="checkStatus" jdbcType="VARCHAR"  />
+		<result column="u_authority" property="authority" jdbcType="INTEGER"  />
+		<result column="u_title" property="title" jdbcType="VARCHAR"  />
+		<result column="u_nick_name" property="nickName" jdbcType="VARCHAR"  />
+		<result column="u_head_title" property="headTitle" jdbcType="VARCHAR"  />
 		<association property="area" javaType="Area" resultMap="ResultArea" />
 	</resultMap>
 
-	<!-- 查询Area 地名 -->
+	<!-- result map of area -->
 	<resultMap id="ResultArea" type="Area">
 		<id column="a_code" property="code" />
 		<result column="a_name" property="name" />
-		<result column="a_pyName" property="pyName" />
-		<result column="a_abbr" property="abbr" />
-		<result column="a_mark" property="mark" />
 	</resultMap>
 
+	<sql id="base_column">
+		u.id as u_id, u.create_date as u_create_date, u.update_check as u_update_check, 
+			u.update_date as u_update_date, u.log_user as u_log_user, u.login_name as u_login_name,
+			u.pass_word as u_pass_word, u.email as u_email, u.phone as u_phone, u.identity as u_identity,
+			u.check_status as u_check_status, u.authority as u_authority, u.title as u_title, 
+			u.nick_name as u_nick_name,u.head_title as u_head_title,
+		a.code as a_code, a.name as a_name
+	</sql>
+	
 	<!-- insert -->
-	<!-- 使用数据库设定的自增id useGeneratedKeys="true" keyProperty="id" -->
-	<insert id="save" parameterType="User" useGeneratedKeys="true"
-		keyProperty="id">
-		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到 -->
+	<insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
 		<selectKey resultType="java.lang.Integer" order="AFTER"
 			keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 		insert into user
-		(createdate,updatecheck,updatedate,loginname,password,email,phone,acode,identity,checkstatus,authority,title,nickname)
-		values
-		(now(),0,now(),#{loginName,jdbcType=VARCHAR},#{passWord,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},
-			#{phone,jdbcType=VARCHAR},#{area.code,jdbcType=VARCHAR},#{identity,jdbcType=VARCHAR},#{checkStatus,jdbcType=VARCHAR},
-			#{authority,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR})
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="loginName != null and loginName != ''">
+				login_name,
+			</if>
+			<if test="passWord != null and passWord != ''">
+				pass_word,
+			</if>
+			<if test="email != null and email != ''">
+				email,
+			</if>
+			<if test="phone != null and phone != ''">
+				phone,
+			</if>
+			<if test="identity != null and identity != ''">
+				identity,
+			</if>
+			<if test="checkStatus != null and checkStatus != ''">
+				check_status,
+			</if>
+			<if test="authority != null and authority > 0">
+				authority,
+			</if>
+			<if test="title != null and title != ''">
+				title,
+			</if>
+			<if test="nickName != null and nickName != ''">
+				nick_name,
+			</if>
+			<if test="headImage != null and headImage != ''">
+				head_image,
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode
+				</if>
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="loginName != null and loginName != ''">
+				#{loginName, jdbcType=VARCHAR},
+			</if>
+			<if test="passWord != null and passWord != ''">
+				#{passWord, jdbcType=VARCHAR},
+			</if>
+			<if test="email != null and email != ''">
+				#{email, jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null and phone != ''">
+				#{phone, jdbcType=VARCHAR},
+			</if>
+			<if test="identity != null and identity != ''">
+				#{identity, jdbcType=VARCHAR},
+			</if>
+			<if test="checkStatus != null and checkStatus != ''">
+				#{checkStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="authority != null and authority > 0">
+				#{authority, jdbcType=INTEGER},
+			</if>
+			<if test="title != null and title != ''">
+				#{title, jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null and nickName != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="headImage != null and headImage != ''">
+				#{headImage, jdbcType=BLOB},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR}
+				</if>
+			</if>
+		</trim>
 	</insert>
 
 	<!-- delete -->
-	<delete id="delete" parameterType="int">
-		delete from user where id =
-		#{id}
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from user where id = #{id, jdbcType=INTEGER}
 	</delete>
 
 	<!-- update -->
 	<update id="update" parameterType="User">
 		update user
 		<trim prefix="set" suffixOverrides=",">
-			updatedate=now(),
-			<if test="updateCheck != '' and updateCheck > 0">
-				updatecheck = #{updateCheck},
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
 			</if>
 			<if test="loginName != '' and loginName != null">
-				loginname = #{loginName},
+				login_name = #{loginName, jdbcType=VARCHAR},
 			</if>
 			<if test="passWord != '' and passWord != null">
-				password = #{passWord},
+				pass_word = #{passWord, jdbcType=VARCHAR},
 			</if>
 			<if test="email != '' and email != null">
-				email = #{email},
+				email = #{email, jdbcType=VARCHAR},
 			</if>
 			<if test="phone != '' and phone != null">
-				phone = #{phone},
+				phone = #{phone, jdbcType=VARCHAR},
+			</if>
+			<if test="identity != null">
+				identity = #{identity, jdbcType=VARCHAR},
+			</if>
+			<if test="checkStatus != null">
+				checkStatus = #{checkStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="authority != null and authority > 0">
+				authority = #{authority, jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				title = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="nickName != null">
+				nick_name = #{nickName, jdbcType=VARCHAR},
+			</if>
+			<if test="headImage != null">
+				head_image = #{headImage, jdbcType=BLOB},
 			</if>
 			<if test="area !=null">
 				<if test="area.code != null and area.code != ''">
-					acode = #{area.code},
+					acode = #{area.code, jdbcType=VARCHAR},
 				</if>
 			</if>
-			<if test="identity != null">
-				identity = #{identity},
-			</if>
-			<if test="checkStatus != null">
-				checkStatus = #{checkStatus},
-			</if>
-			<if test="authority != null and authority > 0">
-				authority = #{authority},
-			</if>
-			<if test="title != null">
-				title = #{title},
-			</if>
-			<if test="nickName != null">
-				nickname = #{nickName},
-			</if>
+			update_check = update_check + 1 
 		</trim>
-		where id = #{id}
+		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
-	<!-- 根据id得到一个User对象 -->
-	<select id="getById" resultMap="ResultUser" parameterType="int">
-		select u.id as u_id, u.createdate as u_createdate, u.updatecheck as
-		u_updatecheck, u.updatedate as u_updatedate, u.loginname as
-		u_loginname, u.password as u_password, u.email as u_email, u.phone as
-		u_phone, u.identity as u_identity, u.checkStatus as u_checkStatus,
-		u.authority as u_authority, u.title as u_title, u.nickname as
-		u_nickName,
-		a.code as a_code,a.name as a_name, a.pyname as a_pyname,
-		a.abbr as a_abbr,
-		a.mark as a_mark
+	<select id="getById" resultMap="ResultUser" parameterType="java.lang.Integer">
+		select <include refid="base_column" />
 		from user as u, area as a
-		where
-		u.acode = a.code and u.id = #{id}
+		where u.acode = a.code and u.id = #{id, jdbcType=INTEGER}
 	</select>
 
+	<!-- get head image -->
+	<select id="getHeadImage" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+		select head_title, head_image
+		from user
+		where id = #{id, jdbcType=INTEGER}
+	</select>
 	<!-- get by user -->
 	<select id="getByUser" resultMap="ResultUser" parameterType="User">
-		select u.id as u_id, u.createdate as u_createdate, u.updatecheck as
-		u_updatecheck, u.updatedate as u_updatedate, u.loginname as
-		u_loginname, u.password as u_password, u.email as u_email, u.phone as
-		u_phone, u.identity as u_identity, u.checkStatus as u_checkStatus,
-		u.authority as u_authority, u.title as u_title, u.nickname as
-		u_nickName,
-		a.code as a_code, a.name as a_name, a.pyname as a_pyname,
-		a.abbr as a_abbr,
-		a.mark as a_mark
+		select <include refid="base_column" />
 		from user as u, area as a
 		<trim prefix="where" prefixOverrides="and|or">
 			u.acode = a.code
 			<if test="loginName != null and loginName != ''">
-				and u.loginname = #{loginName, jdbcType=VARCHAR}
+				and u.login_name = #{loginName, jdbcType=VARCHAR}
 			</if>
 			<if test="passWord != null and passWord != ''">
-				and u.password = #{passWord, jdbcType=VARCHAR}
+				and u.pass_word = #{passWord, jdbcType=VARCHAR}
 			</if>
 			<if test="identity != null">
 				and u.identity = #{identity, jdbcType=VARCHAR}
@@ -145,7 +220,7 @@
 				</if>
 			</if>
 			<if test="checkStatus != null">
-				and u.checkstatus = #{checkStatus, jdbcType=VARCHAR}
+				and u.check_status = #{checkStatus, jdbcType=VARCHAR}
 			</if>
 			<if test="authority != null and authority > 0">
 				and u.authority = #{authority, jdbcType=INTEGER}
@@ -154,60 +229,51 @@
 				and u.title = #{title, jdbcType=VARCHAR}
 			</if>
 			<if test="nickName != null">
-				and u.nickname = #{nickName, jdbcType=VARCHAR}
+				and u.nick_name = #{nickName, jdbcType=VARCHAR}
 			</if>
 		</trim>
 	</select>
 
 	<!-- getByPage -->
 	<select id="getByPage" parameterType="map" resultMap="ResultUser">
-		select u.id as u_id, u.createdate as u_createdate, u.updatecheck as
-		u_updatecheck, u.updatedate as u_updatedate, u.loginname as
-		u_loginname, u.password as u_password, u.email as u_emial, u.phone as
-		u_phone, u.identity as u_identity, u.checkstatus as u_checkStatus,
-		u.title as u_title, u.nickname as u_nickName,
-		a.code as a_code, a.name
-		as a_name, a.pyname as a_pyname, a.abbr as a_abbr,
-		a.mark as a_mark
+		select <include refid="base_column" />
 		from user as u, area as a
 		<trim prefix="where" prefixOverrides="and|or">
 			u.acode = a.code
 			<if test="user != null">
 				<if test="user.loginName != '' and user.loginName != null">
-					and u.loginname = #{user.loginName}
+					and u.login_name like concat('%', #{user.loginName, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.passWord != '' and user.passWord != null">
-					and u.password = #{user.passWord}
+					and u.pass_word like concat('%', #{user.passWord, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.area != null">
 					<if test="user.area.code != null and user.area.code != ''">
-							and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
+						and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
 					</if>
 				</if>
-				<if test="user.identity != null">
-					and u.identity = #{user.identity}
+				<if test="user.identity != null and user.identity != ''">
+					and u.identity = #{user.identity, jdbcType=VARCHAR}
 				</if>
-				<if test="user.email != null">
-					and u.email = #{user.email}
+				<if test="user.email != null and user.email != ''">
+					and u.email = #{user.email, jdbcType=VARCHAR}
 				</if>
-				<if test="user.checkStatus != null">
-					and u.checkStatus = #{user.checkStatus}
+				<if test="user.checkStatus != null and user.checkStatus != ''">
+					and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
 				</if>
 				<if test="user.authority != null and user.authority > 0">
-					and u.authority = #{user.authority}
+					and u.authority = #{user.authority, jdbcType=INTEGER}
 				</if>
-				<if test="user.title != null">
-					and u.title = #{user.title}
+				<if test="user.title != null and user.title != ''">
+					and u.title = #{user.title, jdbcType=VARCHAR}
 				</if>
-				<if test="user.nickName != null">
-					and u.nickname = #{user.nickName}
+				<if test="user.nickName != null and user.nickName != ''">
+					and u.nick_name = #{user.nickName, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
-		order by u.createdate
-		<if test="start != null and size != null">
-			limit #{start},#{size}
-		</if>
+		order by u.create_date
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 
 	<!-- getTotalCount -->
@@ -218,84 +284,77 @@
 			u.acode = a.code
 			<if test="user != null">
 				<if test="user.loginName != '' and user.loginName != null">
-					and u.loginname = #{user.loginName}
+					and u.login_name like concat('%', #{user.loginName, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.passWord != '' and user.passWord != null">
-					and u.password = #{user.passWord}
+					and u.pass_word like concat('%', #{user.passWord, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.area != null">
 					<if test="user.area.code != null and user.area.code != ''">
-							and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
+						and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
 					</if>
 				</if>
-				<if test="user.identity != null">
-					and u.identity = #{user.identity}
+				<if test="user.identity != null and user.identity != ''">
+					and u.identity = #{user.identity, jdbcType=VARCHAR}
 				</if>
-				<if test="user.email != null">
-					and u.email = #{user.email}
+				<if test="user.email != null and user.email != ''">
+					and u.email = #{user.email, jdbcType=VARCHAR}
 				</if>
-				<if test="user.phone != null">
-					and u.phone = #{user.phone}
-				</if>
-				<if test="user.checkStatus != null">
-					and u.checkStatus = #{user.checkStatus}
+				<if test="user.checkStatus != null and user.checkStatus != ''">
+					and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
 				</if>
 				<if test="user.authority != null and user.authority > 0">
-					and u.authority = #{user.authority}
+					and u.authority = #{user.authority, jdbcType=INTEGER}
 				</if>
-				<if test="user.title != null">
-					and u.title = #{user.title}
+				<if test="user.title != null and user.title != ''">
+					and u.title = #{user.title, jdbcType=VARCHAR}
 				</if>
-				<if test="user.nickName != null">
-					and u.nickname = #{user.nickName}
+				<if test="user.nickName != null and user.nickName != ''">
+					and u.nick_name = #{user.nickName, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
 	</select>
 
 	<select id="getAdminByPage" parameterType="map" resultMap="ResultUser">
-		select u.id as u_id, u.createdate as u_createdate, u.updatecheck as
-		u_updatecheck, u.updatedate as u_updatedate, u.loginname as
-		u_loginname, u.password as u_password, u.email as u_emial, u.phone as
-		u_phone, u.identity as u_identity, u.checkstatus as u_checkStatus,
-		u.title as u_title, u.nickname as u_nickName,
-		a.code as a_code, a.name
-		as a_name, a.pyname as a_pyname, a.abbr as a_abbr,
-		a.mark as a_mark
+		select <include refid="base_column" />
 		from user as u, area as a
 		<trim prefix="where" prefixOverrides="and|or">
 			u.acode = a.code
 			<if test="user != null">
 				<if test="user.loginName != '' and user.loginName != null">
-					and u.loginname = #{user.loginName}
+					and u.login_name like concat('%', #{user.loginName, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.passWord != '' and user.passWord != null">
-					and u.password = #{user.passWord}
+					and u.pass_word like concat('%', #{user.passWord, jdbcType=VARCHAR}, '%')
 				</if>
-				<if test="user.identity != null">
-					and u.identity = #{user.identity}
+				<if test="user.area != null">
+					<if test="user.area.code != null and user.area.code != ''">
+							and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
+					</if>
 				</if>
-				<if test="user.email != null">
-					and u.email = #{user.email}
+				<if test="user.identity != null and user.identity != ''">
+					and u.identity = #{user.identity, jdbcType=VARCHAR}
 				</if>
-				<if test="user.checkStatus != null">
-					and u.checkStatus = #{user.checkStatus}
+				<if test="user.email != null and user.email != ''">
+					and u.email = #{user.email, jdbcType=VARCHAR}
+				</if>
+				<if test="user.checkStatus != null and user.checkStatus != ''">
+					and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
 				</if>
 				<if test="user.authority != null and user.authority > 0">
-					and u.authority &lt;= #{user.authority}
+					and u.authority &lt;= #{user.authority, jdbcType=INTEGER}
 				</if>
-				<if test="user.title != null">
-					and u.title = #{user.title}
+				<if test="user.title != null and user.title != ''">
+					and u.title = #{user.title, jdbcType=VARCHAR}
 				</if>
-				<if test="user.nickName != null">
-					and u.nickname = #{user.nickName}
+				<if test="user.nickName != null and user.nickName != ''">
+					and u.nick_name = #{user.nickName, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
-		order by u.createdate
-		<if test="start != null and size != null">
-			limit #{start},#{size}
-		</if>
+		order by u.create_date
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 
 	<!-- getTotalCount -->
@@ -306,31 +365,33 @@
 			u.acode = a.code
 			<if test="user != null">
 				<if test="user.loginName != '' and user.loginName != null">
-					and u.loginname = #{user.loginName}
+					and u.login_name like concat('%', #{user.loginName, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.passWord != '' and user.passWord != null">
-					and u.password = #{user.passWord}
+					and u.pass_word like concat('%', #{user.passWord, jdbcType=VARCHAR}, '%')
 				</if>
-				<if test="user.identity != null">
-					and u.identity = #{user.identity}
+				<if test="user.area != null">
+					<if test="user.area.code != null and user.area.code != ''">
+							and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
+					</if>
 				</if>
-				<if test="user.email != null">
-					and u.email = #{user.email}
+				<if test="user.identity != null and user.identity != ''">
+					and u.identity = #{user.identity, jdbcType=VARCHAR}
 				</if>
-				<if test="user.phone != null">
-					and u.phone = #{user.phone}
+				<if test="user.email != null and user.email != ''">
+					and u.email = #{user.email, jdbcType=VARCHAR}
 				</if>
-				<if test="user.checkStatus != null">
-					and u.checkStatus = #{user.checkStatus}
+				<if test="user.checkStatus != null and user.checkStatus != ''">
+					and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
 				</if>
 				<if test="user.authority != null and user.authority > 0">
-					and u.authority &lt;= #{user.authority}
+					and u.authority &lt;= #{user.authority, jdbcType=INTEGER}
 				</if>
-				<if test="user.title != null">
-					and u.title = #{user.title}
+				<if test="user.title != null and user.title != ''">
+					and u.title = #{user.title, jdbcType=VARCHAR}
 				</if>
-				<if test="user.nickName != null">
-					and u.nickname = #{user.nickName}
+				<if test="user.nickName != null and user.nickName != ''">
+					and u.nick_name = #{user.nickName, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>

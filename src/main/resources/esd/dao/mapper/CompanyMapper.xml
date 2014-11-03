@@ -4,281 +4,444 @@
 <!-- 实现esd.dao.CompanyDao接口 -->
 <mapper namespace="esd.dao.CompanyDao">
 
-	<!-- 查询 User 账户 -->
-	<resultMap type="User" id="ResultUser">
-		<id column="u_id" property="id" />
-		<result column="u_loginName" property="loginName" />
-		<result column="u_passWord" property="passWord" />
-		<result column="u_identity" property="identity" />
+	<!-- result map of User -->
+	<resultMap id="ResultUser" type="User">
+		<id column="u_id" property="id" jdbcType="INTEGER" />
+		<result column="u_login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="u_pass_word" property="passWord" jdbcType="VARCHAR" />
+		<result column="u_identity" property="identity" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<!-- 查询Area 地名 -->
+	<!-- result map of Area -->
 	<resultMap id="ResultArea" type="Area">
-		<id column="a_code" property="code" />
-		<result column="a_name" property="name" />
-		<result column="a_pyName" property="pyName" />
-		<result column="a_abbr" property="abbr" />
-		<result column="a_mark" property="mark" />
+		<id column="a_code" property="code" jdbcType="VARCHAR"  />
+		<result column="a_name" property="name" jdbcType="VARCHAR"  />
 	</resultMap>
 	
-	<!-- 查询 BusinessScope 经营范围 -->
+	<!-- result map of BusinessScope -->
 	<resultMap id="ResultBusinessScope" type="BusinessScope">
-		<id column="b_id" property="id" />
-		<result column="b_name" property="name" />
-		<result column="b_code" property="code" />
-		<result column="b_mark" property="mark" />
+		<id column="b_id" property="id" jdbcType="INTEGER"  />
+		<result column="b_name" property="name" jdbcType="VARCHAR"  />
+		<result column="b_code" property="code" jdbcType="VARCHAR"  />
 	</resultMap>
 	
-	<!-- 查询 Company 公司 -->
+	<!-- result map of Company -->
 	<resultMap id="ResultCompany" type="Company">
-		<id column="c_id" property="id" />
-		<result column="c_createDate" property="createDate" />
-		<result column="c_updateCheck" property="updateCheck" />
-		<result column="c_updateDate" property="updateDate" />
-		<result column="c_name" property="name" />
-		<result column="c_corporateRepresentative" property="corporateRepresentative" />
-		<result column="c_contactPerson" property="contactPerson" />
-		<result column="c_telephone" property="telephone" />
-		<result column="c_contactDept" property="contactDept" />
-		<result column="c_fax" property="fax" />
-		<result column="c_email" property="email" />
-		<result column="c_address" property="address" />
-		<result column="c_introduction" property="introduction" />
-		<result column="c_organizationCode" property="organizationCode" />
-		<result column="c_commercialCode" property="commercialCode" />
-		<result column="c_taxCode" property="taxCode" />
-		<result column="c_socialSecurityCode" property="socialSecurityCode" />
-		<result column="c_webSiteId" property="webSiteId" />
-		<result column="c_laoWangCode" property="laoWangCode" />
-		<result column="c_scale" property="scale" />
-		<result column="c_nature" property="nature" />
-		<result column="c_economyType" property="economyType" />
-		<result column="c_remark" property="remark" />
-		<result column="c_viewCount" property="viewCount" />
-		<result column="c_checkStatus" property="checkStatus" />
+		<id column="c_id" property="id" jdbcType="INTEGER"  />
+		<result column="c_create_date" property="createDate" jdbcType="TIMESTAMP"  />
+		<result column="c_update_check" property="updateCheck" jdbcType="VARCHAR"  />
+		<result column="c_update_date" property="updateDate"  jdbcType="TIMESTAMP" />
+		<result column="c_log_user" property="logUser"  jdbcType="VARCHAR" />
+		<result column="c_name" property="name" jdbcType="VARCHAR"  />
+		<result column="c_corporate_representative" property="corporateRepresentative" jdbcType="VARCHAR"  />
+		<result column="c_contact_person" property="contactPerson" jdbcType="VARCHAR" />
+		<result column="c_telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="c_contact_dept" property="contactDept" jdbcType="VARCHAR" />
+		<result column="c_fax" property="fax" jdbcType="VARCHAR" />
+		<result column="c_email" property="email" jdbcType="VARCHAR" />
+		<result column="c_address" property="address" jdbcType="VARCHAR" />
+		<result column="c_introduction" property="introduction" jdbcType="VARCHAR" />
+		<result column="c_organization_code" property="organizationCode" jdbcType="VARCHAR" />
+		<result column="c_commercial_code" property="commercialCode" jdbcType="VARCHAR" />
+		<result column="c_tax_code" property="taxCode" jdbcType="VARCHAR" />
+		<result column="c_social_security_code" property="socialSecurityCode" jdbcType="VARCHAR" />
+		<result column="c_web_site_id" property="webSiteId" jdbcType="VARCHAR" />
+		<result column="c_lao_wang_code" property="laoWangCode" jdbcType="VARCHAR" />
+		<result column="c_scale" property="scale" jdbcType="VARCHAR" />
+		<result column="c_nature" property="nature" jdbcType="VARCHAR" />
+		<result column="c_economy_type" property="economyType" jdbcType="VARCHAR" />
+		<result column="c_remark" property="remark" jdbcType="VARCHAR" />
+		<result column="c_view_count" property="viewCount" jdbcType="INTEGER" />
+		<result column="c_check_status" property="checkStatus" jdbcType="VARCHAR" />
 		<association property="user" javaType="User" resultMap="ResultUser"/>
 		<association property="area" javaType="Area" resultMap="ResultArea"/>
 		<association property="businessScope" javaType="BusinessScope" resultMap="ResultBusinessScope" />
 	</resultMap>
 	
+	<sql id="base_column">
+		c.id as c_id, c.create_date as c_create_date, c.update_check as c_update_check, c.update_date as c_update_date, 
+			c.log_user as c_log_user,
+			c.name as c_name, c.corporate_representative as c_corporate_representative, c.contact_person as c_contact_person, 
+			c.telephone as c_telephone, c.contact_dept as c_contact_dept, c.fax as c_fax, c.email as c_email, c.address as c_address, 
+			c.introduction as c_introduction, c.organization_code as c_organization_code, c.commercial_code as c_commercial_code, 
+			c.tax_code as c_tax_code, c.social_security_code as c_social_security_code, c.web_site_id as c_web_site_id, 
+			c.lao_wang_code as c_lao_wang_code, c.scale as c_scale, c.nature as c_nature, c.economy_type as c_economy_type, 
+			c.remark c_remark, c.view_count as c_view_count, c.check_status as c_check_status,
+		u.id as u_id, u.login_name as u_login_name, u.pass_word as u_pass_word, u.identity as u_identity, 
+		a.code as a_code, a.name as a_name,
+		b.id as b_id, b.name as b_name, b.code as b_code
+	</sql>
+	
+	<sql id="from_table">
+		company as c left join user as u on c.uid = u.id 
+		left join area as a on c.acode = a.code 
+		left join business_scope as b on c.bid = b.id 
+	</sql>
+	
 	<!-- insert -->
-	<!-- 使用数据库设定的自增id  useGeneratedKeys="true" keyProperty="id" -->
-	<insert id="save" parameterType="Company"
-		useGeneratedKeys="true" keyProperty="id">
-		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
-		<selectKey resultType="java.lang.Integer" order="AFTER"
-			keyProperty="id">
+	<insert id="save" parameterType="Company" useGeneratedKeys="true" keyProperty="id">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into 
-		company(createDate,updateCheck,updateDate,name,corporateRepresentative,contactPerson,telephone,contactDept,fax,email,address,introduction,organizationCode,commercialCode,taxCode,socialSecurityCode,webSiteId,laoWangCode,scale,nature,economyType,remark,viewCount,checkstatus,uid,acode,bid)
-		values(now(),0,now(),#{name},#{corporateRepresentative},#{contactPerson},#{telephone},#{contactDept},#{fax},#{email},#{address},#{introduction},#{organizationCode},#{commercialCode},#{taxCode},#{socialSecurityCode},#{webSiteId},#{laoWangCode},#{scale},#{nature},#{economyType},#{remark},#{viewCount},#{checkStatus},#{user.id},#{area.code},#{businessScope.id})
+		insert into company
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="name != null and name != ''">
+				name,
+			</if>
+			<if test="corporateRepresentative != null and corporateRepresentative != ''">
+				corporate_representative,
+			</if>
+			<if test="contactPerson != null and contactPerson != ''">
+				contact_person,
+			</if>
+			<if test="telephone != null and telephone != ''">
+				telephone,
+			</if>
+			<if test="contactDept != null and contactDept != ''">
+				contact_dept,
+			</if>
+			<if test="fax != null and fax != ''">
+				fax,
+			</if>
+			<if test="email != null and email != ''">
+				email,
+			</if>
+			<if test="address != null and address != ''">
+				address,
+			</if>
+			<if test="introduction != null and introduction != ''">
+				introduction,
+			</if>
+			<if test="organizationCode != null and organizationCode != ''">
+				organization_code,
+			</if>
+			<if test="commercialCode != null and commercialCode != ''">
+				commercial_code,
+			</if>
+			<if test="taxCode != null and taxCode != ''">
+				tax_code,
+			</if>
+			<if test="socialSecurityCode != null and socialSecurityCode != ''">
+				social_security_code,
+			</if>
+			<if test="webSiteId != null and webSiteId != ''">
+				web_site_id,
+			</if>
+			<if test="laoWangCode != null and laoWangCode != ''">
+				lao_wang_code,
+			</if>
+			<if test="scale != null and scale != ''">
+				scale,
+			</if>
+			<if test="nature != null and nature != ''">
+				nature,
+			</if>
+			<if test="economyType != null and economyType != ''">
+				economy_type,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark,
+			</if>
+			<if test="viewCount != null and viewCount > 0">
+				view_count,
+			</if>
+			<if test="checkStatus != null and checkStatus != ''">
+				check_status,
+			</if>
+			<if test="user != null">
+				<if test="user.id != null and user.id > 0">
+					uid,
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode,
+				</if>
+			</if>
+			<if test="businessScope != null">
+				<if test="businessScope.id != null and businessScope.id > 0">
+					bid
+				</if>
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null and name != ''">
+				#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="corporateRepresentative != null and corporateRepresentative != ''">
+				#{corporateRepresentative, jdbcType=VARCHAR},
+			</if>
+			<if test="contactPerson != null and contactPerson != ''">
+				#{contactPerson, jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null and telephone != ''">
+				#{telephone, jdbcType=VARCHAR},
+			</if>
+			<if test="contactDept != null and contactDept != ''">
+				#{contactDept, jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null and fax != ''">
+				#{fax, jdbcType=VARCHAR},
+			</if>
+			<if test="email != null and email != ''">
+				#{email, jdbcType=VARCHAR},
+			</if>
+			<if test="address != null and address != ''">
+				#{address, jdbcType=VARCHAR},
+			</if>
+			<if test="introduction != null and introduction != ''">
+				#{introduction, jdbcType=VARCHAR},
+			</if>
+			<if test="organizationCode != null and organizationCode != ''">
+				#{organizationCode, jdbcType=VARCHAR},
+			</if>
+			<if test="commercialCode != null and commercialCode != ''">
+				#{commercialCode, jdbcType=VARCHAR},
+			</if>
+			<if test="taxCode != null and taxCode != ''">
+				#{taxCode, jdbcType=VARCHAR},
+			</if>
+			<if test="socialSecurityCode != null and socialSecurityCode != ''">
+				#{socialSecurityCode, jdbcType=VARCHAR},
+			</if>
+			<if test="webSiteId != null and webSiteId != ''">
+				#{webSiteId, jdbcType=VARCHAR},
+			</if>
+			<if test="laoWangCode != null and laoWangCode != ''">
+				#{laoWangCode, jdbcType=VARCHAR},
+			</if>
+			<if test="scale != null and scale != ''">
+				#{scale, jdbcType=VARCHAR},
+			</if>
+			<if test="nature != null and nature != ''">
+				#{nature, jdbcType=VARCHAR},
+			</if>
+			<if test="economyType != null and economyType != ''">
+				#{economyType, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="viewCount != null and viewCount > 0">
+				#{viewCount, jdbcType=INTEGER},
+			</if>
+			<if test="checkStatus != null and checkStatus != ''">
+				#{checkStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="user != null">
+				<if test="user.id != null and user.id > 0">
+					#{user.id, jdbcType=INTEGER},
+				</if>
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR},
+				</if>
+			</if>
+			<if test="businessScope != null">
+				<if test="businessScope.id != null and businessScope.id > 0">
+					#{businessScope.id, jdbcType=INTEGER}
+				</if>
+			</if>
+		</trim>
 	</insert>	
 	
 	<!-- delete -->
-	<delete id="delete" parameterType="int">
-		delete from company where id = #{id}
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from company where id = #{id, jdbcType=INTEGER}
 	</delete>
 	
 	<!-- update -->
 	<update id="update" parameterType="Company">
 		update company
 		<trim prefix="set" suffixOverrides=",">
-			updateDate=now(),
-			<if test="updateCheck != null ">
-				updateCheck=#{updateCheck},
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
 			</if>
-			<if test="name != null ">
-				name=#{name},
+			<if test="name != null and name != ''">
+				name = #{name, jdbcType=VARCHAR},
 			</if>
-			<if test="corporateRepresentative != null ">
-				corporateRepresentative=#{corporateRepresentative},
+			<if test="corporateRepresentative != null and corporateRepresentative != ''">
+				corporate_representative = #{corporateRepresentative, jdbcType=VARCHAR},
 			</if>
-			<if test="contactPerson != null ">
-				contactPerson=#{contactPerson},
+			<if test="contactPerson != null and contactPerson != ''">
+				contact_person = #{contactPerson, jdbcType=VARCHAR},
 			</if>
-			<if test="telephone != null ">
-				telephone=#{telephone},
+			<if test="telephone != null and telephone != ''">
+				telephone = #{telephone, jdbcType=VARCHAR},
 			</if>
-			<if test="contactDept != null ">
-				contactDept=#{contactDept},
+			<if test="contactDept != null and contactDept != ''">
+				contact_dept = #{contactDept, jdbcType=VARCHAR},
 			</if>
-			<if test="fax != null ">
-				fax=#{fax},
+			<if test="fax != null and fax != ''">
+				fax = #{fax, jdbcType=VARCHAR},
 			</if>
-			<if test="email != null ">
-				email=#{email},
+			<if test="email != null and email != ''">
+				email = #{email, jdbcType=VARCHAR},
 			</if>
-			<if test="address != null ">
-				address=#{address},
+			<if test="address != null and address != ''">
+				address = #{address, jdbcType=VARCHAR},
 			</if>
-			<if test="introduction != null ">
-				introduction=#{introduction},
+			<if test="introduction != null and introduction != ''">
+				introduction = #{introduction, jdbcType=VARCHAR},
 			</if>
-			<if test="organizationCode != null ">
-				organizationCode=#{organizationCode},
+			<if test="organizationCode != null and organizationCode != ''">
+				organization_code = #{organizationCode, jdbcType=VARCHAR},
 			</if>
-			<if test="taxCode != null ">
-				taxCode=#{taxCode},
+			<if test="commercialCode != null and commercialCode != ''">
+				commercial_code = #{commercialCode, jdbcType=VARCHAR},
 			</if>
-			<if test="commercialCode != null ">
-				commercialCode=#{commercialCode},
+			<if test="taxCode != null and taxCode != ''">
+				tax_code = #{taxCode, jdbcType=VARCHAR},
 			</if>
-			<if test="socialSecurityCode != null ">
-				socialSecurityCode=#{socialSecurityCode},
+			<if test="socialSecurityCode != null and socialSecurityCode != ''">
+				social_security_code = #{socialSecurityCode, jdbcType=VARCHAR},
 			</if>
-			<if test="webSiteId != null ">
-				webSiteId=#{webSiteId},
+			<if test="webSiteId != null and webSiteId != ''">
+				web_site_id = #{webSiteId, jdbcType=VARCHAR},
 			</if>
-			<if test="laoWangCode != null ">
-				laoWangCode=#{laoWangCode},
+			<if test="laoWangCode != null and laoWangCode != ''">
+				lao_wang_code = #{laoWangCode, jdbcType=VARCHAR},
 			</if>
-			<if test="scale != null ">
-				scale=#{scale},
+			<if test="scale != null and scale != ''">
+				scale = #{scale, jdbcType=VARCHAR},
 			</if>
-			<if test="nature != null ">
-				nature=#{nature},
+			<if test="nature != null and nature != ''">
+				nature = #{nature, jdbcType=VARCHAR},
 			</if>
-			<if test="economyType != null ">
-				economyType=#{economyType},
+			<if test="economyType != null and economyType != ''">
+				economy_type = #{economyType, jdbcType=VARCHAR},
 			</if>
-			<if test="remark != null ">
-				remark=#{remark},
+			<if test="remark != null and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR},
 			</if>
 			<if test="viewCount != null and viewCount > 0">
-				viewCount=#{viewCount},
+				view_count = #{viewCount, jdbcType=INTEGER},
 			</if>
-			<if test="checkStatus != null">
-				checkStatus=#{checkStatus},
+			<if test="checkStatus != null and checkStatus != ''">
+				check_status = #{checkStatus, jdbcType=VARCHAR},
 			</if>
 			<if test="user != null">
-				<if test="user.id != null and user.id >0">
-					uid=#{user.id},
+				<if test="user.id != null and user.id > 0">
+					uid = #{user.id, jdbcType=INTEGER},
 				</if>
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode=#{area.code},
+					acode = #{area.code, jdbcType=VARCHAR},
 				</if>
 			</if>
 			<if test="businessScope != null">
 				<if test="businessScope.id != null and businessScope.id > 0">
-					bid = #{businessScope.id},
+					bid = #{businessScope.id, jdbcType=INTEGER},
 				</if>
 			</if>
+			update_check = update_check + 1 
 		</trim>
-		where id= #{id}
+		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
 	<!-- get by id -->
-	<select id="getById" resultMap="ResultCompany" parameterType="int">
-		select c.id as c_id, c.createDate as c_createDate, c.updateCheck as c_updateCheck, c.updateDate as c_updateDate, c.name as c_name, c.corporateRepresentative as c_corporateRepresentative, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.contactDept as c_contactDept, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.taxCode as c_taxCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.economyType as c_economyType, c.remark c_remark, c.viewCount as c_viewCount, c.checkStatus as c_checkStatus,
-				u.id as u_id, u.loginName as u_loginName, u.passWord as u_passWord, u.identity as u_identity,
-				a.code as a_code, a.name as a_name, a.pyname as a_pyName,
-				b.id as b_id, b.code as b_code, b.name as b_name
-		from company as c, user as u, area as a, businessscope as b
-		where c.uid = u.id and c.acode = a.code and c.bid = b.id and c.id = #{id}
+	<select id="getById" resultMap="ResultCompany" parameterType="java.lang.Integer">
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		where c.id = #{id, jdbcType=INTEGER}
 	</select>
 
-	<!-- get by 账号外键 -->
-	<select id="getByAccount" resultMap="ResultCompany" parameterType="int">
-		select c.id as c_id, c.createDate as c_createDate, c.updateCheck as c_updateCheck, c.updateDate as c_updateDate, c.name as c_name, c.corporateRepresentative as c_corporateRepresentative, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.contactDept as c_contactDept, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.taxCode as c_taxCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.economyType as c_economyType, c.remark c_remark, c.viewCount as c_viewCount, c.checkStatus as c_checkStatus,
-				u.id as u_id, u.loginName as u_loginName, u.passWord as u_passWord, u.identity as u_identity,
-				a.code as a_code, a.name as a_name, a.pyname as a_pyName,
-				b.id as b_id, b.code as b_code, b.name as b_name
-		from company as c, user as u, area as a, businessscope as b
-		where c.uid = u.id and c.acode = a.code and c.bid = b.id and c.uid = #{uid}
+	<!-- get by user id -->
+	<select id="getByAccount" resultMap="ResultCompany" parameterType="java.lang.Integer">
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		where c.uid = #{uid, jdbcType=INTEGER}
 	</select>
 
-	<!-- 按多个条件模糊查询简历 传递一个map,里面的参数key为condition, 值为拼接的sql语句条件-->
-	<!-- where条件后待完善 -->
+	<!-- get by itself -->
 	<select id="getByObj" resultMap="ResultCompany" parameterType="Company">
-		select c.id as c_id, c.createDate as c_createDate, c.updateCheck as c_updateCheck, c.updateDate as c_updateDate, c.name as c_name, c.corporateRepresentative as c_corporateRepresentative, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.contactDept as c_contactDept, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.taxCode as c_taxCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.economyType as c_economyType, c.remark c_remark, c.viewCount as c_viewCount, c.checkStatus as c_checkStatus,
-				a.code as a_code, a.name as a_name, a.pyname as a_pyName,
-				b.id as b_id, b.code as b_code, b.name as b_name
-		from company as c, area as a, businessscope as b
+		select <include refid="base_column" />
+		from <include refid="from_table" />
 		<trim prefix="where" prefixOverrides="and|or">
-			where c.acode = a.code and c.bid = b.id 
 			<if test="name != null and name != ''">
-				and c.name like concat('%',#{name},'%')
+				c.name like concat('%',#{name, jdbcType=VARCHAR},'%')
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					and c.acode like concat('%',#{area.code},'%')
+					and c.acode like concat('%',#{area.code, jdbcType=VARCHAR},'%')
 				</if>
 			</if>
 			<if test="businessScope != null">
 				<if test="businessScope.id != null and businessScope.id > 0">
-					and c.bid = #{businessScope.id} 
+					and c.bid = #{businessScope.id, jdbcType=INTEGER} 
 				</if>
 			</if>
 			<if test="checkStatus != null">
-				and c.checkstatus = #{checkStatus}
+				and c.check_status = #{checkStatus, jdbcType=VARCHAR}
 			</if>
 		</trim>
-		limit #{start},#{size};
 	</select>
 	
 	<!-- getByPage -->
-	<!-- where条件后待完善 -->
 	<select id="getByPage" parameterType="map" resultMap="ResultCompany">
-		select c.id as c_id, c.createDate as c_createDate, c.updateCheck as c_updateCheck, c.updateDate as c_updateDate, c.name as c_name, c.corporateRepresentative as c_corporateRepresentative, c.contactPerson as c_contactPerson, c.telephone as c_telephone, c.contactDept as c_contactDept, c.fax as c_fax, c.email as c_email, c.address as c_address, c.introduction as c_introduction, c.organizationcode as c_organizationCode, c.commercialcode as c_commercialCode, c.taxCode as c_taxCode, c.socialsecuritycode as c_socialSecurityCode, c.websiteid as c_webSiteId, c.laowangcode as c_laoWangCode, c.scale as c_scale, c.nature as c_nature, c.economyType as c_economyType, c.remark c_remark, c.viewCount as c_viewCount, c.checkStatus as c_checkStatus,
-				a.code as a_code, a.name as a_name, a.pyname as a_pyName,
-				b.id as b_id, b.code as b_code, b.name as b_name
-		from company as c, area as a, businessscope as b
+		select <include refid="base_column" />
+		from <include refid="from_table" />
 		<trim prefix="where" prefixOverrides="and|or">
-			c.acode = a.code and c.bid = b.id 
 			<if test="company != null">
 				<if test="company.name != null and company.name != ''">
-					and c.name like concat('%',#{company.name},'%')
+					c.name like concat('%',#{company.name, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="company.area != null">
 					<if test="company.area.code != null and company.area.code != ''">
-						and c.acode like concat('%',#{company.area.code},'%') 
+						and c.acode like concat('%',#{company.area.code, jdbcType=VARCHAR},'%') 
 					</if>
 				</if>
 				<if test="company.businessScope != null">
 					<if test="company.businessScope.id != null and company.businessScope.id > 0">
-						and c.bid = #{company.businessScope.id} 
+						and c.bid = #{company.businessScope.id, jdbcType=INTEGER} 
 					</if>
 				</if>
-		 		<if test="company.checkStatus != null">
-					and c.checkstatus = #{company.checkStatus}
+		 		<if test="company.checkStatus != null and company.checkStatus != ''">
+					and c.check_status = #{company.checkStatus, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
-		order by c.createdate desc 
-		limit #{start},#{size}
+		order by c.create_date
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 
 	<!-- getTotalCount -->
-	<!-- where条件后待完善 -->
 	<select id="getTotalCount" parameterType="map" resultType="int">
 		select count(*) 
-		from company as c, area as a, businessscope as b
+		from <include refid="from_table" />
 		<trim prefix="where" prefixOverrides="and|or">
-			c.acode = a.code and c.bid = b.id 
 			<if test="company != null">
 				<if test="company.name != null and company.name != ''">
-					and c.name like concat('%',#{company.name},'%')
+					c.name like concat('%',#{company.name, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="company.area != null">
 					<if test="company.area.code != null and company.area.code != ''">
-						and c.acode like concat('%',#{company.area.code},'%') 
+						and c.acode like concat('%',#{company.area.code, jdbcType=VARCHAR},'%') 
 					</if>
 				</if>
 				<if test="company.businessScope != null">
 					<if test="company.businessScope.id != null and company.businessScope.id > 0">
-						and c.bid = #{company.businessScope.id} 
+						and c.bid = #{company.businessScope.id, jdbcType=INTEGER} 
 					</if>
 				</if>
-		 		<if test="company.checkStatus != null">
-					and c.checkstatus = #{company.checkStatus}
+		 		<if test="company.checkStatus != null and company.checkStatus != ''">
+					and c.check_status = #{company.checkStatus, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
-		
 	</select> 
-	
 	
 </mapper>

@@ -3,86 +3,163 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="esd.dao.MenuDao">
 
+	<!-- result map of WorkExperience -->
+	<resultMap id="ResultMenu" type="Menu">
+		<id column="id" property="id" jdbcType="VARCHAR"  />
+		<result column="text" property="text" jdbcType="VARCHAR"  />
+		<result column="state" property="state" jdbcType="VARCHAR"  />
+		<result column="url" property="url"  jdbcType="VARCHAR" />
+		<result column="checked" property="checked"  jdbcType="VARCHAR" />
+		<result column="icon_cls" property="iconCls" jdbcType="VARCHAR" />
+		<result column="enable" property="enable" jdbcType="TINYINT" />
+		<result column="type_name" property="typeName" jdbcType="VARCHAR" />
+		<result column="authority" property="authority" jdbcType="INTEGER" />
+	</resultMap>
+	
+<!-- 	<sql id="base_column">
+		m.id as m_id, m.create_date as m_create_date, m.update_check as m_update_check, m.update_date as m_update_date,
+		m.log_user as m_log_user, m.time as m_time, m.school as m_school, m.major as m_major,
+		m.education as m_education, m.certificate as m_certificate, m.rid as m_rid
+	</sql> -->
+	
 	<!-- insert -->
 	<insert id="save" parameterType="Menu" useGeneratedKeys="false" keyProperty="id">
-		insert into menu (id,text, state, url, checked, iconcls, enable,typename,authority)
-		values (#{id},#{text}, #{state}, #{url}, #{checked}, #{iconCls},#{enable},#{typeName},#{authority})
+		insert into menu 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">
+				id,
+			</if>
+			<if test="text != null and text != ''">
+				text,
+			</if>
+			<if test="state != null and state != ''">
+				state,
+			</if>
+			<if test="url != null and url != ''">
+				url,
+			</if>
+			<if test="checked != null and checked != ''">
+				checked,
+			</if>
+			<if test="icon_cls != null and icon_cls != ''">
+				icon_cls,
+			</if>
+			<if test="enable != null">
+				enable,
+			</if>
+			<if test="type_name != null and type_name != ''">
+				type_name,
+			</if>
+			<if test="authority != null">
+				authority
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">
+				#{id, jdbcType=VARCHAR},
+			</if>
+			<if test="text != null and text != ''">
+				#{text, jdbcType=VARCHAR},
+			</if>
+			<if test="state != null and state != ''">
+				#{state, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null and url != ''">
+				#{url, jdbcType=VARCHAR},
+			</if>
+			<if test="checked != null and checked != ''">
+				#{checked, jdbcType=VARCHAR},
+			</if>
+			<if test="icon_cls != null and icon_cls != ''">
+				#{icon_cls, jdbcType=VARCHAR},
+			</if>
+			<if test="enable != null">
+				#{enable, jdbcType=TINYINT},
+			</if>
+			<if test="type_name != null and type_name != ''">
+				#{type_name, jdbcType=VARCHAR},
+			</if>
+			<if test="authority != null">
+				#{authority, jdbcType=INTEGER}
+			</if>
+		</trim>
 	</insert>
 
 	<!-- delete -->
 	<delete id="delete" parameterType="java.lang.String">
 		delete from menu
-		where id = #{id}
+		where id = #{id, jdbcType=VARCHAR}
 	</delete>
 
 	<!-- update -->
 	<update id="update" parameterType="Menu">
 		update menu
 		<set>
-			<if test="text != null">
-				text = #{text},
+			<if test="text != null and text != ''">
+				text = #{text, jdbcType=VARCHAR},
 			</if>
-			<if test="state != null">
-				state = #{state},
+			<if test="state != null and state != ''">
+				state = #{state, jdbcType=VARCHAR},
 			</if>
-			<if test="url != null">
-				url = #{url},
+			<if test="url != null and url != ''">
+				url = #{url, jdbcType=VARCHAR},
 			</if>
-			<if test="checked != null">
-				checked = #{checked},
+			<if test="checked != null and checked != ''">
+				checked = #{checked, jdbcType=VARCHAR},
 			</if>
-			<if test="iconCls != null">
-				iconcls = #{iconCls},
+			<if test="iconCls != null and iconCls != ''">
+				icon_cls = #{iconCls, jdbcType=VARCHAR},
 			</if>
-			<if test="enable != null">
-				enable = #{enable},
+			<if test="enable != null and enable != ''">
+				enable = #{enable, jdbcType=TINYINT},
 			</if>
-			<if test="typeName != null">
-				typename = #{typeName},
+			<if test="typeName != null and typeName != ''">
+				type_name = #{typeName, jdbcType=VARCHAR},
 			</if>
 			<if test="authority != null and authority > 0">
-				authority = #{authority}
+				authority = #{authority, jdbcType=INTEGER}
 			</if>
 		</set>
-		where id = #{id}
+		where id = #{id, jdbcType=VARCHAR}
 	</update>
 	
 	<!-- getById -->
-	<select id="getById" parameterType="java.lang.String" resultType="Menu">
+	<select id="getById" parameterType="java.lang.String" resultMap="ResultMenu">
 		select *
 		from menu
-		where id = #{id}
+		where id = #{id, jdbcType=VARCHAR}
 	</select>
 	
 	<!--  get by page -->
-	<select id="getByPage" resultType="Menu" parameterType="map">
+	<select id="getByPage" parameterType="map" resultMap="ResultMenu" >
 		select *
 		from menu
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="menu != null">
-				<if test="menu.state != null">
-					state = #{menu.state}
+				<if test="menu.state != null and menu.state != ''">
+					state = #{menu.state, jdbcType=VARCHAR}
 				</if>
-				<if test="menu.checked != null">
-					and checked = #{menu.checked},
+				<if test="menu.checked != null and menu.checked != ''">
+					and checked = #{menu.checked, jdbcType=VARCHAR}
 				</if>
-				<if test="menu.enable != null">
-					and enable = #{menu.enable}
+				<if test="menu.enable != null ">
+					and enable = #{menu.enable, jdbcType=TINYINT}
 				</if>
-				<if test="menu.typeName != null">
-					and typeName = #{menu.typeName}
+				<if test="menu.typeName != null and menu.typeName != null">
+					and typeName = #{menu.typeName, jdbcType=VARCHAR}
 				</if>
 				<if test="menu.authority != null and menu.authority > 0">
-				 	and authority &lt;= #{menu.authority}	
+				 	and authority &lt;= #{menu.authority, jdbcType=INTEGER}	
 				</if>
 			</if>
 		</trim>
-		limit #{start},#{size}
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 	
 	<!--  get menu checked  -->
-	<select id="getMenuChecked" resultType="Menu" parameterType="java.lang.String">
+	<select id="getMenuChecked" resultMap="ResultMenu" parameterType="java.lang.String">
 		select text,enable
 		from menu
 	</select>
+	
 </mapper>

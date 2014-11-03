@@ -54,13 +54,24 @@
 	<div id="ctl00_Myheader_default71dacom" class="header_cnt">
 		<div id="logoheader">
 			<div id="logoopen">
-			<!-- 显示全国logo -->
-			<c:if test="${area.code == null || area.code  == '' || area.code =='10000000' }">
-				<a href="${contextPath}/index" title="残疾人就业信息网"><img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" /> </a>
-			</c:if>
-			<c:if test="${area.code == '10420000' }">
-				<a href="${contextPath}/index" title="残疾人就业信息网"><img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/hubei.png" id="bg2" /> </a>
-			</c:if>
+				<a href="${contextPath}/index" title="残疾人就业信息网">
+				<!-- 如果能显示对应省市的则显示对应省份的logo, 否则显示全国的log -->
+				<c:choose>
+					<c:when test="${area != null }">
+						<c:choose>
+							<c:when test="${area.code == '10420000' }">
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/hubei.png" id="bg2" /> 
+							</c:when>
+							<c:otherwise>
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" />
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+							<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" /> 
+					</c:otherwise>
+				</c:choose>
+				</a>
 			</div>
 			<div id="headertext">
 				<a href="javascript:void(0);"><img src="${contextPath}/images/7b2b5940424144e8bb123fd92a85f613_top[1].jpg" /> </a>
