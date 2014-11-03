@@ -202,6 +202,7 @@ public class SecureResumeController {
 		String[] jobNames = req.getParameterValues("jobName");
 		String[] jobContents = req.getParameterValues("jobContent");
 		String[] leaveReasons = req.getParameterValues("leaveReason");
+		String[] updateChecks = req.getParameterValues("wUpdateCheck");
 		log.info("wids : " + workTimes);
 		log.info("workTimes : " + workTimes);
 		log.info("companyNames : " + companyNames);
@@ -223,6 +224,8 @@ public class SecureResumeController {
 				we.setLeaveReason(leaveReasons[i]);
 				we.setJobContent(jobContents[i]);
 				we.setResume(resume);
+				int updateCheck = KitService.getInt(updateChecks[i]);
+				we.setUpdateCheck(updateCheck);
 				boolean wbl = resumeService.update(we);
 				if (!wbl) {
 					ra.addFlashAttribute("messagetType", "0");

@@ -13,6 +13,14 @@
 <link href="${contextPath}/css/user/style.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/css/user/StyleSheet.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+<script type="text/javascript">
+	function deletejob(id,title){
+		var bl = window.confirm('确实要删除 '+title+' 这份简历吗?');
+		if(bl){
+			location.href = '${contextPath }/secure/job/delete?id=' + id;
+		};
+	}
+</script>
 <title>残疾人招聘就业网</title>
 </head>
 <body>
@@ -82,14 +90,7 @@
 						</tr>
 					</tbody>
 				</table>
-						<script type="text/javascript">
-                       		function deletejob(id,title){
-                       			var bl = window.confirm('确实要删除 '+title+' 这份简历吗?');
-                       			if(bl){
-                       				location.href = '${contextPath }/secure/job/delete?id=' + id;
-                       			};
-                       		}
-                       	</script>
+				
 			</div>
 		</div>
 

@@ -469,7 +469,7 @@
 	<update id="update" parameterType="Resume">
 		update resume
 		<trim prefix="set" suffixOverrides=",">
-			updateDate = now(),
+			update_date = now(),
 			<if test="logUser != null and logUser != ''">
 				log_user = #{logUser, jdbcType=VARCHAR},
 			</if>

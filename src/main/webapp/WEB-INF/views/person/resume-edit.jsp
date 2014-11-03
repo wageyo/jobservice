@@ -151,6 +151,7 @@
 								<td align="left"><input name="title" type="text" id="title" class="input_border" style="width:200px;" value="${resume.title }" /> <span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1"
 										style="color:Red;font-style:italic;visibility:hidden;">标题不能为空</span>
 										<input type="hidden" name="id" id="rid" value="${resume.id }" />
+										<input type="hidden" name="updateCheck" id="updateCheck" value="${resume.updateCheck }" />
 								</td>
 							</tr>
 							<tr>
@@ -377,7 +378,7 @@
 								<td align="right" class="line35" style="padding: 0px 5px 0px 10px;"><b>其他福利待遇 ：</b></td>
 								<td align="left" style="padding: 0px 5px 0px 10px;"><c:forEach items="${params }" var="p">
 										<c:if test="${p.type == 'benefit' }">
-											<input type="checkbox" name="${p.value}" value="1">${p.name }&nbsp;&nbsp; 
+											<input type="checkbox" name="${p.value}" value="1" />${p.name }&nbsp;&nbsp; 
 										</c:if>
 									</c:forEach></td>
 							</tr>
@@ -390,7 +391,7 @@
 								<td align="right" class="line35"><b>到岗时间 ：</b></td>
 								<td align="left" style="padding: 0px 5px 0px 10px;"><c:forEach items="${params }" var="p">
 										<c:if test="${p.type == 'state' }">
-											<input type="radio" name="state" value="${p.value }" <c:if test="${resume.state == p.value }">checked="checked"</c:if>>${p.name }<br />
+											<input type="radio" name="state" value="${p.value }" <c:if test="${resume.state == p.value }">checked="checked"</c:if> />${p.name }<br />
 										</c:if>
 									</c:forEach></td>
 							</tr>
@@ -454,13 +455,14 @@
 								 				<tr style="text-align:left;">
 													<td >
 														<input type="hidden" name="wid" value="${we.id }" />
+														<input type="hidden" name="wUpdateCheck" value="${we.updateCheck }" />
 														<p><span class="span_assign_width" style="width:250px;">公司 : <input type="text" size="35" name="companyName" value="${we.companyName }"  /></span>在职时间 : <input type="text" name="workTime" value="${we.workTime }"/> <span style="color:red;"> (格式:2003.2-2005.8)</span></p>
 														<p><span class="span_assign_width" style="width:250px;">职位 : <input type="text" size="35" name="jobName" value="${we.jobName }"/></span>离职原因 : <input type="text" size="45" name="leaveReason" value="${we.leaveReason }"/></p>
 														<p><span class="span_assign_width" style="width:36px;">&nbsp;</span><textarea rows="4" cols="100" name="jobContent">${we.jobContent }</textarea></p>
 														<hr/>
 													</td>
-													<td onClick="del_edit_we(${we.id})" onmouseover="mouseover_td(this);" onmouseout="mouseout_td(this)">
-														<a href="javascript:void(0);">删除</a>
+													<td>
+														<a href="javascript:void(0);"  onclick="del_edit_we(${we.id})" onmouseover="mouseover_td(this);" onmouseout="mouseout_td(this)">删除</a>
 													</td>
 												</tr>
 											</c:forEach>
@@ -514,6 +516,7 @@
 							<p><span class="span_assign_width" style="width:250px;">公司 : <input type="text" size="35" id="new_companyName" /></span>在职时间 : <input type="text" id="new_workTime" "/> <span style="color:red;"> (格式:2003.2-2005.8)</span></p>
 							<p><span class="span_assign_width" style="width:250px;">职位 : <input type="text" size="35" id="new_jobName" /></span>离职原因 : <input type="text" size="45" id="new_leaveReason"/></p>
 							<p><span class="span_assign_width" style="width:36px;">&nbsp;</span><textarea rows="4" cols="100" id="new_jobContent" onfocus="if (this.value == '自我评价,所负责的事物等等.') {this.value = '';}" onblur="if (this.value == '') {this.value = '自我评价,所负责的事物等等.';}">自我评价,所负责的事物等等.</textarea></p>
+							
 						</td>
 					</tr>
 				</table>

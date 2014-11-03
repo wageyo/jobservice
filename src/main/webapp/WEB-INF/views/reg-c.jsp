@@ -41,7 +41,7 @@ function getimgcode(){
 					<div class="centent_left">
 						<div id="font_sj" style="padding-left: 10px;">
 							免费注册<span id="ctl00_ContentPlaceHolder1_Labelh">企业</span>会员
-							<span style="font-size: 10px;">(账号注册完毕后, 别忘了进管理中心填写公司资料喔, 只有填写了公司资料才能进行进一步操作.)</span>
+							<span style="font-size: 10px;">(账号注册完毕后, 请填写公司资料才能进行进一步操作.)</span>
 						</div>
 						<div id="width">
 							<div id="F_left">

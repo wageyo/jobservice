@@ -108,26 +108,26 @@
 				log_user = #{logUser, jdbcType=VARCHAR},
 			</if>
 			<if test="companyName != null and companyName != ''">
-				company_name = #{logUser, jdbcType=VARCHAR},
+				company_name = #{companyName, jdbcType=VARCHAR},
 			</if>
 			<if test="jobName != null and jobName != ''">
-				job_name = #{logUser, jdbcType=VARCHAR},
+				job_name = #{jobName, jdbcType=VARCHAR},
 			</if>
 			<if test="jobContent != null and jobContent != ''">
-				job_content = #{logUser, jdbcType=VARCHAR},
+				job_content = #{jobContent, jdbcType=VARCHAR},
 			</if>
 			<if test="workTime != null and workTime != ''">
-				work_time = #{logUser, jdbcType=VARCHAR},
+				work_time = #{workTime, jdbcType=VARCHAR},
 			</if>
 			<if test="leaveReason != null and leaveReason != ''">
-				leave_reason = #{logUser, jdbcType=VARCHAR},
+				leave_reason = #{leaveReason, jdbcType=VARCHAR},
 			</if>
 			<if test="evaluation != null and evaluation != ''">
-				name = #{logUser, jdbcType=VARCHAR},
+				name = #{evaluation, jdbcType=VARCHAR},
 			</if>
 			<if test="resume != null">
 				<if test="resume.id != null and resume.id > 0">
-					rid = #{logUser, jdbcType=INTEGER},
+					rid = #{resume.id, jdbcType=INTEGER},
 				</if>
 			</if>
 			update_check = update_check + 1 
