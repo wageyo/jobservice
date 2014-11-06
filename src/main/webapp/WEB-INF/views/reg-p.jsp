@@ -58,7 +58,7 @@ function getimgcode(){
 							</div>
 							<div id="F_left_0">
 								<input name="passWord" type="password" id="passWord" class="text_tex" onfocus="focus_passWord()" onblur="blur_passWord()" />
-								<span id="passWordNotice" style="color:Red;">密码只能为字母, 数字, 长度为5-20位</span>
+								<span id="passWordNotice" style="color:Red;">(55664482, 0451-55664482, 13812345678三种)</span>
 							</div>
 						</div>
 						<div id="width">
