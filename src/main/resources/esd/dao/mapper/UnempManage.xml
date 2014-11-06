@@ -81,7 +81,7 @@
 	<update id="update" parameterType="UnempManage">
 		update unemp_manage
 		<trim prefix="set" suffixOverrides=",">
-			update_date,
+			update_date = now(),
 			<if test="logUser != null and logUser != ''">
 				log_user = #{logUser, jdbcType=VARCHAR},
 			</if>
