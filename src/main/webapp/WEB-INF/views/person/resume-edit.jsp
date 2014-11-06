@@ -212,7 +212,7 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><b>户籍所在地 ：</b></td>
+								<td align="right" class="line35"><span class="red line35_r">*</span><b>户籍所在地 ：</b></td>
 								<td align="left">
 									<select name="area_lv12" id="area_lv12" class="select_border" style="width:150px;">
 										<c:forEach items="${provinceList }" var="area">
@@ -252,9 +252,10 @@
 								<td colspan="2" align="center" class="line35" id="title55"><b>联系方式</b></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><b> 电话/手机 ：</b></td>
-								<td align="left"><input name="phone" type="text" id="phone" class="input_border" style="width:200px;" value="${resume.phone }" /> <span
-										id="ctl00_ContentPlaceHolder1_RequiredFieldValidator2" style="display:inline-block;color:Red;border-width:1px;border-style:solid;font-style:italic;margin-bottom:0px;visibility:hidden;">手机不能为空</span>
+								<td align="right" class="line35"><span class="red line35_r">*</span><b> 电话/手机 ：</b></td>
+								<td align="left">
+									<input name="phone" type="text" id="phone" class="input_border" style="width:200px;" value="${resume.phone }" /> 
+									<span style="color:blue;font-style:微软雅黑;">参考格式(55664482, 0451-55664482, 13812345678三种)</span>
 								</td>
 							</tr>
 							<tr>
@@ -330,7 +331,7 @@
 								</select></td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><span class="red line35_r">*</span><b>期望职位类别 ：</b></td>
+								<td align="right" class="line35"><b>期望职位类别 ：</b></td>
 								<td align="left">
 									<select name="jobCategory_lv1" id="jobCategory_lv1" class="select_border" style="width:150px;">
 										<c:forEach items="${jcList }" var="p">
@@ -347,7 +348,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><span class="red line35_r">*</span><b>期望工作地 ：</b></td>
+								<td align="right" class="line35"><b>期望工作地点 ：</b></td>
 								<td align="left">
 									<select name="area_lv1" id="area_lv1" class="select_border" style="width:150px;">
 										<c:forEach items="${provinceList }" var="area">
@@ -425,7 +426,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><b>培训情况 ：</b></td>
+								<td align="right" class="line35"><b>培训情况或需求 ：</b></td>
 								<td align="left"><input name="training" type="text" value="${resume.training }" id="ctl00_ContentPlaceHolder1_TextBox11" class="input_border" style="width:200px;" />
 								</td>
 							</tr>

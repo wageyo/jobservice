@@ -127,7 +127,7 @@ function blur_confirmPassWord(){
 
 //联系电话焦点获得
 function focus_phone(){
-	$('#phoneNotice').html('联系方式为手机或座机');
+	$('#phoneNotice').html('(55664482, 0451-55664482, 13812345678三种)');
 }
 
 //联系电话焦点离开

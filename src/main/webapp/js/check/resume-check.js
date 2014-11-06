@@ -33,13 +33,20 @@ function resume_check() {
 		$('#day').focus();
 		return false;
 	}
+	// 户籍所在地  第一项为必填项
+	var area_lv12 = $('#area_lv12').val();
+	if (area_lv12 == null || area_lv12 == '' || area_lv12 == '10000000') {
+		alert('请选择户籍所在地!');
+		$('#area_lv12').focus();
+		return false;
+	}
 	// 电话/手机
-/*	var phone = $('#phone').val();
+	var phone = $('#phone').val();
 	if (!verify.checkTel(phone)) {
 		alert('请检查你输入的电话/手机号码!');
 		$('#phone').focus();
 		return false;
-	}	*/
+	}
 	// 残疾证号 
 	var disabilityCard = $('#disabilityCard').val();
 	if (disabilityCard == null || disabilityCard == '') {
@@ -69,19 +76,19 @@ function resume_check() {
 		return false;
 	}
 	// 职位类别--修改为只有第一级为必填
-	var jobCategory_lv1 = $('#jobCategory_lv1').val();
+/*	var jobCategory_lv1 = $('#jobCategory_lv1').val();
 	if (jobCategory_lv1 == null || jobCategory_lv1 == '' || jobCategory_lv1 == '10000000') {
 		alert('请选择工作类别!');
 		$('#jobCategory_lv1').focus();
 		return false;
-	}
+	}	*/
 	// 地区--修改为只有第一级为必填
-	var area_lv1 = $('#area_lv1').val();
+/*	var area_lv1 = $('#area_lv1').val();
 	if (area_lv1 == null || area_lv1 == '' || area_lv1 == '10000000') {
 		alert('请选择期望工作地!');
 		$('#area_lv1').focus();
 		return false;
-	}
+	}	*/
 	// 学历
 	var education = $('#education').val();
 	if (education == null || education == '') {

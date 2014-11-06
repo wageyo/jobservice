@@ -76,7 +76,7 @@ function getimgcode(){
 							</div>
 							<div id="F_left_0">
 								<input name="phone" type="text" id="phone" class="text_tex" onfocus="focus_phone()" onblur="blur_phone()"/>
-								<span id="phoneNotice" style="color:Red;">联系方式为手机或座机</span>
+								<span id="phoneNotice" style="color:Red;">(55664482, 0451-55664482, 13812345678三种)</span>
 							</div>
 						</div>
 						<div id="width">
