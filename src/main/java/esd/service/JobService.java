@@ -55,6 +55,8 @@ public class JobService {
 
 	// 更新一个对象
 	public boolean update(Job job) {
+		Integer updateCheck = dao.getUpdateCheck(job.getId());
+		job.setUpdateCheck(updateCheck);
 		return dao.update(job);
 	}
 

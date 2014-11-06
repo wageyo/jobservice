@@ -107,6 +107,8 @@ public class ResumeService {
 				resume.setAge(KitService.getAgeByBirth(resume.getBirth()));
 			}
 		}
+		Integer updateCheck = dao.getUpdateCheck(resume.getId());
+		resume.setUpdateCheck(updateCheck);
 		return dao.update(resume);
 	}
 
@@ -515,6 +517,8 @@ public class ResumeService {
 
 	// 更改工作经历
 	public boolean update(WorkExperience we) {
+		Integer updateCheck = dao.getUpdateCheck(we.getId());
+		we.setUpdateCheck(updateCheck);
 		return wDao.update(we);
 	}
 

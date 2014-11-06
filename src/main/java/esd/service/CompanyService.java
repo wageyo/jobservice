@@ -76,6 +76,8 @@ public class CompanyService<T> {
 
 	// 更新一个对象
 	public boolean update(Company company) {
+		Integer updateCheck = dao.getUpdateCheck(company.getId());
+		company.setUpdateCheck(updateCheck);
 		return dao.update(company);
 	}
 

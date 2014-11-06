@@ -184,6 +184,12 @@
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
+	<!-- get updateCheck by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select update_check from user 
+		where id = #{id, jdbcType=INTEGER}
+	</select>
+	
 	<select id="getById" resultMap="ResultUser" parameterType="java.lang.Integer">
 		select <include refid="base_column" />
 		from user as u, area as a

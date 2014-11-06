@@ -643,7 +643,13 @@
 		</trim>
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
-	
+
+	<!-- get updateCheck by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select update_check from resume 
+		where id = #{id, jdbcType=INTEGER}
+	</select>
+		
 	<!-- get by obj -->
 	<select id="getByObj" resultMap="ResultResume" parameterType="Resume">
 		select <include refid="base_column" />

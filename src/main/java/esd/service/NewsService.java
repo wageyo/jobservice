@@ -39,6 +39,8 @@ public class NewsService {
 
 	// 更新一个对象
 	public boolean update(News news) {
+		Integer updateCheck = dao.getUpdateCheck(news.getId());
+		news.setUpdateCheck(updateCheck);
 		return dao.update(news);
 	}
 
