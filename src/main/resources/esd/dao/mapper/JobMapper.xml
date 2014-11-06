@@ -456,7 +456,7 @@
  				</if>
 				<if test="job.jobCategory != null ">
 					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
-						<!-- and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
+					<!-- 	and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
 						and ${job.jobCategory.code, jdbcType=VARCHAR}
 					</if>
 				</if>

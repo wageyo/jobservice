@@ -68,7 +68,7 @@ public class NewsService {
 	}
 
 	// 分页查询方法,其中数据已被处理成适合前台展示的
-	public List<News> getForListShow(News news, int startPage, int size) {
+	public List<News> getListForShow(News news, int startPage, int size) {
 		if(news!=null){
 			if(news.getArea()!=null){
 				String code = news.getArea().getCode();

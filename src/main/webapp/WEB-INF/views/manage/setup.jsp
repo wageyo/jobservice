@@ -1,107 +1,213 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<br /><%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
-
-<div class="manage">
-	<div class="viwe-title">系统设置</div>
-	<div id="" class="system" style="margin-left: 150px;margin-top: 30px">
-
-		<dl>
-			<dt>审核内容:</dt>
-
-		</dl>
-		<dl>
-			<dt>是否审核&nbsp“职位信息”:</dt>
-			<dd id="">
-				&nbsp审核<input type="radio" value="on" name="audit_job" /> &nbsp 不审核<input value="off" name="audit_job" type="radio" />
-			</dd>
-		</dl>
-		<dl>
-			<dt>是否审核&nbsp“企业信息”:</dt>
-			<dd id="">
-				&nbsp审核<input type="radio" value="on" name="audit_company" /> &nbsp 不审核<input type="radio" value="off" name="audit_company" />
-			</dd>
-		</dl>
-		<dl>
-			<dt>是否审核&nbsp“简历信息”:</dt>
-			<dd id="">
-				&nbsp审核<input type="radio" value="on" name="audit_resume" /> &nbsp 不审核<input type="radio" value="off" name="audit_resume" />
-			</dd>
-		</dl>
-		<dl>
-			<dt>是否审核&nbsp“账户信息”:</dt>
-			<dd id="">
-				&nbsp审核<input type="radio" value="on" name="audit_user" /> &nbsp 不审核<input type="radio" value="off" name="audit_user" />
-			</dd>
-		</dl>
-
-		<dl>
-			<dt></dt>
-
-		</dl>
-		<script type="text/javascript">
-		
-		systemManager={};
-		systemManager.status=new Array();
-		/*
-			初始化 开关状态
-		*/
-		systemManager.init=function(){
-			$.ajax({
-					url : '/jobservice/manage/status',
-						type:'post',	
-						success:function(data){
-						  	 $("input[name='audit_user']").val([data.user]);//用户
-						     $("input[name='audit_company']").val([data.company]);//企业
-						     $("input[name='audit_job']").val([data.job]);//职位
-						     $("input[name='audit_resume']").val([data.resume]);//简历
-						},error:function(){
-							alert("获取菜单状态数据发生错误。");
-						}
-					});
-		};
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
 	
-		/*
-			设置 开关状态
-		*/
-		systemManager.submit=function(){
+	<title>职位管理列表</title>
+	<meta http-equiv="keywords" content="残疾人,就业,招聘">
+	<meta http-equiv="description" content="残疾人就业招聘网站">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/manage/main.css" />
+	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
+	<script src="${contextPath}/js/manage/common.js"></script>
+	<script src="${contextPath}/js/manage/job.js"></script>
+	
+</head>
 
-			var params=new Array();
-			params.push($("input[name='audit_user']:checked").val());//用户
-			params.push($("input[name='audit_company']:checked").val());//企业
-			params.push($("input[name='audit_job']:checked").val());//职位
-			params.push($("input[name='audit_resume']:checked").val());//简历
-			$.ajax({
-					url : '/jobservice/manage/setstatus',
-						type:'post',	
-						data:{'params':params},
-						success:function(data){
-							if(data==true){
-								alert("设置成功");
-							}else{
-								alert("设置失败");
-							}
-						},error:function(){
-							alert("发生错误。");
-						}
-					});
-		};
+<body>
+	
+	<!-- 整个页面div  开始 -->
+	<div class="manage-body">
+	
+		<!-- 头部 div -->
+		<%@ include file="header.jsp" %>
+		
+		<!-- 中间主体div -->
+		<div class="manage-body">
+		
+			<!-- 左侧菜单div -->
+			<%@ include file="body-left.jsp" %>
 			
-		
-		
-		$(function(){
-		systemManager.init();
-		
-		});
-		
-		</script>
-
-		<div align="center">
-			<a class="blocklink" style="margin-top: 20px" href="javascript:systemManager.submit();">确定</a>
+			<!-- 右侧详细内容div  -->
+			<div class="manage-body-right">
+			
+				<div class="container-fluid">
+				
+					<!-- 上方条件查询框  开始 -->
+					<div class="">
+						<input class="input-medium search-query" value="${targetName }" type="text" style="line-height:26px;height:26px;" name="targetName" id="targetName"/> 
+						<div class="btn-group" >
+							<button class="btn">${checkStatusName }</button> 
+							<input type="hidden" id="checkStatus" name="checkStatus" value="${checkStatus }"/>
+							<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="javascript:query(null,'daiShen');">待审核</a>
+								</li>
+								<li>
+									<a href="javascript:query(null,'weiTongGuo');">未通过</a>
+								</li>
+								<li>
+									<a href="javascript:query(null,'ok');">已通过</a>
+								</li>
+							</ul>
+						</div>
+						<button type="submit" class="btn" onclick="query(null,null);">查找</button>
+					</div>
+					<!-- 上方条件查询框  结束-->
+					
+					<!-- 下方结果显示框  开始 -->
+					<div class="row-fluid">
+						
+						<div class="span12">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>
+											序号
+										</th>
+										<th>
+											职位名称
+										</th>
+										<th>
+											人数
+										</th>
+										<th>
+											提供薪资
+										</th>
+										<th>
+											岗位性质
+										</th>
+										<th>
+											发布日期
+										</th>
+										<th>
+											有效期至
+										</th>
+										<th>
+											联系人
+										</th>
+										<th>
+											联系电话
+										</th>
+										<th>
+											操作
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- 没有数据返回时, 显示提示文字 -->
+									<c:if test="${entityList[0] == null}">
+										<tr>
+											<td colspan="10" class="warning" style="color:red; text-align:center;">
+												没有找到你需要的数据喔!
+											</td>
+										</tr>
+									</c:if>
+								
+									<c:forEach items="${entityList }" var="entity" varStatus="row">
+										<!-- 隔4行换色 -->
+										<tr 
+											<c:if test="${row.index % 4 == 0 }">class="error"</c:if>
+											<c:if test="${row.index % 4 == 1 }">class="warning"</c:if>
+											<c:if test="${row.index % 4 == 2 }">class="success"</c:if>
+											<c:if test="${row.index % 4 == 3 }">class="info"</c:if>
+										>
+											<td>
+												${(row.index + 1 + (currentPage - 1) * 20) }
+											</td>
+											<td>
+												${entity.name }
+											</td>
+											<td>
+												${entity.hireNumber }
+											</td>
+											<td>
+												${entity.salary }
+											</td>
+											<td>
+												${entity.nature }
+											</td>
+											<td>
+												<fmt:formatDate value="${entity.createDate }" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="createDate"/>
+												${createDate }
+											</td>
+											<td>
+												<fmt:formatDate value="${entity.effectiveTime }" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="effectiveTime"/>
+												${effectiveTime }
+											</td>
+											<td>
+												${entity.contactPerson }
+											</td>
+											<td>
+												${entity.contactTel }
+											</td>
+											<td>
+												<a href="javascript:void(0)">编辑</a> 
+												<a href="javascript:void(0)" style="color:red;">拒绝</a> 
+												<a href="javascript:void(0)">通过</a>
+											</td>
+										</tr>
+									</c:forEach>
+									
+								</tbody>
+							</table>
+						</div>
+						
+						
+						<!-- 尾部分页 结束 -->
+					</div>
+					<!-- 下方结果显示框  开始 -->
+					
+					<!-- 尾部分页 开始 -->
+						<div class="">
+							<div class="pagination">
+								<ul>
+									<li>
+										<input type="hidden" id="totalPage" value="${totalPage }" />
+										<a href="javascript:query(${currentPage - 1 },null);">上一页</a>
+									</li>
+									<c:forEach begin="1" end="${totalPage }" var="i">
+										<li <c:if test="${i == currentPage }">class="active"</c:if>>
+											<!-- 当前页面时链接显示灰色 -->
+											<a 
+												<c:choose>
+													<c:when test="${i == currentPage }">
+														href="javascript:void(0);" 
+													</c:when>
+													<c:otherwise>
+														href="javascript:query(${i },null);" 
+													</c:otherwise>
+												</c:choose>
+											>${i }</a>
+										</li>
+									</c:forEach>
+									<li>
+										<a href="javascript:query(${currentPage + 1 },null);">下一页</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+				</div>
+			
+			
+			</div>
+			<!-- 让body-right div的高度跟随内容自动变化 -->
+			<div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
 		</div>
+		
+		<!-- 尾部div -->
+		<%@ include file="footer.jsp" %>
+		
 	</div>
-</div>
-
-
+	<!-- 整个页面div  结束 -->
+</body>
+</html>

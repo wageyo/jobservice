@@ -94,7 +94,7 @@ public class IndexController {
 		List<Resume> resumeList = resumeService.getByNew(KitService.getProvinceCode(acode),21);
 		mav.addObject("resumeList", resumeList);
 		// 最新的6条消息
-		List<News> newsList = newsService.getByNew(acode, 6,Constants.INFO_TYPE_NEWS);
+		List<News> newsList = newsService.getByNew(acode, 6,Constants.ARTICLE_TYPE_NEWS);
 		mav.addObject("newsList", newsList);
 		return mav;
 	}

@@ -56,7 +56,7 @@ public class MenuService {
 		for (Menu m : list) {
 			if (authority == 999) {
 				if (m.getUrl().equals("/jobservice/manage/setup")) {
-					continue;
+//					continue;	//暂时拿掉
 				}
 			}
 			Attributes a = new Attributes();

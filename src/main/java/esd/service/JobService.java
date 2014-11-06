@@ -213,13 +213,13 @@ public class JobService {
 									.getCode())));
 				}
 			}
-			// 只显示审核通过的
-			job.setCheckStatus(Constants.CheckStatus.OK.toString());
+//			// 只显示审核通过的
+//			job.setCheckStatus(Constants.CheckStatus.OK.toString());
 		}
-		if (job == null) {
-			job = new Job();
-			job.setCheckStatus(Constants.CheckStatus.OK.toString());
-		}
+//		if (job == null) {
+//			job = new Job();
+//			job.setCheckStatus(Constants.CheckStatus.OK.toString());
+//		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("job", job);
 		return dao.getTotalCount(map);

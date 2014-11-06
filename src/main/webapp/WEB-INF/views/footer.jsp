@@ -9,7 +9,7 @@
 		<a class="sotz" href="#">意见反馈</a> | 
 		<a class="sotz" href="${contextPath }/contact">联系我们</a> | 
 		<a href="javascript:alert('建设中');" target="_blank" title="站长统计">站长统计</a> | 
-		<a href="${contextPath }/loginmanage/login" title="登陆管理后台" style="color:blue;">管理后台</a>
+		<a href="${contextPath }/loginManage/login" title="登陆管理后台" style="color:blue;">管理后台</a>
 		
 	</div>
 	<p>

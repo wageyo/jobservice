@@ -426,7 +426,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td align="right" class="line35"><b>培训情况 ：</b></td>
+								<td align="right" class="line35"><b>培训情况或需求 ：</b></td>
 								<td align="left"><input name="training" type="text" value="${resume.training }" id="ctl00_ContentPlaceHolder1_TextBox11" class="input_border" style="width:200px;" />
 								</td>
 							</tr>

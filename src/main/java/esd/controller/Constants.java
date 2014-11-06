@@ -14,7 +14,7 @@ public class Constants {
 	public static final int SIZE = 20;
 	// public static final int PAGE_SIZE = 20;
 
-	public static final String NOTICE = "notice";	//提示文字key
+	public static final String NOTICE = "notice"; // 提示文字key
 	public static final String BENEFIT = "benefit"; // 其他福利
 	public static final String CHECKSTATUS = "checkStatus"; // 审核状态
 	public static final String COMPANYNATURE = "companyNature"; // 单位/企业性质
@@ -43,11 +43,11 @@ public class Constants {
 	/**
 	 * 文章类型： 最新资讯类型
 	 */
-	public static final String INFO_TYPE_NEWS = "news"; // 最新资讯类型
+	public static final String ARTICLE_TYPE_NEWS = "news"; // 最新资讯类型
 	/**
 	 * 文章类型： 就业指导类型
 	 */
-	public static final String INFO_TYPE_DIRECT = "direct"; // 就业指导类型
+	public static final String ARTICLE_TYPE_DIRECT = "direct"; // 就业指导类型
 
 	// 几种用户类型
 	public enum Identity {
@@ -112,6 +112,10 @@ public class Constants {
 		@Override
 		public String toString() {
 			return String.valueOf(str);
+		}
+
+		public String getValue() {
+			return this.str;
 		}
 	}
 

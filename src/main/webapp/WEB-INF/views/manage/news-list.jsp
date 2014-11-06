@@ -1,269 +1,189 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	
+	<title>文章(就业指导/最新资讯)管理列表</title>
+	<meta http-equiv="keywords" content="残疾人,就业,招聘">
+	<meta http-equiv="description" content="残疾人就业招聘网站">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/manage/main.css" />
+	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
+	<script src="${contextPath}/js/manage/common.js"></script>
+	<script src="${contextPath}/js/manage/news.js"></script>
+	
+</head>
 
-
-
-<script type="text/javascript">
-	$(function() {
-
-		$('#news_grid').datagrid({
-			url : '/jobservice/manage/news_list',
-			iconCls : 'icon-save',
-			pageSize : 30,
-			pageList : [ 30, 50, 100, 200 ],
-			border : false,//不显示边框
-			pagination : true, //是否显示分页栏 
-			doSize : true,//在面板被创建的时候将重置大小和重新布局。
-			fit : true, //面板大小将自适应父容器
-			fitColumns : true,//是否显示横向滚动条，未生效
-			nowrap : true,//如果为true，则在同一行中 。设置为true可以提高加载性能 
-			rownumbers : true,//显示行号
-			striped : true,//奇偶行使用不同背景色
-			checkOnSelect : true,//单击不选择复选框
-			frozenColumns : [ [ {//复选框
-				field : 'sid',
-				checkbox : true
-			}, ] ],
-			queryParams : {//发送额外的参数
-				type : 'direct'
-			},
-			columns : [ [ {
-				field : 'id',
-				title : 'i00',
-				width : 100,
-				hidden : 'true'//隐藏列
-			}, {
-				field : 'title',
-				title : '标题',
-				width : 300,
-				formatter : function(value, row, index) {
-					var c = '<a class="name-link" href="javascript:void(0)" onclick="newsManager.openViewNews(' + index + ')">' + value + '</a>';
-					return c;
-				}
-			}, {
-				field : 'author',
-				title : '作者',
-				width : 150
-			}, {
-				field : 'type',
-				title : '文章类型',
-				width : 150
-			}, {
-				field : 'source',
-				title : '来源',
-				width : 150
-			}, {
-				field : 'action',
-				title : '操作',
-				width : 150,
-				align : 'center',
-				formatter : function(value, row, index) {
-					var d = '<a href="javascript:void(0)" class="auditLink" onclick="newsManager.openEditNews(' + index + ')">编辑</a> ';
-					var v = '<a href="javascript:void(0)" class="auditLink" onclick="newsManager.singleDel(' + index + ')">删除</a> ';
-					return d + v;
-				}
-			} ] ],
-			toolbar : '#news_boolbar'//指定自定义菜单
-		});
-	});
-
-	newsManager = {};
-	newsManager.id;
-	newsManager.val;
-
-	/* 
-			打开增加文章窗口
-	 */
-	newsManager.openAddNews = function() {
-		/* 添加标签页 */
-		view.tabs.addTab("文章", '/jobservice/manage/news_add/-1', true);
-	};
-	/* 
-			打开显示文章窗口
-	 */
-	newsManager.openViewNews = function(index) {
-		$('#news_grid').datagrid("clearSelections");
-		$('#news_grid').datagrid("selectRow", index);
-		newsManager.id = $('#news_grid').datagrid("getSelections")[0].id;
-
-		$('#newsPanel').window({
-			width : 1100,
-			href : '/jobservice/manage/news_view',
-			height : 650,
-			title : '查看文章信息',
-			minimizable : false,
-			loadingMessage : '正在加载，请稍后。',
-			iconCls : 'icon-save',
-			modal : true//模态窗口
-			,
-			onLoad : function() {
-				//获取数据
-				$.ajax({
-					url : '/jobservice/manage/news_view',
-					data : {
-						'id' : newsManager.id
-					},
-					type : 'post',
-					success : function(data) {
-						$("#news-view-title").html(data.title);
-						$("#news-view-author").html(data.author);
-						$("#news-view-source").html(data.source);
-
-						if (data.type == "direct") {
-							$("#news-view-type").html("就业指导");
-						}
-						if (data.type == "news") {
-							$("#news-view-type").html("最新资讯");
-						}
-
-						$("#news-view-createDate").html(data.createDate);
-						$("#news-view-content").html(data.content);
-
-					},
-					error : function() {
-						alert("查看文章初始化时发生错误");
-					}
-				});
-
-			}
-		});
-
-	};
-
-	/* 
-			打开编辑文章窗口
-	 */
-	newsManager.openEditNews = function(index) {
-
-		$('#news_grid').datagrid("clearSelections");
-		$('#news_grid').datagrid("selectRow", index);
-		newsManager.id = $('#news_grid').datagrid("getSelections")[0].id;
-
-		/* 添加标签页 */
-		view.tabs.addTab("文章", '/jobservice/manage/news_add/' + newsManager.id, true);
-
-	};
-
-	/* 
-		批量删除
-	 */
-	newsManager.batchDel = function() {
-		//获取所有选中列
-		var selection = $("#news_grid").datagrid('getSelections');
-		//判断选择数目是否大于0
-		if (selection.length == 0) {
-			alert("未选择任何数据。");
-		} else {
-
-			//显示确认删除对话框
-			$.messager.confirm('确认', '是否要批量删除' + selection.length + '条数据？', function(r) {
-				if (r) {
-					var params = new Array();
-					for ( var i = 0; i < selection.length; i++) {
-						params.push(selection[i].id);
-					}
-
-					//调用删除
-					newsManager.del(params);
-				}
-			});
-		}
-
-	};
-
-	/* 
-	删除单个文章
-	 */
-	newsManager.singleDel = function(index) {
-
-		$('#news_grid').datagrid("clearSelections");
-		$('#news_grid').datagrid("selectRow", index);
-		newsManager.id = $('#news_grid').datagrid("getSelections")[0].id;
-		$.messager.confirm('确认', '是否要删除？', function(r) {
-			if (r) {
-				var params = new Array();
-				params.push(newsManager.id);
-
-				//调用删除
-				newsManager.del(params);
-			}
-		});
-
-	};
-
-	/*
-		删除文章
-	 */
-	newsManager.del = function(params) {
-		$.ajax({
-			url : '/jobservice/manage/news_del',
-			type : 'post',
-			data : {
-				'params' : params
-			},
-			success : function(data) {
-				if (data == false) {
-					alert("文章删除失败");
-				}
-				$('#news_grid').datagrid("load");
-				//清楚勾选
-				$('#news_grid').datagrid('clearSelections');
-			},
-			error : function() {
-				alert("删除文章时发生错误");
-			}
-		});
-	};
-
-	/*
-	查询条件
-	 */
-	$("#newsManager_newsType").change(function() {
-		newsManager.val = $("#newsManager_newsType").val();
-		if (newsManager.val == "direct") {
-			//就业指导
-			$('#news_grid').datagrid('load', {
-				type : 'direct'
-			});
-		}
-		//最新资讯
-		if (newsManager.val == "news") {
-			//最新资讯
-			$('#news_grid').datagrid('load', {
-				type : 'news'
-			});
-		}
-
-	});
-</script>
-
-
-
-<!-- 数据表格 -->
-<table id="news_grid"></table>
-
-<!-- 自定义菜单 -->
-<div id="news_boolbar" class="manage" data-options="fit:false,doSize:true" style="white-space: nowrap;height: 50px;margin-top: 5px">
-
-	<div class="audit-area">
-		<div style="float: left;">
-			<span class="audit-text">文章类型：</span> <select id="newsManager_newsType" class="audit-select">
-				<option value="direct">就业指导</option>
-				<option value="news">最新资讯</option>
-			</select>
+<body>
+	
+	<!-- 整个页面div  开始 -->
+	<div class="manage-body">
+	
+		<!-- 头部 div -->
+		<%@ include file="header.jsp" %>
+		
+		<!-- 中间主体div -->
+		<div class="manage-body">
+		
+			<!-- 左侧菜单div -->
+			<%@ include file="body-left.jsp" %>
+			
+			<!-- 右侧详细内容div  -->
+			<div class="manage-body-right">
+			
+				<div class="container-fluid">
+				
+					<!-- 上方条件查询框  开始 -->
+					<div class="">
+						<!-- 模糊查询录入框 暂时隐藏 -->
+						<input class="input-medium search-query" value="${targetName }" type="text" style="line-height:26px;height:26px;" name="targetName" id="targetName"/> 
+						<div class="btn-group" >
+							<button class="btn">${articleTypeName }</button> 
+							<input type="hidden" id="articleType" name="articleType" value="${articleType }"/>
+							<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="javascript:query(null,'direct');">就业知道</a>
+								</li>
+								<li>
+									<a href="javascript:query(null,'news');">最新资讯</a>
+								</li>
+							</ul>
+						</div>
+						<button type="submit" class="btn" onclick="query(null,null);">查找</button>
+					</div>
+					<!-- 上方条件查询框  结束-->
+					
+					<!-- 下方结果显示框  开始 -->
+					<div class="row-fluid">
+						
+						<div class="span12">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>
+											序号
+										</th>
+										<th>
+											文章标题
+										</th>
+										<th>
+											作者
+										</th>
+										<th>
+											来源
+										</th>
+										<th>
+											文章类型
+										</th>
+										<th>
+											所属地区
+										</th>
+										<th>
+											操作
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- 没有数据返回时, 显示提示文字 -->
+									<c:if test="${entityList[0] == null}">
+										<tr>
+											<td colspan="10" class="warning" style="color:red; text-align:center;">
+												没有找到你需要的数据喔!
+											</td>
+										</tr>
+									</c:if>
+									
+									<c:forEach items="${entityList }" var="entity" varStatus="row">
+										<!-- 隔4行换色 -->
+										<tr 
+											<c:if test="${row.index % 3 == 0 }">class="warning"</c:if>
+											<c:if test="${row.index % 3 == 1 }">class="success"</c:if>
+											<c:if test="${row.index % 3 == 2 }">class="info"</c:if>
+										>
+											<td>
+												${(row.index + 1 + (currentPage - 1) * 20) }
+											</td>
+											<td>
+												${entity.title }
+											</td>
+											<td>
+												${entity.author }
+											</td>
+											<td>
+												${entity.source }
+											</td>
+											<td>
+												${entity.articleType }
+											</td>
+											<td>
+												${entity.area.name }
+											</td>
+											<td>
+												<a href="javascript:void(0)">编辑</a> 
+												<a href="javascript:void(0)" style="color:red;">拒绝</a> 
+												<a href="javascript:void(0)">通过</a>
+											</td>
+										</tr>
+									</c:forEach>
+									
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+					<!-- 下方结果显示框  开始 -->
+					
+					<!-- 尾部分页 开始 -->
+					<div class="">
+						<div class="pagination">
+							<ul>
+								<li>
+									<input type="hidden" id="totalPage" value="${totalPage }" />
+									<a href="javascript:query(${currentPage - 1 },null);">上一页</a>
+								</li>
+								<c:forEach begin="1" end="${totalPage }" var="i">
+									<li <c:if test="${i == currentPage }">class="active"</c:if>>
+										<!-- 当前页面时链接显示灰色 -->
+										<a 
+											<c:choose>
+												<c:when test="${i == currentPage }">
+													href="javascript:void(0);" 
+												</c:when>
+												<c:otherwise>
+													href="javascript:query(${i },null);" 
+												</c:otherwise>
+											</c:choose>
+										>${i }</a>
+									</li>
+								</c:forEach>
+								<li>
+									<a href="javascript:query(${currentPage + 1 },null);">下一页</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- 尾部分页 结束 -->
+				</div>
+			
+			
+			</div>
+			<!-- 让body-right div的高度跟随内容自动变化 -->
+			<div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
 		</div>
-		<div style="float: right;">
-
-			<button  onclick="newsManager.openAddNews()">增加</button>
-			<button onclick="newsManager.batchDel()">删除</button>
-
-		</div>
+		
+		<!-- 尾部div -->
+		<%@ include file="footer.jsp" %>
+		
 	</div>
-
-</div>
-
-<!-- 信息窗口 -->
-<div id="newsPanel"></div>
-
+	<!-- 整个页面div  结束 -->
+</body>
+</html>

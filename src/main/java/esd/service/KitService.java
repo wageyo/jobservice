@@ -24,8 +24,8 @@ import esd.dao.ParameterDao;
 /**
  * 工具类: ①将前台传进来的对象或者字段转换成适合sql语句的字段 ②将从数据库读取出来的对象或者字段转换成适合前台显示的对象或字段
  * 
- * @author Administrator
- * 
+ * @author yufu
+ * @email ilxly01@126.com 2014-11-5
  */
 @Service
 public class KitService {
@@ -40,7 +40,12 @@ public class KitService {
 	@Autowired
 	private AreaDao aDao;
 
-	// 将日期转换为yyyy-MM-dd格式
+	/**
+	 * 将日期转换为yyyy-MM-dd格式
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static String dateForShow(Date date) {
 		if (date == null) {
 			return null;
@@ -49,17 +54,72 @@ public class KitService {
 		return sdf.format(date);
 	}
 
-	
+	/**
+	 * 根据审核状态值, 获得对应的审核状态名称(中文)
+	 * 
+	 * @param checkStatus
+	 * @return
+	 */
+	public static String getCheckStatusName(String checkStatus) {
+		if (checkStatus == null || "".equals(checkStatus)) {
+			return null;
+		}
+		if (Constants.CheckStatus.DAISHEN.getValue().equals(checkStatus)) {
+			return "待审核";
+		}
+		if (Constants.CheckStatus.WEITONGGUO.getValue().equals(checkStatus)) {
+			return "未通过";
+		}
+		if (Constants.CheckStatus.OK.getValue().equals(checkStatus)) {
+			return "已通过";
+		}
+		return "未知状态";
+	}
+
+	/**
+	 * 根据文章类型值, 获得对应类型名称(中文)
+	 * 
+	 * @param articleType
+	 * @return
+	 */
+	public static String getArticleName(String articleType) {
+		if (articleType == null || "".equals(articleType)) {
+			return null;
+		}
+		if (Constants.ARTICLE_TYPE_DIRECT.equals(articleType)) {
+			return "就业指导";
+		}
+		if (Constants.ARTICLE_TYPE_NEWS.equals(articleType)) {
+			return "最新资讯";
+		}
+		return "未知类型";
+	}
+
+	/**
+	 * 根据数据总条数, 得到总页数
+	 * 
+	 * @param totolCount
+	 * @return
+	 */
+	public static int getTotalPage(int totalCount) {
+		return totalCount % Constants.SIZE == 0 ? totalCount / Constants.SIZE
+				: (totalCount / Constants.SIZE) + 1;
+	}
+
 	public static void main(String[] args) {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//		Date today = new Date();
-//		Long l1 = 20L;
-//		System.out.println(sdf.format(new Date(today.getTime()+l1*24*60*60*1000)));
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		// Date today = new Date();
+		// Long l1 = 20L;
+		// System.out.println(sdf.format(new
+		// Date(today.getTime()+l1*24*60*60*1000)));
 		Boolean bl = null;
 		System.out.println(bl);
+		System.out.println(KitService.getTotalPage(52));
 	}
+
 	/**
 	 * 得到有效期截止日期
+	 * 
 	 * @param effectiveDays
 	 * @return
 	 */
@@ -69,10 +129,15 @@ public class KitService {
 		if (effectiveDays <= 0) {
 			return today;
 		}
-		return new Date(today.getTime()+effectiveDays*24*60*60*1000);
+		return new Date(today.getTime() + effectiveDays * 24 * 60 * 60 * 1000);
 	}
 
-	// 将id转换为数字id
+	/**
+	 * 将id转换为数字id
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static int getInt(String str) {
 		log.info(" str = " + str);
 		// 验证非空
@@ -90,7 +155,12 @@ public class KitService {
 		}
 	}
 
-	// 有三级县区地区code, 提取出所在省份地区code
+	/**
+	 * 有三级县区地区code, 提取出所在省份地区code
+	 * 
+	 * @param districtCode
+	 * @return
+	 */
 	public static String getProvinceCode(String districtCode) {
 		if (districtCode == null || "".equals(districtCode)
 				|| !districtCode.startsWith("30")) {
@@ -107,7 +177,12 @@ public class KitService {
 		return "__" + code.substring(2, 4) + "____";
 	}
 
-	// 处理传进来的地区code, 变成适用于sql语句使用的格式
+	/**
+	 * 处理传进来的地区code, 变成适用于sql语句使用的格式
+	 * 
+	 * @param code
+	 * @return
+	 */
 	public static String areaCodeForSql(String code) {
 		if (code == null || "".equals(code)) {
 			return null;
@@ -126,7 +201,12 @@ public class KitService {
 		return code;
 	}
 
-	// 处理传进来的职位种类code, 变成适用于jobMapper中sql语句使用的格式
+	/**
+	 * 处理传进来的职位种类code, 变成适用于jobMapper中sql语句使用的格式
+	 * 
+	 * @param code
+	 * @return
+	 */
 	public static String jobCategoryCodeForJobSql(String code) {
 		if (code == null || "".equals(code)) {
 			return null;
@@ -137,15 +217,22 @@ public class KitService {
 			code = null;
 		} else if ("10".equals(start)) {
 			mid = code.substring(2, 4);
-			code = "( job.jccode = '"+code+"' or job.jccode like '20"+ mid +"____' or job.jccode like '30"+ mid +"____')";
+			code = "( job.jccode = '" + code + "' or job.jccode like '20" + mid
+					+ "____' or job.jccode like '30" + mid + "____')";
 		} else if ("20".equals(start)) {
 			mid = code.substring(2, 6);
-			code = "( job.jccode = '"+code+"' or job.jccode like '30"+ mid +"__')";
+			code = "( job.jccode = '" + code + "' or job.jccode like '30" + mid
+					+ "__')";
 		}
 		return code;
 	}
-	
-	//处理传进来的职位种类code, 变成适用于resumeMapper中sql语句使用的格式
+
+	/**
+	 * 处理传进来的职位种类code, 变成适用于resumeMapper中sql语句使用的格式
+	 * 
+	 * @param code
+	 * @return
+	 */
 	public static String jobCategoryCodeForResumeSql(String code) {
 		if (code == null || "".equals(code)) {
 			return null;
@@ -156,15 +243,23 @@ public class KitService {
 			code = null;
 		} else if ("10".equals(start)) {
 			mid = code.substring(2, 4);
-			code = "( resume.desireJob = '"+code+"' or resume.desireJob like '20"+ mid +"____' or resume.desireJob like '30"+ mid +"____')";
+			code = "( resume.desireJob = '" + code
+					+ "' or resume.desireJob like '20" + mid
+					+ "____' or resume.desireJob like '30" + mid + "____')";
 		} else if ("20".equals(start)) {
 			mid = code.substring(2, 6);
-			code = "( resume.desireJob = '"+code+"' or resume.desireJob like '30"+ mid +"__')";
+			code = "( resume.desireJob = '" + code
+					+ "' or resume.desireJob like '30" + mid + "__')";
 		}
 		return code;
 	}
 
-	// 根据传进来的日期字符串, 算出年龄
+	/**
+	 * 根据传进来的日期字符串, 算出年龄
+	 * 
+	 * @param birth
+	 * @return
+	 */
 	public static int getAgeByBirth(String birth) {
 		if (birth == null || "".equals(birth)) {
 			return 0;
@@ -178,7 +273,12 @@ public class KitService {
 		return age;
 	}
 
-	// 将resume处理成为适合前台显示用的对象
+	/**
+	 * 将resume处理成为适合前台显示用的对象
+	 * 
+	 * @param resume
+	 * @return
+	 */
 	public Resume getForShow(Resume resume) {
 		if (resume == null) {
 			return null;
@@ -407,7 +507,12 @@ public class KitService {
 		return resume;
 	}
 
-	// 将resume数组处理成为适合前台显示用的对象
+	/**
+	 * 将resume数组处理成为适合前台显示用的对象
+	 * 
+	 * @param resumeList
+	 * @return
+	 */
 	public List<Resume> getForShowResume(List<Resume> resumeList) {
 		if (resumeList == null) {
 			return null;
@@ -641,7 +746,12 @@ public class KitService {
 		return resumeList;
 	}
 
-	// 将job处理成为适合前台显示用的对象
+	/**
+	 * 将job处理成为适合前台显示用的对象
+	 * 
+	 * @param job
+	 * @return
+	 */
 	public Job getForShow(Job job) {
 		if (job == null) {
 			return null;
@@ -774,7 +884,12 @@ public class KitService {
 		return job;
 	}
 
-	// 将job数组处理成为适合前台显示用的对象
+	/**
+	 * 将job数组处理成为适合前台显示用的对象
+	 * 
+	 * @param jobList
+	 * @return
+	 */
 	public List<Job> getForShowJob(List<Job> jobList) {
 		if (jobList == null) {
 			return null;
@@ -905,7 +1020,12 @@ public class KitService {
 		return jobList;
 	}
 
-	// 将company处理成为适合前台显示用的对象
+	/**
+	 * 将company处理成为适合前台显示用的对象
+	 * 
+	 * @param company
+	 * @return
+	 */
 	public Company getForShow(Company company) {
 		if (company == null) {
 			return null;
@@ -968,7 +1088,12 @@ public class KitService {
 		return company;
 	}
 
-	// 将company数组处理成为适合前台显示用的对象
+	/**
+	 * 将company数组处理成为适合前台显示用的对象
+	 * 
+	 * @param companyList
+	 * @return
+	 */
 	public List<Company> getForShowCompany(List<Company> companyList) {
 		if (companyList == null) {
 			return null;
@@ -1032,7 +1157,12 @@ public class KitService {
 		return companyList;
 	}
 
-	// 将record投递记录表处理成为适合前台显示用的对象
+	/**
+	 * 将record投递记录表处理成为适合前台显示用的对象
+	 * 
+	 * @param record
+	 * @return
+	 */
 	public Record getForShow(Record record) {
 		if (record == null) {
 			return null;
@@ -1121,7 +1251,12 @@ public class KitService {
 		return record;
 	}
 
-	// 将record数组投递记录表处理成为适合前台显示用的对象
+	/**
+	 * 将record数组投递记录表处理成为适合前台显示用的对象
+	 * 
+	 * @param recordList
+	 * @return
+	 */
 	public List<Record> getForShowRecord(List<Record> recordList) {
 		if (recordList == null) {
 			return null;
@@ -1211,7 +1346,12 @@ public class KitService {
 		return recordList;
 	}
 
-	// 将news消息处理成为适合前台显示用的对象
+	/**
+	 * 将news消息处理成为适合前台显示用的对象
+	 * 
+	 * @param news
+	 * @return
+	 */
 	public News getForShow(News news) {
 		if (news == null) {
 			return null;
@@ -1224,7 +1364,12 @@ public class KitService {
 		return news;
 	}
 
-	// 将news数组投递记录表处理成为适合前台显示用的对象
+	/**
+	 * 将news数组投递记录表处理成为适合前台显示用的对象
+	 * 
+	 * @param newsList
+	 * @return
+	 */
 	public List<News> getForShowNews(List<News> newsList) {
 		if (newsList == null) {
 			return null;

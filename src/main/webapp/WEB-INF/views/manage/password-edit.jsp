@@ -1,136 +1,81 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<br /><%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<style type="text/css">
-	.span-width{
-		display:-moz-inline-block;
-		display:inline-block;
-		width:200px;
-		text-align:right;
-	}
-	#pwd-edit li{
-		margin:5px;
-		float:left;
-	}
-	#pwd-edit li a{
-		margin:0px;
-	}
-</style>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	
+	<title>修改密码</title>
+	<meta http-equiv="keywords" content="残疾人,就业,招聘">
+	<meta http-equiv="description" content="残疾人就业招聘网站">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/manage/main.css" />
+	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
+	<script src="${contextPath}/js/manage/common.js"></script>
+	<script src="${contextPath}/js/manage/user.js"></script>
+	
+</head>
 
-<div class="manage">
-	<div class="viwe-title" style="width:50%;margin: auto auto;">修改密码</div>
-	<div id="" class="system" style="margin:20px auto;width:50%;text-align:center;">
-		<!-- 修改密码 -->
-		<ul id="pwd-edit">
-			<li><span class="span-width">原&nbsp;&nbsp;密&nbsp;&nbsp;码:&nbsp;</span><input id="password" type="text" onfocus="password.focus_pwd()" onblur="password.blur_pwd()"/><span id="notice_password" style="text-align:left;color:red;font-size:10px;padding-left:5px;" class="span-width"></span></li>
-			<li><span class="span-width">新&nbsp;&nbsp;密&nbsp;&nbsp;码:&nbsp;</span><input id="new_password" type="text" onfocus="password.focus_newpwd()" onblur="password.blur_newpwd()" /><span id="notice_new_password" style="text-align:left;color:red;font-size:10px;padding-left:5px;"  class="span-width"></span></li>
-			<li><span class="span-width">确认密码:&nbsp;</span><input id="confirm_password" onblur="password.blur_conpwd()" type="text" /><span id="notice_confirm_password" style="text-align:left;color:red;font-size:10px;padding-left:5px;"  class="span-width"></span></li>
-			<li style="text-align:center;width:100%;"><a class="blocklink" style="float:none;" href="javascript:password.submit();">确定</a></li>
-		</ul>
-
-
-		<script type="text/javascript">
+<body>
+	
+	<!-- 整个页面div  开始 -->
+	<div class="manage-body">
+	
+		<!-- 头部 div -->
+		<%@ include file="header.jsp" %>
 		
-		password={};
-		var reg_pwd = /[a-zA-Z0-9_]{5,20}/;
+		<!-- 中间主体div -->
+		<div class="manage-body">
 		
-		//原密码校验
-		password.focus_pwd = function(){
-			$('#notice_password').html('5-20位的英文,数字或下划线"_"');
-		};
-		password.blur_pwd = function(){
-			var oldPassWord = $('#password').val();
-			if(!reg_pwd.test(oldPassWord)){
-				$('#notice_password').html('×');
-			}else{
-				$('#notice_password').html('√');
-			}
-		};
+			<!-- 左侧菜单div -->
+			<%@ include file="body-left.jsp" %>
+			
+			<!-- 右侧详细内容div  开始-->
+			<div class="manage-body-right">
+			
+				<div class="container-fluid">
+					<div class="span6">
+					<form class="form-horizontal">
+						<div class="control-group">
+							 <label class="control-label" for="inputEmail">邮箱</label>
+							<div class="controls">
+								<input id="inputEmail" type="text" />
+							</div>
+						</div>
+						<div class="control-group">
+							 <label class="control-label" for="inputPassword">密码</label>
+							<div class="controls">
+								<input id="inputPassword" type="password" />
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								 <label class="checkbox"><input type="checkbox" /> Remember me</label> <button type="submit" class="btn">登陆</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				
+				</div>
+			
+			
+			</div>
+			<!-- 右侧详细内容div  结束-->
+			<!-- 让body-right div的高度跟随内容自动变化 -->
+			<div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
+		</div>
 		
-		//新密码校验
-		password.focus_newpwd = function(){
-			$('#notice_new_password').html('5-20位的英文,数字或下划线"_"');
-		};
-		password.blur_newpwd = function(){
-			var newPassWord = $('#new_password').val();
-			if(!reg_pwd.test(newPassWord)){
-				$('#notice_new_password').html('×');
-			}else{
-				$('#notice_new_password').html('√');
-			}
-		};
+		<!-- 尾部div -->
+		<%@ include file="footer.jsp" %>
 		
-		//确认密码
-		password.blur_conpwd = function(){
-			var newPassWord = $('#new_password').val();
-			var confirm_password = $('#confirm_password').val();
-			if(!reg_pwd.test(confirm_password)){
-				$('#notice_confirm_password').html('×');
-			}else{
-				if(newPassWord == confirm_password){
-					$('#notice_confirm_password').html('√');
-				}else{
-					$('#notice_confirm_password').html('两次输入的密码不一致');
-				}
-			}
-		};
-		
-		/*
-			提交修改密码
-		*/
-		password.submit=function(){
-
-			var oldPassWord = $('#password').val();
-			var newPassWord = $('#new_password').val();
-			var confirm_password = $('#confirm_password').val();
-			if(!reg_pwd.test(oldPassWord)){
-				$('#notice_password').html('×');
-				$('#password').focus();
-				return;
-			}
-			if(!reg_pwd.test(newPassWord)){
-				$('#notice_new_password').html('×');
-				$('#new_password').focus();
-				return;
-			}
-			if(!reg_pwd.test(confirm_password)){
-				$('#notice_confirm_password').html('×');
-				$('#confirm_password').focus();
-				return;
-			}
-			if(newPassWord != confirm_password){
-				$('#notice_confirm_password').html('两次输入的密码不一致');
-				return;
-			}
-			$.ajax({
-					url : '/jobservice/manage/password_edit',
-						type:'post',	
-						data:{'oldPassWord':oldPassWord,
-							newPassWord:newPassWord	
-						},
-						success:function(data){
-							if(data.notice == true || data.notice == 'true'){
-								$('#password').val('');
-								$('#new_password').val('');
-								$('#confirm_password').val('');
-								$('#notice_password').html('');
-								$('#notice_new_password').html('');
-								$('#notice_confirm_password').html('');
-								alert("修改成功");
-							}else{
-								alert(data.notice);
-							}
-						},error:function(){
-							alert("发生错误。");
-						}
-					});
-		};
-		
-		
-		</script>
-
 	</div>
-</div>
-
-
+	<!-- 整个页面div  结束 -->
+</body>
+</html>

@@ -72,35 +72,35 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         
         
-        /*
-         * 后台登陆过滤器
-         */
-        if (request.getRequestURI().indexOf("/manage") != -1) {
-        	Object obj=request.getSession().getAttribute(Constants.USER);
-            if (obj == null) {
-            	logger.error("未登陆状态进入工作区被拦截");
-                PrintWriter out = null;
-                try {
-                    out = response.getWriter();
-                    StringBuilder builder = new StringBuilder();
-                    builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
-                    builder.append("window.top.location.href='");
-                    builder.append(loginManageUrl);
-                    builder.append("';");
-                    builder.append("</script>");
-                    out.print(builder.toString());
-                    out.close();
-                    return false;
-                } catch (IOException e) {
-                    logger.error(e.getMessage());
-                } finally {
-                    if (out != null) {
-                        out.close();
-                    }
-                }
-
-            }
-        }
+//        /*
+//         * 后台登陆过滤器
+//         */
+//        if (request.getRequestURI().indexOf("/manage") != -1) {
+//        	Object obj=request.getSession().getAttribute(Constants.USER);
+//            if (obj == null) {
+//            	logger.error("未登陆状态进入工作区被拦截");
+//                PrintWriter out = null;
+//                try {
+//                    out = response.getWriter();
+//                    StringBuilder builder = new StringBuilder();
+//                    builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
+//                    builder.append("window.top.location.href='");
+//                    builder.append(loginManageUrl);
+//                    builder.append("';");
+//                    builder.append("</script>");
+//                    out.print(builder.toString());
+//                    out.close();
+//                    return false;
+//                } catch (IOException e) {
+//                    logger.error(e.getMessage());
+//                } finally {
+//                    if (out != null) {
+//                        out.close();
+//                    }
+//                }
+//
+//            }
+//        }
         return true;
     }
 }

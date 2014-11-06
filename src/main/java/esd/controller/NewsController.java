@@ -58,12 +58,12 @@ public class NewsController {
 			acode = ((Area) obj).getCode();
 		}
 		News n = new News();
-		n.setType(Constants.INFO_TYPE_NEWS);
+		n.setType(Constants.ARTICLE_TYPE_NEWS);
 		n.setArea(new Area(acode));
 		Map<String, Object> entity = new HashMap<String, Object>();
-		List<News> newsList = newsService.getForListShow(n, page,
+		List<News> newsList = newsService.getListForShow(n, page,
 				Constants.SIZE);
-		Integer records = newsService.getTotalCount(new News(Constants.INFO_TYPE_NEWS));
+		Integer records = newsService.getTotalCount(new News(Constants.ARTICLE_TYPE_NEWS));
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (newsList != null && records != null && records > 0) {
 			try {
@@ -112,7 +112,7 @@ public class NewsController {
 		News news = newsService.getOneForShow(id);
 		req.setAttribute("news", news);
 		// 再取15条信息放入到request中
-		List<News> list = newsService.getTitleList(Constants.INFO_TYPE_NEWS, 1, 15);
+		List<News> list = newsService.getTitleList(Constants.ARTICLE_TYPE_NEWS, 1, 15);
 		req.setAttribute("newsList", list);
 		return "news/news-detail";
 	}
