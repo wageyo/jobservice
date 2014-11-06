@@ -160,7 +160,7 @@
 				identity = #{identity, jdbcType=VARCHAR},
 			</if>
 			<if test="checkStatus != null">
-				checkStatus = #{checkStatus, jdbcType=VARCHAR},
+				check_status = #{checkStatus, jdbcType=VARCHAR},
 			</if>
 			<if test="authority != null and authority > 0">
 				authority = #{authority, jdbcType=INTEGER},
