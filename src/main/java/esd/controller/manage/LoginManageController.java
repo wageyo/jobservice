@@ -59,10 +59,10 @@ public class LoginManageController {
 	public ModelAndView goLogin(HttpServletRequest request,HttpSession session,
 			RedirectAttributes ra) {
 		log.debug("转到管理 登陆页面");
-		//暂时写死不用登陆 直接到主页
-		List<Menu> menuList = menuService.getByAuthority(Constants.Authority.SUPERADMIN.getValue());
-		session.setAttribute("menuList", menuList);
-		return new ModelAndView("manage/index");
+//		//暂时写死不用登陆 直接到主页
+//		List<Menu> menuList = menuService.getByAuthority(Constants.Authority.SUPERADMIN.getValue());
+//		session.setAttribute("menuList", menuList);
+		return new ModelAndView("manage/login");
 	}
 
 	/*
