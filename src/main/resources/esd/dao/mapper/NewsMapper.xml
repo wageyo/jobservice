@@ -189,7 +189,7 @@
 				</if>
 			</if>
 		</trim>
-		order by n.create_date
+		order by n.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 
