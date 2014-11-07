@@ -738,7 +738,7 @@
 				
 			</if>
 		</trim>
-		order by r.create_date
+		order by r.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 
