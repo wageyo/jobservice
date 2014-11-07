@@ -77,11 +77,11 @@ public class AdminManageController {
 		String checkStatus = request.getParameter("checkStatus");
 		// 判断显示类型
 		if (checkStatus == null || "".equals(checkStatus)) {
-			checkStatus = Constants.CheckStatus.DAISHEN.getValue();
+			checkStatus = Constants.CheckStatus.OK.getValue();
 		}
 		paramEntity.setCheckStatus(checkStatus);
 //			// 获取地区码
-//			User userObj = (User) request.getSession().getAttribute(
+//			User userObj = (User) session.getAttribute(
 //					Constants.USER);
 //			String acode = userObj.getArea().getCode();
 //			// 设置查看地区码条件为管理员所在地区
@@ -96,9 +96,9 @@ public class AdminManageController {
 
 				Map<String, Object> tempMap = new HashMap<>();
 				tempMap.put("id", tmp.getId());// id
-				tempMap.put("loginname", tmp.getLoginName());// 账号
-				tempMap.put("password", tmp.getPassWord());// 密码
-				tempMap.put("nick", tmp.getNickName());// 昵称
+				tempMap.put("loginName", tmp.getLoginName());// 账号
+				tempMap.put("passWord", tmp.getPassWord());// 密码
+				tempMap.put("nickName", tmp.getNickName());// 昵称
 				tempMap.put("title", tmp.getTitle());// 头部标题
 				tempMap.put("area", tmp.getArea());// 所属地区
 				list.add(tempMap);
@@ -324,10 +324,10 @@ public class AdminManageController {
 	 */
 	@RequestMapping(value = "/menu", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Map<String, Object>> jsonMenu(HttpServletRequest request) {
+	public List<Map<String, Object>> jsonMenu(HttpServletRequest request,HttpSession session) {
 		List<Menu> listMenu = null;
 		// 获取地区码
-		User userObj = (User) request.getSession().getAttribute(Constants.USER);
+		User userObj = (User) session.getAttribute(Constants.USER);
 
 		log.debug("获取菜单");
 		listMenu = menuService.getByAuthority(userObj.getAuthority());
@@ -358,9 +358,9 @@ public class AdminManageController {
 	 */
 	@RequestMapping(value = "/status", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> menuChecked(HttpServletRequest request) {
+	public Map<String, Object> menuChecked(HttpServletRequest request,HttpSession session) {
 		// 获取地区码
-		User userObj = (User) request.getSession().getAttribute(Constants.USER);
+		User userObj = (User) session.getAttribute(Constants.USER);
 		String code = userObj.getArea().getCode();
 		if (code == null || code.equals("")) {
 			log.error("获取开关状态失败，地区无效");
@@ -386,12 +386,12 @@ public class AdminManageController {
 	@RequestMapping(value = "/setstatus", method = RequestMethod.POST)
 	@ResponseBody
 	public Boolean setstatus(@RequestParam(value = "params[]") String params[],
-			HttpServletRequest request) {
+			HttpServletRequest request,HttpSession session) {
 		if (params == null || params.length <= 0) {
 			log.error("系统设置  参数错误");
 		}
 		// 获取地区码
-		User userObj = (User) request.getSession().getAttribute(Constants.USER);
+		User userObj = (User) session.getAttribute(Constants.USER);
 		String code = userObj.getArea().getCode();
 		// 更新 开关状态
 		pService.updateSwitch("user", code, params[0]);// 用户

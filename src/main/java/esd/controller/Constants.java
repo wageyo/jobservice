@@ -56,16 +56,20 @@ public class Constants {
 				"company");
 
 		// 定义私有变量
-		private String str;
+		private String val;
 
 		// 构造函数, 枚举类型只能为私有
-		private Identity(String str) {
-			this.str = str;
+		private Identity(String val) {
+			this.val = val;
 		}
 
 		@Override
 		public String toString() {
-			return String.valueOf(str);
+			return String.valueOf(val);
+		}
+
+		public String getValue() {
+			return this.val;
 		}
 	}
 
@@ -102,20 +106,20 @@ public class Constants {
 		DAISHEN("daiShen"), WEITONGGUO("weiTongGuo"), OK("ok");
 
 		// 定义私有变量
-		private String str;
+		private String val;
 
 		// 构造函数, 枚举类型只能为私有
-		private CheckStatus(String str) {
-			this.str = str;
+		private CheckStatus(String val) {
+			this.val = val;
 		}
 
 		@Override
 		public String toString() {
-			return String.valueOf(str);
+			return String.valueOf(val);
 		}
 
 		public String getValue() {
-			return this.str;
+			return this.val;
 		}
 	}
 
@@ -125,16 +129,20 @@ public class Constants {
 		USER("user"), COMPANY("company"), JOB("job"), RESUME("resume");
 
 		// 定义私有变量
-		private String str;
+		private String val;
 
 		// 构造函数, 枚举类型只能为私有
-		private Switch(String str) {
-			this.str = str;
+		private Switch(String val) {
+			this.val = val;
 		}
 
 		@Override
 		public String toString() {
-			return String.valueOf(str);
+			return String.valueOf(val);
+		}
+
+		public String getValue() {
+			return this.val;
 		}
 	}
 
@@ -143,16 +151,20 @@ public class Constants {
 		SUCCESS("success"), ERROR("error"), WRONG("wrong"), INFO("info"), FAILURE(
 				"failure");
 		// 定义私有变量
-		private String str;
+		private String val;
 
 		// 构造函数, 枚举类型只能为私有
-		private Notice(String str) {
-			this.str = str;
+		private Notice(String val) {
+			this.val = val;
 		}
 
 		@Override
 		public String toString() {
-			return String.valueOf(str);
+			return String.valueOf(val);
+		}
+
+		public String getValue() {
+			return this.val;
 		}
 	}
 

@@ -6,7 +6,7 @@
 <html lang="zh-cn">
 <head>
 	
-	<title>用户管理列表</title>
+	<title>管理员用户管理列表</title>
 	<meta http-equiv="keywords" content="残疾人,就业,招聘">
 	<meta http-equiv="description" content="残疾人就业招聘网站">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +18,7 @@
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
-	<script src="${contextPath}/js/manage/user.js"></script>
+	<script src="${contextPath}/js/manage/admin.js"></script>
 	
 </head>
 
@@ -79,10 +79,13 @@
 											账号
 										</th>
 										<th>
-											email地址
+											密码
 										</th>
 										<th>
-											联系电话
+											昵称
+										</th>
+										<th>
+											头部标题
 										</th>
 										<th>
 											所属地区
@@ -116,10 +119,13 @@
 												${entity.loginName }
 											</td>
 											<td>
-												${entity.email }
+												${entity.passWord }
 											</td>
 											<td>
-												${entity.phone }
+												${entity.nickName }
+											</td>
+											<td>
+												${entity.title }
 											</td>
 											<td>
 												${entity.area.name }

@@ -14,7 +14,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
-	<link rel="stylesheet" type="text/css" href="${contextPath}/css/manage/main.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	
@@ -36,7 +36,7 @@
 			
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
-				<img src="${contextPath }/images/manager/tishi.png" style="margin-top: 5%;margin-left: 5%;"/>
+				<img src="${contextPath }/images/backdoor/tishi.png" style="margin-top: 5%;margin-left: 5%;"/>
 			</div>
 		</div>
 		

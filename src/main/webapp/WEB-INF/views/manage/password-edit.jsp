@@ -14,7 +14,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
-	<link rel="stylesheet" type="text/css" href="${contextPath}/css/manage/main.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
@@ -39,30 +39,38 @@
 			<!-- 右侧详细内容div  开始-->
 			<div class="manage-body-right">
 			
-				<div class="container-fluid">
-					<div class="span6">
-					<form class="form-horizontal">
+				<div class="span6" style="margin-top: 40px;">
+					<form class="form-horizontal" action="${contextPath }/loginManage/password_edit"  method="POST" style="text-align:center;">
 						<div class="control-group">
-							 <label class="control-label" for="inputEmail">邮箱</label>
 							<div class="controls">
-								<input id="inputEmail" type="text" />
-							</div>
-						</div>
-						<div class="control-group">
-							 <label class="control-label" for="inputPassword">密码</label>
-							<div class="controls">
-								<input id="inputPassword" type="password" />
+								&nbsp;
+								<span>${notice }</span>
 							</div>
 						</div>
 						<div class="control-group">
 							<div class="controls">
-								 <label class="checkbox"><input type="checkbox" /> Remember me</label> <button type="submit" class="btn">登陆</button>
+							 	<label for="loginName" style="display:initial;width:60px;">原&nbsp;&nbsp;密&nbsp;&nbsp;码</label> 
+								<input id="oldPassWord" name="oldPassWord" value="" type="password" />
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+							 	<label for="passWord" style="display:initial;width:60px;">新&nbsp;&nbsp;密&nbsp;&nbsp;码</label>
+								<input id="newPassWord" name="newPassWord" type="password" value="" />
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+							 	<label for="passWord" style="display:initial;width:60px;">确认密码</label>
+								<input id="confirmPassWord" name="confirmPassWord" type="password" value="" />
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								 <button type="submit" class="btn">修改</button>
 							</div>
 						</div>
 					</form>
-				</div>
-				
-				
 				</div>
 			
 			

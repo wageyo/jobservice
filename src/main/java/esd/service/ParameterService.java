@@ -45,6 +45,36 @@ public class ParameterService {
 	}
 
 	/**
+	 * 更改参数状态
+	 * 
+	 * @param id
+	 * @param value
+	 * @return
+	 */
+	public boolean updateParameter(Parameter parameter) {
+		if(parameter == null){
+			return false;
+		}
+		boolean bl = dao.updateSwitch(parameter);
+		return bl;
+	}
+	
+	/**
+	 * 更改参数状态, 据参数id和value值
+	 * 
+	 * @param id
+	 * @param value
+	 * @return
+	 */
+	public boolean updateParameter(String id, String value) {
+		Parameter p = new Parameter();
+		p.setId(id);
+		p.setValue(value);
+		boolean bl = dao.updateSwitch(p);
+		return bl;
+	}
+
+	/**
 	 * 更改开关, 根据开关名称见Constants.Switch 枚举, 地区code, 开否boolean值
 	 * 
 	 * @param switchName

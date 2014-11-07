@@ -14,7 +14,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
-	<link rel="stylesheet" type="text/css" href="${contextPath}/css/manage/main.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
@@ -43,7 +43,7 @@
 				
 					<!-- 上方条件查询框  开始 -->
 					<div class="">
-						<input class="input-medium search-query" value="${targetName }" type="text" style="line-height:26px;height:26px;" name="targetName" id="targetName"/> 
+						<input class="input-medium search-query" value="${targetName }" type="text" name="targetName" id="targetName"/> 
 						<div class="btn-group" >
 							<button class="btn">${checkStatusName }</button> 
 							<input type="hidden" id="checkStatus" name="checkStatus" value="${checkStatus }"/>

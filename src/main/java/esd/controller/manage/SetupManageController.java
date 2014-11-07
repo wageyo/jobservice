@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,16 @@ import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
+import esd.service.KitService;
 import esd.service.MenuService;
 import esd.service.ParameterService;
 import esd.service.UserService;
 
 /**
- * 审核开关  管理控制器
+ * 审核开关 管理控制器
+ * 
  * @author yufu
- * @email ilxly01@126.com
- * 2014-11-6
+ * @email ilxly01@126.com 2014-11-6
  */
 @Controller
 @RequestMapping("/manage/setup")
@@ -42,20 +44,75 @@ public class SetupManageController {
 	private MenuService menuService;
 
 	@Autowired
-	private ParameterService pService;
+	private ParameterService parameterService;
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AreaService areaService;
 
 	// 跳转到 系统设置 页面
-	@RequestMapping(value = "/gotosetup", method = RequestMethod.GET)
-	public ModelAndView gotosetup(HttpServletRequest request) {
-		
+	@RequestMapping(value = "/goto_setup", method = RequestMethod.GET)
+	public ModelAndView gotosetup(HttpServletRequest request,
+			HttpSession session) {
 		log.error("goto 系统设置");
-		return new ModelAndView("manage/setup");
+		// 获取地区码
+		User userObj = (User) session.getAttribute(Constants.USER);
+		String code = userObj.getArea().getCode();
+		if (code == null || "".equals(code)) {
+			log.error("获取开关状态失败，地区无效");
+			return null;
+		}
+		List<Parameter> resultList = parameterService.getSwitchByArea(code);
+		if (resultList.size() <= 0) {
+			log.error("获取 开关状态数据为空。" + "     user:" + userObj);
+			return null;
+		}
+		Map<String, Object> entity = new HashMap<>();
+		try {
+			List<Map<String, Object>> list = new ArrayList<>();
+			for (Parameter tmp : resultList) {
+				Map<String, Object> tempMap = new HashMap<>();
+				tempMap.put("id", tmp.getId());// id
+				tempMap.put("switchValue", tmp.getValue()); // 开始值: on or off
+				tempMap.put("switchName",
+						KitService.getSwitchName(tmp.getName())); // 开关名称
+				list.add(tempMap);
+			}
+			entity.put("entityList", list);
+			log.debug("获取 开关 信息，size():" + list.size());
+		} catch (Exception e) {
+			log.error("获取开关 时发生错误。");
+			e.printStackTrace();
+		}
+		return new ModelAndView("manage/setup", entity);
+	}
+
+	// 更新 开关状态
+	@RequestMapping(value = "/update_switch", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> setstatus(HttpServletRequest request,
+			HttpSession session) {
+		String switchid = request.getParameter("switchid");
+		String switchStatus = request.getParameter("switchStatus");
+		Map<String, Object> entity = new HashMap<String, Object>();
+		if (switchid == null || "".equals(switchid) || switchStatus == null
+				|| "".equals(switchStatus)) {
+			entity.put(Constants.NOTICE, "传递的参数有误, 请重新尝试或者联系管理员.");
+			return entity;
+		}
+		Parameter pa = new Parameter();
+		pa.setId(switchid);
+		pa.setValue(switchStatus);
+		// 更新
+		Boolean bl = parameterService.updateParameter(switchid, switchStatus);
+		if (bl) {
+			entity.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			entity.put(Constants.NOTICE, "更新开关发生错误, 请重新尝试或者联系管理员.");
+		}
+		return entity;
 	}
 
 	
@@ -70,16 +127,10 @@ public class SetupManageController {
 	
 	
 	
-	/*
-	 * 转到超级页面 管理员列表 页面
-	 */
-	@RequestMapping(value = "/super_list", method = RequestMethod.GET)
-	public ModelAndView super_list(HttpServletRequest request) {
-
-		log.debug("转到超级页面 管理员列表 页面");
-		return new ModelAndView("manage/super-list");
-	}
-
+	
+	
+	
+	
 	/*
 	 * 转到 增加管理员 页面
 	 */
@@ -264,10 +315,11 @@ public class SetupManageController {
 	 */
 	@RequestMapping(value = "/menu", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Map<String, Object>> jsonMenu(HttpServletRequest request) {
+	public List<Map<String, Object>> jsonMenu(HttpServletRequest request,
+			HttpSession session) {
 		List<Menu> listMenu = null;
 		// 获取地区码
-		User userObj = (User) request.getSession().getAttribute(Constants.USER);
+		User userObj = (User) session.getAttribute(Constants.USER);
 
 		log.debug("获取菜单");
 		listMenu = menuService.getByAuthority(userObj.getAuthority());
@@ -298,15 +350,16 @@ public class SetupManageController {
 	 */
 	@RequestMapping(value = "/status", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> menuChecked(HttpServletRequest request) {
+	public Map<String, Object> menuChecked(HttpServletRequest request,
+			HttpSession session) {
 		// 获取地区码
-		User userObj = (User) request.getSession().getAttribute(Constants.USER);
+		User userObj = (User) session.getAttribute(Constants.USER);
 		String code = userObj.getArea().getCode();
 		if (code == null || code.equals("")) {
 			log.error("获取开关状态失败，地区无效");
 			return null;
 		}
-		List<Parameter> listSet = pService.getSwitchByArea(code);
+		List<Parameter> listSet = parameterService.getSwitchByArea(code);
 		if (listSet.size() <= 0) {
 			log.error("获取 开关状态数据为空。" + "     user:" + userObj);
 			return null;
@@ -320,25 +373,4 @@ public class SetupManageController {
 		return map;
 	}
 
-	/*
-	 * 更新 开关状态
-	 */
-	@RequestMapping(value = "/setstatus", method = RequestMethod.POST)
-	@ResponseBody
-	public Boolean setstatus(@RequestParam(value = "params[]") String params[],
-			HttpServletRequest request) {
-		if (params == null || params.length <= 0) {
-			log.error("系统设置  参数错误");
-		}
-		// 获取地区码
-		User userObj = (User) request.getSession().getAttribute(Constants.USER);
-		String code = userObj.getArea().getCode();
-		// 更新 开关状态
-		pService.updateSwitch("user", code, params[0]);// 用户
-		pService.updateSwitch("company", code, params[1]);// 企业
-		pService.updateSwitch("job", code, params[2]);// 职位
-		pService.updateSwitch("resume", code, params[3]);// 简历
-		log.debug("更新菜单状态" + "     user:" + userObj);
-		return true;
-	}
 }

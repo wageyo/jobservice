@@ -94,6 +94,31 @@ public class KitService {
 		}
 		return "未知类型";
 	}
+	
+	/**
+	 * 根据开关值, 获得对应的开关名称
+	 * 
+	 * @param switchValue
+	 * @return
+	 */
+	public static String getSwitchName(String switchValue) {
+		if (switchValue == null || "".equals(switchValue)) {
+			return null;
+		}
+		if (Constants.Switch.USER.getValue().equals(switchValue)) {
+			return "账号信息";
+		}
+		if (Constants.Switch.RESUME.getValue().equals(switchValue)) {
+			return "简历信息";
+		}
+		if (Constants.Switch.COMPANY.getValue().equals(switchValue)) {
+			return "企业信息";
+		}
+		if (Constants.Switch.JOB.getValue().equals(switchValue)) {
+			return "职位信息";
+		}
+		return "未知类型";
+	}
 
 	/**
 	 * 根据数据总条数, 得到总页数

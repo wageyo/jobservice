@@ -19,19 +19,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
-import esd.bean.Job;
 import esd.bean.News;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.KitService;
 import esd.service.NewsService;
 
-
 /**
  * 文章(就业指导/最新资讯)后台管理控制器
+ * 
  * @author yufu
- * @email ilxly01@126.com
- * 2014-11-5
+ * @email ilxly01@126.com 2014-11-5
  */
 @Controller
 @RequestMapping("/manage/news")
@@ -42,90 +40,64 @@ public class NewsManageController {
 	private NewsService newsService;
 
 	// 转到职位管理列表页面
-		@RequestMapping(value = "/news_list", method = RequestMethod.GET)
-		public ModelAndView job_list(HttpServletRequest request, HttpSession session) {
-			log.debug("goto：文章(就业指导/最新资讯)管理");
-			Map<String, Object> entity = new HashMap<>();
-			String pageStr = request.getParameter("page");
-			Integer page = KitService.getInt(pageStr) > 0 ? KitService
-					.getInt(pageStr) : 1;
-					Integer rows = Constants.SIZE;
-			News paramEntity = new News();
-			// 名称模糊查询
-			String targetName = request.getParameter("targetName");
-			paramEntity.setTitle(targetName);
-			// 获取文章类型查询条件
-			String articleType = request.getParameter("articleType");
-			// 判断显示类型, 如果传递的参数为空的话, 则默认首先显示就业指导内容
-			if (articleType == null || "".equals(articleType)) {
-				articleType = Constants.ARTICLE_TYPE_DIRECT;
-			}
-			paramEntity.setType(articleType);
-			
-			// // 获取地区码
-			// User userObj = (User) request.getSession().getAttribute(
-			// Constants.USER);
-			// String acode = userObj.getArea().getCode();
-			// // 设置查看地区码条件为管理员所在地区
-			// jobType.setArea(new Area(acode));
-//			// 如果为超级管理员, 则不设置地区码, 即读取所有地区信息
-//						if (!userObj.getIdentity().equals(
-//								Constants.Identity.SUPERADMIN.toString())) {
-//							newsType.setArea(new Area(userObj.getArea().getCode()));// 地区码
-//						}
-			
-			List<News> resultList = newsService.getListForShow(paramEntity, page,
-					rows);
-			Integer total = newsService.getTotalCount(paramEntity); // 数据总条数
-			try {
-				List<Map<String, Object>> list = new ArrayList<>();
-				System.out.println("resultList.size()" + resultList.size());
-				for (News tmp : resultList) {
-					Map<String, Object> tempMap = new HashMap<>();
-					tempMap.put("id", tmp.getId());// id
-					tempMap.put("title", tmp.getTitle());// 标题
-					tempMap.put("author", tmp.getAuthor());// 作者
-					tempMap.put("source", tmp.getSource());// 来源/来路
-					tempMap.put("articleType", KitService.getArticleName(tmp.getType()));// 文章类型
-					tempMap.put("area", tmp.getArea());	//所属地区
-					list.add(tempMap);
-				}
-				entity.put("total", total);
-				entity.put("entityList", list);
-				log.debug("获取文章(就业指导/最新资讯)信息，size():" + total );
-			} catch (Exception e) {
-				log.error("获取文章(就业指导/最新资讯)信息时发生错误。");
-				e.printStackTrace();
-			}
-			//放入当前页数, 总页数, 职位名, 审核状态
-			entity.put("currentPage", page);
-			entity.put("totalPage", KitService.getTotalPage(total));
-			entity.put("targetName", targetName);
-			entity.put("articleType", articleType);
-			entity.put("articleTypeName", KitService.getArticleName(articleType));
-			return new ModelAndView("manage/news-list", entity);
+	@RequestMapping(value = "/news_list", method = RequestMethod.GET)
+	public ModelAndView list_get(HttpServletRequest request, HttpSession session) {
+		log.debug("goto：文章(就业指导/最新资讯)管理");
+		Map<String, Object> entity = new HashMap<>();
+		String pageStr = request.getParameter("page");
+		Integer page = KitService.getInt(pageStr) > 0 ? KitService
+				.getInt(pageStr) : 1;
+		Integer rows = Constants.SIZE;
+		News paramEntity = new News();
+		// 名称模糊查询
+		String targetName = request.getParameter("targetName");
+		paramEntity.setTitle(targetName);
+		// 获取文章类型查询条件
+		String articleType = request.getParameter("articleType");
+		// 判断显示类型, 如果传递的参数为空的话, 则默认首先显示就业指导内容
+		if (articleType == null || "".equals(articleType)) {
+			articleType = Constants.ARTICLE_TYPE_DIRECT;
 		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		paramEntity.setType(articleType);
+
+		// 获取地区码
+		User userObj = (User) session.getAttribute(Constants.USER);
+		// 根据管理员用户所属地区, 查询他下面所属的所有数据
+		String acode = userObj.getArea().getCode();
+		paramEntity.setArea(new Area(acode));
+
+		List<News> resultList = newsService.getListForShow(paramEntity, page,
+				rows);
+		Integer total = newsService.getTotalCount(paramEntity); // 数据总条数
+		try {
+			List<Map<String, Object>> list = new ArrayList<>();
+			System.out.println("resultList.size()" + resultList.size());
+			for (News tmp : resultList) {
+				Map<String, Object> tempMap = new HashMap<>();
+				tempMap.put("id", tmp.getId());// id
+				tempMap.put("title", tmp.getTitle());// 标题
+				tempMap.put("author", tmp.getAuthor());// 作者
+				tempMap.put("source", tmp.getSource());// 来源/来路
+				tempMap.put("articleType",
+						KitService.getArticleName(tmp.getType()));// 文章类型
+				tempMap.put("area", tmp.getArea()); // 所属地区
+				list.add(tempMap);
+			}
+			entity.put("total", total);
+			entity.put("entityList", list);
+			log.debug("获取文章(就业指导/最新资讯)信息，size():" + total);
+		} catch (Exception e) {
+			log.error("获取文章(就业指导/最新资讯)信息时发生错误。");
+			e.printStackTrace();
+		}
+		// 放入当前页数, 总页数, 职位名, 审核状态
+		entity.put("currentPage", page);
+		entity.put("totalPage", KitService.getTotalPage(total));
+		entity.put("targetName", targetName);
+		entity.put("articleType", articleType);
+		entity.put("articleTypeName", KitService.getArticleName(articleType));
+		return new ModelAndView("manage/news-list", entity);
+	}
 
 	/*
 	 * 转到 文章显示 页面
@@ -155,11 +127,12 @@ public class NewsManageController {
 	 */
 	@RequestMapping(value = "/news_add", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean newsAdd(News params, HttpServletRequest request) {
+	public Boolean newsAdd(News params, HttpServletRequest request,
+			HttpSession session) {
 
 		try {
 			log.debug(" 增加文章" + params);
-			User u = (User) request.getSession().getAttribute(Constants.USER);
+			User u = (User) session.getAttribute(Constants.USER);
 			params.setArea(u.getArea());
 			boolean b = newsService.save(params);
 			log.debug(" 增加文章" + params + "       结果为：" + b);
@@ -176,11 +149,12 @@ public class NewsManageController {
 	 */
 	@RequestMapping(value = "/news_edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean news_edit(News params, HttpServletRequest request) {
+	public Boolean news_edit(News params, HttpServletRequest request,
+			HttpSession session) {
 
 		try {
 			log.debug("   更新文章" + params);
-			User u = (User) request.getSession().getAttribute(Constants.USER);
+			User u = (User) session.getAttribute(Constants.USER);
 			params.setArea(u.getArea());
 
 			boolean b = newsService.update(params);

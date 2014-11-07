@@ -28,7 +28,6 @@
 	width: 100%;
 	height: auto;
 	min-height: 560px;
-	
 }
 
 /**
@@ -51,7 +50,7 @@
 	min-height: 560px;
 	border: 1px solid blue;
 	float: left;
-	padding-top:10px;
+	padding-top: 10px;
 }
 
 /**
@@ -64,4 +63,12 @@
 	display: -webkit-box;
 }
 
-
+/**
+ * 登陆页面背景div样式
+ **/
+.login_background {
+	background-image: url('/jobservice/images/backdoor/tishi.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	height:500px;
+}

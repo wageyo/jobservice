@@ -203,7 +203,7 @@
 		<trim prefix="where" prefixOverrides="and|or">
 			u.acode = a.code
 			<if test="loginName != null and loginName != ''">
-				and u.login_name = #{loginName, jdbcType=VARCHAR}
+				and u.login_name like concat('%', #{loginName, jdbcType=VARCHAR}, '%')
 			</if>
 			<if test="passWord != null and passWord != ''">
 				and u.pass_word = #{passWord, jdbcType=VARCHAR}
@@ -226,10 +226,10 @@
 				and u.authority = #{authority, jdbcType=INTEGER}
 			</if>
 			<if test="title != null">
-				and u.title = #{title, jdbcType=VARCHAR}
+				and u.title like concat('%', #{title, jdbcType=VARCHAR}, '%')
 			</if>
 			<if test="nickName != null">
-				and u.nick_name = #{nickName, jdbcType=VARCHAR}
+				and u.nick_name like concat('%', #{nickName, jdbcType=VARCHAR}, '%')
 			</if>
 		</trim>
 	</select>
@@ -265,10 +265,10 @@
 					and u.authority = #{user.authority, jdbcType=INTEGER}
 				</if>
 				<if test="user.title != null and user.title != ''">
-					and u.title = #{user.title, jdbcType=VARCHAR}
+					and u.title like concat('%', #{user.title, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.nickName != null and user.nickName != ''">
-					and u.nick_name = #{user.nickName, jdbcType=VARCHAR}
+					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
 				</if>
 			</if>
 		</trim>
@@ -307,10 +307,10 @@
 					and u.authority = #{user.authority, jdbcType=INTEGER}
 				</if>
 				<if test="user.title != null and user.title != ''">
-					and u.title = #{user.title, jdbcType=VARCHAR}
+					and u.title like concat('%', #{user.title, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.nickName != null and user.nickName != ''">
-					and u.nick_name = #{user.nickName, jdbcType=VARCHAR}
+					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
 				</if>
 			</if>
 		</trim>
@@ -346,10 +346,10 @@
 					and u.authority &lt;= #{user.authority, jdbcType=INTEGER}
 				</if>
 				<if test="user.title != null and user.title != ''">
-					and u.title = #{user.title, jdbcType=VARCHAR}
+					and u.title like concat('%', #{user.title, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.nickName != null and user.nickName != ''">
-					and u.nick_name = #{user.nickName, jdbcType=VARCHAR}
+					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
 				</if>
 			</if>
 		</trim>
@@ -388,10 +388,10 @@
 					and u.authority &lt;= #{user.authority, jdbcType=INTEGER}
 				</if>
 				<if test="user.title != null and user.title != ''">
-					and u.title = #{user.title, jdbcType=VARCHAR}
+					and u.title like concat('%', #{user.title, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="user.nickName != null and user.nickName != ''">
-					and u.nick_name = #{user.nickName, jdbcType=VARCHAR}
+					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
 				</if>
 			</if>
 		</trim>
