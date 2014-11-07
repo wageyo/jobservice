@@ -448,7 +448,7 @@
 				</choose>
 			</if>
 		</trim>
-		order by job.create_date
+		order by job.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 	
