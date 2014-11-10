@@ -677,6 +677,11 @@
 			 and r.id = #{id, jdbcType=INTEGER}
 	</select>
 
+	<!-- get update check by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select update_check from resume where id = #{id, jdbcType=INTEGER}
+	</select>
+	
 	<select id="getByPage" resultMap="ResultResume" parameterType="map">
 		select <include refid="base_column" />
 		from <include refid="from_table" />

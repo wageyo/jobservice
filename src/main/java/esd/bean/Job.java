@@ -30,7 +30,7 @@ public class Job extends PrimaryKey {
 	private Boolean isActiveEffectiveTime; // 是否查询 超过有效期--查询使用, 表示是否开启有效天数 使用
 	private Date effectiveTime; // 岗位有效日期截至
 
-	private String workPlace; // 工作地
+	private Area workPlace; // 工作地
 	private boolean bed; // 是否提供住宿
 	private boolean lunch; // 是否提供工作餐
 	private String checkStatus; // 是否显示/是否通过审核
@@ -43,10 +43,13 @@ public class Job extends PrimaryKey {
 	// 显示用
 	private String salaryScope; // 查询用的salary范围
 
-	public Job(){}
-	public Job(Integer id){
+	public Job() {
+	}
+
+	public Job(Integer id) {
 		super.setId(id);
 	}
+
 	@Override
 	public String toString() {
 		return "Job [name=" + name + ", hireNumber=" + hireNumber + ", salary="
@@ -56,10 +59,11 @@ public class Job extends PrimaryKey {
 				+ ", contactPerson=" + contactPerson + ", contactTel="
 				+ contactTel + ", contactEmail=" + contactEmail
 				+ ", viewCount=" + viewCount + ", nature=" + nature
-				+ ", effectiveDays=" + effectiveDays + ", isActiveEffectiveTime="
-				+ isActiveEffectiveTime + ", effectiveTime=" + effectiveTime
-				+ ", workPlace=" + workPlace + ", bed=" + bed + ", lunch="
-				+ lunch + ", checkStatus=" + checkStatus + ", mark=" + mark
+				+ ", effectiveDays=" + effectiveDays
+				+ ", isActiveEffectiveTime=" + isActiveEffectiveTime
+				+ ", effectiveTime=" + effectiveTime + ", workPlace="
+				+ workPlace + ", bed=" + bed + ", lunch=" + lunch
+				+ ", checkStatus=" + checkStatus + ", mark=" + mark
 				+ ", company=" + company + ", area=" + area + ", jobCategory="
 				+ jobCategory + ", salaryScope=" + salaryScope + "]";
 	}
@@ -192,11 +196,11 @@ public class Job extends PrimaryKey {
 		this.effectiveTime = effectiveTime;
 	}
 
-	public String getWorkPlace() {
+	public Area getWorkPlace() {
 		return workPlace;
 	}
 
-	public void setWorkPlace(String workPlace) {
+	public void setWorkPlace(Area workPlace) {
 		this.workPlace = workPlace;
 	}
 

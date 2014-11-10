@@ -48,7 +48,6 @@
 	width: 90%;
 	height: auto;
 	min-height: 560px;
-	border: 1px solid blue;
 	float: left;
 	padding-top: 10px;
 }
@@ -59,8 +58,10 @@
 .manage-footer {
 	width: 100%;
 	min-height: 60px;
-	border: 1px solid brown;
 	display: -webkit-box;
+	text-align:center;
+	padding-top: 20px;
+	padding-left: 25%;
 }
 
 /**

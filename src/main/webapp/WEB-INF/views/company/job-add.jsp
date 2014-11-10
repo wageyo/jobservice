@@ -154,11 +154,13 @@
 							</tr>
 							<tr>
 								<td align="right" class="line35"><b> 其他福利 ：</b></td>
-								<td align="left" style="padding: 0px 5px 0px 10px;"><c:forEach items="${params }" var="p">
+								<td align="left" style="padding: 0px 5px 0px 10px;">
+									<c:forEach items="${params }" var="p">
 										<c:if test="${p.type == 'benefit' }">
 											<input type="checkbox" value="${p.value }" name="provideBenefit" />${p.name }&nbsp;&nbsp;
 											</c:if>
-									</c:forEach></td>
+									</c:forEach>
+								</td>
 							</tr>
 							<tr>
 								<td align="right" class="line35"><b>职位描述 ：</b></td>

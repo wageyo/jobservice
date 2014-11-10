@@ -110,9 +110,7 @@
 									<c:forEach items="${entityList }" var="entity" varStatus="row">
 										<!-- 隔4行换色 -->
 										<tr 
-											<c:if test="${row.index % 3 == 0 }">class="warning"</c:if>
-											<c:if test="${row.index % 3 == 1 }">class="success"</c:if>
-											<c:if test="${row.index % 3 == 2 }">class="info"</c:if>
+											<c:if test="${row.index % 2 == 0 }">class="info"</c:if>
 										>
 											<td>
 												${(row.index + 1 + (currentPage - 1) * 20) }
@@ -136,9 +134,14 @@
 												${entity.area.name }
 											</td>
 											<td>
-												<a href="javascript:void(0)">编辑</a> 
-												<a href="javascript:void(0)" style="color:red;">拒绝</a> 
-												<a href="javascript:void(0)">通过</a>
+												<a href="${contextPath }/manage/company/view/${entity.id}">查看</a>
+												<a href="${contextPath }/manage/company/edit/${entity.id}">编辑</a> 
+												<c:if test="${checkStatus != 'weiTongGuo' }">
+													<a href="javascript:updateEntity('refuse','${entity.id }');" style="color:red;">拒绝</a>
+												</c:if> 
+												<c:if test="${checkStatus != 'ok' }">
+													<a href="javascript:updateEntity('approve','${entity.id }');">通过</a>
+												</c:if>
 											</td>
 										</tr>
 									</c:forEach>

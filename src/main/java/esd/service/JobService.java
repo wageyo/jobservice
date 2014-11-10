@@ -13,6 +13,7 @@ import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.controller.Constants;
+import esd.dao.AreaDao;
 import esd.dao.JobDao;
 
 /**
@@ -31,11 +32,16 @@ public class JobService {
 	private KitService kitService;
 
 	@Autowired
-	private ParameterService pService;
+	private ParameterService parameterService;
+	
+	@Autowired
+	private AreaDao areaDao;
+	
 
 	// 保存一个对象
 	public boolean save(Job job) {
-		boolean bl = pService.getSwitchStatus(Constants.Switch.JOB.toString(),job.getArea().getCode());
+		boolean bl = parameterService.getSwitchStatus(Constants.Switch.JOB.toString(),
+				job.getArea().getCode());
 		if (job != null) {
 			// 如果user审核开关打开的话, 则将user设置为 待审核 状态
 			if (bl) {
@@ -55,13 +61,24 @@ public class JobService {
 
 	// 更新一个对象
 	public boolean update(Job job) {
+		// 先获得updateCheck
+		Integer updateCheck = dao.getUpdateCheck(job.getId());
+		job.setUpdateCheck(updateCheck);
 		return dao.update(job);
 	}
 
 	// 按id查询一个对象,用作编辑处理
 	public Job getById(int id) {
 		System.out.println("id in service = " + id);
-		return (Job) dao.getById(id);
+		Job job = (Job) dao.getById(id);
+		// 工作地
+		if (job.getWorkPlace() != null) {
+			if (job.getWorkPlace().getCode() != null) {
+				Area workPlace = areaDao.getByCode(job.getWorkPlace().getCode());
+				job.setWorkPlace(workPlace);
+			}
+		}
+		return job;
 	}
 
 	// 按id查询一个对象, 用做前台展示
@@ -92,8 +109,8 @@ public class JobService {
 									.getCode())));
 				}
 			}
-			//如果未设定是否过滤掉过期的招聘信息, 则默认过滤掉
-			if(job.getIsActiveEffectiveTime() == null){
+			// 如果未设定是否过滤掉过期的招聘信息, 则默认过滤掉
+			if (job.getIsActiveEffectiveTime() == null) {
 				job.setIsActiveEffectiveTime(Boolean.TRUE);
 			}
 		}
@@ -213,13 +230,13 @@ public class JobService {
 									.getCode())));
 				}
 			}
-//			// 只显示审核通过的
-//			job.setCheckStatus(Constants.CheckStatus.OK.toString());
+			// // 只显示审核通过的
+			// job.setCheckStatus(Constants.CheckStatus.OK.toString());
 		}
-//		if (job == null) {
-//			job = new Job();
-//			job.setCheckStatus(Constants.CheckStatus.OK.toString());
-//		}
+		// if (job == null) {
+		// job = new Job();
+		// job.setCheckStatus(Constants.CheckStatus.OK.toString());
+		// }
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("job", job);
 		return dao.getTotalCount(map);

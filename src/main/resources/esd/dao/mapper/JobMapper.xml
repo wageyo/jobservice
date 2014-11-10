@@ -36,7 +36,7 @@
 		<result column="j_view_count" property="viewCount" jdbcType="INTEGER" />
 		<result column="j_nature" property="nature" jdbcType="VARCHAR" />
 		<result column="j_effective_time" property="effectiveTime" jdbcType="TIMESTAMP" />
-		<result column="j_work_place" property="workPlace" jdbcType="VARCHAR" />
+		<result column="j_work_place" property="workPlace.code" jdbcType="VARCHAR" />
 		<result column="j_bed" property="bed" jdbcType="TINYINT" />
 		<result column="j_lunch" property="lunch" jdbcType="TINYINT" />
 		<result column="j_check_status" property="checkStatus" jdbcType="VARCHAR" />
@@ -154,8 +154,10 @@
 			<if test="effectiveTime != null">
 				effective_time,
 			</if>
-			<if test="workPlace != null and workPlace != ''">
-				work_place,
+			<if test="workPlace != null">
+				<if test="workPlace.code != null and workPlace.code != ''">
+					work_place,
+				</if>
 			</if>
 			<if test="bed != null">
 				bed,
@@ -230,8 +232,10 @@
 			<if test="effectiveTime != null">
 				#{effectiveTime, jdbcType=TIMESTAMP},
 			</if>
-			<if test="workPlace != null and workPlace != ''">
-				#{workPlace, jdbcType=VARCHAR},
+			<if test="workPlace != null">
+				<if test="workPlace.code != null and workPlace.code != ''">
+					#{workPlace.code, jdbcType=VARCHAR},
+				</if>
 			</if>
 			<if test="bed != null">
 				#{bed, jdbcType=TINYINT},
@@ -318,8 +322,10 @@
 			<if test="effectiveTime != null">
 				effective_time = #{effectiveTime, jdbcType=TIMESTAMP},
 			</if>
-			<if test="workPlace != null and workPlace != ''">
-				work_place = #{workPlace, jdbcType=VARCHAR},
+			<if test="workPlace != null">
+				<if test="workPlace.code != null and workPlace.code != ''">
+					work_place = #{workPlace.code, jdbcType=VARCHAR},
+				</if>
 			</if>
 			<if test="bed != null">
 				bed = #{bed, jdbcType=TINYINT},
@@ -360,6 +366,11 @@
 		where job.id = #{id, jdbcType=INTEGER}
 	</select>
 
+	<!-- get update check by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select update_check from job where id = #{id, jdbcType=INTEGER}
+	</select>
+	
 	<!-- get By Obj -->
 	<select id="getByObj" resultMap="ResultJob" parameterType="Job">
 		select

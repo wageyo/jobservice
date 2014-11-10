@@ -105,9 +105,7 @@
 									<c:forEach items="${entityList }" var="entity" varStatus="row">
 										<!-- 隔4行换色 -->
 										<tr 
-											<c:if test="${row.index % 3 == 0 }">class="warning"</c:if>
-											<c:if test="${row.index % 3 == 1 }">class="success"</c:if>
-											<c:if test="${row.index % 3 == 2 }">class="info"</c:if>
+											<c:if test="${row.index % 2 == 0 }">class="info"</c:if>
 										>
 											<td>
 												${(row.index + 1 + (currentPage - 1) * 20) }

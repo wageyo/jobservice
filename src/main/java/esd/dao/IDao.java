@@ -28,6 +28,20 @@ public interface IDao<T> {
 
 	// 按id查询一个对象
 	public T getById(String id);
+	
+	/**
+	 * 根据id, 得到该对象的最新updatecheck
+	 * @param id
+	 * @return
+	 */
+	public Integer getUpdateCheck(Integer id);
+	
+	/**
+	 * 根据id, 得到该对象的最新updatecheck
+	 * @param id
+	 * @return
+	 */
+	public Integer getUpdateCheck(String  id);
 
 	// 根据自身对象属性值查找是否存在对象
 	public List<T> getByObj(T t);

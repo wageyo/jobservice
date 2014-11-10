@@ -871,8 +871,10 @@ public class KitService {
 		}
 		// 工作地
 		if (job.getWorkPlace() != null) {
-			Area a = aDao.getByCode(job.getWorkPlace());
-			job.setWorkPlace(a.getName());
+			if(job.getWorkPlace().getCode()!= null){
+				Area workPlace = aDao.getByCode(job.getWorkPlace().getCode());
+				job.setWorkPlace(workPlace);
+			}
 		}
 
 		// 审核状态

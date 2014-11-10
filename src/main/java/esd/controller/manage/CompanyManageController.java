@@ -12,18 +12,24 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
+import esd.bean.BusinessScope;
 import esd.bean.Company;
+import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
+import esd.service.BusinessScopeService;
 import esd.service.CompanyService;
 import esd.service.JobService;
 import esd.service.KitService;
+import esd.service.ParameterService;
 import esd.service.ResumeService;
 import esd.service.UserService;
 
@@ -45,19 +51,13 @@ public class CompanyManageController {
 	private String destFileName;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private AreaService areaService;
-
-	@Autowired
 	private CompanyService companyService;
 
 	@Autowired
-	private JobService jobService;
-
+	private ParameterService pService;
+	
 	@Autowired
-	private ResumeService resumeService;
+	private BusinessScopeService bsService; 
 
 	// 转到企业信息管理列表页面
 	@RequestMapping(value = "/company_list", method = RequestMethod.GET)
@@ -96,7 +96,7 @@ public class CompanyManageController {
 				tempMap.put("id", tmp.getId());// id
 				tempMap.put("name", tmp.getName());// 公司名称
 				tempMap.put("contactPerson", tmp.getContactPerson());// 联系人
-				tempMap.put("telephone", tmp.getTelephone());	//联系电话
+				tempMap.put("telephone", tmp.getTelephone()); // 联系电话
 				tempMap.put("nature", tmp.getNature());// 企业性质
 				tempMap.put("economyType", tmp.getEconomyType());// 经济类型
 				tempMap.put("area", tmp.getArea());// 所属地区
@@ -109,7 +109,7 @@ public class CompanyManageController {
 			log.error("获取企业信息 时发生错误。");
 			e.printStackTrace();
 		}
-		// 放入当前页数, 总页数, 职位名, 审核状态
+		// 放入当前页数, 总页数, 企业名, 审核状态
 		entity.put("currentPage", page);
 		entity.put("totalPage", KitService.getTotalPage(total));
 		entity.put("targetName", targetName);
@@ -119,4 +119,88 @@ public class CompanyManageController {
 		return new ModelAndView("manage/company-list", entity);
 	}
 
+	// 跳转到查看企业页面
+	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+	public ModelAndView view_object(@PathVariable(value = "id") Integer id,
+			HttpServletRequest request, HttpSession session) {
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 根据id查询对应的数据
+		Company obj = companyService.getById(id);
+		entity.put("job", obj);
+		// 各种参数
+		List<Parameter> plist = pService.getAll();
+		entity.put("params", plist);
+		// 职位类别
+		List<BusinessScope> jlist = bsService.getAll();
+		entity.put("bsList", jlist);
+		return new ModelAndView("manage/job-view", entity);
+	}
+
+	// 跳转到编辑企业页面
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView edit_object_get(@PathVariable(value = "id") Integer id,
+			HttpServletRequest request, HttpSession session) {
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 根据id查询对应的数据
+		Company obj = companyService.getById(id);
+		entity.put("job", obj);
+		// 各种参数
+		List<Parameter> plist = pService.getAll();
+		entity.put("params", plist);
+		// 职位类别
+		List<BusinessScope> jlist = bsService.getAll();
+		entity.put("jcList", jlist);
+		return new ModelAndView("manage/job-edit", entity);
+	}
+
+	// 拒绝企业通过
+	@RequestMapping(value = "/refuse/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> refuse_object(
+			@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Company refuseEntity = companyService.getById(id);
+		refuseEntity
+				.setCheckStatus(Constants.CheckStatus.WEITONGGUO.getValue());
+		if (companyService.update(refuseEntity)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
+
+	// 同意企业通过
+	@RequestMapping(value = "/approve/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> approve_object(
+			@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Company refuseEntity = companyService.getById(id);
+		refuseEntity.setCheckStatus(Constants.CheckStatus.OK.getValue());
+		if (companyService.update(refuseEntity)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
+
+	// 提交保存编辑的企业
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> edit_object_post(Company param,
+			HttpServletRequest request, HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (param == null) {
+			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
+			return map;
+		}
+		if (companyService.update(param)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
 }
