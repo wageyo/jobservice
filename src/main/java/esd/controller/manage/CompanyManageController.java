@@ -24,14 +24,10 @@ import esd.bean.Company;
 import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
-import esd.service.AreaService;
 import esd.service.BusinessScopeService;
 import esd.service.CompanyService;
-import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ParameterService;
-import esd.service.ResumeService;
-import esd.service.UserService;
 
 /**
  * 企业信息 后台管理控制器
@@ -126,14 +122,14 @@ public class CompanyManageController {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Company obj = companyService.getById(id);
-		entity.put("job", obj);
+		entity.put("obj", obj);
 		// 各种参数
 		List<Parameter> plist = pService.getAll();
 		entity.put("params", plist);
 		// 职位类别
 		List<BusinessScope> jlist = bsService.getAll();
 		entity.put("bsList", jlist);
-		return new ModelAndView("manage/job-view", entity);
+		return new ModelAndView("manage/company-view", entity);
 	}
 
 	// 跳转到编辑企业页面
@@ -143,14 +139,14 @@ public class CompanyManageController {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Company obj = companyService.getById(id);
-		entity.put("job", obj);
+		entity.put("obj", obj);
 		// 各种参数
 		List<Parameter> plist = pService.getAll();
 		entity.put("params", plist);
 		// 职位类别
 		List<BusinessScope> jlist = bsService.getAll();
-		entity.put("jcList", jlist);
-		return new ModelAndView("manage/job-edit", entity);
+		entity.put("bsList", jlist);
+		return new ModelAndView("manage/company-edit", entity);
 	}
 
 	// 拒绝企业通过

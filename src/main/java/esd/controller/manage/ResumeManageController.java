@@ -12,18 +12,22 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
+import esd.bean.JobCategory;
+import esd.bean.Parameter;
 import esd.bean.Resume;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
-import esd.service.CompanyService;
-import esd.service.JobService;
+import esd.service.JobCategoryService;
 import esd.service.KitService;
+import esd.service.ParameterService;
 import esd.service.ResumeService;
 import esd.service.UserService;
 
@@ -51,15 +55,15 @@ public class ResumeManageController {
 	private AreaService areaService;
 
 	@Autowired
-	private CompanyService companyService;
-
-	@Autowired
-	private JobService jobService;
-
-	@Autowired
 	private ResumeService resumeService;
+	
+	@Autowired
+	private ParameterService pService;
 
-	// 转到职位管理列表页面
+	@Autowired
+	private JobCategoryService jcService;
+
+	// 转到简历管理列表页面
 	@RequestMapping(value = "/resume_list", method = RequestMethod.GET)
 	public ModelAndView list_get(HttpServletRequest request, HttpSession session) {
 		log.debug("goto：简历 后台管理 列表");
@@ -110,7 +114,7 @@ public class ResumeManageController {
 			log.error("获取 简历 时发生错误。");
 			e.printStackTrace();
 		}
-		// 放入当前页数, 总页数, 职位名, 审核状态
+		// 放入当前页数, 总页数, 简历名, 审核状态
 		entity.put("currentPage", page);
 		entity.put("totalPage", KitService.getTotalPage(total));
 		entity.put("targetName", targetName);
@@ -120,4 +124,94 @@ public class ResumeManageController {
 		return new ModelAndView("manage/resume-list", entity);
 	}
 
+	// 跳转到查看简历页面
+	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+	public ModelAndView view_object(@PathVariable(value = "id") Integer id,
+			HttpServletRequest request, HttpSession session) {
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 根据id查询对应的数据
+		Resume obj = resumeService.getById(id);
+		entity.put("obj", obj);
+		// 各种参数
+		List<Parameter> plist = pService.getAll();
+		entity.put("params", plist);
+		// 简历类别
+		List<JobCategory> jlist = jcService.getAll();
+		entity.put("jcList", jlist);
+		// 工作地区
+		List<Area> alist = areaService.getProvinceList();
+		entity.put("provinceList", alist);
+		return new ModelAndView("manage/job-view", entity);
+	}
+
+	// 跳转到编辑简历页面
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView edit_object_get(@PathVariable(value = "id") Integer id,
+			HttpServletRequest request, HttpSession session) {
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 根据id查询对应的数据
+		Resume obj = resumeService.getById(id);
+		entity.put("obj", obj);
+		// 各种参数
+		List<Parameter> plist = pService.getAll();
+		entity.put("params", plist);
+		// 简历类别
+		List<JobCategory> jlist = jcService.getAll();
+		entity.put("jcList", jlist);
+		// 工作地区
+		List<Area> alist = areaService.getProvinceList();
+		entity.put("provinceList", alist);
+		return new ModelAndView("manage/job-edit", entity);
+	}
+
+	// 拒绝简历通过
+	@RequestMapping(value="/refuse/{id}",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> refuse_object(
+			@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Resume refuseEntity = resumeService.getById(id);
+		refuseEntity
+				.setCheckStatus(Constants.CheckStatus.WEITONGGUO.getValue());
+		if (resumeService.update(refuseEntity)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
+	
+	// 同意简历通过
+	@RequestMapping(value="/approve/{id}",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> approve_object(
+			@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Resume refuseEntity = resumeService.getById(id);
+		refuseEntity
+				.setCheckStatus(Constants.CheckStatus.OK.getValue());
+		if (resumeService.update(refuseEntity)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
+
+	// 提交保存编辑的简历
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> edit_object_post(Resume param, HttpServletRequest request,HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(param == null){
+			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
+			return map;
+		}
+		if (resumeService.update(param)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
 }

@@ -69,9 +69,6 @@ public class JobManageController {
 	@Autowired
 	private JobCategoryService jcService;
 
-	@Autowired
-	private ResumeService resumeService;
-
 	// 转到职位管理列表页面
 	@RequestMapping(value = "/job_list", method = RequestMethod.GET)
 	public ModelAndView list_get(HttpServletRequest request, HttpSession session) {
@@ -141,7 +138,7 @@ public class JobManageController {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Job obj = jobService.getById(id);
-		entity.put("job", obj);
+		entity.put("obj", obj);
 		// 各种参数
 		List<Parameter> plist = pService.getAll();
 		entity.put("params", plist);
@@ -161,7 +158,7 @@ public class JobManageController {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Job obj = jobService.getById(id);
-		entity.put("job", obj);
+		entity.put("obj", obj);
 		// 各种参数
 		List<Parameter> plist = pService.getAll();
 		entity.put("params", plist);

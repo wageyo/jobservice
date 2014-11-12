@@ -26,6 +26,7 @@ function query(page,checkStatus){
 	// 跳转提交
 	window.location.href = getRootPath() + '/manage/company/company_list?' + paramStr;
 }
+
 //参数下拉框点击事件
 function selectButton(valueButton, nameButton, value, name){
 	//给对应控件 赋value值
@@ -35,7 +36,7 @@ function selectButton(valueButton, nameButton, value, name){
 }
 
 //保存, 通过, 拒绝, 返回  综合方法
-function updateEntity(submitType,jobId){
+function updateEntity(submitType,objId){
 	//返回
 	if(submitType == 'return'){
 		window.history.back();
@@ -44,13 +45,14 @@ function updateEntity(submitType,jobId){
 	//拒绝
 	if(submitType == 'refuse'){
 		$.ajax({
-			url:server.url + 'manage/company/refuse/'+jobId,
+			url:server.url + 'manage/company/refuse/'+objId,
 			type:'post',
 			dataType:'json',
 			success:function(data){
 				if(data.notice == 'success'){
 					alert('操作成功!');
-					window.location.href = server.url + 'manage/company/job_list';
+					//重新载入页面--以刷新
+					window.location.reload();
 					return;
 				}else{
 					alert(data.notice);
@@ -61,13 +63,14 @@ function updateEntity(submitType,jobId){
 	//通过
 	if(submitType == 'approve'){
 		$.ajax({
-			url:server.url + 'manage/company/approve/'+jobId,
+			url:server.url + 'manage/company/approve/'+objId,
 			type:'post',
 			dataType:'json',
 			success:function(data){
 				if(data.notice == 'success'){
 					alert('操作成功!');
-					window.location.href = server.url + 'manage/company/job_list';
+					//重新载入页面--以刷新
+					window.location.reload();
 					return;
 				}else{
 					alert(data.notice);
@@ -88,18 +91,24 @@ function updateEntity(submitType,jobId){
 			data:{
 				id:param.id,
 				name:param.name,
-				hireNumber:param.hireNumber,
-				salary:param.salary,
-				education:param.education,
-				experience:param.experience,
-				gender:param.gender,
+				corporateRepresentative:param.corporateRepresentative,
+				organizationCode:param.organizationCode,
+				commercialCode:param.commercialCode,
+				taxCode:param.taxCode,
+				socialSecurityCode:param.socialSecurityCode,
+				webSiteId:param.webSiteId,
+				laoWangCode:param.laoWangCode,
+				scale:param.scale,
 				nature:param.nature,
-				workPlace:param.workPlace,
-				jobCategory:param.jcCode,
-				description:param.description,
+				economyType:param.economyType,
+				businessScope:param.businessScope,
+				introduction:param.introduction,
+				telephone:param.telephone,
 				contactPerson:param.contactPerson,
-				contactTel:param.contactTel,
-				contactEmail:param.contactEmail
+				contactDept:param.contactDept,
+				fax:param.fax,
+				email:param.email,
+				address:param.address
 			},
 			success:function(data){
 				if(data.notice == 'success'){
@@ -117,104 +126,91 @@ function updateEntity(submitType,jobId){
 //校验提交表单中所有控件方法
 function checkObject(){
 	var param  = new Object();
-	var jobId = $('#jobId').val();
-	if(jobId == null || jobId == ''){
+	var objId = $('#objId').val();
+	if(objId == null || objId == ''){
 		alert('传递的参数有误, 请刷新页面重新尝试.');
 		return false;
 	}
-	param.id = jobId;
-	var jobName = $('#jobName').val();
-	if(jobName == null || jobName == ''){
-		$('#jobName').focus();
+	param.id = objId;
+	var companyName = $('#companyName').val();
+	if(companyName == null || companyName == ''){
+		$('#companyName').focus();
 		return fasle;
 	}
-	param.name = jobName;
-	var hireNumber = $('#hireNumber').val();
-	if(hireNumber == null || hireNumber == ''){
-		$('#hireNumber').focus();
+	param.name = companyName;
+	var corporateRepresentative = $('#corporateRepresentative').val();
+	if(corporateRepresentative != null && corporateRepresentative != ''){
+		param.corporateRepresentative = corporateRepresentative;
+	}
+	var organizationCode = $('#organizationCode').val();
+	if(organizationCode != null && organizationCode != ''){
+		param.organizationCode = organizationCode;
+	}
+	var commercialCode = $('#commercialCode').val();
+	if(commercialCode == null || commercialCode == ''){
+		alert('填写工商登记号码.');
+		$('#commercialCode').focus();
 		return fasle;
 	}
-	param.hireNumber = hireNumber;
-	var salary = $('#salary').val();
-	if(salary != null || salary != ''){
-		param.salary = salary;
+	var taxCode = $('#taxCode').val();
+	if(taxCode != null && taxCode != ''){
+		param.taxCode = taxCode;
 	}
-	var education = $('#education').val();
-	if(education == null || education == ''){
-		alert('请选择最低学历.');
-		$('#btnEducation').focus();
-		return fasle;
+	var socialSecurityCode = $('#socialSecurityCode').val();
+	if(socialSecurityCode != null && socialSecurityCode != ''){
+		param.socialSecurityCode = socialSecurityCode;
 	}
-	param.education = education;
-	var experience = $('#experience').val();
-	if(experience == null || experience == ''){
-		alert('请选择工作经验.');
-		$('#btnExperience').focus();
-		return fasle;
+	var webSiteId = $('#webSiteId').val();
+	if(webSiteId != null && webSiteId != ''){
+		param.webSiteId = webSiteId;
 	}
-	param.experience = experience;
-	var gender = $('#gender').val();
-	if(gender != null || gender != ''){
-		param.gender = gender;
+	var laoWangCode = $('#laoWangCode').val();
+	if(laoWangCode != null && laoWangCode != ''){
+		param.laoWangCode = laoWangCode;
+	}
+	var scale = $('#scale').val();
+	if(scale != null && scale != ''){
+		param.scale = scale;
 	}
 	var nature = $('#nature').val();
-	if(nature == null || nature == ''){
-		alert('请选择岗位性质.');
-		$('#btnNature').focus();
-		return fasle;
+	if(nature != null && nature != ''){
+		param.nature = nature;
 	}
-	param.nature = nature;
-	//工作地点
-	var workPlace = '';
-	var areaValue3 = $('#areaValue3').val();
-	var areaValue2 = $('#areaValue2').val();
-	var areaValue1 = $('#areaValue1').val();
-	if(areaValue3 != null && areaValue3 != ''){
-		workPlace = areaValue3;
-	}else if(areaValue2 != null && areaValue2 != ''){
-		workPlace = areaValue2;
-	}else if(areaValue1 != null && areaValue1 != ''){
-		workPlace = areaValue1;
-	}else{
-		alert('工作地点不能为空, 请重新选择.');
-		return false;
+	var economyType = $('#economyType').val();
+	if(economyType != null && economyType != ''){
+		param.economyType = economyType;
 	}
-	param.workPlace = workPlace;
-	//工作种类
-	var jcCode = '';
-	var jcValue3 = $('#jcValue3').val();
-	var jcValue2 = $('#jcValue2').val();
-	var jcValue1 = $('#jcValue1').val();
-	if(jcValue3 != null && jcValue3 != ''){
-		jcCode = jcValue3;
-	}else if(jcValue2 != null && jcValue2 != ''){
-		jcCode = jcValue2;
-	}else if(jcValue1 != null && jcValue1 != ''){
-		jcCode = jcValue1;
-	}else{
-		alert('工作地点不能为空, 请重新选择.');
-		return false;
+	var businessScope = $('#businessScope').val();
+	if(businessScope != null && businessScope != ''){
+		param.businessScope = businessScope;
 	}
-	param.jcCode = jcCode;
-	var description = $('#description').val();
-	if(description != null || description != ''){
-		param.description = description;
+	var introduction = $('#introduction').val();
+	if(introduction != null && introduction != ''){
+		param.introduction = introduction;
+	}
+	var telephone = $('#telephone').val();
+	if(telephone != null && telephone != ''){
+		param.telephone = telephone;
 	}
 	var contactPerson = $('#contactPerson').val();
-	if(contactPerson == null || contactPerson == ''){
-		$('#contactPerson').focus();
-		return false;
+	if(contactPerson != null && contactPerson != ''){
+		param.contactPerson = contactPerson;
 	}
-	param.contactPerson = contactPerson;
-	var contactTel = $('#contactTel').val();
-	if(contactTel == null || contactTel == ''){
-		$('#contactTel').focus();
-		return false;
+	var contactDept = $('#contactDept').val();
+	if(contactDept != null && contactDept != ''){
+		param.contactDept = contactDept;
 	}
-	param.contactTel = contactTel;
-	var contactEmail = $('#contactEmail').val();
-	if(contactEmail != null || contactEmail != ''){
-		param.contactEmail = contactEmail;
+	var fax = $('#fax').val();
+	if(fax != null && fax != ''){
+		param.fax = fax;
+	}
+	var email = $('#email').val();
+	if(email != null && email != ''){
+		param.email = email;
+	}
+	var address = $('#address').val();
+	if(address != null && address != ''){
+		param.address = address;
 	}
 	return param;
 }

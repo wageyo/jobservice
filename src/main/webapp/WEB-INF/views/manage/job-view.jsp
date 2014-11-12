@@ -6,7 +6,7 @@
 <html lang="zh-cn">
 <head>
 	
-	<title>编辑/审核职位</title>
+	<title>查看/审核职位</title>
 	<meta http-equiv="keywords" content="残疾人,就业,招聘">
 	<meta http-equiv="description" content="残疾人就业招聘网站">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,13 +57,13 @@
 											招聘职位
 											<span style="float:right;">
 												审核状态:
-												<c:if test="${job.checkStatus == 'ok' }">
+												<c:if test="${obj.checkStatus == 'ok' }">
 													审核通过
 												</c:if>
-												<c:if test="${job.checkStatus == 'daiShen' }">
+												<c:if test="${obj.checkStatus == 'daiShen' }">
 													待审核 
 												</c:if>
-												<c:if test="${job.checkStatus == 'weiTongGuo' }">
+												<c:if test="${obj.checkStatus == 'weiTongGuo' }">
 													未通过
 												</c:if>
 											</span>
@@ -76,14 +76,14 @@
 											<span style="color:red;">* </span>职位名称:
 										</td>
 										<td>
-											<input name="jobName" type="text" value="${job.name }" id="jobName" />
-											<input name="jobId" type="hidden" value="${job.id }" id="jobId" />
+											<input name="jobName" type="text" value="${obj.name }" id="jobName" />
+											<input name="objId" type="hidden" value="${obj.id }" id="objId" />
 										</td>
 										<td>
 											<span style="color:red;">* </span>招聘人数 :
 										</td>
 										<td>
-											<input name="hireNumber" type="text" value="${job.hireNumber }" id="hireNumber" />
+											<input name="hireNumber" type="text" value="${obj.hireNumber }" id="hireNumber" />
 										</td>
 									</tr>
 									<tr>
@@ -94,7 +94,7 @@
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
 												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'salary' && p.value == job.salary}">
+													<c:if test="${p.type == 'salary' && p.value == obj.salary}">
 														<c:set var="salaryName" value="${p.name }"></c:set>
 														<c:set var="salaryValue" value="${p.value }"></c:set>
 													</c:if>
@@ -120,7 +120,7 @@
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
 												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'education' && p.value == job.education}">
+													<c:if test="${p.type == 'education' && p.value == obj.education}">
 														<c:set var="educationName" value="${p.name }"></c:set>
 														<c:set var="educationValue" value="${p.value }"></c:set>
 													</c:if>
@@ -148,7 +148,7 @@
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
 												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'experience' && p.value == job.experience}">
+													<c:if test="${p.type == 'experience' && p.value == obj.experience}">
 														<c:set var="experienceName" value="${p.name }"></c:set>
 														<c:set var="experienceValue" value="${p.value }"></c:set>
 													</c:if>
@@ -174,7 +174,7 @@
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
 												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'gender' && p.value == job.gender}">
+													<c:if test="${p.type == 'gender' && p.value == obj.gender}">
 														<c:set var="genderName" value="${p.name }"></c:set>
 														<c:set var="genderValue" value="${p.value }"></c:set>
 													</c:if>
@@ -202,7 +202,7 @@
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
 												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'jobNature' && p.value == job.nature}">
+													<c:if test="${p.type == 'jobNature' && p.value == obj.nature}">
 														<c:set var="natureName" value="${p.name }"></c:set>
 														<c:set var="natureValue" value="${p.value }"></c:set>
 													</c:if>
@@ -239,7 +239,7 @@
 													</c:forEach>
 												</ul>
 											</div>
-											<fmt:formatDate value="${job.effectiveTime }" pattern="yyyy年MM月dd日 hh:mm:ss" var="effectiveTime"/>
+											<fmt:formatDate value="${obj.effectiveTime }" pattern="yyyy年MM月dd日 hh:mm:ss" var="effectiveTime"/>
 											(目前有效期至:${effectiveTime })
 										</td>
 									</tr>
@@ -249,8 +249,8 @@
 										</td>
 										<td colspan="3">
 											<div class="btn-group" >
-												<button class="btn" id="areaName1" name="areaName1">${job.workPlace.name }</button> 
-												<input type="hidden" id="areaValue1" name="areaValue1" value="${job.workPlace.code }"/>
+												<button class="btn" id="areaName1" name="areaName1">${obj.workPlace.name }</button> 
+												<input type="hidden" id="areaValue1" name="areaValue1" value="${obj.workPlace.code }"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 												<ul class="dropdown-menu" id="areaLevel1">
 													<c:forEach items="${provinceList }" var="p">
@@ -288,8 +288,8 @@
 										</td>
 										<td colspan="3">
 											<div class="btn-group" >
-												<button class="btn" id="jcName1" name="jcName1">${job.jobCategory.name }</button> 
-												<input type="hidden" id="jcValue1" name="jcValue1" value="${job.jobCategory.code }"/>
+												<button class="btn" id="jcName1" name="jcName1">${obj.jobCategory.name }</button> 
+												<input type="hidden" id="jcValue1" name="jcValue1" value="${obj.jobCategory.code }"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 												<ul class="dropdown-menu" id="jcLevel1">
 													<c:forEach items="${jcList }" var="p">
@@ -340,7 +340,7 @@
 											岗位描述 :
 										</td>
 										<td colspan="3">
-											<textarea id="description" name="description" style="width:700px;height:200px;font-size:12px;">${job.description }</textarea>
+											<textarea id="description" name="description" style="width:700px;height:200px;font-size:12px;">${obj.description }</textarea>
 										</td>
 									</tr>
 								</tbody>
@@ -357,7 +357,7 @@
 											<span style="color:red;">* </span>联系人 :
 										</td>
 										<td>
-											<input id="contactPerson" name="contactPerson" value="${job.contactPerson }" type="text" />
+											<input id="contactPerson" name="contactPerson" value="${obj.contactPerson }" type="text" />
 										</td>
 									</tr>
 									<tr>
@@ -365,7 +365,7 @@
 											<span style="color:red;">* </span>联系电话 :
 										</td>
 										<td>
-											<input id="contactTel" name="contactTel" value="${job.contactTel }" type="text" />
+											<input id="contactTel" name="contactTel" value="${obj.contactTel }" type="text" />
 										</td>
 									</tr>
 									<tr>
@@ -373,14 +373,18 @@
 											邮箱 :
 										</td>
 										<td>
-											<input id="contactEmail" name="contactEmail" value="${job.contactEmail }" type="text" />
+											<input id="contactEmail" name="contactEmail" value="${obj.contactEmail }" type="text" />
 										</td>
 									</tr>
 									<tr>
 										<td colspan="4" style="text-align:center;">
-											 <button class="btn btn-success" type="button" onclick="updateEntity('approve','${job.id}');">通过</button>&nbsp;&nbsp;
-											 <button class="btn btn-danger" type="button" onclick="updateEntity('refuse','${job.id}');">拒绝</button>&nbsp;&nbsp;
-											 <button class="btn btn-info" type="button" onclick="updateEntity('return','${job.id}');">返回</button>&nbsp;&nbsp;
+											<c:if test="${obj.checkStatus != 'ok' }">
+											 	<button class="btn btn-success" type="button" onclick="updateEntity('approve','${obj.id}');">通过</button>&nbsp;&nbsp;
+											 </c:if>
+											 <c:if test="${obj.checkStatus != 'weiTongGuo' }">
+											 	<button class="btn btn-danger" type="button" onclick="updateEntity('refuse','${obj.id}');">拒绝</button>&nbsp;&nbsp;
+											 </c:if>
+											 <button class="btn btn-info" type="button" onclick="updateEntity('return','${obj.id}');">返回</button>&nbsp;&nbsp;
 										</td>
 									</tr>
 								</tbody>

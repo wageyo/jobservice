@@ -36,7 +36,7 @@ function selectButton(valueButton, nameButton, value, name){
 }
 
 //保存, 通过, 拒绝, 返回  综合方法
-function updateEntity(submitType,jobId){
+function updateEntity(submitType,objId){
 	//返回
 	if(submitType == 'return'){
 		window.history.back();
@@ -45,13 +45,14 @@ function updateEntity(submitType,jobId){
 	//拒绝
 	if(submitType == 'refuse'){
 		$.ajax({
-			url:server.url + 'manage/job/refuse/'+jobId,
+			url:server.url + 'manage/job/refuse/'+objId,
 			type:'post',
 			dataType:'json',
 			success:function(data){
 				if(data.notice == 'success'){
 					alert('操作成功!');
-					window.location.href = server.url + 'manage/job/job_list';
+					//重新载入页面--以刷新
+					window.location.reload();
 					return;
 				}else{
 					alert(data.notice);
@@ -62,13 +63,14 @@ function updateEntity(submitType,jobId){
 	//通过
 	if(submitType == 'approve'){
 		$.ajax({
-			url:server.url + 'manage/job/approve/'+jobId,
+			url:server.url + 'manage/job/approve/'+objId,
 			type:'post',
 			dataType:'json',
 			success:function(data){
 				if(data.notice == 'success'){
 					alert('操作成功!');
-					window.location.href = server.url + 'manage/job/job_list';
+					//重新载入页面--以刷新
+					window.location.reload();
 					return;
 				}else{
 					alert(data.notice);
@@ -118,12 +120,12 @@ function updateEntity(submitType,jobId){
 //校验提交表单中所有控件方法
 function checkObject(){
 	var param  = new Object();
-	var jobId = $('#jobId').val();
-	if(jobId == null || jobId == ''){
+	var objId = $('#objId').val();
+	if(objId == null || objId == ''){
 		alert('传递的参数有误, 请刷新页面重新尝试.');
 		return false;
 	}
-	param.id = jobId;
+	param.id = objId;
 	var jobName = $('#jobName').val();
 	if(jobName == null || jobName == ''){
 		$('#jobName').focus();

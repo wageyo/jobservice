@@ -29,9 +29,9 @@ public class BusinessScope {
 	public BusinessScope(Integer id) {
 		this.id = id;
 	}
-
-	public BusinessScope(String code) {
-		this.code = code;
+	
+	public BusinessScope(String code){
+		this.id = Integer.parseInt(code);
 	}
 
 	public Integer getId() {

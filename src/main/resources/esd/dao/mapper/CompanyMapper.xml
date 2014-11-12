@@ -352,6 +352,11 @@
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
+	<!-- get update check by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select update_check from company where id = #{id, jdbcType=INTEGER}
+	</select>
+	
 	<!-- get by id -->
 	<select id="getById" resultMap="ResultCompany" parameterType="java.lang.Integer">
 		select <include refid="base_column" />
