@@ -3,7 +3,7 @@ package esd.bean;
 import org.springframework.stereotype.Component;
 
 /**
- * 就业管理
+ * 就业管理/办理情况
  * 
  * @author Administrator
  * 
@@ -11,9 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UnempManage extends PrimaryKey {
 
-	private String assessment; // 职业测评情况
-	private String procedure; // 办理情况
-	private String status; // 就业情况
+	private String time; // 办理持续时间
+	private String content; // 办理情况
 	private Resume resume; // 所属简历
 
 	public UnempManage() {
@@ -23,34 +22,20 @@ public class UnempManage extends PrimaryKey {
 		super.setId(id);
 	}
 
-	@Override
-	public String toString() {
-		return "unempManage [assessment=" + assessment + ", procedure="
-				+ procedure + ", status=" + status + ", resume=" + resume + "]";
+	public String getTime() {
+		return time;
 	}
 
-	public String getAssessment() {
-		return assessment;
+	public void setTime(String time) {
+		this.time = time;
 	}
 
-	public void setAssessment(String assessment) {
-		this.assessment = assessment;
+	public String getContent() {
+		return content;
 	}
 
-	public String getProcedure() {
-		return procedure;
-	}
-
-	public void setProcedure(String procedure) {
-		this.procedure = procedure;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Resume getResume() {

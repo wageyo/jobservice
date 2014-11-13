@@ -5375,11 +5375,13 @@ button.close {
 .modal-open {
   overflow: hidden;
 }
+/**
+ * 暂时去掉 bottom:0; by yufu. 因为会导致弹出的遮罩窗体底边接着浏览器最下边
+ **/
 .modal {
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 0;
   left: 0;
   z-index: 1050;
   display: none;

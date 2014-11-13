@@ -344,6 +344,14 @@ public class KitService {
 			}
 			resume.setGender(p.getName());
 		}
+		// 户籍所在地
+		if (resume.getHukou() != null) {
+			if (resume.getHukou().getCode() != null
+					&& !"".equals(resume.getHukou().getCode())) {
+				Area hukou = aDao.getByCode(resume.getHukou().getCode());
+				resume.setHukou(hukou);
+			}
+		}
 		// 户口状况
 		if (resume.getHukouStatus() != null
 				&& !"".equals(resume.getHukouStatus())) {
@@ -432,28 +440,19 @@ public class KitService {
 			}
 			resume.setJobNature(p.getName());
 		}
-		// 期望职位
-		if (resume.getDesireJob() != null && !"".equals(resume.getDesireJob())) {
-			JobCategory jc = new JobCategory();
-			for (JobCategory jcc : jclist) {
-				if (resume.getDesireJob().equals(jcc.getCode())) {
-					jc = jcc;
-					break;
-				}
+		// 期望工作地
+		if (resume.getDesireAddress() != null) {
+			if(resume.getDesireAddress().getCode()!=null && !"".equals(resume.getDesireAddress().getCode())){
+				Area desireAddress = aDao.getByCode(resume.getDesireAddress().getCode());
+				resume.setDesireAddress(desireAddress);
 			}
-			resume.setDesireJob(jc.getName());
 		}
-		// 工作地
-		if (resume.getDesireAddress() != null
-				&& !"".equals(resume.getDesireAddress())) {
-			Area area = new Area();
-			for (Area a : alist) {
-				if (resume.getDesireAddress().equals(a.getCode())) {
-					area = a;
-					break;
-				}
+		// 目标职位种类code处理
+		if (resume.getDesireJob() != null) {
+			if(resume.getDesireJob().getCode()!=null && !"".equals(resume.getDesireJob().getCode())){
+				JobCategory desireJob = jcDao.getByCode(resume.getDesireJob().getCode());
+				resume.setDesireJob(desireJob);
 			}
-			resume.setDesireAddress(area.getName());
 		}
 		// 期望薪水
 		if (resume.getDesireSalary() != null
@@ -668,29 +667,19 @@ public class KitService {
 				}
 				resume.setJobNature(p.getName());
 			}
-			// 期望职位
-			if (resume.getDesireJob() != null
-					&& !"".equals(resume.getDesireJob())) {
-				JobCategory jc = new JobCategory();
-				for (JobCategory jcc : jclist) {
-					if (resume.getDesireJob().equals(jcc.getCode())) {
-						jc = jcc;
-						break;
-					}
+			// 期望工作地
+			if (resume.getDesireAddress() != null) {
+				if(resume.getDesireAddress().getCode()!=null && !"".equals(resume.getDesireAddress().getCode())){
+					Area desireAddress = aDao.getByCode(resume.getDesireAddress().getCode());
+					resume.setDesireAddress(desireAddress);
 				}
-				resume.setDesireJob(jc.getName());
 			}
-			// 工作地
-			if (resume.getDesireAddress() != null
-					&& !"".equals(resume.getDesireAddress())) {
-				Area area = new Area();
-				for (Area a : alist) {
-					if (resume.getDesireAddress().equals(a.getCode())) {
-						area = a;
-						break;
-					}
+			// 目标职位种类code处理
+			if (resume.getDesireJob() != null) {
+				if(resume.getDesireJob().getCode()!=null && !"".equals(resume.getDesireJob().getCode())){
+					JobCategory desireJob = jcDao.getByCode(resume.getDesireJob().getCode());
+					resume.setDesireJob(desireJob);
 				}
-				resume.setDesireAddress(area.getName());
 			}
 			// 期望薪水
 			if (resume.getDesireSalary() != null

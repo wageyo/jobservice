@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
+import esd.bean.JobCategory;
 import esd.bean.Resume;
 import esd.bean.User;
 import esd.service.AreaService;
@@ -99,7 +100,7 @@ public class ResumeController {
 		}
 		String jcCode = req.getParameter("jcCode");
 		if (jcCode != null && !"".equals(jcCode)) {
-			resume.setDesireJob(jcCode);
+			resume.setDesireJob(new JobCategory(jcCode));
 		}
 		String education = req.getParameter("education");
 		if (education != null && !"".equals(education)) {
@@ -131,8 +132,8 @@ public class ResumeController {
 					map.put("education", it.getEducation());
 					map.put("major", it.getMajor());
 					map.put("experience", it.getExperience());
-					map.put("desireJob", it.getDesireJob());
-					map.put("desireAddress", it.getDesireAddress());
+					map.put("desireJob", it.getDesireJob().getName());
+					map.put("desireAddress", it.getDesireAddress().getName());
 					map.put("desireSalary", it.getDesireSalary());
 					list.add(map);
 				}

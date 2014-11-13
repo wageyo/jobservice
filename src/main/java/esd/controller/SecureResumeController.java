@@ -22,6 +22,7 @@ import esd.bean.JobCategory;
 import esd.bean.Parameter;
 import esd.bean.Record;
 import esd.bean.Resume;
+import esd.bean.UnempManage;
 import esd.bean.User;
 import esd.bean.WorkExperience;
 import esd.controller.Constants.Identity;
@@ -360,7 +361,7 @@ public class SecureResumeController {
 	}
 
 	// 保存工作经历
-	@RequestMapping("/saveExperience")
+	@RequestMapping(value="/saveExperience",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> saveExperience(WorkExperience we) {
 		log.info("--- saveExperience ---");
@@ -381,18 +382,12 @@ public class SecureResumeController {
 	}
 
 	// 删除工作经历
-	@RequestMapping("/deleteExperience")
+	@RequestMapping("/deleteExperience/{weid}")
 	@ResponseBody
-	public Map<String, Object> deleteExperience(HttpServletRequest req) {
+	public Map<String, Object> deleteWorkExperience(@PathVariable(value="weid") Integer weid) {
 		log.info("--- deleteExperience ---");
 		Map<String, Object> json = new HashMap<String, Object>();
-		String idStr = req.getParameter("id");
-		int id = KitService.getInt(idStr);
-		if (id < 0) {
-			json.put("notice", Notice.ERROR.toString());
-			return json;
-		}
-		boolean bl = resumeService.deleteWorkExperience(id);
+		boolean bl = resumeService.deleteWorkExperience(weid);
 		if (!bl) {
 			json.put("notice", Notice.FAILURE.toString());
 			return json;
@@ -400,7 +395,94 @@ public class SecureResumeController {
 		json.put("notice", Notice.SUCCESS.toString());
 		return json;
 	}
+	
+	// 更新工作经历
+	@RequestMapping(value="/updateExperience",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateExperience(WorkExperience we) {
+		log.info("--- saveExperience ---");
+		Map<String, Object> json = new HashMap<String, Object>();
+		// 得到工作经历
+		if (we == null) {
+			json.put("notice", Notice.FAILURE.toString());
+			return json;
+		}
+		// 更新
+		boolean bl = resumeService.update(we);
+		if (!bl) {
+			json.put("notice", Notice.FAILURE.toString());
+		} else {
+			json.put("notice", Notice.SUCCESS.toString());
+		}
+		return json;
+	}
+	
+	// 保存测评办理情况
+	@RequestMapping(value="/saveUnempManage",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> saveUnempManage(UnempManage	um) {
+		log.info("--- saveUnempManage ---");
+		Map<String, Object> json = new HashMap<String, Object>();
+		// 得到工作经历
+		if (um == null) {
+			json.put("notice", Notice.FAILURE.toString());
+			return json;
+		}
+		// 保存
+		boolean bl = resumeService.save(um);
+		if (!bl) {
+			json.put("notice", Notice.FAILURE.toString());
+		} else {
+			json.put("notice", Notice.SUCCESS.toString());
+		}
+		return json;
+	}
 
+	// 删除测评办理情况
+	@RequestMapping("/deleteUnempManage/{umid}")
+	@ResponseBody
+	public Map<String, Object> deleteUnempManage(@PathVariable(value="umid") Integer umid) {
+		log.info("--- deleteUnempManage ---");
+		Map<String, Object> json = new HashMap<String, Object>();
+		boolean bl = resumeService.deleteUnempManage(umid);
+		if (!bl) {
+			json.put("notice", Notice.FAILURE.toString());
+			return json;
+		}
+		json.put("notice", Notice.SUCCESS.toString());
+		return json;
+	}
+	
+	// 更新测评办理情况
+	@RequestMapping(value="/updateUnempManage",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateUnempManagee(UnempManage um) {
+		log.info("--- saveUnempManage ---");
+		Map<String, Object> json = new HashMap<String, Object>();
+		// 得到测评办理情况
+		if (um == null) {
+			json.put("notice", Notice.FAILURE.toString());
+			return json;
+		}
+		// 更新
+		boolean bl = resumeService.update(um);
+		if (!bl) {
+			json.put("notice", Notice.FAILURE.toString());
+		} else {
+			json.put("notice", Notice.SUCCESS.toString());
+		}
+		return json;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
 	// // 保存教育背景
 	// @RequestMapping("/saveEducation")
 	// @ResponseBody

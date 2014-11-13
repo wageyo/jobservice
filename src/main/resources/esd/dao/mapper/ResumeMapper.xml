@@ -17,7 +17,7 @@
 		<result column="r_identity_card" property="identityCard" jdbcType="VARCHAR" />
 		<result column="r_race" property="race" jdbcType="VARCHAR" />
 		<result column="r_marriage" property="marriage" jdbcType="VARCHAR" />
-		<result column="r_hukou" property="hukou" jdbcType="VARCHAR" />
+		<result column="r_hukou" property="hukou.code" jdbcType="VARCHAR" />
 		<result column="r_hukou_address" property="hukouAddress" jdbcType="VARCHAR" />
 		<result column="r_hukou_status" property="hukouStatus" jdbcType="VARCHAR" />
 		<result column="r_address" property="address" jdbcType="VARCHAR" />
@@ -46,8 +46,8 @@
 		<result column="r_work_experience" property="workExperience" jdbcType="VARCHAR" />
 		<result column="r_self_evaluation" property="selfEvaluation" jdbcType="VARCHAR" />
 		<result column="r_job_nature" property="jobNature" jdbcType="VARCHAR" />
-		<result column="r_desire_job" property="desireJob" jdbcType="VARCHAR" />
-		<result column="r_desire_address" property="desireAddress" jdbcType="VARCHAR" />
+		<result column="r_desire_job" property="desireJob.code" jdbcType="VARCHAR" />
+		<result column="r_desire_address" property="desireAddress.code" jdbcType="VARCHAR" />
 		<result column="r_desire_salary" property="desireSalary" jdbcType="VARCHAR" />
 		<result column="r_provide_food_and_room" property="provideFoodAndRoom" jdbcType="TINYINT" />
 		<result column="r_provide_room" property="provideRoom" jdbcType="TINYINT" />
@@ -140,8 +140,10 @@
 			<if test="marriage != null and marriage != ''">
 				marriage,
 			</if>
-			<if test="hukou != null and hukou != ''">
-				hukou,
+			<if test="hukou != null">
+				<if test="hukou.code != null and hukou.code != ''">
+					hukou,
+				</if>
 			</if>
 			<if test="hukouAddress != null and hukouAddress != ''">
 				hukou_address,
@@ -230,11 +232,15 @@
 			<if test="jobNature != null and jobNature != ''">
 				job_nature,
 			</if>
-			<if test="desireJob != null and desireJob != ''">
-				desire_job,
+			<if test="desireJob != null">
+				<if test="desireJob.code != null and desireJob.code != ''">
+					desire_job,
+				</if>
 			</if>
-			<if test="desireAddress != null and desireAddress != ''">
-				desire_address,
+			<if test="desireAddress != null">
+				<if test="desireAddress.code != null and desireAddress.code != ''">
+					desire_address,
+				</if>
 			</if>
 			<if test="desireSalary != null and desireSalary != ''">
 				desire_salary,
@@ -312,8 +318,10 @@
 			<if test="marriage != null and marriage != ''">
 				#{marriage, jdbcType=VARCHAR},
 			</if>
-			<if test="hukou != null and hukou != ''">
-				#{hukou, jdbcType=VARCHAR},
+			<if test="hukou != null">
+				<if test="hukou.code != null and hukou.code != ''">
+					#{hukou.code, jdbcType=VARCHAR},
+				</if>
 			</if>
 			<if test="hukouAddress != null and hukouAddress != ''">
 				#{hukouAddress, jdbcType=VARCHAR},
@@ -402,11 +410,15 @@
 			<if test="jobNature != null and jobNature != ''">
 				#{jobNature, jdbcType=VARCHAR},
 			</if>
-			<if test="desireJob != null and desireJob != ''">
-				#{desireJob, jdbcType=VARCHAR},
+			<if test="desireJob != null">
+				<if test="desireJob.code != null and desireJob.code != ''">
+					#{desireJob.code, jdbcType=VARCHAR},
+				</if>
 			</if>
-			<if test="desireAddress != null and desireAddress != ''">
-				#{desireAddress, jdbcType=VARCHAR},
+			<if test="desireAddress != null">
+				<if test="desireAddress.code != null and desireAddress.code != ''">
+					#{desireAddress.code, jdbcType=VARCHAR},
+				</if>
 			</if>
 			<if test="desireSalary != null and desireSalary != ''">
 				#{desireSalary, jdbcType=VARCHAR},
@@ -494,8 +506,10 @@
 			<if test="marriage != null and marriage != ''">
 				marriage = #{marriage, jdbcType=VARCHAR},
 			</if>
-			<if test="hukou != null and hukou != ''">
-				hukou = #{hukou, jdbcType=VARCHAR},
+			<if test="hukou != null">
+				<if test="hukou.code != null and hukou.code != ''">
+					hukou = #{hukou.code, jdbcType=VARCHAR},
+				</if>
 			</if>
 			<if test="hukouAddress != null and hukouAddress != ''">
 				hukou_address = #{hukouAddress, jdbcType=VARCHAR},
@@ -584,11 +598,15 @@
 			<if test="jobNature != null and jobNature != ''">
 				job_nature = #{jobNature, jdbcType=VARCHAR},
 			</if>
-			<if test="desireJob != null and desireJob != ''">
-				desire_job = #{desireJob, jdbcType=VARCHAR},
+			<if test="desireJob != null">
+				<if test="desireJob.code != null and desireJob.code != ''">
+					desire_job = #{desireJob.code, jdbcType=VARCHAR},
+				</if>
 			</if>
-			<if test="desireAddress != null and desireAddress != ''">
-				desire_address = #{desireAddress, jdbcType=VARCHAR},
+			<if test="desireAddress != null">
+				<if test="desireAddress.code != null and desireAddress.code != ''">
+					desire_address = #{desireAddress.code, jdbcType=VARCHAR},
+				</if>
 			</if>
 			<if test="desireSalary != null and desireSalary != ''">
 				desire_salary = #{desireSalary, jdbcType=VARCHAR},
@@ -714,13 +732,16 @@
 					</if>
 				</if>
 				<!-- 目标职位 -->
-				<if test="resume.desireJob != null and resume.desireJob != ''">
-				<!-- 	and r.desire_job like concat('%',#{resume.desireJob, jdbcType=VARCHAR},'%')	 --> 
-					and ${resume.desireJob, jdbcType=VARCHAR}
+				<if test="resume.desireJob != null">
+					<if test="resume.desireJob.code != null and resume.desireJob.code 1= ''">
+					 	and r.desire_job like concat('%',#{resume.desireJob.code, jdbcType=VARCHAR},'%') 
+					</if>
 				</if>
 				<!-- 期望工作地 -->
-				<if test="resume.desireAddress != null and resume.desireAddress != ''">
-					and r.desire_address like concat('%',#{resume.desireAddress, jdbcType=VARCHAR},'%') 
+				<if test="resume.desireAddress != null">
+					<if test="resume.desireAddress.code != null and resume.desireAddress.code != ''">
+						and r.desire_address like concat('%',#{resume.desireAddress.code, jdbcType=VARCHAR},'%') 
+					</if>
 				</if>
 				<!-- 工作性质 -->
 				<if test="resume.jobNature != null and resume.jobNature != ''">
@@ -774,13 +795,16 @@
 					</if>
 				</if>
 				<!-- 目标职位 -->
-				<if test="resume.desireJob != null and resume.desireJob != ''">
-				<!-- 	and r.desire_job like concat('%',#{resume.desireJob, jdbcType=VARCHAR},'%')	 --> 
-					and ${resume.desireJob, jdbcType=VARCHAR}
+				<if test="resume.desireJob != null">
+					<if test="resume.desireJob.code != null and resume.desireJob.code 1= ''">
+					 	and r.desire_job like concat('%',#{resume.desireJob.code, jdbcType=VARCHAR},'%') 
+					</if>
 				</if>
 				<!-- 期望工作地 -->
-				<if test="resume.desireAddress != null and resume.desireAddress != ''">
-					and r.desire_address like concat('%',#{resume.desireAddress, jdbcType=VARCHAR},'%') 
+				<if test="resume.desireAddress != null">
+					<if test="resume.desireAddress.code != null and resume.desireAddress.code != ''">
+						and r.desire_address like concat('%',#{resume.desireAddress.code, jdbcType=VARCHAR},'%') 
+					</if>
 				</if>
 				<!-- 工作性质 -->
 				<if test="resume.jobNature != null and resume.jobNature != ''">

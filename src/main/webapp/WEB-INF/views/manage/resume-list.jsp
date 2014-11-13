@@ -140,9 +140,14 @@
 												${entity.phone }
 											</td>
 											<td>
-												<a href="javascript:void(0)">编辑</a> 
-												<a href="javascript:void(0)" style="color:red;">拒绝</a> 
-												<a href="javascript:void(0)">通过</a>
+												<a href="${contextPath }/manage/resume/view/${entity.id}">查看</a>
+												<a href="${contextPath }/manage/resume/edit/${entity.id}">编辑</a> 
+												<c:if test="${checkStatus != 'weiTongGuo' }">
+													<a href="javascript:updateEntity('refuse','${entity.id }');" style="color:red;">拒绝</a>
+												</c:if> 
+												<c:if test="${checkStatus != 'ok' }">
+													<a href="javascript:updateEntity('approve','${entity.id }');">通过</a>
+												</c:if>
 											</td>
 										</tr>
 									</c:forEach>

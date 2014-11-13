@@ -195,7 +195,7 @@ function checkObject(){
 	}else if(jcValue1 != null && jcValue1 != ''){
 		jcCode = jcValue1;
 	}else{
-		alert('工作地点不能为空, 请重新选择.');
+		alert('工作种类不能为空, 请重新选择.');
 		return false;
 	}
 	param.jcCode = jcCode;

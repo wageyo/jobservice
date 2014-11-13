@@ -64,10 +64,9 @@
 		var bl = window.confirm('确定要删除此工作经历么? 此操作不可恢复!');
 		if(bl){
 			$.ajax({
-				url:'${contextPath}/secure/resume/deleteExperience',
+				url:'${contextPath}/secure/resume/deleteExperience/'+wid,
 				type:'POST',
 				dataType:'json',
-				data:{'id':wid},
 				success:function(json){
 					if(json.notice == 'success'){
 						alert('删除成功!');

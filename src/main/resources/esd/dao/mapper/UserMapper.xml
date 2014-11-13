@@ -196,6 +196,7 @@
 		from user
 		where id = #{id, jdbcType=INTEGER}
 	</select>
+	
 	<!-- get by user -->
 	<select id="getByUser" resultMap="ResultUser" parameterType="User">
 		select <include refid="base_column" />
@@ -203,7 +204,7 @@
 		<trim prefix="where" prefixOverrides="and|or">
 			u.acode = a.code
 			<if test="loginName != null and loginName != ''">
-				and u.login_name like concat('%', #{loginName, jdbcType=VARCHAR}, '%')
+				and u.login_name = #{loginName, jdbcType=VARCHAR} 
 			</if>
 			<if test="passWord != null and passWord != ''">
 				and u.pass_word = #{passWord, jdbcType=VARCHAR}

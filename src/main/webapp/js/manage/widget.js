@@ -1,19 +1,22 @@
+$(document).ready(function() {
+	
+});
 /**
- * 地区三联动按钮-1
+ * 地区三联动按钮, 命名规则为inputValueId, btnTextId, dropdownId, inputValue1,btnText2,dropdown3 分别代表省市区三级联动, 其中数字不用传入
  */
 // 省级change选择事件
-function selectAreaLevel1(areaCode,areaName){
+function selectAreaLevel1(inputValueId,btnTextId,areaCode,areaName,dropdownId){
 	var url = server.url + 'widget/getSubArea';
 	//给一, 二, 三级菜单的 显示按钮和值 变为 请选择
-	$('#areaName1').text(areaName);
-	$('#areaValue1').val(areaCode);
-	$('#areaName2').text('请选择');
-	$('#areaValue2').val('');
-	$('#areaName3').text('请选择');
-	$('#areaValue3').val('');
+	$('#'+btnTextId+'1').text(areaName);
+	$('#'+inputValueId+'1').val(areaCode);
+	$('#'+btnTextId+'2').text('请选择');
+	$('#'+inputValueId+'2').val('');
+	$('#'+btnTextId+'3').text('请选择');
+	$('#'+inputValueId+'Value3').val('');
 	//移除二, 三级菜单多余选项
-	$('#areaLevel2 li:not(:first)').remove();
-	$('#areaLevel3 li:not(:first)').remove();
+	$('#'+dropdownId+'2 li:not(:first)').remove();
+	$('#'+dropdownId+'3 li:not(:first)').remove();
 	$.ajax({
 		url : url,
 		type : 'GET',
@@ -24,7 +27,7 @@ function selectAreaLevel1(areaCode,areaName){
 		success : function(json) {
 			//重新赋值
 			$.each(json.areaList, function(i, area) {
-				$('#areaLevel2').append('<li><a href="javascript:selectAreaLevel2(\'' + area.code+ '\',\'' + area.name + '\');">' + area.name + '</a></li>');
+				$('#'+dropdownId+'2').append('<li><a href="javascript:selectAreaLevel2(\''+inputValueId+'\',\''+btnTextId+'\',\'' + area.code+ '\',\'' + area.name + '\',\''+dropdownId+'\');">' + area.name + '</a></li>');
 			});
 		},
 		error : function() {
@@ -33,13 +36,13 @@ function selectAreaLevel1(areaCode,areaName){
 	});
 }
 //市级change选择事件
-function selectAreaLevel2(areaCode,areaName){
+function selectAreaLevel2(inputValueId,btnTextId,areaCode,areaName,dropdownId){
 	var url = server.url + 'widget/getSubArea';
 	//给二, 三级菜单的 显示按钮和值 变为 请选择
-	$('#areaName2').text(areaName);
-	$('#areaValue2').val(areaCode);
-	$('#areaName3').text('请选择');
-	$('#areaValue3').val('');
+	$('#'+btnTextId+'2').text(areaName);
+	$('#'+inputValueId+'2').val(areaCode);
+	$('#'+btnTextId+'3').text('请选择');
+	$('#'+inputValueId+'3').val('');
 	//移除3级菜单多余选项
 	$('#areaLevel3 li:not(:first)').remove();
 	$.ajax({
@@ -52,7 +55,7 @@ function selectAreaLevel2(areaCode,areaName){
 		success : function(json) {
 			//重新赋值
 			$.each(json.areaList, function(i, area) {
-				$('#areaLevel3').append('<li><a href="javascript:selectAreaLevel3(\'' + area.code+ '\',\'' + area.name + '\');">' + area.name + '</a></li>');
+				$('#'+dropdownId+'3').append('<li><a href="javascript:selectAreaLevel3(\''+inputValueId+'\',\''+btnTextId+'\',\'' + area.code+ '\',\'' + area.name + '\',\''+dropdownId+'\');">' + area.name + '</a></li>');
 			});
 		},
 		error : function() {
@@ -62,29 +65,29 @@ function selectAreaLevel2(areaCode,areaName){
 }
 
 //县/区 级change选择事件
-function selectAreaLevel3(areaCode,areaName){
+function selectAreaLevel3(inputValueId,btnTextId,areaCode,areaName){
 	//给三级级菜单控件赋值
-	$('#areaName3').text(areaName);
-	$('#areaValue3').val(areaCode);
+	$('#'+btnTextId+'3').text(areaName);
+	$('#'+inputValueId+'3').val(areaCode);
 }
 
 
 /**
- * 职位类别三联动按钮
+ * 职位类别三联动按钮,命名规则为inputValueId, btnTextId, dropdownId, inputValue1,btnText2,dropdown3 分别代表一, 二,三级联动, 其中数字不用传入
  */
 //一级onchange事件
-function selectJcLevel1(jcCode,jcName){
+function selectJcLevel1(inputValueId,btnTextId,jcCode,jcName,dropdownId){
 	var url = server.url + 'widget/getSubJc';
 	//给一, 二, 三级菜单的 显示按钮和值 变为 请选择
-	$('#jcName1').text(jcName);
-	$('#jcValue1').val(jcCode);
-	$('#jcName2').text('请选择');
-	$('#jcValue2').val('');
-	$('#jcName3').text('请选择');
-	$('#jcValue3').val('');
+	$('#'+btnTextId+'1').text(jcName);
+	$('#'+inputValueId+'1').val(jcCode);
+	$('#'+btnTextId+'2').text('请选择');
+	$('#'+inputValueId+'2').val('');
+	$('#'+btnTextId+'3').text('请选择');
+	$('#'+inputValueId+'3').val('');
 	//移除2,3级菜单多余选项
-	$('#jcLevel2 li:not(:first)').remove();
-	$('#jcLevel3 li:not(:first)').remove();
+	$('#'+dropdownId+'2 li:not(:first)').remove();
+	$('#'+dropdownId+'3 li:not(:first)').remove();
 	$.ajax({
 		url : url,
 		type : 'GET',
@@ -95,7 +98,7 @@ function selectJcLevel1(jcCode,jcName){
 		success : function(json) {
 			//重新赋值
 			$.each(json.jcList, function(i, jc) {
-				$('#jcLevel2').append('<li><a href="javascript:selectJcLevel2(\'' + jc.code+ '\',\'' + jc.name + '\');">' + jc.name + '</a></li>');
+				$('#'+dropdownId+'2').append('<li><a href="javascript:selectJcLevel2(\''+inputValueId+'\',\''+btnTextId+'\',\'' + jc.code+ '\',\'' + jc.name + '\',\''+dropdownId+'\');">' + jc.name + '</a></li>');
 			});
 		},
 		error : function() {
@@ -103,16 +106,17 @@ function selectJcLevel1(jcCode,jcName){
 		}
 	});
 }
+
 //二级onchange事件
-function selectJcLevel2(jcCode,jcName){
+function selectJcLevel2(inputValueId,btnTextId,jcCode,jcName,dropdownId){
 	var url = server.url + 'widget/getSubJc';
 	//给二, 三级菜单的 显示按钮和值 变为 请选择
-	$('#jcName2').text(jcName);
-	$('#jcValue2').val(jcCode);
-	$('#jcName3').text('请选择');
-	$('#jcValue3').val('');
+	$('#'+btnTextId+'2').text(jcName);
+	$('#'+inputValueId+'2').val(jcCode);
+	$('#'+btnTextId+'3').text('请选择');
+	$('#'+inputValueId+'3').val('');
 	//移除3级菜单多余选项
-	$('#jcLevel3 li:not(:first)').remove();
+	$('#'+dropdownId+'3 li:not(:first)').remove();
 	
 	$.ajax({
 		url : url,
@@ -124,7 +128,7 @@ function selectJcLevel2(jcCode,jcName){
 		success : function(json) {
 			//重新赋值
 			$.each(json.jcList, function(i, jc) {
-				$('#jcLevel3').append('<li><a href="javascript:selectJcLevel3(\'' + jc.code+ '\',\'' + jc.name + '\');">' + jc.name + '</a></li>');
+				$('#'+dropdownId+'3').append('<li><a href="javascript:selectJcLevel3(\''+inputValueId+'\',\''+btnTextId+'\',\'' + jc.code+ '\',\'' + jc.name + '\',\''+dropdownId+'\');">' + jc.name + '</a></li>');
 			});
 		},
 		error : function() {
@@ -134,19 +138,15 @@ function selectJcLevel2(jcCode,jcName){
 }
 
 //三级onchange事件
-function selectJcLevel3(jcCode,jcName){
+function selectJcLevel3(inputValueId,btnTextId,jcCode,jcName){
 	//给三级级菜单控件赋值
-	$('#jcValue3').val(jcCode);
-	$('#jcName3').text(jcName);
+	$('#'+btnTextId+'3').text(jcName);
+	$('#'+inputValueId+'3').val(jcCode);
 }
 
 
-
-$(document).ready(function() {
-	
-});
 //生日选择控件
-function change_birth(){
+function selectBirth(year,month,day){
 	var year = $('#year').val();
 	var month = $('#month').val();
 	if(month < 10){

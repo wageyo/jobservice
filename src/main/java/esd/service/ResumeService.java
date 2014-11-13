@@ -24,13 +24,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import esd.bean.Area;
+import esd.bean.JobCategory;
 import esd.bean.Resume;
+import esd.bean.UnempManage;
 import esd.bean.User;
 import esd.bean.WorkExperience;
 import esd.controller.Constants;
+import esd.dao.AreaDao;
 import esd.dao.EducationBackgroundDao;
 import esd.dao.FamilyMemberDao;
+import esd.dao.JobCategoryDao;
 import esd.dao.ResumeDao;
+import esd.dao.UnempManageDao;
 import esd.dao.WorkExperienceDao;
 
 /**
@@ -56,6 +61,9 @@ public class ResumeService {
 	private WorkExperienceDao wDao;
 
 	@Autowired
+	private UnempManageDao umDao;
+	
+	@Autowired
 	private PersonService personService;
 
 	@Autowired
@@ -63,6 +71,12 @@ public class ResumeService {
 
 	@Autowired
 	private ParameterService pService;
+
+	@Autowired
+	private JobCategoryDao jcDao;
+
+	@Autowired
+	private AreaDao aDao;
 
 	// 保存一个对象
 	public boolean save(Resume resume) {
@@ -107,37 +121,68 @@ public class ResumeService {
 				resume.setAge(KitService.getAgeByBirth(resume.getBirth()));
 			}
 		}
+		resume.setUpdateCheck(dao.getUpdateCheck(resume.getId()));
 		return dao.update(resume);
 	}
 
 	// 按id查询一个对象,用作编辑处理
 	public Resume getById(int id) {
-		Resume r = (Resume) dao.getById(id);
+		Resume resume = (Resume) dao.getById(id);
+		// 户籍所在地
+		if (resume.getHukou() != null) {
+			if (resume.getHukou().getCode() != null
+					&& !"".equals(resume.getHukou().getCode())) {
+				Area hukou = aDao.getByCode(resume.getHukou().getCode());
+				resume.setHukou(hukou);
+			}
+		}
+		// 期望工作地
+		if (resume.getDesireAddress() != null) {
+			if (resume.getDesireAddress().getCode() != null
+					&& !"".equals(resume.getDesireAddress().getCode())) {
+				Area desireAddress = aDao.getByCode(resume.getDesireAddress()
+						.getCode());
+				resume.setDesireAddress(desireAddress);
+			}
+		}
+		// 目标职位种类code处理
+		if (resume.getDesireJob() != null) {
+			if (resume.getDesireJob().getCode() != null
+					&& !"".equals(resume.getDesireJob().getCode())) {
+				JobCategory desireJob = jcDao.getByCode(resume.getDesireJob()
+						.getCode());
+				resume.setDesireJob(desireJob);
+			}
+		}
+		// 取得工作经历
+		resume.setWorkExperienceList(wDao.getByResume(id));
+		// 取得职业测评情况
+		resume.setUnempManageList(umDao.getByResume(id));
 		// r.setEducationBackgroundList(eDao.getByResume(r.getId()));
 		// r.setFamilyMemberList(fDao.getByResume(r.getId()));
-		// 取得工作经历
-		r.setWorkExperienceList(wDao.getByResume(r.getId()));
 		// int birth = Integer.parseInt(r.getBirth().substring(0, 4));
 		// int now = Integer.parseInt(new
 		// SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 		// .format(new Date()).substring(0, 4));
 		// r.setAge(now - birth);
-		return r;
+		return resume;
 	}
 
 	// 按id查询一个对象, 用做前台展示
 	public Resume getOneForShow(int id) {
 		Resume r = (Resume) dao.getById(id);
+		r = kitService.getForShow(r);
 		// 取得工作经历
 		r.setWorkExperienceList(wDao.getByResume(r.getId()));
 		// 处理为适合前台显示的字段数据
-		r = kitService.getForShow(r);
 		return r;
 	}
 
 	// 按id查询一个对象, 提供给下载
 	public Resume getOneForDownLoad(int id) {
 		Resume r = (Resume) dao.getById(id);
+		// 处理为适合前台显示的字段数据
+		r = kitService.getForShow(r);
 		// 取得工作经历
 		List<WorkExperience> list = wDao.getByResume(id);
 		for (int i = 0; i < list.size(); i++) {
@@ -146,8 +191,6 @@ public class ResumeService {
 				break;
 			}
 		}
-		// 处理为适合前台显示的字段数据
-		r = kitService.getForShow(r);
 		return r;
 	}
 
@@ -194,10 +237,25 @@ public class ResumeService {
 							.getArea().getCode())));
 				}
 			}
+			// 期望工作地
+			if (resume.getDesireJob() != null) {
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					String sqlDesireAddress = KitService.areaCodeForSql(resume
+							.getDesireAddress().getCode());
+					resume.setDesireAddress(new Area(sqlDesireAddress));
+				}
+
+			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				resume.setDesireJob(KitService.jobCategoryCodeForResumeSql(resume
-						.getDesireJob()));
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					String sqlDesireJob = KitService
+							.jobCategoryCodeForResumeSql(resume.getDesireJob()
+									.getCode());
+					resume.setDesireJob(new JobCategory(sqlDesireJob));
+				}
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -206,11 +264,11 @@ public class ResumeService {
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
 		List<Resume> list = dao.getByPage(map);
-//		for (Resume r : list) {
-//			if (r.getUpdateDate() != null) {
-//				r.setUpdateDate(KitService.dateForShow(r.getUpdateDate()));
-//			}
-//		}
+		// for (Resume r : list) {
+		// if (r.getUpdateDate() != null) {
+		// r.setUpdateDate(KitService.dateForShow(r.getUpdateDate()));
+		// }
+		// }
 		System.out.println("resumeList.size() = " + list.size());
 		return list;
 	}
@@ -227,10 +285,25 @@ public class ResumeService {
 							.getArea().getCode())));
 				}
 			}
+			// 期望工作地
+			if (resume.getDesireJob() != null) {
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					String sqlDesireAddress = KitService.areaCodeForSql(resume
+							.getDesireAddress().getCode());
+					resume.setDesireAddress(new Area(sqlDesireAddress));
+				}
+
+			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				resume.setDesireJob(KitService.jobCategoryCodeForResumeSql(resume
-						.getDesireJob()));
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					String sqlDesireJob = KitService
+							.jobCategoryCodeForResumeSql(resume.getDesireJob()
+									.getCode());
+					resume.setDesireJob(new JobCategory(sqlDesireJob));
+				}
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -254,16 +327,24 @@ public class ResumeService {
 							.getArea().getCode())));
 				}
 			}
-			// 期望工作地
-			if (resume.getDesireAddress() != null) {
-				resume.setDesireAddress(KitService.areaCodeForSql(resume
-						.getDesireAddress()));
+			if (resume.getDesireJob() != null) {
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					String sqlDesireAddress = KitService.areaCodeForSql(resume
+							.getDesireAddress().getCode());
+					resume.setDesireAddress(new Area(sqlDesireAddress));
+				}
 
 			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				resume.setDesireJob(KitService.jobCategoryCodeForResumeSql(resume
-						.getDesireJob()));
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					String sqlDesireJob = KitService
+							.jobCategoryCodeForResumeSql(resume.getDesireJob()
+									.getCode());
+					resume.setDesireJob(new JobCategory(sqlDesireJob));
+				}
 			}
 			// 如为特殊声明, 则只显示审核通过的
 			if (resume.getCheckStatus() == null
@@ -315,10 +396,24 @@ public class ResumeService {
 							.getArea().getCode())));
 				}
 			}
+			if (resume.getDesireJob() != null) {
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					String sqlDesireAddress = KitService.areaCodeForSql(resume
+							.getDesireAddress().getCode());
+					resume.setDesireAddress(new Area(sqlDesireAddress));
+				}
+
+			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				resume.setDesireJob(KitService.jobCategoryCodeForResumeSql(resume
-						.getDesireJob()));
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					String sqlDesireJob = KitService
+							.jobCategoryCodeForResumeSql(resume.getDesireJob()
+									.getCode());
+					resume.setDesireJob(new JobCategory(sqlDesireJob));
+				}
 			}
 			// 如为特殊声明, 则只显示审核通过的
 			if (resume.getCheckStatus() == null
@@ -349,7 +444,7 @@ public class ResumeService {
 	public String getBuildResume(int rid, String url) {
 		// ①得到数据model
 		Resume resume = getOneForDownLoad(rid);
-		if(resume==null){
+		if (resume == null) {
 			return null;
 		}
 		log.info("resume.workExperience.size() : "
@@ -358,7 +453,7 @@ public class ResumeService {
 		// ②获得对应地区的模板文件路径
 		String templatePath = getTemplatePath(resume.getArea().getCode(), url);
 		// ③生成的目标文件路径
-		String destPath = "temp"+"/" + "resume.xls";
+		String destPath = "temp" + "/" + "resume.xls";
 		// ④向模板中插入原始数据
 		Map<String, Object> beans = new HashMap<String, Object>();
 		beans.put("resume", resume);
@@ -371,13 +466,13 @@ public class ResumeService {
 					beans);
 			HSSFSheet sheet = workBook.getSheetAt(0);
 			sheet.addMergedRegion(new Region(15, (short) 0, (15 + i), (short) 0));
-			OutputStream os = new FileOutputStream(url+destPath);
+			OutputStream os = new FileOutputStream(url + destPath);
 			workBook.write(os);
 			is.close();
 			os.flush();
 			os.close();
 			log.info("生成excel文件成功");
-			//⑤返回生成文件的路径
+			// ⑤返回生成文件的路径
 			return destPath;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -421,7 +516,8 @@ public class ResumeService {
 			XLSTransformer transformer = null;
 			try {
 				// 获得对应地区的模板文件路径
-				String templatePath = getTemplatePath(resume.getArea().getCode(), url);
+				String templatePath = getTemplatePath(resume.getArea()
+						.getCode(), url);
 				is = new FileInputStream(templatePath);
 				transformer = new XLSTransformer();
 				HSSFWorkbook workBook = (HSSFWorkbook) transformer
@@ -439,7 +535,6 @@ public class ResumeService {
 				os.close();
 				log.info("生成excel文件成功");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				log.info("生成excel文件发生异常");
 			}
 		}
@@ -447,7 +542,7 @@ public class ResumeService {
 		// 从简历所在的缓存文件夹tempFile读取所有excel文件, 打包成zip压缩文件
 		String destPath = "temp" + "/" + uuid + ".zip";
 		// 压缩的目标文件
-		File zipFile = new File(url+destPath);
+		File zipFile = new File(url + destPath);
 		try {
 			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(
 					zipFile));
@@ -467,10 +562,8 @@ public class ResumeService {
 			}
 			zos.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return destPath;
@@ -479,27 +572,30 @@ public class ResumeService {
 	// 根据地区code, 返回他所使用的模板路径
 	private String getTemplatePath(String acode, String url) {
 		// 第一次尝试路径
-		String filePath = url + "templates"+File.separator+acode + File.separator + "resume.xls";
+		String filePath = url + "templates" + File.separator + acode
+				+ File.separator + "resume.xls";
 		File file = new File(filePath);
 		if (file.exists()) {
 			return filePath;
 		}
 		// 本地模板不存在则搜索它的上级模板--市级
 		acode = "20" + acode.substring(2, 6) + "00";
-		filePath = url  + "templates"+File.separator+ acode + File.separator + "resume.xls";
+		filePath = url + "templates" + File.separator + acode + File.separator
+				+ "resume.xls";
 		file = new File(filePath);
 		if (file.exists()) {
 			return filePath;
 		}
 		// 市级模板不存在则搜索它的上级模板--省级
 		acode = "10" + acode.substring(2, 4) + "0000";
-		filePath = url + "templates"+File.separator + acode + File.separator + "resume.xls";
+		filePath = url + "templates" + File.separator + acode + File.separator
+				+ "resume.xls";
 		file = new File(filePath);
 		if (file.exists()) {
 			return filePath;
 		}
-		//都不存在, 则使用标准模板
-		filePath = url + "templates"+File.separator+ "resume.xls";
+		// 都不存在, 则使用标准模板
+		filePath = url + "templates" + File.separator + "resume.xls";
 		return filePath;
 	}
 
@@ -515,7 +611,30 @@ public class ResumeService {
 
 	// 更改工作经历
 	public boolean update(WorkExperience we) {
+		if(we == null){
+			return false;
+		}
+		we.setUpdateCheck(wDao.getUpdateCheck(we.getId()));
 		return wDao.update(we);
+	}
+	
+	// 保存职业测评办理
+	public boolean save(UnempManage um) {
+		return umDao.save(um);
+	}
+
+	// 删除职业测评办理
+	public boolean deleteUnempManage(int umid) {
+		return umDao.delete(umid);
+	}
+
+	// 更改职业测评办理
+	public boolean update(UnempManage um) {
+		if(um == null){
+			return false;
+		}
+		um.setUpdateCheck(umDao.getUpdateCheck(um.getId()));
+		return umDao.update(um);
 	}
 
 	// // 保存教育背景

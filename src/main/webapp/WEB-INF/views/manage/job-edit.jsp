@@ -255,7 +255,7 @@
 												<ul class="dropdown-menu" id="areaLevel1">
 													<c:forEach items="${provinceList }" var="p">
 														<li>
-															<a href="javascript:selectAreaLevel1('${p.code }','${p.name }');">${p.name }</a>
+															<a href="javascript:selectAreaLevel1('areaValue','areaName','${p.code }','${p.name }','areaLevel');">${p.name }</a>
 														</li>
 													</c:forEach>
 												</ul>
@@ -266,7 +266,7 @@
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 												<ul class="dropdown-menu" id="areaLevel2">
 													<li>
-														<a href="javascript:selectAreaLevel2('','请选择');">请选择</a>
+														<a href="javascript:selectAreaLevel2('areaValue','areaName','','请选择','areaLevel');">请选择</a>
 													</li>
 												</ul>
 											</div>
@@ -276,7 +276,7 @@
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 												<ul class="dropdown-menu" id="areaLevel3">
 													<li>
-														<a href="javascript:selectAreaLevel3('','请选择');">请选择</a>
+														<a href="javascript:selectAreaLevel3('areaValue','areaName','','请选择');">请选择</a>
 													</li>
 												</ul>
 											</div>
@@ -294,7 +294,7 @@
 												<ul class="dropdown-menu" id="jcLevel1">
 													<c:forEach items="${jcList }" var="p">
 														<li>
-															<a href="javascript:selectJcLevel1('${p.code }','${p.name }');">${p.name }</a>
+															<a href="javascript:selectJcLevel1('jcValue','jcName','${p.code }','${p.name }','jcLevel');">${p.name }</a>
 														</li>
 													</c:forEach>
 												</ul>
@@ -305,7 +305,7 @@
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 												<ul class="dropdown-menu" id="jcLevel2">
 													<li>
-														<a href="javascript:selectJcLevel2('','请选择');">请选择</a>
+														<a href="javascript:selectJcLevel2('jcValue','jcName','','请选择','jcLevel');">请选择</a>
 													</li>
 												</ul>
 											</div>
@@ -315,12 +315,10 @@
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 												<ul class="dropdown-menu" id="jcLevel3">
 													<li>
-														<a href="javascript:selectJcLevel3('','请选择');">请选择</a>
+														<a href="javascript:selectJcLevel3('jcValue','jcName','','请选择');">请选择</a>
 													</li>
 												</ul>
 											</div>
-	
-	
 										</td>
 									</tr>
 									<tr>

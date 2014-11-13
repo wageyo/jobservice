@@ -22,8 +22,8 @@ public class Resume extends PrimaryKey {
 	private String identityCard; // 身份证号
 	private String race; // 民族
 	private String marriage; // 婚姻状况
-	private String hukou; // 户口所在地
-	private String hukouAddress; // 户籍地址--即身份证上的地址
+	private Area hukou; // 户籍所在地
+	private String hukouAddress; // 户口地址--即身份证上的地址
 	private String hukouStatus; // 户口状况 --本市,农村等类别
 	private String address; // 详细住址/现居住地
 	private String zipcode; // 邮政编码
@@ -60,8 +60,8 @@ public class Resume extends PrimaryKey {
 
 	// 求职意向
 	private String jobNature; // 工作性质
-	private String desireJob; // 期望职位
-	private String desireAddress; // 期望工作地点
+	private JobCategory desireJob; // 期望职位
+	private Area desireAddress; // 期望工作地点
 	private String desireSalary; // 期望工资
 	private boolean provideFoodAndRoom;// 是否提供食宿
 	private boolean provideRoom; // 是否提供住宿
@@ -76,7 +76,7 @@ public class Resume extends PrimaryKey {
 	private String checkStatus; // 审核情况, 是否给予显示
 	private Integer viewCount; // 被浏览次数
 	private String careerTest; // 职业测评情况
-	private String processState; // 办理情况
+	private String processState; // 就业状况 yes or no . 代表已就业, 未就业
 
 	private User user; // 账户表外键
 	private Area area; // 简历所属地区code
@@ -184,11 +184,11 @@ public class Resume extends PrimaryKey {
 		this.marriage = marriage;
 	}
 
-	public String getHukou() {
+	public Area getHukou() {
 		return hukou;
 	}
 
-	public void setHukou(String hukou) {
+	public void setHukou(Area hukou) {
 		this.hukou = hukou;
 	}
 
@@ -424,19 +424,19 @@ public class Resume extends PrimaryKey {
 		this.jobNature = jobNature;
 	}
 
-	public String getDesireJob() {
+	public JobCategory getDesireJob() {
 		return desireJob;
 	}
 
-	public void setDesireJob(String desireJob) {
+	public void setDesireJob(JobCategory desireJob) {
 		this.desireJob = desireJob;
 	}
 
-	public String getDesireAddress() {
+	public Area getDesireAddress() {
 		return desireAddress;
 	}
 
-	public void setDesireAddress(String desireAddress) {
+	public void setDesireAddress(Area desireAddress) {
 		this.desireAddress = desireAddress;
 	}
 

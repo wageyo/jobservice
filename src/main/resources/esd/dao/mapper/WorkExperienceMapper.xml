@@ -142,6 +142,11 @@
 		where we.id= #{id, jdbcType=INTEGER}
 	</select>
 
+	<!-- get update check by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select update_check from work_experience where id = #{id, jdbcType=INTEGER}
+	</select>
+	
 	<!-- get By Resume -->
 	<select id="getByResume" resultMap="ResultWorkExperience" parameterType="java.lang.Integer">
 		select <include refid="base_column"/> 

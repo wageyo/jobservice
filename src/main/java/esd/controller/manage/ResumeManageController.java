@@ -141,7 +141,7 @@ public class ResumeManageController {
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
 		entity.put("provinceList", alist);
-		return new ModelAndView("manage/job-view", entity);
+		return new ModelAndView("manage/resume-view", entity);
 	}
 
 	// 跳转到编辑简历页面
@@ -161,7 +161,7 @@ public class ResumeManageController {
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
 		entity.put("provinceList", alist);
-		return new ModelAndView("manage/job-edit", entity);
+		return new ModelAndView("manage/resume-edit", entity);
 	}
 
 	// 拒绝简历通过
