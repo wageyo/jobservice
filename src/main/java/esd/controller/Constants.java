@@ -41,6 +41,10 @@ public class Constants {
 	public static final String SWITCH_OFF = "off"; // 有无劳动能力
 
 	/**
+	 * 文章类型
+	 */
+	public static final String ARTICLE_TYPE = "article"; //  文章类型
+	/**
 	 * 文章类型： 最新资讯类型
 	 */
 	public static final String ARTICLE_TYPE_NEWS = "news"; // 最新资讯类型

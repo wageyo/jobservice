@@ -164,6 +164,23 @@ public class ResumeManageController {
 		return new ModelAndView("manage/resume-edit", entity);
 	}
 
+	// 提交保存编辑的简历
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> edit_object_post(Resume param, HttpServletRequest request,HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(param == null){
+			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
+			return map;
+		}
+		if (resumeService.update(param)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
+	
 	// 拒绝简历通过
 	@RequestMapping(value="/refuse/{id}",method=RequestMethod.POST)
 	@ResponseBody
@@ -198,20 +215,5 @@ public class ResumeManageController {
 		return map;
 	}
 
-	// 提交保存编辑的简历
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> edit_object_post(Resume param, HttpServletRequest request,HttpSession session) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(param == null){
-			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
-			return map;
-		}
-		if (resumeService.update(param)) {
-			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
-		} else {
-			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
-		}
-		return map;
-	}
+	
 }

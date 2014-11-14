@@ -10,7 +10,6 @@
 		<result column="n_update_check" property="updateCheck" jdbcType="VARCHAR"  />
 		<result column="n_update_date" property="updateDate" jdbcType="TIMESTAMP" />
 		<result column="n_title" property="title" jdbcType="VARCHAR" />
-		<result column="n_title" property="title" jdbcType="VARCHAR" />
 		<result column="n_content" property="content" jdbcType="VARCHAR" />
 		<result column="n_author" property="author" jdbcType="VARCHAR" />
 		<result column="n_source" property="source" jdbcType="VARCHAR" />
@@ -26,7 +25,7 @@
 	
 	<sql id="base_column">
 		n.id as n_id, n.create_date as n_create_date, n.update_check as n_update_check, n.update_date as n_update_date, 
-		n.title as n_title, n.title as n_title, n.content as n_content, n.source as n_source, n.type as n_type,
+		n.title as n_title, n.content as n_content, n.author as n_author, n.source as n_source, n.type as n_type,
 		a.code as a_code, a.name as a_name
 	</sql>
 	
@@ -132,6 +131,11 @@
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
+	<!-- get update check by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select update_check from news where id = #{id, jdbcType=INTEGER}
+	</select>
+	
 	<!-- get by id -->
 	<select id="getById" resultMap="ResultNews" parameterType="int">
 		select <include refid="base_column"/> 

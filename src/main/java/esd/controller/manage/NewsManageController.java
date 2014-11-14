@@ -20,10 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
 import esd.bean.News;
+import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.KitService;
 import esd.service.NewsService;
+import esd.service.ParameterService;
 
 /**
  * 文章(就业指导/最新资讯)后台管理控制器
@@ -38,6 +40,9 @@ public class NewsManageController {
 
 	@Autowired
 	private NewsService newsService;
+	
+	@Autowired
+	private ParameterService pService;
 
 	// 转到职位管理列表页面
 	@RequestMapping(value = "/news_list", method = RequestMethod.GET)
@@ -95,128 +100,102 @@ public class NewsManageController {
 		entity.put("totalPage", KitService.getTotalPage(total));
 		entity.put("targetName", targetName);
 		entity.put("articleType", articleType);
-		entity.put("articleTypeName", KitService.getArticleName(articleType));
+//		entity.put("articleTypeName", KitService.getArticleName(articleType));
+		//获取 文章类型 列表
+		List<Parameter> pList = pService.getByType(Constants.ARTICLE_TYPE);
+		entity.put("pList", pList);
 		return new ModelAndView("manage/news-list", entity);
 	}
 
-	/*
-	 * 转到 文章显示 页面
-	 */
-	@RequestMapping(value = "/news_view", method = RequestMethod.GET)
-	public ModelAndView news_view(HttpServletRequest request) {
-		log.debug("goto：显示文章");
-		return new ModelAndView("manage/news-view");
+	// 转到 增加文章 页面
+	@RequestMapping(value = "/add/{articleType}", method = RequestMethod.GET)
+	public ModelAndView news_add_get(@PathVariable(value="articleType") String articleType, HttpServletRequest request) {
+		log.debug("goto：增加文章");
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 各种参数
+		List<Parameter> plist = pService.getByType(Constants.ARTICLE_TYPE);
+		entity.put("pList", plist);
+		//新增 文章类型
+		entity.put("targetArticleType", articleType);
+		return new ModelAndView("manage/news-add",entity);
 	}
 
-	/*
-	 * 转到 增加文章 页面
-	 */
-	@RequestMapping(value = "/news_add/{id}", method = RequestMethod.GET)
-	public ModelAndView news_add(@PathVariable(value = "id") int id,
-			HttpServletRequest request) {
-		log.debug("goto： 增加文章");
-
-		if (id != -1) {
-			request.setAttribute("id", id);
-		}
-		return new ModelAndView("manage/news-add");
-	}
-
-	/*
-	 * 增加文章
-	 */
-	@RequestMapping(value = "/news_add", method = RequestMethod.POST)
+	// 提交 增加文章
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean newsAdd(News params, HttpServletRequest request,
+	public Map<String,Object> news_add_post(News params, HttpServletRequest request,
 			HttpSession session) {
-
-		try {
-			log.debug(" 增加文章" + params);
-			User u = (User) session.getAttribute(Constants.USER);
-			params.setArea(u.getArea());
-			boolean b = newsService.save(params);
-			log.debug(" 增加文章" + params + "       结果为：" + b);
-			return b;
-		} catch (Exception e) {
-			log.error("增加文章错误");
-			e.printStackTrace();
+		log.debug(" 增加文章" + params);
+		Map<String, Object> result = new HashMap<String, Object>();
+		User u = (User) session.getAttribute(Constants.USER);
+		params.setArea(u.getArea());
+		if(newsService.save(params)){
+			result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		}else{
+			result.put(Constants.NOTICE, Constants.Notice.FAILURE.getValue());
 		}
-		return false;
+		return result;
 	}
 
-	/*
-	 * 更新文章
-	 */
-	@RequestMapping(value = "/news_edit", method = RequestMethod.POST)
+	//删除文章
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Boolean news_edit(News params, HttpServletRequest request,
+	public Map<String,Object> delete_news(@PathVariable(value = "id") Integer id,
+			HttpServletRequest request) {
+		Map<String, Object> entity = new HashMap<String, Object>();
+		boolean bl = newsService.delete(id);
+		if(bl){
+			entity.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		}else{
+			entity.put(Constants.NOTICE, "删除文章出错, 请联系管理员.");
+		}
+		return entity;
+	}
+	
+	// 转到 文章编辑 页面
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView news_edit_get(@PathVariable(value = "id") int id,
+			HttpServletRequest request) {
+		log.debug("goto：编辑文章 ");
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 根据id查询对应的数据
+		News obj = newsService.getById(id);
+		entity.put("obj", obj);
+		// 各种参数
+		List<Parameter> plist = pService.getByType(Constants.ARTICLE_TYPE);
+		entity.put("pList", plist);
+		return new ModelAndView("manage/news-edit",entity);
+	}
+	
+	// 提交文章编辑
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> news_edit_post(News params, HttpServletRequest request,
 			HttpSession session) {
-
-		try {
-			log.debug("   更新文章" + params);
-			User u = (User) session.getAttribute(Constants.USER);
-			params.setArea(u.getArea());
-
-			boolean b = newsService.update(params);
-			log.debug("   更新文章" + params + "       结果为：" + b);
-			return b;
-		} catch (Exception e) {
-			log.error("  更新文章错误");
-			e.printStackTrace();
+		log.debug("   更新文章" + params);
+		Map<String, Object> entity = new HashMap<String, Object>();
+		boolean bl = newsService.update(params);
+		if(bl){
+			entity.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		}else{
+			entity.put(Constants.NOTICE, "更新文章出错, 请联系管理员.");
 		}
-		return false;
+		return entity;
 	}
-
-	/*
-	 * 查看文章
-	 */
-	@RequestMapping(value = "/news_view", method = RequestMethod.POST)
-	@ResponseBody
-	public Object news_view(@RequestParam(value = "id") Integer id,
+	
+	// 转到 文章显示 页面
+	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+	public ModelAndView news_view(@PathVariable(value = "id") int id,
 			HttpServletRequest request) {
-
-		try {
-			log.debug(" 查看文章" + id);
-
-			News news = newsService.getById(id);
-			log.debug(" 查看文章" + news);
-			return news;
-		} catch (Exception e) {
-			log.error("查看文章错误");
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/*
-	 * 删除文章
-	 */
-	@RequestMapping(value = "/news_del", method = RequestMethod.POST)
-	@ResponseBody
-	public boolean audit_resume(
-			@RequestParam(value = "params[]") Integer params[],
-			HttpServletRequest request) {
-
-		if (params == null || params.length <= 0) {
-
-			log.error("dele news error");
-			return false;
-		}
-		// 删除单个
-		if (params.length == 1) {
-			log.debug("del news dange");
-			return newsService.delete(params[0]);
-		}
-		// 删除多个
-		else {
-			for (int i = 0; i < params.length; i++) {
-
-				newsService.delete(params[i]);
-			}
-			log.debug("del news 多个");
-			return true;
-		}
-
+		log.debug("goto：显示文章 ");
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 根据id查询对应的数据
+		News obj = newsService.getById(id);
+		entity.put("obj", obj);
+		// 各种参数
+		List<Parameter> plist = pService.getByType(Constants.ARTICLE_TYPE);
+		entity.put("params", plist);
+		return new ModelAndView("manage/news-view",entity);
 	}
 
 }

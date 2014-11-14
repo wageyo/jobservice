@@ -46,19 +46,24 @@
 						<!-- 模糊查询录入框 暂时隐藏 -->
 						<input class="input-medium search-query" value="${targetName }" type="text" name="targetName" id="targetName"/> 
 						<div class="btn-group" >
+							<c:forEach items="${pList }" var="p">
+								<c:if test="${p.value == articleType }">
+									<c:set var="articleTypeName">${p.name }</c:set>
+								</c:if>
+							</c:forEach>
 							<button class="btn">${articleTypeName }</button> 
 							<input type="hidden" id="articleType" name="articleType" value="${articleType }"/>
 							<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 							<ul class="dropdown-menu">
-								<li>
-									<a href="javascript:query(null,'direct');">就业知道</a>
-								</li>
-								<li>
-									<a href="javascript:query(null,'news');">最新资讯</a>
-								</li>
+								<c:forEach items="${pList }" var="p">
+									<li>
+										<a href="javascript:query(null,'${p.value }');">${p.name }</a>
+									</li>
+								</c:forEach>
 							</ul>
 						</div>
 						<button type="submit" class="btn" onclick="query(null,null);">查找</button>
+						<button type="button" class="btn btn-info" onclick="addEntityGet();" style="float:right;">新增文章</button>
 					</div>
 					<!-- 上方条件查询框  结束-->
 					
@@ -126,9 +131,8 @@
 												${entity.area.name }
 											</td>
 											<td>
-												<a href="javascript:void(0)">编辑</a> 
-												<a href="javascript:void(0)" style="color:red;">拒绝</a> 
-												<a href="javascript:void(0)">通过</a>
+												<a href="${contextPath }/manage/news/edit/${entity.id}">编辑</a> 
+												<a href="javascript:updateEntity('delete','${entity.id }')" style="color:red;">删除</a> 
 											</td>
 										</tr>
 									</c:forEach>
