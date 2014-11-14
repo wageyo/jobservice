@@ -52,13 +52,7 @@ public class JobManageController {
 	private String destFileName;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private AreaService areaService;
-
-	@Autowired
-	private CompanyService companyService;
 
 	@Autowired
 	private JobService jobService;

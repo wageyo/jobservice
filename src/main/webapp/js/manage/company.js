@@ -135,7 +135,7 @@ function checkObject(){
 	var companyName = $('#companyName').val();
 	if(companyName == null || companyName == ''){
 		$('#companyName').focus();
-		return fasle;
+		return false;
 	}
 	param.name = companyName;
 	var corporateRepresentative = $('#corporateRepresentative').val();
@@ -150,7 +150,7 @@ function checkObject(){
 	if(commercialCode == null || commercialCode == ''){
 		alert('填写工商登记号码.');
 		$('#commercialCode').focus();
-		return fasle;
+		return false;
 	}
 	var taxCode = $('#taxCode').val();
 	if(taxCode != null && taxCode != ''){

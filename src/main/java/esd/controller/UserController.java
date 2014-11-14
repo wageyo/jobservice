@@ -256,7 +256,7 @@ public class UserController {
 	 * @param session
 	 */
 	@RequestMapping(value = "/uploadPic", method = RequestMethod.POST)
-	public void importPic(@RequestParam("pic") CommonsMultipartFile pic,
+	public void importPic(@RequestParam("pic") CommonsMultipartFile pic,HttpServletRequest request,
 			HttpServletResponse response, HttpSession session)
 			throws IOException {
 		// ① response 输出相应内容
@@ -266,12 +266,10 @@ public class UserController {
 			writer.write(Constants.NOTICE + ":" + "网络发生错误, 上传照片失败.");
 			return;
 		}
-		User user = (User) session.getAttribute(Constants.USER);
-		user = userService.getById(user.getId());
+		Integer id = KitService.getInt(request.getParameter("userid"));
 		//要更新的对象
 		User tempUser = new User();
-		tempUser.setId(user.getId());
-		tempUser.setUpdateCheck(user.getUpdateCheck());
+		tempUser.setId(id);
 		tempUser.setHeadImage(pic.getBytes());
 		boolean bl = userService.update(tempUser);
 		if (bl) {
@@ -319,10 +317,12 @@ public class UserController {
 		return "" + byteFile / mb + "MB";
 	}
 	
-	// 得到上传头像图片的方法
+	// 下载头像图片的方法
 	@RequestMapping("/downloadPic/{id}")
 	@ResponseBody
-	public byte[] viewWorkerPicGet(@PathVariable(value="id") Integer id) {
+	public byte[] viewWorkerPicGet(@PathVariable(value="id") Integer id,HttpServletResponse response) {
+//		response.addHeader("Content-Type", "image/gif");
+		response.setContentType("image/gif");
 		byte[] entity = userService.getHeadImage(id);
 		return entity;
 	}

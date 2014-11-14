@@ -129,13 +129,13 @@ function checkObject(){
 	var jobName = $('#jobName').val();
 	if(jobName == null || jobName == ''){
 		$('#jobName').focus();
-		return fasle;
+		return false;
 	}
 	param.name = jobName;
 	var hireNumber = $('#hireNumber').val();
 	if(hireNumber == null || hireNumber == ''){
 		$('#hireNumber').focus();
-		return fasle;
+		return false;
 	}
 	param.hireNumber = hireNumber;
 	var salary = $('#salary').val();
@@ -146,14 +146,14 @@ function checkObject(){
 	if(education == null || education == ''){
 		alert('请选择最低学历.');
 		$('#btnEducation').focus();
-		return fasle;
+		return false;
 	}
 	param.education = education;
 	var experience = $('#experience').val();
 	if(experience == null || experience == ''){
 		alert('请选择工作经验.');
 		$('#btnExperience').focus();
-		return fasle;
+		return false;
 	}
 	param.experience = experience;
 	var gender = $('#gender').val();
@@ -164,7 +164,7 @@ function checkObject(){
 	if(nature == null || nature == ''){
 		alert('请选择岗位性质.');
 		$('#btnNature').focus();
-		return fasle;
+		return false;
 	}
 	param.nature = nature;
 	//工作地点

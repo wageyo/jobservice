@@ -162,15 +162,15 @@ function checkObject(){
 	}
 	param.name = resumeName;
 	var gender = $('#gender').val();
-	if(gender != null || gender != ''){
+	if(gender != null && gender != ''){
 		param.gender = gender;
 	}
 	var race = $('#race').val();
-	if(race != null || race != ''){
+	if(race != null && race != ''){
 		param.race = race;
 	}
 	var hukouStatus = $('#hukouStatus').val();
-	if(hukouStatus != null || hukouStatus != ''){
+	if(hukouStatus != null && hukouStatus != ''){
 		param.hukouStatus = hukouStatus;
 	}
 	var year = $('#year').val();
@@ -210,17 +210,17 @@ function checkObject(){
 	param.hukou = hukou;
 	//户口地址
 	var hukouAddress = $('#hukouAddress').val();
-	if(hukouAddress != null || hukouAddress != ''){
+	if(hukouAddress != null && hukouAddress != ''){
 		param.hukouAddress = hukouAddress;
 	}
 	//现居住地
 	var address = $('#address').val();
-	if(address != null || address != ''){
+	if(address != null && address != ''){
 		param.address = address;
 	}
 	//婚姻状况
 	var marriage = $('#marriage').val();
-	if(marriage != null || marriage != ''){
+	if(marriage != null && marriage != ''){
 		param.marriage = marriage;
 	}
 	
@@ -229,17 +229,17 @@ function checkObject(){
 	 */
 	//电话/手机
 	var phone = $('#phone').val();
-	if(phone != null || phone != ''){
+	if(phone != null && phone != ''){
 		param.phone = phone;
 	}
 	//qq
 	var qq = $('#qq').val();
-	if(qq != null || qq != ''){
+	if(qq != null && qq != ''){
 		param.qq = qq;
 	}
 	//邮箱
 	var email = $('#email').val();
-	if(email != null || email != ''){
+	if(email != null && email != ''){
 		param.email = email;
 	}
 	
@@ -248,22 +248,22 @@ function checkObject(){
 	 */
 	//残疾证号
 	var disabilityCard = $('#disabilityCard').val();
-	if(disabilityCard != null || disabilityCard != ''){
+	if(disabilityCard != null && disabilityCard != ''){
 		param.disabilityCard = disabilityCard;
 	}
 	//残疾类别
 	var disabilityCategory = $('#disabilityCategory').val();
-	if(disabilityCategory != null || disabilityCategory != ''){
+	if(disabilityCategory != null && disabilityCategory != ''){
 		param.disabilityCategory = disabilityCategory;
 	}
 	//残疾等级
 	var disabilityLevel = $('#disabilityLevel').val();
-	if(disabilityLevel != null || disabilityLevel != ''){
+	if(disabilityLevel != null && disabilityLevel != ''){
 		param.disabilityLevel = disabilityLevel;
 	}
 	//残疾部位
 	var disabilityPart = $('#disabilityPart').val();
-	if(disabilityPart != null || disabilityPart != ''){
+	if(disabilityPart != null && disabilityPart != ''){
 		param.disabilityPart = disabilityPart;
 	}
 	
@@ -272,17 +272,17 @@ function checkObject(){
 	 */
 	//失业证号
 	var shiYeHao = $('#shiYeHao').val();
-	if(shiYeHao != null || shiYeHao != ''){
+	if(shiYeHao != null && shiYeHao != ''){
 		param.shiYeHao = shiYeHao;
 	}
 	//职位类型
 	var jobNature = $('#jobNature').val();
-	if(jobNature != null || jobNature != ''){
+	if(jobNature != null && jobNature != ''){
 		param.jobNature = jobNature;
 	}
 	//期望薪水
 	var desireSalary = $('#desireSalary').val();
-	if(desireSalary != null || desireSalary != ''){
+	if(desireSalary != null && desireSalary != ''){
 		param.desireSalary = desireSalary;
 	}
 	//期望职位类别
@@ -323,11 +323,11 @@ function checkObject(){
 	//
 	//其他要求
 	var provideOther = $('#provideOther').val();
-	if(provideOther != null || provideOther != ''){
+	if(provideOther != null && provideOther != ''){
 		param.provideOther = provideOther;
 	}
 	var state = $('#state').val();
-	if(state != null || state != ''){
+	if(state != null && state != ''){
 		param.state = state;
 	}
 	
@@ -341,23 +341,23 @@ function checkObject(){
 	}
 	param.education = education;
 	var major = $('#major').val();
-	if(major != null || major != ''){
+	if(major != null && major != ''){
 		param.major = major;
 	}
 	var school = $('#school').val();
-	if(school != null || school != ''){
+	if(school != null && school != ''){
 		param.school = school;
 	}
 	var experts = $('#experts').val();
-	if(experts != null || experts != ''){
+	if(experts != null && experts != ''){
 		param.experts = experts;
 	}
 	var training = $('#training').val();
-	if(training != null || training != ''){
+	if(training != null && training != ''){
 		param.training = training;
 	}
 	var selfEvaluation = $('#selfEvaluation').val();
-	if(selfEvaluation != null || selfEvaluation != ''){
+	if(selfEvaluation != null && selfEvaluation != ''){
 		param.selfEvaluation = selfEvaluation;
 	}
 	
@@ -365,7 +365,7 @@ function checkObject(){
 	 * 工作经历
 	 */
 	var experience = $('#experience').val();
-	if(experience != null || experience != ''){
+	if(experience != null && experience != ''){
 		param.experience = experience;
 	}
 	
@@ -373,11 +373,11 @@ function checkObject(){
 	 * 就业管理
 	 */
 	var careerTest = $('#careerTest').val();
-	if(careerTest != null || careerTest != ''){
+	if(careerTest != null && careerTest != ''){
 		param.careerTest = careerTest;
 	}
 	var processState = $('#processState').val();
-	if(processState != null || processState != ''){
+	if(processState != null && processState != ''){
 		param.processState = processState;
 	}
 	return param;

@@ -124,6 +124,7 @@ public class UserService<T> {
 
 	// 更新一个对象
 	public boolean update(User user) {
+		user.setUpdateCheck(dao.getUpdateCheck(user.getId()));
 		return dao.update(user);
 	}
 

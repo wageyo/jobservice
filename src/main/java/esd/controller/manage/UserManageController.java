@@ -12,19 +12,17 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
-import esd.bean.Job;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
-import esd.service.CompanyService;
-import esd.service.JobService;
 import esd.service.KitService;
-import esd.service.ResumeService;
 import esd.service.UserService;
 
 /**
@@ -49,15 +47,6 @@ public class UserManageController {
 
 	@Autowired
 	private AreaService areaService;
-
-	@Autowired
-	private CompanyService companyService;
-
-	@Autowired
-	private JobService jobService;
-
-	@Autowired
-	private ResumeService resumeService;
 
 	// 转到职位管理列表页面
 	@RequestMapping(value = "/user_list", method = RequestMethod.GET)
@@ -118,4 +107,83 @@ public class UserManageController {
 		return new ModelAndView("manage/user-list", entity);
 	}
 
+	// 跳转到查看职位页面
+	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+	public ModelAndView view_object(@PathVariable(value = "id") Integer id,
+			HttpServletRequest request, HttpSession session) {
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 根据id查询对应的数据
+		User obj = userService.getById(id);
+		entity.put("obj", obj);
+		// 工作地区
+		List<Area> alist = areaService.getProvinceList();
+		entity.put("provinceList", alist);
+		return new ModelAndView("manage/user-view", entity);
+	}
+
+	// 跳转到编辑职位页面
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView edit_object_get(@PathVariable(value = "id") Integer id,
+			HttpServletRequest request, HttpSession session) {
+		Map<String, Object> entity = new HashMap<String, Object>();
+		// 根据id查询对应的数据
+		User obj = userService.getById(id);
+		entity.put("obj", obj);
+		// 工作地区
+		List<Area> alist = areaService.getProvinceList();
+		entity.put("provinceList", alist);
+		return new ModelAndView("manage/user-edit", entity);
+	}
+
+	// 拒绝职位通过
+	@RequestMapping(value="/refuse/{id}",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> refuse_object(
+			@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		User refuseEntity = userService.getById(id);
+		refuseEntity
+				.setCheckStatus(Constants.CheckStatus.WEITONGGUO.getValue());
+		if (userService.update(refuseEntity)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
+	
+	// 同意职位通过
+	@RequestMapping(value="/approve/{id}",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> approve_object(
+			@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		User refuseEntity = userService.getById(id);
+		refuseEntity
+				.setCheckStatus(Constants.CheckStatus.OK.getValue());
+		if (userService.update(refuseEntity)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
+
+	// 提交保存编辑的职位
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> edit_object_post(User param, HttpServletRequest request,HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(param == null){
+			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
+			return map;
+		}
+		if (userService.update(param)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
+	
 }

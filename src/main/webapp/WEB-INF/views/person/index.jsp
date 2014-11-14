@@ -39,6 +39,12 @@
 					$('#picfileTitle').val('');
 					return false;
 				}	*/
+				/**
+				 *	②设置上传参数
+				 **/
+				this.setData({
+					'userid':'${user.id}'
+				});
 				
 			},
 			onComplete : function(file,response){
