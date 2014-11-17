@@ -118,7 +118,7 @@
 				#{title, jdbcType=VARCHAR},
 			</if>
 			<if test="nickName != null and nickName != ''">
-				#{logUser, jdbcType=VARCHAR},
+				#{nickName, jdbcType=VARCHAR},
 			</if>
 			<if test="headImage != null and headImage != ''">
 				#{headImage, jdbcType=BLOB},

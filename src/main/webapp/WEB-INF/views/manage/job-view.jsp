@@ -20,15 +20,6 @@
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/widget.js"></script>
 	<script src="${contextPath}/js/manage/job.js"></script>
-	<style type="text/css">
-		table thead{
-			background-color: rgb(243, 242, 253);
-		}
-		td{
-			line-height: 40px;
-			padding-left: 20px;
-		}
-	</style>
 </head>
 
 <body>

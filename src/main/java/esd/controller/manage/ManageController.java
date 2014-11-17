@@ -7,11 +7,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import esd.bean.Menu;
@@ -23,12 +21,6 @@ import esd.service.MenuService;
 @RequestMapping("/manage")
 public class ManageController {
 	private static Logger log = Logger.getLogger(ManageController.class);
-
-	@Value("${templateFile}")
-	private String templateFile;
-
-	@Value("${destFileName}")
-	private String destFileName;
 
 	@Autowired
 	private MenuService menuService;
@@ -43,19 +35,12 @@ public class ManageController {
 		User userObj = (User) session.getAttribute(Constants.USER);
 		if (userObj == null) {
 			ra.addFlashAttribute(Constants.NOTICE, "session已过期, 请重新登陆.");
-			return "redirect:/manage/login";
+			return "redirect:/manage/login/index";
 		}
 		List<Menu> menuList = menuService
 				.getByAuthority(userObj.getAuthority());
 		session.setAttribute("menuList", menuList);
 		return "/manage/index";
-	}
-
-	// 转到首页 提示页
-	@RequestMapping(value = "/prompt", method = RequestMethod.GET)
-	public ModelAndView Prompt(HttpServletRequest request) {
-
-		return new ModelAndView("manage/prompt");
 	}
 
 }

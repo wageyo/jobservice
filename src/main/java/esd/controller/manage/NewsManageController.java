@@ -183,19 +183,4 @@ public class NewsManageController {
 		return entity;
 	}
 	
-	// 转到 文章显示 页面
-	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-	public ModelAndView news_view(@PathVariable(value = "id") int id,
-			HttpServletRequest request) {
-		log.debug("goto：显示文章 ");
-		Map<String, Object> entity = new HashMap<String, Object>();
-		// 根据id查询对应的数据
-		News obj = newsService.getById(id);
-		entity.put("obj", obj);
-		// 各种参数
-		List<Parameter> plist = pService.getByType(Constants.ARTICLE_TYPE);
-		entity.put("params", plist);
-		return new ModelAndView("manage/news-view",entity);
-	}
-
 }

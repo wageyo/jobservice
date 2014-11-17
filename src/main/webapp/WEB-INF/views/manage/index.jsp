@@ -17,6 +17,8 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript">
+	</script>
 	
 </head>
 

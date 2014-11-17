@@ -62,6 +62,10 @@ public class UserService<T> {
 		if (user != null) {
 			// 管理员账号审核状态,默认为OK
 			user.setCheckStatus(Constants.CheckStatus.OK.toString());
+			//管理员权限
+			user.setIdentity(Constants.Identity.ADMIN.getValue());
+			user.setAuthority(Constants.Authority.ADMIN.getValue());
+			user.setUpdateCheck(dao.getUpdateCheck(user.getId()));
 			bl_admin = dao.save(user);
 			// 保存失败时
 			if (!bl_admin) {

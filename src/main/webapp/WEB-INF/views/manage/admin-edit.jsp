@@ -6,7 +6,7 @@
 <html lang="zh-cn">
 <head>
 	
-	<title>修改消息/就业指导讯息</title>
+	<title>编辑 管理员账号</title>
 	<meta http-equiv="keywords" content="残疾人,就业,招聘">
 	<meta http-equiv="description" content="残疾人就业招聘网站">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,9 +17,10 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
+	<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/widget.js"></script>
-	<script src="${contextPath}/js/manage/news.js"></script>
+	<script src="${contextPath}/js/manage/admin.js"></script>
 </head>
 
 <body>
@@ -41,76 +42,92 @@
 				<div class="container-fluid">
 					<div class="row-fluid">
 						<div class="span12">
-							<table>
+							<table style="width:750px;">
 								<thead>
 									<tr>
 										<td colspan="4">
-											更新文章
+											编辑管理员账号
 										</td>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
+										<td style="width:150px;">
+											<span style="color:red;">* </span>登陆账号:
+										</td>
+										<td colspan="3">
+											<input name="loginName" type="text" value="${obj.loginName }" id="loginName" />
+										</td>
+									</tr>
+									<tr>
 										<td>
-											<span style="color:red;">* </span>标题:
+											<span style="color:red;">* </span>登陆密码 :
+										</td>
+										<td colspan="3">
+											<input name="passWord" type="text" value="${obj.passWord }" id="passWord" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											昵称 :
+										</td>
+										<td colspan="3">
+											<input name="nickName" type="text" value="${obj.nickName }" id="nickName" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span style="color:red;">* </span>头部标题文本 :
 										</td>
 										<td colspan="3">
 											<input name="title" type="text" value="${obj.title }" id="title" />
 										</td>
 									</tr>
+									<!-- 创建账号所属地区 开始 -->
 									<tr>
 										<td>
-											<span style="color:red;">* </span>作者 :
-										</td>
-										<td colspan="3">
-											<input name="author" type="text" value="${obj.author }" id="author" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											来源 :
-										</td>
-										<td colspan="3">
-											<input name="source" type="text" value="${obj.source }" id="source" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											文章类型 :
+											 <span style="color:red;">* </span>账号所属地区<br/>
 										</td>
 										<td colspan="3">
 											<div class="btn-group" >
-												<!-- 将值转换为对应显示的参数文本 -->
-												<c:forEach items="${pList }" var="p">
-													<c:if test="${p.value == obj.type }">
-														<c:set var="articleTypeName" >${p.name }</c:set>
-														<c:set var="articleTypeValue" >${p.value }</c:set>
-													</c:if>
-												</c:forEach>
-												<button class="btn" id="BtnArticleType">${articleTypeName }</button> 
-												<input type="hidden" id="articleType" name="articleType" value="${articleTypeValue }"/>
+												<button class="btn" id="areaName1" name="areaName1">${obj.area.name }</button> 
+												<input type="hidden" id="areaValue1" name="areaValue1" value="${obj.area.code }"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
-												<ul class="dropdown-menu">
-													<c:forEach items="${pList }" var="p">
+												<ul class="dropdown-menu" id="areaLevel1">
+													<c:forEach items="${provinceList }" var="p">
 														<li>
-															<a href="javascript:selectButton('articleType','BtnArticleType','${p.value }','${p.name }');">${p.name }</a>
+															<a href="javascript:selectAreaLevel1('areaValue','areaName','${p.code }','${p.name }','areaLevel');">${p.name }</a>
 														</li>
 													</c:forEach>
 												</ul>
 											</div>
+											<div class="btn-group" >
+												<button class="btn" id="areaName2" name="areaName2">请选择</button> 
+												<input type="hidden" id="areaValue2" name="areaValue2" value=""/>
+												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+												<ul class="dropdown-menu" id="areaLevel2">
+													<li>
+														<a href="javascript:selectAreaLevel2('areaValue','areaName','','请选择','areaLevel');">请选择</a>
+													</li>
+												</ul>
+											</div>
+											<div class="btn-group" >
+												<button class="btn" id="areaName3" name="areaName3">请选择</button> 
+												<input type="hidden" id="areaValue3" name="areaValue3" value=""/>
+												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+												<ul class="dropdown-menu" id="areaLevel3">
+													<li>
+														<a href="javascript:selectAreaLevel3('areaValue','areaName','','请选择');">请选择</a>
+													</li>
+												</ul>
+											</div>
 										</td>
 									</tr>
-									<tr>
-										<td>
-											<span style="color:red;">* </span>文章内容 :
-										</td>
-										<td>
-											<textarea id="content" style="width:650px;height:450px;">${obj.content }</textarea> 
-										</td>
-									</tr>
+									<!-- 创建账号所属地区 结束 -->
+																			
 									<tr>
 										<td colspan="4" style="text-align:center;">
-											 <button class="btn btn-primary" type="button" onclick="updateEntity('update','${obj.id}');">保存修改</button>&nbsp;&nbsp;
+											 <button class="btn btn-primary" type="button" onclick="updateEntity('update','${obj.id}');">更新</button>&nbsp;&nbsp;
 											 <button class="btn btn-info" type="button" onclick="updateEntity('return',null);">返回</button>&nbsp;&nbsp;
 										</td>
 									</tr>

@@ -23,8 +23,6 @@
 	<script src="${contextPath}/js/bootstrap-switch-master/bootstrap-switch.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/setup.js"></script>
-	<script type="text/javascript">
-	</script>
 
 </head>
 

@@ -114,7 +114,7 @@
 									</c:if>
 								
 									<c:forEach items="${entityList }" var="entity" varStatus="row">
-										<!-- 隔4行换色 -->
+										<!-- 隔2行换色 -->
 										<tr 
 											<c:if test="${row.index % 2 == 0 }">class="info"</c:if>
 										>

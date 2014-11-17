@@ -18,3 +18,12 @@ function getRootPath(){
     var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
     return(localhostPaht+projectName);
 }
+
+//参数下拉框点击事件
+function selectButton(valueButton, nameButton, value, name){
+	//给对应控件 赋value值
+	$('#'+valueButton).val(value);
+	//给对应控件 赋name值
+	$('#'+nameButton).text(name);
+}
+

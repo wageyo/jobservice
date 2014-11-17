@@ -25,82 +25,83 @@ import esd.controller.Constants;
  * 
  */
 public class LoginInterceptor implements HandlerInterceptor {
-    private static Logger logger = Logger.getLogger(LoginInterceptor.class);
+	private static Logger logger = Logger.getLogger(LoginInterceptor.class);
 
-    @Value("${login.url}")
-    private String loginUrl;
+	@Value("${login.url}")
+	private String loginUrl;
 
-    @Value("${loginManage.url}")
-    private String loginManageUrl;
-    
+	@Value("${loginManage.url}")
+	private String loginManageUrl;
 
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object arg2, Exception arg3)
-            throws Exception {
-        
-    }
+	public void afterCompletion(HttpServletRequest request,
+			HttpServletResponse response, Object arg2, Exception arg3)
+			throws Exception {
 
-    public void postHandle(HttpServletRequest request, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
-            throws Exception {
-        // TODO Auto-generated method stub
-    }
+	}
 
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) {
-        if (request.getRequestURI().indexOf("/secure") != -1) {
-            Object obj = request.getSession().getAttribute(Constants.USER);
-            if (obj == null) {
-                PrintWriter out = null;
-                try {
-                    out = response.getWriter();
-                    StringBuilder builder = new StringBuilder();
-                    builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
-                    builder.append("window.top.location.href='");
-                    builder.append(loginUrl);
-                    builder.append("';");
-                    builder.append("</script>");
-                    out.print(builder.toString());
-                    out.close();
-                    return false;
-                } catch (IOException e) {
-                    logger.error(e.getMessage());
-                } finally {
-                    if (out != null) {
-                        out.close();
-                    }
-                }
+	public void postHandle(HttpServletRequest request,
+			HttpServletResponse arg1, Object arg2, ModelAndView arg3)
+			throws Exception {
+		// TODO Auto-generated method stub
+	}
 
-            }
-        }
-        
-        
-        /*
-         * 后台登陆过滤器
-         */
-        if (request.getRequestURI().indexOf("/manage") != -1) {
-        	Object obj=request.getSession().getAttribute(Constants.USER);
-            if (obj == null) {
-            	logger.error("未登陆状态进入工作区被拦截");
-                PrintWriter out = null;
-                try {
-                    out = response.getWriter();
-                    StringBuilder builder = new StringBuilder();
-                    builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
-                    builder.append("window.top.location.href='");
-                    builder.append(loginManageUrl);
-                    builder.append("';");
-                    builder.append("</script>");
-                    out.print(builder.toString());
-                    out.close();
-                    return false;
-                } catch (IOException e) {
-                    logger.error(e.getMessage());
-                } finally {
-                    if (out != null) {
-                        out.close();
-                    }
-                }
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object arg2) {
+		if (request.getRequestURI().indexOf("/secure") != -1) {
+			Object obj = request.getSession().getAttribute(Constants.USER);
+			if (obj == null) {
+				PrintWriter out = null;
+				try {
+					out = response.getWriter();
+					StringBuilder builder = new StringBuilder();
+					builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
+					builder.append("window.top.location.href='");
+					builder.append(loginUrl);
+					builder.append("';");
+					builder.append("</script>");
+					out.print(builder.toString());
+					out.close();
+					return false;
+				} catch (IOException e) {
+					logger.error(e.getMessage());
+				} finally {
+					if (out != null) {
+						out.close();
+					}
+				}
 
-            }
-        }
-        return true;
-    }
+			}
+		}
+
+		/*
+		 * 后台登陆过滤器
+		 */
+		if (request.getRequestURI().indexOf("/manage") != -1) {
+			Object obj = request.getSession().getAttribute(Constants.USER);
+			if (obj == null) {
+				logger.error("未登陆状态进入工作区被拦截");
+				PrintWriter out = null;
+				try {
+					out = response.getWriter();
+					StringBuilder builder = new StringBuilder();
+					builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
+					builder.append("window.top.location.href='");
+					builder.append(loginManageUrl);
+					builder.append("';");
+					builder.append("</script>");
+					out.print(builder.toString());
+					out.close();
+					return false;
+				} catch (IOException e) {
+					logger.error(e.getMessage());
+				} finally {
+					if (out != null) {
+						out.close();
+					}
+				}
+
+			}
+		}
+		return true;
+	}
 }

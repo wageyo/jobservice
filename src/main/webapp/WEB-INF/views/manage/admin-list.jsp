@@ -45,23 +45,8 @@
 					<div class="">
 						<!-- 模糊查询录入框 暂时隐藏 -->
 						<input class="input-medium search-query" value="${targetName }" type="text" name="targetName" id="targetName"/> 
-						<div class="btn-group" >
-							<button class="btn">${checkStatusName }</button> 
-							<input type="hidden" id="checkStatus" name="checkStatus" value="${checkStatus }"/>
-							<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="javascript:query(null,'daiShen');">待审核</a>
-								</li>
-								<li>
-									<a href="javascript:query(null,'weiTongGuo');">未通过</a>
-								</li>
-								<li>
-									<a href="javascript:query(null,'ok');">已通过</a>
-								</li>
-							</ul>
-						</div>
 						<button type="submit" class="btn" onclick="query(null,null);">查找</button>
+						<button type="button" class="btn btn-info" onclick="window.location.href='${contextPath}/manage/admin/add';" style="float:right;">新增管理员账号</button>
 					</div>
 					<!-- 上方条件查询框  结束-->
 					
@@ -106,7 +91,7 @@
 									</c:if>
 									
 									<c:forEach items="${entityList }" var="entity" varStatus="row">
-										<!-- 隔4行换色 -->
+										<!-- 隔2行换色 -->
 										<tr 
 											<c:if test="${row.index % 2 == 0 }">class="info"</c:if>
 										>
@@ -129,9 +114,8 @@
 												${entity.area.name }
 											</td>
 											<td>
-												<a href="javascript:void(0)">编辑</a> 
-												<a href="javascript:void(0)" style="color:red;">拒绝</a> 
-												<a href="javascript:void(0)">通过</a>
+												<a href="${contextPath }/manage/admin/edit/${entity.id}">编辑</a> 
+												<a href="javascript:updateEntity('delete','${entity.id }')" style="color:red;">删除</a>
 											</td>
 										</tr>
 									</c:forEach>

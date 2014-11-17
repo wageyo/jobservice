@@ -76,6 +76,10 @@ function updateEntity(submitType,objId){
 	}
 	// 删除
 	if(submitType == 'delete'){
+		var confirm = window.confirm('此操作不可恢复, 确认删除吗?');
+		if(!confirm){
+			return;
+		}
 		$.ajax({
 			url:server.url + 'manage/news/delete/' + objId,
 			type:'post',

@@ -124,7 +124,7 @@ public class LoginManageController {
 	 */
 	@RequestMapping(value = "/quit", method = RequestMethod.GET)
 	public String quit(HttpServletRequest request, HttpSession session) {
-		session.removeAttribute(Constants.USER);
+		session.invalidate();
 		log.error("管理员用户退出");
 		return "redirect:/loginManage/login";
 	}

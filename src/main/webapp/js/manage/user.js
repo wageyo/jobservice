@@ -171,6 +171,9 @@ $(document).ready(function(){
 	/*
 	 * 异步 上传图片方法函数
 	 */
+	if(button.val() == '' || button.val() == null){
+		return;
+	}
 	new AjaxUpload(button, {
 		action: server.url + 'user/uploadPic',
 		name: 'pic',// 更改上传的文件名

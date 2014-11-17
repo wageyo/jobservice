@@ -25,40 +25,99 @@
 	<div class="manage-body">
 	
 		<!-- 头部 div -->
-		<%@ include file="header.jsp" %>
+		<div class="manage-header" style="background-color:white;">
+		
+		</div>
 		
 		<!-- 中间主体div 开始-->
-		<div class="manage-body">
+		<div class="manage-body" style="background-image: url('/jobservice/images/backdoor/tishi.png');background-position: center;background-repeat: no-repeat;">
 			<!-- 中间登陆div  -->
-			<div class="login_background">
-				<div class="span12" style="margin-top: 150px;">
-					<form class="form-horizontal" action="${contextPath }/loginManage/login"  method="POST" style="text-align:center;">
-						<div class="control-group">
-							<div class="controls">
-								&nbsp;
-								<span>${notice }</span>
-							</div>
-						</div>
-						<div class="control-group">
-							<div class="controls">
-							 	<label for="loginName" style="display:initial;width:60px;">用户名</label> 
-								<input id="loginName" name="loginName" value="qinghai" type="text" />
-							</div>
-						</div>
-						<div class="control-group">
-							<div class="controls">
-							 	<label for="passWord" style="display:initial;width:60px;">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
-								<input id="passWord" name="passWord" value="qinghai" type="password" style=""/>
-							</div>
-						</div>
-						<div class="control-group">
-							<div class="controls">
-								 <button type="submit" class="btn">登陆</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
+			<form class="form-horizontal" action="${contextPath }/loginManage/login"  method="POST" style="text-align:center;">
+				<table style="width: 100%;">
+					<tr>
+						<td style="width: 40%;height: 160px;">
+						 &nbsp;
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+						<td style="width: 40%;">
+						 &nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td>
+						 &nbsp;
+						</td>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+							<span>${notice }</span>
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td>
+						 &nbsp;
+						</td>
+						<td>
+							<label for="loginName" style="display:initial;width:60px;">用户名:</label> 
+						</td>
+						<td>
+							<input id="loginName" name="loginName" value="superadmin" type="text" />
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td>
+						 &nbsp;
+						</td>
+						<td>
+						 	<label for="passWord" style="display:initial;width:60px;">密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+						</td>
+						<td>
+							<input id="passWord" name="passWord" value="123123" type="password" style=""/>
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td>
+						 &nbsp;
+						</td>
+						<td colspan="2">
+							<button type="submit" class="btn">登陆</button>
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td>
+						 &nbsp;
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+						<td>
+						 &nbsp;
+						</td>
+					</tr>
+				</table>
+			</form>
+			
 			<!-- 中间登陆div 结束-->
 		</div>
 		
