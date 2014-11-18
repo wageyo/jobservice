@@ -1,6 +1,6 @@
 /*
 SQLyog 企业版 - MySQL GUI v7.14 
-MySQL - 5.1.62-community : Database - jobservice
+MySQL - 5.5.19 : Database - jobservice
 *********************************************************************
 */
 
@@ -83,7 +83,7 @@ CREATE TABLE `company` (
   `acode` varchar(10) DEFAULT NULL COMMENT '所在地区外键',
   `bid` int(10) DEFAULT NULL COMMENT '所属行业外键',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
 
 /*Data for the table `company` */
 
@@ -142,6 +142,7 @@ CREATE TABLE `job` (
   `education` varchar(50) DEFAULT NULL COMMENT '最低学历',
   `experience` varchar(50) DEFAULT NULL COMMENT '要求的工作经验年限',
   `gender` varchar(10) DEFAULT NULL COMMENT '性别',
+  `age` varchar(50) DEFAULT NULL COMMENT '年龄限制',
   `description` varchar(1000) DEFAULT NULL COMMENT '岗位描述',
   `provide_benefit` varchar(1000) DEFAULT NULL COMMENT '工资及其他福利',
   `contact_person` varchar(50) DEFAULT NULL COMMENT '联系人',
@@ -159,7 +160,7 @@ CREATE TABLE `job` (
   `acode` varchar(10) DEFAULT NULL COMMENT '地区表外键',
   `jccode` varchar(10) DEFAULT NULL COMMENT '职位种类表外键',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=254 DEFAULT CHARSET=utf8;
 
 /*Data for the table `job` */
 
@@ -197,7 +198,7 @@ CREATE TABLE `menu` (
 
 /*Data for the table `menu` */
 
-insert  into `menu`(`id`,`text`,`state`,`url`,`checked`,`icon_cls`,`enable`,`type_name`,`authority`) values ('1','职位管理','','/jobservice/manage/job_list','','',1,'job',600),('2','企业管理','','/jobservice/manage/company_list','','',1,'company',600),('3','简历管理','','/jobservice/manage/resume_list','','',1,'resume',600),('4','账户管理','','/jobservice/manage/user_list','','',1,'user',600),('5','文章管理','','/jobservice/manage/news_list','',NULL,1,NULL,600),('6','系统设置','','/jobservice/manage/setup','','',1,NULL,600),('7','管理员账号管理',NULL,'/jobservice/manage/super_list',NULL,NULL,1,NULL,999),('8','修改密码',NULL,'/jobservice/manage/password_edit',NULL,NULL,1,NULL,600);
+insert  into `menu`(`id`,`text`,`state`,`url`,`checked`,`icon_cls`,`enable`,`type_name`,`authority`) values ('1','职位管理','','/jobservice/manage/job/job_list','','',1,'ge/job',600),('2','企业管理','','/jobservice/manage/company/company_list','','',1,'ge/company',600),('3','简历管理','','/jobservice/manage/resume/resume_list','','',1,'ge/resume',600),('4','账户管理','','/jobservice/manage/user/user_list','','',1,'ge/user',600),('5','文章管理','','/jobservice/manage/news/news_list','',NULL,1,'ge/news',600),('6','系统设置','','/jobservice/manage/setup/goto_setup','','',1,'ge/setup',600),('7','管理员账号管理',NULL,'/jobservice/manage/admin/admin_list',NULL,NULL,1,'ge/admin',999),('8','修改密码',NULL,'/jobservice/loginManage/password_edit',NULL,NULL,1,'ge/password',600);
 
 /*Table structure for table `news` */
 
@@ -216,7 +217,7 @@ CREATE TABLE `news` (
   `type` varchar(50) DEFAULT NULL COMMENT '文章类型',
   `acode` varchar(10) DEFAULT NULL COMMENT '所属地区code',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 /*Data for the table `news` */
 
@@ -236,7 +237,7 @@ CREATE TABLE `parameter` (
 
 /*Data for the table `parameter` */
 
-insert  into `parameter`(`id`,`name`,`value`,`type`,`mark`,`acode`) values ('01a7311d-cf40-4242-a283-98cf54509ae3','job','on','switch','是否审核开关--职位--呼和浩特市 市辖区','30150101'),('05f9ff54-0cc6-4d06-b5e2-77755a73b214','user','on','switch','是否审核开关--账号--呼和浩特市 市辖区','30150101'),('191936d2-ed5c-4850-a1ee-fdc8c410704f','company','on','switch','是否审核开关--企业--青海省','10630000'),('1d9bc7a0-1755-4645-81ad-2fa746f3d2c1','company','off','switch','是否审核开关--企业--湖北省','10420000'),('39b0df0e-ca57-4349-bc87-53646a2be493','user','on','switch','是否审核开关--账号--青海省','10630000'),('3eed461a-07ac-4643-8fbc-e4907948c2fe','resume','on','switch','是否审核开关--简历--呼和浩特市 市辖区','30150101'),('44','应届毕业生','graduate','state','目前状态','10000000'),('45','我对现有工作还算满意，如有更好的工作机会，我也可以考虑。（到岗时间另议）','onwatch','state','目前状态','10000000'),('4518e188-5df0-4357-8dc9-f66fc0748d51','resume','off','switch','是否审核开关--简历--湖北省','10420000'),('46','目前暂无跳槽打算','noplan','state','目前状态','10000000'),('47','我目前在职，正考虑换个新环境（如有合适的工作机会，到岗时间一个月左右）','onjob','state','目前状态','10000000'),('48','我目前处于离职状态，可立即上岗 ','now','state','目前状态','10000000'),('554c83f4-f210-485c-8a02-9a37edc408f2','resume','on','switch','是否审核开关--简历--青海省','10630000'),('8ac5df36-b71e-4d5e-aab6-a9ac3f9aacdc','company','on','switch','是否审核开关--企业--呼和浩特市 市辖区','30150101'),('90f2aa0e-1130-423f-a422-c610203ab720','job','off','switch','是否审核开关--职位--湖北省','10420000'),('be1','免费食宿','provideFoodAndRoom','benefit','其他福利','10000000'),('be2','免费住宿','provideRoom','benefit','其他福利','10000000'),('be3','免费工作餐','provideFood','benefit','其他福利','10000000'),('be4','保险 ','provideInsurance','benefit','其他福利','10000000'),('c15f61a4-51a7-4462-906d-6ef48f02e81f','user','off','switch','是否审核开关--账号--新疆维吾尔自治区','10650000'),('c2d346aa-74c3-494e-b8ab-6145234f86c1','job','on','switch','是否审核开关--职位--青海省','10630000'),('ck1','审核OK','ok','checkStatus','审核状态','10000000'),('ck2','未通过','weiTongGuo','checkStatus','审核状态','10000000'),('ck3','审核中','daiShen','checkStatus','审核状态','10000000'),('cn0','请选择','','companyNature','单位性质','10000000'),('cn1','企业','enterprise','companyNature','单位性质','10000000'),('cn2','事业','shiye','companyNature','单位性质','10000000'),('cn3','机关','jiguan','companyNature','单位性质','10000000'),('cn4','社团','shetuan','companyNature','单位性质','10000000'),('d42df3d0-25a0-4fc2-8665-e956b4873a92','user','off','switch','是否审核开关--账号--湖北省','10420000'),('dc0','请选择','','disabilityCategory','残疾类别','10000000'),('dc1','视力残疾','vision','disabilityCategory','残疾类别','10000000'),('dc2','听力残疾','hearing','disabilityCategory','残疾类别','10000000'),('dc3','言语残疾','speak','disabilityCategory','残疾类别','10000000'),('dc4','智力残疾','intelligence','disabilityCategory','残疾类别','10000000'),('dc5','肢体残疾','limbs','disabilityCategory','残疾类别','10000000'),('dc6','精神残疾','mind','disabilityCategory','残疾类别','10000000'),('dc7','多重残疾','multi','disabilityCategory','残疾类别','10000000'),('dl0','请选择','','disabilityLevel','残疾等级','10000000'),('dl1','一级残疾','level1','disabilityLevel','残疾等级','10000000'),('dl2','二级残疾','level2','disabilityLevel','残疾等级','10000000'),('dl3','三级残疾','level3','disabilityLevel','残疾等级','10000000'),('dl4','四级残疾','level4','disabilityLevel','残疾等级','10000000'),('dp0','请选择','','disabilityPart','残疾部位','10000000'),('dp1','单上肢','danshangzhi','disabilityPart','残疾部位','10000000'),('dp2','双上肢','shuangshangzhi','disabilityPart','残疾部位','10000000'),('dp3','三肢','sanzhi','disabilityPart','残疾部位','10000000'),('dp4','单下肢','danxiazhi','disabilityPart','残疾部位','10000000'),('dp5','双下肢','shuangxiazhi','disabilityPart','残疾部位','10000000'),('dp6','四肢','sizhi','disabilityPart','残疾部位','10000000'),('dp7','上下单肢','shangxiadanzhi','disabilityPart','残疾部位','10000000'),('dp8','脊椎','jizhui','disabilityPart','残疾部位','10000000'),('dp9','其他','other','disabilityPart','残疾部位','10000000'),('e5fdb7ca-6ed8-4916-912f-468c62e94f9b','job','off','switch','是否审核开关--职位--新疆维吾尔自治区','10650000'),('ed0','请选择','','education','学历','10000000'),('ed1','博士','7','education','学历','10000000'),('ed2','研究生','6','education','学历','10000000'),('ed3','本科','5','education','学历','10000000'),('ed4','大专','4','education','学历','10000000'),('ed5','高中','3','education','学历','10000000'),('ed6','初中','2','education','学历','10000000'),('ed7','小学','1','education','学历','10000000'),('ee0','请选择','','experience','工作年限','10000000'),('ee1','无经验','0','experience','工作年限','10000000'),('ee2','1年以内','lessone','experience','工作年限','10000000'),('ee3','1-3年','one','experience','工作年限','10000000'),('ee4','3-5年','three','experience','工作年限','10000000'),('ee5','5年以上','five','experience','工作年限','10000000'),('eft0','请选择','','effectiveTime','有效期','10000000'),('eft1','7天','7','effectiveTime','有效期','10000000'),('eft2','15天','15','effectiveTime','有效期','10000000'),('eft3','30天','30','effectiveTime','有效期','10000000'),('eft4','60天','60','effectiveTime','有效期','10000000'),('eft5','90天','90','effectiveTime','有效期','10000000'),('et0','请选择','','economyType','经济类型','10000000'),('et1','国有','guoyou','economyType','经济类型','10000000'),('et2','集体','jiti','economyType','经济类型','10000000'),('et3','联营','lianying','economyType','经济类型','10000000'),('et4','股份制','gufenzhi','economyType','经济类型','10000000'),('et5','民营','minying','economyType','经济类型','10000000'),('et6','个体','geti','economyType','经济类型','10000000'),('et7','外商','waishang','economyType','经济类型','10000000'),('et8','港澳台','gangaotai','economyType','经济类型','10000000'),('et9','其他','qita','economyType','经济类型','10000000'),('f3c5f54a-545b-43e0-91e9-7c4257167c3e','company','off','switch','是否审核开关--企业--新疆维吾尔自治区','10650000'),('f58167ae-34ac-4198-a701-0b5ea0eee121','resume','off','switch','是否审核开关--简历--新疆维吾尔自治区','10650000'),('g0','不限','','gender','性别','10000000'),('g1','女','0','gender','性别','10000000'),('g2','男','1','gender','性别','10000000'),('hk0','请选择','','huKou','户口状况','10000000'),('hk1','本市城镇','benshitown','huKou','户口状况','10000000'),('hk2','本市农村','benshicountry','huKou','户口状况','10000000'),('hk3','本省城镇','benshengtown','huKou','户口状况','10000000'),('hk4','本省农村','benshengcountry','huKou','户口状况','10000000'),('hk5','外省城镇','waishengtown','huKou','户口状况','10000000'),('hk6','外省农村','waishengcountry','huKou','户口状况','10000000'),('jn0','请选择','','jobNature','工作性质','10000000'),('jn1','全职','full','jobNature','工作性质','10000000'),('jn2','兼职','half','jobNature','工作性质','10000000'),('jn3','实习','practice','jobNature','工作性质','10000000'),('m0','请选择','','marriage','婚姻状况','10000000'),('m1','保密','secret','marriage','婚姻状况','10000000'),('m2','未婚','not','marriage','婚姻状况','10000000'),('m3','已婚','yes','marriage','婚姻状况','10000000'),('m4','离异','divorce','marriage','婚姻状况','10000000'),('m5','丧偶','widowed','marriage','婚姻状况','10000000'),('sc1','20人以下','19','scale','企业规模','10000000'),('sc2','20-50人之间','20','scale','企业规模','10000000'),('sc3','50-100人之间','50','scale','企业规模','10000000'),('sc4','100人以上','100','scale','企业规模','10000000'),('sl0','请选择','','salary','薪资范围','10000000'),('sl1','1000元以下','0000001000','salary','薪资范围','10000000'),('sl2','1000-2000元','0100002000','salary','薪资范围','10000000'),('sl3','2001-4000元','0200104000','salary','薪资范围','10000000'),('sl4','4001-6000元','0400106000','salary','薪资范围','10000000'),('sl5','6001-8000元','0600108000','salary','薪资范围','10000000'),('sl6','8001-10000元','0800110000','salary','薪资范围','10000000'),('sl7','1万以上','1000099999','salary','薪资范围','10000000'),('wa0','请选择','','workAbility','有无劳动能力','10000000'),('wa1','完全劳动能力','full','workAbility','有无劳动能力','10000000'),('wa2','半劳动能力','half','workAbility','有无劳动能力','10000000');
+insert  into `parameter`(`id`,`name`,`value`,`type`,`mark`,`acode`) values ('01a7311d-cf40-4242-a283-98cf54509ae3','job','on','switch','是否审核开关--职位--呼和浩特市 市辖区','30150101'),('05f9ff54-0cc6-4d06-b5e2-77755a73b214','user','on','switch','是否审核开关--账号--呼和浩特市 市辖区','30150101'),('191936d2-ed5c-4850-a1ee-fdc8c410704f','company','off','switch','是否审核开关--企业--青海省','10630000'),('1d9bc7a0-1755-4645-81ad-2fa746f3d2c1','company','off','switch','是否审核开关--企业--湖北省','10420000'),('263b54a7-c4a7-42d5-9bed-4a0628125b3b','company','off','switch','是否审核开关--企业--郑州市','20410100'),('26e52c1a-69ad-40e1-ab42-39e70295530b','company','off','switch','是否审核开关--企业--吉林省','10220000'),('2bd1adf7-fb20-4bb5-9f25-32a9ed9b8a79','job','off','switch','是否审核开关--职位--天津市','10120000'),('2bf060ab-1dbe-4b0e-b27c-9d0367481d91','company','off','switch','是否审核开关--企业--东城区','30110101'),('39b0df0e-ca57-4349-bc87-53646a2be493','user','on','switch','是否审核开关--账号--青海省','10630000'),('3e61084f-57de-47d9-a79a-b0368b785732','job','off','switch','是否审核开关--职位--北京市','10110000'),('3eed461a-07ac-4643-8fbc-e4907948c2fe','resume','on','switch','是否审核开关--简历--呼和浩特市 市辖区','30150101'),('3ff8dde6-f68d-4e8d-8430-11c5968d02e4','resume','off','switch','是否审核开关--简历--北京市','10110000'),('44','应届毕业生','graduate','state','目前状态','10000000'),('45','我对现有工作还算满意，如有更好的工作机会，我也可以考虑。（到岗时间另议）','onwatch','state','目前状态','10000000'),('4518e188-5df0-4357-8dc9-f66fc0748d51','resume','off','switch','是否审核开关--简历--湖北省','10420000'),('46','目前暂无跳槽打算','noplan','state','目前状态','10000000'),('47','我目前在职，正考虑换个新环境（如有合适的工作机会，到岗时间一个月左右）','onjob','state','目前状态','10000000'),('48','我目前处于离职状态，可立即上岗 ','now','state','目前状态','10000000'),('52b7deac-3df7-4ef8-8b6a-2a9f3fa6b99e','resume','off','switch','是否审核开关--简历--东城区','30110101'),('52d96a7b-ce3d-49e6-b7fa-5584f4fe5bdd','job','off','switch','是否审核开关--职位--山西省','10140000'),('554c83f4-f210-485c-8a02-9a37edc408f2','resume','on','switch','是否审核开关--简历--青海省','10630000'),('5a9234d7-bcaa-44a8-9922-539cb2ae627f','job','off','switch','是否审核开关--职位--郑州市','20410100'),('5b99d6fb-fb61-481b-81ee-6203b9ef652f','job','off','switch','是否审核开关--职位--东城区','30110101'),('5ff0c1bd-561b-45d7-b9bd-1490541670bf','resume','off','switch','是否审核开关--简历--山西省','10140000'),('6b6c948e-785c-4ccf-9ba2-a39e06ba0e30','resume','off','switch','是否审核开关--简历--郑州市','20410100'),('6fe1c3dc-fbff-4dd2-9744-a74685322c19','resume','off','switch','是否审核开关--简历--辽宁省','10210000'),('70ca6671-721a-478b-8464-195edddf0a99','user','off','switch','是否审核开关--账号--北京市','10110000'),('71b98452-9955-4358-94bb-e74ffdf102f4','company','off','switch','是否审核开关--企业--山西省','10140000'),('754457e7-302e-461a-9417-5354c30ebaa8','user','off','switch','是否审核开关--账号--吉林省','10220000'),('7564f0df-8200-41b9-a884-1b7ef084ccab','company','off','switch','是否审核开关--企业--天津市','10120000'),('76582ab7-3a2c-4441-9670-9c94c1905888','company','off','switch','是否审核开关--企业--北京市','10110000'),('812dc461-bf48-4427-8e1f-1c075c9d2e64','user','off','switch','是否审核开关--账号--东城区','30110101'),('83a46312-c634-456e-8500-d27f08fb6f43','company','off','switch','是否审核开关--企业--辽宁省','10210000'),('8ac5df36-b71e-4d5e-aab6-a9ac3f9aacdc','company','on','switch','是否审核开关--企业--呼和浩特市 市辖区','30150101'),('90f2aa0e-1130-423f-a422-c610203ab720','job','off','switch','是否审核开关--职位--湖北省','10420000'),('9102213e-4275-467a-b6f9-fb46fa407618','job','off','switch','是否审核开关--职位--吉林省','10220000'),('a76feeaa-c628-48fb-bb93-cffebc727f42','resume','off','switch','是否审核开关--简历--天津市','10120000'),('article1','最新资讯','news','article','文章类型-新闻','10000000'),('article2','就业指导','direct','article','文章类型-就业知道','10000000'),('b801e968-d2b3-40d1-9e10-1f7f7a9ef3f9','user','off','switch','是否审核开关--账号--天津市','10120000'),('bc5a4d14-7444-40d3-b2b3-497ad38c5c00','job','off','switch','是否审核开关--职位--辽宁省','10210000'),('be1','免费食宿','provideFoodAndRoom','benefit','其他福利','10000000'),('be2','免费住宿','provideRoom','benefit','其他福利','10000000'),('be3','免费工作餐','provideFood','benefit','其他福利','10000000'),('be4','保险 ','provideInsurance','benefit','其他福利','10000000'),('c15f61a4-51a7-4462-906d-6ef48f02e81f','user','off','switch','是否审核开关--账号--新疆维吾尔自治区','10650000'),('c2d346aa-74c3-494e-b8ab-6145234f86c1','job','on','switch','是否审核开关--职位--青海省','10630000'),('cf17dcda-c0bf-458c-ab75-43a76bf1472b','user','off','switch','是否审核开关--账号--辽宁省','10210000'),('ck1','审核OK','ok','checkStatus','审核状态','10000000'),('ck2','未通过','weiTongGuo','checkStatus','审核状态','10000000'),('ck3','审核中','daiShen','checkStatus','审核状态','10000000'),('cn0','请选择','','companyNature','单位性质','10000000'),('cn1','企业','enterprise','companyNature','单位性质','10000000'),('cn2','事业','shiye','companyNature','单位性质','10000000'),('cn3','机关','jiguan','companyNature','单位性质','10000000'),('cn4','社团','shetuan','companyNature','单位性质','10000000'),('d42df3d0-25a0-4fc2-8665-e956b4873a92','user','off','switch','是否审核开关--账号--湖北省','10420000'),('d4936658-d1e5-421a-b13b-cf7a2e987892','user','off','switch','是否审核开关--账号--山西省','10140000'),('dc0','请选择','','disabilityCategory','残疾类别','10000000'),('dc1','视力残疾','vision','disabilityCategory','残疾类别','10000000'),('dc2','听力残疾','hearing','disabilityCategory','残疾类别','10000000'),('dc3','言语残疾','speak','disabilityCategory','残疾类别','10000000'),('dc4','智力残疾','intelligence','disabilityCategory','残疾类别','10000000'),('dc5','肢体残疾','limbs','disabilityCategory','残疾类别','10000000'),('dc6','精神残疾','mind','disabilityCategory','残疾类别','10000000'),('dc7','多重残疾','multi','disabilityCategory','残疾类别','10000000'),('ddf8f293-6087-4ec3-b21a-910f703820cb','user','off','switch','是否审核开关--账号--郑州市','20410100'),('dl0','请选择','','disabilityLevel','残疾等级','10000000'),('dl1','一级残疾','level1','disabilityLevel','残疾等级','10000000'),('dl2','二级残疾','level2','disabilityLevel','残疾等级','10000000'),('dl3','三级残疾','level3','disabilityLevel','残疾等级','10000000'),('dl4','四级残疾','level4','disabilityLevel','残疾等级','10000000'),('dp0','请选择','','disabilityPart','残疾部位','10000000'),('dp1','单上肢','danshangzhi','disabilityPart','残疾部位','10000000'),('dp2','双上肢','shuangshangzhi','disabilityPart','残疾部位','10000000'),('dp3','三肢','sanzhi','disabilityPart','残疾部位','10000000'),('dp4','单下肢','danxiazhi','disabilityPart','残疾部位','10000000'),('dp5','双下肢','shuangxiazhi','disabilityPart','残疾部位','10000000'),('dp6','四肢','sizhi','disabilityPart','残疾部位','10000000'),('dp7','上下单肢','shangxiadanzhi','disabilityPart','残疾部位','10000000'),('dp8','脊椎','jizhui','disabilityPart','残疾部位','10000000'),('dp9','其他','other','disabilityPart','残疾部位','10000000'),('e5fdb7ca-6ed8-4916-912f-468c62e94f9b','job','off','switch','是否审核开关--职位--新疆维吾尔自治区','10650000'),('ea78968a-7d3c-4635-9daf-51dc11484623','resume','off','switch','是否审核开关--简历--吉林省','10220000'),('ed0','请选择','','education','学历','10000000'),('ed1','博士','7','education','学历','10000000'),('ed2','研究生','6','education','学历','10000000'),('ed3','本科','5','education','学历','10000000'),('ed4','大专','4','education','学历','10000000'),('ed5','高中','3','education','学历','10000000'),('ed6','初中','2','education','学历','10000000'),('ed7','小学','1','education','学历','10000000'),('ee0','请选择','','experience','工作年限','10000000'),('ee1','无经验','0','experience','工作年限','10000000'),('ee2','1年以内','lessone','experience','工作年限','10000000'),('ee3','1-3年','one','experience','工作年限','10000000'),('ee4','3-5年','three','experience','工作年限','10000000'),('ee5','5年以上','five','experience','工作年限','10000000'),('eft0','请选择','','effectiveTime','有效期','10000000'),('eft1','7天','7','effectiveTime','有效期','10000000'),('eft2','15天','15','effectiveTime','有效期','10000000'),('eft3','30天','30','effectiveTime','有效期','10000000'),('eft4','60天','60','effectiveTime','有效期','10000000'),('eft5','90天','90','effectiveTime','有效期','10000000'),('es1','已就业','yes','processState','就业状况','10000000'),('es2','未就业','no','processState','就业状况','10000000'),('et0','请选择','','economyType','经济类型','10000000'),('et1','国有','guoyou','economyType','经济类型','10000000'),('et2','集体','jiti','economyType','经济类型','10000000'),('et3','联营','lianying','economyType','经济类型','10000000'),('et4','股份制','gufenzhi','economyType','经济类型','10000000'),('et5','民营','minying','economyType','经济类型','10000000'),('et6','个体','geti','economyType','经济类型','10000000'),('et7','外商','waishang','economyType','经济类型','10000000'),('et8','港澳台','gangaotai','economyType','经济类型','10000000'),('et9','其他','qita','economyType','经济类型','10000000'),('f3c5f54a-545b-43e0-91e9-7c4257167c3e','company','off','switch','是否审核开关--企业--新疆维吾尔自治区','10650000'),('f58167ae-34ac-4198-a701-0b5ea0eee121','resume','off','switch','是否审核开关--简历--新疆维吾尔自治区','10650000'),('g0','不限','','gender','性别','10000000'),('g1','女','0','gender','性别','10000000'),('g2','男','1','gender','性别','10000000'),('hk0','请选择','','huKou','户口状况','10000000'),('hk1','本市城镇','benshitown','huKou','户口状况','10000000'),('hk2','本市农村','benshicountry','huKou','户口状况','10000000'),('hk3','本省城镇','benshengtown','huKou','户口状况','10000000'),('hk4','本省农村','benshengcountry','huKou','户口状况','10000000'),('hk5','外省城镇','waishengtown','huKou','户口状况','10000000'),('hk6','外省农村','waishengcountry','huKou','户口状况','10000000'),('jn0','请选择','','jobNature','工作性质','10000000'),('jn1','全职','full','jobNature','工作性质','10000000'),('jn2','兼职','half','jobNature','工作性质','10000000'),('jn3','实习','practice','jobNature','工作性质','10000000'),('m0','请选择','','marriage','婚姻状况','10000000'),('m1','保密','secret','marriage','婚姻状况','10000000'),('m2','未婚','not','marriage','婚姻状况','10000000'),('m3','已婚','yes','marriage','婚姻状况','10000000'),('m4','离异','divorce','marriage','婚姻状况','10000000'),('m5','丧偶','widowed','marriage','婚姻状况','10000000'),('sc1','20人以下','19','scale','企业规模','10000000'),('sc2','20-50人之间','20','scale','企业规模','10000000'),('sc3','50-100人之间','50','scale','企业规模','10000000'),('sc4','100人以上','100','scale','企业规模','10000000'),('sl0','请选择','','salary','薪资范围','10000000'),('sl1','1000元以下','0000001000','salary','薪资范围','10000000'),('sl2','1000-2000元','0100002000','salary','薪资范围','10000000'),('sl3','2001-4000元','0200104000','salary','薪资范围','10000000'),('sl4','4001-6000元','0400106000','salary','薪资范围','10000000'),('sl5','6001-8000元','0600108000','salary','薪资范围','10000000'),('sl6','8001-10000元','0800110000','salary','薪资范围','10000000'),('sl7','1万以上','1000099999','salary','薪资范围','10000000'),('sl8','面议','0000000000','salary','薪资范围','10000000'),('wa0','请选择','','workAbility','有无劳动能力','10000000'),('wa1','完全劳动能力','full','workAbility','有无劳动能力','10000000'),('wa2','半劳动能力','half','workAbility','有无劳动能力','10000000');
 
 /*Table structure for table `record` */
 
@@ -269,7 +270,7 @@ CREATE TABLE `record` (
   `direction` tinyint(1) DEFAULT NULL COMMENT '投递方向标示符, true-简历投像职位, false-公司发送某职位的邀请到简历, 必填项, 任何增删改的操作都不得缺少!!!!!!!,默认为true',
   `comment` varchar(1000) DEFAULT NULL COMMENT '发送邀请说的话/求职留下的话',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
 
 /*Data for the table `record` */
 
@@ -334,11 +335,11 @@ CREATE TABLE `resume` (
   `check_status` varchar(50) DEFAULT NULL COMMENT '是否显示/是否通过审核',
   `view_count` int(10) DEFAULT '0' COMMENT '被浏览次数',
   `career_test` varchar(255) DEFAULT NULL COMMENT '职业测评情况',
-  `process_state` varchar(255) DEFAULT NULL COMMENT '办理情况',
+  `process_state` varchar(50) DEFAULT NULL COMMENT '就业状况',
   `uid` int(10) DEFAULT NULL COMMENT '个人用户ID',
   `acode` varchar(10) DEFAULT NULL COMMENT '简历所属地区外键',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=850 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=849 DEFAULT CHARSET=utf8;
 
 /*Data for the table `resume` */
 
@@ -368,12 +369,11 @@ CREATE TABLE `unemp_manage` (
   `update_check` int(11) DEFAULT '1' COMMENT '更新验证',
   `update_date` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `log_user` varchar(50) DEFAULT NULL COMMENT '记录操作人',
-  `assessment` varchar(50) DEFAULT NULL COMMENT '职业测评情况',
-  `procedure` varchar(50) DEFAULT NULL COMMENT '办理情况',
-  `status` varchar(50) DEFAULT NULL COMMENT '就业情况',
+  `time` varchar(50) DEFAULT NULL COMMENT '办理时间',
+  `content` varchar(50) DEFAULT NULL COMMENT '办理情况',
   `rid` int(11) DEFAULT NULL COMMENT '所属简历id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `unemp_manage` */
 
@@ -400,11 +400,11 @@ CREATE TABLE `user` (
   `head_image` mediumblob COMMENT '用户头像图片',
   `acode` varchar(10) DEFAULT NULL COMMENT '账号所属地地区外键',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=351 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=357 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`id`,`create_date`,`update_check`,`update_date`,`log_user`,`login_name`,`pass_word`,`email`,`phone`,`identity`,`check_status`,`authority`,`title`,`nick_name`,`head_title`,`head_image`,`acode`) values (232,'2014-04-18 11:22:06',0,'2014-04-23 13:32:23',NULL,'superadmin','123123','superman@test.com','13888888888','superadmin','ok',999,'超级管理员','超级管理员',NULL,NULL,'10000000');
+insert  into `user`(`id`,`create_date`,`update_check`,`update_date`,`log_user`,`login_name`,`pass_word`,`email`,`phone`,`identity`,`check_status`,`authority`,`title`,`nick_name`,`head_title`,`head_image`,`acode`) values (232,'2014-04-18 11:22:06',4,'2014-11-07 08:49:35',NULL,'superadmin','123123','superman@test.com','13888888888','superadmin','ok',999,'超级管理员','超级管理员',NULL,NULL,'10000000');
 
 /*Table structure for table `work_experience` */
 
@@ -424,7 +424,7 @@ CREATE TABLE `work_experience` (
   `evaluation` varchar(1000) DEFAULT NULL COMMENT '评价',
   `rid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 /*Data for the table `work_experience` */
 
