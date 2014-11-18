@@ -45,15 +45,15 @@ function job_check(){
 		return false;
 	}
 	//地区
-	var area_lv3 = $('#area_lv3').val();
-	if(area_lv3 == null || area_lv3 == ''){
-		alert('请选择具体的期望工作地!');
+	var area_lv1 = $('#area_lv1').val();
+	if(area_lv1 == null || area_lv1 == ''){
+		alert('请选择具体的工作地!');
 		$('#area_lv1').focus();
 		return false;
 	}
 	//职位类别
 	var jobCategory_lv1 = $('#jobCategory_lv1').val();
-	if(jobCategory_lv1 == null || jobCategory_lv1 == '' || jobCategory_lv1 == '不限'){
+	if(jobCategory_lv1 == null || jobCategory_lv1 == ''){
 		alert('请选择工作类别!');
 		$('#jobCategory_lv1').focus();
 		return false;
@@ -67,10 +67,15 @@ function job_check(){
 	}
 	//电话/手机
 	var contactTel = $('#contactTel').val();
-	if(!verify.checkTel(contactTel)){
-        alert('请检查你输入的电话/手机号码!');
+	if(contactTel == null || contactTel == ''){
+        alert('电话/手机号码不能为空!');
 		$('#contactTel').focus();
 		return false;
 	}
+/*	if(!verify.checkTel(contactTel)){
+        alert('请检查你输入的电话/手机号码!');
+		$('#contactTel').focus();
+		return false;
+	}	*/
 	return true;
 }

@@ -132,8 +132,20 @@ public class ResumeController {
 					map.put("education", it.getEducation());
 					map.put("major", it.getMajor());
 					map.put("experience", it.getExperience());
-					map.put("desireJob", it.getDesireJob().getName());
-					map.put("desireAddress", it.getDesireAddress().getName());
+					if(it.getDesireJob()!=null){
+						if(it.getDesireJob().getName()!=null && !"".equals(it.getDesireJob().getName())){
+							map.put("desireJob", it.getDesireJob().getName());
+						}
+					}else{
+						map.put("desireJob", Constants.NO_LIMIT);
+					}
+					if(it.getDesireAddress()!=null){
+						if(it.getDesireAddress().getName()!=null && !"".equals(it.getDesireAddress().getName())){
+							map.put("desireAddress", it.getDesireAddress().getName());
+						}
+					}else{
+						map.put("desireAddress", Constants.NO_LIMIT);
+					}
 					map.put("desireSalary", it.getDesireSalary());
 					list.add(map);
 				}

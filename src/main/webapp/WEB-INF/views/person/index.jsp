@@ -105,12 +105,10 @@
 								<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable"></span>：欢迎您！</li>
 								<li class="B">您的用户等级：
 									<span> <span id="ctl00_ContentPlaceHolder1_tag">个人</span>会员 </span> 
-									<input type="submit" name="ctl00$ContentPlaceHolder1$Button1" value="升级为商家"
-										onclick="return confirm('您确认升级为企业会员！此操作是不可返的！');" id="ctl00_ContentPlaceHolder1_Button1" />
 								</li>
 								<li class="C" style="text-align: left">
 									<c:if test="${user.createDate != null}">
-										<fmt:formatDate value="${user.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="createDate" />
+										<fmt:formatDate value="${user.createDate}" type="both" timeStyle="default" pattern="yyyy-MM-dd HH:mm:ss" var="createDate" />
 									</c:if> 
 									注册时间：<span id="ctl00_ContentPlaceHolder1_addtime">${createDate }</span>
 								</li>

@@ -225,7 +225,7 @@
 	</select>
 
 	<!-- get title list -->
-	<select id="getTitleList" resultType="News" parameterType="map">
+	<select id="getTitleList" resultMap="ResultNews" parameterType="map">
 		select <include refid="base_column"/> 
 		from <include refid="from_table"/> 
 		<trim prefix="where" prefixOverrides="and|or">

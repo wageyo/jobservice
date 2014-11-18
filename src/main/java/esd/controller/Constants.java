@@ -40,10 +40,12 @@ public class Constants {
 	public static final String SWITCH_ON = "on"; //
 	public static final String SWITCH_OFF = "off"; // 有无劳动能力
 
+	public static final String NO_LIMIT = "不限"; // 不限字段
+
 	/**
 	 * 文章类型
 	 */
-	public static final String ARTICLE_TYPE = "article"; //  文章类型
+	public static final String ARTICLE_TYPE = "article"; // 文章类型
 	/**
 	 * 文章类型： 最新资讯类型
 	 */

@@ -19,6 +19,7 @@ public class Job extends PrimaryKey {
 	private String education; // 最低学历
 	private String experience; // 要求的工作经验年限
 	private String gender; // 性别
+	private String age; // 年龄限制
 	private String description; // 岗位描述
 	private String provideBenefit; // 工资和其他福利
 	private String contactPerson; // 联系人
@@ -114,6 +115,14 @@ public class Job extends PrimaryKey {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
 	}
 
 	public String getDescription() {

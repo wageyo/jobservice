@@ -794,6 +794,9 @@ public class KitService {
 				}
 			}
 			job.setSalary(p.getName());
+		}else{
+			//薪水为空, 则显示不限
+			job.setSalary(Constants.NO_LIMIT);
 		}
 		// 学历
 		if (job.getEducation() != null && !"".equals(job.getEducation())) {

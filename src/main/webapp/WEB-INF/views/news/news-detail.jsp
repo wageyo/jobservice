@@ -42,7 +42,13 @@
 						style="color: #ffffff; font-family: 宋体; overflow: hidden; text-align: center;
 		                        padding-top: 2px; margin-left: 10px; font-weight: bold; width: 120px; font-size: 13px;
 		                        background: url(${contextPath}/images/menu_bg_r16_c2.jpg) no-repeat left top">
-						最新咨询</div>
+						<c:if test="${news.type == 'news' }">
+							最新资讯
+						</c:if>
+						<c:if test="${news.type == 'direct' }">
+							就业指导
+						</c:if>
+					</div>
 				</div>
 				<div style="width: 710px;">
 					<div class="news_title">
@@ -80,7 +86,14 @@
 				<div style="width: 254px; float: right; border: 1px solid  #9CC7E7">
 					<div style="width: 232px; height: 29px; background-image: url(${contextPath}/images/menu_bg_r17_c19.jpg);
 		                        padding-left: 20px; padding-top: 5px; color: #0157B4">
-						<strong>最新资讯</strong>
+						<strong>
+							<c:if test="${news.type == 'news' }">
+								最新资讯
+							</c:if>
+							<c:if test="${news.type == 'direct' }">
+								就业指导
+							</c:if>
+						</strong>
 					</div>
 					<div style="width: 252px;">
 						<table style="line-height: 20px">

@@ -26,7 +26,7 @@
 	
 		<!-- 头部 div -->
 		<div class="manage-header" style="background-color:white;">
-		
+			<span style="float:right;"><a href="${contextPath }/index">回到首页</a></span>
 		</div>
 		
 		<!-- 中间主体div 开始-->

@@ -57,19 +57,8 @@
 .manage-footer {
 	width: 100%;
 	min-height: 60px;
-	display: -webkit-box;
-	text-align:center;
 	padding-top: 20px;
-	padding-left: 25%;
-}
-
-/**
- * 登陆页面背景div样式
- **/
-.login_background {
-	background-position: center;
-	background-repeat: no-repeat;
-	height:500px;
+	text-align:center;
 }
 
 /**

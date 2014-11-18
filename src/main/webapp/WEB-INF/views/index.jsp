@@ -305,8 +305,9 @@ function getimgcode(){
 		<div class="redline_con">
 			<ul class="prohr">
 				<c:forEach items="${resumeList }" var="resume">
-					<li><img src="${contextPath}/images/boy_icon.gif" align="absmiddle" style="float: left; margin-right: 3px;"> <a class="cGary"
-							href="${contextPath }/resume/getOneForShow?id=${resume.id}" target="_blank"> ${resume.name } - 学历:${resume.education } - 求职:${resume.desireJob } </a>
+					<li>
+						<img src="${contextPath}/images/boy_icon.gif" align="absmiddle" style="float: left; margin-right: 3px;" /> 
+						<a class="cGary" href="${contextPath }/resume/getOneForShow?id=${resume.id}" target="_blank"> ${resume.name } - 学历:${resume.education } - 求职:${resume.desireJob.name } </a>
 					</li>
 				</c:forEach>
 			</ul>

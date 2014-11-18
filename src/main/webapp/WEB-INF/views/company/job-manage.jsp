@@ -64,11 +64,11 @@
 								<td align="center"><a href="${contextPath }/job/getOneForShow?id=${job.id}">${job.name }</a>
 								</td>
 								<c:if test="${job.createDate!=null}">
-									<fmt:formatDate value="${job.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm" var="createDate" />
+									<fmt:formatDate value="${job.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm" var="createDate" />
 								</c:if>
 								<td align="center">${createDate }</td>
 								<c:if test="${job.updateDate!=null}">
-									<fmt:formatDate value="${job.updateDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm" var="updateDate" />
+									<fmt:formatDate value="${job.updateDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm" var="updateDate" />
 								</c:if>
 								<td align="center">${updateDate }</td>
 								<td align="center">${job.checkStatus }</td>

@@ -733,7 +733,7 @@
 				</if>
 				<!-- 目标职位 -->
 				<if test="resume.desireJob != null">
-					<if test="resume.desireJob.code != null and resume.desireJob.code 1= ''">
+					<if test="resume.desireJob.code != null and resume.desireJob.code != ''">
 					 	and r.desire_job like concat('%',#{resume.desireJob.code, jdbcType=VARCHAR},'%') 
 					</if>
 				</if>
@@ -796,7 +796,7 @@
 				</if>
 				<!-- 目标职位 -->
 				<if test="resume.desireJob != null">
-					<if test="resume.desireJob.code != null and resume.desireJob.code 1= ''">
+					<if test="resume.desireJob.code != null and resume.desireJob.code != ''">
 					 	and r.desire_job like concat('%',#{resume.desireJob.code, jdbcType=VARCHAR},'%') 
 					</if>
 				</if>

@@ -112,7 +112,7 @@ public class NewsController {
 		News news = newsService.getOneForShow(id);
 		req.setAttribute("news", news);
 		// 再取15条信息放入到request中
-		List<News> list = newsService.getTitleList(Constants.ARTICLE_TYPE_NEWS, 1, 15);
+		List<News> list = newsService.getTitleList(news.getType(), 1, 15);
 		req.setAttribute("newsList", list);
 		return "news/news-detail";
 	}

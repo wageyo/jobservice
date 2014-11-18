@@ -24,11 +24,16 @@ function company_check(){
 	}
 	//电话/手机
 	var telephone = $('#telephone').val();
-	if(!verify.checkTel(telephone)){
-        alert('请检查你输入的电话/手机号码!');
+	if(telephone == null || telephone == ''){
+        alert('电话/手机号码不能为空!');
 		$('#telephone').focus();
 		return false;
 	}
+/*	if(!verify.checkTel(telephone)){
+        alert('请检查你输入的电话/手机号码!');
+		$('#telephone').focus();
+		return false;
+	}	*/
 	//联系人
 	var contactPerson = $('#contactPerson').val();
 	if(contactPerson == null || contactPerson == ''){

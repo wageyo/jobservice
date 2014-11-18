@@ -158,10 +158,12 @@
 			success:function(data){
 				if(data.notice == 'success'){
 					alert('邀请发送成功!');
-					pupclose();	//关闭窗口
 				}else{
 					alert(data.notice);
 				}
+				//清空留言内容
+				$('#leaveMessage').val('');
+				pupclose();	//关闭窗口
 			},
 			error:function(){
 				alert('发送邀请发生错误, 请重新尝试或者联系管理人员.');
@@ -348,11 +350,29 @@
 																	</tr>
 																	<tr>
 																		<td class="txt">从事岗位：</td>
-																		<td>${resume.desireJob }</td>
+																		<td>
+																			<c:choose>
+																				<c:when test="${resume.desireJob != null }">
+																					${resume.desireJob.name }
+																				</c:when>
+																				<c:otherwise>
+																					不限
+																				</c:otherwise>
+																			</c:choose>
+																		</td>
 																	</tr>
 																	<tr>
 																		<td class="txt">工作地点：</td>
-																		<td>${resume.desireAddress }</td>
+																		<td>
+																			<c:choose>
+																				<c:when test="${resume.desireAddress != null }">
+																					${resume.desireAddress.name }
+																				</c:when>
+																				<c:otherwise>
+																					不限
+																				</c:otherwise>
+																			</c:choose>
+																		</td>
 																	</tr>
 																	<tr>
 																		<td class="txt">其他要求：</td>

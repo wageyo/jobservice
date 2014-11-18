@@ -86,7 +86,7 @@ public class ResumeService {
 			Resume tempResume = personService.getDefaultResume(resume.getUser()
 					.getId());
 			if (tempResume == null) {
-				resume.setDefault(true);
+				resume.setIsDefault(Boolean.TRUE);
 			}
 
 			// 有出生日期得到年龄
@@ -197,27 +197,13 @@ public class ResumeService {
 	// 根据个人用户的user id, 得到他默认选中的简历
 	public Resume getDefaultResume(int userid) {
 		Resume r = new Resume();
-		r.setDefault(true);
+		r.setIsDefault(Boolean.TRUE);
 		r.setUser(new User(userid));
 		List<Resume> list = dao.getByObj(r);
 		log.info("getDefaultResume list.size() : " + list.size());
 		if (list != null) {
 			if (list.size() == 1) {
 				r = list.get(0);
-				// 取得教育经历
-				// r.setEducationBackgroundList(eDao.getByResume(r.getId()));
-				// 取得家庭成员
-				// r.setFamilyMemberList(fDao.getByResume(r.getId()));
-				// 取得工作经历
-				// r.setWorkExperienceList(wDao.getByResume(r.getId()));
-				// 计算年龄
-				// int birth = Integer.parseInt(r.getBirth().substring(0, 4));
-				// int now = Integer.parseInt(new
-				// SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-				// .format(new Date()).substring(0, 4));
-				// r.setAge(now - birth);
-				// 设置生日为yyyy-MM-dd格式
-				// r.setBirth(r.getBirth().substring(0,10));
 				return r;
 			}
 			return null;
@@ -264,11 +250,6 @@ public class ResumeService {
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
 		List<Resume> list = dao.getByPage(map);
-		// for (Resume r : list) {
-		// if (r.getUpdateDate() != null) {
-		// r.setUpdateDate(KitService.dateForShow(r.getUpdateDate()));
-		// }
-		// }
 		System.out.println("resumeList.size() = " + list.size());
 		return list;
 	}
@@ -327,9 +308,9 @@ public class ResumeService {
 							.getArea().getCode())));
 				}
 			}
-			if (resume.getDesireJob() != null) {
-				if (resume.getDesireJob().getCode() != null
-						&& !"".equals(resume.getDesireJob().getCode())) {
+			if (resume.getDesireAddress() != null) {
+				if (resume.getDesireAddress().getCode() != null
+						&& !"".equals(resume.getDesireAddress().getCode())) {
 					String sqlDesireAddress = KitService.areaCodeForSql(resume
 							.getDesireAddress().getCode());
 					resume.setDesireAddress(new Area(sqlDesireAddress));

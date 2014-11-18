@@ -102,7 +102,18 @@
 						</tr>
 						<tr class="job_detail">
 							<td>工作地区：</td>
-							<td><span id="ctl00_ctl00_cph_cph_lb_workplace">${job.workPlace }</span></td>
+							<td>
+								<span id="ctl00_ctl00_cph_cph_lb_workplace">
+									<c:choose>
+										<c:when test="${job.workPlace != null }">
+											${job.workPlace }
+										</c:when>
+										<c:otherwise>
+											不限
+										</c:otherwise>
+									</c:choose>
+								</span>
+							</td>
 							<td>薪资待遇：</td>
 							<td><span id="ctl00_ctl00_cph_cph_lb_wage">${job.salary }</span></td>
 						</tr>
@@ -170,7 +181,9 @@
 								<td>${jj.hireNumber }</td>
 								<td>${job.jobCategory.name }</td>
 								<td>${job.education }</td>
-								<td>${job.updateDate }</td>
+								<td>
+									<fmt:formatDate value="${job.updateDate }"  dateStyle="default" pattern="yyyy-MM-dd HH:mm:ss"/>
+								</td>
 								<td>${job.nature }</td>
 							</tr>
 						</c:if>

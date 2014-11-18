@@ -54,10 +54,10 @@
 								<td align="center" height="30px;">${i.index + 1 }</td>
 								<td align="center"><a href="${contextPath }/resume/getOneForShow?id=${resume.id}">${resume.title }</a></td>
 								<c:if test="${resume.createDate!=null}">
-									<fmt:formatDate value="${resume.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm" var="createDate" />
+									<fmt:formatDate value="${resume.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm" var="createDate" />
 								</c:if>
 								<c:if test="${resume.updateDate!=null}">
-									<fmt:formatDate value="${resume.updateDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm" var="updateDate" />
+									<fmt:formatDate value="${resume.updateDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm" var="updateDate" />
 								</c:if>
 								<td align="center">${createDate }</td>
 								<td align="center">${updateDate }</td>

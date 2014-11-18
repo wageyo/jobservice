@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -107,7 +108,11 @@
 								<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable"></span>：欢迎您！</li>
 								<li class="B">您的用户等级：<span id="ctl00_ContentPlaceHolder1_tag">企业用户</span>
 								</li>
-								<li class="C" style="text-align: left">注册时间：<span id="ctl00_ContentPlaceHolder1_addtime">${user.createDate }</span></li>
+								<li class="C" style="text-align: left">
+								<c:if test="${user.createDate != null}">
+									<fmt:formatDate value="${user.createDate}" type="both" timeStyle="default" pattern="yyyy-MM-dd HH:mm:ss" var="createDate" />
+								</c:if> 
+								注册时间：<span id="ctl00_ContentPlaceHolder1_addtime">${createDate }</span></li>
 								<li class="D">邮箱：<span id="ctl00_ContentPlaceHolder1_uemail">${user.email }</span></li>
 								<li class="D">联系方式：<span id="ctl00_ContentPlaceHolder1_uemail">${user.phone }</span></li>
 								<li class="F" style="display: none;"><span class="Integral"> <a href="money/jf_add.aspx" target="_self">充值</a> </span>

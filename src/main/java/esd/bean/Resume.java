@@ -72,7 +72,7 @@ public class Resume extends PrimaryKey {
 	private String state; // 目前状态
 
 	// 简历的自身属性
-	private boolean isDefault; // 是否是默认被选中要投递的简历
+	private Boolean isDefault; // 是否是默认被选中要投递的简历
 	private String checkStatus; // 审核情况, 是否给予显示
 	private Integer viewCount; // 被浏览次数
 	private String careerTest; // 职业测评情况
@@ -504,11 +504,11 @@ public class Resume extends PrimaryKey {
 		this.state = state;
 	}
 
-	public boolean isDefault() {
+	public Boolean getIsDefault() {
 		return isDefault;
 	}
 
-	public void setDefault(boolean isDefault) {
+	public void setIsDefault(Boolean isDefault) {
 		this.isDefault = isDefault;
 	}
 

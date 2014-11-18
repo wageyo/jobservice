@@ -28,6 +28,7 @@
 		<result column="j_education" property="education" jdbcType="VARCHAR" />
 		<result column="j_experience" property="experience" jdbcType="VARCHAR" />
 		<result column="j_gender" property="gender" jdbcType="VARCHAR" />
+		<result column="j_age" property="age" jdbcType="VARCHAR" />
 		<result column="j_description" property="description" jdbcType="VARCHAR" />
 		<result column="j_provide_benefit" property="provideBenefit" jdbcType="VARCHAR" />
 		<result column="j_contact_person" property="contactPerson" jdbcType="VARCHAR" />
@@ -79,7 +80,7 @@
 	<sql id="base_column">
 		job.id as j_id,	job.create_date as j_create_date, job.update_check as j_update_check, job.update_date as j_update_date, job.log_user as j_log_user,
 			job.name as j_name, job.hire_number as j_hire_number, job.salary as j_salary, job.education as j_education, 
-			job.experience as j_experience, job.gender as j_gender, job.description as j_description, 
+			job.experience as j_experience, job.gender as j_gender, job.age as j_age, job.description as j_description, 
 			job.provide_benefit as j_provide_benefit,job.contact_person as j_contact_person, job.contact_tel as j_contact_tel, 
 			job.contact_email as j_contact_email, job.view_count as j_view_count, job.nature as j_nature, job.effective_time as j_effective_time, 
 			job.work_place as j_work_place, job.bed as j_bed, job.lunch as j_lunch, job.check_status as j_check_status, job.mark as j_mark,  
@@ -131,6 +132,9 @@
 			</if>
 			<if test="gender != null and gender != ''">
 				gender,
+			</if>
+			<if test="age != null and age != ''">
+				age,
 			</if>
 			<if test="description != null and description != ''">
 				description,
@@ -209,6 +213,9 @@
 			</if>
 			<if test="gender != null and gender != ''">
 				#{gender, jdbcType=VARCHAR},
+			</if>
+			<if test="age != null and age != ''">
+				#{age, jdbcType=VARCHAR},
 			</if>
 			<if test="description != null and description != ''">
 				#{description, jdbcType=VARCHAR},
@@ -297,6 +304,9 @@
 			</if>
 			<if test="gender != null and gender != ''">
 				gender = #{gender, jdbcType=VARCHAR},
+			</if>
+			<if test="age != null and age != ''">
+				age = #{age, jdbcType=VARCHAR},
 			</if>
 			<if test="description != null and description != ''">
 				description = #{description, jdbcType=VARCHAR},

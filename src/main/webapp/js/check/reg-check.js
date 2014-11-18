@@ -27,20 +27,30 @@ function check(){
 		$('#confirmPassWord').focus();
 		return false;
 	}
-	//电话/手机
+	//电话/手机--暂时去掉所有电话的check项, 只保留非空
 	var phone = $('#phone').val();
-	if(!verify.checkTel(phone)){
+	if(phone == null || phone == ''){
+		$('#phoneNotice').html('×');
+		$('#phone').focus();
+	}
+/*	if(!verify.checkTel(phone)){
 		$('#phoneNotice').html('×');
 		$('#phone').focus();
 		return false;
-	}
+	}	*/
 	
+	//暂时去掉所有邮箱的check项, 只保留非空
 	var email = $('#email').val();
+	if(email == null || email == ''){
+		$('#email').html('×');
+		$('#email').focus();
+	}
+/*	
 	if(!verify.isEmail(email)){
 		$('#emailNotice').html('请输入正确的邮箱格式,如:tudou@163.com');
 		$('#email').focus();
 		return false;
-	}
+	}	*/
 	//地区
 	var area_lv3 = $('#area_lv3').val();
 	if(area_lv3 == null || area_lv3 == ''){
