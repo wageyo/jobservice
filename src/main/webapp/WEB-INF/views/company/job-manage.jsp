@@ -21,7 +21,7 @@
 		};
 	}
 </script>
-<title>残疾人招聘就业网</title>
+<title>残疾人就业信息网</title>
 </head>
 <body>
 	<jsp:include page="../header.jsp" />

@@ -12,7 +12,7 @@
 <link href="${contextPath}/css/user/style.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/css/user/StyleSheet.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
-<title>残疾人招聘就业网</title>
+<title>残疾人就业信息网</title>
 
 </head>
 <body>

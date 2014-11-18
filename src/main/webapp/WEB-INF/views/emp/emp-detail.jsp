@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>残疾人招聘就业网</title>
+<title>残疾人就业信息网</title>
 <link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
 <!-- 
 <link href="${contextPath}/css/body_job.css" rel="stylesheet" type="text/css" />

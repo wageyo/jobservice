@@ -12,7 +12,7 @@
 <link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/css/body_job.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/css/search.css" rel="stylesheet" type="text/css" />
-<title>残疾人招聘就业网</title>
+<title>残疾人就业信息网</title>
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 <script type="text/javascript">
 	function send_resume(jid){
@@ -106,7 +106,7 @@
 								<span id="ctl00_ctl00_cph_cph_lb_workplace">
 									<c:choose>
 										<c:when test="${job.workPlace != null }">
-											${job.workPlace }
+											${job.workPlace.name }
 										</c:when>
 										<c:otherwise>
 											不限

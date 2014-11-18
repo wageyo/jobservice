@@ -29,6 +29,7 @@
 			type:'POST',
 			data: {},
 			onSubmit : function(file , ext){
+				alert(123);
 				button.val('上传图片中ing...');
 				/**
 				 *	①验证上传文件格式

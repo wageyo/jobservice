@@ -16,7 +16,7 @@
 <script type="text/javascript" src="${contextPath}/js/verify.js"></script>
 <script type="text/javascript" src="${contextPath}/js/widget.js"></script>
 <script type="text/javascript" src="${contextPath}/js/check/job-check.js"></script>
-<title>残疾人招聘就业网</title>
+<title>残疾人就业信息网</title>
 </head>
 <body>
 	<jsp:include page="../header.jsp" />
