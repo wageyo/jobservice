@@ -415,41 +415,25 @@
 		select
 			<include refid="base_column"/>
 		from <include refid="from_table"/>
-		<trim prefix="where" prefixOverrides="and|or">
+		<trim prefix="where" prefixOverrides="and|or" >
 			<if test="job != null">
 				<if test="job.name != null and job.name != ''">
- 					and job.name like concat('%',#{job.name},'%')
- 				</if>
-				<if test="job.jobCategory != null ">
-					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
-					<!-- 	and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
-						and ${job.jobCategory.code, jdbcType=VARCHAR}
-					</if>
-				</if>
- 				<if test="job.education != null and job.education !=''">
- 					and job.education >= #{job.education}
- 				</if>
- 				<if test="job.area != null">
-					<if test="job.area.code != null and job.area.code != ''">
-						and job.acode like concat('%',#{job.area.code},'%')
-					</if>
-				</if>
-				<if test="job.nature != null and job.nature != ''">
- 					and job.nature = #{job.nature}
- 				</if>
- 				<if test="job.experience != null and job.experience != ''">
- 					and job.experience = #{job.experience}
+ 					job.name like concat('%',#{job.name,jdbcType=VARCHAR},'%')
  				</if>
  				<if test="job.salary != null and job.salary != ''">
- 					and job.salary = #{job.salary}
+ 					and job.salary = #{job.salary,jdbcType=VARCHAR}
  				</if>
- 				<if test="job.checkStatus != null and job.checkStatus != ''">
- 					and job.check_status = #{job.checkStatus} 
+ 				<if test="job.education != null and job.education !=''">
+ 					and job.education &gt;= #{job.education,jdbcType=VARCHAR}
  				</if>
- 				<if test="job.company != null">
- 					<if test="job.company.id > 0">
- 						and job.cid = #{job.company.id}
- 					</if>
+ 				<if test="job.experience != null and job.experience != ''">
+ 					and job.experience = #{job.experience,jdbcType=VARCHAR}
+ 				</if>
+ 				<if test="job.gender != null and job.gender != ''">
+ 					and job.gender = #{job.gender,jdbcType=VARCHAR}
+ 				</if>
+				<if test="job.nature != null and job.nature != ''">
+ 					and job.nature = #{job.nature,jdbcType=VARCHAR}
  				</if>
  				<choose>
 					<when test="job.isActiveEffectiveTime == null">
@@ -461,6 +445,30 @@
 						</if>
 					</otherwise>
 				</choose>
+				<if test="job.workPlace != null">
+					<if test="job.workPlace.code != null and job.workPlace.code != ''">
+						and job.work_place like concat('%',#{job.workPlace.code, jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+ 				<if test="job.checkStatus != null and job.checkStatus != ''">
+ 					and job.check_status = #{job.checkStatus,jdbcType=VARCHAR} 
+ 				</if>
+ 				<if test="job.company != null">
+ 					<if test="job.company.id > 0">
+ 						and job.cid = #{job.company.id,jdbcType=INTEGER}
+ 					</if>
+ 				</if>
+ 				<if test="job.area != null">
+					<if test="job.area.code != null and job.area.code != ''">
+						and job.acode like concat('%',#{job.area.code,jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<if test="job.jobCategory != null ">
+					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
+					<!-- 	and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
+						and ${job.jobCategory.code, jdbcType=VARCHAR}
+					</if>
+				</if>
 			</if>
 		</trim>
 		order by job.create_date desc 
@@ -470,41 +478,25 @@
 	<select id="getTotalCount" resultType="int" parameterType="map">
 		select count(*)
 		from <include refid="from_table"/>
-		<trim prefix="where" prefixOverrides="and|or">
+		<trim prefix="where" prefixOverrides="and|or" >
 			<if test="job != null">
 				<if test="job.name != null and job.name != ''">
- 					and job.name like concat('%',#{job.name},'%')
- 				</if>
-				<if test="job.jobCategory != null ">
-					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
-					<!-- 	and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
-						and ${job.jobCategory.code, jdbcType=VARCHAR}
-					</if>
-				</if>
- 				<if test="job.education != null and job.education !=''">
- 					and job.education >= #{job.education}
- 				</if>
- 				<if test="job.area != null">
-					<if test="job.area.code != null and job.area.code != ''">
-						and job.acode like concat('%',#{job.area.code},'%')
-					</if>
-				</if>
-				<if test="job.nature != null and job.nature != ''">
- 					and job.nature = #{job.nature}
- 				</if>
- 				<if test="job.experience != null and job.experience != ''">
- 					and job.experience = #{job.experience}
+ 					job.name like concat('%',#{job.name,jdbcType=VARCHAR},'%')
  				</if>
  				<if test="job.salary != null and job.salary != ''">
- 					and job.salary = #{job.salary}
+ 					and job.salary = #{job.salary,jdbcType=VARCHAR}
  				</if>
- 				<if test="job.checkStatus != null and job.checkStatus != ''">
- 					and job.check_status = #{job.checkStatus} 
+ 				<if test="job.education != null and job.education !=''">
+ 					and job.education &gt;= #{job.education,jdbcType=VARCHAR}
  				</if>
- 				<if test="job.company != null">
- 					<if test="job.company.id > 0">
- 						and job.cid = #{job.company.id}
- 					</if>
+ 				<if test="job.experience != null and job.experience != ''">
+ 					and job.experience = #{job.experience,jdbcType=VARCHAR}
+ 				</if>
+ 				<if test="job.gender != null and job.gender != ''">
+ 					and job.gender = #{job.gender,jdbcType=VARCHAR}
+ 				</if>
+				<if test="job.nature != null and job.nature != ''">
+ 					and job.nature = #{job.nature,jdbcType=VARCHAR}
  				</if>
  				<choose>
 					<when test="job.isActiveEffectiveTime == null">
@@ -516,6 +508,30 @@
 						</if>
 					</otherwise>
 				</choose>
+				<if test="job.workPlace != null">
+					<if test="job.workPlace.code != null and job.workPlace.code != ''">
+						and job.work_place like concat('%',#{job.workPlace.code, jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+ 				<if test="job.checkStatus != null and job.checkStatus != ''">
+ 					and job.check_status = #{job.checkStatus,jdbcType=VARCHAR} 
+ 				</if>
+ 				<if test="job.company != null">
+ 					<if test="job.company.id > 0">
+ 						and job.cid = #{job.company.id,jdbcType=INTEGER}
+ 					</if>
+ 				</if>
+ 				<if test="job.area != null">
+					<if test="job.area.code != null and job.area.code != ''">
+						and job.acode like concat('%',#{job.area.code,jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<if test="job.jobCategory != null ">
+					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
+					<!-- 	and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
+						and ${job.jobCategory.code, jdbcType=VARCHAR}
+					</if>
+				</if>
 			</if>
 		</trim>
 	</select>

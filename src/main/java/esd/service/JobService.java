@@ -221,7 +221,7 @@ public class JobService {
 		list = kitService.getForShowJob(list);
 		return list;
 	}
-
+	
 	// 获得数据总条数
 	public int getTotalCount(Job job) {
 		if (job != null) {

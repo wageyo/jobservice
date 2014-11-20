@@ -861,6 +861,13 @@ public class KitService {
 																// 剩余的
 			job.setEffectiveDays(cha);
 		}
+		//岗位类别
+		if(job.getJobCategory()!=null){
+			if(job.getJobCategory().getCode()!= null && !"".equals(job.getJobCategory().getCode())){
+				JobCategory jobCategory = jcDao.getByCode(job.getJobCategory().getCode());
+				job.setJobCategory(jobCategory);
+			}
+		}
 		// 工作地
 		if (job.getWorkPlace() != null) {
 			if(job.getWorkPlace().getCode()!= null){
@@ -1002,6 +1009,20 @@ public class KitService {
 																	// 有效期截止日期
 																	// 剩余的天数
 				job.setEffectiveDays(cha);
+			}
+			//岗位类别
+			if(job.getJobCategory()!=null){
+				if(job.getJobCategory().getCode()!= null && !"".equals(job.getJobCategory().getCode())){
+					JobCategory jobCategory = jcDao.getByCode(job.getJobCategory().getCode());
+					job.setJobCategory(jobCategory);
+				}
+			}
+			// 工作地
+			if (job.getWorkPlace() != null) {
+				if(job.getWorkPlace().getCode()!= null){
+					Area workPlace = aDao.getByCode(job.getWorkPlace().getCode());
+					job.setWorkPlace(workPlace);
+				}
 			}
 			// 审核状态
 			if (job.getCheckStatus() != null

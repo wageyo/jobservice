@@ -214,9 +214,6 @@ public class Job extends PrimaryKey {
 	}
 
 	public Area getWorkPlace() {
-		if(workPlace == null){
-			workPlace = new Area("10000000");
-		}
 		return workPlace;
 	}
 
@@ -273,9 +270,6 @@ public class Job extends PrimaryKey {
 	}
 
 	public JobCategory getJobCategory() {
-		if(jobCategory == null){
-			jobCategory = new JobCategory("10000000");
-		}
 		return jobCategory;
 	}
 
