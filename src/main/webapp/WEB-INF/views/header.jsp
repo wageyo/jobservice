@@ -56,21 +56,7 @@
 			<div id="logoopen">
 				<a href="${contextPath}/index" title="残疾人就业信息网">
 				<!-- 如果能显示对应省市的则显示对应省份的logo, 否则显示全国的log -->
-				<c:choose>
-					<c:when test="${area != null }">
-						<c:choose>
-							<c:when test="${area.code == '10420000' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/hubei.png" id="bg2" /> 
-							</c:when>
-							<c:otherwise>
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" />
-							</c:otherwise>
-						</c:choose>
-					</c:when>
-					<c:otherwise>
-							<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" /> 
-					</c:otherwise>
-				</c:choose>
+					<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/hubei.png" id="bg2" title="湖北残疾人就业信息网" alt="湖北残疾人就业信息网"/> 
 				</a>
 			</div>
 			<div id="headertext">
