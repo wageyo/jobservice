@@ -86,6 +86,10 @@ public class Job extends PrimaryKey {
 	}
 
 	public String getSalary() {
+		//处理, 防止前台数据显示不规范
+				if(salary == null){
+					salary = "";
+				}
 		return salary;
 	}
 
@@ -110,6 +114,10 @@ public class Job extends PrimaryKey {
 	}
 
 	public String getGender() {
+		//处理, 防止前台数据显示不规范
+		if(gender == null){
+			gender = "";
+		}
 		return gender;
 	}
 
@@ -206,6 +214,9 @@ public class Job extends PrimaryKey {
 	}
 
 	public Area getWorkPlace() {
+		if(workPlace == null){
+			workPlace = new Area("10000000");
+		}
 		return workPlace;
 	}
 
@@ -262,6 +273,9 @@ public class Job extends PrimaryKey {
 	}
 
 	public JobCategory getJobCategory() {
+		if(jobCategory == null){
+			jobCategory = new JobCategory("10000000");
+		}
 		return jobCategory;
 	}
 

@@ -15,11 +15,11 @@ public class JobCategory {
 	private String name; // 职位名称
 	private String mark; // 标记:hot等...
 
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "JobCategory [ code = " + this.code + ", name = " + this.name
-				+ ", mark = " + this.mark + "]";
+		return "JobCategory [code=" + code + ", name=" + name + ", mark="
+				+ mark + "]";
 	}
 
 	public JobCategory() {

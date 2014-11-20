@@ -58,6 +58,7 @@ function job_check(){
 		$('#jobCategory_lv1').focus();
 		return false;
 	}
+	alert(jobCategory_lv1);
 	//联系人
 	var contactPerson = $('#contactPerson').val();
 	if(contactPerson == null || contactPerson == ''){

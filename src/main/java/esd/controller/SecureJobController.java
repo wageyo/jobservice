@@ -65,7 +65,7 @@ public class SecureJobController {
 			RedirectAttributes ra) {
 		log.info("--- save post ---");
 		log.info("************************************"
-				+ req.getParameter("area.code"));
+				+ req.getParameter("workPlace.code"));
 		// 是否为企业用户
 		Company company = (Company) session.getAttribute("company");
 		if (company == null) {

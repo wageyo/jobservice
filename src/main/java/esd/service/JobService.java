@@ -14,6 +14,7 @@ import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.controller.Constants;
 import esd.dao.AreaDao;
+import esd.dao.JobCategoryDao;
 import esd.dao.JobDao;
 
 /**
@@ -37,6 +38,8 @@ public class JobService {
 	@Autowired
 	private AreaDao areaDao;
 	
+	@Autowired
+	private JobCategoryDao jcDao;
 
 	// 保存一个对象
 	public boolean save(Job job) {
@@ -78,6 +81,13 @@ public class JobService {
 				job.setWorkPlace(workPlace);
 			}
 		}
+		// 工作类别
+				if (job.getJobCategory() != null) {
+					if (job.getJobCategory().getCode() != null && !"".equals(job.getJobCategory().getCode())) {
+						JobCategory jobCategory = jcDao.getByCode(job.getJobCategory().getCode());
+						job.setJobCategory(jobCategory);
+					}
+				}
 		return job;
 	}
 

@@ -129,13 +129,13 @@
 							</tr>
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span><b> 工作地点 ：</b></td>
-								<td align="left"><select name="area_lv1" id="area_lv1" class="select_border" style="width:150px;">
+								<td align="left"><select name="workPlace.code" id="area_lv1" class="select_border" style="width:150px;">
 										<c:forEach items="${provinceList }" var="area">
 											<option value="${area.code }">${area.name }</option>
 										</c:forEach>
 								</select> <select name="area_lv2" id="area_lv2" class="select_border" style="width:150px;">
 										<option value="">请选择城市</option>
-								</select> <select name="workPlace" id="area_lv3" class="select_border" style="width:150px;">
+								</select> <select name="area_lv3" id="area_lv3" class="select_border" style="width:150px;">
 										<option value="">请选择区域</option>
 								</select>
 									<p style="color:red;text-indent: 1em;">请精确到区县级</p>
@@ -144,7 +144,7 @@
 							<tr>
 								<td align="right" class="line35"><span class="red line35_r">*</span><b> 工作种类 ：</b></td>
 								<td align="left">
-									<select name="jobCategory_lv1" id="jobCategory_lv1" class="select_border" style="width:150px;">
+									<select name="jobCategory.code" id="jobCategory_lv1" class="select_border" style="width:150px;">
 										<c:forEach items="${jcList }" var="p">
 											<option value="${p.code }">${p.name }</option>
 										</c:forEach>
@@ -152,7 +152,7 @@
 									<select name="jobCategory_lv2" id="jobCategory_lv2" class="select_border" style="width:150px;">
 										<option value="">请选择</option>
 									</select> 
-									<select name="jobCategory.code" id="jobCategory_lv3" class="select_border" style="width:150px;">
+									<select name="jobCategory_lv3" id="jobCategory_lv3" class="select_border" style="width:150px;">
 										<option value="">请选择</option>
 									</select> <br />
 								<!-- 	<p style="color:red;text-indent: 1em;">请选择具体的职位</p>	 -->
