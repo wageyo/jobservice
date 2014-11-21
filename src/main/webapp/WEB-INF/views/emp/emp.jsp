@@ -24,7 +24,7 @@
 		var keyWord = $('#keyWord').val();
 		var jcCode = $('#jobCategory').val();
 		var education = $('#education').val();
-		var areaCode = $('#areaCode').val();
+	//	var areaCode = $('#areaCode').val();
 		var jobNature = $('#jobNature').val();
 		var gender = $('#gender').val();
 		var url = '${contextPath}/resume/search/' + page;
@@ -35,7 +35,7 @@
 				'keyWord' : keyWord,
 				'jcCode' : jcCode,
 				'education' : education,
-				'areaCode' : areaCode,
+		//		'areaCode' : areaCode,
 				'jobNature' : jobNature,
 				'gender' : gender,
 			},
@@ -95,7 +95,7 @@
 							</c:forEach>
 						</select>
 					</p>
-					<p>
+			<!-- 		<p>
 						工作地区：
 						<select name="areaCode" id="areaCode" style="width: 130px">
 							<option value="">请选择</option>
@@ -103,7 +103,7 @@
 								<option value="${t.code }"  <c:if test="${fn:substring(area.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
 							</c:forEach>
 						</select>
-					</p>
+					</p> -->
 					<p>
 						就职方式： <select name="jobNature" id="jobNature" style="width: 100px">
 							<c:forEach items="${params }" var="p">

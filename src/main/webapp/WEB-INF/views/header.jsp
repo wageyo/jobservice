@@ -62,6 +62,21 @@
 							<c:when test="${area.code == '10420000' }">
 								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/hubei.png" id="bg2" /> 
 							</c:when>
+							<c:when test="${area.code == '20652300' }">
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/cjz.png" id="bg2" /> 
+							</c:when>
+							<c:when test="${area.code == '10150000' }">
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/neimenggu.png" id="bg2" /> 
+							</c:when>
+							<c:when test="${area.code == '20230200' }">
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/qigihar.png" id="bg2" /> 
+							</c:when>
+							<c:when test="${area.code == '10630000' }">
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/qinghai.png" id="bg2" /> 
+							</c:when>
+							<c:when test="${area.code == '10650000' }">
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/xinjiang.png" id="bg2" /> 
+							</c:when>
 							<c:otherwise>
 								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" />
 							</c:otherwise>

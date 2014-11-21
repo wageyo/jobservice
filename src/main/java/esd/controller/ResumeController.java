@@ -67,9 +67,15 @@ public class ResumeController {
 	private static Logger log = Logger.getLogger(ResumeController.class);
 
 	@RequestMapping("/search")
-	public ModelAndView resume(HttpServletRequest request) {
+	public ModelAndView resume(HttpServletRequest request,HttpSession session) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("emp/emp");
+		//先查看request中有没有传过来的acode, 不为空则是第一次进来, 将其中的acode放到session中
+		String acode= request.getParameter("acode");
+		if(acode != null && !"".equals(acode)){
+			Area area = areaService.getByCode(acode);
+			session.setAttribute("area", area);
+		}
 		return mav;
 	}
 
@@ -80,20 +86,17 @@ public class ResumeController {
 		log.info("--- search ---");
 		Map<String, Object> entity = new HashMap<String, Object>();
 		Resume resume = new Resume();
-		String areaCode = req.getParameter("areaCode");
-		if (areaCode != null && !"".equals(areaCode)) {
-			resume.setArea(new Area(areaCode));
-		} else {
-			// 读取地区码
-			Object obj_acode = session.getAttribute("acode");
-			if (obj_acode != null) {
-				// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-				String acode = obj_acode.toString();
-				log.info("acode [" + acode + "]");
-				acode = KitService.getProvinceCode(acode);
-				resume.setArea(new Area(acode));
-			}
+		//一, 初始acode
+		String acode = "10000000";
+		//二,从session读取area
+		Object obj = session.getAttribute("area");
+		if(obj!=null){
+			acode = ((Area)obj).getCode();
 		}
+		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
+		String belongsAcode = KitService.getProvinceCode(acode);
+		resume.setArea(new Area(belongsAcode));
+				
 		String keyWord = req.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
 			resume.setTitle(keyWord);
@@ -189,25 +192,30 @@ public class ResumeController {
 
 	// 根据id得到一个简历返回前台
 	@RequestMapping("/getOneForShow")
-	public String getOneForShow(HttpServletRequest req, HttpSession session,RedirectAttributes ra) {
+	public String getOneForShow(HttpServletRequest request, HttpSession session,RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
-		// 读取地区码
-		String acode = req.getParameter("acode");
-		log.info("acode [" + acode + "]");
-		if (acode != null && !"".equals(acode)) {
-			// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-			// acode = KitService.getProvinceCode(acode);
+		//①先查看request中有没有传过来的acode, 
+		String acode= request.getParameter("acode");
+		if(acode != null){
+			//②不为空则是第一次进来, 将其中的acode放到session中
 			Area area = areaService.getByCode(acode);
 			session.setAttribute("area", area);
+		}else{
+			//③为空在则检查session是中没有地区信息
+			Object obj = session.getAttribute("area");
+			if(obj!=null){
+				acode = ((Area)obj).getCode();
+			}
 		}
-		String idStr = req.getParameter("id");
+				
+		String idStr = request.getParameter("id");
 		log.info("idStr = " + idStr);
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
 			return "forward:/resume/search";
 		}
 		Resume resume = resumeService.getOneForShow(id);
-		req.setAttribute("resume", resume);
+		request.setAttribute("resume", resume);
 		// 如果为公司用户访问该简历, 则查询出公司的基本信息
 		User user = (User) session.getAttribute(Constants.USER);
 		if (user != null) {
@@ -239,8 +247,8 @@ public class ResumeController {
 					j.setName(job.getName());
 					jobList.add(j);
 				}
-				req.setAttribute("company", model);
-				req.setAttribute("jobList", jobList);
+				request.setAttribute("company", model);
+				request.setAttribute("jobList", jobList);
 			}
 		}
 		return "emp/emp-detail";

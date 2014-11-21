@@ -41,50 +41,51 @@ public class JobController {
 
 	@Autowired
 	private AreaService areaService;
-	
+
 	@RequestMapping("/search")
-	public ModelAndView work(HttpServletRequest request) {
+	public ModelAndView work(HttpServletRequest request,HttpSession session) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("work/work");
+		//先查看request中有没有传过来的acode, 不为空则是第一次进来, 将其中的acode放到session中
+		String acode= request.getParameter("acode");
+		if(acode != null && !"".equals(acode)){
+			Area area = areaService.getByCode(acode);
+			session.setAttribute("area", area);
+		}
 		return mav;
 	}
 
 	// 多条件职位简历
 	@RequestMapping(value = "/search/{page}", method = RequestMethod.POST)
-	public ModelAndView search(HttpServletRequest req,
+	public ModelAndView search(HttpServletRequest request,
 			@PathVariable(value = "page") Integer page, HttpSession session) {
 		log.info("--- search ---");
 		Map<String, Object> entity = new HashMap<String, Object>();
 		Job job = new Job();
-		String areaCode = req.getParameter("areaCode");
-		log.info("acode [" + areaCode + "]");
-		if (areaCode != null && !"".equals(areaCode)) {
-			job.setArea(new Area(areaCode));
-		} else {
-			// 读取地区码
-			Object obj_acode = session.getAttribute("acode");
-			log.info("obj_acode [" + obj_acode + "]");
-			if (obj_acode != null) {
-				// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-				String acode = obj_acode.toString();
-				log.info("acode [" + acode + "]");
-				acode = KitService.getProvinceCode(acode);
-				job.setArea(new Area(acode));
-			}
+		//一, 初始acode
+		String acode = "10000000";
+		//二,从session读取area
+		Object obj = session.getAttribute("area");
+		if(obj!=null){
+			acode = ((Area)obj).getCode();
 		}
-		String keyWord = req.getParameter("keyWord");
+		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
+		String belongsAcode = KitService.getProvinceCode(acode);
+		job.setArea(new Area(belongsAcode));
+		
+		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
 			job.setName(keyWord);
 		}
-		String jcCode = req.getParameter("jcCode");
+		String jcCode = request.getParameter("jcCode");
 		if (jcCode != null && !"".equals(jcCode)) {
 			job.setJobCategory(new JobCategory(jcCode));
 		}
-		String education = req.getParameter("education");
+		String education = request.getParameter("education");
 		if (education != null && !"".equals(education)) {
 			job.setEducation(education);
 		}
-		String jobNature = req.getParameter("jobNature");
+		String jobNature = request.getParameter("jobNature");
 		if (jobNature != null && !"".equals(jobNature)) {
 			job.setNature(jobNature);
 		}
@@ -126,21 +127,24 @@ public class JobController {
 
 	// 根据id得到一个职位返回前台显示
 	@RequestMapping("/getOneForShow")
-	public String getOneForShow(HttpServletRequest req, RedirectAttributes ra,
+	public String getOneForShow(HttpServletRequest request, RedirectAttributes ra,
 			HttpSession session) {
 		log.info("--- getOneForShow ---");
-		// 读取地区码,放入到session中
-		String acode = req.getParameter("acode");
-		log.info("acode [" + acode + "]");
-		if (acode != null && !"".equals(acode)) {
-//			// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-//			if(acode.startsWith("30")){
-//				acode = KitService.getProvinceCode(acode);
-//			}
+		//①先查看request中有没有传过来的acode, 
+		String acode= request.getParameter("acode");
+		if(acode != null){
+			//②不为空则是第一次进来, 将其中的acode放到session中
 			Area area = areaService.getByCode(acode);
 			session.setAttribute("area", area);
+		}else{
+			//③为空在则检查session是中没有地区信息
+			Object obj = session.getAttribute("area");
+			if(obj!=null){
+				acode = ((Area)obj).getCode();
+			}
 		}
-		String idStr = req.getParameter("id");
+				
+		String idStr = request.getParameter("id");
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
 			ra.addFlashAttribute("messageType", "0");
@@ -149,11 +153,11 @@ public class JobController {
 		}
 		// 将job放入到request中
 		Job job = jobService.getOneForShow(id);
-		req.setAttribute("job", job);
+		request.setAttribute("job", job);
 		// 同时将该公司所发布的其他职位也放入到request中
 		List<Job> jobList = jobService.getByCompanyForShow(job.getCompany()
 				.getId(), 1, 99);
-		req.setAttribute("jobList", jobList);
+		request.setAttribute("jobList", jobList);
 		return "work/work-detail";
 	}
 
@@ -232,8 +236,8 @@ public class JobController {
 		String acode = req.getParameter("acode");
 		String pageSizeStr = req.getParameter("pageSize");
 		// 初始化为10
-		Integer pageSize =10;
-		if(pageSizeStr != null && !"".equals(pageSizeStr)){
+		Integer pageSize = 10;
+		if (pageSizeStr != null && !"".equals(pageSizeStr)) {
 			pageSize = Integer.parseInt(pageSizeStr);
 		}
 		ModelMap map = new ModelMap();

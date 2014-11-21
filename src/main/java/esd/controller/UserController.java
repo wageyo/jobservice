@@ -24,11 +24,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.octo.captcha.service.CaptchaServiceException;
 
+import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.User;
 import esd.controller.Constants.Identity;
 import esd.controller.Constants.Notice;
 import esd.controller.checkcode.CaptchaServiceSingleton;
+import esd.service.AreaService;
 import esd.service.CompanyService;
 import esd.service.KitService;
 import esd.service.ParameterService;
@@ -47,6 +49,9 @@ public class UserController {
 	@Autowired
 	private ParameterService pService;
 
+	@Autowired
+	private AreaService areaService;
+	
 	// 注册,即保存一个账号
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(HttpServletRequest req, User user, HttpSession session,
@@ -74,22 +79,22 @@ public class UserController {
 		// }
 		// }
 		String identity = user.getIdentity();
-		if (Constants.Identity.SUPERADMIN.toString().equals(identity)) {
+		if (Constants.Identity.SUPERADMIN.getValue().equals(identity)) {
 			user.setAuthority(Constants.Authority.SUPERADMIN.getValue());
-		} else if (Constants.Identity.ADMIN.toString().equals(identity)) {
+		} else if (Constants.Identity.ADMIN.getValue().equals(identity)) {
 			user.setAuthority(Constants.Authority.ADMIN.getValue());
-		} else if (Constants.Identity.COMPANY.toString().equals(identity)) {
+		} else if (Constants.Identity.COMPANY.getValue().equals(identity)) {
 			user.setAuthority(Constants.Authority.COMPANY.getValue());
-		} else if (Constants.Identity.PERSON.toString().equals(identity)) {
+		} else if (Constants.Identity.PERSON.getValue().equals(identity)) {
 			user.setAuthority(Constants.Authority.PERSON.getValue());
 		}
 		log.info("注册用户为: " + user);
 		boolean bl = userService.save(user);
 		log.info("save bl = " + bl);
 		if (!bl) {
-			if (Constants.Identity.PERSON.toString().equals(user.getIdentity())) {
+			if (Constants.Identity.PERSON.getValue().equals(user.getIdentity())) {
 				return "reg-p";
-			} else if (Constants.Identity.COMPANY.toString().equals(
+			} else if (Constants.Identity.COMPANY.getValue().equals(
 					user.getIdentity())) {
 				return "reg-c";
 			} else {
@@ -98,15 +103,17 @@ public class UserController {
 		}
 		// 如果需要审核, 则弹出提示框
 		boolean u_bl = pService.getSwitchStatus(
-				Constants.Switch.USER.toString(), user.getArea().getCode());
+				Constants.Switch.USER.getValue(), user.getArea().getCode());
 		if (u_bl) {
 			redirectAttributes.addFlashAttribute("messageType", "0");
 			redirectAttributes
 					.addFlashAttribute("message", "注册请求已提交, 请等待管理员审核");
 		} else {
 			session.setAttribute(Constants.USER, user);
-			// 地区码
-			session.setAttribute(Constants.AREA, user.getArea());
+//			// 地区码
+//			String acode = user.getArea().getCode();
+//			Area area = areaService.getByCode(acode);
+//			session.setAttribute(Constants.AREA, area);
 		}
 		return "redirect:/index";
 	}
@@ -141,13 +148,9 @@ public class UserController {
 		String preURI = request.getHeader("Referer");
 		int index = preURI.indexOf("jobservice");
 		String path = null;
-		log.debug("uri =============  " + preURI + "   ***** *  " + index);
 		if (preURI != null) {
 			path = preURI.substring(index + 10);
 		}
-		log.debug("uri\t" + preURI);
-		log.debug("index\t" + index);
-		log.debug("path\t" + path);
 		log.debug("--- login --- user : " + user);
 
 		if (user == null) {
@@ -179,25 +182,27 @@ public class UserController {
 			return "redirect:" + path;
 		}
 		if (user.getCheckStatus().equals(
-				Constants.CheckStatus.DAISHEN.toString())) {
+				Constants.CheckStatus.DAISHEN.getValue())) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户正在审核中, 请稍后登陆!");
 			return "redirect:" + path;
 		} else if (user.getCheckStatus().equals(
-				Constants.CheckStatus.WEITONGGUO.toString())) {
+				Constants.CheckStatus.WEITONGGUO.getValue())) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户名没有通过审核, 请重新申请!");
 			return "redirect:" + path;
 		}
-		if (user.getIdentity().equals(Identity.COMPANY.toString())) {
+		if (user.getIdentity().equals(Identity.COMPANY.getValue())) {
 			Company company = companyService.getByAccount(user.getId());
 			log.debug("company " + company);
-			session.setAttribute("company", company);
+			session.setAttribute(Constants.Identity.COMPANY.getValue(), company);
 		}
 		log.debug("login: " + user);
 		session.setAttribute(Constants.USER, user);
-		// 地区码
-		session.setAttribute("area", user.getArea());
+//		// 地区码
+//		String acode = user.getArea().getCode();
+//		Area area = areaService.getByCode(acode);
+//		session.setAttribute(Constants.AREA, area);
 		return "redirect:/index";
 	}
 
@@ -215,11 +220,11 @@ public class UserController {
 		User user = userService.check(loginName);
 		if (user == null) {
 			// 不存在
-			json.put("notice", Notice.SUCCESS.toString());
+			json.put("notice", Notice.SUCCESS.getValue());
 			return json;
 		}
 		// 该用户存在
-		json.put("notice", Notice.FAILURE.toString());
+		json.put("notice", Notice.FAILURE.getValue());
 		return json;
 	}
 
@@ -227,7 +232,8 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		log.info("--- logout ---");
-		session.invalidate();
+//		session.invalidate();
+		session.removeAttribute(Constants.USER);
 		return "redirect:/index";
 	}
 
@@ -239,7 +245,7 @@ public class UserController {
 		if (user == null) {
 			return "redirect:/index.jsp";
 		}
-		if (user.getIdentity().equals(Constants.Identity.COMPANY.toString())) {
+		if (user.getIdentity().equals(Constants.Identity.COMPANY.getValue())) {
 			Company c = companyService.getByAccount(user.getId());
 			// 如未填公司资料, 则跳转到填写公司资料页面
 			if (c == null) {
@@ -273,7 +279,7 @@ public class UserController {
 		tempUser.setHeadImage(pic.getBytes());
 		boolean bl = userService.update(tempUser);
 		if (bl) {
-			writer.write(Constants.Notice.SUCCESS.toString());
+			writer.write(Constants.Notice.SUCCESS.getValue());
 		} else {
 			writer.write(Constants.NOTICE + ":" + "上传图片失败");
 		}

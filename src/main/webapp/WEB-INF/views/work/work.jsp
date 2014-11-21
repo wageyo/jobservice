@@ -23,7 +23,7 @@
 		var keyWord = $('#keyWord').val();
 		var jcCode = $('#jobCategory').val();
 		var education = $('#education').val();
-		var areaCode = $('#areaCode').val();
+	//	var areaCode = $('#areaCode').val();
 		var jobNature = $('#jobNature').val();
 		var url = '${contextPath}/job/search/' + page;
 		$.ajax({
@@ -33,7 +33,7 @@
 				'keyWord' : keyWord,
 				'jcCode' : jcCode,
 				'education' : education,
-				'areaCode' : areaCode,
+			//	'areaCode' : areaCode,
 				'jobNature' : jobNature
 			},
 			success : function(e) {
@@ -82,7 +82,7 @@
 							</c:forEach>
 						</select>
 					</p>
-					<p>
+			<!-- 		<p>
 						工作地点：
 						<select name="areaCode" id="areaCode" class="dropdownlist" style="width: 130px; margin-right:100px;">
 							<option value="">请选择</option>
@@ -90,7 +90,7 @@
 								<option value="${t.code }" <c:if test="${fn:substring(area.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
 							</c:forEach>
 						</select>
-					</p>
+					</p> -->
 					<p>
 						工作性质： <select name="jobNature" id="jobNature" class="dropdownlist" style="width: 100px">
 							<c:forEach items="${params }" var="p">

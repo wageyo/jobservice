@@ -70,17 +70,19 @@ public class IndexController {
 	@RequestMapping("/index")
 	public ModelAndView index(HttpServletRequest request,HttpSession session) {
 		log.debug("=========================" + request.getRequestURI());
-		//如果acode为空, 则说明首次进首页, 再查看request中有没有传过来的acode
+		//①先查看request中有没有传过来的acode, 
 		String acode= request.getParameter("acode");
-		if(acode == null){
-			//得到地区code
+		if(acode != null){
+			//②不为空则是第一次进来, 将其中的acode放到session中
+			Area area = areaService.getByCode(acode);
+			session.setAttribute("area", area);
+		}else{
+			//③为空在则检查session是中没有地区信息
 			Object obj = session.getAttribute("area");
 			if(obj!=null){
 				acode = ((Area)obj).getCode();
 			}
 		}
-		Area area = areaService.getByCode(acode);
-		session.setAttribute("area", area);
 		ModelAndView mav = new ModelAndView("index");
 		// 得到最新的10个公司
 		List<Company> companyList = companyService.getByNew(KitService.getProvinceCode(acode),10);
