@@ -69,17 +69,15 @@ public class IndexController {
 	//首页
 	@RequestMapping("/index")
 	public ModelAndView index(HttpServletRequest request,HttpSession session) {
-		log.debug(request.getRequestURI());
-		log.debug("=========================" + exportTemplateUrl);
-		//得到地区code
-		Object obj = session.getAttribute("area");
-		String acode= null;
-		if(obj!=null){
-			acode = ((Area)obj).getCode();
-		}
+		log.debug("=========================" + request.getRequestURI());
 		//如果acode为空, 则说明首次进首页, 再查看request中有没有传过来的acode
+		String acode= request.getParameter("acode");
 		if(acode == null){
-			acode = request.getParameter("acode");
+			//得到地区code
+			Object obj = session.getAttribute("area");
+			if(obj!=null){
+				acode = ((Area)obj).getCode();
+			}
 		}
 		Area area = areaService.getByCode(acode);
 		session.setAttribute("area", area);
