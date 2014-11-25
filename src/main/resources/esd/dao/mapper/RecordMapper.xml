@@ -248,6 +248,9 @@
 			<if test="cid != null and cid > 0">
 				and cid =#{cid, jdbcType=INTEGER}
 			</if>
+			<if test="direction != null">
+				and direction = #{direction, jdbcType=TINYINT}
+			</if>
 		</where>
 	</select>
 	

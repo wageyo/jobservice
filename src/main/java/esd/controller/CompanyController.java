@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -21,6 +22,7 @@ import esd.bean.Job;
 import esd.bean.Resume;
 import esd.bean.User;
 import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.RecordService;
@@ -70,15 +72,17 @@ public class CompanyController {
 
 	// 根据企业id, 得到当前企业用户自身对象
 	@RequestMapping("/getOne")
-	public String getOne(HttpServletRequest req, HttpSession session) {
+	public String getOne(HttpServletRequest request, HttpServletResponse response) {
 		log.info("--- getOne ---");
-		User user = (User) session.getAttribute(Constants.USER);
-		if (user == null) {
-			req.setAttribute("notice", "请登录!");
-			return "redirect:/index.jsp";
+		String companyId  = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		if (companyId == null || "".equals(companyId)) {
+			request.setAttribute("notice", "请先登录!");
+			return "redirect:/index";
 		}
-		Company company = companyService.getByAccount(user.getId());
-		req.setAttribute("company", company);
+		Integer cid = Integer.parseInt(companyId);
+		//企业信息
+		Company company = companyService.getById(cid);
+		request.setAttribute("company", company);
 		return "/company/infoEdit";
 	}
 
@@ -123,8 +127,7 @@ public class CompanyController {
 	// 公司向某职位发送简历邀请
 	@ResponseBody
 	@RequestMapping(value = "/sendInvite", method = RequestMethod.POST)
-	public Map<String, Object> sendInvite(HttpServletRequest request,
-			HttpSession session) {
+	public Map<String, Object> sendInvite(HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int rid = Integer.parseInt(request.getParameter("rid"));
 		int jid = Integer.parseInt(request.getParameter("jid"));
@@ -147,40 +150,5 @@ public class CompanyController {
 		}
 		return map;
 	}
-
-	// 根据地区code, 得到本地区所有显示的企业
-	// @RequestMapping("/getByArea")
-	// @ResponseBody
-	// public Map<String, Object> getByArea(HttpServletRequest req) {
-	// log.info("--- getByArea ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// String code = req.getParameter("areaCode");
-	// if (code == null || "".equals(code)) {
-	// json.put("notice", Notice.ERROR);
-	// return json;
-	// }
-	// String startStr = req.getParameter("start");
-	// int start = KitService.getInt(startStr);
-	// if (start < 0) {
-	// start = 1;
-	// }
-	// String sizeStr = req.getParameter("size");
-	// int size = KitService.getInt(sizeStr);
-	// if (size < 0) {
-	// size = Constants.SIZE;
-	// }
-	// List<Company> list = companyService.getByArea(code, start, size);
-	// json.put("notice", Notice.SUCCESS);
-	// json.put("companyList", list);
-	// return json;
-	// }
-
-	// 批量删除投递来的简历
-	// @RequestMapping("/deleteGotResume")
-	// public String deleteGotResume(HttpServletRequest req, HttpSession
-	// session) {
-	//
-	// return null;
-	// }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ import esd.controller.Constants.Identity;
 import esd.controller.Constants.Notice;
 import esd.service.AreaService;
 import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.JobService;
 import esd.service.KitService;
@@ -45,7 +47,7 @@ public class SecureJobController {
 	private PersonService personService;
 
 	@Autowired
-	private CompanyService companyService;
+	private CompanyService<Company> companyService;
 
 	@Autowired
 	private ParameterService pService;
@@ -61,19 +63,21 @@ public class SecureJobController {
 
 	// 保存职位
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(HttpServletRequest req, Job job, HttpSession session,
+	public String save(Job job,HttpServletRequest request,  HttpServletResponse response,
 			RedirectAttributes ra) {
 		log.info("--- save post ---");
 		log.info("************************************"
-				+ req.getParameter("workPlace.code"));
+				+ request.getParameter("workPlace.code"));
 		// 是否为企业用户
-		Company company = (Company) session.getAttribute("company");
-		if (company == null) {
+		String companyId = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		if (companyId == null || "".equals(companyId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "请先完善公司信息");
 			return "/secure/company/save";
 		}
-
+		//企业信息
+		Integer cid = Integer.parseInt(companyId);
+		Company company = companyService.getById(cid);
 		log.info("job : " + job);
 		if (job == null) {
 			ra.addFlashAttribute("messageType", "0");
@@ -93,7 +97,7 @@ public class SecureJobController {
 			return "/secure/job/save";
 		}
 		log.info("--- 发布职位成功 ---");
-		req.setAttribute("notice", Notice.SUCCESS.toString());
+		request.setAttribute("notice", Notice.SUCCESS.toString());
 		ra.addFlashAttribute("messageURL", "/secure/job/getManage");
 		ra.addFlashAttribute("message", "保存职位信息成功!");
 		return "redirect:/secure/job/save";
@@ -101,37 +105,35 @@ public class SecureJobController {
 
 	// 跳转到保存职位
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
-	public String gotoResumeAdd(HttpServletRequest req, HttpSession session,
+	public String gotoResumeAdd(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra) {
 		log.info("--- save get---");
 		// 先查看是否添加了企业信息, 没有添加的话则提示
-		User user = (User) session.getAttribute(Constants.USER);
-		Company c = companyService.getByAccount(user.getId());
-		if (c == null) {
+		String companyId  = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		if (companyId == null || "".equals(companyId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "填写完公司信息后才可以发布招聘信息");
 			return "redirect:/secure/company/save";
 		}
+		//企业信息
+		Integer cid = Integer.parseInt(companyId);
+		Company company = companyService.getById(cid);
+		request.setAttribute("company", company);
 		List<Parameter> plist = pService.getAll();
 		// 各种参数
-		req.setAttribute("params", plist);
+		request.setAttribute("params", plist);
 		// 职位类别
 		List<JobCategory> jlist = jcService.getJcLv1();
-		req.setAttribute("jcList", jlist);
+		request.setAttribute("jcList", jlist);
 		// 工作地区
 		List<Area> provinceList = areaService.getProvinceList();
-		req.setAttribute("provinceList", provinceList);
-		// 是否为企业用户
-		Company company = (Company) session.getAttribute("company");
-		if (company == null) {
-			ra.addFlashAttribute("messageType", "0");
-			ra.addFlashAttribute("message", "请先完善公司信息");
-			return "/secure/company/save";
-		}
-
+		request.setAttribute("provinceList", provinceList);
+		
+		String acode = company.getArea().getCode();
+		
 		// 查看企业信息审核开关是否打开
 		boolean bl = pService.getSwitchStatus(Constants.Switch.COMPANY
-				.toString(), company.getArea().getCode());
+				.toString(), acode);
 		// 如果company审核开关打开的话,验证企业用户信息是否通过了审核
 		if (bl) {
 			if (company.getCheckStatus() != null) {
@@ -157,18 +159,18 @@ public class SecureJobController {
 
 	// 删除一个职位简历
 	@RequestMapping("/delete")
-	public String delete(HttpServletRequest req) {
+	public String delete(HttpServletRequest request) {
 		log.info("--- delete ---");
-		String idStr = req.getParameter("id");
+		String idStr = request.getParameter("id");
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
-			req.setAttribute("notice", "获取参数失败!");
+			request.setAttribute("notice", "获取参数失败!");
 			return "forward:/secure/job/getManage";
 		}
 		boolean bl = jobService.delete(id);
 		log.info("jobDelete bl = " + bl);
 		if (!bl) {
-			req.setAttribute("notice", "删除职位出错!");
+			request.setAttribute("notice", "删除职位出错!");
 			return "forward:/secure/job/getManage";
 		}
 		log.info("--- 删除职位成功 ---");
@@ -199,42 +201,42 @@ public class SecureJobController {
 
 	// 跳转到修改职位页面
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String getOne(HttpServletRequest req) {
+	public String getOne(HttpServletRequest request) {
 		log.info("--- update get ---");
-		String idStr = req.getParameter("id");
+		String idStr = request.getParameter("id");
 		log.info("idStr = " + idStr);
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
 			return "forward:/secure/job/getManage";
 		}
 		Job job = jobService.getById(id);
-		req.setAttribute("job", job);
+		request.setAttribute("job", job);
 		List<Parameter> plist = pService.getAll();
 		// 各种参数
-		req.setAttribute("params", plist);
+		request.setAttribute("params", plist);
 		// 职位类别
 		List<JobCategory> jlist = jcService.getAll();
-		req.setAttribute("jcList", jlist);
+		request.setAttribute("jcList", jlist);
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
-		req.setAttribute("provinceList", alist);
+		request.setAttribute("provinceList", alist);
 		return "company/job-edit";
 	}
 
 	// 根据企业id, 得到该企业所发布的职位
 	@RequestMapping("/getByCompany")
 	@ResponseBody
-	public Map<String, Object> getByCompany(HttpServletRequest req) {
+	public Map<String, Object> getByCompany(HttpServletRequest request) {
 		log.info("--- getByCompany ---");
 		Map<String, Object> json = new HashMap<String, Object>();
 		// 得到当前企业用户
-		String idStr = req.getParameter("companyid");
+		String idStr = request.getParameter("companyid");
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
 			json.put("notice", Notice.ERROR.toString());
 			return json;
 		}
-		String startStr = req.getParameter("page");
+		String startStr = request.getParameter("page");
 		int start = KitService.getInt(startStr);
 		if (start < 0) {
 			json.put("notice", Notice.ERROR.toString());
@@ -249,32 +251,30 @@ public class SecureJobController {
 
 	// 得到当前企业用户的所有职位列表
 	@RequestMapping("/getManage")
-	public String getManage(HttpServletRequest req, HttpSession session,
+	public String getManage(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra) {
 		log.info("--- getManage ---");
 		// 先查看是否添加了企业信息, 没有添加的话则提示
-		User user = (User) session.getAttribute(Constants.USER);
-		Company c = companyService.getByAccount(user.getId());
-		if (c == null) {
+		String companyId  = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		if (companyId == null || "".equals(companyId)) {
 			ra.addFlashAttribute("messageType", "0");
-			ra.addFlashAttribute("message", "还没有填写公司信息, 请先填写完公司信息后再进行操作!");
+			ra.addFlashAttribute("message", "填写完公司信息后才可以发布招聘信息");
 			return "redirect:/secure/company/save";
 		}
-		// 判断当前用户是否登录, 且是否为企业用户
-		Company company = (Company) session.getAttribute("company");
-		if (company == null) {
-			return "redirect:/index.jsp";
-		}
-		String startStr = req.getParameter("page");
+		//企业信息
+		Integer cid = Integer.parseInt(companyId);
+		Company company = companyService.getById(cid);
+
+		String startStr = request.getParameter("page");
 		int start = KitService.getInt(startStr);
 		List<Job> jobList = jobService.getByCompany(company.getId(), start,
 				Constants.SIZE);
 		log.info(" jobList.size() = " + jobList.size());
-		req.setAttribute("jobList", jobList);
+		request.setAttribute("jobList", jobList);
 		int totalCount = jobService.getByCompanyCount(company.getId());
-		req.setAttribute("totalCount", totalCount);
-		req.setAttribute("currentPage", start);
-		req.setAttribute(
+		request.setAttribute("totalCount", totalCount);
+		request.setAttribute("currentPage", start);
+		request.setAttribute(
 				"totalPages",
 				totalCount % Constants.SIZE == 0 ? (totalCount / Constants.SIZE)
 						: (totalCount / Constants.SIZE + 1));
@@ -284,9 +284,9 @@ public class SecureJobController {
 	// 获得职位总个数
 	@RequestMapping("/getTotalCount")
 	@ResponseBody
-	public Map<String, Object> getTotalCount(HttpServletRequest req) {
+	public Map<String, Object> getTotalCount(HttpServletRequest request) {
 		log.info("--- getTotalCount ---");
-		String areaCode = req.getParameter("areaCode");
+		String areaCode = request.getParameter("areaCode");
 		if (areaCode == null) {
 			areaCode = "10000000";
 		}
@@ -301,23 +301,24 @@ public class SecureJobController {
 	// 向一个职位投递自己的默认的简历
 	@RequestMapping("/sendResume")
 	@ResponseBody
-	public Map<String, Object> sendResume(HttpServletRequest req,
-			HttpSession session) {
+	public Map<String, Object> sendResume(HttpServletRequest request,
+			HttpServletResponse response) {
 		log.info("--- sendResume ---");
 		Map<String, Object> json = new HashMap<String, Object>();
-		User user = (User) session.getAttribute(Constants.USER);
-		if (user == null) {
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		if (userId == null || "".equals(userId)) {
 			log.info("用户未登陆");
 			json.put("notice", "请登录后操作");
 			return json;
 		}
-		if (!user.getIdentity().equals(Identity.PERSON.toString())) {
+		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		if (!Identity.PERSON.getValue().equals(identity)) {
 			log.info("对不起, 你不是个人用户, 不能投递简历!");
 			json.put("notice", "对不起, 你不是个人用户, 不能投递简历!");
 			return json;
 		}
 		// 得到职位id
-		String jidStr = req.getParameter("jid");
+		String jidStr = request.getParameter("jid");
 		int jid = KitService.getInt(jidStr);
 		if (jid < 0) {
 			json.put("notice", "传递的参数有误.");
@@ -325,13 +326,14 @@ public class SecureJobController {
 		}
 		Job job = jobService.getById(jid);
 		// 得到当前个人用户的默认简历
-		Resume r = personService.getDefaultResume(user.getId());
+		Integer uid = Integer.parseInt(userId);
+		Resume r = personService.getDefaultResume(uid);
 		if (r == null) {
 			json.put("notice", "你还没有创建简历哦,创建一份简历后再进行操作!");
 			return json;
 		}
 		// 检查7天内是否投递过, 如果投递过则不可重复投递
-		int isSend = recordService.checkSentInSomeDays(user.getId(), jid, null,
+		int isSend = recordService.checkSentInSomeDays(uid, jid, null,
 				null, Boolean.TRUE);
 		if (isSend > 0) {
 			json.put("notice", "7天内只能向同一职位投递一次简历, 请稍后操作.");

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -38,6 +38,7 @@ import esd.bean.Resume;
 import esd.bean.User;
 import esd.service.AreaService;
 import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ResumeService;
@@ -67,53 +68,50 @@ public class ResumeController {
 	private static Logger log = Logger.getLogger(ResumeController.class);
 
 	@RequestMapping("/search")
-	public ModelAndView resume(HttpServletRequest request,HttpSession session) {
+	public ModelAndView resume(HttpServletRequest request,
+			HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("emp/emp");
-		//先查看request中有没有传过来的acode, 不为空则是第一次进来, 将其中的acode放到session中
-		String acode= request.getParameter("acode");
-		if(acode != null && !"".equals(acode)){
-			Area area = areaService.getByCode(acode);
-			session.setAttribute("area", area);
+		// 先查看request中有没有传过来的acode, 不为空则是第一次进来, 将其中的acode放到cookie中
+		String acode = request.getParameter("acode");
+		if (acode != null && !"".equals(acode)) {
+			CookieHelper.setCookie(response, Constants.AREA, acode,
+					Integer.MAX_VALUE);
 		}
 		return mav;
 	}
 
 	// 多条件职位简历
 	@RequestMapping(value = "/search/{page}", method = RequestMethod.POST)
-	public ModelAndView search(HttpServletRequest req,
-			@PathVariable(value = "page") Integer page, HttpSession session) {
+	public ModelAndView search(HttpServletRequest request,
+			@PathVariable(value = "page") Integer page,
+			HttpServletResponse response) {
 		log.info("--- search ---");
 		Map<String, Object> entity = new HashMap<String, Object>();
 		Resume resume = new Resume();
-		//一, 初始acode
-		String acode = "10000000";
-		//二,从session读取area
-		Object obj = session.getAttribute("area");
-		if(obj!=null){
-			acode = ((Area)obj).getCode();
-		}
-		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
-		String belongsAcode = KitService.getProvinceCode(acode);
-		resume.setArea(new Area(belongsAcode));
-				
-		String keyWord = req.getParameter("keyWord");
+		// 从cookie读取acode
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		// 如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
+		acode = KitService.getProvinceCode(acode);
+		resume.setArea(new Area(acode));
+
+		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
 			resume.setTitle(keyWord);
 		}
-		String jcCode = req.getParameter("jcCode");
+		String jcCode = request.getParameter("jcCode");
 		if (jcCode != null && !"".equals(jcCode)) {
 			resume.setDesireJob(new JobCategory(jcCode));
 		}
-		String education = req.getParameter("education");
+		String education = request.getParameter("education");
 		if (education != null && !"".equals(education)) {
 			resume.setEducation(education);
 		}
-		String jobNature = req.getParameter("jobNature");
+		String jobNature = request.getParameter("jobNature");
 		if (jobNature != null && !"".equals(jobNature)) {
 			resume.setJobNature(jobNature);
 		}
-		String gender = req.getParameter("gender");
+		String gender = request.getParameter("gender");
 		if (gender != null && !"".equals(gender)) {
 			resume.setGender(gender);
 		}
@@ -135,18 +133,21 @@ public class ResumeController {
 					map.put("education", it.getEducation());
 					map.put("major", it.getMajor());
 					map.put("experience", it.getExperience());
-					if(it.getDesireJob()!=null){
-						if(it.getDesireJob().getName()!=null && !"".equals(it.getDesireJob().getName())){
+					if (it.getDesireJob() != null) {
+						if (it.getDesireJob().getName() != null
+								&& !"".equals(it.getDesireJob().getName())) {
 							map.put("desireJob", it.getDesireJob().getName());
 						}
-					}else{
+					} else {
 						map.put("desireJob", Constants.NO_LIMIT);
 					}
-					if(it.getDesireAddress()!=null){
-						if(it.getDesireAddress().getName()!=null && !"".equals(it.getDesireAddress().getName())){
-							map.put("desireAddress", it.getDesireAddress().getName());
+					if (it.getDesireAddress() != null) {
+						if (it.getDesireAddress().getName() != null
+								&& !"".equals(it.getDesireAddress().getName())) {
+							map.put("desireAddress", it.getDesireAddress()
+									.getName());
 						}
-					}else{
+					} else {
 						map.put("desireAddress", Constants.NO_LIMIT);
 					}
 					map.put("desireSalary", it.getDesireSalary());
@@ -167,47 +168,22 @@ public class ResumeController {
 		return new ModelAndView("emp/emp-json", "entity", entity);
 	}
 
-	// 多条件查询简历--给opencms框架使用
-	@RequestMapping("/searchForOpenCms")
-	@ResponseBody
-	public JSONPObject searchForOpenCms(
-			@RequestParam(value = "callback") String callback,
-			HttpServletRequest req) {
-		log.info("--- searchForOpenCms ---");
-		// //接收从网站群接收来的地区code, 根据他查找所属地区的职位
-		String acode = req.getParameter("acode");
-		String pageSizeStr = req.getParameter("pageSize");
-		// 初始化为10
-		Integer pageSize = 10;
-		if (pageSizeStr != null && !"".equals(pageSizeStr)) {
-			pageSize = Integer.parseInt(pageSizeStr);
-		}
-		ModelMap map = new ModelMap();
-		// 条件查询得到符合条件的简历
-		List<Resume> resumeList = resumeService.getByNew(
-				KitService.getProvinceCode(acode), pageSize);
-		map.put("resumeList", resumeList);
-		return new JSONPObject(callback, map);
-	}
-
 	// 根据id得到一个简历返回前台
 	@RequestMapping("/getOneForShow")
-	public String getOneForShow(HttpServletRequest request, HttpSession session,RedirectAttributes ra) {
+	public String getOneForShow(HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
-		//①先查看request中有没有传过来的acode, 
-		String acode= request.getParameter("acode");
-		if(acode != null){
-			//②不为空则是第一次进来, 将其中的acode放到session中
-			Area area = areaService.getByCode(acode);
-			session.setAttribute("area", area);
-		}else{
-			//③为空在则检查session是中没有地区信息
-			Object obj = session.getAttribute("area");
-			if(obj!=null){
-				acode = ((Area)obj).getCode();
-			}
+		// ①先查看request中有没有传过来的acode,
+		String acode = request.getParameter("acode");
+		if (acode != null) {
+			// ②不为空则是第一次进来, 将其中的acode放到cookie中
+			CookieHelper.setCookie(response, Constants.AREA, acode,
+					Integer.MAX_VALUE);
+		} else {
+			// ③为空在则检查cookie是中没有地区信息
+			acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		}
-				
+
 		String idStr = request.getParameter("id");
 		log.info("idStr = " + idStr);
 		int id = KitService.getInt(idStr);
@@ -217,12 +193,11 @@ public class ResumeController {
 		Resume resume = resumeService.getOneForShow(id);
 		request.setAttribute("resume", resume);
 		// 如果为公司用户访问该简历, 则查询出公司的基本信息
-		User user = (User) session.getAttribute(Constants.USER);
-		if (user != null) {
-			if (Constants.Identity.COMPANY.toString()
-					.equals(user.getIdentity())) {
+		String companyId = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		if (companyId != null &&!"".equals(companyId)) {
+				int cid = Integer.parseInt(companyId);
 				// 公司基本信息
-				Company company = companyService.getByAccount(user.getId());
+				Company company = companyService.getById(cid);
 				if (company == null) {
 					ra.addFlashAttribute("messageType", "0");
 					ra.addFlashAttribute("message", "请先完善公司信息");
@@ -249,9 +224,31 @@ public class ResumeController {
 				}
 				request.setAttribute("company", model);
 				request.setAttribute("jobList", jobList);
-			}
 		}
 		return "emp/emp-detail";
+	}
+
+	// 多条件查询简历--给opencms框架使用
+	@RequestMapping("/searchForOpenCms")
+	@ResponseBody
+	public JSONPObject searchForOpenCms(
+			@RequestParam(value = "callback") String callback,
+			HttpServletRequest req) {
+		log.info("--- searchForOpenCms ---");
+		// //接收从网站群接收来的地区code, 根据他查找所属地区的职位
+		String acode = req.getParameter("acode");
+		String pageSizeStr = req.getParameter("pageSize");
+		// 初始化为10
+		Integer pageSize = 10;
+		if (pageSizeStr != null && !"".equals(pageSizeStr)) {
+			pageSize = Integer.parseInt(pageSizeStr);
+		}
+		ModelMap map = new ModelMap();
+		// 条件查询得到符合条件的简历
+		List<Resume> resumeList = resumeService.getByNew(
+				KitService.getProvinceCode(acode), pageSize);
+		map.put("resumeList", resumeList);
+		return new JSONPObject(callback, map);
 	}
 
 	// 下载简历--返回流, 在IE8下报错

@@ -38,22 +38,6 @@ public class PersonController {
 	
 	@Autowired
 	private AreaService areaService;
-
-	// 得到投递过的职位列表
-	@RequestMapping("/getSentJob")
-	public String getSentJob(HttpServletRequest req, HttpSession session) {
-		log.info("----- getSentJob -----");
-		User user = (User) session.getAttribute(Constants.USER);
-		if (user == null) {
-			return "redirect:/index.jsp";
-		}
-		List<Record> recordList = personService.getSentJob(user.getId(), 1, 30);
-		log.info("recordList.size() = " + recordList);
-		req.setAttribute("recordList", recordList);
-		return "person/job-record";
-	}
-
-	
 	
 	//跳转到添加简历页面
 	@RequestMapping("/gotoResumeAdd")
@@ -61,11 +45,6 @@ public class PersonController {
 		log.info("----- getSentJob -----");
 		ModelAndView mav = new ModelAndView("person/resume-add");
 		List<Parameter> plist = parameterService.getAll();
-		//残疾类别
-		//残疾等级
-		//残疾部位
-		//户口状况
-		//文化程度
 		mav.addObject("params", plist);
 		//职位类别
 		List<JobCategory> jlist = jcService.getAll();
@@ -75,23 +54,4 @@ public class PersonController {
 		mav.addObject("areaList", alist);
 		return mav;
 	}
-	// @RequestMapping("/getSentJob")
-	// @ResponseBody
-	// public Map<String, Object> getSentJob(HttpServletRequest req,
-	// HttpSession session) {
-	// log.info("----- getSentJob -----");
-	// // User user = (User)session.getAttribute(Constants.USER);
-	// // if(user == null){
-	// // return "redirect:/index.jsp";
-	// // }
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// String uidStr = req.getParameter("uid");
-	// int uid = Constants.getInt(uidStr);
-	// List<Job> list = personService.getSentJob(uid);
-	// log.info("jobList.size() = "+list.size());
-	// req.setAttribute("jobList", list);
-	// json.put("jobList", list);
-	// return json;
-	// // return "person/sentJob";
-	// }
 }

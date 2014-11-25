@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import esd.bean.Area;
 import esd.bean.News;
+import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.NewsService;
 
@@ -47,16 +48,11 @@ public class DirectController {
 
 	// 就业指导信息 分页查询
 	@RequestMapping(value = "/search/{page}", method = RequestMethod.GET)
-	public ModelAndView search(HttpServletRequest req,
-			@PathVariable(value = "page") Integer page, HttpSession session) {
+	public ModelAndView search(@PathVariable(value = "page") Integer page,HttpServletRequest request, HttpServletResponse response) {
 		log.info("--- search ---");
 		// 读取地区码
 		// 得到地区code
-		Object obj = session.getAttribute("area");
-		String acode = null;
-		if (obj != null) {
-			acode = ((Area) obj).getCode();
-		}
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		News n = new News();
 		n.setType(Constants.ARTICLE_TYPE_DIRECT);
 		n.setArea(new Area(acode));

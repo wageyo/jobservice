@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,6 +33,7 @@ import esd.controller.Constants.Notice;
 import esd.controller.checkcode.CaptchaServiceSingleton;
 import esd.service.AreaService;
 import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.ParameterService;
 import esd.service.UserService;
@@ -52,14 +54,14 @@ public class UserController {
 	@Autowired
 	private AreaService areaService;
 	
-	// 注册,即保存一个账号
+	// 注册
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(HttpServletRequest req, User user, HttpSession session,
+	public String save(HttpServletRequest request, User user, HttpServletResponse response,
 			RedirectAttributes redirectAttributes) {
 		log.info("--- save ---");
 		// 判断验证码是否正确
-		String codeStr = req.getParameter("LoginVerifyCode");
-		String captchaId = req.getSession().getId();
+		String codeStr = request.getParameter("LoginVerifyCode");
+		String captchaId = request.getSession().getId();
 		try {
 			Boolean isResponseCorrect = CaptchaServiceSingleton.getInstance()
 					.validateResponseForID(captchaId, codeStr);
@@ -71,17 +73,10 @@ public class UserController {
 		} catch (CaptchaServiceException e) {
 			log.error("error in check", e);
 		}
-		log.info("areaCode " + req.getParameter("area.code") + " || "
+		log.info("areaCode " + request.getParameter("area.code") + " || "
 				+ user.getArea());
-		// if (user != null) {
-		// if (user.getArea() == null) {
-		// user.setArea(new Area("30230103"));
-		// }
-		// }
 		String identity = user.getIdentity();
-		if (Constants.Identity.SUPERADMIN.getValue().equals(identity)) {
-			user.setAuthority(Constants.Authority.SUPERADMIN.getValue());
-		} else if (Constants.Identity.ADMIN.getValue().equals(identity)) {
+		if (Constants.Identity.ADMIN.getValue().equals(identity)) {
 			user.setAuthority(Constants.Authority.ADMIN.getValue());
 		} else if (Constants.Identity.COMPANY.getValue().equals(identity)) {
 			user.setAuthority(Constants.Authority.COMPANY.getValue());
@@ -89,6 +84,11 @@ public class UserController {
 			user.setAuthority(Constants.Authority.PERSON.getValue());
 		}
 		log.info("注册用户为: " + user);
+		//如果cookie中有acode, 则使用默认的地区code, 否则使用前台传过来的地区code
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		if(acode != null && !"".equals(acode)){
+			user.setArea(new Area(acode));
+		}
 		boolean bl = userService.save(user);
 		log.info("save bl = " + bl);
 		if (!bl) {
@@ -106,14 +106,16 @@ public class UserController {
 				Constants.Switch.USER.getValue(), user.getArea().getCode());
 		if (u_bl) {
 			redirectAttributes.addFlashAttribute("messageType", "0");
-			redirectAttributes
-					.addFlashAttribute("message", "注册请求已提交, 请等待管理员审核");
+			redirectAttributes.addFlashAttribute("message", "注册请求已提交, 请等待管理员审核");
 		} else {
-			session.setAttribute(Constants.USER, user);
-//			// 地区码
-//			String acode = user.getArea().getCode();
-//			Area area = areaService.getByCode(acode);
-//			session.setAttribute(Constants.AREA, area);
+			CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+			CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
+			CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
+			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
+			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+			//地区代码设为永久
+			CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
 		}
 		return "redirect:/index";
 	}
@@ -121,10 +123,10 @@ public class UserController {
 	// 根据id得到一个账号对象
 	@RequestMapping("/getOne")
 	@ResponseBody
-	public Map<String, Object> getOne(HttpServletRequest req) {
+	public Map<String, Object> getOne(HttpServletRequest request) {
 		log.info("--- getOne ---");
 		Map<String, Object> json = new HashMap<String, Object>();
-		String idStr = req.getParameter("id");
+		String idStr = request.getParameter("id");
 		int id = KitService.getInt(idStr);
 		if (id <= 0) {
 			json.put("notice1", Notice.ERROR);
@@ -142,21 +144,11 @@ public class UserController {
 
 	// 登陆
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(User user, HttpServletRequest request,
-			HttpSession session, RedirectAttributes ra) {
-		// 请求来的uri
-		String preURI = request.getHeader("Referer");
-		int index = preURI.indexOf("jobservice");
-		String path = null;
-		if (preURI != null) {
-			path = preURI.substring(index + 10);
-		}
-		log.debug("--- login --- user : " + user);
-
+	public String login(User user, HttpServletRequest request,HttpServletResponse response, RedirectAttributes ra) {
 		if (user == null) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "登录错误");
-			return "redirect:" + path;
+			return "redirect:/index";
 		}
 		// 判断验证码是否正确
 		String codeStr = request.getParameter("LoginVerifyCode");
@@ -169,7 +161,7 @@ public class UserController {
 			if (!isResponseCorrect) {
 				ra.addFlashAttribute("messageType", "0");
 				ra.addFlashAttribute("message", "验证码错误");
-				return "redirect:" + path;
+				return "redirect:/index";
 			}
 		} catch (CaptchaServiceException e) {
 			log.error("error in check", e);
@@ -179,30 +171,35 @@ public class UserController {
 		if (user == null) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户名或密码错误!");
-			return "redirect:" + path;
+			return "redirect:/index";
 		}
 		if (user.getCheckStatus().equals(
-				Constants.CheckStatus.DAISHEN.getValue())) {
+				Constants.CheckStatus.DAISHEN.toString())) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户正在审核中, 请稍后登陆!");
-			return "redirect:" + path;
+			return "redirect:/index";
 		} else if (user.getCheckStatus().equals(
-				Constants.CheckStatus.WEITONGGUO.getValue())) {
+				Constants.CheckStatus.WEITONGGUO.toString())) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户名没有通过审核, 请重新申请!");
-			return "redirect:" + path;
+			return "redirect:/index";
 		}
-		if (user.getIdentity().equals(Identity.COMPANY.getValue())) {
+		if (user.getIdentity().equals(Identity.COMPANY.toString())) {
 			Company company = companyService.getByAccount(user.getId());
 			log.debug("company " + company);
-			session.setAttribute(Constants.Identity.COMPANY.getValue(), company);
+			if(company != null){
+				CookieHelper.setCookie(response, Constants.USERCOMPANYID, String.valueOf(company.getId()));
+			}
 		}
 		log.debug("login: " + user);
-		session.setAttribute(Constants.USER, user);
-//		// 地区码
-//		String acode = user.getArea().getCode();
-//		Area area = areaService.getByCode(acode);
-//		session.setAttribute(Constants.AREA, area);
+		CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+		CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
+		CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
+		CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
+		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+		CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+		//地区代码设为永久
+		CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
 		return "redirect:/index";
 	}
 
@@ -230,40 +227,45 @@ public class UserController {
 
 	// 登出
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		log.info("--- logout ---");
-//		session.invalidate();
-		session.removeAttribute(Constants.USER);
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		log.info("--- 登出 ---");
+		//杀死除地区code外的所有cookie
+		CookieHelper.setCookie(response, Constants.USERID, null, 0);
+		CookieHelper.setCookie(response, Constants.USERNAME, null, 0);
+		CookieHelper.setCookie(response, Constants.USERPASSWORD, null, 0);
+		CookieHelper.setCookie(response, Constants.USERIDENTITY, null, 0);
+		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
+		CookieHelper.setCookie(response, Constants.USERREGISTERTIME, null, 0);
+		CookieHelper.setCookie(response, Constants.USERCOMPANYID, null, 0);
 		return "redirect:/index";
 	}
 
 	// 跳转到个人中心
 	@RequestMapping("/goCenter")
-	public String goCenter(HttpSession session) {
+	public String goCenter(HttpServletRequest request, HttpServletResponse response) {
 		log.info("--- goCenter ---");
-		User user = (User) session.getAttribute(Constants.USER);
-		if (user == null) {
-			return "redirect:/index.jsp";
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		//用户id为空即为未登录
+		if (userId == null ||"".equals(userId)) {
+			return "redirect:/index";
 		}
-		if (user.getIdentity().equals(Constants.Identity.COMPANY.getValue())) {
-			Company c = companyService.getByAccount(user.getId());
+		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		//如果为公司用户, 且没有填写基本资料, 则跳转到填写公司基本信息页面上
+		if (identity.equals(Constants.Identity.COMPANY.getValue())) {
+			Integer uid = Integer.parseInt(userId);
+			Company c = companyService.getByAccount(uid);
 			// 如未填公司资料, 则跳转到填写公司资料页面
 			if (c == null) {
 				return "redirect:/secure/company/save";
 			}
 		}
-		return "/" + user.getIdentity() + "/index";
+		return "/" +identity + "/index";
 	}
 
-	/**
-	 * 接收上传的的头像图片
-	 * 
-	 * @param pic
-	 * @param session
-	 */
+	//接收上传的的头像图片
 	@RequestMapping(value = "/uploadPic", method = RequestMethod.POST)
 	public void importPic(@RequestParam("pic") CommonsMultipartFile pic,HttpServletRequest request,
-			HttpServletResponse response, HttpSession session)
+			HttpServletResponse response)
 			throws IOException {
 		// ① response 输出相应内容
 		response.setContentType("text/html;charset=utf-8");

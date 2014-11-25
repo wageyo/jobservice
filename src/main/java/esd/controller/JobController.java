@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -28,6 +29,7 @@ import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.controller.Constants.Notice;
 import esd.service.AreaService;
+import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
 
@@ -43,14 +45,13 @@ public class JobController {
 	private AreaService areaService;
 
 	@RequestMapping("/search")
-	public ModelAndView work(HttpServletRequest request,HttpSession session) {
+	public ModelAndView work(HttpServletRequest request,HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("work/work");
-		//先查看request中有没有传过来的acode, 不为空则是第一次进来, 将其中的acode放到session中
+		//先查看request中有没有传过来的acode, 不为空则是第一次进来, 将其中的acode放到cookie中
 		String acode= request.getParameter("acode");
 		if(acode != null && !"".equals(acode)){
-			Area area = areaService.getByCode(acode);
-			session.setAttribute("area", area);
+			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
 		}
 		return mav;
 	}
@@ -58,20 +59,15 @@ public class JobController {
 	// 多条件职位简历
 	@RequestMapping(value = "/search/{page}", method = RequestMethod.POST)
 	public ModelAndView search(HttpServletRequest request,
-			@PathVariable(value = "page") Integer page, HttpSession session) {
+			@PathVariable(value = "page") Integer page, HttpServletResponse response) {
 		log.info("--- search ---");
 		Map<String, Object> entity = new HashMap<String, Object>();
 		Job job = new Job();
-		//一, 初始acode
-		String acode = "10000000";
-		//二,从session读取area
-		Object obj = session.getAttribute("area");
-		if(obj!=null){
-			acode = ((Area)obj).getCode();
-		}
+		//从cookie读取acode
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
-		String belongsAcode = KitService.getProvinceCode(acode);
-		job.setArea(new Area(belongsAcode));
+		acode = KitService.getProvinceCode(acode);
+		job.setArea(new Area(acode));
 		
 		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
@@ -127,21 +123,16 @@ public class JobController {
 
 	// 根据id得到一个职位返回前台显示
 	@RequestMapping("/getOneForShow")
-	public String getOneForShow(HttpServletRequest request, RedirectAttributes ra,
-			HttpSession session) {
+	public String getOneForShow(HttpServletRequest request, HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
 		//①先查看request中有没有传过来的acode, 
 		String acode= request.getParameter("acode");
 		if(acode != null){
-			//②不为空则是第一次进来, 将其中的acode放到session中
-			Area area = areaService.getByCode(acode);
-			session.setAttribute("area", area);
+			//②不为空则是第一次进来, 将其中的acode放到cookie中
+			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
 		}else{
-			//③为空在则检查session是中没有地区信息
-			Object obj = session.getAttribute("area");
-			if(obj!=null){
-				acode = ((Area)obj).getCode();
-			}
+			//③为空在则检查cookie是中没有地区信息
+			acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		}
 				
 		String idStr = request.getParameter("id");
@@ -210,18 +201,17 @@ public class JobController {
 	// 获得职位总个数
 	@RequestMapping("/getTotalCount")
 	@ResponseBody
-	public Map<String, Object> getTotalCount(HttpServletRequest req,
-			HttpSession session) {
+	public Map<String, Object> getTotalCount(HttpServletRequest request, HttpServletResponse response) {
 		log.info("--- getTotalCount ---");
-		String areaCode = req.getParameter("acode");
-		if (areaCode == null) {
-			areaCode = "10000000";
-		}
+		//从cookie读取acode
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
+		acode = KitService.getProvinceCode(acode);
 		Map<String, Object> json = new HashMap<String, Object>();
 		Job job = new Job();
-		job.setArea(new Area(areaCode));
+		job.setArea(new Area(acode));
 		int total = jobService.getTotalCount(job);
-		json.put("totalCount", total);
+		json.put("totalCount321", total);
 		return json;
 	}
 

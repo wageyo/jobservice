@@ -113,7 +113,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;共有：<span id="Label8" style="color:Red;">${totalCount }</span>个工作岗位供您选择
-						<c:if test="${user == null }">
+						<c:if test="${cookie.companyid.value == null || cookie.companyid.value == ''}">
 							<a href="${contextPath}/regC" style="color: #f00;">我也要发布</a>
 						</c:if>
 						</td>

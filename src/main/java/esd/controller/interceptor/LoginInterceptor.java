@@ -17,6 +17,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.controller.Constants;
+import esd.service.CookieHelper;
 
 /**
  * 用户登陆过滤器
@@ -42,14 +43,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse arg1, Object arg2, ModelAndView arg3)
 			throws Exception {
-		// TODO Auto-generated method stub
 	}
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) {
 		if (request.getRequestURI().indexOf("/secure") != -1) {
-			Object obj = request.getSession().getAttribute(Constants.USER);
-			if (obj == null) {
+			String username = CookieHelper.getCookieValue(request, Constants.USERNAME);
+			if (username == null) {
 				PrintWriter out = null;
 				try {
 					out = response.getWriter();
@@ -77,8 +77,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		 * 后台登陆过滤器
 		 */
 		if (request.getRequestURI().indexOf("/manage") != -1) {
-			Object obj = request.getSession().getAttribute(Constants.USER);
-			if (obj == null) {
+			String username = CookieHelper.getCookieValue(request, Constants.USERNAME);
+			if (username == null) {
 				logger.error("未登陆状态进入工作区被拦截");
 				PrintWriter out = null;
 				try {

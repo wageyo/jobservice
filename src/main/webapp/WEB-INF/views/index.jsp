@@ -34,7 +34,7 @@ function getimgcode(){
 		<div class="hotNews_con">
 
 			<!-- 用户未登陆时显示登陆框 -->
-			<c:if test="${user == null }">
+			<c:if test="${cookie.username.value == null || cookie.username.value == ''}">
 				<div id="login">
 					<form action="${contextPath }/user/login" method="post" onSubmit="return check();">
 						<div id="ctl00_ContentPlaceHolder1_login_1" class="login_1">
@@ -49,11 +49,16 @@ function getimgcode(){
 										onfocus="focus_check_code(this)" onblur="blur_check_code(this)" /></li>
 							</ul>
 							<ul>
-								<li id="login_an"><input type="image" id="ctl00_ContentPlaceHolder1_ImageButton1" src="${contextPath}/images/an.jpg" style="border-width:0px;">
+								<li id="login_an">
+									<input type="image" id="ctl00_ContentPlaceHolder1_ImageButton1" src="${contextPath}/images/an.jpg" style="border-width:0px;" />
 								</li>
-								<li><span class="AntCod"><a href="javascript:getimgcode()"> <img id="verifyCode" src="${contextPath}/checkcode/create" alt="验证码,看不清楚?请点击刷新验证码"
-											style="padding-top: 4px; width: 80px; border: #CCC 0px solid;" border="0">
-									</a> </span>
+								<li>
+									<span class="AntCod">
+										<a href="javascript:getimgcode()"> 
+											<img id="verifyCode" src="${contextPath}/checkcode/create" alt="验证码,看不清楚?请点击刷新验证码"
+											style="padding-top: 4px; width: 80px; border: #CCC 0px solid;" border="0" />
+										</a> 
+									</span>
 								</li>
 							</ul>
 						</div>
@@ -120,8 +125,8 @@ function getimgcode(){
 						</table>
 					</div>
 					<div id="ctl00_ContentPlaceHolder1_login_3" class="login_3">
-						<a href="${contextPath}/regP"> <img src="${contextPath}/images/up_1.jpg" border="0">
-						</a> <a href="${contextPath}/regC"> <img src="${contextPath}/images/up_2.jpg" border="0">
+						<a href="${contextPath}/regP"> <img src="${contextPath}/images/up_1.jpg" border="0" />
+						</a> <a href="${contextPath}/regC"> <img src="${contextPath}/images/up_2.jpg" border="0" />
 						</a>
 					</div>
 				</div>
@@ -129,16 +134,15 @@ function getimgcode(){
 
 
 			<!-- 用户登录时 -->
-			<c:if test="${user != null }">
+			<c:if test="${cookie.username.value != null && cookie.username.value != ''}">
 				<!-- 个人登陆显示的div -->
-				<c:if test="${user.identity == 'person' }">
+				<c:if test="${cookie.identity.value == 'person' }">
 					<div class="loginstatus">
 						<ul class="AntAccout_Center_Rithg">
-							<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable">${user.loginName }</span>：欢迎您！</li>
+							<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable">${cookie.username.value }</span>：欢迎您！</li>
 							<li class="B">您的用户等级：<span> <span id="ctl00_ContentPlaceHolder1_tag">个人</span>会员 </span></li>
 							<li class="C" style="text-align: left">注册时间：
-								<fmt:formatDate value="${user.createDate }" pattern="yyyy-MM-dd hh:mm:ss" var="createDate" />
-								<span id="ctl00_ContentPlaceHolder1_addtime">${createDate }</span>
+								<span id="ctl00_ContentPlaceHolder1_addtime">${cookie.registertime.value }</span>
 							</li>
 							<li class="D">现在您可以进入<span id="ctl00_ContentPlaceHolder1_uemail"><a href="${contextPath }/user/goCenter" style="font-size:13px;color:red;font-weight:700px;">个人中心</a> </span>来管理您的个人信息或简历</li>
 
@@ -147,14 +151,13 @@ function getimgcode(){
 				</c:if>
 
 				<!-- 企业登陆显示的div -->
-				<c:if test="${user.identity == 'company' }">
+				<c:if test="${cookie.identity.value == 'company' }">
 					<div class="loginstatus">
 						<ul class="AntAccout_Center_Rithg">
-							<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable">${user.loginName }</span>：欢迎您！</li>
+							<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable">${cookie.username.value }</span>：欢迎您！</li>
 							<li class="B">您的用户等级：<span> <span id="ctl00_ContentPlaceHolder1_tag">企业</span>会员 </span></li>
 							<li class="C" style="text-align: left">注册时间：
-								<fmt:formatDate value="${user.createDate }" pattern="yyyy-MM-dd hh:mm:ss" var="createDate" />
-								<span id="ctl00_ContentPlaceHolder1_addtime">${createDate }</span>
+								<span id="ctl00_ContentPlaceHolder1_addtime">${cookie.registertime.value }</span>
 							</li>
 							<li class="D">现在您可以进入<span id="ctl00_ContentPlaceHolder1_uemail"><a href="${contextPath }/user/goCenter" style="font-size:13px;color:red;font-weight:700px;">管理中心</a> </span>来管理您发布的招聘信息或者查看收到的简历</li>
 
@@ -163,12 +166,12 @@ function getimgcode(){
 				</c:if>
 
 				<!-- 管理员登陆显示的div -->
-				<c:if test="${user.identity == 'admin' }">
+				<c:if test="${cookie.identity.value == 'admin' }">
 					<div class="loginstatus">
 						<ul class="AntAccout_Center_Rithg">
-							<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable">${user.loginName }</span>：欢迎您！</li>
+							<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable">${cookie.username.value }</span>：欢迎您！</li>
 							<li class="B">您的用户等级：<span> <span id="ctl00_ContentPlaceHolder1_tag">管理员</span> </span></li>
-							<li class="C" style="text-align: left">注册时间：<span id="ctl00_ContentPlaceHolder1_addtime">${user.createDate }</span>
+							<li class="C" style="text-align: left">注册时间：<span id="ctl00_ContentPlaceHolder1_addtime">${cookie.registertime.value }</span>
 							</li>
 
 						</ul>
@@ -176,14 +179,16 @@ function getimgcode(){
 				</c:if>
 			</c:if>
 
-
 			<div class="xian"></div>
 			<div id="hotFlash">
 				<div id="MainPromotionBanner">
 					<div id="SlidePlayer">
 						<ul class="Slides">
-							<li style=""><a href="javascript:void(0);" title="求职宝典" target="_blank"><img src="${contextPath}/images/02285576946c4c239fea5fd5233dbf0d_baodian.jpg">
-							</a></li>
+							<li style="">
+								<a href="javascript:void(0);" title="求职宝典" target="_blank">
+									<img src="${contextPath}/images/02285576946c4c239fea5fd5233dbf0d_baodian.jpg" />
+								</a>
+							</li>
 						</ul>
 					</div>
 
@@ -206,33 +211,7 @@ function getimgcode(){
 			<span class="rd_e_l fl"></span><span class="rd_e_r fr"></span>
 		</div>
 	</div>
-	<!-- 
-		<div id="redline">
-			<div class="redline_top">
-				<h2 class="fl rl_l">
-					<span class="cH2">品牌招聘信息</span>
-				</h2>
-				<h2 class="fr rl_r">
-					<a href="${contextPath}/work" target="_blank" class="cH2">更多招聘信息</a>
-				</h2>
-			</div>
-			<div class="redline_con">
-				<ul class="pic_ban">
-					<c:forEach items="${companyList }" var="company">
-						<li style="text-align: center;"><a href="${contextPath }/company/getOneForShow?id=${company.id}"> <img src="${contextPath}/images/453dfd05ecfa42398a11742b0b3ea761_20111111549ad.jpg"
-								border="0" width="160" height="40">
-						</a>
-							<p>招聘：</p>
-						</li>
-					</c:forEach>
 	
-				</ul>
-			</div>
-			<div class="redline_bot">
-				<span class="rd_e_l fl"></span><span class="rd_e_r fr"></span>
-			</div>
-		</div>
-	 -->
 	<div id="redline">
 		<div class="redline_top">
 			<h2 class="fl rl_l">
@@ -245,16 +224,15 @@ function getimgcode(){
 		<div class="redline_con">
 			<ul class="hotbrand">
 				<c:forEach items="${companyList }" var="company">
-					<li><img src="${contextPath}/images/hot_icon.gif" align="absbottom"><a class="f14" href="${contextPath }/company/getOneForShow?id=${company.id}">${company.name }</a><br> <img
-								src="${contextPath}/images/bro_icon.gif" align="absbottom"> <a class="f14" href="${contextPath }/work" title="${company.businessScope.name }">${company.businessScope.name}</a>
+					<li>
+						<img src="${contextPath}/images/hot_icon.gif" align="absbottom" />
+						<a class="f14" href="${contextPath }/company/getOneForShow?id=${company.id}">${company.name }</a><br /> 
+						<img src="${contextPath}/images/bro_icon.gif" align="absbottom" /> 
+						<a class="f14" href="${contextPath }/work" title="${company.businessScope.name }">${company.businessScope.name}</a>
 					</li>
 				</c:forEach>
-
-
 			</ul>
 		</div>
-
-
 
 		<div class="redline_con"></div>
 		<div class="redline_bot">
@@ -286,8 +264,6 @@ function getimgcode(){
 
 			</ul>
 		</div>
-
-
 
 		<div class="blueLineE">
 			<span class="rd_e_l fl bgBlue"></span><span class="rd_e_r fr bgBlue"></span>

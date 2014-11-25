@@ -284,7 +284,7 @@
 																						<td class="txt"><span class="txt1">残疾部位：${resume.disabilityPart }</span></td>
 																					</tr>
 																					<c:choose>
-																						<c:when test="${user.identity == 'admin' || user.id == resume.user.id || user.identity == 'company'}">
+																						<c:when test="${cookie.identity.value == 'admin' || cookie.userid.value  == resume.user.id || cookie.identity.value == 'company'}">
 																							<tr>
 																								<td class="txt" height="25"><span class="txt1">电话：${resume.phone }</span></td>
 																								<td class="txt"><span class="txt1">邮箱：${resume.email }</span></td>
@@ -547,20 +547,18 @@
 					</tr>
 				</tbody>
 			</table> -->
-			<c:if test="${user != null }">	
-				<c:if test="${user.identity == 'admin' }">
-					<table height="30" background="${contextPath}/images/bottom.gif" border="0" cellpadding="0" cellspacing="0" width="100">
-						<tbody>
-							<tr>
-								<td class="txt2" width="34"><img src="${contextPath}/images/open-folder.gif" height="16" width="16">
-								</td>
-								<td width="66">
-									<a href='${contextPath }/resume/down_back/${resume.id}'> <span class="span5">下载简历</span></a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</c:if>
+			<c:if test="${cookie.identity.value == 'admin' }">
+				<table height="30" background="${contextPath}/images/bottom.gif" border="0" cellpadding="0" cellspacing="0" width="100">
+					<tbody>
+						<tr>
+							<td class="txt2" width="34"><img src="${contextPath}/images/open-folder.gif" height="16" width="16">
+							</td>
+							<td width="66">
+								<a href='${contextPath }/resume/down_back/${resume.id}'> <span class="span5">下载简历</span></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</c:if>
 			<table height="5" border="0" cellpadding="0" cellspacing="0">
 				<tbody>
@@ -579,18 +577,16 @@
 				</tbody>
 			</table>
 			<!-- 只有企业用户才可以发送邀请 -->
-			<c:if test="${user != null }">
-				<c:if test="${user.identity == 'company' }">
-					<table height="30" background="${contextPath}/images/bottom.gif" border="0" cellpadding="0" cellspacing="0" width="100">
-						<tbody>
-							<tr>
-								<td class="txt2" width="34"><img src="${contextPath}/images/open-folder.gif" height="16" width="16" />
-								</td>
-								<td width="66"><a href="javascript:void(0);" onclick="pupopen();"><span class="span5">发送邀请</span> </a></td>
-							</tr>
-						</tbody>
-					</table>
-				</c:if>
+			<c:if test="${cookie.identity.value == 'company' }">
+				<table height="30" background="${contextPath}/images/bottom.gif" border="0" cellpadding="0" cellspacing="0" width="100">
+					<tbody>
+						<tr>
+							<td class="txt2" width="34"><img src="${contextPath}/images/open-folder.gif" height="16" width="16" />
+							</td>
+							<td width="66"><a href="javascript:void(0);" onclick="pupopen();"><span class="span5">发送邀请</span> </a></td>
+						</tr>
+					</tbody>
+				</table>
 			</c:if>
 	</div>
 	

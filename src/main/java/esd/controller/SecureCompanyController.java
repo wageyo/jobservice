@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +29,11 @@ import esd.controller.Constants.Notice;
 import esd.service.AreaService;
 import esd.service.BusinessScopeService;
 import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.KitService;
 import esd.service.ParameterService;
+import esd.service.UserService;
 
 @Controller
 @RequestMapping("/secure/company")
@@ -39,6 +41,9 @@ public class SecureCompanyController {
 
 	private static Logger log = Logger.getLogger(SecureCompanyController.class);
 
+	@Autowired
+	private UserService userService;
+	
 	@Autowired
 	private CompanyService<Company> companyService;
 
@@ -56,7 +61,7 @@ public class SecureCompanyController {
 
 	// 保存一个企业用户
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(Company company, HttpSession session,
+	public String save(Company company, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra) {
 		log.info("--- save post ---");
 		if (company == null) {
@@ -64,7 +69,9 @@ public class SecureCompanyController {
 			ra.addFlashAttribute("message", "传递的数据为空!");
 			return "/user/goCenter";
 		}
-		User user = (User) session.getAttribute(Constants.USER);
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User user = userService.getById(uid);
 		//所属人
 		company.setUser(user);
 		//所属地区
@@ -76,8 +83,7 @@ public class SecureCompanyController {
 			return "/user/goCenter";
 		}
 		log.info("company : " + company);
-		company = companyService.getById(company.getId());
-		session.setAttribute("company", company);
+		CookieHelper.setCookie(response, Constants.USERCOMPANYID, String.valueOf(company.getId()));
 		ra.addFlashAttribute("messageURL", "/user/goCenter");
 		ra.addFlashAttribute("message", "保存公司信息成功!");
 		return "redirect:/secure/company/save";
@@ -85,15 +91,10 @@ public class SecureCompanyController {
 
 	// 跳转到保存公司信息页面
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
-	public ModelAndView gotoCompanyAdd(HttpServletRequest req) {
+	public ModelAndView gotoCompanyAdd(HttpServletRequest request) {
 		log.info("----- save get -----");
 		ModelAndView mav = new ModelAndView("company/info-add");
 		List<Parameter> plist = parameterService.getAll();
-		// 残疾类别
-		// 残疾等级
-		// 残疾部位
-		// 户口状况
-		// 文化程度
 		mav.addObject("params", plist);
 		// 职位类别
 		List<JobCategory> jlist = jcService.getAll();
@@ -110,10 +111,10 @@ public class SecureCompanyController {
 	// 删除企业用户
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Map<String, Object> delete(HttpServletRequest req) {
+	public Map<String, Object> delete(HttpServletRequest request) {
 		log.info("--- delete ---");
 		Map<String, Object> json = new HashMap<String, Object>();
-		String idStr = req.getParameter("id");
+		String idStr = request.getParameter("id");
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
 			json.put("notice", Notice.ERROR);
@@ -131,7 +132,7 @@ public class SecureCompanyController {
 
 	// 保存修改后的企业信息
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(Company company, HttpSession session,
+	public String update(Company company, HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra) {
 		log.info("--- update post ---");
 		if (company == null) {
@@ -146,9 +147,6 @@ public class SecureCompanyController {
 			ra.addFlashAttribute("message", "操作失败!");
 			return "redirect:/secure/company/update";
 		}
-		// 重新读取企业信息
-		company = companyService.getById(company.getId());
-		session.setAttribute("company", company);
 		ra.addFlashAttribute("messageURL", "/user/goCenter");
 		ra.addFlashAttribute("message", "更新公司信息成功!");
 		return "redirect:/secure/company/update";
@@ -156,103 +154,56 @@ public class SecureCompanyController {
 
 	// 跳转到企业信息修改页面
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String getCompanyForEdit(HttpServletRequest req,
-			HttpSession session, RedirectAttributes ra) {
+	public String getCompanyForEdit(HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra) {
 		log.info("----- save get -----");
 		// 先查看是否添加了企业信息, 没有添加的话则提示
-		User user = (User) session.getAttribute(Constants.USER);
-		Company c = companyService.getByAccount(user.getId());
-		if (c == null) {
+		String companyId  = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		if (companyId == null || "".equals(companyId)) {
+			ra.addFlashAttribute("messageType", "0");
+			ra.addFlashAttribute("message", "填写完公司信息后才可以发布招聘信息");
 			return "redirect:/secure/company/save";
 		}
+		Integer cid = Integer.parseInt(companyId);
+		//企业信息
+		Company company = companyService.getById(cid);
+		request.setAttribute(Constants.Identity.COMPANY.getValue(), company);
+		//相关参数
 		List<Parameter> plist = parameterService.getAll();
-		req.setAttribute("params", plist);
+		request.setAttribute("params", plist);
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
-		req.setAttribute("provinceList", alist);
+		request.setAttribute("provinceList", alist);
 		// 经营范围
 		List<BusinessScope> blist = bsService.getAll();
-		req.setAttribute("bsList", blist);
+		request.setAttribute("bsList", blist);
 		return "company/info-edit";
 	}
 
-	// 根据企业id, 得到当前企业用户自身对象
-	// @RequestMapping("/getOne")
-	// public String getOne(HttpServletRequest req, HttpSession session) {
-	// log.info("--- getOne ---");
-	// User user = (User) session.getAttribute(Constants.USER);
-	// if (user == null) {
-	// req.setAttribute("notice", "请登录!");
-	// return "redirect:/index.jsp";
-	// }
-	// Company company = companyService.getByAccount(user.getId());
-	// req.setAttribute("company", company);
-	// return "/company/infoEdit";
-	// }
-
-	// 根据地区code, 得到本地区所有显示的企业
-	// @RequestMapping("/getByArea")
-	// @ResponseBody
-	// public Map<String, Object> getByArea(HttpServletRequest req) {
-	// log.info("--- getByArea ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// String code = req.getParameter("areaCode");
-	// if (code == null || "".equals(code)) {
-	// json.put("notice", Notice.ERROR);
-	// return json;
-	// }
-	// String startStr = req.getParameter("start");
-	// int start = KitService.getInt(startStr);
-	// if (start < 0) {
-	// start = 1;
-	// }
-	// String sizeStr = req.getParameter("size");
-	// int size = KitService.getInt(sizeStr);
-	// if (size < 0) {
-	// size = Constants.SIZE;
-	// }
-	// List<Company> list = companyService.getByArea(code, start, size);
-	// json.put("notice", Notice.SUCCESS);
-	// json.put("companyList", list);
-	// return json;
-	// }
-
 	// 得到当前公司收到的所有简历
 	@RequestMapping(value = "/getAllGotResume/{page}", method = RequestMethod.GET)
-	public String getAllGotResume(HttpServletRequest req, HttpSession session,
+	public String getAllGotResume(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra, @PathVariable(value = "page") Integer page) {
-
-		User user = (User) session.getAttribute(Constants.USER);
-		if (!user.getIdentity().equals(Identity.COMPANY.toString())) {
-			ra.addFlashAttribute("message", "权限不足!");
-			ra.addFlashAttribute("messageType", "0");
-			return "/user/goCenter";
-		}
 		// 先查看是否添加了企业信息, 没有添加的话则提示
-		Company company = companyService.getByAccount(user.getId());
-		if (company == null) {
+		String  companyId= CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		if (companyId == null || "".equals(companyId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "还没有填写公司信息, 请先填写完公司信息后再进行操作!");
 			return "redirect:/secure/company/save";
 		}
+		Integer cid = Integer.parseInt(companyId);
+		Company company = companyService.getById(cid);
 		List<Record> list = companyService.getAllGotResume(company.getId(),
 				page, Constants.SIZE);
 		int totalCount = companyService.getAllGotResumeCount(company.getId());
-		req.setAttribute("recordList", list);
-		req.setAttribute("totalCount", totalCount);
-		req.setAttribute("currentPage", page);
-		req.setAttribute(
+		request.setAttribute("recordList", list);
+		request.setAttribute("totalCount", totalCount);
+		request.setAttribute("currentPage", page);
+		request.setAttribute(
 				"totalPages",
 				totalCount % Constants.SIZE == 0 ? (totalCount / Constants.SIZE)
 						: (totalCount / Constants.SIZE + 1));
 		return "/company/resume-record";
 	}
 
-	// 批量删除投递来的简历
-	// @RequestMapping("/deleteGotResume")
-	// public String deleteGotResume(HttpServletRequest req, HttpSession
-	// session) {
-	//
-	// return null;
-	// }
 }

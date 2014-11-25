@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import esd.bean.Area;
 import esd.bean.News;
+import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.NewsService;
 
@@ -47,16 +48,14 @@ public class NewsController {
 
 	// 最新消息 分页查询
 	@RequestMapping(value = "/search/{page}", method = RequestMethod.GET)
-	public ModelAndView search(HttpServletRequest req,
-			@PathVariable(value = "page") Integer page,HttpSession session) {
+	public ModelAndView search(HttpServletRequest request,
+			@PathVariable(value = "page") Integer page) {
 		log.info("--- search ---");
-		//读取地区码
-		//得到地区code
-		Object obj = session.getAttribute("area");
-		String acode = null;
-		if (obj != null) {
-			acode = ((Area) obj).getCode();
-		}
+		//从cookie读取acode
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
+		acode = KitService.getProvinceCode(acode);
+		
 		News n = new News();
 		n.setType(Constants.ARTICLE_TYPE_NEWS);
 		n.setArea(new Area(acode));

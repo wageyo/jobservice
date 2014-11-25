@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -28,15 +29,20 @@ import esd.bean.WorkExperience;
 import esd.controller.Constants.Identity;
 import esd.controller.Constants.Notice;
 import esd.service.AreaService;
+import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.KitService;
 import esd.service.ParameterService;
 import esd.service.PersonService;
 import esd.service.ResumeService;
+import esd.service.UserService;
 
 @Controller
 @RequestMapping("/secure/resume")
 public class SecureResumeController {
+
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private ResumeService resumeService;
@@ -57,10 +63,14 @@ public class SecureResumeController {
 
 	// 保存简历
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(HttpServletRequest req, Resume resume,
-			HttpSession session, RedirectAttributes redirectAttributes) {
+	public String save(Resume resume,HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		log.info("--- save post---");
-		User user = (User) session.getAttribute(Constants.USER);
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		if(userId == null || "".equals(userId)){
+			redirectAttributes.addFlashAttribute("messageType", "0");
+			redirectAttributes.addFlashAttribute("message", "请刷新页面重新尝试!");
+			return "redirect:/index";
+		}
 		log.info("得到resume为 : " + resume);
 		// 形成的简历对象
 		if (resume == null) {
@@ -69,37 +79,19 @@ public class SecureResumeController {
 			return "redirect:/secure/resume/save";
 		}
 		// 所属人
+		Integer uid = Integer.parseInt(userId);
+		User user = userService.getById(uid);
 		resume.setUser(user);
 		// 所属地区
 		resume.setArea(user.getArea());
 		boolean bl = resumeService.save(resume);
-		// 保存个人教育经历
-		// String[] edutimes = req.getParameterValues("edutime");
-		// String[] eduschools = req.getParameterValues("eduschool");
-		// if (edutimes != null) {
-		// for (int i = 0; i < edutimes.length; i++) {
-		// if (edutimes[i] == null || "".equals(edutimes[i])) {
-		// continue;
-		// }
-		// EducationBackground eb = new EducationBackground();
-		// eb.setTime(edutimes[i]);
-		// eb.setSchool(eduschools[i]);
-		// eb.setResume(resume);
-		// resumeService.save(eb);
-		// }
-		// }
-		//
 		log.info("--------个人工作经历------------");
 		// // 保存个人工作经历
-		String[] workTimes = req.getParameterValues("workTime");
-		String[] companyNames = req.getParameterValues("companyName");
-		String[] jobNames = req.getParameterValues("jobName");
-		String[] jobContents = req.getParameterValues("jobContent");
-		String[] leaveReasons = req.getParameterValues("leaveReason");
-		log.info("workTimes : " + workTimes);
-		log.info("companyNames : " + companyNames);
-		log.info("jobNames : " + jobNames);
-		log.info("jobContents : " + jobContents);
+		String[] workTimes = request.getParameterValues("workTime");
+		String[] companyNames = request.getParameterValues("companyName");
+		String[] jobNames = request.getParameterValues("jobName");
+		String[] jobContents = request.getParameterValues("jobContent");
+		String[] leaveReasons = request.getParameterValues("leaveReason");
 		if (jobNames != null) {
 			for (int i = 0; i < workTimes.length; i++) {
 				if (workTimes[i] == null || "".equals(workTimes[i])) {
@@ -204,11 +196,11 @@ public class SecureResumeController {
 		String[] jobContents = req.getParameterValues("jobContent");
 		String[] leaveReasons = req.getParameterValues("leaveReason");
 		String[] updateChecks = req.getParameterValues("wUpdateCheck");
-		log.info("wids : " + workTimes);
-		log.info("workTimes : " + workTimes);
-		log.info("companyNames : " + companyNames);
-		log.info("jobNames : " + jobNames);
-		log.info("jobContents : " + jobContents);
+//		log.info("wids : " + workTimes);
+//		log.info("workTimes : " + workTimes);
+//		log.info("companyNames : " + companyNames);
+//		log.info("jobNames : " + jobNames);
+//		log.info("jobContents : " + jobContents);
 		WorkExperience we = null;
 		if (wids != null) {
 			for (int i = 0; i < wids.length; i++) {
@@ -257,24 +249,30 @@ public class SecureResumeController {
 
 	// 得到当前个人用户的所有简历
 	@RequestMapping("/getManage")
-	public String getManage(HttpServletRequest req, HttpSession session) {
+	public String getManage(HttpServletRequest request, HttpServletResponse response,RedirectAttributes ra) {
 		log.info("--- getManage ---");
 		// 得到当前用户
-		User user = (User) session.getAttribute(Constants.USER);
-		List<Resume> resumeList = resumeService.getByUser(user.getId());
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		if(userId == null || "".equals(userId)){
+			ra.addFlashAttribute("messageType", "0");
+			ra.addFlashAttribute("message", "请刷新页面重新尝试!");
+			return "/user/goCenter";
+		}
+		Integer uid = Integer.parseInt(userId);
+		List<Resume> resumeList = resumeService.getByUser(uid);
 		log.info("user'resume = " + resumeList.size());
-		req.setAttribute("resumeList", resumeList);
+		request.setAttribute("resumeList", resumeList);
 		return "/person/resume-manage";
 	}
 
 	// 根据个人用户的user id, 得到他所有的简历
 	@RequestMapping("/getByUser")
 	@ResponseBody
-	public Map<String, Object> getByUser(HttpServletRequest req) {
+	public Map<String, Object> getByUser(HttpServletRequest request) {
 		log.info("--- getByUser ---");
 		Map<String, Object> json = new HashMap<String, Object>();
 		// 得到当前用户
-		String idStr = req.getParameter("userid");
+		String idStr = request.getParameter("userid");
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
 			json.put("notice", Notice.ERROR);
@@ -289,11 +287,11 @@ public class SecureResumeController {
 	// 根据个人用户的user id, 得到他默认选中的简历
 	@RequestMapping("/getDefaultResume")
 	@ResponseBody
-	public Map<String, Object> getDefaultResume(HttpServletRequest req) {
+	public Map<String, Object> getDefaultResume(HttpServletRequest request) {
 		log.info("--- getDefaultResume ---");
 		Map<String, Object> json = new HashMap<String, Object>();
 		// 得到当前用户
-		String useridStr = req.getParameter("userid");
+		String useridStr = request.getParameter("userid");
 		int userid = KitService.getInt(useridStr);
 		if (userid < 0) {
 			json.put("notice", Notice.ERROR);
@@ -312,48 +310,65 @@ public class SecureResumeController {
 
 	// 得到投递过的职位列表
 	@RequestMapping(value = "/getSentJob/{page}", method = RequestMethod.GET)
-	public String getSentJob(HttpServletRequest req, HttpSession session,
+	public String getSentJob(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra, @PathVariable(value = "page") Integer page) {
 		log.info("----- getSentJob -----");
-		User user = (User) session.getAttribute(Constants.USER);
-		if (!user.getIdentity().equals(Identity.PERSON.toString())) {
+		// 得到当前用户
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		if(userId == null || "".equals(userId)){
+			ra.addFlashAttribute("messageType", "0");
+			ra.addFlashAttribute("message", "请刷新页面重新尝试!");
+			return "/user/goCenter";
+		}
+		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		if (!(Identity.PERSON.getValue()).equals(identity)) {
 			ra.addFlashAttribute("message", "权限不足!");
 			ra.addFlashAttribute("messageType", "0");
 			return "/user/goCenter";
 		}
 
-		List<Record> recordList = personService.getSentJob(user.getId(), page,
+		Integer uid = Integer.parseInt(userId);
+		List<Record> recordList = personService.getSentJob(uid, page,
 				Constants.SIZE);
-		req.setAttribute("recordList", recordList);
-		int totalCount = personService.getSentJobCount(user.getId());
-		req.setAttribute("totalCount", totalCount);
-		req.setAttribute("currentPage", page);
-		req.setAttribute(
+		request.setAttribute("recordList", recordList);
+		int totalCount = personService.getSentJobCount(uid);
+		request.setAttribute("totalCount", totalCount);
+		request.setAttribute("currentPage", page);
+		request.setAttribute(
 				"totalPages",
 				totalCount % Constants.SIZE == 0 ? (totalCount / Constants.SIZE)
 						: (totalCount / Constants.SIZE + 1));
 		return "person/job-record";
 	}
-	
+
 	// 得到 收到的面试邀请
 	@RequestMapping(value = "/getReceivedInvite/{page}", method = RequestMethod.GET)
-	public String getReceivedInvite(HttpServletRequest req, HttpSession session,
-			RedirectAttributes ra, @PathVariable(value = "page") Integer page) {
+	public String getReceivedInvite(HttpServletRequest request,HttpServletResponse response, RedirectAttributes ra,
+			@PathVariable(value = "page") Integer page) {
 		log.info("----- getSentJob -----");
-		User user = (User) session.getAttribute(Constants.USER);
-		if (!user.getIdentity().equals(Identity.PERSON.toString())) {
+		
+		// 得到当前用户
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		if(userId == null || "".equals(userId)){
+			ra.addFlashAttribute("messageType", "0");
+			ra.addFlashAttribute("message", "请刷新页面重新尝试!");
+			return "/user/goCenter";
+		}
+		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		if (!(Identity.PERSON.getValue()).equals(identity)) {
 			ra.addFlashAttribute("message", "权限不足!");
 			ra.addFlashAttribute("messageType", "0");
 			return "/user/goCenter";
 		}
-		
-		List<Record> recordList = personService.getSengetReceivedInvitetJob(user.getId(), page,
-				Constants.SIZE);
-		req.setAttribute("recordList", recordList);
-		int totalCount = personService.getSengetReceivedInvitetJobCount(user.getId());
-		req.setAttribute("totalCount", totalCount);
-		req.setAttribute("currentPage", page);
-		req.setAttribute(
+		Integer uid = Integer.parseInt(userId);
+
+		List<Record> recordList = personService.getSengetReceivedInvitetJob(
+				uid, page, Constants.SIZE);
+		request.setAttribute("recordList", recordList);
+		int totalCount = personService.getSengetReceivedInvitetJobCount(uid);
+		request.setAttribute("totalCount", totalCount);
+		request.setAttribute("currentPage", page);
+		request.setAttribute(
 				"totalPages",
 				totalCount % Constants.SIZE == 0 ? (totalCount / Constants.SIZE)
 						: (totalCount / Constants.SIZE + 1));
@@ -361,7 +376,7 @@ public class SecureResumeController {
 	}
 
 	// 保存工作经历
-	@RequestMapping(value="/saveExperience",method=RequestMethod.POST)
+	@RequestMapping(value = "/saveExperience", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> saveExperience(WorkExperience we) {
 		log.info("--- saveExperience ---");
@@ -384,7 +399,8 @@ public class SecureResumeController {
 	// 删除工作经历
 	@RequestMapping("/deleteExperience/{weid}")
 	@ResponseBody
-	public Map<String, Object> deleteWorkExperience(@PathVariable(value="weid") Integer weid) {
+	public Map<String, Object> deleteWorkExperience(
+			@PathVariable(value = "weid") Integer weid) {
 		log.info("--- deleteExperience ---");
 		Map<String, Object> json = new HashMap<String, Object>();
 		boolean bl = resumeService.deleteWorkExperience(weid);
@@ -395,9 +411,9 @@ public class SecureResumeController {
 		json.put("notice", Notice.SUCCESS.toString());
 		return json;
 	}
-	
+
 	// 更新工作经历
-	@RequestMapping(value="/updateExperience",method=RequestMethod.POST)
+	@RequestMapping(value = "/updateExperience", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateExperience(WorkExperience we) {
 		log.info("--- saveExperience ---");
@@ -416,11 +432,11 @@ public class SecureResumeController {
 		}
 		return json;
 	}
-	
+
 	// 保存测评办理情况
-	@RequestMapping(value="/saveUnempManage",method=RequestMethod.POST)
+	@RequestMapping(value = "/saveUnempManage", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> saveUnempManage(UnempManage	um) {
+	public Map<String, Object> saveUnempManage(UnempManage um) {
 		log.info("--- saveUnempManage ---");
 		Map<String, Object> json = new HashMap<String, Object>();
 		// 得到工作经历
@@ -441,7 +457,8 @@ public class SecureResumeController {
 	// 删除测评办理情况
 	@RequestMapping("/deleteUnempManage/{umid}")
 	@ResponseBody
-	public Map<String, Object> deleteUnempManage(@PathVariable(value="umid") Integer umid) {
+	public Map<String, Object> deleteUnempManage(
+			@PathVariable(value = "umid") Integer umid) {
 		log.info("--- deleteUnempManage ---");
 		Map<String, Object> json = new HashMap<String, Object>();
 		boolean bl = resumeService.deleteUnempManage(umid);
@@ -452,9 +469,9 @@ public class SecureResumeController {
 		json.put("notice", Notice.SUCCESS.toString());
 		return json;
 	}
-	
+
 	// 更新测评办理情况
-	@RequestMapping(value="/updateUnempManage",method=RequestMethod.POST)
+	@RequestMapping(value = "/updateUnempManage", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> updateUnempManagee(UnempManage um) {
 		log.info("--- saveUnempManage ---");
@@ -473,16 +490,7 @@ public class SecureResumeController {
 		}
 		return json;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
+
 	// // 保存教育背景
 	// @RequestMapping("/saveEducation")
 	// @ResponseBody

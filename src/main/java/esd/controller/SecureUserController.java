@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -14,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import esd.bean.Company;
 import esd.bean.User;
 import esd.controller.Constants.Notice;
-import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.UserService;
 
@@ -28,16 +28,13 @@ public class SecureUserController {
 	@Autowired
 	private UserService<User> userService;
 
-	@Autowired
-	private CompanyService<Company> companyService;
-
 	// 修改账号
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Map<String, Object> edit(User user, HttpServletRequest req) {
+	public Map<String, Object> edit(User user, HttpServletRequest request) {
 		log.info("--- edit ---");
 		Map<String, Object> json = new HashMap<String, Object>();
-		String idStr = req.getParameter("id");
+		String idStr = request.getParameter("id");
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
 			json.put("notice", Notice.ERROR);
@@ -73,10 +70,10 @@ public class SecureUserController {
 	// 根据id得到一个账号对象
 	@RequestMapping("/getOne")
 	@ResponseBody
-	public Map<String, Object> getOne(HttpServletRequest req) {
+	public Map<String, Object> getOne(HttpServletRequest request) {
 		log.info("--- getOne ---");
 		Map<String, Object> json = new HashMap<String, Object>();
-		String idStr = req.getParameter("id");
+		String idStr = request.getParameter("id");
 		int id = KitService.getInt(idStr);
 		if (id <= 0) {
 			json.put("notice1", Notice.ERROR);
@@ -94,23 +91,31 @@ public class SecureUserController {
 
 	// 跳转到修改密码页面修改密码
 	@RequestMapping(value = "/passWordEdit", method = RequestMethod.GET)
-	public String gotoPassWordEdit(HttpSession session) {
+	public String gotoPassWordEdit(HttpServletRequest request, HttpServletResponse response) {
 		log.info("--- passWordEdit get---");
-		User user = (User) session.getAttribute(Constants.USER);
-		return user.getIdentity() + "/password-edit";
+		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		return identity + "/password-edit";
 	}
 
 	// 修改密码
 	@RequestMapping(value = "/passWordEdit", method = RequestMethod.POST)
-	public String passWordEdit(HttpServletRequest req, HttpSession session,
+	public String passWordEdit(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra) {
 		log.info("--- passWordEdit post---");
-		User user = (User) session.getAttribute(Constants.USER);
-		String oldPassWord = req.getParameter("oldPassWord");
-		String newPassWord = req.getParameter("newPassWord");
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		if(userId == null || "".equals(userId)){
+			ra.addFlashAttribute("messageType", "0");
+			ra.addFlashAttribute("message", "请先登录, 再修改密码.");
+			return "redirect:/index";
+		}
+		Integer uid = Integer.parseInt(userId);
+		User user = userService.getById(uid);
+		String loginName = CookieHelper.getCookieValue(request, Constants.USERNAME);
+		String oldPassWord = request.getParameter("oldPassWord");
+		String newPassWord = request.getParameter("newPassWord");
 		// 验证原密码是否正确
 		User tempUser = new User();
-		tempUser.setLoginName(user.getLoginName());
+		tempUser.setLoginName(loginName);
 		tempUser.setPassWord(oldPassWord);
 		tempUser = userService.check(tempUser);
 		if (tempUser == null) {
@@ -124,12 +129,9 @@ public class SecureUserController {
 		log.info("update password bl = " + bl);
 		if (!bl) {
 			ra.addFlashAttribute("messageType", "0");
-			ra.addFlashAttribute("message", "操作失败!");
+			ra.addFlashAttribute("message", "修改密码失败, 请联系管理员.");
 			return "redirect:/secure/user/passWordEdit";
 		}
-		// 重新读取用户放到session中
-		user = userService.getById(user.getId());
-		session.setAttribute(Constants.USER, user);
 		ra.addFlashAttribute("messageType", "1");
 		ra.addFlashAttribute("message", "操作成功!");
 		return "redirect:/secure/user/passWordEdit";

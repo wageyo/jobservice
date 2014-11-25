@@ -3,6 +3,7 @@ package esd.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ import esd.bean.Parameter;
 import esd.bean.Resume;
 import esd.service.AreaService;
 import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.JobService;
 import esd.service.KitService;
@@ -68,20 +70,16 @@ public class IndexController {
 
 	//首页
 	@RequestMapping("/index")
-	public ModelAndView index(HttpServletRequest request,HttpSession session) {
+	public ModelAndView index(HttpServletRequest request,HttpServletResponse response) {
 		log.debug("=========================" + request.getRequestURI());
 		//①先查看request中有没有传过来的acode, 
 		String acode= request.getParameter("acode");
 		if(acode != null){
-			//②不为空则是第一次进来, 将其中的acode放到session中
-			Area area = areaService.getByCode(acode);
-			session.setAttribute("area", area);
+			//②不为空则是第一次进来, 将其中的acode放到cookie中
+			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
 		}else{
-			//③为空在则检查session是中没有地区信息
-			Object obj = session.getAttribute("area");
-			if(obj!=null){
-				acode = ((Area)obj).getCode();
-			}
+			//③为空在则检查cookie是中没有地区信息
+			acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		}
 		ModelAndView mav = new ModelAndView("index");
 		// 得到最新的10个公司
@@ -152,7 +150,7 @@ public class IndexController {
 
 	//职位列表浏览页面
 	@RequestMapping("/work")
-	public ModelAndView work(HttpServletRequest request,HttpSession session) {
+	public ModelAndView work(HttpServletRequest request, HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("work/work");
 		List<Parameter> plist = parameterService.getAll();
@@ -167,23 +165,24 @@ public class IndexController {
 		// 获得职位总数
 		int totalCount = jobService.getTotalCount(null);
 		mav.addObject("totalCount", totalCount);
-		// 读取地区码,放入到session中
+		// 如果request中有传过来地区code, 则读取地区码,放入到cookie中
 		String acode = request.getParameter("acode");
 		log.info("acode [" + acode + "]");
 		if (acode != null && !"".equals(acode)) {
-//			// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-//			if(acode.startsWith("30")){
-//				acode = KitService.getProvinceCode(acode);
-//			}
-			Area area = areaService.getByCode(acode);
-			session.setAttribute("area", area);
+			CookieHelper.setCookie(response, Constants.AREA, acode);
+		}else{
+			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		}
+		// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
+		if(acode.startsWith("30")){
+			acode = KitService.getProvinceCode(acode);
 		}
 		return mav;
 	}
 
 	//简历列表浏览页面
 	@RequestMapping("/emp")
-	public ModelAndView emp(HttpServletRequest request,HttpSession session) {
+	public ModelAndView emp(HttpServletRequest request, HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("emp/emp");
 		List<Parameter> plist = parameterService.getAll();
@@ -199,16 +198,17 @@ public class IndexController {
 		int totalCount = resumeService.getTotalCount(null);
 		log.info("*********************************************" + totalCount);
 		mav.addObject("totalCount", totalCount);
-		// 读取地区码,放入到session中
+		// 如果request中有传过来地区code, 则读取地区码,放入到cookie中
 		String acode = request.getParameter("acode");
 		log.info("acode [" + acode + "]");
 		if (acode != null && !"".equals(acode)) {
-			// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-			if(acode.startsWith("30")){
-				acode = KitService.getProvinceCode(acode);
-			}
-		Area area = areaService.getByCode(acode);
-		session.setAttribute("area", area);
+			CookieHelper.setCookie(response, Constants.AREA, acode);
+		}else{
+			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		}
+		// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
+		if(acode.startsWith("30")){
+			acode = KitService.getProvinceCode(acode);
 		}
 		return mav;
 	}
