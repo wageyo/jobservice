@@ -193,7 +193,6 @@ public class UserController {
 		}
 		log.debug("login: " + user);
 		CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
-		CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
 		CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
 		CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));

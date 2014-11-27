@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,9 +22,11 @@ import esd.bean.News;
 import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
+import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.NewsService;
 import esd.service.ParameterService;
+import esd.service.UserService;
 
 /**
  * 文章(就业指导/最新资讯)后台管理控制器
@@ -39,6 +40,9 @@ public class NewsManageController {
 	private static Logger log = Logger.getLogger(NewsManageController.class);
 
 	@Autowired
+	private UserService<User> userService;
+	
+	@Autowired
 	private NewsService newsService;
 	
 	@Autowired
@@ -46,7 +50,7 @@ public class NewsManageController {
 
 	// 转到职位管理列表页面
 	@RequestMapping(value = "/news_list", method = RequestMethod.GET)
-	public ModelAndView list_get(HttpServletRequest request, HttpSession session) {
+	public ModelAndView list_get(HttpServletRequest request) {
 		log.debug("goto：文章(就业指导/最新资讯)管理");
 		Map<String, Object> entity = new HashMap<>();
 		String pageStr = request.getParameter("page");
@@ -66,7 +70,9 @@ public class NewsManageController {
 		paramEntity.setType(articleType);
 
 		// 获取地区码
-		User userObj = (User) session.getAttribute(Constants.USER);
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
@@ -124,11 +130,14 @@ public class NewsManageController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> news_add_post(News params, HttpServletRequest request,
-			HttpSession session) {
+			HttpServletResponse response) {
 		log.debug(" 增加文章" + params);
 		Map<String, Object> result = new HashMap<String, Object>();
-		User u = (User) session.getAttribute(Constants.USER);
-		params.setArea(u.getArea());
+		//获取当前登录用户所在地区
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
+		params.setArea(userObj.getArea());
 		if(newsService.save(params)){
 			result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		}else{
@@ -171,7 +180,7 @@ public class NewsManageController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> news_edit_post(News params, HttpServletRequest request,
-			HttpSession session) {
+			HttpServletResponse response) {
 		log.debug("   更新文章" + params);
 		Map<String, Object> entity = new HashMap<String, Object>();
 		boolean bl = newsService.update(params);

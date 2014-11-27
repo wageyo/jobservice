@@ -41,6 +41,8 @@ public class Constants {
 	public static final String USERPASSWORD = "password"; // 密码
 	public static final String USERIDENTITY = "identity"; // 身份值
 	public static final String USERAUTHORITY = "authority"; // 权限值
+	public static final String USERNICKNAME = "nickname";	//用户昵称
+	public static final String USERTITLE = "title";	//用户标题--管理员用户显示标题使用
 	public static final String USERCOMPANYID = "companyid"; // 企业id
 	public static final String USERREGISTERTIME = "registertime"; // 注册时间
 	public static final String AREA = "area"; // 地区key

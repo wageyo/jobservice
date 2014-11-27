@@ -2,8 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<script type="text/javascript">
+	$(document).ready(function(){
+		decodeTitle();
+	});
+
+	//解码title, nickName
+	function decodeTitle(){
+		var nickName = decodeURIComponent('${cookie.nickname.value}');
+		$('#nickName').html(nickName);
+		var title = decodeURIComponent('${cookie.title.value}');
+		$('#adminTitle').html(title);
+	}
+</script>
 <div class="manage-header" style="">
-	
 	<table style="width:100%;height:100%;background-color: rgb(240, 240, 255);;">
 		<tr>
 			<td style="line-height: 20px;">
@@ -13,7 +25,7 @@
 				&nbsp;
 			</td>
 			<td style="text-align:right;line-height: 20px;">
-				<a href="javascript:void(0);">${user.nickName } </a>
+				<a href="javascript:void(0);" id="nickName">${cookie.nickname.value } </a>
 				<span id="currentTime"></span>
 				<span style=""><a href="/jobservice/loginManage/quit">退出</a></span>
 			</td>
@@ -23,7 +35,7 @@
 				&nbsp;
 			</td>
 			<td >
-				<span style="font-size:30px;letter-spacing:10px;">${user.title }</span>
+				<span style="font-size:30px;letter-spacing:10px;" id="adminTitle"></span>
 			</td>
 			<td>
 				&nbsp;

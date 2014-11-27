@@ -1,6 +1,10 @@
 package esd.controller.manage;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -14,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.controller.Constants.Authority;
+import esd.service.CookieHelper;
 import esd.service.UserService;
 
 /**
@@ -32,19 +37,19 @@ public class LoginManageController {
 
 	// 转到管理 登陆页面
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView goLogin(HttpServletRequest request,
-			HttpSession session, RedirectAttributes ra) {
+	public ModelAndView goLogin(HttpServletRequest request) {
 		log.debug("转到管理 登陆页面");
 		return new ModelAndView("manage/login");
 	}
 
 	// 转到管理 登陆页面
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpServletRequest request, HttpSession session,
+	public String login(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra) {
-		Object obj = session.getAttribute(Constants.USER);
-		// 判断是否在别处登录
-		if (obj == null) {
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		// 判断是否登录
+		if (userId == null || "".equals(userId)) {
 			log.debug("进入到后台管理登录页面。");
 			String loginName = request.getParameter("loginName");
 			String passWord = request.getParameter("passWord");
@@ -57,27 +62,35 @@ public class LoginManageController {
 			User userObj = new User();
 			userObj.setLoginName(loginName);
 			userObj.setPassWord(passWord);
-			User u = userService.check(userObj);
-			if (u == null) {
+			User user = userService.check(userObj);
+			if (user == null) {
 				log.debug("登陆管理登陆失败。");
 				ra.addFlashAttribute(Constants.NOTICE, "账号或密码错误");
 				return "redirect:/loginManage/login";
 			} else {
-				// // 非管理员用户登陆
-				// if (!Identity.ADMIN.toString().equals(u.getIdentity())) {
-				// ra.addFlashAttribute(Constants.NOTICE, "权限不足");
-				// return "redirect:/loginManage/login";
-				// }
-				if (u.getAuthority() != null) {
-					if (u.getAuthority() < Authority.ADMIN.getValue()) {
+				if (user.getAuthority() != null) {
+					if (user.getAuthority() < Authority.ADMIN.getValue()) {
 						ra.addFlashAttribute(Constants.NOTICE, "权限不足");
 						return "redirect:/loginManage/login";
 					}
 				}
-				session.setAttribute(Constants.USER, u);
-				session.setAttribute("titleText", u.getTitle());
+				CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+				CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
+				CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
+				CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+				try {
+					String nickName = URLEncoder.encode(user.getNickName(), "UTF-8");
+					CookieHelper.setCookie(response, Constants.USERNICKNAME,nickName);
+					String title = URLEncoder.encode(user.getTitle(), "UTF-8");
+					CookieHelper.setCookie(response, Constants.USERTITLE,title);
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//地区代码
+				CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode());
 
-				log.debug("管理用户登陆成功:" + u);
+				log.debug("管理用户登陆成功:" + user);
 				return "redirect:/manage/index";
 			}
 		} else {
@@ -96,13 +109,10 @@ public class LoginManageController {
 	// 修改密码
 	@RequestMapping(value = "/password_edit", method = RequestMethod.POST)
 	public String password_edit_post(HttpServletRequest request,
-			HttpSession session, RedirectAttributes ra) {
-		User user = (User) session.getAttribute(Constants.USER);
+			HttpServletResponse response, RedirectAttributes ra) {
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
 		String return_password_edit = "redirect:/loginManage/password_edit";
-		if (user == null) {
-			ra.addFlashAttribute(Constants.NOTICE, "用户未登录,请登陆后再进行操作!");
-			return return_password_edit;
-		}
+		User user = userService.getById(Integer.parseInt(userId));
 		String oldPassWord = request.getParameter("oldPassWord");
 		String newPassWord = request.getParameter("newPassWord");
 		if (!user.getPassWord().equals(oldPassWord)) {
@@ -123,8 +133,15 @@ public class LoginManageController {
 	 * 退出
 	 */
 	@RequestMapping(value = "/quit", method = RequestMethod.GET)
-	public String quit(HttpServletRequest request, HttpSession session) {
-		session.invalidate();
+	public String quit(HttpServletRequest request, HttpServletResponse response) {
+		//杀死所有cookie
+		CookieHelper.setCookie(response, Constants.USERID, null, 0);
+		CookieHelper.setCookie(response, Constants.USERNAME, null, 0);
+		CookieHelper.setCookie(response, Constants.USERIDENTITY, null, 0);
+		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
+		CookieHelper.setCookie(response, Constants.USERNICKNAME, null, 0);
+		CookieHelper.setCookie(response, Constants.USERTITLE, null, 0);
+		CookieHelper.setCookie(response, Constants.AREA, null, 0);
 		log.error("管理员用户退出");
 		return "redirect:/loginManage/login";
 	}

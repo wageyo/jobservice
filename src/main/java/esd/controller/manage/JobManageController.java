@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import esd.bean.Area;
 import esd.bean.Job;
@@ -26,12 +25,11 @@ import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
-import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ParameterService;
-import esd.service.ResumeService;
 import esd.service.UserService;
 
 /**
@@ -52,6 +50,9 @@ public class JobManageController {
 	private String destFileName;
 
 	@Autowired
+	private UserService<User> userService;
+	
+	@Autowired
 	private AreaService areaService;
 
 	@Autowired
@@ -65,7 +66,7 @@ public class JobManageController {
 
 	// 转到职位管理列表页面
 	@RequestMapping(value = "/job_list", method = RequestMethod.GET)
-	public ModelAndView list_get(HttpServletRequest request, HttpSession session) {
+	public ModelAndView list_get(HttpServletRequest request, HttpServletResponse response) {
 		log.debug("goto：招聘信息/职位 后台管理 列表");
 		Map<String, Object> entity = new HashMap<>();
 		String pageStr = request.getParameter("page");
@@ -82,11 +83,16 @@ public class JobManageController {
 		}
 		paramEntity.setName(targetName);
 		paramEntity.setCheckStatus(checkStatus);
-
-		// 获取地区码
-		User userObj = (User) session.getAttribute(Constants.USER);
+		
+		//获取当前管理员所在地区code
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		if(userId == null || "".equals(userId)){
+			return new ModelAndView("redirect:/loginManage/login");
+		}
+		Integer uid = Integer.parseInt(userId);
+		User user = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
-		String acode = userObj.getArea().getCode();
+		String acode = user.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
 
 		List<Job> resultList = jobService.getListShowForManage(paramEntity,
@@ -128,7 +134,7 @@ public class JobManageController {
 	// 跳转到查看职位页面
 	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
 	public ModelAndView view_object(@PathVariable(value = "id") Integer id,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Job obj = jobService.getById(id);
@@ -148,7 +154,7 @@ public class JobManageController {
 	// 跳转到编辑职位页面
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView edit_object_get(@PathVariable(value = "id") Integer id,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Job obj = jobService.getById(id);
@@ -168,7 +174,7 @@ public class JobManageController {
 	// 提交保存编辑的职位
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> edit_object_post(Job param, HttpServletRequest request,HttpSession session) {
+	public Map<String, Object> edit_object_post(Job param, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(param == null){
 			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
@@ -185,8 +191,7 @@ public class JobManageController {
 	// 拒绝职位通过
 	@RequestMapping(value="/refuse/{id}",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> refuse_object(
-			@PathVariable(value = "id") Integer id) {
+	public Map<String, Object> refuse_object(@PathVariable(value = "id") Integer id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Job refuseEntity = jobService.getById(id);
 		refuseEntity
@@ -202,8 +207,7 @@ public class JobManageController {
 	// 同意职位通过
 	@RequestMapping(value="/approve/{id}",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> approve_object(
-			@PathVariable(value = "id") Integer id) {
+	public Map<String, Object> approve_object(@PathVariable(value = "id") Integer id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Job refuseEntity = jobService.getById(id);
 		refuseEntity

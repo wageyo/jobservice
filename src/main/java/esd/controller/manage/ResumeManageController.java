@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,7 @@ import esd.bean.Resume;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
+import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.KitService;
 import esd.service.ParameterService;
@@ -49,7 +50,7 @@ public class ResumeManageController {
 	private String destFileName;
 
 	@Autowired
-	private UserService userService;
+	private UserService<User> userService;
 
 	@Autowired
 	private AreaService areaService;
@@ -65,7 +66,7 @@ public class ResumeManageController {
 
 	// 转到简历管理列表页面
 	@RequestMapping(value = "/resume_list", method = RequestMethod.GET)
-	public ModelAndView list_get(HttpServletRequest request, HttpSession session) {
+	public ModelAndView list_get(HttpServletRequest request) {
 		log.debug("goto：简历 后台管理 列表");
 		Map<String, Object> entity = new HashMap<>();
 		String pageStr = request.getParameter("page");
@@ -84,7 +85,9 @@ public class ResumeManageController {
 		paramEntity.setCheckStatus(checkStatus);
 
 		// 获取地区码
-		User userObj = (User) session.getAttribute(Constants.USER);
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
@@ -127,7 +130,7 @@ public class ResumeManageController {
 	// 跳转到查看简历页面
 	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
 	public ModelAndView view_object(@PathVariable(value = "id") Integer id,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Resume obj = resumeService.getById(id);
@@ -147,7 +150,7 @@ public class ResumeManageController {
 	// 跳转到编辑简历页面
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView edit_object_get(@PathVariable(value = "id") Integer id,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Resume obj = resumeService.getById(id);
@@ -167,7 +170,7 @@ public class ResumeManageController {
 	// 提交保存编辑的简历
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> edit_object_post(Resume param, HttpServletRequest request,HttpSession session) {
+	public Map<String, Object> edit_object_post(Resume param, HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(param == null){
 			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");

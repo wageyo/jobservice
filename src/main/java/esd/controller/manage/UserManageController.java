@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ import esd.bean.Area;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
+import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.UserService;
 
@@ -43,14 +44,14 @@ public class UserManageController {
 	private String destFileName;
 
 	@Autowired
-	private UserService userService;
+	private UserService<User> userService;
 
 	@Autowired
 	private AreaService areaService;
 
 	// 转到职位管理列表页面
 	@RequestMapping(value = "/user_list", method = RequestMethod.GET)
-	public ModelAndView list_get(HttpServletRequest request, HttpSession session) {
+	public ModelAndView list_get(HttpServletRequest request) {
 		log.debug("goto：账号/用户 后台管理 列表");
 		Map<String, Object> entity = new HashMap<>();
 		String pageStr = request.getParameter("page");
@@ -69,13 +70,14 @@ public class UserManageController {
 		paramEntity.setCheckStatus(checkStatus);
 
 		// 获取地区码
-		User userObj = (User) session.getAttribute(Constants.USER);
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
 
-		List<User> resultList = userService.getByPage(paramEntity,
-				page, rows);
+		List<User> resultList = userService.getByPage(paramEntity, page, rows);
 		Integer total = userService.getTotalCount(paramEntity); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
@@ -87,7 +89,7 @@ public class UserManageController {
 				tempMap.put("email", tmp.getEmail());// 邮箱
 				tempMap.put("phone", tmp.getPhone());// 联系电话
 				tempMap.put("area", tmp.getArea());// 所属地区
-				
+
 				list.add(tempMap);
 			}
 			entity.put("total", total);
@@ -110,7 +112,7 @@ public class UserManageController {
 	// 跳转到查看职位页面
 	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
 	public ModelAndView view_object(@PathVariable(value = "id") Integer id,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		User obj = userService.getById(id);
@@ -124,7 +126,7 @@ public class UserManageController {
 	// 跳转到编辑职位页面
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView edit_object_get(@PathVariable(value = "id") Integer id,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		User obj = userService.getById(id);
@@ -134,13 +136,14 @@ public class UserManageController {
 		entity.put("provinceList", alist);
 		return new ModelAndView("manage/user-edit", entity);
 	}
-	
+
 	// 提交保存编辑的职位
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> edit_object_post(User param, HttpServletRequest request,HttpSession session) {
+	public Map<String, Object> edit_object_post(User param,
+			HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(param == null){
+		if (param == null) {
 			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
 			return map;
 		}
@@ -151,9 +154,9 @@ public class UserManageController {
 		}
 		return map;
 	}
-	
+
 	// 拒绝职位通过
-	@RequestMapping(value="/refuse/{id}",method=RequestMethod.POST)
+	@RequestMapping(value = "/refuse/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> refuse_object(
 			@PathVariable(value = "id") Integer id) {
@@ -168,16 +171,15 @@ public class UserManageController {
 		}
 		return map;
 	}
-	
+
 	// 同意职位通过
-	@RequestMapping(value="/approve/{id}",method=RequestMethod.POST)
+	@RequestMapping(value = "/approve/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> approve_object(
 			@PathVariable(value = "id") Integer id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		User refuseEntity = userService.getById(id);
-		refuseEntity
-				.setCheckStatus(Constants.CheckStatus.OK.getValue());
+		refuseEntity.setCheckStatus(Constants.CheckStatus.OK.getValue());
 		if (userService.update(refuseEntity)) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {
@@ -186,6 +188,4 @@ public class UserManageController {
 		return map;
 	}
 
-	
-	
 }

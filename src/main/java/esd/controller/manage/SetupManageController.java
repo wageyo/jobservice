@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
+import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.ParameterService;
+import esd.service.UserService;
 
 /**
  * 审核开关 管理控制器
@@ -32,17 +34,22 @@ import esd.service.ParameterService;
 @RequestMapping("/manage/setup")
 public class SetupManageController {
 	private static Logger log = Logger.getLogger(SetupManageController.class);
-
+	
+	@Autowired
+	private UserService<User> userService;
+	
 	@Autowired
 	private ParameterService parameterService;
 
 	// 跳转到 系统设置 页面
 	@RequestMapping(value = "/goto_setup", method = RequestMethod.GET)
 	public ModelAndView gotosetup(HttpServletRequest request,
-			HttpSession session) {
+			HttpServletResponse response) {
 		log.error("goto 系统设置");
 		// 获取地区码
-		User userObj = (User) session.getAttribute(Constants.USER);
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
 		String code = userObj.getArea().getCode();
 		if (code == null || "".equals(code)) {
 			log.error("获取开关状态失败，地区无效");
@@ -77,7 +84,7 @@ public class SetupManageController {
 	@RequestMapping(value = "/update_switch", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> setstatus(HttpServletRequest request,
-			HttpSession session) {
+			HttpServletResponse response) {
 		String switchid = request.getParameter("switchid");
 		String switchStatus = request.getParameter("switchStatus");
 		Map<String, Object> entity = new HashMap<String, Object>();

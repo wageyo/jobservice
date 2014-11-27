@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,10 @@ import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.BusinessScopeService;
 import esd.service.CompanyService;
+import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.ParameterService;
+import esd.service.UserService;
 
 /**
  * 企业信息 后台管理控制器
@@ -47,7 +49,10 @@ public class CompanyManageController {
 	private String destFileName;
 
 	@Autowired
-	private CompanyService companyService;
+	private UserService<User> userService;
+	
+	@Autowired
+	private CompanyService<Company> companyService;
 
 	@Autowired
 	private ParameterService pService;
@@ -57,7 +62,7 @@ public class CompanyManageController {
 
 	// 转到企业信息管理列表页面
 	@RequestMapping(value = "/company_list", method = RequestMethod.GET)
-	public ModelAndView list_get(HttpServletRequest request, HttpSession session) {
+	public ModelAndView list_get(HttpServletRequest request) {
 		log.debug("goto：企业信息 后台管理 列表");
 		Map<String, Object> entity = new HashMap<>();
 		String pageStr = request.getParameter("page");
@@ -76,7 +81,9 @@ public class CompanyManageController {
 		paramEntity.setCheckStatus(checkStatus);
 
 		// 获取地区码
-		User userObj = (User) session.getAttribute(Constants.USER);
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
@@ -118,7 +125,7 @@ public class CompanyManageController {
 	// 跳转到查看企业页面
 	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
 	public ModelAndView view_object(@PathVariable(value = "id") Integer id,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Company obj = companyService.getById(id);
@@ -135,7 +142,7 @@ public class CompanyManageController {
 	// 跳转到编辑企业页面
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView edit_object_get(@PathVariable(value = "id") Integer id,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
 		Company obj = companyService.getById(id);
@@ -153,7 +160,7 @@ public class CompanyManageController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> edit_object_post(Company param,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (param == null) {
 			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");

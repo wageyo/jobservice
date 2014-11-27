@@ -9,6 +9,40 @@
 		color:#251FAF;
 	}
 </style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		getMenu();
+	});
+	
+	//获得菜单
+	function getMenu(){
+		var authority = '${cookie.authority.value}';
+		$.ajax({
+			url:'${contextPath}/manage/getMenu/' + authority,
+			type:'POST',
+			dataType:'json',
+			success:function(data){
+				$.each(data.menuList,function(i,menu){
+					var mli = '<li ';
+					var requestUrl = '${requestUrl}';
+					var tt = requestUrl.substring(requestUrl.indexOf('ge/'),(requestUrl.indexOf('ge/')+6));
+					var ttt = menu.url.substring(menu.url.indexOf('ge/'),(menu.url.indexOf('ge/')+6));
+					tt = tt.replace( /^\s+|\s+$/g, "" );
+					ttt = ttt.replace( /^\s+|\s+$/g, "" );
+					if(tt == ttt){
+						mli += ' class="active" ';
+					}
+					mli += '><a href="' + menu.url +'">' + menu.text + '</a></li>';
+					$('.manage-body-left .nav-list').append(mli);
+				});
+			},
+			error:function(){
+				alert('获取菜单失败, 请重新登陆或者刷新页面后重试.');
+			}
+		});
+		
+	}
+</script>
 <div class="manage-body-left" style="background:url('${contextPath}/images/backdoor/ul_bg.jpg') repeat-y;">
 	<div class="container-fluid" style="padding-left:0px;padding-right:0px;">
 		<div class="row-fluid">

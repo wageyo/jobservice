@@ -78,7 +78,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 		 */
 		if (request.getRequestURI().indexOf("/manage") != -1) {
 			String username = CookieHelper.getCookieValue(request, Constants.USERNAME);
-			if (username == null) {
+			String authorityStr = CookieHelper.getCookieValue(request, Constants.USERAUTHORITY);
+			Integer authority = 0;
+			if(authorityStr  != null && !"".equals(authorityStr)){
+				authority = Integer.parseInt(authorityStr);
+			}
+			if (username == null || authority < Constants.Authority.ADMIN.getValue()) {
 				logger.error("未登陆状态进入工作区被拦截");
 				PrintWriter out = null;
 				try {

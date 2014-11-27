@@ -43,7 +43,7 @@ public class AdminManageController {
 	private static Logger log = Logger.getLogger(AdminManageController.class);
 
 	@Autowired
-	private UserService userService;
+	private UserService<User> userService;
 	
 	@Autowired
 	private AreaService areaService;
@@ -53,7 +53,7 @@ public class AdminManageController {
 	 * 转到超级页面 管理员列表 页面
 	 */
 	@RequestMapping(value = "/admin_list", method = RequestMethod.GET)
-	public ModelAndView admin_list(HttpServletRequest request, HttpSession session) {
+	public ModelAndView admin_list(HttpServletRequest request) {
 		log.debug("goto：管理员管理");
 		Map<String, Object> entity = new HashMap<>();
 		String pageStr = request.getParameter("page");
@@ -75,12 +75,6 @@ public class AdminManageController {
 			checkStatus = Constants.CheckStatus.OK.getValue();
 		}
 		paramEntity.setCheckStatus(checkStatus);
-//			// 获取地区码
-//			User userObj = (User) session.getAttribute(
-//					Constants.USER);
-//			String acode = userObj.getArea().getCode();
-//			// 设置查看地区码条件为管理员所在地区
-//			companyType.setArea(new Area(acode));
 		List<User> resultList = userService.getByPage(
 				paramEntity, page, rows);
 		Integer total = userService.getTotalCount(paramEntity); // 数据总条数
@@ -128,8 +122,7 @@ public class AdminManageController {
 	// 提交 增加管理员
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> admin_add_post(User params, HttpServletRequest request,
-			HttpSession session) {
+	public Map<String,Object> admin_add_post(User params, HttpServletRequest request) {
 		log.debug(" 增加管理员" + params);
 		Map<String, Object> result = new HashMap<String, Object>();
 		boolean bl = userService.saveAdmin(params);
@@ -174,8 +167,7 @@ public class AdminManageController {
 	// 提交管理员编辑
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> admin_edit_post(User params, HttpServletRequest request,
-			HttpSession session) {
+	public Map<String,Object> admin_edit_post(User params, HttpServletRequest request) {
 		log.debug("   更新管理员" + params);
 		Map<String, Object> entity = new HashMap<String, Object>();
 		boolean bl = userService.update(params);

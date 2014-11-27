@@ -1,20 +1,20 @@
 package esd.controller.manage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import esd.bean.Menu;
-import esd.bean.User;
-import esd.controller.Constants;
 import esd.service.MenuService;
 
 @Controller
@@ -24,23 +24,23 @@ public class ManageController {
 
 	@Autowired
 	private MenuService menuService;
-
+	
 	// 转到管理 主页
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index(HttpServletRequest request, HttpSession session,
-			RedirectAttributes ra) {
+	public String index(HttpServletRequest request) {
 		log.debug("goto：管理后台  首页");
-		// 读取对应管理员对应的菜单, 放到session中
-		// 从session中读取登陆管理员, 如果为空则返回登陆页面
-		User userObj = (User) session.getAttribute(Constants.USER);
-		if (userObj == null) {
-			ra.addFlashAttribute(Constants.NOTICE, "session已过期, 请重新登陆.");
-			return "redirect:/manage/login/index";
-		}
-		List<Menu> menuList = menuService
-				.getByAuthority(userObj.getAuthority());
-		session.setAttribute("menuList", menuList);
 		return "/manage/index";
+	}
+	
+	//根据权限值获得菜单列表
+	@RequestMapping(value="/getMenu/{authority}",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> getMenuList(@PathVariable(value="authority") Integer authority, HttpServletRequest request){
+		log.debug("----获取 菜单----");
+		Map<String,Object> entity = new HashMap<String,Object>();
+		List<Menu> list = menuService.getByAuthority(authority);
+		entity.put("menuList", list);
+		return entity;
 	}
 
 }
