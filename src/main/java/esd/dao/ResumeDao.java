@@ -11,8 +11,12 @@ import esd.bean.Resume;
  * @author Administrator
  * 
  */
-public interface ResumeDao extends IDao {
+public interface ResumeDao extends IDao<Resume> {
 
+	
+	//根据账号, 删除对应的简历
+	Integer deleteByUser(Integer cid);
+	
 	// 根据用户id, 得到此人简历
 	public List<Resume> getByUser(int id);
 

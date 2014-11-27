@@ -134,11 +134,11 @@
 												${entity.nature }
 											</td>
 											<td>
-												<fmt:formatDate value="${entity.createDate }" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="createDate"/>
+												<fmt:formatDate value="${entity.createDate }" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" var="createDate"/>
 												${createDate }
 											</td>
 											<td>
-												<fmt:formatDate value="${entity.effectiveTime }" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="effectiveTime"/>
+												<fmt:formatDate value="${entity.effectiveTime }" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" var="effectiveTime"/>
 												${effectiveTime }
 											</td>
 											<td>
@@ -156,6 +156,7 @@
 												<c:if test="${checkStatus != 'ok' }">
 													<a href="javascript:updateEntity('approve','${entity.id }');">通过</a>
 												</c:if>
+												<a href="javascript:updateEntity('delete','${entity.id }');">删除</a>
 											</td>
 										</tr>
 									</c:forEach>

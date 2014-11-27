@@ -279,6 +279,11 @@
 		delete from job where id = #{id, jdbcType=INTEGER}
 	</delete>
 	
+	<!-- deleteByCompany -->
+	<delete id="deleteByCompany" parameterType="java.lang.Integer">
+		delete from job where cid = #{cid, jdbcType=INTEGER}
+	</delete>
+	
 	<!-- update -->
 	<update id="update" parameterType="Job">
 		update job

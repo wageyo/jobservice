@@ -31,8 +31,6 @@ import esd.bean.User;
 import esd.bean.WorkExperience;
 import esd.controller.Constants;
 import esd.dao.AreaDao;
-import esd.dao.EducationBackgroundDao;
-import esd.dao.FamilyMemberDao;
 import esd.dao.JobCategoryDao;
 import esd.dao.ResumeDao;
 import esd.dao.UnempManageDao;
@@ -51,18 +49,18 @@ public class ResumeService {
 	@Autowired
 	private ResumeDao dao;
 
-	@Autowired
-	private EducationBackgroundDao eDao;
-
-	@Autowired
-	private FamilyMemberDao fDao;
+	// @Autowired
+	// private EducationBackgroundDao eDao;
+	//
+	// @Autowired
+	// private FamilyMemberDao fDao;
 
 	@Autowired
 	private WorkExperienceDao wDao;
 
 	@Autowired
 	private UnempManageDao umDao;
-	
+
 	@Autowired
 	private PersonService personService;
 
@@ -111,6 +109,12 @@ public class ResumeService {
 	// 删除一个对象
 	public boolean delete(int id) {
 		return dao.delete(id);
+	}
+
+	// 根据账号, 删除附属的简历
+	public boolean deleteByUser(Integer uid) {
+		Integer result = dao.deleteByUser(uid);
+		return result >= 0 ? true : false;
 	}
 
 	// 更新一个对象
@@ -206,7 +210,6 @@ public class ResumeService {
 				r = list.get(0);
 				return r;
 			}
-			return null;
 		}
 		return null;
 	}
@@ -592,13 +595,13 @@ public class ResumeService {
 
 	// 更改工作经历
 	public boolean update(WorkExperience we) {
-		if(we == null){
+		if (we == null) {
 			return false;
 		}
 		we.setUpdateCheck(wDao.getUpdateCheck(we.getId()));
 		return wDao.update(we);
 	}
-	
+
 	// 保存职业测评办理
 	public boolean save(UnempManage um) {
 		return umDao.save(um);
@@ -611,7 +614,7 @@ public class ResumeService {
 
 	// 更改职业测评办理
 	public boolean update(UnempManage um) {
-		if(um == null){
+		if (um == null) {
 			return false;
 		}
 		um.setUpdateCheck(umDao.getUpdateCheck(um.getId()));

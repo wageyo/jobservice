@@ -148,6 +148,7 @@
 												<c:if test="${checkStatus != 'ok' }">
 													<a href="javascript:updateEntity('approve','${entity.id }');">通过</a>
 												</c:if>
+												<a href="javascript:updateEntity('delete','${entity.id }');">删除</a>
 											</td>
 										</tr>
 									</c:forEach>

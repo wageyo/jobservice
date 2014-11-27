@@ -220,6 +220,18 @@ public class JobManageController {
 		return map;
 	}
 
-	
+	// 删除职位
+	@RequestMapping(value="/delete/{id}",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete_object(@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Boolean bl = jobService.delete(id);
+		if (bl) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
 
 }

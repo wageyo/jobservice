@@ -19,11 +19,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
+import esd.bean.Company;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
+import esd.service.CompanyService;
 import esd.service.CookieHelper;
+import esd.service.JobService;
 import esd.service.KitService;
+import esd.service.ResumeService;
 import esd.service.UserService;
 
 /**
@@ -45,6 +49,15 @@ public class UserManageController {
 
 	@Autowired
 	private UserService<User> userService;
+
+	@Autowired
+	private ResumeService resumeService;
+
+	@Autowired
+	private CompanyService<Company> companyService;
+
+	@Autowired
+	private JobService jobService;
 
 	@Autowired
 	private AreaService areaService;
@@ -188,4 +201,34 @@ public class UserManageController {
 		return map;
 	}
 
+	// 删除职位
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete_object(
+			@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		User user = userService.getById(id);
+		// 个人用户, 则删除下面的简历
+		if (Constants.Identity.PERSON.getValue().equals(user.getIdentity())) {
+			Boolean bl1 = userService.delete(id);
+			Boolean bl2 = resumeService.deleteByUser(id);
+			if (bl1 && bl2) {
+				map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+			} else {
+				map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+			}
+		} else if (Constants.Identity.COMPANY.getValue().equals(
+				user.getIdentity())) {
+			Company company = companyService.getByAccount(id);
+			Boolean bl1 = userService.delete(id);
+			Boolean bl2 = companyService.delete(company.getId());
+			Boolean bl3 = jobService.deleteByCompany(company.getId());
+			if (bl1 && bl2 && bl3) {
+				map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+			} else {
+				map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+			}
+		}
+		return map;
+	}
 }

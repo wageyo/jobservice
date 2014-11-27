@@ -104,8 +104,30 @@ function updateEntity(submitType,objId){
 				}
 			}
 		});
-		
 	}
+	
+	//删除
+	if(submitType == 'delete'){
+		if(!confirm('删除该账号的同时也将删除与此账号关联的简历信息(或者企业与职位信息), 此操作不可恢复, 请谨慎操作.')){
+			return;
+		}
+		$.ajax({
+			url:server.url + 'manage/user/delete/'+objId,
+			type:'post',
+			dataType:'json',
+			success:function(data){
+				if(data.notice == 'success'){
+					alert('操作成功!');
+					//重新载入页面--以刷新
+					window.location.reload();
+					return;
+				}else{
+					alert(data.notice);
+				}
+			}
+		});
+	}
+	
 	return;
 }
 

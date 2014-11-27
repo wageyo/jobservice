@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ import esd.controller.Constants;
 import esd.service.BusinessScopeService;
 import esd.service.CompanyService;
 import esd.service.CookieHelper;
+import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ParameterService;
 import esd.service.UserService;
@@ -54,6 +54,9 @@ public class CompanyManageController {
 	@Autowired
 	private CompanyService<Company> companyService;
 
+	@Autowired
+	private JobService jobService;
+	
 	@Autowired
 	private ParameterService pService;
 	
@@ -207,5 +210,18 @@ public class CompanyManageController {
 		return map;
 	}
 
-	
+	// 删除公司
+	@RequestMapping(value="/delete/{id}",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete_object(@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Boolean bl = companyService.delete(id);
+		Boolean bl2 = jobService.deleteByCompany(id);
+		if (bl&&bl2) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
 }

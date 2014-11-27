@@ -34,17 +34,17 @@ public class JobService {
 
 	@Autowired
 	private ParameterService parameterService;
-	
+
 	@Autowired
 	private AreaDao areaDao;
-	
+
 	@Autowired
 	private JobCategoryDao jcDao;
 
 	// 保存一个对象
 	public boolean save(Job job) {
-		boolean bl = parameterService.getSwitchStatus(Constants.Switch.JOB.toString(),
-				job.getArea().getCode());
+		boolean bl = parameterService.getSwitchStatus(
+				Constants.Switch.JOB.toString(), job.getArea().getCode());
 		if (job != null) {
 			// 如果user审核开关打开的话, 则将user设置为 待审核 状态
 			if (bl) {
@@ -58,8 +58,14 @@ public class JobService {
 	}
 
 	// 删除一个对象
-	public boolean delete(int id) {
+	public boolean delete(Integer id) {
 		return dao.delete(id);
+	}
+
+	// 根据公司id 删除对应招聘职位
+	public Boolean deleteByCompany(Integer cid) {
+		Integer result = dao.deleteByCompany(cid);
+		return result >= 0 ? true : false;
 	}
 
 	// 更新一个对象
@@ -77,17 +83,20 @@ public class JobService {
 		// 工作地
 		if (job.getWorkPlace() != null) {
 			if (job.getWorkPlace().getCode() != null) {
-				Area workPlace = areaDao.getByCode(job.getWorkPlace().getCode());
+				Area workPlace = areaDao
+						.getByCode(job.getWorkPlace().getCode());
 				job.setWorkPlace(workPlace);
 			}
 		}
 		// 工作类别
-				if (job.getJobCategory() != null) {
-					if (job.getJobCategory().getCode() != null && !"".equals(job.getJobCategory().getCode())) {
-						JobCategory jobCategory = jcDao.getByCode(job.getJobCategory().getCode());
-						job.setJobCategory(jobCategory);
-					}
-				}
+		if (job.getJobCategory() != null) {
+			if (job.getJobCategory().getCode() != null
+					&& !"".equals(job.getJobCategory().getCode())) {
+				JobCategory jobCategory = jcDao.getByCode(job.getJobCategory()
+						.getCode());
+				job.setJobCategory(jobCategory);
+			}
+		}
 		return job;
 	}
 
@@ -221,7 +230,7 @@ public class JobService {
 		list = kitService.getForShowJob(list);
 		return list;
 	}
-	
+
 	// 获得数据总条数
 	public int getTotalCount(Job job) {
 		if (job != null) {

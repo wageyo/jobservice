@@ -118,7 +118,27 @@ function updateEntity(submitType,objId){
 				}
 			}
 		});
-		
+	}
+	//删除
+	if(submitType == 'delete'){
+		if(!confirm('删除企业的同时也将删除该企业发布的招聘信息, 此操作不可恢复, 请谨慎操作.')){
+			return;
+		}
+		$.ajax({
+			url:server.url + 'manage/company/delete/'+objId,
+			type:'post',
+			dataType:'json',
+			success:function(data){
+				if(data.notice == 'success'){
+					alert('操作成功!');
+					//重新载入页面--以刷新
+					window.location.reload();
+					return;
+				}else{
+					alert(data.notice);
+				}
+			}
+		});
 	}
 	return;
 }

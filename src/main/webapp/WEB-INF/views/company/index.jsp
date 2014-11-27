@@ -29,7 +29,6 @@
 			type:'POST',
 			data: {},
 			onSubmit : function(file , ext){
-				alert(123);
 				button.val('上传图片中ing...');
 				/**
 				 *	①验证上传文件格式
@@ -44,7 +43,7 @@
 				 *	②设置上传参数
 				 **/
 				this.setData({
-					'userid':'${user.id}'
+					'userid':'${cookie.userid.value}'
 				});
 				
 			},
@@ -54,7 +53,7 @@
 				}else{
 					//刷新新上传的图片
 					$('#headImage').attr('src','');
-					$('#headImage').attr('src','${contextPath }/user/downloadPic/${user.id}');
+					$('#headImage').attr('src','${contextPath }/user/downloadPic/${cookie.userid.value}');
 				}
 				button.val('上传图片');
 				this.enable();
@@ -99,7 +98,7 @@
 				</div>
 				<div class="AntAccout_Center_User" id="w726">
 					<div class="AntAccout_Center_Left">
-						<img id="headImage" src="${contextPath }/user/downloadPic/${user.id}" style="height:90px;width:90px;border-width:0px;" />
+						<img id="headImage" src="${contextPath }/user/downloadPic/${cookie.userid.value}" style="height:90px;width:90px;border-width:0px;" />
 								<input type="button" name="file" value="上传图片" id="picFileImport"/>
 					</div>
 

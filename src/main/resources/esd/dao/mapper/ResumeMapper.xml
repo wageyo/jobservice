@@ -477,6 +477,11 @@
 		delete from resume where id = #{id, jdbcType=INTEGER}
 	</delete>
 
+	<!-- deleteByUser -->
+	<delete id="deleteByUser" parameterType="java.lang.Integer">
+		delete from resume where uid = #{uid, jdbcType=INTEGER}
+	</delete>
+
 	<!-- update -->
 	<update id="update" parameterType="Resume">
 		update resume
