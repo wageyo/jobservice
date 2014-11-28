@@ -71,16 +71,10 @@ public class IndexController {
 	//首页
 	@RequestMapping("/index")
 	public ModelAndView index(HttpServletRequest request,HttpServletResponse response) {
-		log.debug("=========================" + request.getRequestURI());
-		//①先查看request中有没有传过来的acode, 
-		String acode= request.getParameter("acode");
-		if(acode != null){
-			//②不为空则是第一次进来, 将其中的acode放到cookie中
-			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
-		}else{
-			//③为空在则检查cookie是中没有地区信息
-			acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		}
+		log.debug("************ /index ****************");
+		// 进入湖北首页, 则将cookie写死为湖北的地区code10420000
+		String acode = "10420000";
+		CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
 		ModelAndView mav = new ModelAndView("index");
 		// 得到最新的10个公司
 		List<Company> companyList = companyService.getByNew(KitService.getProvinceCode(acode),10);
@@ -133,7 +127,7 @@ public class IndexController {
 	public ModelAndView regC(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("reg-c");
 		// 工作地区
-		List<Area> alist = areaService.getProvinceList();
+		List<Area> alist = areaService.getSubArea(Constants.AREAHUBEI);
 		mav.addObject("provinceList", alist);
 		return mav;
 	}
@@ -143,7 +137,7 @@ public class IndexController {
 	public ModelAndView regP(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("reg-p");
 		// 工作地区
-		List<Area> alist = areaService.getProvinceList();
+		List<Area> alist = areaService.getSubArea(Constants.AREAHUBEI);
 		mav.addObject("provinceList", alist);
 		return mav;
 	}

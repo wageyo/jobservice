@@ -48,6 +48,10 @@ public class Constants {
 	public static final String AREA = "area"; // 地区key
 	/******************放入cookie中的key值********************/
 	
+	/**
+	 * 湖北地区code
+	 */
+	public static final String AREAHUBEI = "10420000";
 	
 	
 	public static final String WORKABILITY = "workAbility"; // 有无劳动能力
