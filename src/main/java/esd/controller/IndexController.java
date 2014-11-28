@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,8 @@ import esd.bean.JobCategory;
 import esd.bean.News;
 import esd.bean.Parameter;
 import esd.bean.Resume;
+import esd.bean.User;
+import esd.controller.Constants.Identity;
 import esd.service.AreaService;
 import esd.service.CompanyService;
 import esd.service.CookieHelper;
@@ -34,6 +35,7 @@ import esd.service.KitService;
 import esd.service.NewsService;
 import esd.service.ParameterService;
 import esd.service.ResumeService;
+import esd.service.UserService;
 
 /**
  * 首页  菜单, 跳转用controller
@@ -47,6 +49,9 @@ public class IndexController {
 	@Value("${export.template.url}")
 	private String exportTemplateUrl;
 
+	@Autowired
+	private UserService<User> userService;
+	
 	@Autowired
 	private CompanyService<Company> companyService;
 
@@ -72,9 +77,30 @@ public class IndexController {
 	@RequestMapping("/index")
 	public ModelAndView index(HttpServletRequest request,HttpServletResponse response) {
 		log.debug("=========================" + request.getRequestURI());
-		//①先查看request中有没有传过来的acode, 
+		//如果存在从网站群接收来的用户名, 密码, 则证明是从网站群登陆过来的, 则将该用户的相关信息和登陆一样, 放到cookie中
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		if(username != null && !"".equals(username) && password != null && !"".equals(password)){
+			User user = userService.check(username);
+			/*********** 设置用户信息到cookie中 ************/
+			if (user.getIdentity().equals(Identity.COMPANY.toString())) {
+				Company company = companyService.getByAccount(user.getId());
+				log.debug("company " + company);
+				if(company != null){
+					CookieHelper.setCookie(response, Constants.USERCOMPANYID, String.valueOf(company.getId()));
+				}
+			}
+			log.debug("login: " + user);
+			CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+			CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
+			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
+			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+		}
+		
+ 		//①先查看request中有没有传过来的acode, 
 		String acode= request.getParameter("acode");
-		if(acode != null){
+		if(acode != null && !"".equals(acode)){
 			//②不为空则是第一次进来, 将其中的acode放到cookie中
 			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
 		}else{
@@ -228,6 +254,7 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("direct/direct");
 		return mav;
 	}
+
 	@RequestMapping("/jsonp")
 	public String jsonp() {
 		return "test";

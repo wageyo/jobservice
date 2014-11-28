@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ import esd.bean.Area;
 import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.controller.Constants.Notice;
-import esd.service.AreaService;
 import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
@@ -40,9 +38,6 @@ public class JobController {
 	private static Logger log = Logger.getLogger(JobController.class);
 	@Autowired
 	private JobService jobService;
-
-	@Autowired
-	private AreaService areaService;
 
 	@RequestMapping("/search")
 	public ModelAndView work(HttpServletRequest request,HttpServletResponse response) {

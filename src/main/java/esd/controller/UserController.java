@@ -5,14 +5,13 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +22,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.octo.captcha.service.CaptchaServiceException;
 
 import esd.bean.Area;
@@ -31,7 +31,6 @@ import esd.bean.User;
 import esd.controller.Constants.Identity;
 import esd.controller.Constants.Notice;
 import esd.controller.checkcode.CaptchaServiceSingleton;
-import esd.service.AreaService;
 import esd.service.CompanyService;
 import esd.service.CookieHelper;
 import esd.service.KitService;
@@ -51,9 +50,6 @@ public class UserController {
 	@Autowired
 	private ParameterService pService;
 
-	@Autowired
-	private AreaService areaService;
-	
 	// 注册
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(HttpServletRequest request, User user, HttpServletResponse response,
@@ -197,8 +193,11 @@ public class UserController {
 		CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
 		CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
-		//地区代码设为永久
-		CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
+		//地区代码设为永久,如果当前cookie中不存在地区code, 才使用当前用户的
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		if(acode == null || "".equals(acode)){
+			CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
+		}
 		return "redirect:/index";
 	}
 
@@ -332,5 +331,32 @@ public class UserController {
 		response.setContentType("image/gif");
 		byte[] entity = userService.getHeadImage(id);
 		return entity;
+	}
+
+	//提供给跨域登陆的方法
+	@RequestMapping(value="/crossDomainLogin", method=RequestMethod.GET)
+	@ResponseBody
+	public JSONPObject crossDomainLogin(@RequestParam(value="callback") String callback,HttpServletRequest request){
+		log.info("--- crossDomainLogin ---");
+		ModelMap map = new ModelMap();
+		//接收从网站群接收来的用户名, 密码
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		if(username == null || "".equals(username) || password == null || "".equals(password)){
+			map.put(Constants.NOTICE, "用户名或者密码为空.");
+			return new JSONPObject(callback, map);
+		}
+		User user= new User();
+		user.setLoginName(username);
+		user.setPassWord(password);
+		//查看有木有该用户
+		User resultUser = userService.check(user);
+		//存在该用户, 则将用户名和吗
+		if(resultUser != null){
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS);
+		}else{
+			map.put(Constants.NOTICE, "用户名或者密码错误.");
+		}
+		return new JSONPObject(callback, map);
 	}
 }
