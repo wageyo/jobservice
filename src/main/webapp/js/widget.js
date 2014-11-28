@@ -108,6 +108,37 @@ $(document).ready(function() {
 	});
 	
 	/**
+	 * 地区二级联动按钮-3
+	 */
+
+	// 市级onchange事件
+	$('#area_lv23').change(function() {
+		var provinceID = $("#area_lv23 option:selected").val();
+		if(provinceID == null || provinceID == ''){
+			$('#area_lv33 option:not(:first)').remove();
+			return false;
+		}
+		var url = server.url + 'widget/getSubArea';
+		$.ajax({
+			url : url,
+			type : 'GET',
+			dataType : 'json',
+			data : {
+				'code' : provinceID
+			},
+			success : function(json) {
+				$('#area_lv33 option:not(:first)').remove();
+				$.each(json.areaList, function(i, area) {
+					$('#area_lv33').append('<option value="' + area.code + '">' + area.name + '</option>');
+				});
+			},
+			error : function() {
+				alert('操作失败!');
+			}
+		});
+	});
+	
+	/**
 	 * 职位类别三联动按钮
 	 */
 	// 一级onchange事件

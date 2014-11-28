@@ -34,22 +34,24 @@ public class Constants {
 	public static final String STATE = "state"; // 目前状态
 	public static final String SWITCH = "switch"; // 目前状态
 	public static final String USER = "user"; // 用户key
-	
-	/******************放入cookie中的key值********************/
+
+	/****************** 放入cookie中的key值 ********************/
 	public static final String USERID = "userid"; // 用户id
 	public static final String USERNAME = "username"; // 用户名
 	public static final String USERPASSWORD = "password"; // 密码
 	public static final String USERIDENTITY = "identity"; // 身份值
 	public static final String USERAUTHORITY = "authority"; // 权限值
-	public static final String USERNICKNAME = "nickname";	//用户昵称
-	public static final String USERTITLE = "title";	//用户标题--管理员用户显示标题使用
+	public static final String USERNICKNAME = "nickname"; // 用户昵称
+	public static final String USERTITLE = "title"; // 用户标题--管理员用户显示标题使用
 	public static final String USERCOMPANYID = "companyid"; // 企业id
 	public static final String USERREGISTERTIME = "registertime"; // 注册时间
 	public static final String AREA = "area"; // 地区key
-	/******************放入cookie中的key值********************/
-	
-	
-	
+	/****************** 放入cookie中的key值 ********************/
+	/**
+	 * 新疆地区code
+	 */
+	public static final String AREAXINJIANG = "10650000";
+
 	public static final String WORKABILITY = "workAbility"; // 有无劳动能力
 
 	public static final String SWITCH_ON = "on"; //

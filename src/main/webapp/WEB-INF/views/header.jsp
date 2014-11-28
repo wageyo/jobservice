@@ -41,37 +41,7 @@
 		<div id="logoheader">
 			<div id="logoopen">
 				<a href="${contextPath}/index" title="残疾人就业信息网">
-				<!-- 如果能显示对应省市的则显示对应省份的logo, 否则显示全国的log -->
-				<c:choose>
-					<c:when test="${cookie.area.value != null && cookie.area.value != '' }">
-						<c:choose>
-							<c:when test="${cookie.area.value == '10420000' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/hubei.png" id="bg2" /> 
-							</c:when>
-							<c:when test="${cookie.area.value == '20652300' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/cjz.png" id="bg2" /> 
-							</c:when>
-							<c:when test="${cookie.area.value == '10150000' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/neimenggu.png" id="bg2" /> 
-							</c:when>
-							<c:when test="${cookie.area.value == '20230200' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/qigihar.png" id="bg2" /> 
-							</c:when>
-							<c:when test="${cookie.area.value == '10630000' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/qinghai.png" id="bg2" /> 
-							</c:when>
-							<c:when test="${cookie.area.value == '10650000' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/xinjiang.png" id="bg2" /> 
-							</c:when>
-							<c:otherwise>
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" />
-							</c:otherwise>
-						</c:choose>
-					</c:when>
-					<c:otherwise>
-							<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/quanguo.png" id="bg2" /> 
-					</c:otherwise>
-				</c:choose>
+					<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/xinjiang.png" id="bg2" /> 
 				</a>
 			</div>
 			<div id="headertext">
