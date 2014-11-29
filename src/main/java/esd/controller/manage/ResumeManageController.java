@@ -81,7 +81,7 @@ public class ResumeManageController {
 		if (checkStatus == null || "".equals(checkStatus)) {
 			checkStatus = Constants.CheckStatus.DAISHEN.getValue();
 		}
-		paramEntity.setName(targetName);
+		paramEntity.setTitle(targetName);
 		paramEntity.setCheckStatus(checkStatus);
 
 		// 获取地区码
