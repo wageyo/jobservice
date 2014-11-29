@@ -9,8 +9,8 @@
 
 	//解码title, nickName
 	function decodeTitle(){
-		var nickName = decodeURIComponent('${cookie.nickname.value}');
-		$('#nickName').html(nickName);
+		var adminNickName = decodeURIComponent('${cookie.nickname.value}');
+		$('#adminNickName').html(adminNickName);
 		var title = decodeURIComponent('${cookie.title.value}');
 		$('#adminTitle').html(title);
 	}
@@ -25,7 +25,7 @@
 				&nbsp;
 			</td>
 			<td style="text-align:right;line-height: 20px;">
-				<a href="javascript:void(0);" id="nickName">${cookie.nickname.value } </a>
+				<a href="javascript:void(0);" id="adminNickName">${cookie.nickname.value } </a>
 				<span id="currentTime"></span>
 				<span style=""><a href="/jobservice/loginManage/quit">退出</a></span>
 			</td>

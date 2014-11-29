@@ -62,7 +62,7 @@ public class UserManageController {
 	@Autowired
 	private AreaService areaService;
 
-	// 转到职位管理列表页面
+	// 转到普通用户账号管理列表页面
 	@RequestMapping(value = "/user_list", method = RequestMethod.GET)
 	public ModelAndView list_get(HttpServletRequest request) {
 		log.debug("goto：账号/用户 后台管理 列表");
@@ -112,7 +112,7 @@ public class UserManageController {
 			log.error("获取账号/用户 时发生错误。");
 			e.printStackTrace();
 		}
-		// 放入当前页数, 总页数, 职位名, 审核状态
+		// 放入当前页数, 总页数, 普通用户账号名, 审核状态
 		entity.put("currentPage", page);
 		entity.put("totalPage", KitService.getTotalPage(total));
 		entity.put("targetName", targetName);
@@ -122,7 +122,7 @@ public class UserManageController {
 		return new ModelAndView("manage/user-list", entity);
 	}
 
-	// 跳转到查看职位页面
+	// 跳转到查看普通用户账号页面
 	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
 	public ModelAndView view_object(@PathVariable(value = "id") Integer id,
 			HttpServletRequest request) {
@@ -136,7 +136,7 @@ public class UserManageController {
 		return new ModelAndView("manage/user-view", entity);
 	}
 
-	// 跳转到编辑职位页面
+	// 跳转到编辑普通用户账号页面
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView edit_object_get(@PathVariable(value = "id") Integer id,
 			HttpServletRequest request) {
@@ -150,7 +150,7 @@ public class UserManageController {
 		return new ModelAndView("manage/user-edit", entity);
 	}
 
-	// 提交保存编辑的职位
+	// 提交保存编辑的普通用户账号
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> edit_object_post(User param,
@@ -168,7 +168,7 @@ public class UserManageController {
 		return map;
 	}
 
-	// 拒绝职位通过
+	// 拒绝普通用户账号通过
 	@RequestMapping(value = "/refuse/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> refuse_object(
@@ -185,7 +185,7 @@ public class UserManageController {
 		return map;
 	}
 
-	// 同意职位通过
+	// 同意普通用户账号通过
 	@RequestMapping(value = "/approve/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> approve_object(
@@ -201,7 +201,7 @@ public class UserManageController {
 		return map;
 	}
 
-	// 删除职位
+	// 删除普通用户账号
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> delete_object(
