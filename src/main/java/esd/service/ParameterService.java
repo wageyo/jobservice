@@ -1,6 +1,8 @@
 package esd.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,32 @@ public class ParameterService {
 	}
 
 	/**
+	 * 根据地区code获得该地区信息共享范围
+	 * 
+	 * @param areaCode
+	 * @return
+	 */
+	public Parameter getByType(String type, String areaCode) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("type", type);
+		map.put("areaCode", areaCode);
+		return dao.getByType1(map);
+	}
+	
+	/**
+	 * 根据类型获得对应参数列表
+	 * 
+	 * @param type
+	 * @return
+	 */
+	public List<Parameter> getByTypeAndArea(String type,String areaCode) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("type", type);
+		map.put("areaCode", areaCode);
+		return dao.getByType2(map);
+	}
+	
+	/**
 	 * 获得所有参数
 	 * 
 	 * @return
@@ -44,6 +72,21 @@ public class ParameterService {
 		return dao.getByPage(null);
 	}
 
+	/**
+	 * 更新参数状态
+	 * 
+	 * @param id
+	 * @param value
+	 * @return
+	 */
+	public boolean update(Parameter parameter) {
+		if(parameter == null){
+			return false;
+		}
+		boolean bl = dao.update(parameter);
+		return bl;
+	}
+	
 	/**
 	 * 更改参数状态
 	 * 

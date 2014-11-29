@@ -103,17 +103,17 @@
 		<trim prefix="where" prefixOverrides="and|or">
 			p.acode = a.code 
 			<if test="name != null and name != ''">
-				and p.name = #{name}
+				and p.name = #{name, jdbcType=VARCHAR}
 			</if>
 			<if test="value != null and value != ''">
-				and p.value = #{value}
+				and p.value = #{value, jdbcType=VARCHAR}
 			</if>
 			<if test="type != null and type != ''">
-				and p.type = #{type}
+				and p.type = #{type, jdbcType=VARCHAR}
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					and p.acode = #{area.code}
+					and p.acode = #{area.code, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
@@ -127,17 +127,17 @@
 		<trim prefix="where" prefixOverrides="and|or">
 			p.acode = a.code 
 			<if test="name != null and name != ''">
-				and p.name = #{name}
+				and p.name = #{name, jdbcType=VARCHAR}
 			</if>
 			<if test="value != null and value != ''">
-				and p.value = #{value}
+				and p.value = #{value, jdbcType=VARCHAR}
 			</if>
 			<if test="type != null and type != ''">
-				and p.type = #{type}
+				and p.type = #{type, jdbcType=VARCHAR}
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					and p.acode = #{area.code}
+					and p.acode = #{area.code, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>
@@ -152,17 +152,17 @@
 			p.acode = a.code 
 			<if test="parameter != null">
 				<if test="parameter.name != null and parameter.name != ''">
-					and p.name = #{parameter.name}
+					and p.name = #{parameter.name, jdbcType=VARCHAR}
 				</if>
 				<if test="parameter.type != null and parameter.type != ''">
-					and p.type = #{parameter.type}
+					and p.type = #{parameter.type, jdbcType=VARCHAR}
 				</if>
 				<if test="parameter.value != null and parameter.value != ''">
-					and p.value = #{parameter.value}
+					and p.value = #{parameter.value, jdbcType=VARCHAR}
 				</if>
 				<if test="parameter.area != null">
 					<if test="parameter.area.code != null and parameter.area.code != ''">
-						and acode = #{parameter.area.code}
+						and acode = #{parameter.area.code, jdbcType=VARCHAR}
 					</if>
 				</if>
 			</if>
@@ -173,6 +173,18 @@
 	<!-- get by type -->
 	<select id="getByType" resultType="Parameter" parameterType="java.lang.String">
 		select * from parameter
-		where type = #{type} order by id desc;
+		where type = #{type, jdbcType=VARCHAR} order by id asc;
+	</select>
+	
+	<!-- getShareScope -->
+	<select id="getByType1" resultType="Parameter" parameterType="map">
+		select * from parameter
+		where type = #{type, jdbcType=VARCHAR} and acode = #{areaCode, jdbcType=VARCHAR};
+	</select>
+	
+	<!-- getShareScope -->
+	<select id="getByType2" resultType="Parameter" parameterType="map">
+		select * from parameter
+		where type = #{type, jdbcType=VARCHAR} and acode &lt;= #{areaCode, jdbcType=VARCHAR};
 	</select>
 </mapper>

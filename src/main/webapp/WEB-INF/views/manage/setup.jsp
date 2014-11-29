@@ -43,7 +43,7 @@
 			<!-- 右侧详细内容div  开始-->
 			<div class="manage-body-right">
 			
-				<div class="span6" style="margin-top: 80px;margin-left:200px;">
+				<div class="span6" style="margin-top: 50px;margin-left:200px;">
 					<h3>审核开关状态</h3>
 					<c:forEach items="${entityList }" var="entity">
 						<div class="control-group">
@@ -53,8 +53,23 @@
 							</div>
 						</div>
 					</c:forEach>
+					<br/>
+					<!-- 信息分享范围 -->
+					<h3>信息分享范围<span style="font-size:12px;font-weight:normal;">(设定本地区残联就业指导中心网站和就业信息网显示信息的范围)</span></h3>
+					<div class="btn-group" >
+						<button class="btn" id="btnShareScope">${shareScope.name }</button> 
+						<input type="hidden" id="shareScope" name="shareScope" value="${shareScope.value }"/>
+						<input type="hidden" id="pid" name="pid" value="${shareScope.id }" />
+						<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<c:forEach items="${shareScopeSwitch }" var="sc">
+								<li>
+									<a href="javascript:updateShareScope('${shareScope.id }','${sc.value }','${sc.name }');">${sc.name }</a>
+								</li>
+							</c:forEach>
+						</ul><span style="font-size:11px;color:red;">(县区级信息过少,暂不推荐)</span>
+					</div>
 				</div>
-
 			</div>
 			<!-- 右侧详细内容div  结束-->
 

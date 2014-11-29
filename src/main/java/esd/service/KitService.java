@@ -227,6 +227,36 @@ public class KitService {
 	}
 
 	/**
+	 * 处理传进来的地区code, 变成适用于sql语句使用的格式,适用于带有信息查询范围的场合
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public static String areaCodeForSql1(String value, String code) {
+		if (code == null || "".equals(code)) {
+			return null;
+		}
+		String mid;
+		//全国范围
+		if("country".equals(value)){
+			code =  "%";
+		}else if("privince".equals(value)){
+			//全省范围
+			mid = code.substring(2, 4);
+			code = "__" + mid + "____";
+		}else if("city".equals(value)){
+			//全市范围
+			mid = code.substring(2, 6);
+			code = "__" + mid + "__";
+		}else if("district".equals(value)){
+			//全县/区
+			mid = code.substring(2, 8);
+			code = "__" + mid + "__";
+		}
+		return code;
+	}
+	
+	/**
 	 * 处理传进来的职位种类code, 变成适用于jobMapper中sql语句使用的格式
 	 * 
 	 * @param code

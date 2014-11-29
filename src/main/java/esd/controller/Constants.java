@@ -52,9 +52,13 @@ public class Constants {
 	
 	public static final String WORKABILITY = "workAbility"; // 有无劳动能力
 
-	public static final String SWITCH_ON = "on"; //
-	public static final String SWITCH_OFF = "off"; // 有无劳动能力
-
+	public static final String SWITCH_ON = "on"; // 开关-开
+	public static final String SWITCH_OFF = "off"; //	开关-合
+	
+	public static final String SHARE_SCOPE_SWITCH = "shareScopeSwitch"; // 分享信息范围 选项标示符
+	public static final String SHARE_SCOPE = "shareScope"; // 分享信息范围  值
+	public static final String SHARE_SCOPE_INIT = "city"; // 分享信息范围默认值 默认为市级
+	
 	public static final String NO_LIMIT = "不限"; // 不限字段
 
 	/**

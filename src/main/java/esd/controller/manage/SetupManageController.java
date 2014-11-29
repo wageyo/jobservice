@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import esd.bean.Area;
 import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
@@ -77,6 +79,36 @@ public class SetupManageController {
 			log.error("获取开关 时发生错误。");
 			e.printStackTrace();
 		}
+		//设定地区
+		//获取信息共享范围列表
+		List<Parameter> pList = parameterService.getByTypeAndArea(Constants.SHARE_SCOPE_SWITCH,code);
+		entity.put(Constants.SHARE_SCOPE_SWITCH, pList);
+		//获取本地区信息共享范围
+		Parameter shareScope = parameterService.getByType(Constants.SHARE_SCOPE,code);
+		//如果暂未设定, 则在前台进行提示
+		if(shareScope == null){
+			shareScope = new Parameter();
+			String id = UUID.randomUUID().toString();
+			shareScope.setId(id);
+			shareScope.setType(Constants.SHARE_SCOPE);
+			if(code.startsWith("10")){
+				shareScope.setName("初始化为省级");
+				shareScope.setValue(Constants.SHARE_SCOPE_INIT);
+			}else if(code.startsWith("20")){
+				shareScope.setName("初始化为市级");
+				shareScope.setValue(Constants.SHARE_SCOPE_INIT);
+			}else if(code.startsWith("30")){
+				shareScope.setName("初始化为县区级");
+				shareScope.setValue(Constants.SHARE_SCOPE_INIT);
+			}
+			shareScope.setArea(new Area(code));
+			shareScope.setMark(code + "地区  信息共享范围");
+			Boolean bl = parameterService.save(shareScope);
+			if(!bl){
+				entity.put(Constants.NOTICE, "初始化数据失败, 请重新尝试或者联系管理员");
+			}
+		}
+		entity.put(Constants.SHARE_SCOPE, shareScope);
 		return new ModelAndView("manage/setup", entity);
 	}
 
@@ -105,5 +137,34 @@ public class SetupManageController {
 		}
 		return entity;
 	}
+	
+	// 更新 本地区信息共享范围
+	@RequestMapping(value = "/update_share_scope", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> setShare(HttpServletRequest request,
+			HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String shareScopeValue = request.getParameter("shareScopeValue");
+		String shareScopeName = request.getParameter("shareScopeName");
+		Map<String, Object> entity = new HashMap<String, Object>();
+		if (id == null || "".equals(id) || shareScopeValue == null
+				|| "".equals(shareScopeValue)) {
+			entity.put(Constants.NOTICE, "传递的参数有误, 请重新尝试或者联系管理员.");
+			return entity;
+		}
+		Parameter parameter = new Parameter();
+		parameter.setId(id);
+		parameter.setName(shareScopeName);
+		parameter.setValue(shareScopeValue);
+		// 更新
+		Boolean bl = parameterService.update(parameter);
+		if (bl) {
+			entity.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			entity.put(Constants.NOTICE, "更新信息共享范围发生错误, 请重新尝试或者联系管理员.");
+		}
+		return entity;
+	}
 
+	
 }

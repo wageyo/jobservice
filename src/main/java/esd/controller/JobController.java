@@ -26,10 +26,12 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import esd.bean.Area;
 import esd.bean.Job;
 import esd.bean.JobCategory;
+import esd.bean.Parameter;
 import esd.controller.Constants.Notice;
 import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
+import esd.service.ParameterService;
 
 @Controller
 @RequestMapping("/job")
@@ -39,6 +41,9 @@ public class JobController {
 	@Autowired
 	private JobService jobService;
 
+	@Autowired
+	private ParameterService parameterService;
+	
 	@RequestMapping("/search")
 	public ModelAndView work(HttpServletRequest request,HttpServletResponse response) {
 		log.debug(request.getRequestURI());
@@ -228,8 +233,16 @@ public class JobController {
 			pageSize = Integer.parseInt(pageSizeStr);
 		}
 		ModelMap map = new ModelMap();
-		List<Job> jobList = jobService.getByNew(
-				KitService.getProvinceCode(acode), pageSize);
+		//信息分享范围处理
+		Parameter shareScope = parameterService.getByType(Constants.SHARE_SCOPE, acode);
+		String sqlArea = "";
+		//存在信息分享范围
+		if(shareScope!=null){
+			sqlArea = KitService.areaCodeForSql1(shareScope.getValue(),acode);
+		}else{
+			sqlArea = KitService.getProvinceCode(acode);
+		}
+		List<Job> jobList = jobService.getByNew(sqlArea, pageSize);
 		map.put("jobList", jobList);
 		return new JSONPObject(callback, map);
 	}

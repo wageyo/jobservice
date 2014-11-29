@@ -34,6 +34,7 @@ import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.JobCategory;
+import esd.bean.Parameter;
 import esd.bean.Resume;
 import esd.bean.User;
 import esd.service.AreaService;
@@ -41,6 +42,7 @@ import esd.service.CompanyService;
 import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
+import esd.service.ParameterService;
 import esd.service.ResumeService;
 
 @Controller
@@ -64,6 +66,9 @@ public class ResumeController {
 
 	@Autowired
 	private AreaService areaService;
+	
+	@Autowired
+	private ParameterService parameterService;
 
 	private static Logger log = Logger.getLogger(ResumeController.class);
 
@@ -246,9 +251,17 @@ public class ResumeController {
 			pageSize = Integer.parseInt(pageSizeStr);
 		}
 		ModelMap map = new ModelMap();
+		//信息分享范围处理
+		Parameter shareScope = parameterService.getByType(Constants.SHARE_SCOPE, acode);
+		String sqlArea = "";
+		//存在信息分享范围
+		if(shareScope!=null){
+			sqlArea = KitService.areaCodeForSql1(shareScope.getValue(),acode);
+		}else{
+			sqlArea = KitService.getProvinceCode(acode);
+		}
 		// 条件查询得到符合条件的简历
-		List<Resume> resumeList = resumeService.getByNew(
-				KitService.getProvinceCode(acode), pageSize);
+		List<Resume> resumeList = resumeService.getByNew(sqlArea, pageSize);
 		map.put("resumeList", resumeList);
 		return new JSONPObject(callback, map);
 	}
