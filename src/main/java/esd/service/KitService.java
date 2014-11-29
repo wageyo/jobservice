@@ -239,8 +239,8 @@ public class KitService {
 		String mid;
 		//全国范围
 		if("country".equals(value)){
-			code =  "%";
-		}else if("privince".equals(value)){
+			code =  "";
+		}else if("province".equals(value)){
 			//全省范围
 			mid = code.substring(2, 4);
 			code = "__" + mid + "____";
@@ -251,7 +251,7 @@ public class KitService {
 		}else if("district".equals(value)){
 			//全县/区
 			mid = code.substring(2, 8);
-			code = "__" + mid + "__";
+			code = "__" + mid + "";
 		}
 		return code;
 	}
