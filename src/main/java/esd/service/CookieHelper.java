@@ -4,6 +4,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import esd.controller.Constants;
+
 /**
  * @Package: esd.service
  * @Title: Cookie.java Create on 2014-11-25 上午8:57:52
@@ -130,4 +132,22 @@ public class CookieHelper {
 		response.addCookie(cookie);
 	}
 	
+	/**
+	 * 杀死所有cookie信息, bl 为true 则包括地区code, false或者null不包括
+	 * @param response
+	 * @param bl
+	 */
+	public static void killAllCookie(HttpServletResponse response,Boolean bl){
+		//杀死所有cookie
+		CookieHelper.setCookie(response, Constants.USERID, null, 0);
+		CookieHelper.setCookie(response, Constants.USERNAME, null, 0);
+		CookieHelper.setCookie(response, Constants.USERPASSWORD, null, 0);
+		CookieHelper.setCookie(response, Constants.USERIDENTITY, null, 0);
+		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
+		CookieHelper.setCookie(response, Constants.USERREGISTERTIME, null, 0);
+		CookieHelper.setCookie(response, Constants.USERCOMPANYID, null, 0);
+		if(bl){
+			CookieHelper.setCookie(response, Constants.AREA, null, 0);
+		}
+	}
 }
