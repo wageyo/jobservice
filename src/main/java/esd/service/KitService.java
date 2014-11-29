@@ -218,10 +218,10 @@ public class KitService {
 			code = "30______";
 		} else if ("10".equals(start)) {
 			mid = code.substring(2, 4);
-			code = "30" + mid + "____";
+			code = "__" + mid + "____";
 		} else if ("20".equals(start)) {
 			mid = code.substring(2, 6);
-			code = "30" + mid + "__";
+			code = "__" + mid + "__";
 		}
 		return code;
 	}
