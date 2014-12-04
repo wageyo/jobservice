@@ -11,7 +11,7 @@
 					<table border="0" cellspacing="0" cellpadding="0" class="table_boder" align="center">
 						<tbody>
 							<tr>
-								<td class="uu1" align="left" colspan="2"><b> <span id="ctl00_ContentPlaceHolder1_Label1">修改密码</span> </b>
+								<td class="uu1" align="left" colspan="2"><b> <span id="ctl00_ContentPlaceHolder1_Label1">设置登陆密码</span> </b>
 								</td>
 							</tr>
 						</tbody>
@@ -21,32 +21,28 @@
 		</tbody>
 	</table>
 	<div class="AntAccout_Center table_boder p10 mb10 center">
-		<form action="${contextPath }/secure/user/passWordEdit" method="post" onsubmit="return check();">
+		<form action="${contextPath }/user/setPassWord" method="post" onsubmit="return check();">
 			<table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
 				<tbody>
 					<tr>
-						<td colspan="2" align="center" class="line35"><b>修改登录密码</b>
+						<td colspan="2" align="center" class="line35"><b>设置登录密码</b>
 						</td>
 					</tr>
 					<tr>
-						<td align="right" class="line35"><b>用户名 ：</b>
+						<td align="right" class="line35"><b>用户名 ： </b>
 						</td>
 						<td align="left">
-							<span id="Label2"> 
-								<input name="sid" type="hidden" value="0" /> 
-								<span id="ctl00_ContentPlaceHolder1_Label3" class="user_name">${user.loginName }</span> 
-								<span class="red line25"></span>您的用户名 
-							</span>
+							<input type="text" class="input_border" disabled value="${username }" />
+							<input name="userid" type="hidden" value="${userid }" />
+						</td>
+						<td align="right" class="line35"><b></b>
+						</td>
+						<td align="left">
+								 
 						</td>
 					</tr>
 					<tr>
-						<td align="right" class="line35"><b>旧密码 ： </b>
-						</td>
-						<td align="left"><input name="oldPassWord" type="password" id="oldPassWord"  value=""class="input_border" /><span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1" style="color:Red;">*请输入原密码</span>
-						</td>
-					</tr>
-					<tr>
-						<td align="right" class="line35"><b>新密码 ： </b>
+						<td align="right" class="line35"><b>密 码 ： </b>
 						</td>
 						<td align="left"><input name="newPassWord" type="password" id="newPassWord" class="input_border" /><span id="ctl00_ContentPlaceHolder1_RequiredFieldValidator1" style="color:Red;">*您的新登陆口令(6~12个字符)</span>
 						</td>
@@ -67,14 +63,7 @@
 		</form>
 		<script type="text/javascript">
 			function check(){
-				//旧密码
-				var oldPassWord = $('#oldPassWord').val();
-				if(oldPassWord == null || oldPassWord == '' ){
-					alert('请先输入原密码!');
-					$('#oldPassWord').focus();
-					return false;
-				}
-				//新密码
+				//密码
 				var reg_pwd = /[a-zA-Z0-9]{6,12}/;
 				var newPassWord = $('#newPassWord').val();
 				if(!reg_pwd.test(newPassWord)){

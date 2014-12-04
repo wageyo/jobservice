@@ -144,10 +144,12 @@ public class UserController {
 
 	// 登陆
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(User user, HttpServletRequest request,HttpServletResponse response, RedirectAttributes ra) {
-		if (user == null) {
+	public String login(HttpServletRequest request,HttpServletResponse response, RedirectAttributes ra) {
+		String loginName = request.getParameter("loginName");
+		String passWord = request.getParameter("passWord");
+		if (loginName == null) {
 			ra.addFlashAttribute("messageType", "0");
-			ra.addFlashAttribute("message", "登录错误");
+			ra.addFlashAttribute("message", "用户名为空");
 			return "redirect:/index";
 		}
 		// 判断验证码是否正确
@@ -166,12 +168,53 @@ public class UserController {
 		} catch (CaptchaServiceException e) {
 			log.error("error in check", e);
 		}
-		log.debug("user : " + user);
-		user = userService.check(user);
+		log.debug("loginName : " + loginName);
+		//判断残疾证号/用户名在数据库中是否存在
+		User user = userService.check(loginName);
+		//1-不存在则初始化用户, 并跳转到设置密码页面
 		if (user == null) {
+			user = new User();
+			user.setLoginName(loginName);
+			user.setPassWord(passWord);
+			user.setIdentity(Constants.Identity.PERSON.getValue());
+			user.setAuthority(Constants.Authority.PERSON.getValue());
+			String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+			user.setArea(new Area(acode));
+			//保存用户
+			Boolean bl = userService.save(user);
+			if(!bl){
+				ra.addFlashAttribute("messageType", "0");
+				ra.addFlashAttribute("message", "初始化用户失败, 请联系管理员!");
+				return "redirect:/index";
+			}else{
+				ra.addFlashAttribute("messageType", "1");
+				ra.addFlashAttribute("message", "请先设置密码!!");
+				//相关的用户信息放到cookie中
+				CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+				CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
+				CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
+				CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+				CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+				request.setAttribute(Constants.USERID, user.getId());
+				request.setAttribute(Constants.USERNAME, user.getLoginName());
+				ra.addFlashAttribute("messageType", "0");
+				ra.addFlashAttribute("message", "请先设置密码!!");
+				return "person/password-set";
+			}
+		}
+		//如果用户没有设置密码, 则强行跳转到设置密码页面
+		if(user.getPassWord() == null || "".equals(user.getPassWord())){
+			//相关的用户信息放到cookie中
+			CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+			CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
+			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
+			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+			request.setAttribute(Constants.USERID, user.getId());
+			request.setAttribute(Constants.USERNAME, user.getLoginName());
 			ra.addFlashAttribute("messageType", "0");
-			ra.addFlashAttribute("message", "用户名或密码错误!");
-			return "redirect:/index";
+			ra.addFlashAttribute("message", "请先设置密码!!");
+			return "person/password-set";
 		}
 		if (user.getCheckStatus().equals(
 				Constants.CheckStatus.DAISHEN.toString())) {
@@ -197,8 +240,6 @@ public class UserController {
 		CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
 		CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
-		//地区代码设为永久
-		CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
 		return "redirect:/index";
 	}
 
@@ -333,4 +374,38 @@ public class UserController {
 		byte[] entity = userService.getHeadImage(id);
 		return entity;
 	}
+	
+	// 设置密码
+	@RequestMapping(value = "/setPassWord", method = RequestMethod.GET)
+	public String setPassWordGet(HttpServletRequest request) {
+		return "person/password-set";
+	}
+	// 设置密码
+	@RequestMapping(value = "/setPassWord", method = RequestMethod.POST)
+	public String setPassWordPost(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes ra) {
+		log.info("--- passWordEdit post---");
+		String passWord = request.getParameter("newPassWord");
+		String userId = request.getParameter(Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User user = userService.getById(uid);
+		user.setPassWord(passWord);
+		boolean bl = userService.update(user);
+		log.info("update password bl = " + bl);
+		if (!bl) {
+			ra.addFlashAttribute("messageType", "0");
+			ra.addFlashAttribute("message", "修改密码失败, 请联系管理员.");
+			return "redirect:/secure/user/setPassWord";
+		}
+//			//将基本属性设置到cookie中 
+//			CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+//			CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
+//			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
+//			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+//			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+		ra.addFlashAttribute("messageType", "1");
+		ra.addFlashAttribute("message", "操作成功!");
+		return "redirect:/user/goCenter";
+	}
+	
 }

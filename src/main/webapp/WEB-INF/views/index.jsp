@@ -40,7 +40,7 @@ function getimgcode(){
 						<div id="ctl00_ContentPlaceHolder1_login_1" class="login_1">
 							<ul style="width: 160px;">
 								<li class="login_li">
-									<input name="loginName" type="text" value="请输入您的用户名" id="loginName" maxlength="20" class="login_nput" 
+									<input name="loginName" type="text" value="用户名或残疾证号" id="loginName" maxlength="20" class="login_nput" 
 										onfocus="focus_login_name(this)" onblur="blur_login_name(this)" /></li>
 								<li class="login_li">
 									<input name="passWord" type="password" value="" id="passWord" maxlength="20" class="login_nput" /></li>
@@ -66,13 +66,13 @@ function getimgcode(){
 					<script type="text/javascript">
 						//用户名校验
 						function focus_login_name(object){
-							if (object.value == '请输入您的用户名'){
+							if (object.value == '用户名或残疾证号'){
 								object.value = '';
 							}
 						}
 						function blur_login_name(object){
 							if (object.value == ''){
-								object.value = '请输入您的用户名';
+								object.value = '用户名或残疾证号';
 							}
 						}
 						
@@ -96,12 +96,17 @@ function getimgcode(){
 								$('#loginName').focus();
 								return false;
 							}
-							//新密码
-							var passWord = $('#passWord').val();
-							if(passWord == null || passWord == '' ){
-						        alert('请输入密码!');
-								$('#passWord').focus();
-								return false;
+							var reg = /^[0-9]{14}[0-9a-zA-Z]{4}[1-7]{1}[1-4]{1}[B]?[0-9]?/;
+							var checkResult = reg.test(loginName);
+							//如果不是残疾证号, 则对密码进行校验
+							if(!checkResult){
+								//密码
+								var passWord = $('#passWord').val();
+								if(passWord == null || passWord == '' ){
+							        alert('您输入的不是残疾证号, 请输入密码!');
+									$('#passWord').focus();
+									return false;
+								}
 							}
 							//验证码
 							var LoginVerifyCode = $('#LoginVerifyCode').val();
