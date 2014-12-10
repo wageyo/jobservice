@@ -19,7 +19,64 @@
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/job.js"></script>
-	
+		<script type="text/javascript">  
+        $(function () {  
+            $("#jobcheckbox").click(function () {  
+                if ($(this).is(":checked")) {  
+                    //全选  
+                    $("#jobt1 :checkbox").attr("checked", "checked");  
+                }  
+                else {  
+                    //全不选  
+                    $("#jobt1 :checkbox").removeAttr("checked");  
+                }  
+            });  
+            //导出所选
+            $("#jobExportSelected").click(function () {  
+	            var chk_value =[];//定义一个数组    
+	        	$("input[name=checkbox2]:checked").each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数     
+	           			 chk_value.push($(this).val());//将选中的值添加到数组chk_value中    
+	       		}); 
+	    		if(chk_value.length!=0){	    		
+	            $.ajax({
+	    			url:server.url + 'job/jobExportSelected',
+	    			type:'post',
+	    			data:{params:chk_value},
+	    			success:function(data){
+	    					window.location.href=data;
+	    				},
+	    			error:function(){
+	    					alert("导出时发生错误");
+	    				}
+	    			});
+	    		}else{
+	    		      alert("你还没有选择任何内容！");  
+	    		}
+            });  
+            //导出所有
+            $("#jobExportAll").click(function () {    
+            	var param  = new Object();
+            	param.checkStatus=$('#checkStatus').val();
+            	param.targetName=$('#targetNameHid').val();
+                $.ajax({
+	    			url:server.url + 'job/jobExportAll',
+	    			type:'post',
+	    			data:{
+	    				checkStatus:param.checkStatus,
+	    				targetName:param.targetName
+	    				},
+	    			success:function(data){
+	    				window.location.href=data;	
+	    			},
+	    			error:function(){
+	    				alert("导出时发生错误");
+	    				}
+	    			});
+            });  
+         
+        })  
+        
+    </script>  
 </head>
 
 <body>
@@ -61,6 +118,11 @@
 							</ul>
 						</div>
 						<button type="submit" class="btn" onclick="query(null,null);">查找</button>
+						<input type="hidden" id="targetNameHid" name="targetNameHid" value="${targetName }"  />
+						<div style="float:right;">	
+							<button type="button" class="btn btn-info" id="jobExportSelected"  >导出所选</button>
+							<button type="button" class="btn btn-info" id="jobExportAll"  >导出全部</button>
+						</div>
 					</div>
 					<!-- 上方条件查询框  结束-->
 					
@@ -68,9 +130,12 @@
 					<div class="row-fluid">
 						
 						<div class="span12">
-							<table class="table">
+							<table class="table" id="jobt1">
 								<thead>
 									<tr>
+										<th >
+									  		<input id="jobcheckbox" type="checkbox" />  
+										</th>
 										<th>
 											序号
 										</th>
@@ -118,6 +183,10 @@
 										<tr 
 											<c:if test="${row.index % 2 == 0 }">class="info"</c:if>
 										>
+										<td>
+												<input type="hidden" id="jobtotal" name="jobtotal" value="${entity.id }"/>  
+                   							 	<input id="Checkbox2" name="checkbox2" type="checkbox" value="${entity.id }"/>  
+               								</td>
 											<td>
 												${(row.index + 1 + (currentPage - 1) * 20) }
 											</td>

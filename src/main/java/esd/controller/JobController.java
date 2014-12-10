@@ -1,10 +1,12 @@
 package esd.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +29,7 @@ import esd.bean.Area;
 import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.bean.Parameter;
+import esd.common.PoiCreateExcel;
 import esd.controller.Constants.Notice;
 import esd.service.CookieHelper;
 import esd.service.JobService;
@@ -245,6 +248,88 @@ public class JobController {
 		List<Job> jobList = jobService.getByNew(sqlArea, pageSize);
 		map.put("jobList", jobList);
 		return new JSONPObject(callback, map);
+	}
+	
+	// 导出所选信息 --不许删
+	@RequestMapping(value = "/jobExportSelected", method = RequestMethod.POST  )
+	@ResponseBody
+	public String ExportSelected(
+			@RequestParam(value = "params[]") int params[],
+			HttpServletRequest req) {
+		log.info("--------  down_multi ----------"+params.toString());
+		boolean b = true;
+		List<Job> job = new ArrayList<Job>();
+		for (int i = 0; i < params.length; i++) {
+			job.add(jobService.getOneForShow(params[i]));
+		}
+		String url = req.getRealPath("/");
+		// 创建导出文件夹
+		File uploadPath = new File(url + "upload");
+		// 导出文件夹
+		String exportFolder = uploadPath + File.separator + "job";
+		File jobPath = new File(exportFolder);
+		if (!(uploadPath.exists())) {
+			uploadPath.mkdir();
+		}
+		if (!(jobPath.exists())) {
+			jobPath.mkdir();
+		}
+		// 创建文件唯一名称
+		String uuid = UUID.randomUUID().toString();
+		String exportPath = exportFolder + File.separator + uuid + ".xls";
+		String FileDownloadPath = "null";
+		// 导出文件
+		b = PoiCreateExcel.createJobExcel(exportPath, job);
+		if (b) {
+			String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/job/" + uuid + ".xls";
+		}
+		return FileDownloadPath;
+		
+	}
+	//批量导出信息 --不许删
+	
+	@RequestMapping(value = "/jobExportAll", method = RequestMethod.POST  )
+	@ResponseBody
+	public String ExportAll(Job param,
+			HttpServletRequest req) {
+		boolean b = true;
+		Job paramEntity = new Job();
+		String targetName = param.getTargetName();
+		String checkStatus = param.getCheckStatus();
+		if (checkStatus == null || "".equals(checkStatus)) {
+			checkStatus = Constants.CheckStatus.DAISHEN.getValue();
+		}
+		paramEntity.setName(targetName);
+		paramEntity.setCheckStatus(checkStatus);
+		Integer total = jobService.getTotalCount(paramEntity);
+		Integer page=1;
+		List<Job> job = jobService.getListShowForManage(
+				paramEntity, page, total);
+		String url = req.getRealPath("/");
+	
+		// 创建导出文件夹
+		File uploadPath = new File(url + "upload");
+		// 导出文件夹
+		String exportFolder = uploadPath + File.separator + "job";
+		File jobPath = new File(exportFolder);
+		if (!(uploadPath.exists())) {
+			uploadPath.mkdir();
+		}
+		if (!(jobPath.exists())) {
+			jobPath.mkdir();
+		}
+		// 创建文件唯一名称
+		String uuid = UUID.randomUUID().toString();
+		String exportPath = exportFolder + File.separator + uuid + ".xls";
+		String FileDownloadPath = "null";
+		// 导出文件
+		b = PoiCreateExcel.createJobExcel(exportPath, job);
+		if (b) {
+			String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/job/" + uuid + ".xls";
+		}
+		return FileDownloadPath;
 	}
 
 }

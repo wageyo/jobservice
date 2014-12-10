@@ -43,6 +43,8 @@ public class Job extends PrimaryKey {
 
 	// 显示用
 	private String salaryScope; // 查询用的salary范围
+	
+	private String targetName; // 查询条件
 
 	public Job() {
 	}
@@ -285,4 +287,13 @@ public class Job extends PrimaryKey {
 		this.salaryScope = salaryScope;
 	}
 
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
+
+	
 }
