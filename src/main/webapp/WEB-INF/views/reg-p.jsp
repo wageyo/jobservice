@@ -90,24 +90,6 @@ function getimgcode(){
 						</div>
 						<div id="width">
 							<div id="F_left">
-								<span class="STYLE1">*&nbsp;</span>所在地区：
-							</div>
-							<div id="F_left_0" style="line-height:25px;">
-							<!-- 	<select name="area_lv1" id="area_lv1" class="select_border" style="width:100px;">
-								</select>  -->
-								<select name="area_lv23" id="area_lv23" class="select_border" style="width:100px;">
-										<c:forEach items="${provinceList }" var="area">
-											<option value="${area.code }">${area.name }</option>
-										</c:forEach>
-								</select> 
-								<select name="area.code" id="area_lv33" class="select_border" style="width:100px;">
-									<option value="">请选择区域</option>
-								</select>
-								<br/><span id="passWordNotice" style="color:Red;">为方便残联中心和您沟通,请填写准确的所在地区</span>
-							</div>
-						</div>
-						<div id="width">
-							<div id="F_left">
 								<span class="STYLE1">*&nbsp;</span>验&nbsp;证&nbsp;码：
 							</div>
 							<div id="F_left_0">

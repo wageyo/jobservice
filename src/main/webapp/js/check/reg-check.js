@@ -50,13 +50,6 @@ function check(){
 		$('#email').focus();
 		return false;
 	}	*/
-	//地区
-	var area_lv33 = $('#area_lv33').val();
-	if(area_lv33 == null || area_lv33 == ''){
-		$('#areaNotice').html('为方便残联中心和您沟通,请填写准确的所在地区');
-		$('#area_lv23').focus();
-		return false;
-	}
 	//验证码
 	var LoginVerifyCode = $('#LoginVerifyCode').val();
 	if(LoginVerifyCode == null || LoginVerifyCode == ''){

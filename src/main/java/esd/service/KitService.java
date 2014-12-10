@@ -209,20 +209,20 @@ public class KitService {
 	 * @return
 	 */
 	public static String areaCodeForSql(String code) {
-		if (code == null || "".equals(code)) {
-			return null;
-		}
-		String start = code.substring(0, 2);
-		String mid;
-		if ("10000000".equals(code)) {
-			code = "30______";
-		} else if ("10".equals(start)) {
-			mid = code.substring(2, 4);
-			code = "30" + mid + "____";
-		} else if ("20".equals(start)) {
-			mid = code.substring(2, 6);
-			code = "30" + mid + "__";
-		}
+//		if (code == null || "".equals(code)) {
+//			return null;
+//		}
+//		String start = code.substring(0, 2);
+//		String mid;
+//		if ("10000000".equals(code)) {
+//			code = "30______";
+//		} else if ("10".equals(start)) {
+//			mid = code.substring(2, 4);
+//			code = "30" + mid + "____";
+//		} else if ("20".equals(start)) {
+//			mid = code.substring(2, 6);
+//			code = "30" + mid + "__";
+//		}
 		return code;
 	}
 

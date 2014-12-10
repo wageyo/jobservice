@@ -73,8 +73,6 @@ public class UserController {
 		} catch (CaptchaServiceException e) {
 			log.error("error in check", e);
 		}
-		log.info("areaCode " + request.getParameter("area.code") + " || "
-				+ user.getArea());
 		String identity = user.getIdentity();
 		if (Constants.Identity.ADMIN.getValue().equals(identity)) {
 			user.setAuthority(Constants.Authority.ADMIN.getValue());
@@ -85,10 +83,7 @@ public class UserController {
 		}
 		log.info("注册用户为: " + user);
 		//如果cookie中有acode, 则使用默认的地区code, 否则使用前台传过来的地区code
-		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		if(acode != null && !"".equals(acode)){
-			user.setArea(new Area(acode));
-		}
+		user.setArea(new Area(Constants.AREAHUBEI));
 		boolean bl = userService.save(user);
 		log.info("save bl = " + bl);
 		if (!bl) {
@@ -114,8 +109,8 @@ public class UserController {
 			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
 			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
-			//地区代码设为永久
-			CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
+//			//地区代码设为永久
+//			CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
 		}
 		return "redirect:/index";
 	}
