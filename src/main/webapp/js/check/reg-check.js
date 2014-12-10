@@ -52,12 +52,12 @@ function check(){
 		return false;
 	}	*/
 	//地区
-	var area_lv3 = $('#area_lv3').val();
+/*	var area_lv3 = $('#area_lv3').val();
 	if(area_lv3 == null || area_lv3 == ''){
 		$('#areaNotice').html('为方便残联中心和您沟通,请填写准确的所在地区');
 		$('#area_lv1').focus();
 		return false;
-	}
+	}	*/
 	//验证码
 	var LoginVerifyCode = $('#LoginVerifyCode').val();
 	if(LoginVerifyCode == null || LoginVerifyCode == ''){

@@ -88,7 +88,7 @@ function getimgcode(){
 								<span id="emailNotice" style="color:Red;"></span>
 							</div>
 						</div>
-						<div id="width">
+				<!-- 		<div id="width">
 							<div id="F_left">
 								<span class="STYLE1">*&nbsp;</span>所在地区：
 							</div>
@@ -106,7 +106,7 @@ function getimgcode(){
 								</select>
 								<br/><span id="passWordNotice" style="color:Red;">为方便残联中心和您沟通,请填写准确的所在地区</span>
 							</div>
-						</div>
+						</div> -->
 						<div id="width">
 							<div id="F_left">
 								<span class="STYLE1">*&nbsp;</span>验&nbsp;证&nbsp;码：

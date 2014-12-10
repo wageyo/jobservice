@@ -131,14 +131,15 @@ public class CookieHelper {
 		cookie.setPath("/");
 		response.addCookie(cookie);
 	}
-	
+
 	/**
 	 * 杀死所有cookie信息, bl 为true 则包括地区code, false或者null不包括
+	 * 
 	 * @param response
 	 * @param bl
 	 */
-	public static void killAllCookie(HttpServletResponse response,Boolean bl){
-		//杀死所有cookie
+	public static void killAllCookie(HttpServletResponse response, Boolean bl) {
+		// 杀死所有cookie
 		CookieHelper.setCookie(response, Constants.USERID, null, 0);
 		CookieHelper.setCookie(response, Constants.USERNAME, null, 0);
 		CookieHelper.setCookie(response, Constants.USERPASSWORD, null, 0);
@@ -146,8 +147,23 @@ public class CookieHelper {
 		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
 		CookieHelper.setCookie(response, Constants.USERREGISTERTIME, null, 0);
 		CookieHelper.setCookie(response, Constants.USERCOMPANYID, null, 0);
-		if(bl){
+		if (bl) {
 			CookieHelper.setCookie(response, Constants.AREA, null, 0);
 		}
+	}
+
+	/***
+	 * 从cookie中获得当前的地区code, 如果没有, 则说明不是从网站群跳转过来的, 则设置为全国的地区code-10000000
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getLocalArea(HttpServletRequest request) {
+		String area = getCookieValue(request, Constants.AREA);
+		if (area == null || "".equals(area)) {
+			area = Constants.AREACOUNTRY;
+		}
+		return area;
+
 	}
 }
