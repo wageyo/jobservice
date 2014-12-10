@@ -1,13 +1,14 @@
 package esd.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.Resume;
-import esd.bean.User;
+import esd.common.PoiCreateExcel;
 import esd.service.CompanyService;
 import esd.service.CookieHelper;
 import esd.service.JobService;
@@ -151,4 +153,86 @@ public class CompanyController {
 		return map;
 	}
 
+	// 导出所选公司信息 --不许删
+	@RequestMapping(value = "/companyExportSelected", method = RequestMethod.POST  )
+	@ResponseBody
+	public String ExportSelected(
+			@RequestParam(value = "params[]") int params[],
+			HttpServletRequest req) {
+		log.info("--------  down_multi ----------"+params.toString());
+		boolean b = true;
+		List<Company> company = new ArrayList<Company>();
+		for (int i = 0; i < params.length; i++) {
+			company.add(companyService.getOneForShow(params[i]));
+		}
+		String url = req.getRealPath("/");
+		// 创建导出文件夹
+		File uploadPath = new File(url + "upload");
+		// 导出文件夹
+		String exportFolder = uploadPath + File.separator + "company";
+		File companyPath = new File(exportFolder);
+		if (!(uploadPath.exists())) {
+			uploadPath.mkdir();
+		}
+		if (!(companyPath.exists())) {
+			companyPath.mkdir();
+		}
+		// 创建文件唯一名称
+		String uuid = UUID.randomUUID().toString();
+		String exportPath = exportFolder + File.separator + uuid + ".xls";
+		String FileDownloadPath = "null";
+		// 导出文件
+		b = PoiCreateExcel.createComapnyExcel(exportPath, company);
+		if (b) {
+			String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/company/" + uuid + ".xls";
+		}
+		return FileDownloadPath;
+		
+	}
+	//批量导出公司信息 --不许删
+	
+	@RequestMapping(value = "/companyExportAll", method = RequestMethod.POST  )
+	@ResponseBody
+	public String ExportAll(Company param,
+			HttpServletRequest req) {
+		boolean b = true;
+		Company paramEntity = new Company();
+		String targetName = param.getTargetName();
+		String checkStatus = param.getCheckStatus();
+		if (checkStatus == null || "".equals(checkStatus)) {
+			checkStatus = Constants.CheckStatus.DAISHEN.getValue();
+		}
+		paramEntity.setName(targetName);
+		paramEntity.setCheckStatus(checkStatus);
+		Integer total = companyService.getTotalCount(paramEntity);
+		
+		Integer page=1;
+		List<Company> company = companyService.getListShowForManage(
+				paramEntity, page, total);
+		String url = req.getRealPath("/");
+	
+		// 创建导出文件夹
+		File uploadPath = new File(url + "upload");
+		// 导出文件夹
+		String exportFolder = uploadPath + File.separator + "company";
+		File companyPath = new File(exportFolder);
+		if (!(uploadPath.exists())) {
+			uploadPath.mkdir();
+		}
+		if (!(companyPath.exists())) {
+			companyPath.mkdir();
+		}
+		// 创建文件唯一名称
+		String uuid = UUID.randomUUID().toString();
+		String exportPath = exportFolder + File.separator + uuid + ".xls";
+		String FileDownloadPath = "null";
+		// 导出文件
+		b = PoiCreateExcel.createComapnyExcel(exportPath, company);
+		if (b) {
+			String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/company/" + uuid + ".xls";
+		}
+		return FileDownloadPath;
+	}
 }

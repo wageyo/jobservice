@@ -39,6 +39,8 @@ public class Company extends PrimaryKey {
 	private User user; // 账号表外键
 	private Area area; // 所在地区
 	private BusinessScope businessScope; // 所属行业/经营范围
+	private int idtotal[];//企业总id数组
+	private String targetName; // 查询条件
 
 	@Override
 	public String toString() {
@@ -256,4 +258,21 @@ public class Company extends PrimaryKey {
 		this.businessScope = businessScope;
 	}
 
+	public int[] getIdtotal() {
+		return idtotal;
+	}
+
+	public void setIdtotal(int[] idtotal) {
+		this.idtotal = idtotal;
+	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
+
+	
 }
