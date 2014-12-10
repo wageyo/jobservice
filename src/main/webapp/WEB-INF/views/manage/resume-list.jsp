@@ -19,7 +19,64 @@
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/resume.js"></script>
-	
+		<script type="text/javascript">  
+        $(function () {  
+            $("#resumeCheckbox").click(function () {  
+                if ($(this).is(":checked")) {  
+                    //全选  
+                    $("#resumetable :checkbox").attr("checked", "checked");  
+                }  
+                else {  
+                    //全不选  
+                    $("#resumetable :checkbox").removeAttr("checked");  
+                }  
+            });  
+            //导出所选
+            $("#resumeExportSelected").click(function () {  
+	            var resume_value =[];//定义一个数组    
+	        	$("input[name=resumeCheckbox2]:checked").each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数     
+	           			 resume_value.push($(this).val());//将选中的值添加到数组resume_value中    
+	       		}); 
+	    		if(resume_value.length!=0){	    		
+	            $.ajax({
+	    			url:server.url + 'resume/resumeExportSelected',
+	    			type:'post',
+	    			data:{params:resume_value},
+	    			success:function(data){
+	    				window.location.href=data;
+	    				},
+	    			error:function(){
+	    				alert("导出时发生错误");
+	    				}
+	    			});
+	    		}else{
+	    		      alert("你还没有选择任何内容！");  
+	    		}
+            });  
+            //导出所有
+            $("#resumeExportAll").click(function () {    
+            	var param  = new Object();
+            	param.checkStatus=$('#checkStatus').val();
+            	param.targetName=$('#resumeNameHid').val();
+                $.ajax({
+	    			url:server.url + 'resume/resumeExportAll',
+	    			type:'post',
+	    			data:{
+	    				checkStatus:param.checkStatus,
+	    				targetName:param.targetName
+	    				},
+	    			success:function(data){
+	    				window.location.href=data;
+	    				},
+	    			error:function(){
+	    				alert("导出时发生错误");
+	    				}
+	    			});
+            });  
+         
+        })  
+        
+    </script>  
 </head>
 
 <body>
@@ -61,6 +118,11 @@
 							</ul>
 						</div>
 						<button type="submit" class="btn" onclick="query(null,null);">查找</button>
+						<input type="hidden" id="resumeNameHid" name="resumeNameHid" value="${targetName }"  />
+						<div style="float:right;">	
+							<button type="button" class="btn btn-info" id="resumeExportSelected"  >导出所选</button>	
+							<button type="button" class="btn btn-info" id="resumeExportAll"  >导出全部</button>
+						</div>
 					</div>
 					<!-- 上方条件查询框  结束-->
 					
@@ -68,9 +130,12 @@
 					<div class="row-fluid">
 						
 						<div class="span12">
-							<table class="table">
+							<table class="table" id="resumetable">
 								<thead>
 									<tr>
+										<th >
+										  <input id="resumeCheckbox" type="checkbox" />  
+										</th>
 										<th>
 											序号
 										</th>
@@ -115,6 +180,10 @@
 										<tr 
 											<c:if test="${row.index % 2 == 0 }">class="info"</c:if>
 										>
+											<td>
+												<input type="hidden" id="companytotal" name="companytotal" value="${entity.id }"/>  
+                   							 	<input id="resumeCheckbox2" name="resumeCheckbox2" type="checkbox" value="${entity.id }"/>  
+               								</td>
 											<td>
 												${(row.index + 1 + (currentPage - 1) * 20) }
 											</td>

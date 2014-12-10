@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +37,7 @@ import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.bean.Parameter;
 import esd.bean.Resume;
-import esd.bean.User;
+import esd.common.PoiCreateExcel;
 import esd.service.AreaService;
 import esd.service.CompanyService;
 import esd.service.CookieHelper;
@@ -329,4 +330,89 @@ public class ResumeController {
 		}
 		return null;
 	}
+	
+	// 下载所选简历信息    --别删
+	@RequestMapping(value = "/resumeExportSelected", method = RequestMethod.POST  )
+	@ResponseBody
+	public String ExportSelected(
+			@RequestParam(value = "params[]") int params[],
+			HttpServletRequest req) {
+		log.info("--------  down_multi ----------");
+		boolean b = true;
+		List<Resume> resumes = new ArrayList<Resume>();
+		for (int i = 0; i < params.length; i++) {
+			resumes.add(resumeService.getOneForShow(params[i]));
+		}
+		
+		String url = req.getRealPath("/");
+		// 创建导出文件夹
+		File uploadPath = new File(url + "upload");
+		// 导出文件夹
+		String exportFolder = uploadPath + File.separator + "resumes";
+		File resumesPath = new File(exportFolder);
+		if (!(uploadPath.exists())) {
+			uploadPath.mkdir();
+		}
+		if (!(resumesPath.exists())) {
+			resumesPath.mkdir();
+		}
+		// 创建文件唯一名称
+		String uuid = UUID.randomUUID().toString();
+		String exportPath = exportFolder + File.separator + uuid + ".xls";
+		String FileDownloadPath = "null";
+		// 导出文件
+		b = PoiCreateExcel.createResumeExcel(exportPath, resumes);
+		if (b) {
+			String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/resumes/" + uuid + ".xls";
+		}
+		return FileDownloadPath;
+	}
+	
+	
+	
+	// 批量下载信息    --别删
+		@RequestMapping(value = "/resumeExportAll", method = RequestMethod.POST  )
+		@ResponseBody
+		public String ExportAll(Resume param,
+				HttpServletRequest req) {
+			boolean b = true;
+			Resume paramEntity = new Resume();
+			String targetName = param.getTargetName();
+			String checkStatus = param.getCheckStatus();
+			if (checkStatus == null || "".equals(checkStatus)) {
+				checkStatus = Constants.CheckStatus.DAISHEN.getValue();
+			}
+			paramEntity.setName(targetName);
+			paramEntity.setCheckStatus(checkStatus);
+			Integer total = resumeService.getTotalCount(paramEntity);
+			Integer page=1;
+			List<Resume> resume = resumeService.getListShowForManage(
+					paramEntity, page, total);
+			String url = req.getRealPath("/");
+		
+			// 创建导出文件夹
+			File uploadPath = new File(url + "upload");
+			// 导出文件夹
+			String exportFolder = uploadPath + File.separator + "resume";
+			File resumePath = new File(exportFolder);
+			if (!(uploadPath.exists())) {
+				uploadPath.mkdir();
+			}
+			if (!(resumePath.exists())) {
+				resumePath.mkdir();
+			}
+			// 创建文件唯一名称
+			String uuid = UUID.randomUUID().toString();
+			String exportPath = exportFolder + File.separator + uuid + ".xls";
+			String FileDownloadPath = "null";
+			// 导出文件
+			b = PoiCreateExcel.createResumeExcel(exportPath, resume);
+			if (b) {
+				String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
+				FileDownloadPath = "http://" + destPath + "/upload/resume/" + uuid + ".xls";
+			}
+			return FileDownloadPath;
+		}
+	
 }

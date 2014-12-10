@@ -81,6 +81,8 @@ public class Resume extends PrimaryKey {
 	private User user; // 账户表外键
 	private Area area; // 简历所属地区code
 
+
+	private String targetName; // 查询条件
 	// 教育背景, 家庭成员, 工作经历, 就业管理
 	// private List<EducationBackground> educationBackgroundList = new
 	// ArrayList<EducationBackground>();
@@ -576,4 +578,13 @@ public class Resume extends PrimaryKey {
 		this.unempManageList = unempManageList;
 	}
 
+	public String getTargetName() {
+		return targetName;
+	}
+
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
+
+	
 }
