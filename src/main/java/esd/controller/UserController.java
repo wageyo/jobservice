@@ -106,8 +106,6 @@ public class UserController {
 			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
 			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
-//			//地区代码设为永久
-//			CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
 		}
 		return "redirect:/index";
 	}
@@ -347,7 +345,7 @@ public class UserController {
 		user.setPassWord(password);
 		//查看有木有该用户
 		User resultUser = userService.check(user);
-		//存在该用户, 则将用户名和吗
+		//存在该用户, 则将用户名和密码
 		if(resultUser != null){
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS);
 		}else{
