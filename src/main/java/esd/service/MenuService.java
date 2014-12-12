@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +15,6 @@ import esd.dao.MenuDao;
 
 @Service
 public class MenuService {
-
-	private static Logger log = Logger.getLogger(MenuService.class);
 
 	@Autowired
 	private MenuDao dao;

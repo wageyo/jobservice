@@ -9,10 +9,8 @@ import org.apache.log4j.Logger;
  * 
  */
 public class Constants {
-	private static Logger log = Logger.getLogger(Constants.class);
 	public static final int START = 0;
 	public static final int SIZE = 20;
-	// public static final int PAGE_SIZE = 20;
 
 	public static final String NOTICE = "notice"; // 提示文字key
 	public static final String BENEFIT = "benefit"; // 其他福利

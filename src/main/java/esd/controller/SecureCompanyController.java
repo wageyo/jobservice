@@ -24,7 +24,6 @@ import esd.bean.JobCategory;
 import esd.bean.Parameter;
 import esd.bean.Record;
 import esd.bean.User;
-import esd.controller.Constants.Identity;
 import esd.controller.Constants.Notice;
 import esd.service.AreaService;
 import esd.service.BusinessScopeService;

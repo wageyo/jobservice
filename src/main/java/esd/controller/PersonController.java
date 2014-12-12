@@ -2,9 +2,6 @@ package esd.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 import esd.bean.Area;
 import esd.bean.JobCategory;
 import esd.bean.Parameter;
-import esd.bean.Record;
-import esd.bean.User;
 import esd.service.AreaService;
 import esd.service.JobCategoryService;
 import esd.service.ParameterService;
-import esd.service.PersonService;
 
 @Controller
 @RequestMapping("/person")
@@ -27,9 +21,6 @@ public class PersonController {
 
 	private static Logger log = Logger.getLogger(PersonController.class);
 
-	@Autowired
-	private PersonService personService;
-	
 	@Autowired
 	private ParameterService parameterService;
 	

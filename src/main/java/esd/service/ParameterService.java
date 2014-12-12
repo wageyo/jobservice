@@ -1,8 +1,6 @@
 package esd.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +39,9 @@ public class ParameterService {
 	public Parameter getShareScopeByArea(String acode) {
 		return dao.getShareScopeByArea(acode);
 	}
-	
+
 	/**
-	 * 根据地区code和分享类型shareScopeSwitch 来获得该地区  "能够"  控制的信息分享范围列表
+	 * 根据地区code和分享类型shareScopeSwitch 来获得该地区 "能够" 控制的信息分享范围列表
 	 * 
 	 * @param type
 	 * @return
@@ -51,7 +49,7 @@ public class ParameterService {
 	public List<Parameter> getByTypeAndArea(String acode) {
 		return dao.getShareScopeListByArea(acode);
 	}
-	
+
 	/**
 	 * 获得所有参数
 	 * 
@@ -70,13 +68,13 @@ public class ParameterService {
 	 * @return
 	 */
 	public boolean update(Parameter parameter) {
-		if(parameter == null){
+		if (parameter == null) {
 			return false;
 		}
 		boolean bl = dao.update(parameter);
 		return bl;
 	}
-	
+
 	/**
 	 * 更改参数状态
 	 * 
@@ -85,13 +83,13 @@ public class ParameterService {
 	 * @return
 	 */
 	public boolean updateParameter(Parameter parameter) {
-		if(parameter == null){
+		if (parameter == null) {
 			return false;
 		}
 		boolean bl = dao.updateSwitch(parameter);
 		return bl;
 	}
-	
+
 	/**
 	 * 更改参数状态, 据参数id和value值
 	 * 

@@ -318,17 +318,6 @@ public class KitService {
 		}
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
-
-		// // 创建时间
-		// if (resume.getCreateDate() != null
-		// && !"".equals(resume.getCreateDate())) {
-		// resume.setCreateDate(dateForShow(resume.getCreateDate()));
-		// }
-		// // 更新时间
-		// if (resume.getUpdateDate() != null
-		// && !"".equals(resume.getUpdateDate())) {
-		// resume.setUpdateDate(dateForShow(resume.getUpdateDate()));
-		// }
 		// // 出生日期
 		// if (resume.getBirth() != null && !"".equals(resume.getBirth())) {
 		// resume.setBirth(dateForShow(resume.getBirth()));

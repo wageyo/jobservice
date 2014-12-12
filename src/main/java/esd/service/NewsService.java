@@ -9,10 +9,8 @@ import org.springframework.stereotype.Service;
 
 import esd.bean.Area;
 import esd.bean.News;
-import esd.bean.Parameter;
 import esd.controller.Constants;
 import esd.dao.NewsDao;
-import esd.dao.ParameterDao;
 
 /**
  * 消息操作类
@@ -29,9 +27,6 @@ public class NewsService {
 	@Autowired
 	private KitService kitService;
 
-	@Autowired
-	private ParameterDao parameterDao;
-	
 	// 保存一个对象
 	public boolean save(News news) {
 		return dao.save(news);

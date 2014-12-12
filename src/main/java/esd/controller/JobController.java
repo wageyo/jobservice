@@ -28,13 +28,11 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import esd.bean.Area;
 import esd.bean.Job;
 import esd.bean.JobCategory;
-import esd.bean.Parameter;
 import esd.common.PoiCreateExcel;
 import esd.controller.Constants.Notice;
 import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
-import esd.service.ParameterService;
 
 @Controller
 @RequestMapping("/job")
@@ -44,9 +42,6 @@ public class JobController {
 	@Autowired
 	private JobService jobService;
 
-	@Autowired
-	private ParameterService parameterService;
-	
 	@RequestMapping("/search")
 	public ModelAndView work(HttpServletRequest request,HttpServletResponse response) {
 		log.debug(request.getRequestURI());

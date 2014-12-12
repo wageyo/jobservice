@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import esd.bean.JobCategory;
+import esd.controller.Constants;
 import esd.dao.JobCategoryDao;
 
 @Service
@@ -47,10 +48,22 @@ public class JobCategoryService {
 	 * @param map中为具体的参数
 	 *            : 1-类对象, 字段的值即为查询条件; 2-start: 起始页数; 3-size: 返回条数
 	 */
-	public List<JobCategory> getByPage(Map map) {
+	public List<JobCategory> getByPage(JobCategory jobCategory,Integer startPage, Integer pageSize) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("jobCategory", jobCategory);
+		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
+				* (pageSize <= 0 ? Constants.SIZE : pageSize));
+		map.put("size", pageSize <= 0 ? Constants.SIZE : pageSize);
 		return dao.getByPage(map);
 	}
 
+	// 获得数据总条数
+	public int getTotalCount(JobCategory jobCategory,Integer startPage, Integer pageSize) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("jobCategory", jobCategory);
+		return dao.getTotalCount(map);
+	}
+	
 	// 获得最受欢迎职位种类列表
 	public List<JobCategory> getPopularJobCategory() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -96,11 +109,6 @@ public class JobCategoryService {
 		// }
 		// }
 		return dao.getAll();
-	}
-
-	// 获得数据总条数
-	public int getTotalCount(Map map) {
-		return dao.getTotalCount(map);
 	}
 
 	// 得到省级菜单

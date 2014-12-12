@@ -32,5 +32,5 @@ public interface UserDao extends IDao<User> {
 	 * @param id
 	 * @return
 	 */
-	HashMap getHeadImage(Integer id);
+	HashMap<String,Object> getHeadImage(Integer id);
 }

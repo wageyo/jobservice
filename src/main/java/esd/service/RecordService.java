@@ -11,19 +11,12 @@ import esd.bean.Job;
 import esd.bean.Record;
 import esd.bean.Resume;
 import esd.dao.RecordDao;
-import esd.dao.ResumeDao;
 
 @Service
 public class RecordService {
 
 	@Autowired
-	private ResumeDao resumeDao;
-
-	@Autowired
 	private RecordDao recordDao;
-
-	@Autowired
-	private KitService kitService;
 
 	/**
 	 * 向指定职位投递简历/向指定人发送邀请
@@ -91,7 +84,7 @@ public class RecordService {
 		re.setjSalary(job.getSalary());
 		re.setcID(job.getCompany().getId());
 		re.setDirection(direction);
-		if(job.getMark()!=null && !"".equals(job.getMark())){
+		if (job.getMark() != null && !"".equals(job.getMark())) {
 			re.setComment(job.getMark());
 		}
 		return re;

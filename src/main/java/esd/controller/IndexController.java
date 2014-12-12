@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,9 +44,6 @@ import esd.service.UserService;
 @Controller
 public class IndexController {
 	private static Logger log = Logger.getLogger(IndexController.class);
-
-	@Value("${export.template.url}")
-	private String exportTemplateUrl;
 
 	@Autowired
 	private UserService<User> userService;

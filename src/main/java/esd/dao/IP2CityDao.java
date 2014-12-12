@@ -6,11 +6,12 @@ import esd.bean.IP2City;
 
 /**
  * 地名操作Dao接口
+ * 
  * @author Administrator
- *
+ * 
  */
-public interface IP2CityDao extends IDao{
+public interface IP2CityDao {
 
-	//得到所有数据
+	// 得到所有数据
 	public List<IP2City> getAll();
 }

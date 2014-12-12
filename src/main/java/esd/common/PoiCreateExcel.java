@@ -15,17 +15,12 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.Resume;
-import esd.dao.AreaDao;
 
 public class PoiCreateExcel {
-
-	@Autowired
-	private static AreaDao aDao;
 
 	/**
 	 * 导出职位信息
@@ -90,7 +85,7 @@ public class PoiCreateExcel {
 		headell.setCellValue("是否提供住宿");
 		headell = headRow.createCell(19);
 		headell.setCellValue("是否提供工作餐");
-		
+
 		headell = headRow.createCell(20);
 		headell.setCellValue("是否显示/是否通过审核");
 		headell = headRow.createCell(21);
@@ -102,7 +97,6 @@ public class PoiCreateExcel {
 		headell = headRow.createCell(24);
 		headell.setCellValue("职位类别");
 
-		
 		for (int i = 1; i <= jobList.size(); i++) {
 			Job job = jobList.get(i - 1);
 			// 创建一个Excel的单元格
@@ -121,7 +115,7 @@ public class PoiCreateExcel {
 			cell.setCellValue(job.getExperience());
 			cell = row.createCell(5);
 			cell.setCellValue(job.getGender());
-			
+
 			cell = row.createCell(6);
 			cell.setCellValue(job.getAge());
 			cell = row.createCell(7);
@@ -132,10 +126,10 @@ public class PoiCreateExcel {
 			cell.setCellValue(job.getContactPerson());
 			cell = row.createCell(10);
 			cell.setCellValue(job.getContactTel());
-			
+
 			cell = row.createCell(11);
 			cell.setCellValue(job.getContactEmail());
-			if(job.getViewCount()!=null){
+			if (job.getViewCount() != null) {
 				cell = row.createCell(12);
 				cell.setCellValue(job.getViewCount());
 			}
@@ -144,15 +138,17 @@ public class PoiCreateExcel {
 			cell = row.createCell(14);
 			cell.setCellValue(job.getEffectiveDays());
 			cell = row.createCell(15);
-			//	cell.setCellValue(job.getIsActiveEffectiveTime());
-		
-			if(job.getEffectiveTime() != null){
-				SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 格式化当前系统日期
-				String effectiveTimeString=  dateFm.format(job.getEffectiveTime());
-					cell = row.createCell(16);
-					cell.setCellValue(effectiveTimeString);
+			// cell.setCellValue(job.getIsActiveEffectiveTime());
+
+			if (job.getEffectiveTime() != null) {
+				SimpleDateFormat dateFm = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss"); // 格式化当前系统日期
+				String effectiveTimeString = dateFm.format(job
+						.getEffectiveTime());
+				cell = row.createCell(16);
+				cell.setCellValue(effectiveTimeString);
 			}
-			
+
 			if (job.getWorkPlace() != null) {
 				if (job.getWorkPlace().getCode() != null
 						&& !"".equals(job.getWorkPlace().getCode())) {
@@ -160,32 +156,32 @@ public class PoiCreateExcel {
 					cell.setCellValue(job.getWorkPlace().getName());
 				}
 			}
-			
-			if(job.isBed()==true){
+
+			if (job.isBed() == true) {
 				cell = row.createCell(18);
 				cell.setCellValue("是");
-			}else if(job.isBed()==false){
+			} else if (job.isBed() == false) {
 				cell = row.createCell(18);
 				cell.setCellValue("否");
 			}
-			
-			if(job.isLunch()==true){
+
+			if (job.isLunch() == true) {
 				cell = row.createCell(19);
 				cell.setCellValue("是");
-			}else if(job.isLunch()==false){
+			} else if (job.isLunch() == false) {
 				cell = row.createCell(19);
 				cell.setCellValue("否");
 			}
-			
+
 			cell = row.createCell(20);
 			cell.setCellValue(job.getCheckStatus());
 			cell = row.createCell(21);
 			cell.setCellValue(job.getMark());
-			
+
 			if (job.getCompany() != null) {
-			
-					cell = row.createCell(22);
-					cell.setCellValue(job.getCompany().getName());
+
+				cell = row.createCell(22);
+				cell.setCellValue(job.getCompany().getName());
 			}
 			if (job.getArea() != null) {
 				if (job.getArea().getCode() != null
@@ -194,7 +190,7 @@ public class PoiCreateExcel {
 					cell.setCellValue(job.getArea().getName());
 				}
 			}
-			
+
 			if (job.getJobCategory() != null) {
 				if (job.getJobCategory().getCode() != null
 						&& !"".equals(job.getJobCategory().getCode())) {
@@ -220,7 +216,7 @@ public class PoiCreateExcel {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * 导出单位信息
 	 * 
@@ -228,7 +224,8 @@ public class PoiCreateExcel {
 	 * @param companyList
 	 * @return
 	 */
-	public static boolean createComapnyExcel(String FilePath, List<Company> companyList) {
+	public static boolean createComapnyExcel(String FilePath,
+			List<Company> companyList) {
 		// 创建Excel的工作书册 Workbook,对应到一个excel文档
 		HSSFWorkbook wb = new HSSFWorkbook();
 		// 创建Excel的工作sheet,对应到一个excel文档的tab
@@ -284,16 +281,16 @@ public class PoiCreateExcel {
 		headell.setCellValue("备注");
 		headell = headRow.createCell(19);
 		headell.setCellValue("被浏览次数");
-//		headell = headRow.createCell(20);
-//		headell.setCellValue("是否显示");
-		
+		// headell = headRow.createCell(20);
+		// headell.setCellValue("是否显示");
+
 		for (int i = 1; i <= companyList.size(); i++) {
 			Company company = companyList.get(i - 1);
 			// 创建一个Excel的单元格
 			HSSFRow row = sheet.createRow(i);
 			HSSFCell cell = row.createCell(0);
 			// 设置单元格的样式格式
-			//公司名称
+			// 公司名称
 			cell = row.createCell(0);
 			cell.setCellValue(company.getName());
 			// 法人
@@ -317,13 +314,13 @@ public class PoiCreateExcel {
 			// 公司详细地址
 			cell = row.createCell(7);
 			cell.setCellValue(company.getAddress());
-			//  公司简介
+			// 公司简介
 			cell = row.createCell(8);
 			cell.setCellValue(company.getIntroduction());
 			// 组织机构代码
 			cell = row.createCell(9);
 			cell.setCellValue(company.getOrganizationCode());
-			//工商登记号码
+			// 工商登记号码
 			cell = row.createCell(10);
 			cell.setCellValue(company.getCommercialCode());
 			// 税务编码
@@ -335,10 +332,10 @@ public class PoiCreateExcel {
 			// 网站ID
 			cell = row.createCell(13);
 			cell.setCellValue(company.getWebSiteId());
-			//  市劳网号
+			// 市劳网号
 			cell = row.createCell(14);
 			cell.setCellValue(company.getLaoWangCode());
-			//  企业规模
+			// 企业规模
 			cell = row.createCell(15);
 			cell.setCellValue(company.getScale());
 			// 企业性质
@@ -351,13 +348,13 @@ public class PoiCreateExcel {
 			cell = row.createCell(18);
 			cell.setCellValue(company.getRemark());
 			// 被浏览次数
-			if(company.getViewCount()!=null){
+			if (company.getViewCount() != null) {
 				cell = row.createCell(19);
 				cell.setCellValue(company.getViewCount());
 			}
-//			cell = row.createCell(20);
-//			cell.setCellValue(company.getCheckStatus());
-			
+			// cell = row.createCell(20);
+			// cell.setCellValue(company.getCheckStatus());
+
 		}
 		try {
 			FileOutputStream os = new FileOutputStream(FilePath);
@@ -376,6 +373,7 @@ public class PoiCreateExcel {
 		}
 		return true;
 	}
+
 	/**
 	 * 导出简历信息
 	 * 
@@ -383,7 +381,8 @@ public class PoiCreateExcel {
 	 * @param resumeList
 	 * @return
 	 */
-	public static boolean createResumeExcel(String FilePath, List<Resume> resumeList) {
+	public static boolean createResumeExcel(String FilePath,
+			List<Resume> resumeList) {
 		// 创建Excel的工作书册 Workbook,对应到一个excel文档
 		HSSFWorkbook wb = new HSSFWorkbook();
 		// 创建Excel的工作sheet,对应到一个excel文档的tab
@@ -441,8 +440,6 @@ public class PoiCreateExcel {
 		headell.setCellValue("有无劳动能力");
 		headell = headRow.createCell(20);
 		headell.setCellValue("籍贯");
-		
-		
 
 		headell = headRow.createCell(21);
 		headell.setCellValue("政治面貌");
@@ -487,7 +484,7 @@ public class PoiCreateExcel {
 		headell.setCellValue("期望工作地点");
 		headell = headRow.createCell(40);
 		headell.setCellValue("期望工资");
-		
+
 		headell = headRow.createCell(41);
 		headell.setCellValue("是否提供食宿");
 		headell = headRow.createCell(42);
@@ -530,7 +527,7 @@ public class PoiCreateExcel {
 			cell.setCellValue(resume.getIdentityCard());
 			cell = row.createCell(5);
 			cell.setCellValue(resume.getRace());
-			
+
 			cell = row.createCell(6);
 			cell.setCellValue(resume.getMarriage());
 			if (resume.getHukou() != null) {
@@ -540,14 +537,14 @@ public class PoiCreateExcel {
 					cell.setCellValue(resume.getHukou().getName());
 				}
 			}
-			
+
 			cell = row.createCell(8);
 			cell.setCellValue(resume.getHukouAddress());
 			cell = row.createCell(9);
 			cell.setCellValue(resume.getHukouStatus());
 			cell = row.createCell(10);
 			cell.setCellValue(resume.getAddress());
-			
+
 			cell = row.createCell(11);
 			cell.setCellValue(resume.getZipcode());
 			cell = row.createCell(12);
@@ -558,7 +555,7 @@ public class PoiCreateExcel {
 			cell.setCellValue(resume.getQq());
 			cell = row.createCell(15);
 			cell.setCellValue(resume.getDisabilityCategory());
-			
+
 			cell = row.createCell(16);
 			cell.setCellValue(resume.getDisabilityCard());
 			cell = row.createCell(17);
@@ -569,7 +566,7 @@ public class PoiCreateExcel {
 			cell.setCellValue(resume.getWorkAbility());
 			cell = row.createCell(20);
 			cell.setCellValue(resume.getHomeTown());
-			
+
 			cell = row.createCell(21);
 			cell.setCellValue(resume.getPoliticalStatus());
 			cell = row.createCell(22);
@@ -580,7 +577,7 @@ public class PoiCreateExcel {
 			cell.setCellValue(resume.getWeight());
 			cell = row.createCell(25);
 			cell.setCellValue(resume.getProcessState());
-			
+
 			cell = row.createCell(26);
 			cell.setCellValue(resume.getEducation());
 			cell = row.createCell(27);
@@ -591,7 +588,7 @@ public class PoiCreateExcel {
 			cell.setCellValue(resume.getZhiCheng());
 			cell = row.createCell(30);
 			cell.setCellValue(resume.getShiYeHao());
-			
+
 			cell = row.createCell(31);
 			cell.setCellValue(resume.getExperts());
 			cell = row.createCell(32);
@@ -601,7 +598,7 @@ public class PoiCreateExcel {
 			cell = row.createCell(34);
 			cell.setCellValue(resume.getWorkExperience());
 			cell = row.createCell(35);
-			
+
 			cell.setCellValue(resume.getSelfEvaluation());
 			cell = row.createCell(36);
 			cell.setCellValue(resume.getAttachment());
@@ -611,11 +608,12 @@ public class PoiCreateExcel {
 				if (resume.getDesireJob().getCode() != null
 						&& !"".equals(resume.getDesireJob().getCode())) {
 					cell = row.createCell(38);
-					System.out.println(resume.getDesireJob().getName()+"********8");
+					System.out.println(resume.getDesireJob().getName()
+							+ "********8");
 					cell.setCellValue(resume.getDesireJob().getName());
 				}
 			}
-			
+
 			if (resume.getDesireAddress() != null) {
 				if (resume.getDesireAddress().getCode() != null
 						&& !"".equals(resume.getDesireAddress().getCode())) {
@@ -623,73 +621,70 @@ public class PoiCreateExcel {
 					cell.setCellValue(resume.getDesireAddress().getName());
 				}
 			}
-			
-			
+
 			cell = row.createCell(40);
 			cell.setCellValue(resume.getDesireSalary());
-			
-		
-			if(resume.isProvideFoodAndRoom()==true){
+
+			if (resume.isProvideFoodAndRoom() == true) {
 				cell = row.createCell(41);
 				cell.setCellValue("是");
-			}else if(resume.isProvideFoodAndRoom()==false){
+			} else if (resume.isProvideFoodAndRoom() == false) {
 				cell = row.createCell(41);
 				cell.setCellValue("否");
 			}
-	
-			
-			if(resume.isProvideRoom()==true){
+
+			if (resume.isProvideRoom() == true) {
 				cell = row.createCell(42);
 				cell.setCellValue("是");
-			}else if(resume.isProvideRoom()==false){
+			} else if (resume.isProvideRoom() == false) {
 				cell = row.createCell(42);
 				cell.setCellValue("否");
 			}
-			
-			if(resume.isProvideFood()==true){
+
+			if (resume.isProvideFood() == true) {
 				cell = row.createCell(43);
 				cell.setCellValue("是");
-			}else if(resume.isProvideFood()==false){
+			} else if (resume.isProvideFood() == false) {
 				cell = row.createCell(43);
 				cell.setCellValue("否");
 			}
-			if(resume.isProvideInsurance()==true){
+			if (resume.isProvideInsurance() == true) {
 				cell = row.createCell(44);
 				cell.setCellValue("是");
-			}else if(resume.isProvideInsurance()==false){
+			} else if (resume.isProvideInsurance() == false) {
 				cell = row.createCell(44);
 				cell.setCellValue("否");
 			}
 			cell = row.createCell(45);
 			cell.setCellValue(resume.getProvideOther());
-			if(resume.isWorkShift()==true){
+			if (resume.isWorkShift() == true) {
 				cell = row.createCell(46);
 				cell.setCellValue("是");
-			}else if(resume.isWorkShift()==false){
+			} else if (resume.isWorkShift() == false) {
 				cell = row.createCell(46);
 				cell.setCellValue("否");
 			}
 			cell = row.createCell(47);
 			cell.setCellValue(resume.getState());
-			
-			if(resume.getIsDefault()==true){
+
+			if (resume.getIsDefault() == true) {
 				cell = row.createCell(48);
 				cell.setCellValue("是");
-			}else if(resume.getIsDefault()==false){
+			} else if (resume.getIsDefault() == false) {
 				cell = row.createCell(48);
 				cell.setCellValue("否");
 			}
-			
+
 			cell = row.createCell(49);
 			cell.setCellValue(resume.getCheckStatus());
-			
-			if(resume.getViewCount()!=null){
+
+			if (resume.getViewCount() != null) {
 				cell = row.createCell(50);
 				cell.setCellValue(resume.getViewCount());
 			}
 			cell = row.createCell(51);
 			cell.setCellValue(resume.getCareerTest());
-			
+
 		}
 		try {
 			FileOutputStream os = new FileOutputStream(FilePath);
@@ -708,5 +703,5 @@ public class PoiCreateExcel {
 		}
 		return true;
 	}
-	
+
 }

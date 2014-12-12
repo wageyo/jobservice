@@ -203,7 +203,7 @@ public class UserService<T> {
 		if (id == null || id <= 0) {
 			return null;
 		}
-		HashMap resultMap = dao.getHeadImage(id);
+		HashMap<String,Object> resultMap = dao.getHeadImage(id);
 		byte[] headImage = (byte[]) resultMap.get("head_image");
 		return headImage;
 	}

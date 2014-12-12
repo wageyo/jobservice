@@ -63,13 +63,7 @@ public class ResumeController {
 
 	@Autowired
 	private CompanyService companyService;
-
-	@Autowired
-	private AreaService areaService;
 	
-	@Autowired
-	private ParameterService parameterService;
-
 	private static Logger log = Logger.getLogger(ResumeController.class);
 
 	@RequestMapping("/search")
