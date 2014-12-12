@@ -9,7 +9,7 @@
 <meta content="残疾人招聘就业" name="description" />
 
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
-<title>聘人才</title>
+<title>jsonp_test</title>
 <script type="text/javascript">
 	$(document).ready(function() {
 		common.pagination(1);
