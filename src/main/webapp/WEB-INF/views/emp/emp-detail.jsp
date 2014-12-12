@@ -276,7 +276,7 @@
 																					<tr>
 																						<td class="txt" height="25"><span class="txt1">学历：${resume.education }</span></td>
 																						<td class="txt"><span class="txt1">婚姻状况：${resume.marriage }</span></td>
-																						<td class="txt"><span class="txt1">户籍：${resume.homeTown }</span></td>
+																						<td class="txt"><span class="txt1">户籍：${resume.hukou.name }</span></td>
 																					</tr>
 																					<tr>
 																						<td class="txt" height="25"><span class="txt1">残疾类别：${resume.disabilityCategory }</span></td>
