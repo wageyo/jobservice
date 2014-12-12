@@ -53,8 +53,6 @@ public class NewsController {
 		log.info("--- search ---");
 		//从cookie读取acode
 		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
-		acode = KitService.getProvinceCode(acode);
 		
 		News n = new News();
 		n.setType(Constants.ARTICLE_TYPE_NEWS);

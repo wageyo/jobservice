@@ -94,7 +94,7 @@ public class KitService {
 		}
 		return "未知类型";
 	}
-	
+
 	/**
 	 * 根据开关值, 获得对应的开关名称
 	 * 
@@ -129,17 +129,6 @@ public class KitService {
 	public static int getTotalPage(int totalCount) {
 		return totalCount % Constants.SIZE == 0 ? totalCount / Constants.SIZE
 				: (totalCount / Constants.SIZE) + 1;
-	}
-
-	public static void main(String[] args) {
-		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		// Date today = new Date();
-		// Long l1 = 20L;
-		// System.out.println(sdf.format(new
-		// Date(today.getTime()+l1*24*60*60*1000)));
-		Boolean bl = null;
-		System.out.println(bl);
-		System.out.println(KitService.getTotalPage(52));
 	}
 
 	/**
@@ -181,81 +170,67 @@ public class KitService {
 	}
 
 	/**
-	 * 有三级县区地区code, 提取出所在省份地区code
+	 * 根据分享范围得到 适用于sql查询 地区code形式
 	 * 
-	 * @param districtCode
+	 * @param shareScope
 	 * @return
 	 */
-	public static String getProvinceCode(String districtCode) {
-		if (districtCode == null || "".equals(districtCode)
-				|| !districtCode.startsWith("30")) {
-			return districtCode;
+	public static String getAreaSqlFromShareScope(String shareScope,
+			String acode) {
+		String areaSql = ""; // 预定义sql
+		if (shareScope == null || "".equals(shareScope)) {
+			return acode;
 		}
-		String mid = districtCode.substring(2, 4);
-		return "10" + mid + "0000";
-	}
-
-	public static String getCodeForNews(String code) {
-		if (code == null || "".equals(code) || "10000000".equals(code)) {
-			return null;
+		// 本站内范围内
+		if (Constants.SHARESCOPE.LOCAL.getValue().equals(shareScope)) {
+			areaSql = acode;
+			// 县区范 围
+		} else if (Constants.SHARESCOPE.DISTRICT.getValue().equals(shareScope)) {
+			areaSql = "__" + acode.substring(2, 8);
+			// 市 范围
+		} else if (Constants.SHARESCOPE.CITY.getValue().equals(shareScope)) {
+			areaSql = "__" + acode.substring(2, 6) + "__";
+			// 省范围
+		} else if (Constants.SHARESCOPE.PROVINCE.getValue().equals(shareScope)) {
+			areaSql = "__" + acode.substring(2, 4) + "____";
+			// 全国范围
+		} else if (Constants.SHARESCOPE.COUNTRY.getValue().equals(shareScope)) {
+			areaSql = "";
+			// 不符合规则的, 则使用传进来的原来的acode
+		} else {
+			areaSql = acode;
 		}
-		return "__" + code.substring(2, 4) + "____";
+		return areaSql;
 	}
 
 	/**
-	 * 处理传进来的地区code, 变成适用于sql语句使用的格式
+	 * 处理传进来的目标工作地code, 变成适用于resumeMapper中sql语句使用的格式
 	 * 
 	 * @param code
 	 * @return
 	 */
-	public static String areaCodeForSql(String code) {
+	public static String desireAddressForResumeSql(String code) {
+		String sqlCode = "";
 		if (code == null || "".equals(code)) {
 			return null;
 		}
-		String start = code.substring(0, 2);
 		String mid;
 		if ("10000000".equals(code)) {
-			code = "30______";
-		} else if ("10".equals(start)) {
+			sqlCode = null;
+		} else if (code.startsWith("10")) {
 			mid = code.substring(2, 4);
-			code = "__" + mid + "____";
-		} else if ("20".equals(start)) {
+			sqlCode = "( r.desire_address like '__" + mid + "____' )";
+		} else if (code.startsWith("20")) {
 			mid = code.substring(2, 6);
-			code = "__" + mid + "__";
+			sqlCode = "( r.desire_address like '__" + mid + "__')";
+		} else if (code.startsWith("30")) {
+			sqlCode = "( r.desire_address = '" + code + "')";
+		} else {
+			sqlCode = null;
 		}
-		return code;
+		return sqlCode;
 	}
 
-	/**
-	 * 处理传进来的地区code, 变成适用于sql语句使用的格式,适用于带有信息查询范围的场合
-	 * 
-	 * @param code
-	 * @return
-	 */
-	public static String areaCodeForSql1(String value, String code) {
-		if (code == null || "".equals(code)) {
-			return null;
-		}
-		String mid;
-		//全国范围
-		if("country".equals(value)){
-			code =  "";
-		}else if("province".equals(value)){
-			//全省范围
-			mid = code.substring(2, 4);
-			code = "__" + mid + "____";
-		}else if("city".equals(value)){
-			//全市范围
-			mid = code.substring(2, 6);
-			code = "__" + mid + "__";
-		}else if("district".equals(value)){
-			//全县/区
-			mid = code.substring(2, 8);
-			code = "__" + mid + "";
-		}
-		return code;
-	}
-	
 	/**
 	 * 处理传进来的职位种类code, 变成适用于jobMapper中sql语句使用的格式
 	 * 
@@ -263,23 +238,25 @@ public class KitService {
 	 * @return
 	 */
 	public static String jobCategoryCodeForJobSql(String code) {
+		String sqlCode = "";
 		if (code == null || "".equals(code)) {
 			return null;
 		}
-		String start = code.substring(0, 2);
 		String mid;
 		if ("10000000".equals(code)) {
-			code = null;
-		} else if ("10".equals(start)) {
+			sqlCode = null;
+		} else if (code.startsWith("10")) {
 			mid = code.substring(2, 4);
-			code = "( job.jccode = '" + code + "' or job.jccode like '20" + mid
-					+ "____' or job.jccode like '30" + mid + "____')";
-		} else if ("20".equals(start)) {
+			sqlCode = "( job.jccode like '__" + mid + "____' )";
+		} else if (code.startsWith("20")) {
 			mid = code.substring(2, 6);
-			code = "( job.jccode = '" + code + "' or job.jccode like '30" + mid
-					+ "__')";
+			sqlCode = "( job.jccode like '__" + mid + "__')";
+		} else if (code.startsWith("30")) {
+			sqlCode = "( job.jccode = '" + code + "')";
+		} else {
+			sqlCode = null;
 		}
-		return code;
+		return sqlCode;
 	}
 
 	/**
@@ -289,24 +266,25 @@ public class KitService {
 	 * @return
 	 */
 	public static String jobCategoryCodeForResumeSql(String code) {
+		String sqlCode = "";
 		if (code == null || "".equals(code)) {
 			return null;
 		}
-		String start = code.substring(0, 2);
 		String mid;
 		if ("10000000".equals(code)) {
-			code = null;
-		} else if ("10".equals(start)) {
+			sqlCode = null;
+		} else if (code.startsWith("10")) {
 			mid = code.substring(2, 4);
-			code = "( resume.desireJob = '" + code
-					+ "' or resume.desireJob like '20" + mid
-					+ "____' or resume.desireJob like '30" + mid + "____')";
-		} else if ("20".equals(start)) {
+			sqlCode = "( r.desire_job like '__" + mid + "____' )";
+		} else if (code.startsWith("20")) {
 			mid = code.substring(2, 6);
-			code = "( resume.desireJob = '" + code
-					+ "' or resume.desireJob like '30" + mid + "__')";
+			sqlCode = "( r.desire_job like '__" + mid + "__')";
+		} else if (code.startsWith("30")) {
+			sqlCode = "( r.desire_job = '" + code + "')";
+		} else {
+			sqlCode = null;
 		}
-		return code;
+		return sqlCode;
 	}
 
 	/**
@@ -340,10 +318,6 @@ public class KitService {
 		}
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
-		// 所有职位种类
-		List<JobCategory> jclist = jcDao.getAll();
-		// 所有地区
-		List<Area> alist = aDao.getAll();
 
 		// // 创建时间
 		// if (resume.getCreateDate() != null
@@ -472,15 +446,19 @@ public class KitService {
 		}
 		// 期望工作地
 		if (resume.getDesireAddress() != null) {
-			if(resume.getDesireAddress().getCode()!=null && !"".equals(resume.getDesireAddress().getCode())){
-				Area desireAddress = aDao.getByCode(resume.getDesireAddress().getCode());
+			if (resume.getDesireAddress().getCode() != null
+					&& !"".equals(resume.getDesireAddress().getCode())) {
+				Area desireAddress = aDao.getByCode(resume.getDesireAddress()
+						.getCode());
 				resume.setDesireAddress(desireAddress);
 			}
 		}
 		// 目标职位种类code处理
 		if (resume.getDesireJob() != null) {
-			if(resume.getDesireJob().getCode()!=null && !"".equals(resume.getDesireJob().getCode())){
-				JobCategory desireJob = jcDao.getByCode(resume.getDesireJob().getCode());
+			if (resume.getDesireJob().getCode() != null
+					&& !"".equals(resume.getDesireJob().getCode())) {
+				JobCategory desireJob = jcDao.getByCode(resume.getDesireJob()
+						.getCode());
 				resume.setDesireJob(desireJob);
 			}
 		}
@@ -573,21 +551,7 @@ public class KitService {
 		}
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
-		// 所有职位种类
-		List<JobCategory> jclist = jcDao.getAll();
-		// 所有地区
-		List<Area> alist = aDao.getAll();
 		for (Resume resume : resumeList) {
-			// // 创建时间
-			// if (resume.getCreateDate() != null
-			// && !"".equals(resume.getCreateDate())) {
-			// resume.setCreateDate(dateForShow(resume.getCreateDate()));
-			// }
-			// // 更新时间
-			// if (resume.getUpdateDate() != null
-			// && !"".equals(resume.getUpdateDate())) {
-			// resume.setUpdateDate(dateForShow(resume.getUpdateDate()));
-			// }
 			// // 出生日期
 			// if (resume.getBirth() != null && !"".equals(resume.getBirth())) {
 			// resume.setBirth(dateForShow(resume.getBirth()));
@@ -699,15 +663,19 @@ public class KitService {
 			}
 			// 期望工作地
 			if (resume.getDesireAddress() != null) {
-				if(resume.getDesireAddress().getCode()!=null && !"".equals(resume.getDesireAddress().getCode())){
-					Area desireAddress = aDao.getByCode(resume.getDesireAddress().getCode());
+				if (resume.getDesireAddress().getCode() != null
+						&& !"".equals(resume.getDesireAddress().getCode())) {
+					Area desireAddress = aDao.getByCode(resume
+							.getDesireAddress().getCode());
 					resume.setDesireAddress(desireAddress);
 				}
 			}
 			// 目标职位种类code处理
 			if (resume.getDesireJob() != null) {
-				if(resume.getDesireJob().getCode()!=null && !"".equals(resume.getDesireJob().getCode())){
-					JobCategory desireJob = jcDao.getByCode(resume.getDesireJob().getCode());
+				if (resume.getDesireJob().getCode() != null
+						&& !"".equals(resume.getDesireJob().getCode())) {
+					JobCategory desireJob = jcDao.getByCode(resume
+							.getDesireJob().getCode());
 					resume.setDesireJob(desireJob);
 				}
 			}
@@ -803,14 +771,6 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 
-		// // 创建时间
-		// if (job.getCreateDate() != null && !"".equals(job.getCreateDate())) {
-		// job.setCreateDate(dateForShow(job.getCreateDate()));
-		// }
-		// // 更新时间
-		// if (job.getUpdateDate() != null) {
-		// job.setUpdateDate(dateForShow(job.getUpdateDate()));
-		// }
 		// 薪水
 		if (job.getSalary() != null && !"".equals(job.getSalary())) {
 			Parameter p = new Parameter();
@@ -824,8 +784,8 @@ public class KitService {
 				}
 			}
 			job.setSalary(p.getName());
-		}else{
-			//薪水为空, 则显示不限
+		} else {
+			// 薪水为空, 则显示不限
 			job.setSalary(Constants.NO_LIMIT);
 		}
 		// 学历
@@ -891,16 +851,18 @@ public class KitService {
 																// 剩余的
 			job.setEffectiveDays(cha);
 		}
-		//岗位类别
-		if(job.getJobCategory()!=null){
-			if(job.getJobCategory().getCode()!= null && !"".equals(job.getJobCategory().getCode())){
-				JobCategory jobCategory = jcDao.getByCode(job.getJobCategory().getCode());
+		// 岗位类别
+		if (job.getJobCategory() != null) {
+			if (job.getJobCategory().getCode() != null
+					&& !"".equals(job.getJobCategory().getCode())) {
+				JobCategory jobCategory = jcDao.getByCode(job.getJobCategory()
+						.getCode());
 				job.setJobCategory(jobCategory);
 			}
 		}
 		// 工作地
 		if (job.getWorkPlace() != null) {
-			if(job.getWorkPlace().getCode()!= null){
+			if (job.getWorkPlace().getCode() != null) {
 				Area workPlace = aDao.getByCode(job.getWorkPlace().getCode());
 				job.setWorkPlace(workPlace);
 			}
@@ -953,15 +915,6 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 		for (Job job : jobList) {
-			// // 创建时间
-			// if (job.getCreateDate() != null &&
-			// !"".equals(job.getCreateDate())) {
-			// job.setCreateDate(dateForShow(job.getCreateDate()));
-			// }
-			// // 更新时间
-			// if (job.getUpdateDate() != null) {
-			// job.setUpdateDate(dateForShow(job.getUpdateDate()));
-			// }
 			// 薪水
 			if (job.getSalary() != null && !"".equals(job.getSalary())) {
 				Parameter p = new Parameter();
@@ -1040,17 +993,20 @@ public class KitService {
 																	// 剩余的天数
 				job.setEffectiveDays(cha);
 			}
-			//岗位类别
-			if(job.getJobCategory()!=null){
-				if(job.getJobCategory().getCode()!= null && !"".equals(job.getJobCategory().getCode())){
-					JobCategory jobCategory = jcDao.getByCode(job.getJobCategory().getCode());
+			// 岗位类别
+			if (job.getJobCategory() != null) {
+				if (job.getJobCategory().getCode() != null
+						&& !"".equals(job.getJobCategory().getCode())) {
+					JobCategory jobCategory = jcDao.getByCode(job
+							.getJobCategory().getCode());
 					job.setJobCategory(jobCategory);
 				}
 			}
 			// 工作地
 			if (job.getWorkPlace() != null) {
-				if(job.getWorkPlace().getCode()!= null){
-					Area workPlace = aDao.getByCode(job.getWorkPlace().getCode());
+				if (job.getWorkPlace().getCode() != null) {
+					Area workPlace = aDao.getByCode(job.getWorkPlace()
+							.getCode());
 					job.setWorkPlace(workPlace);
 				}
 			}
@@ -1103,15 +1059,6 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 
-		// // 创建时间
-		// if (company.getCreateDate() != null
-		// && !"".equals(company.getCreateDate())) {
-		// company.setCreateDate(dateForShow(company.getCreateDate()));
-		// }
-		// // 更新时间
-		// if (company.getUpdateDate() != null) {
-		// company.setUpdateDate(dateForShow(company.getUpdateDate()));
-		// }
 		// 企业规模
 		if (company.getScale() != null && !"".equals(company.getScale())) {
 			Parameter p = new Parameter();
@@ -1171,15 +1118,6 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 		for (Company company : companyList) {
-			// // 创建时间
-			// if (company.getCreateDate() != null
-			// && !"".equals(company.getCreateDate())) {
-			// company.setCreateDate(dateForShow(company.getCreateDate()));
-			// }
-			// // 更新时间
-			// if (company.getUpdateDate() != null) {
-			// company.setUpdateDate(dateForShow(company.getUpdateDate()));
-			// }
 			// 企业规模
 			if (company.getScale() != null && !"".equals(company.getScale())) {
 				Parameter p = new Parameter();
@@ -1240,11 +1178,6 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 
-		// // 创建时间
-		// if (record.getCreateDate() != null
-		// && !"".equals(record.getCreateDate())) {
-		// record.setCreateDate(dateForShow(record.getCreateDate()));
-		// }
 		// 性别
 		if (record.getrGender() != null && !"".equals(record.getrGender())) {
 			Parameter p = new Parameter();
@@ -1334,11 +1267,6 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 		for (Record record : recordList) {
-			// // 创建时间
-			// if (record.getCreateDate() != null
-			// && !"".equals(record.getCreateDate())) {
-			// record.setCreateDate(dateForShow(record.getCreateDate()));
-			// }
 			// 性别
 			if (record.getrGender() != null && !"".equals(record.getrGender())) {
 				Parameter p = new Parameter();
@@ -1426,11 +1354,6 @@ public class KitService {
 		if (news == null) {
 			return null;
 		}
-		// // 创建时间
-		// if (news.getCreateDate() != null && !"".equals(news.getCreateDate()))
-		// {
-		// news.setCreateDate(dateForShow(news.getCreateDate()));
-		// }
 		return news;
 	}
 
@@ -1444,13 +1367,6 @@ public class KitService {
 		if (newsList == null) {
 			return null;
 		}
-		// for (News news : newsList) {
-		// // 创建时间
-		// if (news.getCreateDate() != null
-		// && !"".equals(news.getCreateDate())) {
-		// news.setCreateDate(dateForShow(news.getCreateDate()));
-		// }
-		// }
 		return newsList;
 	}
 

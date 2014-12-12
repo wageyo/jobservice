@@ -455,9 +455,6 @@
 						and job.work_place like concat('%',#{job.workPlace.code, jdbcType=VARCHAR},'%')
 					</if>
 				</if>
- 				<if test="job.checkStatus != null and job.checkStatus != ''">
- 					and job.check_status = #{job.checkStatus,jdbcType=VARCHAR} 
- 				</if>
  				<if test="job.company != null">
  					<if test="job.company.id > 0">
  						and job.cid = #{job.company.id,jdbcType=INTEGER}
@@ -474,6 +471,14 @@
 						and ${job.jobCategory.code, jdbcType=VARCHAR}
 					</if>
 				</if>
+ 				<choose>
+					<when test="job.checkStatus != null and job.checkStatus != ''">
+						and job.check_status = #{job.checkStatus, jdbcType=VARCHAR}
+					</when>
+					<otherwise>
+						and job.check_status = 'ok'
+					</otherwise>
+				</choose>
 			</if>
 		</trim>
 		order by job.create_date desc 
@@ -518,9 +523,6 @@
 						and job.work_place like concat('%',#{job.workPlace.code, jdbcType=VARCHAR},'%')
 					</if>
 				</if>
- 				<if test="job.checkStatus != null and job.checkStatus != ''">
- 					and job.check_status = #{job.checkStatus,jdbcType=VARCHAR} 
- 				</if>
  				<if test="job.company != null">
  					<if test="job.company.id > 0">
  						and job.cid = #{job.company.id,jdbcType=INTEGER}
@@ -537,6 +539,14 @@
 						and ${job.jobCategory.code, jdbcType=VARCHAR}
 					</if>
 				</if>
+				<choose>
+					<when test="job.checkStatus != null and job.checkStatus != ''">
+						and job.check_status = #{job.checkStatus, jdbcType=VARCHAR}
+					</when>
+					<otherwise>
+						and job.check_status = 'ok'
+					</otherwise>
+				</choose>
 			</if>
 		</trim>
 	</select>

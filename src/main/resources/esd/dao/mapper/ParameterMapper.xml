@@ -26,13 +26,54 @@
 		p.id as p_id, p.name as p_name, p.value as p_value, p.type as p_type, p.mark as p_mark,
  		a.code as a_code, a.name as a_name, a.pyname as a_pyName, a.abbr as a_abbr, a.mark as a_mark
 	</sql>
+	
 	<!-- insert -->
 	<insert id="save" parameterType="Parameter" >
-		<!-- 返回新保存的这条数据的id,在保存后,用保存前对象.getId()得到-->
-		insert into 
-		parameter(id,name,value,type,mark,acode) 
-		values(#{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR},
-			#{type,jdbcType=VARCHAR},#{mark,jdbcType=VARCHAR},#{area.code,jdbcType=VARCHAR})
+		insert into parameter
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">
+				id,
+			</if>
+			<if test="name != null and name != ''">
+				name,
+			</if>
+			<if test="value != null and value != ''">
+				value,
+			</if>
+			<if test="type != null and type != ''">
+				type,
+			</if>
+			<if test="mark != null and mark != ''">
+				mark,
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode
+				</if>
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null and id != ''">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null and name != ''">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="value != null and value != ''">
+				#{value,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null and type != ''">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null and mark != ''">
+				#{mark,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code,jdbcType=VARCHAR}
+				</if>
+			</if>
+		</trim>
 	</insert>
 
 	<!-- delete -->
@@ -177,14 +218,16 @@
 	</select>
 	
 	<!-- getShareScope -->
-	<select id="getByType1" resultType="Parameter" parameterType="map">
+	<select id="getShareScopeByArea" resultType="Parameter" parameterType="java.lang.String">
 		select * from parameter
-		where type = #{type, jdbcType=VARCHAR} and acode = #{areaCode, jdbcType=VARCHAR};
+		where type = 'shareScope' and acode = #{acode, jdbcType=VARCHAR};
 	</select>
 	
 	<!-- getShareScope -->
-	<select id="getByType2" resultType="Parameter" parameterType="map">
+	<select id="getShareScopeListByArea" resultType="Parameter" parameterType="java.lang.String">
 		select * from parameter
-		where type = #{type, jdbcType=VARCHAR} and acode &lt;= #{areaCode, jdbcType=VARCHAR};
+		where type = 'shareScopeSwitch' and acode &lt;= #{acode, jdbcType=VARCHAR};
 	</select>
+	
+	
 </mapper>

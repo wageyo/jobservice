@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import esd.bean.Area;
 import esd.bean.Parameter;
 import esd.controller.Constants;
-import esd.dao.MenuDao;
 import esd.dao.ParameterDao;
 
 @Service
@@ -18,9 +17,6 @@ public class ParameterService {
 
 	@Autowired
 	private ParameterDao dao;
-
-	@Autowired
-	private MenuDao mDao;
 
 	public Boolean save(Parameter p) {
 		return dao.save(p);
@@ -37,29 +33,23 @@ public class ParameterService {
 	}
 
 	/**
-	 * 根据地区code获得该地区信息共享范围
+	 * 根据地区code, 获得该地区的信息分享范围
 	 * 
 	 * @param areaCode
 	 * @return
 	 */
-	public Parameter getByType(String type, String areaCode) {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("type", type);
-		map.put("areaCode", areaCode);
-		return dao.getByType1(map);
+	public Parameter getShareScopeByArea(String acode) {
+		return dao.getShareScopeByArea(acode);
 	}
 	
 	/**
-	 * 根据类型获得对应参数列表
+	 * 根据地区code和分享类型shareScopeSwitch 来获得该地区  "能够"  控制的信息分享范围列表
 	 * 
 	 * @param type
 	 * @return
 	 */
-	public List<Parameter> getByTypeAndArea(String type,String areaCode) {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("type", type);
-		map.put("areaCode", areaCode);
-		return dao.getByType2(map);
+	public List<Parameter> getByTypeAndArea(String acode) {
+		return dao.getShareScopeListByArea(acode);
 	}
 	
 	/**

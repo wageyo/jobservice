@@ -281,22 +281,22 @@ public class SecureJobController {
 		return "/company/job-manage";
 	}
 
-	// 获得职位总个数
-	@RequestMapping("/getTotalCount")
-	@ResponseBody
-	public Map<String, Object> getTotalCount(HttpServletRequest request) {
-		log.info("--- getTotalCount ---");
-		String areaCode = request.getParameter("areaCode");
-		if (areaCode == null) {
-			areaCode = "10000000";
-		}
-		Map<String, Object> json = new HashMap<String, Object>();
-		Job job = new Job();
-		job.setArea(new Area(areaCode));
-		int total = jobService.getTotalCount(job);
-		json.put("totalCount", total);
-		return json;
-	}
+//	// 获得职位总个数
+//	@RequestMapping("/getTotalCount")
+//	@ResponseBody
+//	public Map<String, Object> getTotalCount(HttpServletRequest request) {
+//		log.info("--- getTotalCount ---");
+//		String areaCode = request.getParameter("areaCode");
+//		if (areaCode == null) {
+//			areaCode = "10000000";
+//		}
+//		Map<String, Object> json = new HashMap<String, Object>();
+//		Job job = new Job();
+//		job.setArea(new Area(areaCode));
+//		int total = jobService.getTotalCount(job,Boolean.TRUE);
+//		json.put("totalCount", total);
+//		return json;
+//	}
 
 	// 向一个职位投递自己的默认的简历
 	@RequestMapping("/sendResume")

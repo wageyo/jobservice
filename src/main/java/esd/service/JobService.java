@@ -12,10 +12,12 @@ import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.JobCategory;
+import esd.bean.Parameter;
 import esd.controller.Constants;
 import esd.dao.AreaDao;
 import esd.dao.JobCategoryDao;
 import esd.dao.JobDao;
+import esd.dao.ParameterDao;
 
 /**
  * 职位操作类
@@ -34,6 +36,9 @@ public class JobService {
 
 	@Autowired
 	private ParameterService parameterService;
+
+	@Autowired
+	private ParameterDao parameterDao;
 
 	@Autowired
 	private AreaDao areaDao;
@@ -108,63 +113,27 @@ public class JobService {
 		return job;
 	}
 
-	// 分页查询方法,--标准分页方法
-	// @param map中为具体的参数
-	// 1-类对象, 名称为对应类的小写!!切记切记!! 字段的值即为查询条件; 2-start: 起始索引; 3-size: 返回条数
-	public List<Job> getByPage(Job job, int startPage, int size) {
-		if (job != null) {
-			// 地区code处理
-			if (job.getArea() != null) {
-				if (job.getArea() != null) {
-					job.setArea(new Area(KitService.areaCodeForSql(job
-							.getArea().getCode())));
-				}
-			}
+	/**
+	 * 分页查询方法, 其中的数据没有做处理 管理后台/常用情况--使用
+	 * 
+	 * @param object
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Job> getListShowForManage(Job object, int startPage, int size) {
+		if (object != null) {
 			// 职位种类code处理
-			if (job.getJobCategory() != null) {
-				if (job.getJobCategory().getCode() != null) {
-					job.setJobCategory(new JobCategory(KitService
-							.jobCategoryCodeForJobSql(job.getJobCategory()
-									.getCode())));
-				}
-			}
-			// 如果未设定是否过滤掉过期的招聘信息, 则默认过滤掉
-			if (job.getIsActiveEffectiveTime() == null) {
-				job.setIsActiveEffectiveTime(Boolean.TRUE);
-			}
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("job", job);
-		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
-				* (size <= 0 ? Constants.SIZE : size));
-		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<Job> list = dao.getByPage(map);
-		log.info("jobList.size() = " + list.size());
-		return list;
-	}
-
-	// 后台审核用方法
-	// 分页查询方法,其中数据已被处理成适合前台展示的
-	public List<Job> getListShowForManage(Job job, int startPage, int size) {
-		if (job != null) {
-			// 地区code处理
-			if (job.getArea() != null) {
-				if (job.getArea() != null) {
-					job.setArea(new Area(KitService.areaCodeForSql(job
-							.getArea().getCode())));
-				}
-			}
-			// 职位种类code处理
-			if (job.getJobCategory() != null) {
-				if (job.getJobCategory().getCode() != null) {
-					job.setJobCategory(new JobCategory(KitService
-							.jobCategoryCodeForJobSql(job.getJobCategory()
+			if (object.getJobCategory() != null) {
+				if (object.getJobCategory().getCode() != null) {
+					object.setJobCategory(new JobCategory(KitService
+							.jobCategoryCodeForJobSql(object.getJobCategory()
 									.getCode())));
 				}
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("job", job);
+		map.put("job", object);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
@@ -175,29 +144,41 @@ public class JobService {
 		return list;
 	}
 
-	// 分页查询方法,其中数据已被处理成适合前台展示的
-	public List<Job> getForListShow(Job job, int startPage, int size) {
-		if (job != null) {
-			// 地区code处理
-			if (job.getArea() != null) {
-				if (job.getArea() != null) {
-					job.setArea(new Area(KitService.areaCodeForSql(job
-							.getArea().getCode())));
+	/**
+	 * 分页查询方法, 其中数据已被处理成适合前台展示的形式 前台--使用
+	 * 
+	 * @param object
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Job> getForListShow(Job object, int startPage, int size) {
+		if (object != null) {
+			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+			if (object.getArea() != null) {
+				if (object.getArea().getCode() != null
+						&& !"".equals(object.getArea().getCode())) {
+					Parameter parameter = parameterDao
+							.getShareScopeByArea(object.getArea().getCode());
+					if (parameter != null) {
+						String areaSql = KitService.getAreaSqlFromShareScope(
+								parameter.getValue(), object.getArea()
+										.getCode());
+						object.setArea(new Area(areaSql));
+					}
 				}
 			}
 			// 职位种类code处理
-			if (job.getJobCategory() != null) {
-				if (job.getJobCategory().getCode() != null) {
-					job.setJobCategory(new JobCategory(KitService
-							.jobCategoryCodeForJobSql(job.getJobCategory()
+			if (object.getJobCategory() != null) {
+				if (object.getJobCategory().getCode() != null) {
+					object.setJobCategory(new JobCategory(KitService
+							.jobCategoryCodeForJobSql(object.getJobCategory()
 									.getCode())));
 				}
 			}
-			// 只显示审核通过的
-			job.setCheckStatus(Constants.CheckStatus.OK.toString());
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("job", job);
+		map.put("job", object);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
@@ -208,56 +189,70 @@ public class JobService {
 		return list;
 	}
 
-	// 得到最新的N个职位
+	/**
+	 * 得到最新的N个职位
+	 * 
+	 * @param acode
+	 * @param size
+	 * @return
+	 */
 	public List<Job> getByNew(String acode, int size) {
-		if (size <= 0) {
-			size = Constants.SIZE;
-		}
-		// 处理传进来的地区code, 变成适用于sql语句使用的格式
+		Job job = new Job();
+		// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
 		if (acode != null) {
-			acode = KitService.areaCodeForSql(acode);
+			Parameter parameter = parameterDao.getShareScopeByArea(acode);
+			if (parameter != null) {
+				String areaSql = KitService.getAreaSqlFromShareScope(
+						parameter.getValue(), acode);
+				job.setArea(new Area(areaSql));
+			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		Job job = new Job();
-		job.setArea(new Area(acode));
-		// 只显示审核通过的
-		job.setCheckStatus(Constants.CheckStatus.OK.toString());
 		map.put("job", job);
 		map.put("start", Constants.START);
-		map.put("size", size);
+		map.put("size", size <= 0 ? Constants.SIZE : size);
 		List<Job> list = dao.getByPage(map);
 		// 处理为适合前台显示的字段数据
 		list = kitService.getForShowJob(list);
 		return list;
 	}
 
-	// 获得数据总条数
-	public int getTotalCount(Job job) {
-		if (job != null) {
-			// 地区code处理
-			if (job.getArea() != null) {
-				if (job.getArea() != null) {
-					job.setArea(new Area(KitService.areaCodeForSql(job
-							.getArea().getCode())));
+	/**
+	 * 获得数据总条数
+	 * 
+	 * @param object
+	 *            --带有各种查询属性的对象
+	 * @param shareScope
+	 *            --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
+	 * @return
+	 */
+	public int getTotalCount(Job object, Boolean shareScope) {
+		if (object != null) {
+			if (shareScope) {
+				// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+				if (object.getArea().getCode() != null
+						&& !"".equals(object.getArea().getCode())) {
+					Parameter parameter = parameterDao
+							.getShareScopeByArea(object.getArea().getCode());
+					if (parameter != null) {
+						String areaSql = KitService.getAreaSqlFromShareScope(
+								parameter.getValue(), object.getArea()
+										.getCode());
+						object.setArea(new Area(areaSql));
+					}
 				}
 			}
 			// 职位种类code处理
-			if (job.getJobCategory() != null) {
-				if (job.getJobCategory().getCode() != null) {
-					job.setJobCategory(new JobCategory(KitService
-							.jobCategoryCodeForJobSql(job.getJobCategory()
+			if (object.getJobCategory() != null) {
+				if (object.getJobCategory().getCode() != null) {
+					object.setJobCategory(new JobCategory(KitService
+							.jobCategoryCodeForJobSql(object.getJobCategory()
 									.getCode())));
 				}
 			}
-			// // 只显示审核通过的
-			// job.setCheckStatus(Constants.CheckStatus.OK.toString());
 		}
-		// if (job == null) {
-		// job = new Job();
-		// job.setCheckStatus(Constants.CheckStatus.OK.toString());
-		// }
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("job", job);
+		map.put("job", object);
 		return dao.getTotalCount(map);
 	}
 

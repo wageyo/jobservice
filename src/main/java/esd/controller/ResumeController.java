@@ -35,7 +35,6 @@ import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.JobCategory;
-import esd.bean.Parameter;
 import esd.bean.Resume;
 import esd.common.PoiCreateExcel;
 import esd.service.AreaService;
@@ -97,8 +96,6 @@ public class ResumeController {
 		Resume resume = new Resume();
 		// 从cookie读取acode
 		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		// 如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
-		acode = KitService.getProvinceCode(acode);
 		resume.setArea(new Area(acode));
 
 		String keyWord = request.getParameter("keyWord");
@@ -123,7 +120,7 @@ public class ResumeController {
 		}
 		List<Resume> resumeList = resumeService.getForListShow(resume, page,
 				Constants.SIZE);
-		Integer records = resumeService.getTotalCount(resume);
+		Integer records = resumeService.getTotalCount(resume,Boolean.TRUE);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (resumeList != null && records != null && records > 0) {
 			try {
@@ -243,7 +240,7 @@ public class ResumeController {
 			@RequestParam(value = "callback") String callback,
 			HttpServletRequest req) {
 		log.info("--- searchForOpenCms ---");
-		// //接收从网站群接收来的地区code, 根据他查找所属地区的职位
+		 //接收从网站群接收来的地区code, 根据他查找所属地区的职位
 		String acode = req.getParameter("acode");
 		String pageSizeStr = req.getParameter("pageSize");
 		// 初始化为10
@@ -252,17 +249,8 @@ public class ResumeController {
 			pageSize = Integer.parseInt(pageSizeStr);
 		}
 		ModelMap map = new ModelMap();
-		//信息分享范围处理
-		Parameter shareScope = parameterService.getByType(Constants.SHARE_SCOPE, acode);
-		String sqlArea = "";
-		//存在信息分享范围
-		if(shareScope!=null){
-			sqlArea = KitService.areaCodeForSql1(shareScope.getValue(),acode);
-		}else{
-			sqlArea = KitService.getProvinceCode(acode);
-		}
 		// 条件查询得到符合条件的简历
-		List<Resume> resumeList = resumeService.getByNew(sqlArea, pageSize);
+		List<Resume> resumeList = resumeService.getByNew(acode, pageSize);
 		map.put("resumeList", resumeList);
 		return new JSONPObject(callback, map);
 	}
@@ -385,7 +373,7 @@ public class ResumeController {
 			}
 			paramEntity.setName(targetName);
 			paramEntity.setCheckStatus(checkStatus);
-			Integer total = resumeService.getTotalCount(paramEntity);
+			Integer total = resumeService.getTotalCount(paramEntity,Boolean.FALSE);
 			Integer page=1;
 			List<Resume> resume = resumeService.getListShowForManage(
 					paramEntity, page, total);

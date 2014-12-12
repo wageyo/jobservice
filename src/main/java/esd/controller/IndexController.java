@@ -111,13 +111,13 @@ public class IndexController {
 		}
 		ModelAndView mav = new ModelAndView("index");
 		// 得到最新的10个公司
-		List<Company> companyList = companyService.getByNew(KitService.getProvinceCode(acode),10);
+		List<Company> companyList = companyService.getByNew(acode,10);
 		mav.addObject("companyList", companyList);
 		// 最新的20条招聘信息
-		List<Job> jobList = jobService.getByNew(KitService.getProvinceCode(acode),20);
+		List<Job> jobList = jobService.getByNew(acode,20);
 		mav.addObject("jobList", jobList);
 		// 最新的21条简历信息
-		List<Resume> resumeList = resumeService.getByNew(KitService.getProvinceCode(acode),21);
+		List<Resume> resumeList = resumeService.getByNew(acode,21);
 		mav.addObject("resumeList", resumeList);
 		// 最新的6条消息
 		List<News> newsList = newsService.getByNew(acode, 6,Constants.ARTICLE_TYPE_NEWS);
@@ -191,7 +191,7 @@ public class IndexController {
 		List<Area> alist = areaService.getProvinceList();
 		mav.addObject("areaList", alist);
 		// 获得职位总数
-		int totalCount = jobService.getTotalCount(null);
+		int totalCount = jobService.getTotalCount(null,true);
 		mav.addObject("totalCount", totalCount);
 		// 如果request中有传过来地区code, 则读取地区码,放入到cookie中
 		String acode = request.getParameter("acode");
@@ -200,10 +200,6 @@ public class IndexController {
 			CookieHelper.setCookie(response, Constants.AREA, acode);
 		}else{
 			acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		}
-		// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-		if(acode.startsWith("30")){
-			acode = KitService.getProvinceCode(acode);
 		}
 		return mav;
 	}
@@ -223,7 +219,7 @@ public class IndexController {
 		List<Area> alist = areaService.getProvinceList();
 		mav.addObject("areaList", alist);
 		// 获得简历总数
-		int totalCount = resumeService.getTotalCount(null);
+		int totalCount = resumeService.getTotalCount(null,Boolean.TRUE);
 		log.info("*********************************************" + totalCount);
 		mav.addObject("totalCount", totalCount);
 		// 如果request中有传过来地区code, 则读取地区码,放入到cookie中
@@ -233,10 +229,6 @@ public class IndexController {
 			CookieHelper.setCookie(response, Constants.AREA, acode);
 		}else{
 			acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		}
-		// 由于单个区县信息量过少, 所以当地区为三级的县区时,默认选择本省内的信息
-		if(acode.startsWith("30")){
-			acode = KitService.getProvinceCode(acode);
 		}
 		return mav;
 	}
@@ -270,10 +262,19 @@ public class IndexController {
 		map.put("pi", "hello,I'm Fjt");
 		return new JSONPObject(callback, map);
 		/**
-		 * 前台写方 function jsonp() { var url =
-		 * 'http://192.168.170.154:8080/jobservice/jsonptest'; $.ajax({ url :
-		 * url, type : 'GET', success : function(e) { alert(e.pi); }, dataType :
-		 * 'jsonp', async : true }); };
+		 * 前台方法写法 
+		 * function jsonp() { 
+		 * 		var url = 'http://192.168.170.154:8080/jobservice/jsonptest'; 
+		 * 		$.ajax({ 
+		 * 			url : url, 
+		 * 			type : 'GET', 
+		 * 			dataType : 'jsonp', 
+		 * 			async : true ,
+		 * 			success : function(e) { 
+		 * 				alert(e.pi); 
+		 * 			}
+		 * 		}); 
+		 * };
 		 **/
 	}
 }

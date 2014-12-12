@@ -26,11 +26,12 @@ import org.springframework.stereotype.Service;
 import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
+import esd.bean.Parameter;
 import esd.bean.Record;
-import esd.bean.Resume;
 import esd.controller.Constants;
 import esd.controller.SecureResumeController;
 import esd.dao.CompanyDao;
+import esd.dao.ParameterDao;
 import esd.dao.RecordDao;
 
 @Service
@@ -52,6 +53,9 @@ public class CompanyService<T> {
 
 	@Autowired
 	private ParameterService pService;
+
+	@Autowired
+	private ParameterDao parameterDao;
 
 	// 保存一个对象
 	public boolean save(Company company) {
@@ -93,122 +97,117 @@ public class CompanyService<T> {
 		return (Company) dao.getById(id);
 	}
 
-	// 按公司对象本身属性条件查询
-	public List<Company> check(Company company) {
-		return dao.getByObj(company);
-	}
-
-	// 后台审核用方法
-	// 分页查询方法,其中数据已被处理成适合前台展示的
-	public List<Company> getListShowForManage(Company company, int start,
+	/**
+	 * 分页查询方法, 其中的数据没有做处理 管理后台/常用情况--使用
+	 * 
+	 * @param company
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Company> getListShowForManage(Company company, int startPage,
 			int size) {
-		if (company != null) {
-			// 处理传进来的地区code, 变成适用于sql语句使用的格式
-			if (company.getArea() != null) {
-				if (company.getArea().getCode() != null) {
-					company.getArea().setCode(
-							KitService.areaCodeForSql(company.getArea()
-									.getCode()));
-				}
-			}
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (start < 0) {
-			start = 1;
-		}
-		if (size < 0) {
-			size = 50;
-		}
-		map.put("company", company);
-		map.put("start", (start - 1) * size);
-		map.put("size", size);
-		List<Company> clist = dao.getByPage(map);
-		for (Company c : clist) {
-			c = kitService.getForShow(c);
-		}
-		return clist;
-	}
-
-	// 分页查询方法,其中数据已被处理成适合前台展示的
-	public List<Company> getForListShow(Company company, int start, int size) {
-		if (company != null) {
-			// 处理传进来的地区code, 变成适用于sql语句使用的格式
-			if (company.getArea() != null) {
-				if (company.getArea().getCode() != null) {
-					company.getArea().setCode(
-							KitService.areaCodeForSql(company.getArea()
-									.getCode()));
-				}
-			}
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (start < 0) {
-			start = 1;
-		}
-		if (size < 0) {
-			size = 50;
-		}
-		map.put("company", company);
-		map.put("start", (start - 1) * size);
-		map.put("size", size);
-		List<Company> clist = dao.getByPage(map);
-		for (Company c : clist) {
-			c = kitService.getForShow(c);
-		}
-		return clist;
-	}
-
-	// 分页查询方法,--标准分页方法
-	// @param map中为具体的参数
-	// 1-类对象, 名称为对应类的小写!!切记切记!! 字段的值即为查询条件; 2-start: 起始索引; 3-size: 返回条数
-	public List<Company> getByPage(Company company, int startPage, int size) {
-		if (company != null) {
-			// 处理传进来的地区code, 变成适用于sql语句使用的格式
-			if (company.getArea() != null) {
-				if (company.getArea().getCode() != null) {
-					company.getArea().setCode(
-							KitService.areaCodeForSql(company.getArea()
-									.getCode()));
-				}
-			}
-		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("company", company);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		return dao.getByPage(map);
+		List<Company> clist = dao.getByPage(map);
+		for (Company c : clist) {
+			c = kitService.getForShow(c);
+		}
+		return clist;
 	}
 
-	// 获得数据总条数
-	public int getTotalCount(Company company) {
-		if (company != null) {
-			// 处理传进来的地区code, 变成适用于sql语句使用的格式
-			if (company.getArea() != null) {
-				if (company.getArea().getCode() != null) {
-					company.getArea().setCode(
-							KitService.areaCodeForSql(company.getArea()
-									.getCode()));
+	/**
+	 * 分页查询方法, 其中数据已被处理成适合前台展示的形式 前台--使用
+	 * 
+	 * @param object
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Company> getForListShow(Company object, int startPage, int size) {
+		if (object != null) {
+			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+			if (object.getArea() != null) {
+				if (object.getArea().getCode() != null
+						&& !"".equals(object.getArea().getCode())) {
+					Parameter parameter = parameterDao
+							.getShareScopeByArea(object.getArea().getCode());
+					if (parameter != null) {
+						String areaSql = KitService.getAreaSqlFromShareScope(
+								parameter.getValue(), object.getArea()
+										.getCode());
+						object.setArea(new Area(areaSql));
+					}
 				}
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("company", company);
+		map.put("company", object);
+		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
+				* (size <= 0 ? Constants.SIZE : size));
+		map.put("size", size <= 0 ? Constants.SIZE : size);
+		List<Company> clist = dao.getByPage(map);
+		for (Company c : clist) {
+			c = kitService.getForShow(c);
+		}
+		return clist;
+	}
+
+	/**
+	 * 获得数据总条数
+	 * 
+	 * @param object
+	 *            --带有各种查询属性的对象
+	 * @param shareScope
+	 *            --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
+	 * @return
+	 */
+	public int getTotalCount(Company object, Boolean shareScope) {
+		if (object != null) {
+			if (shareScope) {
+				// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+				if (object.getArea().getCode() != null
+						&& !"".equals(object.getArea().getCode())) {
+					Parameter parameter = parameterDao
+							.getShareScopeByArea(object.getArea().getCode());
+					if (parameter != null) {
+						String areaSql = KitService.getAreaSqlFromShareScope(
+								parameter.getValue(), object.getArea()
+										.getCode());
+						object.setArea(new Area(areaSql));
+					}
+				}
+			}
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("company", object);
 		return dao.getTotalCount(map);
 	}
 
-	// 得到最新的N个公司
+	/**
+	 * 得到最新的N个公司
+	 * 
+	 * @param acode
+	 * @param size
+	 * @return
+	 */
 	public List<Company> getByNew(String acode, int size) {
-		// 处理传进来的地区code, 变成适用于sql语句使用的格式
+		Company company = new Company();
+		// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
 		if (acode != null) {
-			acode = KitService.areaCodeForSql(acode);
+			Parameter parameter = parameterDao.getShareScopeByArea(acode);
+			if (parameter != null) {
+				String areaSql = KitService.getAreaSqlFromShareScope(
+						parameter.getValue(), acode);
+				company.setArea(new Area(areaSql));
+			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		Company company = new Company();
-		company.setCheckStatus(Constants.CheckStatus.OK.toString());
-		company.setArea(new Area(acode));
 		map.put("company", company);
-		map.put("start", 0);
+		map.put("start", Constants.START);
 		map.put("size", size <= 0 ? Constants.SIZE : size);
 		List<Company> list = dao.getByPage(map);
 		// 处理为适合前台显示的字段数据

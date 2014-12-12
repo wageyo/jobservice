@@ -79,28 +79,22 @@ public class SetupManageController {
 			log.error("获取开关 时发生错误。");
 			e.printStackTrace();
 		}
+		System.out.println(123);
 		//设定地区
-		//获取信息共享范围列表
-		List<Parameter> pList = parameterService.getByTypeAndArea(Constants.SHARE_SCOPE_SWITCH,code);
+		//获取  可以  信息共享范围列表
+		List<Parameter> pList = parameterService.getByTypeAndArea(code);
 		entity.put(Constants.SHARE_SCOPE_SWITCH, pList);
 		//获取本地区信息共享范围
-		Parameter shareScope = parameterService.getByType(Constants.SHARE_SCOPE,code);
+		Parameter shareScope = parameterService.getShareScopeByArea(code);
 		//如果暂未设定, 则在前台进行提示
 		if(shareScope == null){
 			shareScope = new Parameter();
 			String id = UUID.randomUUID().toString();
 			shareScope.setId(id);
 			shareScope.setType(Constants.SHARE_SCOPE);
-			if(code.startsWith("10")){
-				shareScope.setName("初始化为省级");
-				shareScope.setValue(Constants.SHARE_SCOPE_INIT);
-			}else if(code.startsWith("20")){
-				shareScope.setName("初始化为市级");
-				shareScope.setValue(Constants.SHARE_SCOPE_INIT);
-			}else if(code.startsWith("30")){
-				shareScope.setName("初始化为县区级");
-				shareScope.setValue(Constants.SHARE_SCOPE_INIT);
-			}
+			//初始化为本站内
+			shareScope.setName("本站内");
+			shareScope.setValue(Constants.SHARE_SCOPE_INIT);
 			shareScope.setArea(new Area(code));
 			shareScope.setMark(code + "地区  信息共享范围");
 			Boolean bl = parameterService.save(shareScope);

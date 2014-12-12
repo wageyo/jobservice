@@ -739,13 +739,13 @@
 				<!-- 目标职位 -->
 				<if test="resume.desireJob != null">
 					<if test="resume.desireJob.code != null and resume.desireJob.code != ''">
-					 	and r.desire_job like concat('%',#{resume.desireJob.code, jdbcType=VARCHAR},'%') 
+					 	and ${resume.desireJob.code }
 					</if>
 				</if>
 				<!-- 期望工作地 -->
 				<if test="resume.desireAddress != null">
 					<if test="resume.desireAddress.code != null and resume.desireAddress.code != ''">
-						and r.desire_address like concat('%',#{resume.desireAddress.code, jdbcType=VARCHAR},'%') 
+						and ${resume.desireAddress.code }
 					</if>
 				</if>
 				<!-- 工作性质 -->
@@ -802,13 +802,13 @@
 				<!-- 目标职位 -->
 				<if test="resume.desireJob != null">
 					<if test="resume.desireJob.code != null and resume.desireJob.code != ''">
-					 	and r.desire_job like concat('%',#{resume.desireJob.code, jdbcType=VARCHAR},'%') 
+					 	and ${resume.desireJob.code }
 					</if>
 				</if>
 				<!-- 期望工作地 -->
 				<if test="resume.desireAddress != null">
 					<if test="resume.desireAddress.code != null and resume.desireAddress.code != ''">
-						and r.desire_address like concat('%',#{resume.desireAddress.code, jdbcType=VARCHAR},'%') 
+						and ${resume.desireAddress.code }
 					</if>
 				</if>
 				<!-- 工作性质 -->

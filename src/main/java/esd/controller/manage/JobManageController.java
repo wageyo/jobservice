@@ -97,7 +97,7 @@ public class JobManageController {
 
 		List<Job> resultList = jobService.getListShowForManage(paramEntity,
 				page, rows);
-		Integer total = jobService.getTotalCount(paramEntity); // 数据总条数
+		Integer total = jobService.getTotalCount(paramEntity,Boolean.FALSE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
 			System.out.println("resultList.size()" + resultList.size());

@@ -191,7 +191,6 @@ public class CompanyController {
 		
 	}
 	//批量导出公司信息 --不许删
-	
 	@RequestMapping(value = "/companyExportAll", method = RequestMethod.POST  )
 	@ResponseBody
 	public String ExportAll(Company param,
@@ -205,11 +204,10 @@ public class CompanyController {
 		}
 		paramEntity.setName(targetName);
 		paramEntity.setCheckStatus(checkStatus);
-		Integer total = companyService.getTotalCount(paramEntity);
 		
 		Integer page=1;
 		List<Company> company = companyService.getListShowForManage(
-				paramEntity, page, total);
+				paramEntity, page, Integer.MAX_VALUE);
 		String url = req.getRealPath("/");
 	
 		// 创建导出文件夹

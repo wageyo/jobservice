@@ -93,7 +93,7 @@ public class CompanyManageController {
 
 		List<Company> resultList = companyService.getListShowForManage(
 				paramEntity, page, rows);
-		Integer total = companyService.getTotalCount(paramEntity); // 数据总条数
+		Integer total = companyService.getTotalCount(paramEntity, Boolean.TRUE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
 			System.out.println("resultList.size()" + resultList.size());

@@ -34,31 +34,32 @@ public class Constants {
 	public static final String STATE = "state"; // 目前状态
 	public static final String SWITCH = "switch"; // 目前状态
 	public static final String USER = "user"; // 用户key
-	
-	/******************放入cookie中的key值********************/
+
+	/****************** 放入cookie中的key值 ********************/
 	public static final String USERID = "userid"; // 用户id
 	public static final String USERNAME = "username"; // 用户名
 	public static final String USERPASSWORD = "password"; // 密码
 	public static final String USERIDENTITY = "identity"; // 身份值
 	public static final String USERAUTHORITY = "authority"; // 权限值
-	public static final String USERNICKNAME = "nickname";	//用户昵称
-	public static final String USERTITLE = "title";	//用户标题--管理员用户显示标题使用
+	public static final String USERNICKNAME = "nickname"; // 用户昵称
+	public static final String USERTITLE = "title"; // 用户标题--管理员用户显示标题使用
 	public static final String USERCOMPANYID = "companyid"; // 企业id
 	public static final String USERREGISTERTIME = "registertime"; // 注册时间
 	public static final String AREA = "area"; // 地区key
-	/******************放入cookie中的key值********************/
-	
+	/****************** 放入cookie中的key值 ********************/
+
 	public static final String AREACOUNTRY = "10000000"; // 全国地区code
-	
+
 	public static final String WORKABILITY = "workAbility"; // 有无劳动能力
 
 	public static final String SWITCH_ON = "on"; // 开关-开
-	public static final String SWITCH_OFF = "off"; //	开关-合
-	
-	public static final String SHARE_SCOPE_SWITCH = "shareScopeSwitch"; // 分享信息范围 选项标示符
-	public static final String SHARE_SCOPE = "shareScope"; // 分享信息范围  值
-	public static final String SHARE_SCOPE_INIT = "city"; // 分享信息范围默认值 默认为市级
-	
+	public static final String SWITCH_OFF = "off"; // 开关-合
+
+	public static final String SHARE_SCOPE_SWITCH = "shareScopeSwitch"; // 分享信息范围
+																		// 选项标示符
+	public static final String SHARE_SCOPE = "shareScope"; // 分享信息范围 值
+	public static final String SHARE_SCOPE_INIT = "local"; // 分享信息范围默认值 默认为市级
+
 	public static final String NO_LIMIT = "不限"; // 不限字段
 
 	/**
@@ -74,7 +75,12 @@ public class Constants {
 	 */
 	public static final String ARTICLE_TYPE_DIRECT = "direct"; // 就业指导类型
 
-	// 几种用户类型
+	/**
+	 *  几种用户类型
+	 * @author yufu
+	 * @email ilxly01@126.com
+	 * 2014-12-11
+	 */
 	public enum Identity {
 		// 利用构造函数传参 级.
 		SUPERADMIN("superAdmin"), ADMIN("admin"), PERSON("person"), COMPANY(
@@ -98,7 +104,12 @@ public class Constants {
 		}
 	}
 
-	// 几种权限值
+	/**
+	 *  几种权限值
+	 * @author yufu
+	 * @email ilxly01@126.com
+	 * 2014-12-11
+	 */
 	public enum Authority {
 		// 利用构造函数传参 级.
 		SUPERADMIN(999), ADMIN(600), PERSON(100), COMPANY(200);
@@ -125,7 +136,12 @@ public class Constants {
 		System.out.println(Authority.SUPERADMIN.getValue());
 	}
 
-	// 几种审核状态
+	/**
+	 *  几种审核状态
+	 * @author yufu
+	 * @email ilxly01@126.com
+	 * 2014-12-11
+	 */
 	public enum CheckStatus {
 		// 利用构造函数传参 级.
 		DAISHEN("daiShen"), WEITONGGUO("weiTongGuo"), OK("ok");
@@ -148,7 +164,12 @@ public class Constants {
 		}
 	}
 
-	// 几种开关名称
+	/**
+	 *  几种开关名称
+	 * @author yufu
+	 * @email ilxly01@126.com
+	 * 2014-12-11
+	 */
 	public enum Switch {
 		// 利用构造函数传参 级.
 		USER("user"), COMPANY("company"), JOB("job"), RESUME("resume");
@@ -171,7 +192,12 @@ public class Constants {
 		}
 	}
 
-	// json格式前台返回提示符
+	/**
+	 *  json格式前台返回提示符
+	 * @author yufu
+	 * @email ilxly01@126.com
+	 * 2014-12-11
+	 */
 	public enum Notice {
 		SUCCESS("success"), ERROR("error"), WRONG("wrong"), INFO("info"), FAILURE(
 				"failure");
@@ -193,4 +219,32 @@ public class Constants {
 		}
 	}
 
+	/**
+	 *  几种信息分享范围
+	 * @author yufu
+	 * @email ilxly01@126.com
+	 * 2014-12-11
+	 */
+	public enum SHARESCOPE {
+		// 利用构造函数传参 级.
+		COUNTRY("country"), PROVINCE("province"), CITY("city"), DISTRICT(
+				"district"),LOCAL("local");
+
+		// 定义私有变量
+		private String val;
+
+		// 构造函数, 枚举类型只能为私有
+		private SHARESCOPE(String val) {
+			this.val = val;
+		}
+
+		@Override
+		public String toString() {
+			return String.valueOf(val);
+		}
+
+		public String getValue() {
+			return this.val;
+		}
+	}
 }

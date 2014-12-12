@@ -68,8 +68,6 @@ public class JobController {
 		Job job = new Job();
 		//从cookie读取acode
 		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
-		acode = KitService.getProvinceCode(acode);
 		job.setArea(new Area(acode));
 		
 		String keyWord = request.getParameter("keyWord");
@@ -91,7 +89,7 @@ public class JobController {
 		job.setIsActiveEffectiveTime(true);
 		List<Job> jobList = jobService
 				.getForListShow(job, page, Constants.SIZE);
-		Integer records = jobService.getTotalCount(job);
+		Integer records = jobService.getTotalCount(job,Boolean.TRUE);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (jobList != null && records != null && records > 0) {
 			try {
@@ -203,22 +201,22 @@ public class JobController {
 		return json;
 	}
 
-	// 获得职位总个数
-	@RequestMapping("/getTotalCount")
-	@ResponseBody
-	public Map<String, Object> getTotalCount(HttpServletRequest request, HttpServletResponse response) {
-		log.info("--- getTotalCount ---");
-		//从cookie读取acode
-		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
-		acode = KitService.getProvinceCode(acode);
-		Map<String, Object> json = new HashMap<String, Object>();
-		Job job = new Job();
-		job.setArea(new Area(acode));
-		int total = jobService.getTotalCount(job);
-		json.put("totalCount321", total);
-		return json;
-	}
+//	// 获得职位总个数
+//	@RequestMapping("/getTotalCount")
+//	@ResponseBody
+//	public Map<String, Object> getTotalCount(HttpServletRequest request, HttpServletResponse response) {
+//		log.info("--- getTotalCount ---");
+//		//从cookie读取acode
+//		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+//		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
+//		acode = KitService.getProvinceCode(acode);
+//		Map<String, Object> json = new HashMap<String, Object>();
+//		Job job = new Job();
+//		job.setArea(new Area(acode));
+//		int total = jobService.getTotalCount(job,Boolean.TRUE);
+//		json.put("totalCount321", total);
+//		return json;
+//	}
 
 	// 多条件查询职位--给opencms框架使用
 	@RequestMapping(value = "/searchForOpenCms", method = RequestMethod.GET)
@@ -227,7 +225,7 @@ public class JobController {
 			@RequestParam(value = "callback") String callback,
 			HttpServletRequest req) {
 		log.info("--- searchForOpenCms ---");
-		// //接收从网站群接收来的地区code, 根据他查找所属地区的职位
+		//接收从网站群接收来的地区code, 根据他查找所属地区的职位
 		String acode = req.getParameter("acode");
 		String pageSizeStr = req.getParameter("pageSize");
 		// 初始化为10
@@ -236,16 +234,7 @@ public class JobController {
 			pageSize = Integer.parseInt(pageSizeStr);
 		}
 		ModelMap map = new ModelMap();
-		//信息分享范围处理
-		Parameter shareScope = parameterService.getByType(Constants.SHARE_SCOPE, acode);
-		String sqlArea = "";
-		//存在信息分享范围
-		if(shareScope!=null){
-			sqlArea = KitService.areaCodeForSql1(shareScope.getValue(),acode);
-		}else{
-			sqlArea = KitService.getProvinceCode(acode);
-		}
-		List<Job> jobList = jobService.getByNew(sqlArea, pageSize);
+		List<Job> jobList = jobService.getByNew(acode, pageSize);
 		map.put("jobList", jobList);
 		return new JSONPObject(callback, map);
 	}
@@ -287,8 +276,8 @@ public class JobController {
 		return FileDownloadPath;
 		
 	}
-	//批量导出信息 --不许删
 	
+	//批量导出信息 --不许删
 	@RequestMapping(value = "/jobExportAll", method = RequestMethod.POST  )
 	@ResponseBody
 	public String ExportAll(Job param,
@@ -302,7 +291,7 @@ public class JobController {
 		}
 		paramEntity.setName(targetName);
 		paramEntity.setCheckStatus(checkStatus);
-		Integer total = jobService.getTotalCount(paramEntity);
+		Integer total = jobService.getTotalCount(paramEntity,Boolean.TRUE);
 		Integer page=1;
 		List<Job> job = jobService.getListShowForManage(
 				paramEntity, page, total);

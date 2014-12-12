@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import esd.bean.Area;
 import esd.bean.News;
+import esd.bean.Parameter;
 import esd.controller.Constants;
 import esd.dao.NewsDao;
+import esd.dao.ParameterDao;
 
 /**
  * 消息操作类
@@ -27,6 +29,9 @@ public class NewsService {
 	@Autowired
 	private KitService kitService;
 
+	@Autowired
+	private ParameterDao parameterDao;
+	
 	// 保存一个对象
 	public boolean save(News news) {
 		return dao.save(news);
@@ -55,9 +60,10 @@ public class NewsService {
 		return news;
 	}
 
-	// 分页查询方法,--标准分页方法
-	// @param map中为具体的参数
-	// 1-类对象, 名称为对应类的小写!!切记切记!! 字段的值即为查询条件; 2-start: 起始索引; 3-size: 返回条数
+	/**
+	 * 分页查询方法, 其中的数据没有做处理
+	 * 后台/常用--使用
+	 */
 	public List<News> getByPage(News news, int startPage, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("news", news);
@@ -68,17 +74,11 @@ public class NewsService {
 		return list;
 	}
 
-	// 分页查询方法,其中数据已被处理成适合前台展示的
+	/**
+	 * 分页查询方法, 其中数据已被处理成适合前台展示的
+	 * 前台--使用
+	 */
 	public List<News> getListForShow(News news, int startPage, int size) {
-		if(news!=null){
-			if(news.getArea()!=null){
-				String code = news.getArea().getCode();
-				if(code!=null &&!"".equals(code)){
-					// 处理成查询本省内的信息的code
-					news.getArea().setCode(KitService.getCodeForNews(code));
-				}
-			}
-		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("news", news);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
@@ -91,7 +91,6 @@ public class NewsService {
 
 	// 得到最新的N个信息
 	public List<News> getByNew(String acode, int size, String type) {
-		acode = KitService.getCodeForNews(acode);
 		Map<String, Object> map = new HashMap<String, Object>();
 		News news = new News();
 		news.setArea(new Area(acode));

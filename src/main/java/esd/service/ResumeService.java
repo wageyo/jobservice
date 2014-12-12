@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import esd.bean.Area;
 import esd.bean.JobCategory;
+import esd.bean.Parameter;
 import esd.bean.Resume;
 import esd.bean.UnempManage;
 import esd.bean.User;
@@ -32,6 +33,7 @@ import esd.bean.WorkExperience;
 import esd.controller.Constants;
 import esd.dao.AreaDao;
 import esd.dao.JobCategoryDao;
+import esd.dao.ParameterDao;
 import esd.dao.ResumeDao;
 import esd.dao.UnempManageDao;
 import esd.dao.WorkExperienceDao;
@@ -69,6 +71,9 @@ public class ResumeService {
 
 	@Autowired
 	private ParameterService pService;
+
+	@Autowired
+	private ParameterDao parameterDao;
 
 	@Autowired
 	private JobCategoryDao jcDao;
@@ -214,113 +219,28 @@ public class ResumeService {
 		return null;
 	}
 
-	// 分页查询方法,
-	// @param map中为具体的参数
-	// : 1-类对象, 名称为对应类的小写!!切记切记!! 字段的值即为查询条件; 2-start: 起始索引; 3-size:返回条数
-	public List<Resume> getByPage(Resume resume, int startPage, int size) {
-		if (resume != null) {
-			// 地区code处理
-			if (resume.getArea() != null) {
-				if (resume.getArea() != null) {
-					resume.setArea(new Area(KitService.areaCodeForSql(resume
-							.getArea().getCode())));
-				}
-			}
-			// 期望工作地
-			if (resume.getDesireJob() != null) {
-				if (resume.getDesireJob().getCode() != null
-						&& !"".equals(resume.getDesireJob().getCode())) {
-					String sqlDesireAddress = KitService.areaCodeForSql(resume
-							.getDesireAddress().getCode());
-					resume.setDesireAddress(new Area(sqlDesireAddress));
-				}
-
-			}
-			// 目标职位种类code处理
-			if (resume.getDesireJob() != null) {
-				if (resume.getDesireJob().getCode() != null
-						&& !"".equals(resume.getDesireJob().getCode())) {
-					String sqlDesireJob = KitService
-							.jobCategoryCodeForResumeSql(resume.getDesireJob()
-									.getCode());
-					resume.setDesireJob(new JobCategory(sqlDesireJob));
-				}
-			}
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("resume", resume);
-		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
-				* (size <= 0 ? Constants.SIZE : size));
-		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<Resume> list = dao.getByPage(map);
-		System.out.println("resumeList.size() = " + list.size());
-		return list;
-	}
-
-	// 后台审核用方法
-	// 分页查询方法,其中数据已被处理成适合前台展示的
+	/**
+	 * 分页查询方法, 其中的数据没有做处理 管理后台/常用情况--使用
+	 * 
+	 * @param resume
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
 	public List<Resume> getListShowForManage(Resume resume, int startPage,
 			int size) {
 		if (resume != null) {
-			// 地区code处理
-			if (resume.getArea() != null) {
-				if (resume.getArea() != null) {
-					resume.setArea(new Area(KitService.areaCodeForSql(resume
-							.getArea().getCode())));
-				}
-			}
-			// 期望工作地
-			if (resume.getDesireJob() != null) {
-				if (resume.getDesireJob().getCode() != null
-						&& !"".equals(resume.getDesireJob().getCode())) {
-					String sqlDesireAddress = KitService.areaCodeForSql(resume
-							.getDesireAddress().getCode());
-					resume.setDesireAddress(new Area(sqlDesireAddress));
-				}
-
-			}
-			// 目标职位种类code处理
-			if (resume.getDesireJob() != null) {
-				if (resume.getDesireJob().getCode() != null
-						&& !"".equals(resume.getDesireJob().getCode())) {
-					String sqlDesireJob = KitService
-							.jobCategoryCodeForResumeSql(resume.getDesireJob()
-									.getCode());
-					resume.setDesireJob(new JobCategory(sqlDesireJob));
-				}
-			}
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("resume", resume);
-		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
-				* (size <= 0 ? Constants.SIZE : size));
-		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<Resume> list = dao.getByPage(map);
-		// 处理为适合前台显示的字段数据
-		list = kitService.getForShowResume(list);
-		return list;
-	}
-
-	// 分页查询方法,其中数据已被处理成适合前台展示的
-	public List<Resume> getForListShow(Resume resume, int startPage, int size) {
-		if (resume != null) {
-			// 地区code处理
-			if (resume.getArea() != null) {
-				if (resume.getArea() != null) {
-					resume.setArea(new Area(KitService.areaCodeForSql(resume
-							.getArea().getCode())));
-				}
-			}
+			// 期望工作地  处理成适合sql查询的方式
 			if (resume.getDesireAddress() != null) {
 				if (resume.getDesireAddress().getCode() != null
 						&& !"".equals(resume.getDesireAddress().getCode())) {
-					String sqlDesireAddress = KitService.areaCodeForSql(resume
+					String sqlDesireAddress = KitService.desireAddressForResumeSql(resume
 							.getDesireAddress().getCode());
 					resume.setDesireAddress(new Area(sqlDesireAddress));
 				}
 
 			}
-			// 目标职位种类code处理
+			// 目标职位  处理成适合sql查询的方式
 			if (resume.getDesireJob() != null) {
 				if (resume.getDesireJob().getCode() != null
 						&& !"".equals(resume.getDesireJob().getCode())) {
@@ -329,11 +249,6 @@ public class ResumeService {
 									.getCode());
 					resume.setDesireJob(new JobCategory(sqlDesireJob));
 				}
-			}
-			// 如为特殊声明, 则只显示审核通过的
-			if (resume.getCheckStatus() == null
-					|| "".equals(resume.getCheckStatus())) {
-				resume.setCheckStatus(Constants.CheckStatus.OK.toString());
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -347,71 +262,138 @@ public class ResumeService {
 		return list;
 	}
 
-	// 得到最新的N个简历
-	public List<Resume> getByNew(String acode, int size) {
-		if (size <= 0) {
-			size = Constants.SIZE;
-		}
-		// 处理传进来的地区code, 变成适用于sql语句使用的格式
-		if (acode != null) {
-			acode = KitService.areaCodeForSql(acode);
+	/**
+	 * 分页查询方法, 其中数据已被处理成适合前台展示的形式 前台--使用
+	 * 
+	 * @param object
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Resume> getForListShow(Resume object, int startPage, int size) {
+		if (object != null) {
+			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+			if (object.getArea() != null) {
+				if (object.getArea().getCode() != null
+						&& !"".equals(object.getArea().getCode())) {
+					Parameter parameter = parameterDao
+							.getShareScopeByArea(object.getArea().getCode());
+					if (parameter != null) {
+						String areaSql = KitService.getAreaSqlFromShareScope(
+								parameter.getValue(), object.getArea()
+										.getCode());
+						object.setArea(new Area(areaSql));
+					}
+				}
+			}
+			// 期望工作地  处理成适合sql查询的方式
+			if (object.getDesireAddress() != null) {
+				if (object.getDesireAddress().getCode() != null
+						&& !"".equals(object.getDesireAddress().getCode())) {
+					String sqlDesireAddress = KitService.desireAddressForResumeSql(object
+							.getDesireAddress().getCode());
+					object.setDesireAddress(new Area(sqlDesireAddress));
+				}
+
+			}
+			// 目标职位种类code处理
+			if (object.getDesireJob() != null) {
+				if (object.getDesireJob().getCode() != null
+						&& !"".equals(object.getDesireJob().getCode())) {
+					String sqlDesireJob = KitService
+							.jobCategoryCodeForResumeSql(object.getDesireJob()
+									.getCode());
+					object.setDesireJob(new JobCategory(sqlDesireJob));
+				}
+			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		Resume resume = new Resume();
-		resume.setArea(new Area(acode));
-		// 则只显示审核通过的
-		resume.setCheckStatus(Constants.CheckStatus.OK.toString());
-		map.put("resume", resume);
-		map.put("start", Constants.START);
-		map.put("size", size);
+		map.put("resume", object);
+		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
+				* (size <= 0 ? Constants.SIZE : size));
+		map.put("size", size <= 0 ? Constants.SIZE : size);
 		List<Resume> list = dao.getByPage(map);
 		// 处理为适合前台显示的字段数据
 		list = kitService.getForShowResume(list);
 		return list;
 	}
 
-	// 获得数据总条数
-	public int getTotalCount(Resume resume) {
-		if (resume != null) {
-			// 地区code处理
-			if (resume.getArea() != null) {
-				if (resume.getArea() != null) {
-					resume.setArea(new Area(KitService.areaCodeForSql(resume
-							.getArea().getCode())));
+	/**
+	 * 获得数据总条数
+	 * 
+	 * @param object
+	 *            --带有各种查询属性的对象
+	 * @param shareScope
+	 *            --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
+	 * @return
+	 */
+	public int getTotalCount(Resume object, Boolean shareScope) {
+		if (object != null) {
+			if (shareScope) {
+				// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+				if (object.getArea().getCode() != null
+						&& !"".equals(object.getArea().getCode())) {
+					Parameter parameter = parameterDao
+							.getShareScopeByArea(object.getArea().getCode());
+					if (parameter != null) {
+						String areaSql = KitService.getAreaSqlFromShareScope(
+								parameter.getValue(), object.getArea()
+										.getCode());
+						object.setArea(new Area(areaSql));
+					}
 				}
-			}
-			if (resume.getDesireJob() != null) {
-				if (resume.getDesireJob().getCode() != null
-						&& !"".equals(resume.getDesireJob().getCode())) {
-					String sqlDesireAddress = KitService.areaCodeForSql(resume
-							.getDesireAddress().getCode());
-					resume.setDesireAddress(new Area(sqlDesireAddress));
-				}
-
 			}
 			// 目标职位种类code处理
-			if (resume.getDesireJob() != null) {
-				if (resume.getDesireJob().getCode() != null
-						&& !"".equals(resume.getDesireJob().getCode())) {
+			if (object.getDesireJob() != null) {
+				if (object.getDesireJob().getCode() != null
+						&& !"".equals(object.getDesireJob().getCode())) {
 					String sqlDesireJob = KitService
-							.jobCategoryCodeForResumeSql(resume.getDesireJob()
+							.jobCategoryCodeForResumeSql(object.getDesireJob()
 									.getCode());
-					resume.setDesireJob(new JobCategory(sqlDesireJob));
+					object.setDesireJob(new JobCategory(sqlDesireJob));
 				}
 			}
-			// 如为特殊声明, 则只显示审核通过的
-			if (resume.getCheckStatus() == null
-					|| "".equals(resume.getCheckStatus())) {
-				resume.setCheckStatus(Constants.CheckStatus.OK.toString());
+			// 期望工作地  处理成适合sql查询的方式
+			if (object.getDesireAddress() != null) {
+				if (object.getDesireAddress().getCode() != null
+						&& !"".equals(object.getDesireAddress().getCode())) {
+					String sqlDesireAddress = KitService.desireAddressForResumeSql(object
+							.getDesireAddress().getCode());
+					object.setDesireAddress(new Area(sqlDesireAddress));
+				}
 			}
 		}
-		if (resume == null) {
-			resume = new Resume();
-			resume.setCheckStatus(Constants.CheckStatus.OK.toString());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("resume", object);
+		return dao.getTotalCount(map);
+	}
+
+	/**
+	 * 得到最新的N个简历
+	 * 
+	 * @param acode
+	 * @param size
+	 * @return
+	 */
+	public List<Resume> getByNew(String acode, int size) {
+		Resume resume = new Resume();
+		// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+		if (acode != null) {
+			Parameter parameter = parameterDao.getShareScopeByArea(acode);
+			if (parameter != null) {
+				String areaSql = KitService.getAreaSqlFromShareScope(
+						parameter.getValue(), acode);
+				resume.setArea(new Area(areaSql));
+			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("resume", resume);
-		return dao.getTotalCount(map);
+		map.put("start", Constants.START);
+		map.put("size", size <= 0 ? Constants.SIZE : size);
+		List<Resume> list = dao.getByPage(map);
+		// 处理为适合前台显示的字段数据
+		list = kitService.getForShowResume(list);
+		return list;
 	}
 
 	// 根据用户id, 得到此人简历

@@ -414,9 +414,14 @@
 						and c.bid = #{company.businessScope.id, jdbcType=INTEGER} 
 					</if>
 				</if>
-		 		<if test="company.checkStatus != null and company.checkStatus != ''">
-					and c.check_status = #{company.checkStatus, jdbcType=VARCHAR}
-				</if>
+				<choose>
+					<when test="company.checkStatus != null and company.checkStatus != ''">
+						and c.check_status = #{company.checkStatus, jdbcType=VARCHAR}
+					</when>
+					<otherwise>
+						and c.check_status = 'ok'
+					</otherwise>
+				</choose>
 			</if>
 		</trim>
 		order by c.create_date
@@ -442,9 +447,14 @@
 						and c.bid = #{company.businessScope.id, jdbcType=INTEGER} 
 					</if>
 				</if>
-		 		<if test="company.checkStatus != null and company.checkStatus != ''">
-					and c.check_status = #{company.checkStatus, jdbcType=VARCHAR}
-				</if>
+		 		<choose>
+					<when test="company.checkStatus != null and company.checkStatus != ''">
+						and c.check_status = #{company.checkStatus, jdbcType=VARCHAR}
+					</when>
+					<otherwise>
+						and c.check_status = 'ok'
+					</otherwise>
+				</choose>
 			</if>
 		</trim>
 	</select> 

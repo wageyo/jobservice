@@ -12,27 +12,6 @@ import esd.bean.Parameter;
  * 
  */
 public interface ParameterDao extends IDao<Parameter> {
-
-	/**
-	 *  根据类型获得对应参数列表
-	 * @param type
-	 * @return
-	 */
-	public List<Parameter> getByType(String type);
-
-	/**
-	 *  根据类型获得对应参数
-	 * @param map
-	 * @return
-	 */
-	public Parameter getByType1(Map<String,Object> map);
-	
-	/**
-	 *  根据类型获得对应参数
-	 * @param map
-	 * @return
-	 */
-	public List<Parameter> getByType2(Map<String,Object> map);
 		
 	/**
 	 *  根据自身对象属性查找一个对象
@@ -47,4 +26,25 @@ public interface ParameterDao extends IDao<Parameter> {
 	 * @return
 	 */
 	public boolean updateSwitch(Parameter p);
+	
+	/**
+	 *  根据类型获得对应参数列表
+	 * @param type
+	 * @return
+	 */
+	public List<Parameter> getByType(String type);
+
+	/**
+	 *  根据地区code, 获得该地区的信息分享范围
+	 * @param map
+	 * @return
+	 */
+	public Parameter getShareScopeByArea(String acode);
+	
+	/**
+	 *  根据地区code 来获得该地区  "能够" 控制的信息分享范围列表
+	 * @param map
+	 * @return
+	 */
+	public List<Parameter> getShareScopeListByArea(String acode);
 }

@@ -156,23 +156,11 @@ public class UserService<T> {
 	 *            : 1-类对象, 字段的值即为查询条件; 2-start: 起始页数; 3-size: 返回条数
 	 */
 	public List<User> getByPage(User user, int startPage, int size) {
-		if (user != null) {
-			// 处理传进来的地区code, 变成适用于sql语句使用的格式
-			if (user.getArea() != null) {
-				if (user.getArea().getCode() != null) {
-					user.getArea()
-							.setCode(
-									KitService.areaCodeForSql(user.getArea()
-											.getCode()));
-				}
-			}
-		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(Constants.USER, user);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		// 查询完毕后将acode归还
 		return dao.getByPage(map);
 	}
 
@@ -205,17 +193,6 @@ public class UserService<T> {
 
 	// 获得数据总条数
 	public int getTotalCount(User user) {
-		if (user != null) {
-			// 处理传进来的地区code, 变成适用于sql语句使用的格式
-			if (user.getArea() != null) {
-				if (user.getArea().getCode() != null) {
-					user.getArea()
-							.setCode(
-									KitService.areaCodeForSql(user.getArea()
-											.getCode()));
-				}
-			}
-		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(Constants.USER, user);
 		return dao.getTotalCount(map);

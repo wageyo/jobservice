@@ -94,7 +94,7 @@ public class ResumeManageController {
 
 		List<Resume> resultList = resumeService.getListShowForManage(paramEntity,
 				page, rows);
-		Integer total = resumeService.getTotalCount(paramEntity); // 数据总条数
+		Integer total = resumeService.getTotalCount(paramEntity,Boolean.FALSE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
 			System.out.println("resultList.size()" + resultList.size());
