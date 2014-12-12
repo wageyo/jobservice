@@ -2,82 +2,55 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<div id="topheader">
-	<div class="top">
-		<div id="topcontent">
-			<div id="topcontentleft">
-				<ul id="ctl00_Myheader_yeslogin" class="loginul">
-					<!-- 用户登陆时 -->
-					<c:if test="${cookie.username.value != null && cookie.username.value != ''}">
-						<li id="lihome">欢迎您回来：<span id="ctl00_Myheader_Label1" style="color: red">${cookie.username.value }</span>
-						</li>
-						<c:choose>
-							<c:when test="${cookie.identity == 'admin' }">
-								<li id="limember"><a title="进入管理后台" href="${contextPath }/manage/index" target="_blank">[进入管理后台]</a></li>
-							</c:when>
-							<c:otherwise>
-								<li id="limember"><a title="进入用户中心" href="${contextPath }/user/goCenter">[进入用户中心]</a></li>
-							</c:otherwise>
-						</c:choose>
-						<li id="liquit"><a href="${contextPath}/user/logout">退出登陆</a>
-						</li>
-					</c:if>
-					<!-- 没有用户登陆时 -->
-					<c:if test="${cookie.username.value == null || cookie.username.value == ''}">
-						<li><a title="企业会员注册" href="${contextPath}/regC" target="_blank"> 企业会员注册</a></li>
-						<li>|</li>
-						<li><a title="个人会员注册" href="${contextPath}/regP" target="_blank"> 个人会员注册</a></li>
-					</c:if>
-				</ul>
-			</div>
-			<div style="float: right;">
-				<a href="#" onclick="SetHome(this,window.location)">设为首页</a>|<a href="javascript:addFavorite();">加入收藏</a>|客服热线：<strong style="color:Red">0451-55664482</strong>
-			</div>
-			<div style="clear: both"></div>
-		</div>
-	</div>
-	
-	<div id="ctl00_Myheader_default71dacom" class="header_cnt">
-		<div id="logoheader">
-			<div id="logoopen">
-				<a href="${contextPath}/index" title="残疾人就业信息网">
-				<!-- 如果能显示对应省市的则显示对应省份的logo, 否则显示全国的log -->
-				<c:choose>
-					<c:when test="${cookie.area.value != null && cookie.area.value != '' }">
-						<c:choose>
-							<c:when test="${cookie.area.value != '10000000' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/${cookie.area.value }.png" /> 
-							</c:when>
-							<c:otherwise>
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" id="bg2" />
-							</c:otherwise>
-						</c:choose>
-					</c:when>
-					<c:otherwise>
-							<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" id="bg2" /> 
-					</c:otherwise>
-				</c:choose>
-				</a>
-			</div>
-			<div id="headertext">
-				<a href="javascript:void(0);"><img src="${contextPath}/images/7b2b5940424144e8bb123fd92a85f613_top[1].jpg" /> </a>
+	<div class="StatusBar">
+			<div class="StatusBarMain">
+				<div class="left">
+					<span>当前位置: </span>
+					<span>首页</span>
+				</div>
+				<div class="right">
+					<div class="Wellcome">您好 </div>
+					<div class="ListBtn">
+						<ul>
+							<li> <a href="">联系我们</a> </li>
+							<li>|</li>
+							<li> <a id="showATB" title="显示无障碍工具条" style="font-weight:bold; color:#0298fc;" href="javascript:void(0)">无障碍工具条</a> </li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
-	<script type="text/javascript">
-		//添加收藏夹
-		function addFavorite(){
-			var fav_url = 'http://cjrjy.hrbesd.com/';
-			var fav_title = '残疾人就业网';
-			if(document.all && window.external){
-				window.external.addFavorite(fav_url,fav_title);
-				alert('添加收藏夹成功!');
-			}else if(window.sidebar){
-				window.sidebar.addPanel(fav_title,fav_url,"");
-				alert('添加收藏夹成功!');
-			}else{
-				alert('浏览器不支持，请手动CTRL+D加入收藏夹');
-			}
-		}
-	</script>
+		
+			<div id="header" class="HeaderStyle SetHeaderBg">
+			<div class="HeaderMainBg SetHeaderWholeBg">
+				<div class="HeaderMainLeft SetHeaderLeft">
+					<div class="logo">
+						<a title="残疾人就业服务网" href="index.htm?crumbs=001">
+							<img id="imgLogo" src="${contextPath}/images/Logo.png">
+						</a>
+					</div>
+				</div>
+				<div class="HeaderMainRight SetHeaderRight"></div>
+			</div>
+			<div class="HeaderMain">
+				<div class="HeaderMainRight">
+					<div class="HeaderMainRightUp"></div>
+				</div>
+				<div class="clearboth"></div>
+			
+				<div id="mainnav" class="NavigationBar SetNavigationBar">
+				<div>
+						<ul id="jsmenu">
+							<li> <a id="7" class="SelectStyle" name="" title="首页" href="${contextPath}/index">首页</a> </li>
+							<li> <a id="165" title="个人求职" href="${contextPath}/work">个人求职</a> </li>
+							<li> <a id="166" title="单位招聘" href="${contextPath}/work">单位招聘</a> </li>
+							<li> <a id="164" title="服务机构" href="${contextPath}/direct">就业指导</a> </li>
+							<li> <a id="167" title="就业服务" href="${contextPath}/news">最新资讯</a> </li>
+							<li> <a id="192" title="职业培训" href="${contextPath}/contact">联系我们</a> </li>
+							<li> <a id="168" title="就业政策" href="${contextPath}/about">关于本站</a> </li>
+						</ul>
+					</div>
+				</div>
+		
+			</div>
+		</div>
