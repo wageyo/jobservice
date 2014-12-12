@@ -25,10 +25,10 @@
 	<div id="container" class="container">
 	
 		<!-- 顶部工具条栏 -->
-		<jsp:include page="status-bar.jsp" />
+		<jsp:include page="formatter/status-bar.jsp" />
 		
 		<!-- 头部导航及图片栏目 -->
-		<jsp:include page="header.jsp" />
+		<jsp:include page="formatter/header.jsp" />
 		<div class="clearboth"></div>
 		
 		<!-- ******* 中部内容显示区 ******* start ********** -->
@@ -580,7 +580,7 @@
 		
 		<!-- 尾部footer区 -->
 		<div class="clearboth"></div>
-		<jsp:include page="footer.jsp" />
+		<jsp:include page="formatter/footer.jsp" />
 	</div>
 
 <script type="text/javascript">
