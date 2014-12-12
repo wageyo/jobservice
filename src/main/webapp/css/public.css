@@ -4,6 +4,7 @@
     margin-left: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
+	font-family: Microsoft YaHei,Arial;
     }
 body
 {
@@ -20,7 +21,6 @@ body
 body, input, select, button, textarea
 {
 	font-size: 12px;
-	font-family: ����;
 	top: 0px;
 	left: 0px;
 	color:#606060;
@@ -86,8 +86,8 @@ img
 	width: 5px;
 	float: left;
 }
-/* a ��ǩ ��ʽ*/
-/*��ɫ���»���꾭���ɫ���»�*/
+/* a 标签 样式*/
+/*黑色无下滑鼠标经过红色无下滑*/
 a:link
 {
 	color:#606060;
@@ -110,7 +110,7 @@ a:active
 	text-decoration: none;
 }
 
-/*��ɫ���»���꾭���ɫ���»�*/
+/*蓝色无下滑鼠标经过红色有下滑*/
 .BlueNoUnderlineHoverNoUnderlineRed a:link
 {
 	color: #0462be;
@@ -133,7 +133,7 @@ a:active
 }
 
 
-/*��ɫ���»���꾭���ɫ���»�*/
+/*黑色无下滑鼠标经过红色有下滑*/
 .BlackNoUnderlineHoverNoUnderlineRed a:link
 {
 	color:#606060;
@@ -155,7 +155,7 @@ a:active
 	color:#606060;
 	text-decoration: none;
 }
-/*��ɫ�»�����꾭�����»�*/
+/*蓝色下滑线鼠标经过无下滑*/
 
 .BlueUnderlineHoverNoUnderlineBlue a:link
 {
@@ -178,7 +178,7 @@ a:active
 	color:#606060;
 	text-decoration: none;
 }
-/*��ɫ���»�����꾭�����»���ɫ*/
+/*蓝色无下滑线鼠标经过无下滑红色*/
 
 .BlueNoUnderlineHoverNoUnderlineBlue a:link
 {
@@ -202,14 +202,14 @@ a:active
 	text-decoration: none;
 }
 
-/*��ɫ������ʽ*/
+/*红色字体样式*/
 .ColorRed
 {
  color:Red;	
 }
 
-/*������������....*/
-/*λ��*/
+/*更多需求尽情添加....*/
+/*位置*/
 .SetFloatLeft
 {
 	float: left;
@@ -218,7 +218,7 @@ a:active
 {
 	float: right;
 }
-/*���ǩ�Զ�����hot�����ͼ�꣬���HotPictrues.jsʹ��*/
+/*给标签自动加上hot字样的图标，配合HotPictrues.js使用*/
 .HotKey
 {
 	font-weight: 700;
@@ -232,7 +232,7 @@ a:active
 	position: relative;
 	z-index: 1;
 }
-/*����ͼ������*/
+/*最新图标字样*/
 .NewKey
 {
 	
@@ -346,7 +346,7 @@ a:active
     border-style: none;
     background: url("../images/PublicTableOneImage/botton_left0Gray.gif");
 }
-.Square /*liǰ���С����*/
+.Square /*li前面的小方块*/
 {
     background: url("../images/Sy_HRsqImage/Square.jpg") no-repeat 0 3px;
     padding-left:15px;
@@ -454,7 +454,7 @@ a:active
     
        }
 
-.Square /*liǰ���С����*/
+.Square /*li前面的小方块*/
 {
    background: url("../images/Sy_HRsqImage/Square.jpg") no-repeat 0 4px;
     padding-left:15px;
@@ -470,7 +470,7 @@ a:active
 {
 height:25px;
 }
-/*tabѡ��*/
+/*tab选择*/
 .Search ul li
 {
 	float: left;
@@ -498,7 +498,7 @@ height:25px;
 {
 	width: 20px;
 }
-/*�����*/
+/*输入框*/
 .Search .SearchInputText
 {
 	margin-top: 5px;
@@ -676,7 +676,7 @@ height:25px;
 	margin-left: 9px;
 	margin-left: 1px!improtant;
 }
-/*���*/
+/*火狐*/
 .ShadowBg
 {
 	background: url(../images/HomePageImage/LoginImage/ShadowBg.gif) repeat-x;
@@ -723,59 +723,59 @@ height:25px;
 	text-decoration: none;
 	color: Black;
 }
-/*��һ���ɫ */.firstWhite
+/*第一块白色 */.firstWhite
 {
 	background: url(../images/HomePageImage/tabImage/firstWhite.gif) no-repeat;
 	width: 24px;
 }
-/*��һ����ɫ*/.firstBlue
+/*第一块蓝色*/.firstBlue
 {
 	background: url(../images/HomePageImage/tabImage/firstBlue.gif) no-repeat;
 	width: 24px;
 }
-/*��ɫ����*/.whitebg
+/*白色背景*/.whitebg
 {
 	display:block;
 	width:137px;
     color:White;
 	background: url(../images/HomePageImage/tabImage/whitebg.gif);
 }
-/*�м��ɫ���ұ�*/.rightWhiteOfCenter
+/*中间白色在右边*/.rightWhiteOfCenter
 {
 	background: url(../images/HomePageImage/tabImage/rightWhiteOfCenter.gif) no-repeat;
 	width: 24px;
 }
-/*�м��ɫ�����*/.leftWhiteOfCenter
+/*中间白色在左边*/.leftWhiteOfCenter
 {
 	background: url(../images/HomePageImage/tabImage/leftWhiteOfCenter.gif) no-repeat;
 	width: 24px;
 }
-/*��ɫ����*/.bluebg
+/*蓝色背景*/.bluebg
 {
 	display:block;
 	width:137px;
     color:Black;
 	background: url(../images/HomePageImage/tabImage/bluebg.gif);
 }
-/*�м���ɫ���ұ�*/.rightBlueOfCenter
+/*中间蓝色在右边*/.rightBlueOfCenter
 {
 	background: url(../images/HomePageImage/tabImage/rightBlueOfCenter.gif) no-repeat;
 	width: 24px;
 }
-/*ĩβ����ɫ*/.lastBlue
+/*末尾的蓝色*/.lastBlue
 {
 	background: url(../images/HomePageImage/tabImage/lastBlue.gif) no-repeat right;
 	width: 24px;
 
 }
-/*ĩβ��*/.lastWhite
+/*末尾白*/.lastWhite
 {
 	background: url(../images/HomePageImage/tabImage/lastWhite.gif) no-repeat right;
 	width: 24px;
 	
 }
 /*
-������Ĭ��Ƥ����ʽ
+工具条默认皮肤样式
 */
 
 html{
@@ -913,7 +913,6 @@ div#abthelpbox{
 	z-index:100;
 	border:3px solid #000;
 	background:#FFF;
-	font-family:΢���ź�;
 	font-size:12px;
 	line-height:14px;
 	text-align:left;
@@ -997,11 +996,9 @@ div#gettextmessagebox div#gettextmessagecontent{
 	clear:both;
 	width:90%;
 	padding-top:20px;
-	font-family:΢���ź�;
 	font-size:26px;
-	_font-size:26px;
 	line-height:26px;
-	line-height:46px\0;
+	line-height:46px;
     height:50px;
     line-height:50px;
 	
@@ -1023,8 +1020,8 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	width:30px;
 }
 */
-/*����ͼģʽ����*/
-/*ͼƬ���1*110px*/
+/*左右图模式设置*/
+/*图片规格1*110px*/
 .HeaderMainBg
 {
  background:url("Image/HomePageImage/HeaderImage/OnepxBg2.jpg") no-repeat;
@@ -1033,26 +1030,22 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 
 
 
-/*�����˵���ʽ���� ͼƬ���1*35px*/
+/*导航菜单样式设置 图片规格：1*35px*/
 .HeaderStyle .SetNavigationBar
 {
 	background: url("../images/HomePageImage/HeaderImage/Navbg.gif") repeat-x;
 }
-.SetNavigationBar
-{
-	background: url("../images/HomePageImage/HeaderImage/Navbg.gif") repeat-x;
-}
-/*���ͼλͼƬ1���� ���ͼƬ���270*50px*/
+/*广告图位图片1设置 广告图片规格270*50px*/
 .HeaderStyle .Advertisement .SetAdvertisementOne
 {
 	background: url("../images/HomePageImage/HeaderImage/Advertisement1.gif") no-repeat;
 }
-/*���ͼλͼƬ2���� ���ͼƬ���270*50px*/
+/*广告图位图片2设置 广告图片规格270*50px*/
 .HeaderStyle .Advertisement .SetAdvertisementTwo
 {
 	background: url("../images/HomePageImage/HeaderImage/Advertisement2.gif") no-repeat;
 }
-/*δ��¼��ʽ*/
+/*未登录样式*/
 .login
 {
 	height: 132px;
@@ -1204,7 +1197,6 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	letter-spacing: 1px;
 	line-height: 23px;
 }
-
 .login .loginmain .loginmainarae .divchk .zdfg
 {
 	float: right;
@@ -1232,7 +1224,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	height: 28px;
 }
 
-/*������ҳ��½���½�����ʽ*/
+/*个人首页登陆后登陆框的样式*/
 .PersonalLogined
 {
 	height: 132px;
@@ -1302,7 +1294,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 {
    color:#ff5a00;
 }
-/*˭������*/
+/*谁看过我*/
 .PersonalLogined .loginmain .loginmainarae .FirstImage
 {
 	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResume.gif) no-repeat  15px 0px;
@@ -1312,7 +1304,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*˭������Hover*/
+/*谁看过我Hover*/
 .PersonalLogined .loginmain .loginmainarae .FirstImageHover
 {
 	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResumeHover.gif) no-repeat  15px 0px;
@@ -1322,7 +1314,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*������*/
+/*简历订阅*/
 .PersonalLogined .loginmain .loginmainarae .SecendImage
 {
 	background: url(../images/HomePageImage/LoginImage/MyResume.gif) no-repeat  15px 0px;
@@ -1332,7 +1324,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*������Hover*/
+/*简历订阅Hover*/
 .PersonalLogined .loginmain .loginmainarae .SecendImageHover
 {
 	background: url(../images/HomePageImage/LoginImage/MyResumeHover.gif) no-repeat  15px 0px;
@@ -1342,7 +1334,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*�������*/
+/*简历管理*/
 .PersonalLogined .loginmain .loginmainarae .ThirdImage
 {
 	background: url(../images/HomePageImage/LoginImage/Email.gif) no-repeat  15px 0px;
@@ -1352,7 +1344,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*�������Hover*/
+/*简历管理Hover*/
 .PersonalLogined .loginmain .loginmainarae .ThirdImageHover
 {
 	background: url(../images/HomePageImage/LoginImage/EmailHover.gif) no-repeat  15px 0px;
@@ -1363,7 +1355,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	margin:10px 0px;
 }
 
-/*��λ�û���½�����ʾ*/
+/*单位用户登陆后的显示*/
 .EnterpriseLogined
 {
 	height: 132px;
@@ -1433,7 +1425,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 {
    color:#ff5a00;
 }
-/*˭������*/
+/*谁看过我*/
 .EnterpriseLogined .loginmain .loginmainarae .FirstImage
 {
 	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResume.gif) no-repeat  15px 0px;
@@ -1443,7 +1435,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*˭������Hover*/
+/*谁看过我Hover*/
 .EnterpriseLogined .loginmain .loginmainarae .FirstImageHover
 {
 	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResumeHover.gif) no-repeat  15px 0px;
@@ -1453,7 +1445,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*������*/
+/*简历订阅*/
 .EnterpriseLogined .loginmain .loginmainarae .SecendImage
 {
 	background: url(../images/HomePageImage/LoginImage/MyResume.gif) no-repeat  15px 0px;
@@ -1463,7 +1455,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*������Hover*/
+/*简历订阅Hover*/
 .EnterpriseLogined .loginmain .loginmainarae .SecendImageHover
 {
 	background: url(../images/HomePageImage/LoginImage/MyResumeHover.gif) no-repeat  15px 0px;
@@ -1473,7 +1465,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*�������*/
+/*简历管理*/
 .EnterpriseLogined .loginmain .loginmainarae .ThirdImage
 {
 	background: url(../images/HomePageImage/LoginImage/Email.gif) no-repeat  15px 0px;
@@ -1483,7 +1475,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	cursor:pointer;
 	margin:10px 0px;
 }
-/*�������Hover*/
+/*简历管理Hover*/
 .EnterpriseLogined .loginmain .loginmainarae .ThirdImageHover
 {
 	background: url(../images/HomePageImage/LoginImage/EmailHover.gif) no-repeat  15px 0px;
@@ -1545,7 +1537,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
       {
        height:120px;	
       }
-    .AreaList .dashed /*����*/
+    .AreaList .dashed /*虚线*/
     {
         width: 590px;
         height: 1px;
@@ -1654,12 +1646,12 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
     {
         padding-top:5px;
     }
-	/*������ʽ*/
+	/*内容样式*/
 .setMainCityWith
 {
     width:816px;
 }
-/*����table��ʽ*/
+/*内容table样式*/
 .MainCity .allCitys
 {
     height:30px;
@@ -1675,7 +1667,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
     border-bottom:1px dashed black;
     _overflow:hidden;
 }
-/*���ݳ��е���ʽ*/
+/*内容城市的样式*/
 .MainCity .city
 {
     margin-top:5px;
@@ -1691,7 +1683,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
     width:408px;
     float:right;
 }
-/*����ʡ����ʽ*/
+/*内容省的样式*/
 .MainCity .provices
 {
     margin-top:10px;
@@ -1711,7 +1703,7 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 {
     width:25px;
 }
-/*���td��ʽ*/
+/*表格td样式*/
 .MainCity tr
 {
     height:20px;
@@ -1771,19 +1763,19 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 {
  font-weight:700;	
 }
-/*div��strong��ʽ*/
+/*div中strong样式*/
 
 .MainCity div.allCitys
 {
     font-size:14px;
     font-weight:700;
 }
-/*������ʽ*/
+/*内容样式*/
 .setFunctionCategory
 {
     width:908px;
 }
-/*�����ʽ*/
+/*表格样式*/
 .FunctionCategory table
 {
     margin-left:5px;
@@ -2050,7 +2042,7 @@ div.PublicframeTwo div.listpub dl dd a:active
 	overflow:hidden;
 }
 
-/*��ͼģʽ*/
+/*整图模式*/
 .HeaderStyle .HeaderMainBg
 {
 	width: 990px;
@@ -2082,7 +2074,7 @@ div.PublicframeTwo div.listpub dl dd a:active
 	height: 184px;
 	float: right;
 }
-/*������*/
+/*导航条*/
 .HeaderStyle .NavigationBar
 {
 	width: 990px;
@@ -2271,7 +2263,7 @@ div.PublicframeTwo div.listpub dl dd a:active
 }
 
 
-/*�����˵���s*/
+/*二级菜单条s*/
   .ListBar
     {
           width:975px;
@@ -2355,7 +2347,7 @@ div.PublicframeTwo div.listpub dl dd a:active
     
     margin-left:5px;
     float:left;
-    width:390px;
+    width:300px;
   
 }
 .listDate
@@ -2426,7 +2418,7 @@ div.PublicframeTwo div.listpub dl dd a:active
 
 
 
-/*ͼƬ������ʽ*/
+/*图片滚动样式*/
 .photo
 {
     width:255px;
@@ -2546,7 +2538,7 @@ div.PublicframeTwo div.listpub dl dd a:active
 {
    width:820px;
 }
-/*�����ʽ*/
+/*表格样式*/
 .IndustryCategory table
 {
     margin-left:5px;
@@ -2619,7 +2611,7 @@ div.allCitys strong
     margin-left:5px;
     font-size:14px;
 }
-/*��Ķ����˵���ʽ*/
+/*层的二级菜单样式*/
 .showChildren
 {
 	position:absolute;
@@ -2702,8 +2694,8 @@ div.allCitys strong
 
 
 
-/*����ͼģʽ����*/
-/*ͼƬ���1*110px*/
+/*左右图模式设置*/
+/*图片规格1*110px*/
 .HeaderMainBg
 {
  background:url("../images/HomePageImage/HeaderImage/OnepxBg2.jpg") no-repeat;
@@ -2712,17 +2704,17 @@ div.allCitys strong
 
 
 
-/*�����˵���ʽ���� ͼƬ���1*35px*/
+/*导航菜单样式设置 图片规格：1*35px*/
 .HeaderStyle .SetNavigationBar
 {
 	background: url("../images/HomePageImage/HeaderImage/Navbg.gif") repeat-x;
 }
-/*���ͼλͼƬ1���� ���ͼƬ���270*50px*/
+/*广告图位图片1设置 广告图片规格270*50px*/
 .HeaderStyle .Advertisement .SetAdvertisementOne
 {
 	background: url("../images/HomePageImage/HeaderImage/Advertisement1.gif") no-repeat;
 }
-/*���ͼλͼƬ2���� ���ͼƬ���270*50px*/
+/*广告图位图片2设置 广告图片规格270*50px*/
 .HeaderStyle .Advertisement .SetAdvertisementTwo
 {
 	background: url("../images/HomePageImage/HeaderImage/Advertisement2.gif") no-repeat;

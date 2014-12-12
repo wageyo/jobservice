@@ -5,27 +5,33 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
-<meta content="残疾人招聘就业" name="description" />
-<%--<link href="${contextPath}/css/header.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/style.css" rel="stylesheet" type="text/css" />
---%><link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
-<script type="text/javascript" src="${contextPath}/js/JScript.js"></script>
-<script type="text/javascript" src="${contextPath}/js/potoschange.js"></script>
-<script type="text/javascript">
-function getimgcode(){
-	var timestamp=new Date().getTime();
-	$("#verifyCode").attr("src","${contextPath}/checkcode/create?"+timestamp);
-}
-</script>
-<title>残疾人就业信息网</title>
+	<title>残疾人就业信息网</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
+	<meta content="残疾人招聘就业" name="description" />
+	
+	<link href="${contextPath}/css/public.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/potoschange.js"></script>
+	<script type="text/javascript">
+		function getimgcode(){
+			var timestamp=new Date().getTime();
+			$("#verifyCode").attr("src","${contextPath}/checkcode/create?"+timestamp);
+		}
+	</script>
 </head>
 <body style="height:1900px;min-height:900px;">
 	<div id="container" class="container">
-	<jsp:include page="header.jsp" />
+	
+		<!-- 顶部工具条栏 -->
+		<jsp:include page="status-bar.jsp" />
+		
+		<!-- 头部导航及图片栏目 -->
+		<jsp:include page="header.jsp" />
 		<div class="clearboth"></div>
+		
+		<!-- ******* 中部内容显示区 ******* start ********** -->
 		<div id="content" class="content">
 			<div>
 				<div class="login SetFloatLeft">
@@ -38,10 +44,10 @@ function getimgcode(){
 							<div>
 								<div class="divtext">
 									<div>
-										<input type="text" value="请输入用户名或身份证" id="UserName" class="text DefaultText" title="请输入用户名或身份证" style="color: Gray;">
+										<input type="text" value="请输入用户名或身份证" id="UserName" class="text DefaultText" title="请输入用户名或身份证" style="color: Gray;" />
 									</div>
 									<div class="righttext">
-										<input type="text" value="请输入用户密码" id="Password0" class="text DefaultText" title="输入密码" style="color: Gray;">
+										<input type="text" value="请输入用户密码" id="Password0" class="text DefaultText" title="输入密码" style="color: Gray;" />
 									</div>
 								</div>
 								<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
@@ -569,9 +575,12 @@ function getimgcode(){
 					<div class="clearboth"></div>
 				</div>
 			</div>
-			<div class="clearboth"></div>
-			<jsp:include page="footer.jsp" />
 		</div>
+		<!-- ******* 中部内容显示区 ******* end ********** -->
+		
+		<!-- 尾部footer区 -->
+		<div class="clearboth"></div>
+		<jsp:include page="footer.jsp" />
 	</div>
 
 <script type="text/javascript">
