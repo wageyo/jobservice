@@ -47,13 +47,12 @@
 </script>
 </head>
 <body>
+		<jsp:include page="../formatter/status-bar.jsp" />
 	<jsp:include page="../header.jsp" />
-
-	<jsp:include page="../nav.jsp" />
 
 	<div id="xdAC">
 		<div class="imga">
-			<a href="javascript:void(0);" title="招聘频道" target="_blank"><img src="${contextPath}/images/c2e34940b08940b48f3255b493b4ba68_zph_2013_ad_full.gif" alt="招聘频道" width="980" height="80"
+			<a href="javascript:void(0);" title="招聘频道" target="_blank"><img src="${contextPath}/images/c2e34940b08940b48f3255b493b4ba68_zph_2013_ad_full.gif" alt="招聘频道" width="990" height="80"
 				border='0'>
 			</a>
 		</div>
@@ -132,7 +131,7 @@
 			<div id="ctl00_ctl00_cph_cph_div_NewPosts" class="NewPosts">
 				<div class="job_list">
 
-					<table width="980px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
+					<table width="990px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
 						<tr style="background-color: #ECF4FF;">
 							<td width="29" height="30">&nbsp;</td>
 							<td width="200px" class="s13_blue_b" style="color: #345478">招聘职位</td>
