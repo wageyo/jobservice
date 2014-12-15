@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<link href="${contextPath}/css/public.css" rel="stylesheet" type="text/css" />
 <div id="header" class="HeaderStyle SetHeaderBg">
 	<div class="HeaderMainBg SetHeaderWholeBg">
 		<div class="HeaderMainLeft SetHeaderLeft">
@@ -24,7 +25,7 @@
 				<ul id="jsmenu">
 					<li><a id="7" class="SelectStyle" name="" title="首页"
 						href="${contextPath}/index">首页</a></li>
-					<li><a id="165" title="个人求职" href="${contextPath}/work">个人求职</a>
+					<li><a id="165" title="个人求职" href="${contextPath}/emp">个人求职</a>
 					</li>
 					<li><a id="166" title="单位招聘" href="${contextPath}/work">单位招聘</a>
 					</li>

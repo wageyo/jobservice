@@ -426,7 +426,8 @@ UL#ulTopRightBtns A.ec {
 }
 
 #xdAC {
-	WIDTH: 978px;
+	WIDTH: 990px;
+/* 	WIDTH: 978px; */
 	height: 84px;
 	margin: auto;
 }
@@ -631,7 +632,8 @@ UL#ulTopRightBtns A.ec {
 	LINE-HEIGHT: 35px;
 	MARGIN-TOP: 10px;
 	HEIGHT: 35px;
-	width: 978px;
+	width: 990px;
+/* 	width: 978px; */
 	FONT-SIZE: 13px;
 	VERTICAL-ALIGN: middle;
 	FONT-WEIGHT: bold;
@@ -662,7 +664,8 @@ UL#ulTopRightBtns A.ec {
 	border-left: 1px solid #AACCEF;
 	border-right: 1px solid #AACCEF;
 	border-bottom: 1px solid #AACCEF;
-	width: 978px;
+	width: 990px;
+/* 	width: 978px; */
 	height: auto;
 }
 
@@ -711,7 +714,8 @@ UL#ulTopRightBtns A.ec {
 }
 
 .list11 {
-	width: 976px;
+	width: 990px;
+/* 	width: 976px; */
 	line-height: 34px;
 	background: #F9f9f9;
 }
@@ -2109,7 +2113,8 @@ A.area-select:hover {
 .xinxi {
 	border: 1px solid #AACCEF;
 	height: 140;
-	width: 978px;
+	width: 990px;
+/* 	width: 978px; */
 	background: #EFF6FF
 }
 
@@ -2141,7 +2146,8 @@ send55 {
 	border-right: 1px solid #AACCEF;
 	border-top: 1px solid #AACCEF;
 	height: 30px;
-	width: 978px;
+	width: 990px;
+/* 	width: 978px; */
 	background: #EFF6FF;
 	line-height: 30px;
 	font-weight: bold;

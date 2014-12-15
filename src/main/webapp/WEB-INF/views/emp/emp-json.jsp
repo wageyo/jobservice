@@ -4,7 +4,7 @@
 
 <div id="data" style="display: none">
 	<div class="list11">
-		<table width="980px" border="0" cellspacing="0" cellpadding="0">
+		<table width="990px" border="0" cellspacing="0" cellpadding="0">
 		<c:forEach items="${entity.list}" var="item">
 			<tr class="list11" style="text-align: center;">
 				<td width="20px" height="30">&nbsp;<input type="hidden" name="id" value="${item.id }"/></td>

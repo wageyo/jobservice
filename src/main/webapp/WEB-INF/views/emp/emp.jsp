@@ -8,10 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 <meta content="残疾人招聘就业" name="description" />
-<link href="${contextPath}/css/header.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/css/body_job.css" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/css/search.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/css/public.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 <title>残疾人就业信息网</title>
 <script type="text/javascript">
@@ -61,14 +61,14 @@
 </style>
 </head>
 <body>
+<div id="container" class="container">
+	<jsp:include page="../formatter/status-bar.jsp" />
 	<jsp:include page="../header.jsp" />
-
-	<jsp:include page="../nav.jsp" />
 
 
 	<div id="xdAC">
 		<div class="imga">
-			<img src="${contextPath}/images/c2e34940b08940b48f3255b493b4ba68_zph_2013_ad_full.gif" alt="招聘频道" width="980" height="80" border='0'>
+			<img src="${contextPath}/images/c2e34940b08940b48f3255b493b4ba68_zph_2013_ad_full.gif" alt="招聘频道" width="990" height="80" border='0'>
 		</div>
 		<div class="title4">简历搜索</div>
 		<div class="xinxi">
@@ -158,7 +158,7 @@
 			<div id="ctl00_ctl00_cph_cph_div_NewPosts" class="NewPosts">
 				<div class="job_list">
 
-					<table width="980px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
+					<table width="990px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
 						<tr style="background-color: #ECF4FF; text-align: center">
 							<td width="20" height="30">&nbsp;</td>
 							<td width="70px" class="s13_blue_b" style="color: #345478">简历标题</td>
@@ -177,5 +177,6 @@
 			</div>
 		</div>
 		<jsp:include page="../footer.jsp" />
+		</div>
 </body>
 </html>
