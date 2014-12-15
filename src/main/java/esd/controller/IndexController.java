@@ -1,6 +1,9 @@
 package esd.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -109,15 +112,32 @@ public class IndexController {
 		// 得到最新的10个公司
 		List<Company> companyList = companyService.getByNew(acode,10);
 		mav.addObject("companyList", companyList);
-		// 最新的20条招聘信息
-		List<Job> jobList = jobService.getByNew(acode,20);
-		mav.addObject("jobList", jobList);
+		// 最新的12条热点招聘信息
+		List<Job> hotJobList = jobService.getByNew(acode,12);
+		mav.addObject("hotJobList", hotJobList);
 		// 最新的21条简历信息
-		List<Resume> resumeList = resumeService.getByNew(acode,21);
+		List<Resume> resumeList = resumeService.getByNew(acode,10);
 		mav.addObject("resumeList", resumeList);
-		// 最新的6条消息
-		List<News> newsList = newsService.getByNew(acode, 6,Constants.ARTICLE_TYPE_NEWS);
+		// 最新的9条就业指导信息
+		List<News> directList = newsService.getByNew(acode, 9,Constants.ARTICLE_TYPE_DIRECT);
+		mav.addObject("directList", directList);
+		// 最新的9条消息
+		List<News> newsList = newsService.getByNew(acode, 9,Constants.ARTICLE_TYPE_NEWS);
 		mav.addObject("newsList", newsList);
+		//获得下面按类别显示的51条数据
+		Job object = new Job();
+		object.setJobCategory(new JobCategory("10010000"));
+		List<Job> jobByCategoryResult = jobService.getListForShow(object, Constants.START, 51);
+		List<Map<String,Object>> jobByCategoryList = new ArrayList<Map<String,Object>>();
+		for(Job job :jobByCategoryResult){
+			Map<String,Object> j = new HashMap<String,Object>();
+			j.put("jobId", job.getId());
+			j.put("jobName", job.getName());
+			j.put("companyId", job.getCompany().getId());
+			j.put("companyName", job.getCompany().getName());
+			jobByCategoryList.add(j);
+		}
+		mav.addObject("jobByCategoryList",jobByCategoryList);
 		return mav;
 	}
 

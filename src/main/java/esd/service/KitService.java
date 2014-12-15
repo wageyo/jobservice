@@ -247,17 +247,39 @@ public class KitService {
 			sqlCode = null;
 		} else if (code.startsWith("10")) {
 			mid = code.substring(2, 4);
-			sqlCode = "( job.jccode like '__" + mid + "____' )";
+			sqlCode = "__" + mid + "____";
 		} else if (code.startsWith("20")) {
 			mid = code.substring(2, 6);
-			sqlCode = "( job.jccode like '__" + mid + "__')";
+			sqlCode = "__" + mid + "__";
 		} else if (code.startsWith("30")) {
-			sqlCode = "( job.jccode = '" + code + "')";
+			sqlCode = code;
 		} else {
 			sqlCode = null;
 		}
 		return sqlCode;
 	}
+
+//	 public static String jobCategoryCodeForJobSql(String code) {
+//	 String sqlCode = "";
+//	 if (code == null || "".equals(code)) {
+//	 return null;
+//	 }
+//	 String mid;
+//	 if ("10000000".equals(code)) {
+//	 sqlCode = null;
+//	 } else if (code.startsWith("10")) {
+//	 mid = code.substring(2, 4);
+//	 sqlCode = "( job.jccode like '__" + mid + "____' )";
+//	 } else if (code.startsWith("20")) {
+//	 mid = code.substring(2, 6);
+//	 sqlCode = "( job.jccode like '__" + mid + "__')";
+//	 } else if (code.startsWith("30")) {
+//	 sqlCode = "( job.jccode = '" + code + "')";
+//	 } else {
+//	 sqlCode = null;
+//	 }
+//	 return sqlCode;
+//	 }
 
 	/**
 	 * 处理传进来的职位种类code, 变成适用于resumeMapper中sql语句使用的格式

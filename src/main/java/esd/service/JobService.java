@@ -121,7 +121,7 @@ public class JobService {
 	 * @param size
 	 * @return
 	 */
-	public List<Job> getListShowForManage(Job object, int startPage, int size) {
+	public List<Job> getListForManage(Job object, int startPage, int size) {
 		if (object != null) {
 			// 职位种类code处理
 			if (object.getJobCategory() != null) {
@@ -152,7 +152,7 @@ public class JobService {
 	 * @param size
 	 * @return
 	 */
-	public List<Job> getForListShow(Job object, int startPage, int size) {
+	public List<Job> getListForShow(Job object, int startPage, int size) {
 		if (object != null) {
 			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
 			if (object.getArea() != null) {

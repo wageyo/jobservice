@@ -83,7 +83,7 @@ public class JobController {
 		}
 		job.setIsActiveEffectiveTime(true);
 		List<Job> jobList = jobService
-				.getForListShow(job, page, Constants.SIZE);
+				.getListForShow(job, page, Constants.SIZE);
 		Integer records = jobService.getTotalCount(job,Boolean.TRUE);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (jobList != null && records != null && records > 0) {
@@ -196,6 +196,29 @@ public class JobController {
 		return json;
 	}
 
+	//根据职位种类code, 获得对应类型的51条数据, 以供前台显示
+	@RequestMapping(value="/getByCategory/{jobCategoryCode}", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> getByJobCategory(@PathVariable(value="jobCategoryCode") String jobCategoryCode, HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		Job object = new Job();
+		object.setJobCategory(new JobCategory(jobCategoryCode));
+		List<Job> jobByCategoryResult = jobService.getListForShow(object, Constants.START, 51);
+		List<Map<String,Object>> jobByCategoryList = new ArrayList<Map<String,Object>>();
+		for(Job job :jobByCategoryResult){
+			Map<String,Object> j = new HashMap<String,Object>();
+			j.put("jobId", job.getId());
+			j.put("jobName", job.getName());
+			j.put("companyId", job.getCompany().getId());
+			j.put("companyName", job.getCompany().getName());
+			jobByCategoryList.add(j);
+		}
+		map.put("jobByCategoryList",jobByCategoryList);
+		return map;
+	}
+	
+	
+	
 //	// 获得职位总个数
 //	@RequestMapping("/getTotalCount")
 //	@ResponseBody
@@ -288,7 +311,7 @@ public class JobController {
 		paramEntity.setCheckStatus(checkStatus);
 		Integer total = jobService.getTotalCount(paramEntity,Boolean.TRUE);
 		Integer page=1;
-		List<Job> job = jobService.getListShowForManage(
+		List<Job> job = jobService.getListForManage(
 				paramEntity, page, total);
 		String url = req.getRealPath("/");
 	

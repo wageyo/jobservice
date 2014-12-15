@@ -158,30 +158,29 @@
 				<div class="PublicframeOne SetMarginTop hp_fwdt" style=" width:707px; float:left; height:255px;">
 					<div class="PublicframeOneHeaderBar" style=" width:707px">
 						<div class="PublicframeOneHeaderBarLeft">最新资讯</div>
-						<div class="PublicframeOneHeaderBarRight"> <a target="_blank" href="P_WorkplaceInformation.aspx">更多</a> </div>
+						<div class="PublicframeOneHeaderBarRight"> <a  href="P_WorkplaceInformation.aspx">更多</a> </div>
 					</div>
 					<div class="photo">
 						<dl id="scrollimg2" class="tagon3">
-							<dt class="pic1"> <a title="[简历模板] 英语简历范文" target="_blank" href=""> <img title="[简历模板] 英语简历范文" alt="[简历模板] 英语简历范文" style=" width:255px; height:208px; " src="images/Article/test/6.jpg"> </a> </dt>
-							<dd class="tag1"> <a onfocus="imgScroll(1)" onmousemove="imgScroll(1)" target="_blank" title="[简历模板] 英语简历范文" href="">1</a> </dd>
-							<dt class="pic2"> <a title="[简历模板] 金融学专业简历范文" target="_blank" href=""> <img title="[简历模板] 金融学专业简历范文" alt="[简历模板] 金融学专业简历范文" style=" width:255px; height:208px; " src="images/Article/test/5.jpg"> </a> </dt>
-							<dd class="tag2"> <a onfocus="imgScroll(2)" onmousemove="imgScroll(2)" target="_blank" title="[简历模板] 金融学专业简历范文" href="">2</a> </dd>
-							<dt class="pic3"> <a title="[简历模板] 市场营销专业简历样本" target="_blank" href=""> <img title="[简历模板] 市场营销专业简历样本" alt="[简历模板] 市场营销专业简历样本" style=" width:255px; height:208px; " src="images/Article/test/4.jpg"> </a> </dt>
-							<dd class="tag3"> <a onfocus="imgScroll(3)" onmousemove="imgScroll(3)" target="_blank" title="[简历模板] 市场营销专业简历样本" href="">3</a> </dd>
-							<dt class="pic4"> <a title="[面试]面试承诺是否有效？" target="_blank" href=""> <img title="[面试]面试承诺是否有效？" alt="[面试]面试承诺是否有效？" style=" width:255px; height:208px; " src="images/Article/test/3.jpg"> </a> </dt>
-							<dd class="tag4"> <a onfocus="imgScroll(4)" onmousemove="imgScroll(4)" target="_blank" title="[面试]面试承诺是否有效？" href="">4</a> </dd>
-							<dt class="pic5"> <a title="[面试]三分钟定面试成败" target="_blank" href=""> <img title="[面试]三分钟定面试成败" alt="[面试]三分钟定面试成败" style=" width:255px; height:208px; " src="images/Article/test/2.jpg"> </a> </dt>
-							<dd class="tag5"> <a onfocus="imgScroll(5)" onmousemove="imgScroll(5)" target="_blank" title="[面试]三分钟定面试成败" href="">5</a> </dd>
-							<dt class="pic6"> <a title="[面试]面试后关键：如何写好感谢信" target="_blank" href=""> <img title="[面试]面试后关键：如何写好感谢信" alt="[面试]面试后关键：如何写好感谢信" style=" width:255px; height:208px; " src="images/Article/test/1.jpg"> </a> </dt>
-							<dd class="tag6"> <a onfocus="imgScroll(6)" onmousemove="imgScroll(6)" target="_blank" title="[面试]面试后关键：如何写好感谢信" href="">6</a> </dd>
+							<dt class="pic1"> <a title="[简历模板] 英语简历范文"  href=""> <img title="[简历模板] 英语简历范文" alt="[简历模板] 英语简历范文" style=" width:255px; height:208px; " src="images/Article/test/6.jpg"> </a> </dt>
+							<dd class="tag1"> <a onfocus="imgScroll(1)" onmousemove="imgScroll(1)"  title="[简历模板] 英语简历范文" href="">1</a> </dd>
+							<dt class="pic2"> <a title="[简历模板] 金融学专业简历范文"  href=""> <img title="[简历模板] 金融学专业简历范文" alt="[简历模板] 金融学专业简历范文" style=" width:255px; height:208px; " src="images/Article/test/5.jpg"> </a> </dt>
+							<dd class="tag2"> <a onfocus="imgScroll(2)" onmousemove="imgScroll(2)"  title="[简历模板] 金融学专业简历范文" href="">2</a> </dd>
+							<dt class="pic3"> <a title="[简历模板] 市场营销专业简历样本"  href=""> <img title="[简历模板] 市场营销专业简历样本" alt="[简历模板] 市场营销专业简历样本" style=" width:255px; height:208px; " src="images/Article/test/4.jpg"> </a> </dt>
+							<dd class="tag3"> <a onfocus="imgScroll(3)" onmousemove="imgScroll(3)"  title="[简历模板] 市场营销专业简历样本" href="">3</a> </dd>
+							<dt class="pic4"> <a title="[面试]面试承诺是否有效？"  href=""> <img title="[面试]面试承诺是否有效？" alt="[面试]面试承诺是否有效？" style=" width:255px; height:208px; " src="images/Article/test/3.jpg"> </a> </dt>
+							<dd class="tag4"> <a onfocus="imgScroll(4)" onmousemove="imgScroll(4)"  title="[面试]面试承诺是否有效？" href="">4</a> </dd>
+							<dt class="pic5"> <a title="[面试]三分钟定面试成败"  href=""> <img title="[面试]三分钟定面试成败" alt="[面试]三分钟定面试成败" style=" width:255px; height:208px; " src="images/Article/test/2.jpg"> </a> </dt>
+							<dd class="tag5"> <a onfocus="imgScroll(5)" onmousemove="imgScroll(5)"  title="[面试]三分钟定面试成败" href="">5</a> </dd>
+							<dt class="pic6"> <a title="[面试]面试后关键：如何写好感谢信"  href=""> <img title="[面试]面试后关键：如何写好感谢信" alt="[面试]面试后关键：如何写好感谢信" style=" width:255px; height:208px; " src="images/Article/test/1.jpg"> </a> </dt>
+							<dd class="tag6"> <a onfocus="imgScroll(6)" onmousemove="imgScroll(6)"  title="[面试]面试后关键：如何写好感谢信" href="">6</a> </dd>
 						</dl>
 					</div>
-					<div id="hp_fwdt_id" class="hp_fwdt">
+					<div class="hp_fwdt">
 						<ul>
 							<c:forEach items="${newsList }" var="news">
 								<li class="Square2"> 
 										<a href="${contextPath }/news/getOneForShow?id=${news.id}" title="${news.title }">${news.title }</a>
-									
 								</li>
 							</c:forEach>
 						
@@ -191,19 +190,13 @@
 				<div class="PublicframeOne SetMarginTop hp_fwxx" style=" width:274px; height:255px; float:left; margin-left:5px;">
 					<div style=" width:274px" class="PublicframeOneHeaderBar">
 						<div class="PublicframeOneHeaderBarLeft">就业指导</div>
-						<div class="PublicframeOneHeaderBarRight"> <a target="_blank" href="HP_VocationalTraining.aspx">更多</a> </div>
+						<div class="PublicframeOneHeaderBarRight"> <a  href="HP_VocationalTraining.aspx">更多</a> </div>
 					</div>
-					<div id="hp_ftxx_id">
+					<div >
 						<ul>
-							<li class="Square"> <a target="_blank" title="最新职业能力测评" href="">最新职业能力测评</a> </li>
-							<li class="Square"> <a target="_blank" title="职业胜任能力测评" href="">职业胜任能力测评</a> </li>
-							<li class="Square"> <a target="_blank" title="HR必知：培训需求分析五大作用" href="">HR必知：培训需求分析五大作用</a> </li>
-							<li class="Square"> <a target="_blank" title="企业培训计划制定五大要点" href="">企业培训计划制定五大要点</a> </li>
-							<li class="Square"> <a target="_blank" title="HR必看:如何做好企业培训这道菜" href="">HR必看:如何做好企业培训这道菜</a> </li>
-							<li class="Square"> <a target="_blank" title="常见的4种培训需求分析方法" href="">常见的4种培训需求分析方法</a> </li>
-							<li class="Square"> <a target="_blank" title="揭秘培训需求分析要点" href="">揭秘培训需求分析要点</a> </li>
-							<li class="Square"> <a target="_blank" title="培训需求分析要善于寻找差距" href="">培训需求分析要善于寻找差距</a> </li>
-							<li class="Square"> <a target="_blank" title="如何做好培训需求分析？" href="">如何做好培训需求分析？</a> </li>
+							<c:forEach items="${directList }" var="direct">
+								<li class="Square"> <a  title="最新职业能力测评" href="${contextPath }/news/getOneForShow?id=${direct.id}" title="${direct.title }">${direct.title }</a> </li>
+							</c:forEach>
 						</ul>
 						<div class="clearboth"></div>
 					</div>
@@ -227,76 +220,15 @@
 										<th>残疾等级</th>
 										<th>求职岗位</th>
 									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">陈**</a></td>
-										<td>高中</td>
-										<td>视力</td>
-										<td>二级</td>
-										<td><div>中医科医生</div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">邢**</a></td>
-										<td>本科</td>
-										<td>多重</td>
-										<td>一级</td>
-										<td><div>平面设计师</div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">邱**</a></td>
-										<td>初中</td>
-										<td>智力</td>
-										<td>三级</td>
-										<td><div>其他</div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">陈**</a></td>
-										<td>本科</td>
-										<td>多重</td>
-										<td>二级</td>
-										<td><div></div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">邓**</a></td>
-										<td>初中</td>
-										<td>言语</td>
-										<td>二级</td>
-										<td><div></div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">赵**</a></td>
-										<td>大专</td>
-										<td>言语</td>
-										<td>二级</td>
-										<td><div>大学/大专应届毕…</div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">李**</a></td>
-										<td>初中</td>
-										<td>肢体</td>
-										<td>三级</td>
-										<td><div>其他</div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">赖**</a></td>
-										<td>初中</td>
-										<td>听力</td>
-										<td>一级</td>
-										<td><div>普工/操作工</div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">陈**</a></td>
-										<td>初中</td>
-										<td>肢体</td>
-										<td>三级</td>
-										<td><div>普工/操作工</div></td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="">夏**</a></td>
-										<td>高中</td>
-										<td>听力</td>
-										<td>一级</td>
-										<td><div></div></td>
-									</tr>
+									<c:forEach items="${resumeList }" var="resume">
+										<tr class="resumeMessageheaderOther">
+											<td><a  href="${contextPath }/resume/getOneForShow?id=${resume.id}">${resume.name }</a></td>
+											<td>${resume.education }</td>
+											<td>${resume.disabilityCategory }</td>
+											<td>${resume.disabilityLevel }</td>
+											<td><div>${resume.desireJob.name }</div></td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 							<div class="clearboth"></div>
@@ -317,56 +249,17 @@
 										<th>招聘职位</th>
 										<th>日期</th>
 									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="广东惠而浦家电制品有限公司">广东惠而浦家电制…</a></td>
-										<td><a target="_blank" href="" title="生产工">生产工</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="佛山裕顺福首饰钻石有限公司">佛山裕顺福首饰钻…</a></td>
-										<td><a target="_blank" href="" title="普通工">普通工</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="广东科荣电器有限公司">广东科荣电器有限…</a></td>
-										<td><a target="_blank" href="" title="装配工">装配工</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="佛山市樱顺卫厨用品有限公司">佛山市樱顺卫厨用…</a></td>
-										<td><a target="_blank" href="" title="普工">普工</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="佛山市顺德区今桥首饰有限公司">佛山市顺德区今桥…</a></td>
-										<td><a target="_blank" href="" title="普工">普工</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="佛山市顺德区今桥首饰有限公司">佛山市顺德区今桥…</a></td>
-										<td><a target="_blank" href="" title="文员">文员</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="珠海市意多傢私有限公司">珠海市意多傢私有…</a></td>
-										<td><a target="_blank" href="" title="氩弧焊工">氩弧焊工</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="深圳市华测检测技术股份有限公司顺德分公司">深圳市华测检测技…</a></td>
-										<td><a target="_blank" href="" title="助理技术员">助理技术员</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="佛山南海佳美莉美甲服务部">佛山南海佳美莉美…</a></td>
-										<td><a target="_blank" href="" title="美容师">美容师</a></td>
-										<td>2014/12/3</td>
-									</tr>
-									<tr class="resumeMessageheaderOther">
-										<td><a target="_blank" href="" title="佛山南海佳美莉美甲服务部">佛山南海佳美莉美…</a></td>
-										<td><a target="_blank" href="" title="美甲师">美甲师</a></td>
-										<td>2014/12/3</td>
-									</tr>
+									<c:forEach items="${companyList }" var="company">
+										<tr class="resumeMessageheaderOther">
+											<td>
+												<div style="white-space:nowrap; width:130px; text-overflow:ellipsis;-moz-text-overflow: ellipsis; overflow:hidden">
+													<a  href="${contextPath }/company/getOneForShow?id=${company.id}" title="${company.name }">${company.name }</a>
+												</div>
+											</td>
+											<td><a  href="" title="${company.businessScope.name}">${company.businessScope.name}</a></td>
+											<td><fmt:formatDate value="${company.updateDate }" type="both" pattern="yyyy/MM/dd" /></td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 							<div class="clearboth"></div>
@@ -382,17 +275,17 @@
 						<div class="PublicframeTwoContent listpub" style="width:275px; height:307px;">
 							<div>
 								<ul>
-									<li class="Square"> <a target="_blank" title="密切注意职场成长中的10个主要障碍" href="">密切注意职场成长中的10个主要障碍</a> </li>
-									<li class="Square"> <a target="_blank" title="传说中最好的文章：如何择业、跳槽、成..." href="">传说中最好的文章：如何择业、跳槽、成...</a> </li>
-									<li class="Square"> <a target="_blank" title="职业规划：人生一堂必修课" href="">职业规划：人生一堂必修课</a> </li>
-									<li class="Square"> <a target="_blank" title="职场规划为了什么" href="">职场规划为了什么</a> </li>
+									<li class="Square"> <a  title="密切注意职场成长中的10个主要障碍" href="">密切注意职场成长中的10个主要障碍</a> </li>
+									<li class="Square"> <a  title="传说中最好的文章：如何择业、跳槽、成..." href="">传说中最好的文章：如何择业、跳槽、成...</a> </li>
+									<li class="Square"> <a  title="职业规划：人生一堂必修课" href="">职业规划：人生一堂必修课</a> </li>
+									<li class="Square"> <a  title="职场规划为了什么" href="">职场规划为了什么</a> </li>
 								</ul>
-								<a href="" target="_blank">
+								<a href="" >
 									<div id="btn_Link" class="LinkButton"></div>
 								</a>
 							</div>
 							<div>
-								<a href="" target="_blank">
+								<a href="" >
 									<div id="btn_Link1" class="LinkButton1"></div>
 								</a>
 							</div>
@@ -409,22 +302,12 @@
 					</div>
 					<div id="List_rdzp">
 						<ul>
-							<li>
-								<a title="广州润兴软件有限公司" target="_blank" href="">广州润兴软件有限公司</a> <a class="position" title="网页设计工程师" target="_blank" style="color:#0868C8" href="">网页设计工程师</a>
-							</li>
-							<li>
-								<a title="茂名中燃城市燃气发展有限公司" target="_blank" href="">茂名中燃城市燃气发展有限公司</a> <a class="position" title="厨房杂工" target="_blank" style="color:#0868C8" href="">厨房杂工</a>
-							</li>
-							<li>
-								<a title="茂名华通丰田汽车销售服务有限公司" target="_blank" href="">茂名华通丰田汽车销售服务有限公司</a> <a class="position" title="客服回访专员" target="_blank" style="color:#0868C8" href="">客服回访专员</a>
-							</li>
-							<li>
-								<a title="广东惠而浦家电制品有限公司" target="_blank" href="">广东惠而浦家电制品有限公司</a> <a class="position" title="财务文员" target="_blank" style="color:#0868C8" href="">财务文员</a>
-								<a class="position" title="实验室技术员" target="_blank" style="color:#0868C8" href="">实验室技术员</a>
-							</li>
-							<li>
-								<a title="阳西县福利装璜包装加工厂" target="_blank" href="">阳西县福利装璜包装加工厂</a> <a class="position" title="全职" target="_blank" style="color:#0868C8" href="">全职</a>
-							</li>
+							<c:forEach items="${hotJobList }" var="job">
+								<li>
+									<a href="${contextPath }/company/getOneForShow?id=${job.company.id}" title="${job.company.name }">${job.company.name }</a> 
+									<a href="${contextPath }/job/getOneForShow?id=${job.id}" class="position" title="${job.name }"  style="color:#0868C8">${job.name }</a>
+								</li>
+							</c:forEach>
 						</ul>
 						<div class="clearboth"></div>
 					</div>
@@ -433,7 +316,7 @@
 					<div class="clearboth"></div>
 					<ul class="TabCss">
 						<li id="001"> <span class="firstWhite"></span> <span class="whitebg">计算机/互联网/通信</span> </li>
-						<li id="002"> <span class="rightWhiteOfCenter"></span> <span class="whitebg bluebg">会计/金融/银行/保险</span> </li>
+						<li id="002"> <span class="rightWhiteOfCenter"></span> <span class="whitebg bluebg" onclick="changeShowJob('10020000');">会计/金融/银行/保险</span> </li>
 						<li id="003"> <span class="rightWhiteOfCenter rightBlueOfCenter"></span> <span class="whitebg bluebg">贸易/消费/制造/营运</span> </li>
 						<li id="004"> <span class="rightWhiteOfCenter rightBlueOfCenter"></span> <span class="whitebg bluebg">制药/医疗</span> </li>
 						<li id="005"> <span class="rightWhiteOfCenter rightBlueOfCenter"></span> <span class="whitebg bluebg">广告/媒体</span> </li>
@@ -444,57 +327,14 @@
 					<div id="List_Tab_Content" class="TabContentStyle">
 						<div id="TabsMainShow">
 							<ul>
-								<li class=""><a target="_blank" href="">梅州奥美佳电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">广东道路信息发展有限公司</a><a href="" style="color:#0868C8" class="position">话务员</a></li>
-								<li class=""><a target="_blank" href="">愈富制造（河源）有限公司</a><a href="" style="color:#0868C8" class="position">文员</a></li>
-								<li class=""><a target="_blank" href="">珠海市为达电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">肇庆华锋电子铝箔股份有限公司</a><a href="" style="color:#0868C8" class="position">后勤门卫</a><a href="" style="color:#0868C8" class="position">仓库管理员</a></li>
-								<li class=""><a target="_blank" href="">肇庆市创源电子有限公司</a><a href="" style="color:#0868C8" class="position">手工</a></li>
-								<li class=""><a target="_blank" href="">肇庆市众邦计算机科技有限公司</a><a href="" style="color:#0868C8" class="position">文员</a></li>
-								<li class=""><a target="_blank" href="">潮州市蓓蕾电子有限公司</a><a href="" style="color:#0868C8" class="position">男工</a><a href="" style="color:#0868C8" class="position">女工</a></li>
-								<li class=""><a target="_blank" href="">潮州市创佳集团有限公司 </a><a href="" style="color:#0868C8" class="position">男工</a><a href="" style="color:#0868C8" class="position">女工</a></li>
-								<li class=""><a target="_blank" href="">深圳市盛传网络技术有限公司</a><a href="" style="color:#0868C8" class="position">客服</a></li>
-								<li class=""><a target="_blank" href="">广东远光电缆实业有限公司</a><a href="" style="color:#0868C8" class="position">生产工</a></li>
-								<li class=""><a target="_blank" href="">珠海启扬数据处理有限公司</a><a href="" style="color:#0868C8" class="position">打字员</a></li>
-								<li class=""><a target="_blank" href="">珠海市田森电子科技有限公司</a></li>
-								<li class=""><a target="_blank" href="">珠海富润科技有限公司</a><a href="" style="color:#0868C8" class="position">电销专员</a></li>
-								<li class=""><a target="_blank" href="">深圳市普顺达科技有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">珠海普威科技有限公司</a><a href="" style="color:#0868C8" class="position">.net 软件开发</a></li>
-								<li class=""><a target="_blank" href="">珠海普及信息科技有限公司</a></li>
-								<li class=""><a target="_blank" href="">珠海安居宝电子科技有限公司</a></li>
-								<li class=""><a target="_blank" href="">珠海矽微电子科技有限公司</a></li>
-								<li class=""><a target="_blank" href="">珠海市思域软件科技有限公司</a></li>
-								<li class=""><a target="_blank" href="">梅州奥美佳电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">广东道路信息发展有限公司</a><a href="" style="color:#0868C8" class="position">话务员</a></li>
-								<li class=""><a target="_blank" href="">愈富制造（河源）有限公司</a><a href="" style="color:#0868C8" class="position">文员</a></li>
-								<li class=""><a target="_blank" href="">珠海市为达电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">肇庆华锋电子铝箔股份有限公司</a><a href="" style="color:#0868C8" class="position">后勤门卫</a><a href="" style="color:#0868C8" class="position">仓库管理员</a></li>
-								<li class=""><a target="_blank" href="">肇庆市创源电子有限公司</a><a href="" style="color:#0868C8" class="position">手工</a></li>
-								<li class=""><a target="_blank" href="">肇庆市众邦计算机科技有限公司</a><a href="" style="color:#0868C8" class="position">文员</a></li>
-								<li class=""><a target="_blank" href="">潮州市蓓蕾电子有限公司</a><a href="" style="color:#0868C8" class="position">男工</a><a href="" style="color:#0868C8" class="position">女工</a></li>
-								<li class=""><a target="_blank" href="">潮州市创佳集团有限公司 </a><a href="" style="color:#0868C8" class="position">男工</a><a href="" style="color:#0868C8" class="position">女工</a></li>
-								<li class=""><a target="_blank" href="">深圳市盛传网络技术有限公司</a><a href="" style="color:#0868C8" class="position">客服</a></li>
-								<li class=""><a target="_blank" href="">梅州奥美佳电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">广东道路信息发展有限公司</a><a href="" style="color:#0868C8" class="position">话务员</a></li>
-								<li class=""><a target="_blank" href="">愈富制造（河源）有限公司</a><a href="" style="color:#0868C8" class="position">文员</a></li>
-								<li class=""><a target="_blank" href="">珠海市为达电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">肇庆华锋电子铝箔股份有限公司</a><a href="" style="color:#0868C8" class="position">后勤门卫</a><a href="" style="color:#0868C8" class="position">仓库管理员</a></li>
-								<li class=""><a target="_blank" href="">肇庆市创源电子有限公司</a><a href="" style="color:#0868C8" class="position">手工</a></li>
-								<li class=""><a target="_blank" href="">肇庆市众邦计算机科技有限公司</a><a href="" style="color:#0868C8" class="position">文员</a></li>
-								<li class=""><a target="_blank" href="">潮州市蓓蕾电子有限公司</a><a href="" style="color:#0868C8" class="position">男工</a><a href="" style="color:#0868C8" class="position">女工</a></li>
-								<li class=""><a target="_blank" href="">潮州市创佳集团有限公司 </a><a href="" style="color:#0868C8" class="position">男工</a><a href="" style="color:#0868C8" class="position">女工</a></li>
-								<li class=""><a target="_blank" href="">深圳市盛传网络技术有限公司</a><a href="" style="color:#0868C8" class="position">客服</a></li>
-								<li class=""><a target="_blank" href="">梅州奥美佳电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">广东道路信息发展有限公司</a><a href="" style="color:#0868C8" class="position">话务员</a></li>
-								<li class=""><a target="_blank" href="">愈富制造（河源）有限公司</a><a href="" style="color:#0868C8" class="position">文员</a></li>
-								<li class=""><a target="_blank" href="">珠海市为达电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">肇庆华锋电子铝箔股份有限公司</a><a href="" style="color:#0868C8" class="position">后勤门卫</a><a href="" style="color:#0868C8" class="position">仓库管理员</a></li>
-								<li class=""><a target="_blank" href="">梅州奥美佳电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">广东道路信息发展有限公司</a><a href="" style="color:#0868C8" class="position">话务员</a></li>
-								<li class=""><a target="_blank" href="">愈富制造（河源）有限公司</a><a href="" style="color:#0868C8" class="position">文员</a></li>
-								<li class=""><a target="_blank" href="">珠海市为达电子有限公司</a><a href="" style="color:#0868C8" class="position">普工</a></li>
-								<li class=""><a target="_blank" href="">肇庆华锋电子铝箔股份有限公司</a><a href="" style="color:#0868C8" class="position">后勤门卫</a><a href="" style="color:#0868C8" class="position">仓库管理员</a></li>
-								<li class=""><a target="_blank" href="">肇庆市创源电子有限公司</a><a href="" style="color:#0868C8" class="position">手工</a></li>
+							<!-- 一个公司显示多个职位的时候用下面这个样式 -->
+							<!-- 	<li class=""><a  href="">肇庆华锋电子铝箔股份有限公司</a><a href="" style="color:#0868C8" class="position">后勤门卫</a><a href="" style="color:#0868C8" class="position">仓库管理员</a></li> -->
+							<c:forEach items="${jobByCategoryList }" var="job">
+								<li class="">
+									<a href="${contextPath }/company/getOneForShow?id=${job.companyId}">${job.companyName }</a>
+									<a href="${contextPath }/job/getOneForShow?id=${job.id}" style="color:#0868C8" class="position">${job.jobName }</a>
+								</li>
+							</c:forEach>
 							</ul>
 						</div>
 						<div class="clearboth"></div>
@@ -512,18 +352,18 @@
 							<div class="PublicframeTwoHeadBarRight"></div>
 							<div class="PublicframeTwoHeadBarMore">
 								<span class="PublicframeTwoHeadBarMoreSpan">
-									<a href="HP_ArticleMore.aspx?seachCategory=3&amp;crumbs=001030" target="_blank">更多</a>
+									<a href="HP_ArticleMore.aspx?seachCategory=3&amp;crumbs=001030" >更多</a>
 								</span>
 							</div>
 						</div>
 						<div class="PublicframeTwoContent listpub">
 							<dl class="jdmb">
-								<dt> <img src="${contextPath}/images/HomePageImage/临时图/p3.jpg" alt="简历模板"> <span>商业模板</span> </dt>
-								<dd> <a title="常见的4种培训需求分析方法" href="" target="_blank">常见的4种培训需求分析方法</a> </dd>
-								<dd> <a title="揭秘培训需求分析要点" href="" target="_blank">揭秘培训需求分析要点</a> </dd>
-								<dd> <a title="培训需求分析要善于寻找差距" href="" target="_blank">培训需求分析要善于寻找差距</a> </dd>
-								<dd> <a title="如何做好培训需求分析？" href="" target="_blank">如何做好培训需求分析？</a> </dd>
-								<dd> <a title="培训需求管理要点揭秘" href="" target="_blank">培训需求管理要点揭秘</a> </dd>
+								<dt> <img src="${contextPath}/images/HomePageImage/临时图/p3.jpg" alt="简历模板" /> <span>商业模板</span> </dt>
+								<dd> <a title="常见的4种培训需求分析方法" href="" >常见的4种培训需求分析方法</a> </dd>
+								<dd> <a title="揭秘培训需求分析要点" href="" >揭秘培训需求分析要点</a> </dd>
+								<dd> <a title="培训需求分析要善于寻找差距" href="" >培训需求分析要善于寻找差距</a> </dd>
+								<dd> <a title="如何做好培训需求分析？" href="" >如何做好培训需求分析？</a> </dd>
+								<dd> <a title="培训需求管理要点揭秘" href="" >培训需求管理要点揭秘</a> </dd>
 							</dl>
 							<div class="clearboth"></div>
 						</div>
@@ -533,16 +373,16 @@
 							<div class="PublicframeTwoHeadBarLeft"></div>
 							<div class="PublicframeTwoHeadBarTittle"> <span class="PublicframeTwoHeadBarTittleSpan" title="面试技巧">面试技巧</span> </div>
 							<div class="PublicframeTwoHeadBarRight"></div>
-							<div class="PublicframeTwoHeadBarMore"> <span class="PublicframeTwoHeadBarMoreSpan"> <a href="HP_ArticleMore.aspx?seachCategory=4&amp;crumbs=001030" target="_blank">更多</a> </span> </div>
+							<div class="PublicframeTwoHeadBarMore"> <span class="PublicframeTwoHeadBarMoreSpan"> <a href="HP_ArticleMore.aspx?seachCategory=4&amp;crumbs=001030" >更多</a> </span> </div>
 						</div>
 						<div class="PublicframeTwoContent listpub">
 							<dl class="jdmb">
 								<dt> <img src="${contextPath}/images/HomePageImage/临时图/p2.jpg" alt="面试技巧"> <span>面试技巧指南</span> </dt>
-								<dd> <a title="面试官的常用陷阱手段" href="" target="_blank">面试官的常用陷阱手段</a> </dd>
-								<dd> <a title="教你应付8类难缠的面试官" href="" target="_blank">教你应付8类难缠的面试官</a> </dd>
-								<dd> <a title="如何与招聘面试官打好交道" href="" target="_blank">如何与招聘面试官打好交道</a> </dd>
-								<dd> <a title="打动主考官的6个面试技巧" href="" target="_blank">打动主考官的6个面试技巧</a> </dd>
-								<dd> <a title="面试成功掌握十技巧" href="" target="_blank">面试成功掌握十技巧</a> </dd>
+								<dd> <a title="面试官的常用陷阱手段" href="" >面试官的常用陷阱手段</a> </dd>
+								<dd> <a title="教你应付8类难缠的面试官" href="" >教你应付8类难缠的面试官</a> </dd>
+								<dd> <a title="如何与招聘面试官打好交道" href="" >如何与招聘面试官打好交道</a> </dd>
+								<dd> <a title="打动主考官的6个面试技巧" href="" >打动主考官的6个面试技巧</a> </dd>
+								<dd> <a title="面试成功掌握十技巧" href="" >面试成功掌握十技巧</a> </dd>
 							</dl>
 							<div class="clearboth"></div>
 						</div>
@@ -556,18 +396,18 @@
 							<div class="PublicframeTwoHeadBarRight"></div>
 							<div class="PublicframeTwoHeadBarMore">
 								<span class="PublicframeTwoHeadBarMoreSpan">
-									<a href="HP_ArticleMore.aspx?seachCategory=5&amp;crumbs=001030" target="_blank">更多</a>
+									<a href="HP_ArticleMore.aspx?seachCategory=5&amp;crumbs=001030" >更多</a>
 								</span>
 							</div>
 						</div>
 						<div class="PublicframeTwoContent listpub">
 							<dl class="jdmb">
 								<dt> <img src="${contextPath}/images/HomePageImage/临时图/p1.jpg" alt="职场资讯"> <span>新鲜的资讯信息</span> </dt>
-								<dd> <a title="IT培训班进修火引争议" href="" target="_blank">IT培训班进修火引争议</a> </dd>
-								<dd> <a title="职业规划有什么作用？" href="" target="_blank">职业规划有什么作用？</a> </dd>
-								<dd> <a title="想转行 你准备好了吗?" href="" target="_blank">想转行 你准备好了吗?</a> </dd>
-								<dd> <a title="何做出彰显个人能力的求职简历呢" href="" target="_blank">何做出彰显个人能力的求职简历呢</a> </dd>
-								<dd> <a title="时刻准备勇闯招聘会" href="" target="_blank">时刻准备勇闯招聘会</a> </dd>
+								<dd> <a title="IT培训班进修火引争议" href="" >IT培训班进修火引争议</a> </dd>
+								<dd> <a title="职业规划有什么作用？" href="" >职业规划有什么作用？</a> </dd>
+								<dd> <a title="想转行 你准备好了吗?" href="" >想转行 你准备好了吗?</a> </dd>
+								<dd> <a title="何做出彰显个人能力的求职简历呢" href="" >何做出彰显个人能力的求职简历呢</a> </dd>
+								<dd> <a title="时刻准备勇闯招聘会" href="" >时刻准备勇闯招聘会</a> </dd>
 							</dl>
 							<div class="clearboth"></div>
 						</div>
@@ -591,13 +431,16 @@
 			}, function () { $(this).css("color", "white"); });
 			/*设置热门搜索字体颜色*/
 			$(".VerticalLineUL").find("a").css("color", "#20a4fe");
+			
+			/*******  个人注册/企业注册   ********/
 			$("#PersonalRegister").bind("click", function () {
             	window.location.href = ""; //个人注册
-			})
+			});
 			$("#BusinessRegister").bind("click", function () {
 				window.location.href = ""; //企业注册
-			})
-			/*个人单位切换*/
+			});
+			
+			/*******  个人单位切换   ********/
 			$("#PersonalTab").bind("click", function () {
 				LoginType = 0; $(this).removeClass().addClass("BlueFirst"); $("#BusinessTab").removeClass().addClass("WhiteLast"); $(".loginmain").removeClass("loginmain2"); $(".LoginRight").removeClass("LoginRight2"); $("#LoginBtn").removeClass("loginbtnimg2"); $("#LinkHrefBtn").attr("href", ""); $("#UserName").val("请输入用户名或身份证");
 			}).mouseover(function () { this.style.cursor = "pointer"; }).mouseout(function () { this.style.cursor = "auto"; });
@@ -609,11 +452,39 @@
 			}).mouseout(function () {
 				this.style.cursor = "auto";
 			});
-			 /*鼠标mouseover效果*/
+			
+			 /*******  鼠标mouseover效果   ********/
 			$("#LoginBtn").mouseover(function () { this.src = "${contextPath}/images/HomePageImage/LoginImage/HoverLogin.gif"; this.style.cursor = "pointer"; }).mouseout(function () { this.src = "${contextPath}/images/HomePageImage/LoginImage/LoginButtom.gif"; this.style.cursor = "pointer"; })
 			$("#PersonalRegister").mouseover(function () { this.style.background = 'url(${contextPath}/images/HomePageImage/LoginImage/HoverPersonalRegister.gif)'; this.style.cursor = "pointer"; }).mouseout(function () { this.style.background = 'url(${contextPath}/images/HomePageImage/LoginImage/PersonalRegister.gif)'; this.style.cursor = "auto"; })
 			$("#BusinessRegister").mouseover(function () { this.style.background = 'url(${contextPath}/images/HomePageImage/LoginImage/HoverBusinessRegister.gif)'; this.style.cursor = "pointer"; }).mouseout(function () { this.style.background = 'url(${contextPath}/images/HomePageImage/LoginImage/BusinessRegister.gif)'; this.style.cursor = "auto"; })
 		});
+		
+		/*******  不同种类职位轮换效果   ********/
+		function changeShowJob(jobCategory){
+			//异步请求数据
+			$.ajax({
+				url : '${contextPath}/job/getByCategory/' + jobCategory,
+				type : 'post',
+				dataType : 'json',
+				success : function(data){
+					//如果有数据返回, 则遍历数据进行显示
+					if(data.jobByCategoryList != null && data.jobByCategoryList.length > 0){
+						$.each(data.jobByCategoryList, function(i, item){
+							var str = '<a href="${contextPath }/company/getOneForShow?id=' + item.companyId+ '">${job.companyName }</a>';
+							str += '<a href="${contextPath }/job/getOneForShow?id=${job.id}" style="color:#0868C8" class="position">${job.jobName }</a>';
+							
+							//先清除当前TabsMainShow div框中的所有li子元素, 然后添加上新的招聘信息
+							$('#TabsMainShow').find('ul').children().remove();
+							
+						});
+					}
+				},
+				error : function(){
+					alert("请求数据发生错误, 请联系管理员.");
+				}
+			});
+			
+		}
 		
 	</script>
 </body>

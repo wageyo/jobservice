@@ -167,13 +167,6 @@ public class ResumeService {
 		resume.setWorkExperienceList(wDao.getByResume(id));
 		// 取得职业测评情况
 		resume.setUnempManageList(umDao.getByResume(id));
-		// r.setEducationBackgroundList(eDao.getByResume(r.getId()));
-		// r.setFamilyMemberList(fDao.getByResume(r.getId()));
-		// int birth = Integer.parseInt(r.getBirth().substring(0, 4));
-		// int now = Integer.parseInt(new
-		// SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-		// .format(new Date()).substring(0, 4));
-		// r.setAge(now - birth);
 		return resume;
 	}
 
