@@ -1,0 +1,755 @@
+﻿/*内容样式*/
+.setMainCityWith
+{
+    width:816px;
+}
+/*内容table样式*/
+.MainCity .allCitys
+{
+    height:30px;
+    line-height:30px; 
+    color:#168ffd;
+    font-size:14px;
+}
+.MainCity .dotted
+{
+    width:786px; 
+    height:1px; 
+    margin-left:15px; 
+    border-bottom:1px dashed black;
+    _overflow:hidden;
+}
+/*内容城市的样式*/
+.MainCity .city
+{
+    margin-top:5px;
+}
+.MainCity .city table.city1
+{
+    width:408px; 
+    float:left; 
+    text-align:left;
+}
+.MainCity .city table.city2
+{
+    width:408px;
+    float:right;
+}
+/*内容省的样式*/
+.MainCity .provices
+{
+    margin-top:10px;
+    width:816px;
+    height:auto;
+}
+.MainCity .provices .allCitys
+{
+    width:816px;
+    height:30px;
+    line-height:30px; 
+    background:#f7f7f7; 
+    color:#168ffd;
+    font-size:14px;
+}
+.MainCity .provices table th
+{
+    width:25px;
+}
+/*表格td样式*/
+.MainCity tr
+{
+    height:20px;
+    line-height:20px;
+}
+.MainCity th.firstth
+{
+    color:#168ff5;
+    padding-left:3px;
+}
+.MainCity a
+{
+    color:Black;
+    text-decoration:none;
+}
+.MainCity td.Two
+{
+    width:45px;
+}
+.MainCity td.Three
+{
+    width:55px;
+}
+.MainCity td.Four
+{
+    width:65px;
+}
+.MainCity div.provices table td
+{
+    padding-left:5px;
+}
+.MainCity td.provicesThree
+{
+    width:90px;
+}
+
+.MainCity td.provicesSix
+{
+    width:120px;
+}
+.MainCity td.Blue
+{
+    color:#168ffd;
+}
+
+.MainCity .GzcyLower
+{
+
+}
+.MainCity td.GzcyHigh
+{
+	background:#168ff5;
+    cursor:pointer;
+    color:White;
+}
+.MainCity .Strong
+{
+ font-weight:700;	
+}
+/*div中strong样式*/
+
+.MainCity div.allCitys
+{
+    font-size:14px;
+    font-weight:700;
+}
+/*
+  <div class="LayerOut setMainCityWith" id="list_Layer_District">
+        <div class="HeaderBar">
+            <div class="LayerTitle">
+                <strong>地区选择</strong> (您最多可以选择5各地区)</div>
+            <div class="LayerBtn">
+                [确定]</div>
+        </div>
+        <div class="MainCity">
+            <div class="allCitys">
+                主要城市:</div>
+            <div class="dotted">
+            </div>
+            <div class="city">
+                <table class="city1">
+                    <tr style="width: 396px;">
+                        <th class="firstth">
+                            B
+                        </th>
+                        <td class="Three Strong GzcyLower">
+                            北京
+                        </td>
+                        <td class="Two GzcyLower">
+                            包头
+                        </td>
+                        <td class="Two GzcyLower">
+                            保定
+                        </td>
+                        <td class="Two">
+                        </td>
+                        <td class="Two">
+                        </td>
+                        <td class="Four">
+                        </td>
+                        <td class="Two">
+                        </td>
+                        <td class="Two">
+                        </td>
+                        <td class="Two">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            C
+                        </th>
+                        <td class="GzcyLower">
+                            长春
+                        </td>
+                        <td class="GzcyLower">
+                            长沙
+                        </td>
+                        <td class="GzcyLower">
+                            成都
+                        </td>
+                        <td class="GzcyLower">
+                            重庆
+                        </td>
+                        <td class="GzcyLower">
+                            常州
+                        </td>
+                        <td class="GzcyLower">
+                            常德
+                        </td>
+                        <td class="Blue GzcyLower">
+                            常熟
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth GzcyLower">
+                            D
+                        </th>
+                        <td class="GzcyLower">
+                            大连
+                        </td>
+                        <td class="GzcyLower">
+                            东莞
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth GzcyLower">
+                            F
+                        </th>
+                        <td class="GzcyLower">
+                            福州
+                        </td>
+                        <td class="GzcyLower">
+                            佛山
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth GzcyLower">
+                            G
+                        </th>
+                        <td class="GzcyLower Strong">
+                            广州
+                        </td>
+                        <td class="GzcyLower">
+                            贵阳
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            H
+                        </th>
+                        <td class="GzcyLower">
+                            哈尔滨
+                        </td>
+                        <td class="GzcyLower">
+                            杭州
+                        </td>
+                        <td class="GzcyLower">
+                            合肥
+                        </td>
+                        <td class="GzcyLower">
+                            海口
+                        </td>
+                        <td class="GzcyLower">
+                            衡阳
+                        </td>
+                        <td class="GzcyLower">
+                            呼和浩特
+                        </td>
+                        <td class="GzcyLower">
+                            惠州
+                        </td>
+                        <td class="GzcyLower">
+                            衡阳
+                        </td>
+                        <td class="Blue GzcyLower">
+                            淮安
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            J
+                        </th>
+                        <td class="GzcyLower">
+                            济南
+                        </td>
+                        <td class="GzcyLower">
+                            嘉兴
+                        </td>
+                        <td class="GzcyLower">
+                            金华
+                        </td>
+                        <td class="GzcyLower">
+                            吉林
+                        </td>
+                        <td class="GzcyLower">
+                            江门
+                        </td>
+                        <td class="GzcyLower">
+                            荆州
+                        </td>
+                        <td class="Blue GzcyLower">
+                            江阴
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            K
+                        </th>
+                        <td class="GzcyLower">
+                            昆明
+                        </td>
+                        <td class="GzcyLower">
+                            昆山
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            L
+                        </th>
+                        <td class="GzcyLower">
+                            兰州
+                        </td>
+                        <td class="GzcyLower">
+                            廊坊
+                        </td>
+                        <td class="GzcyLower">
+                            临沂
+                        </td>
+                        <td class="GzcyLower">
+                            洛阳
+                        </td>
+                        <td class="Blue GzcyLower">
+                            连云港
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table2">
+                    <tr>
+                        <th class="firstth">
+                            N
+                        </th>
+                        <td class="Two GzcyLower">
+                            南京
+                        </td>
+                        <td class="Two GzcyLower">
+                            宁波
+                        </td>
+                        <td class="Three GzcyLower">
+                            南昌
+                        </td>
+                        <td class="Four GzcyLower">
+                            南通
+                        </td>
+                        <td class="Two GzcyLower">
+                            南宁
+                        </td>
+                        <td class="Two">
+                        </td>
+                        <td class="Two">
+                        </td>
+                        <td class="Two">
+                        </td>
+                        <td class="Three">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            Q
+                        </th>
+                        <td class="GzcyLower">
+                            青岛
+                        </td>
+                        <td class="GzcyLower">
+                            泉州
+                        </td>
+                        <td class="GzcyLower">
+                            秦皇岛
+                        </td>
+                        <td class="Blue GzcyLower">
+                            清远
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            S
+                        </th>
+                        <td class="GzcyLower">
+                            <strong>上海</strong>
+                        </td>
+                        <td class="GzcyLower">
+                            <strong>深圳</strong>
+                        </td>
+                        <td class="GzcyLower">
+                            沈阳
+                        </td>
+                        <td class="GzcyLower">
+                            石家庄
+                        </td>
+                        <td class="GzcyLower">
+                            苏州
+                        </td>
+                        <td class="GzcyLower">
+                            三亚
+                        </td>
+                        <td class="GzcyLower">
+                            邵阳
+                        </td>
+                        <td class="GzcyLower">
+                            汕头
+                        </td>
+                        <td class="Blue GzcyLower">
+                            顺德
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            T
+                        </th>
+                        <td class="GzcyLower">
+                            天津
+                        </td>
+                        <td class="GzcyLower">
+                            太远
+                        </td>
+                        <td class="GzcyLower">
+                            台州
+                        </td>
+                        <td class="GzcyLower">
+                            唐山
+                        </td>
+                        <td class="Blue GzcyLower">
+                            泰州
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            W
+                        </th>
+                        <td class="GzcyLower">
+                            武汉
+                        </td>
+                        <td class="GzcyLower">
+                            无锡
+                        </td>
+                        <td class="GzcyLower">
+                            温州
+                        </td>
+                        <td class="GzcyLower">
+                            乌鲁木齐
+                        </td>
+                        <td class="GzcyLower">
+                            芜湖
+                        </td>
+                        <td class="GzcyLower">
+                            潍坊
+                        </td>
+                        <td class="GzcyLower">
+                            威海
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            X
+                        </th>
+                        <td class="GzcyLower">
+                            西安
+                        </td>
+                        <td class="GzcyLower">
+                            厦门
+                        </td>
+                        <td class="GzcyLower">
+                            徐州
+                        </td>
+                        <td class="GzcyLower">
+                            襄阳
+                        </td>
+                        <td class="GzcyLower">
+                            湘潭
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            Y
+                        </th>
+                        <td class="GzcyLower">
+                            烟台
+                        </td>
+                        <td class="GzcyLower">
+                            扬州
+                        </td>
+                        <td class="GzcyLower">
+                            宜昌
+                        </td>
+                        <td class="Blue GzcyLower">
+                            盐城
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            Z
+                        </th>
+                        <td class="GzcyLower">
+                            漳州
+                        </td>
+                        <td class="GzcyLower">
+                            郑州
+                        </td>
+                        <td class="GzcyLower">
+                            中山
+                        </td>
+                        <td class="GzcyLower">
+                            珠海
+                        </td>
+                        <td class="GzcyLower">
+                            镇江
+                        </td>
+                        <td class="GzcyLower">
+                            珠江
+                        </td>
+                        <td class="Blue GzcyLower">
+                            湛江
+                        </td>
+                        <td class="Blue GzcyLower">
+                            肇庆
+                        </td>
+                        <td class="Blue GzcyLower">
+                            张家港
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clearboth" style="clear: both;">
+            </div>
+            <div class="provices">
+                <div class="allCitys">
+                    <strong>所有省份</strong></div>
+                <table>
+                    <tr>
+                        <th class="firstth">
+                            A-G
+                        </th>
+                        <td class="provicesThree GzcyLower">
+                            安徽省
+                        </td>
+                        <td class="provicesThree GzcyLower">
+                            澳门
+                        </td>
+                        <td class="provicesThree GzcyLower">
+                            福建省
+                        </td>
+                        <td class="provicesThree GzcyLower">
+                            甘肃省
+                        </td>
+                        <td class="provicesSix GzcyLower">
+                            广东省（除深圳）
+                        </td>
+                        <td class="provicesThree GzcyLower">
+                            广西省
+                        </td>
+                        <td class="provicesThree GzcyLower">
+                            贵州省
+                        </td>
+                        <td class="provicesThree GzcyLower">
+                            国外
+                        </td>
+                        <td class="provicesThree GzcyLower">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            H-J
+                        </th>
+                        <td class="GzcyLower">
+                            海南省
+                        </td>
+                        <td class="GzcyLower">
+                            河北省
+                        </td>
+                        <td class="GzcyLower">
+                            河南省
+                        </td>
+                        <td class="GzcyLower">
+                            黑龙江省
+                        </td>
+                        <td class="GzcyLower">
+                            湖北省
+                        </td>
+                        <td class="GzcyLower">
+                            湖南省
+                        </td>
+                        <td class="GzcyLower">
+                            吉林省
+                        </td>
+                        <td class="GzcyLower">
+                            江苏省
+                        </td>
+                        <td class="GzcyLower">
+                            江西省
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            L-S
+                        </th>
+                        <td class="GzcyLower">
+                            辽宁省
+                        </td>
+                        <td class="GzcyLower">
+                            内蒙古
+                        </td>
+                        <td class="GzcyLower">
+                            宁夏
+                        </td>
+                        <td class="GzcyLower">
+                            青海省
+                        </td>
+                        <td class="GzcyLower">
+                            山东省
+                        </td>
+                        <td class="GzcyLower">
+                            山西省
+                        </td>
+                        <td class="GzcyLower">
+                            陕西省
+                        </td>
+                        <td class="GzcyLower">
+                            四川省
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="firstth">
+                            T-Z
+                        </th>
+                        <td class="GzcyLower">
+                            台湾省
+                        </td>
+                        <td class="GzcyLower">
+                            西藏
+                        </td>
+                        <td class="GzcyLower">
+                            香港
+                        </td>
+                        <td class="GzcyLower">
+                            新疆
+                        </td>
+                        <td class="GzcyLower">
+                            云南省
+                        </td>
+                        <td class="GzcyLower">
+                            浙江省
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+*/

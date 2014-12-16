@@ -8,10 +8,10 @@ $(function () {
 	
 	/*******  个人注册/企业注册   ********/
 	$("#PersonalRegister").bind("click", function () {
-    	window.location.href = ""; //个人注册
+    	window.location.href = server.url + 'regP'; //个人注册
 	});
 	$("#BusinessRegister").bind("click", function () {
-		window.location.href = ""; //企业注册
+		window.location.href = server.url + 'regC'; //企业注册
 	});
 	
 	/*******  光标focus效果   ********/
@@ -40,8 +40,20 @@ $(function () {
 	
 	 /*******  鼠标mouseover效果   ********/
 	$("#LoginBtn").mouseover(function () { this.src = "/images/HomePageImage/LoginImage/HoverLogin.gif"; this.style.cursor = "pointer"; }).mouseout(function () { this.src = "images/HomePageImage/LoginImage/LoginButtom.gif"; this.style.cursor = "pointer"; })
-	$("#PersonalRegister").mouseover(function () { this.style.background = 'url(images/HomePageImage/LoginImage/HoverPersonalRegister.gif)'; this.style.cursor = "pointer"; }).mouseout(function () { this.style.background = 'url(images/HomePageImage/LoginImage/PersonalRegister.gif)'; this.style.cursor = "auto"; })
-	$("#BusinessRegister").mouseover(function () { this.style.background = 'url(images/HomePageImage/LoginImage/HoverBusinessRegister.gif)'; this.style.cursor = "pointer"; }).mouseout(function () { this.style.background = 'url(images/HomePageImage/LoginImage/BusinessRegister.gif)'; this.style.cursor = "auto"; })
+	$("#PersonalRegister").mouseover(function () { 
+		this.style.background = 'url(images/HomePageImage/LoginImage/HoverPersonalRegister.gif)'; 
+		this.style.cursor = "pointer"; 
+	}).mouseout(function () { 
+		this.style.background = 'url(images/HomePageImage/LoginImage/PersonalRegister.gif)'; 
+		this.style.cursor = "auto"; 
+	})
+	$("#BusinessRegister").mouseover(function () { 
+		this.style.background = 'url(images/HomePageImage/LoginImage/HoverBusinessRegister.gif)'; 
+		this.style.cursor = "pointer"; 
+	}).mouseout(function () { 
+		this.style.background = 'url(images/HomePageImage/LoginImage/BusinessRegister.gif)'; 
+		this.style.cursor = "auto"; 
+	})
 	
 	 /*******  点击登陆   ********/
 	$("#LoginBtn").click(function(){
@@ -62,17 +74,6 @@ function changeShowJob(jobCategory,obj){
 		type : 'post',
 		dataType : 'json',
 		success : function(data){
-			//上部职位种类样式变换
-			//1-所有的标题样式变成未选中状态
-		//	alert($(obj).parent().siblings().html());
-		//	$('.TabCss').children().children().filter(':first').removeClass().addClass('firstBlue');
-		//	$('.TabCss').children().children().not(':first, :last').removeClass().addClass('rightWhiteOfCenter rightBlueOfCenter');
-		//	$('.TabCss').children().children().filter(':last').removeClass().addClass('lastBlue');
-			//2-选中的标题, 添加选中状态
-		//	$(obj).addClass('whitebg');
-		//	$(obj).prev().addClass('firstWhite');
-		//	alert($(obj).parent().next().html().child(':first'));
-		//	$(obj).parent().next().child(':first').addClass('rightWhiteOfCenter');
 			//如果有数据返回, 则遍历数据进行显示
 			if(data.jobByCategoryList != null && data.jobByCategoryList.length > 0){
 				$('#TabsMainShow').find('ul').children().remove();

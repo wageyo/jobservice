@@ -1,0 +1,78 @@
+﻿.TabCss
+{
+	list-style: none;
+	border:0px;
+}
+.TabCss li
+{
+	float: left;
+	height: 27px;
+	line-height:27px;
+	font-size:13px;
+}
+.TabCss li span
+{
+	display: block;
+	float: left;
+	height:27px;
+	cursor:pointer;
+	font-weight:bold;
+}
+
+
+.TabCss .aCSS
+{
+	text-decoration: none;
+	color: Black;
+}
+/*第一块白色 */.firstWhite
+{
+	background: url(../images/HomePageImage/tabImage/firstWhite.gif) no-repeat;
+	width: 24px;
+}
+/*第一块蓝色*/.firstBlue
+{
+	background: url(../images/HomePageImage/tabImage/firstBlue.gif) no-repeat;
+	width: 24px;
+}
+/*白色背景*/.whitebg
+{
+	display:block;
+	width:137px;
+    color:White;
+	background: url(../images/HomePageImage/tabImage/whitebg.gif);
+}
+/*中间白色在右边*/.rightWhiteOfCenter
+{
+	background: url(../images/HomePageImage/tabImage/rightWhiteOfCenter.gif) no-repeat;
+	width: 24px;
+}
+/*中间白色在左边*/.leftWhiteOfCenter
+{
+	background: url(../images/HomePageImage/tabImage/leftWhiteOfCenter.gif) no-repeat;
+	width: 24px;
+}
+/*蓝色背景*/.bluebg
+{
+	display:block;
+	width:137px;
+    color:Black;
+	background: url(../images/HomePageImage/tabImage/bluebg.gif);
+}
+/*中间蓝色在右边*/.rightBlueOfCenter
+{
+	background: url(../images/HomePageImage/tabImage/rightBlueOfCenter.gif) no-repeat;
+	width: 24px;
+}
+/*末尾的蓝色*/.lastBlue
+{
+	background: url(../images/HomePageImage/tabImage/lastBlue.gif) no-repeat right;
+	width: 24px;
+
+}
+/*末尾白*/.lastWhite
+{
+	background: url(../images/HomePageImage/tabImage/lastWhite.gif) no-repeat right;
+	width: 24px;
+	
+}

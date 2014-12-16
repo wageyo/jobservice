@@ -2,11 +2,31 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-		<div id="footer" class="footer">
-				<div style="clear: both"></div>
-				<div class="footertext">
-					<p> <a title="首页" href="${contextPath }/index">首页</a> | <a title="关于我们" href="http://www.hrbesd.com">关于我们</a> | <a title="意见反馈" href="#">意见反馈</a> | <a title="联系我们" href="${contextPath }/contact">联系我们</a> | <a title="站长统计" href="javascript:alert('建设中');" target="_blank">站长统计</a> | <a title="管理后台" href="${contextPath }/loginManage/login" title="登陆管理后台" style="color:blue;">管理后台</a> </p>
-					<p>© 2013 hrbesd.com, Inc. 哈尔滨亿时代数码科技开发有限公司, All rights reserved. 黑ICP备10202513号 </p>
-				
-				</div>
-			</div>
+<div class="footer" id="footer">
+	<div style="clear: both"></div>
+	<!-- 脚部 begin -->
+	<div class="footertext">
+		<p>
+			<a href="ContactUs.aspx?crumbs=001044" title="关于网站">关于网站</a>&nbsp;|&nbsp;<a
+				href="ContactUs.aspx?crumbs=001044" title="网站声明">网站声明</a>&nbsp;|&nbsp;<a
+				href="ContactUs.aspx?crumbs=001044" title="服务中心">服务中心</a>&nbsp;|&nbsp;<a
+				href="ContactUs.aspx?crumbs=001044" title="用户反馈">用户反馈</a>&nbsp;|&nbsp;<a
+				href="ContactUs.aspx?crumbs=001044" title="合作伙伴">合作伙伴</a>&nbsp;|&nbsp;<a
+				href="ContactUs.aspx?crumbs=001044" title="友情链接">友情链接</a>&nbsp;|&nbsp;<a
+				href="ContactUs.aspx?crumbs=001044" title="联系我们">联系我们</a>&nbsp;|&nbsp;<a
+				href="http://manager.jyfw.org.cn" target="_blank">后台登陆</a>
+		</p>
+		<p>广东省残疾人就业服务中心 &nbsp;&nbsp;版权所有 粤ICP备1401007号 &nbsp;&nbsp;</p>
+		<p>Copyright(c) 2010 - 2016 jyfw.org.cn All Rigths Reserved</p>
+		<p>就业指导：020-83351933,职业培训：020-39075705,职业能力测评：020-38976543邮件:
+			CJR_jiuyezhongxin@163.com</p>
+	</div>
+	<!-- 脚部 end -->
+	
+	<!-- 脚部弹出层 begin -->
+	<div style="text-align:center; margin:0 auto; width:520px;">
+		
+	</div>
+	<!-- 脚部弹出层 end -->
+	
+</div>

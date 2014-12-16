@@ -1,0 +1,294 @@
+﻿
+.HeaderStyle
+{
+	width: 100%;
+	min-width:990px;
+	height: 184px;
+	overflow:hidden;
+}
+
+/*整图模式*/
+.HeaderStyle .HeaderMainBg
+{
+	width: 990px;
+	height: 184px;
+	margin: 0px auto;
+}
+
+.HeaderStyle .HeaderMainBg .HeaderMainLeft
+{
+	width: 280px;
+	height: 184px;
+	float: left;
+}
+.HeaderStyle .HeaderMainBg .HeaderMainLeft .logo
+{
+	width: 360px;
+	height: 88px;
+	position:static;
+	margin-top:25px;
+	top: 7px;
+	left: 20px;
+	#left: -20px;
+	z-index:0;
+}
+
+.HeaderStyle .HeaderMainBg .HeaderMainRight
+{
+	width: 280px;
+	height: 184px;
+	float: right;
+}
+/*导航条*/
+.HeaderStyle .NavigationBar
+{
+	width: 990px;
+	height: 35px;
+	margin: 0px auto;
+	background: blue;
+}
+
+.HeaderStyle .NavigationBar ul
+{
+	margin-left: 60px;
+}
+* html .HeaderStyle .NavigationBar ul
+{
+	margin-left: 30px;
+}
+.HeaderStyle .NavigationBar ul li
+{
+	float: left;
+	line-height: 35px;
+    line-height: 36px\9;
+	font-size: 14px;
+	font-weight: 900;
+	color: White;
+	margin-left: 30px;	
+}
+.HeaderStyle .NavigationBar ul li a
+{
+	color: White;
+	padding:3px 10px;
+    #padding-top:5px;
+	
+}
+.HeaderStyle .NavigationBar ul li a:hover
+{
+	color: #b75a00;
+	width: 80px;
+	height: 24px;
+	padding:3px 10px;
+    #padding-top:5px;
+	background: url("../images/HomePageImage/HeaderImage/Nav_sybutton.gif") repeat-x;
+}
+
+
+
+		
+#sonMenuList ul li
+{	
+    list-style: none;
+	font-size: 12px;
+    font-weight:normal;
+	line-height:30px;
+	color:#666666;
+    clear:both;
+    display:block;
+    width:140px;
+	padding:0px;
+	margin:0px;
+	background: #e9f6fe;
+	text-align:left;
+	text-indent:1em;
+}
+
+#sonMenuList ul li a
+{
+    color:#666666;
+}
+			
+#sonMenuList ul li a:hover
+{	
+    background:transparent;
+	color:White;
+}
+			
+#sonMenuList ul li:hover
+{	
+    font-weight: 600;
+    background: #0298fc;
+}
+			
+
+
+.HeaderStyle .NavigationBar .SelectStyle
+{
+	color: #b75a00;
+	padding:3px 10px;
+    #padding-top:5px;
+    #padding-bottom:5px;
+	width: 80px;
+	height: 24px;
+	background: url("../images/HomePageImage/HeaderImage/Nav_sybutton.gif") repeat-x;
+}
+
+.HeaderStyle .Advertisement
+{
+	width: 550px;
+	height: 100%;
+	float: right;
+}
+
+.HeaderStyle .Advertisement .AdvertisementOne
+{
+	width: 270px;
+	height: 50px;
+	float: left;
+	margin-top: 13px;
+}
+.HeaderStyle .Advertisement .AdvertisementTwo
+{
+	width: 270px;
+	height: 50px;
+	float: right;
+	margin-top: 13px;
+}
+.HeaderStyle .HeaderMain
+{
+	width: 990px;
+	height: 75px;
+	margin: 0px auto;
+	position: relative;
+	top: -110px;
+	left:0px;	
+}
+.HeaderStyle .HeaderMain .HeaderMainRight
+{
+	float: right;
+	height: 75px;
+	width: 145px;
+}
+.HeaderStyle .HeaderMain .HeaderMainRight .HeaderMainRightUp
+{
+	height: 45px;
+}
+.HeaderStyle .HeaderMain .HeaderMainRight .HeaderMainRightUp .Phone
+{
+	width: 100px;
+	height: 23px;
+	line-height: 23px;
+	text-align: left;
+	margin: 0px auto;
+}
+.HeaderStyle .HeaderMain .HeaderMainRight .HeaderMainRightUp .Phone .PhoneImg
+{
+	width: 14px;
+	height: 14px;
+	float: left;
+	margin-top: 5px;
+	background: url("../images/HomePageImage/HeaderImage/phone.jpg") no-repeat;
+}
+.HeaderStyle .HeaderMain .HeaderMainRight .HeaderMainRightUp .Telephone
+{
+	width: 100px;
+	text-align: left;
+	margin: 0px auto;
+}
+.HeaderStyle .HeaderMain .HeaderMainRight .HeaderMainRightUp .Telephone .TelephoneImg
+{
+	width: 14px;
+	height: 14px;
+	float: left;
+	margin-top: 2px;
+	background: url("../images/HomePageImage/HeaderImage/Telephone.jpg") no-repeat;
+}
+.HeaderStyle .HeaderMain .HeaderMainRight .Quicklink
+{
+	width: 145px;
+	height: 30px;
+	
+	cursor:pointer;
+}
+.HeaderStyle .HeaderMain .HeaderMainRight .Quicklink a
+{
+    width: 145px;
+	height: 30px;
+	
+}
+.HeaderStyle .HeaderMain .ShowCity
+{
+	float: right;
+	margin-top: 35px;
+	font-size: 16px;
+	line-height: 18px;
+	font-weight: 900;
+	margin-right: 15px;
+	color: Blue;
+}
+
+
+/*二级菜单条s*/
+  .ListBar
+    {
+          width:975px;
+          margin:0px auto;
+    	  text-align:center;
+    	  background:url('../images/HomePageImage/HeaderImage/ListBarCenter.gif') repeat-x;
+    	  height:35px;
+    	  zoom:1;
+    }
+    .ListBar li
+    {
+    	 float:left;
+          margin-left:20px;
+          line-height:30px;      
+          padding-left:20px;
+    }
+        .ListBar .Selected
+    {
+          background:url('../images/HomePageImage/HeaderImage/ListBarTriangle.gif') no-repeat left;
+    }
+        .ListBar .left
+    {
+    	  background:url('../images/HomePageImage/HeaderImage/ListBarLeft.gif') no-repeat left;
+    	  width:12px;
+    	  height:35px;
+    	  float:left
+    	 
+    }
+    .ListBar .right
+    {
+    	 background:url('../images/HomePageImage/HeaderImage/ListBarRight.gif') no-repeat right;
+    	 width:12px;
+    	 height:35px;
+    	 float:right;
+    }
+/*
+*二级菜单条：
+*使用方法：
+HTML：
+
+
+    <div class="ListBar">
+    <div class="left"></div>
+
+    <ul>
+    <li class="Selected"><a href="#">个人中心</a></li>
+    <li><a href="#">个人中心</a></li>
+    <li><a href="#">个人中心</a></li>
+    </ul>
+
+    <div class="right"></div>
+    </div>
+
+相应js：
+    jQuery(function () {
+        $(".ListBar").find("li").bind("click", function () {
+            $($(this).parents("ul")[0]).find("li").removeClass("Selected");
+            $(this).addClass("Selected");
+        })
+
+    })
+
+*/

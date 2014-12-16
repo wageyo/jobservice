@@ -1,0 +1,364 @@
+*
+{
+	padding: 0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    }
+body
+{
+	position: relative;
+	line-height: 18px;
+	font-size: 12px;
+	background: #FFF;
+	color: #000;
+    margin:0px;
+	text-align: center;
+	zoom: 1;
+	height: 100%;
+}
+body, input, select, button, textarea
+{
+	font-size: 12px;
+	font-family: Microsoft YaHei, Arial;
+	top: 0px;
+	left: 0px;
+	color:#606060;
+}
+.clearboth
+{
+	clear: both;
+	height: 0px;
+	line-height: 0px;
+	font-size: 0px;
+}
+.content
+{
+	width: 990px;
+	margin: 3px auto;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+	font-size: 12px;
+	font-weight: normal;
+}
+button
+{
+	cursor: pointer;
+}
+
+ul li, ol li
+{
+	list-style: none;
+	color:#606060;
+}
+
+img
+{
+	border: 0 none;
+}
+/*
+*����button
+*
+ʹ��
+<div class="PublicButtomBar">
+<div class="left"></div>
+<input type="button" class="btn" value="ѡ��/�޸�" style=" width:200px;" />
+<div class="right"></div>
+</div>
+*/
+.PublicButtomBar
+{
+	white-space: nowrap;
+	width: auto;
+}
+.PublicButtomBar .btn
+{
+	background: url(../images/PublicImage/PublicframeButtomImage/Center.gif) repeat;
+	height: 23px;
+	cursor: pointer;
+	border: 0px;
+	float: left;
+}
+.PublicButtomBar .left
+{
+	background: url(../images/PublicImage/PublicframeButtomImage/Left.gif) no-repeat;
+	height: 23px;
+	width: 5px;
+	float: left;
+}
+.PublicButtomBar .right
+{
+	background: url(../images/PublicImage/PublicframeButtomImage/Right.gif) no-repeat;
+	height: 23px;
+	width: 5px;
+	float: left;
+}
+/* a ��ǩ ��ʽ*/
+/*��ɫ���»���꾭���ɫ���»�*/
+a:link
+{
+	color:#606060;
+	text-decoration: none;
+}
+a:visited
+{
+	color:#606060;
+	text-decoration: none;
+}
+a:hover
+{
+	color: #F60;
+	text-decoration: none;
+	cursor: pointer;
+}
+a:active
+{
+	color:#606060;
+	text-decoration: none;
+}
+
+/*��ɫ���»���꾭���ɫ���»�*/
+.BlueNoUnderlineHoverNoUnderlineRed a:link
+{
+	color: #0462be;
+	text-decoration: none;
+}
+.BlueNoUnderlineHoverNoUnderlineRed a:visited
+{
+	color: #0462be;
+	text-decoration: none;
+}
+.BlueNoUnderlineHoverNoUnderlineRed a:hover
+{
+	color: #F60;
+	text-decoration: none;
+}
+.BlueNoUnderlineHoverNoUnderlineRed a:active
+{
+	color: #0462be;
+	text-decoration: none;
+}
+
+
+/*��ɫ���»���꾭���ɫ���»�*/
+.BlackNoUnderlineHoverNoUnderlineRed a:link
+{
+	color:#606060;
+	text-decoration: none;
+}
+.BlackNoUnderlineHoverNoUnderlineRed a:visited
+{
+	color:#606060;
+	text-decoration: none;
+}
+.BlackNoUnderlineHoverNoUnderlineRed a:hover
+{
+	color: #F60;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.BlackNoUnderlineHoverNoUnderlineRed a:active
+{
+	color:#606060;
+	text-decoration: none;
+}
+/*��ɫ�»�����꾭�����»�*/
+
+.BlueUnderlineHoverNoUnderlineBlue a:link
+{
+	color: #20a4fe;
+	text-decoration: underline;
+}
+.BlueUnderlineHoverNoUnderlineBlue a:visited
+{
+	color: #20a4fe;
+	text-decoration: none;
+}
+.BlueUnderlineHoverNoUnderlineBlue a:hover
+{
+	color: #F60;
+	text-decoration: none;
+	cursor: pointer;
+}
+.BlueUnderlineHoverNoUnderlineBlue a:active
+{
+	color:#606060;
+	text-decoration: none;
+}
+/*��ɫ���»�����꾭�����»���ɫ*/
+
+.BlueNoUnderlineHoverNoUnderlineBlue a:link
+{
+	color: #20a4fe;
+	text-decoration:none;
+}
+.BlueNoUnderlineHoverNoUnderlineBlue a:visited
+{
+	color: #20a4fe;
+	text-decoration: none;
+}
+.BlueNoUnderlineHoverNoUnderlineBlue a:hover
+{
+	color: #F60;
+	text-decoration: none;
+	cursor: pointer;
+}
+.BlueNoUnderlineHoverNoUnderlineBlue a:active
+{
+	color:#606060;
+	text-decoration: none;
+}
+
+/*��ɫ������ʽ*/
+.ColorRed
+{
+ color:Red;	
+}
+
+/*������������....*/
+/*λ��*/
+.SetFloatLeft
+{
+	float: left;
+}
+.SetFloatRight
+{
+	float: right;
+}
+/*���ǩ�Զ�����hot�����ͼ�꣬���HotPictrues.jsʹ��*/
+.HotKey
+{
+	font-weight: 700;
+	position: static;
+}
+.HotImage
+{
+	background: url(../images/HomePageImage/SearchImage/HOT.gif) no-repeat right;
+	width: 21px;
+	height: 12px;
+	position: relative;
+	z-index: 1;
+}
+/*����ͼ������*/
+.NewKey
+{
+	
+}
+.NewKey a
+{
+	float:left;
+}
+.NewImage
+{
+	background: url(../images/Sy_ZczxListImage/new.gif) no-repeat right;
+	width: 22px;
+	height: 9px;
+	margin-left:3px;
+	float:left;
+}
+
+.pagingList
+{
+    float:right;
+}
+.pagingList .inputText
+{
+    width:30px;
+}
+    .pagingList ul li 
+{
+    float:left;
+    padding-left:3px;
+    padding-right:3px;
+}
+        .pagingList ul li.HighLightColor 
+{
+    color:Red; 
+}
+.pagingList .FristPage
+{
+	width: 31px;
+    height: 27px;
+    cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/botton_Left0Highlit.gif");
+}
+
+.pagingList .PreviousPage
+{
+	width: 31px;
+    height: 27px;
+    cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/botton_LeftHighlit.gif");
+}
+.pagingList .NextPage
+{
+	width: 31px;
+    height: 27px;
+    cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/botton_right.gif");
+}
+.pagingList .LastPage
+{
+	width: 31px;
+    height: 27px;
+    cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/botton_right0.gif");
+}
+.pagingList .GoToPage
+{
+    width: 31px;
+    height: 27px;
+     cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/go.gif");
+}
+
+
+
+
+.pagingList .FristPageGray
+{
+	width: 31px;
+    height: 27px;
+    cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/botton_left0.gif");
+}
+
+.pagingList .PreviousPageGray
+{
+	width: 31px;
+    height: 27px;
+    cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/botton_left.gif");
+}
+.pagingList .NextPageGray
+{
+	width: 31px;
+    height: 27px;
+    cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/botton_rightGray.gif");
+}
+.pagingList .LastPageGray
+{
+	width: 31px;
+    height: 27px;
+    cursor:pointer;
+    border-style: none;
+    background: url("../images/PublicTableOneImage/botton_left0Gray.gif");
+}
+.Square /*liǰ���С����*/
+{
+    background: url("../images/Sy_HRsqImage/Square.jpg") no-repeat 0 3px;
+    padding-left:15px;
+    line-height:25px;
+    text-align:left;
+}

@@ -1,0 +1,246 @@
+﻿.resumeMessage
+{
+    width: 346px;
+    margin-left:10px;
+}
+.resumeMessageheaderOne
+{
+    color:#333333;
+    
+    height:30px;
+}
+.resumeMessageheaderOne th
+{
+    text-align:left;
+}
+.resumeMessageheaderOther
+{
+    height:25px;
+}
+.resumeMessageheaderOther
+{
+    text-align:left;
+}
+
+
+.hp_fwdt
+{
+    float:left;
+    width:420px;
+    height:220px;
+    margin-top:10px;
+}
+.hp_fwdt ul
+{
+    margin-left:25px;
+}
+
+.hp_fwdt ul li
+{
+   display:block;
+   line-height:23px;
+   height:23px;
+}
+.hp_fwdt ul li a
+{
+    
+    margin-left:5px;
+    float:left;
+    width:395px;
+    /** 以下为超出隐藏样式 **/
+    white-space:nowrap; 
+    line-height:20px; 
+    text-overflow:ellipsis;
+    -moz-text-overflow: ellipsis; 
+    overflow:hidden
+  
+}
+.listDate
+{
+ 
+    float:left;
+}
+
+.Square2
+{
+    background: url("../images/Sy_HRsqImage/square2.gif") no-repeat 0px  8px;
+    padding-left:15px;
+    line-height:25px;
+    text-align:left;
+   
+}
+.LinkButton
+{
+    width:223px;
+    height:81px;
+    margin:10px auto 10px;
+    cursor:pointer;
+    background:url("../images/Sy_HRsqImage/LinkButton.gif") no-repeat;
+}
+.LinkButton_Hover
+{
+    width:223px;
+    height:81px;
+    margin:10px auto 10px;
+    cursor:pointer;
+    background:url("../images/Sy_HRsqImage/LinkButton_hover.gif") no-repeat;
+}
+.LinkButton1
+{
+    width:223px;
+    height:81px;
+    margin:5px auto 10px;
+    cursor:pointer;
+    background:url("../images/Sy_HRsqImage/LinkButton1.gif") no-repeat;
+}
+.LinkButton1_Hover
+{
+    width:223px;
+    height:81px;
+    margin:5px auto 10px;
+    cursor:pointer;
+    background:url("../images/Sy_HRsqImage/LinkButton1_hover.gif") no-repeat;
+}
+.LinkButton2
+{
+    display:none;
+    width:223px;
+    height:55px;
+    margin:5px auto 15px;
+    cursor:pointer;
+    background:url("../images/Sy_HRsqImage/LinkButton2.gif") no-repeat;
+}
+.LinkButton2_Hover
+{
+    display:none;
+    width:223px;
+    height:55px;
+    margin:5px auto 15px;
+    cursor:pointer;
+    background:url("../images/Sy_HRsqImage/LinkButton2_hover.gif") no-repeat;
+}
+
+
+
+
+/*图片滚动样式*/
+.photo
+{
+    width:255px;
+    height:208px;
+    float:left;
+    margin-top:8px;
+    margin-left:8px;
+}
+.photo dl
+{     
+    width:255px;
+    height:208px;
+    padding:0px;
+    margin:0px;
+    position: relative;
+     
+}
+
+.photo dl dt
+{
+    position: absolute;
+    width:255px;
+    left:0px;
+    font-size: 0px;
+    line-height: 0px;
+    z-index: 1;
+
+   
+}
+.photo dl dd
+{
+    position:absolute;
+    width:12px;
+    height:12px; 
+    top:190px; 
+    background:#eeda2d;
+    border:1px solid #e1cd23;
+    font-size:10px;
+    z-index:5;
+    line-height:12px;
+    text-align:center;
+   
+}
+.photo dl.tagon1 dt.pic1
+{
+    z-index: 4;
+}
+.photo dl.tagon1 dd.tag1
+{
+    background:#f4973c;border:1px solid #ec711f;
+}
+.photo dl.tagon2 dt.pic2
+{
+    z-index: 4;
+}
+.photo dl.tagon2 dd.tag2
+{
+    background:#f4973c;border:1px solid #ec711f;
+  
+}
+.photo dl.tagon3 dt.pic3
+{
+    z-index: 4;
+}
+.photo dl.tagon3 dd.tag3
+{
+    background:#f4973c;border:1px solid #ec711f;
+}
+.photo dl.tagon4 dt.pic4
+{
+    z-index: 4;
+}
+.photo dl.tagon4 dd.tag4
+{
+    background:#f4973c;border:1px solid #ec711f;
+}
+.photo dl.tagon5 dt.pic5
+{
+    z-index: 4;
+}
+.photo dl.tagon5 dd.tag5
+{ background:#f4973c;border:1px solid #ec711f;
+}
+.photo dl.tagon6 dt.pic6
+{
+    z-index: 4;
+}
+.photo dl.tagon6 dd.tag6
+{ background:#f4973c;border:1px solid #ec711f;
+}
+.photo dl dd.tag1
+{
+    left:130px;
+}
+.photo dl dd.tag2
+{
+    left:150px;
+}
+.photo dl dd.tag3
+{
+    left:170px;
+}
+.photo dl dd.tag4
+{
+    left:190px;
+}
+.photo dl dd.tag5
+{
+    left:210px;
+    
+    
+    
+    
+    
+    
+}
+.photo dl dd.tag6
+{
+    left:230px;
+}

@@ -1,0 +1,117 @@
+﻿.Search
+{
+	width: 675px;
+	height: 64px;
+}
+.Search .SearchTab
+{
+height:25px;
+}
+/*tab选择*/
+.Search ul li
+{
+	float: left;
+}
+.Search ul li.SearchTextBlueBg
+{
+	background: url(../images/HomePageImage/SearchImage/SearchTextBg.gif) no-repeat;
+	width: 60px;
+	height: 25px;
+	letter-spacing: 2px;
+	color: White;
+	line-height: 21px;
+	font-weight: 700;
+	padding-left:2px;
+}
+.Search .SearchTextWhiteBg
+{
+	width: 60px;
+	height: 25px;
+	letter-spacing: 2px;
+	color: Black;
+	line-height: 21px;
+}
+.Search .SearchImg
+{
+	width: 20px;
+}
+/*输入框*/
+.Search .SearchInputText
+{
+	margin-top: 5px;
+}
+.Search .AdvancedSearch
+{
+	margin-left: 20px;
+	
+	line-height: 26px;
+}
+.Search .InputTextBg
+{
+	background: url(../images/HomePageImage/SearchImage/SearchImage.gif) no-repeat left;
+	width: 394px;
+	border: 1px solid #7fc5fe;
+}
+.Search .InputTextBg .InputTextBlank
+{
+	line-height: 24px;
+	border: 0px;
+	height: 24px;
+	width: 365px;
+	float: right;
+	color: Gray;
+}
+
+.Search .SearchDistrictBtn
+{
+	background:#9dd8ff url(../images/HomePageImage/SearchImage/DistrictBtn.gif) no-repeat right;
+	width: 91px;
+	height: 26px;
+	margin-left: 10px;
+	color:White;
+	
+}
+.Search .SearchDistrictBtn span
+{
+ line-height:26px;
+ margin-left: -5px;
+}
+.Search .SearchHoverDistrictBtn
+{
+	background: url(../images/HomePageImage/SearchImage/HoverDistrictBtn.gif) no-repeat right;
+}
+.Search .SearchButtom
+{
+	background: url(../images/HomePageImage/SearchImage/SearchBtn.gif) no-repeat right;
+	width: 87px;
+	height: 26px;
+	margin-left: 10px;
+}
+.Search .SearchHoverButtom
+{
+	background: url(../images/HomePageImage/SearchImage/HoverSearchBtn.gif) no-repeat right;
+}
+
+#ClickSearchBtn
+{
+    display:none;
+}
+
+/*
+*用法：
+  <div class="SearchInputText">
+    <div class="SetFloatLeft InputTextBg">
+        <input type="text" title="请输入关键字" id="KeyWord" class="InputTextBlank DefaultText" value="请输入关键字" /></div>
+    <div class="SearchBtn SetFloatLeft">
+        <div class="SearchDistrictBtn SetFloatLeft" title="选择地区">
+        </div>
+        <div class="SearchButtom SetFloatLeft" title="搜索">
+        </div>
+        <div class="SetFloatLeft AdvancedSearch">
+            <a href="#" title="高级搜索">高级搜索</a></div>
+    </div>
+</div>
+*说明：
+配套使用DefaultText.js
+可以获得输入框有默认值的效果
+*/

@@ -1,0 +1,558 @@
+﻿/*未登录样式*/
+.login
+{
+	height: 132px;
+	width: 266px;
+}
+.login .loginbtn
+{
+	float: left;
+	height: 131px;
+	width: 27px;
+}
+
+.login .loginbtn .WhiteFirst
+{
+	background: url(../images/HomePageImage/LoginImage/WhiteFirst.gif) no-repeat right;
+	height: 66px;
+	width: 27px;
+}
+.login .loginbtn .BlueFirst
+{
+	background: url(../images/HomePageImage/LoginImage/BlueFirst.gif) no-repeat right;
+	height: 66px;
+	width: 27px;
+}
+.login .loginbtn .BlueLast
+{
+	background: url(../images/HomePageImage/LoginImage/BlueLast.gif) no-repeat top;
+	height: 65px;
+	width: 27px;
+}
+.login .loginbtn .WhiteLast
+{
+	background: url(../images/HomePageImage/LoginImage/WhiteLast.gif) no-repeat top;
+	height: 65px;
+	width: 27px;
+}
+
+.login .loginmain
+{
+	background: url(../images/HomePageImage/LoginImage/LoginBg.gif) repeat-x;
+	height: 131px;
+	width: 230px;
+	float: left;	
+}
+.login .LoginRight
+{
+	background: url(../images/HomePageImage/LoginImage/LoginRight.gif) no-repeat right;
+	height: 131px;
+	width: 5px;
+	float: left;
+}
+.login .loginmain2
+{
+	background: url(../images/HomePageImage/LoginImage/LoginBg2.gif) repeat-x;
+	height: 131px;
+	width: 230px;
+	float: left;	
+}
+.login .LoginRight2
+{
+	background: url(../images/HomePageImage/LoginImage/LoginRight2.gif) no-repeat right;
+	height: 131px;
+	width: 5px;
+	float: left;
+}
+.login .loginmain .loginmainarae
+{
+	width: 210px;
+	height: 110px;
+	margin: 12px 12px 7px 12px;
+}
+
+.login .loginmain .loginmainarae .divtext
+{
+	float: left;
+}
+.login .loginmain .loginmainarae .divtext .text
+{
+	width: 145px;
+	border: 1px solid #c7d0e3;
+	height: 21px;
+	line-height: 21px;
+	color:Gray;
+	 padding-left:5px;
+}
+.login .loginmain .loginmainarae .divtext .textuserbgch
+{
+	
+}
+.login .loginmain .loginmainarae .divtext .textuserbgen
+{
+	background: url(../images/HomePageImage/LoginImage/UserInputBgEN.gif) no-repeat left;
+}
+.login .loginmain .loginmainarae .divtext .textpasswordbgch
+{
+	background: url(../images/HomePageImage/LoginImage/PasswordBgCN.gif) no-repeat left;
+}
+.login .loginmain .loginmainarae .divtext .textpasswordbgeh
+{
+	background: url(../images/HomePageImage/LoginImage/PasswordBgEN.gif) no-repeat left;
+}
+.login .loginmain .loginmainarae .divtext .righttext
+{
+	margin-top: 7px;
+	margin-top: 5px!improtant;
+}
+.login .loginmain .loginmainarae .loginbtnimg
+{
+	float: right;
+	margin-top: 1px;
+	width:51px;
+	height:51px;
+	background:url(../images/HomePageImage/LoginImage/PersonLoginBtn.gif) no-repeat;
+}
+.login .loginmain .loginmainarae .loginbtnimg2
+{
+	float: right;
+	margin-top: 1px;
+	width:51px;
+	height:51px;
+	background:url(../images/HomePageImage/LoginImage/CompanyLoginBtn.gif) no-repeat;
+}
+/*.login .loginmain .loginmainarae .loginbtnimg img
+{
+	vertical-align: middle;
+}*/
+.login .loginmain .loginmainarae .divchk
+{
+	margin-top: 6px;
+	margin-top: 3px!improtant;
+	height: 22px;
+	line-height: 23px;
+}
+
+.login .loginmain .loginmainarae .divchk .zd
+{
+	float: left;
+}
+
+.login .loginmain .loginmainarae .divchk .zd .zdchk
+{
+	vertical-align: middle;
+	margin-left: 4px;
+	margin-left: 0px!improtant;
+}
+.login .loginmain .loginmainarae .divchk .zd .zdword
+{
+	margin-left: 2px;
+	letter-spacing: 1px;
+	line-height: 23px;
+}
+.login .loginmain .loginmainarae .divchk .zdfg
+{
+	float: right;
+	vertical-align: middle;
+	letter-spacing: 1px;
+	line-height: 23px;
+}
+.login .loginmain .loginmainarae .registerdiv
+{
+	margin-top: 2px;
+	margin-top: 3px!improtant;
+}
+.login .loginmain .loginmainarae .registerdiv .personalregister
+{
+	float: left;
+	background: url(../images/HomePageImage/LoginImage/PersonalRegister.gif) no-repeat;
+	width: 101px;
+	height: 28px;
+}
+.login .loginmain .loginmainarae .registerdiv .businessregister
+{
+	float: right;
+	background: url(../images/HomePageImage/LoginImage/BusinessRegister.gif) no-repeat;
+	width: 101px;
+	height: 28px;
+}
+/*
+未登录对应代HTML码
+ <div class="login SetFloatLeft">
+                    <div class="loginbtn">
+                        <div class="BlueFirst" id="PersonalTab" title="个人用户登录">
+                        </div>
+                        <div class="WhiteLast" id="BusinessTab" title="单位用户登录">
+                        </div>
+                    </div>
+                    <div class="loginmain">
+                        <div class="loginmainarae">
+                            <div>
+                                <div class="divtext">
+                                    <div>
+                                        <input type="text" title="输入个人用户/邮箱" class="text" id="UserName" /></div>
+                                    <div class="righttext">
+                                        <input type="text" title="输入密码" class="text" id="Password" /></div>
+                                </div>
+                                <div class="loginbtnimg">
+                                    <img src="Image/HomePageImage/LoginImage/LoginButtom.gif" alt="登录" id="LoginBtn" />
+                                </div>
+                            </div>
+                            <div class="clearboth">
+                            </div>
+                            <div class="divchk">
+                                <div class="zd">
+                                    <span>
+                                        <input type="checkbox" value="自动登录" title="自动登录" class="zdchk" /></span> <span class="zdword"
+                                            title="自动登录">自动登录</span></div>
+                                <div class="zdfg">
+                                    <a href="Sy_Wjmm.aspx" title="忘记密码">忘记密码</a>
+                                </div>
+                            </div>
+                            <div class="clearboth">
+                            </div>
+                            <div class="registerdiv">
+                                <div class="personalregister" id="PersonalRegister" title="注册个人会员">
+                                </div>
+                                <div class="businessregister" id="BusinessRegister" title="注册单位会员">
+                                </div>
+                            </div>
+                            <div class="clearboth">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="LoginRight">
+                    </div>
+                </div>
+*/
+
+/*个人首页登陆后登陆框的样式*/
+.PersonalLogined
+{
+	height: 132px;
+	width: 266px;
+}
+.PersonalLogined .loginbtn
+{
+	float: left;
+	height: 131px;
+	width: 5px;
+	background: url(../images/HomePageImage/LoginImage/LoginedLeft.gif) no-repeat left;
+}
+.PersonalLogined .loginmain
+{
+	background: url(../images/HomePageImage/LoginImage/LoginBg.gif) repeat-x;
+	height: 131px;
+	width: 252px;
+	float: left;
+}
+.PersonalLogined .LoginRight
+{
+	background: url(../images/HomePageImage/LoginImage/LoginRight.gif) no-repeat right;
+	height: 131px;
+	width: 5px;
+	float: left;
+}
+.PersonalLogined .loginmain .loginmainarae
+{
+	width: 238px;
+	height: 110px;
+	margin: 9px auto;
+}
+.PersonalLogined .loginmain .loginmainarae .NameLay
+{
+ margin-top:2px;
+}
+.PersonalLogined .loginmain .loginmainarae .NameLay a
+{
+ color:#666666;
+}
+.PersonalLogined .loginmain .loginmainarae .NameLay a:hover
+{
+ color:#F60;
+}
+.PersonalLogined .loginmain .loginmainarae .Strong
+{
+ font-weight:bold;
+}
+.PersonalLogined .loginmain .loginmainarae .TimeShow
+{
+  text-align:left;
+  border-bottom:1px solid #a0d1f0; 
+  margin-top:5px;
+  padding-bottom:3px;
+}
+
+.PersonalLogined .loginmain .loginmainarae .RapidEntry
+{
+  float:left;
+  width:79px;
+}
+.PersonalLogined .loginmain .loginmainarae .RapidEntry a
+{
+   color:#1192e4;
+}
+.PersonalLogined .loginmain .loginmainarae .RapidEntry span
+{
+   color:#ff5a00;
+}
+/*谁看过我*/
+.PersonalLogined .loginmain .loginmainarae .FirstImage
+{
+	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResume.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*谁看过我Hover*/
+.PersonalLogined .loginmain .loginmainarae .FirstImageHover
+{
+	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResumeHover.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*简历订阅*/
+.PersonalLogined .loginmain .loginmainarae .SecendImage
+{
+	background: url(../images/HomePageImage/LoginImage/MyResume.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*简历订阅Hover*/
+.PersonalLogined .loginmain .loginmainarae .SecendImageHover
+{
+	background: url(../images/HomePageImage/LoginImage/MyResumeHover.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*简历管理*/
+.PersonalLogined .loginmain .loginmainarae .ThirdImage
+{
+	background: url(../images/HomePageImage/LoginImage/Email.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*简历管理Hover*/
+.PersonalLogined .loginmain .loginmainarae .ThirdImageHover
+{
+	background: url(../images/HomePageImage/LoginImage/EmailHover.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*
+*个人登陆后对应HTML
+
+ <div class="PersonalLogined SetFloatLeft">
+                    <div class="loginbtn"></div>
+
+                    <div class="loginmain">
+
+                      <div class="loginmainarae">
+                      <div class="NameLay"><span class="SetFloatLeft"> 欢迎回来，</span><span class="Strong SetFloatLeft">溪小姐</span><span class="SetFloatRight"><a href="#">[退出]</a></span></div>
+                      <div class="clearboth"></div>
+                      <div class="TimeShow">您最近的登陆时间：<span>2011-1-1 15:44</span></div>
+                      <div>
+
+                      <div class="RapidEntry">
+                      <div title="谁看过我" class="FirstImage">(<span>22222</span>)</div>
+                      <div><a href="#">我的中心</a></div>
+                      </div>
+
+                      <div class="RapidEntry">
+                      <div title="我申请的工作" class="SecendImage">(<span>5</span>)</div>
+                      <div><a href="#">职位订阅</a></div>
+                      </div>
+
+                      <div class="RapidEntry">
+                      <div title="人事经理来信" class="ThirdImage">(<span>1</span>)</div>
+                      <div><a href="#">简历管理</a></div>
+                      </div>
+
+                      </div>
+                     </div>
+                    </div>
+
+                    <div class="LoginRight"></div>
+                </div>
+
+*/
+
+/*单位用户登陆后的显示*/
+.EnterpriseLogined
+{
+	height: 132px;
+	width: 266px;
+}
+.EnterpriseLogined .loginbtn
+{
+	float: left;
+	height: 131px;
+	width: 5px;
+	background: url(../images/HomePageImage/LoginImage/LoginedLeft.gif) no-repeat left;
+}
+.EnterpriseLogined .loginmain
+{
+	background: url(../images/HomePageImage/LoginImage/LoginBg.gif) repeat-x;
+	height: 131px;
+	width: 252px;
+	float: left;
+}
+.EnterpriseLogined .LoginRight
+{
+	background: url(../images/HomePageImage/LoginImage/LoginRight.gif) no-repeat right;
+	height: 131px;
+	width: 5px;
+	float: left;
+}
+.EnterpriseLogined .loginmain .loginmainarae
+{
+	width: 238px;
+	height: 110px;
+	margin: 9px auto;
+}
+.EnterpriseLogined .loginmain .loginmainarae .NameLay
+{
+ margin-top:2px;
+}
+.EnterpriseLogined .loginmain .loginmainarae .NameLay a
+{
+ color:#666666;
+}
+.EnterpriseLogined .loginmain .loginmainarae .NameLay a:hover
+{
+ color:#F60;
+}
+.EnterpriseLogined .loginmain .loginmainarae .Strong
+{
+ font-weight:bold;
+}
+.EnterpriseLogined .loginmain .loginmainarae .TimeShow
+{
+  text-align:left;
+  border-bottom:1px solid #a0d1f0; 
+  margin-top:5px;
+  padding-bottom:3px;
+}
+
+.EnterpriseLogined .loginmain .loginmainarae .RapidEntry
+{
+  float:left;
+  width:79px;
+}
+.EnterpriseLogined .loginmain .loginmainarae .RapidEntry a
+{
+   color:#1192e4;
+}
+.EnterpriseLogined .loginmain .loginmainarae .RapidEntry span
+{
+   color:#ff5a00;
+}
+/*谁看过我*/
+.EnterpriseLogined .loginmain .loginmainarae .FirstImage
+{
+	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResume.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*谁看过我Hover*/
+.EnterpriseLogined .loginmain .loginmainarae .FirstImageHover
+{
+	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResumeHover.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*简历订阅*/
+.EnterpriseLogined .loginmain .loginmainarae .SecendImage
+{
+	background: url(../images/HomePageImage/LoginImage/MyResume.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*简历订阅Hover*/
+.EnterpriseLogined .loginmain .loginmainarae .SecendImageHover
+{
+	background: url(../images/HomePageImage/LoginImage/MyResumeHover.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*简历管理*/
+.EnterpriseLogined .loginmain .loginmainarae .ThirdImage
+{
+	background: url(../images/HomePageImage/LoginImage/Email.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*简历管理Hover*/
+.EnterpriseLogined .loginmain .loginmainarae .ThirdImageHover
+{
+	background: url(../images/HomePageImage/LoginImage/EmailHover.gif) no-repeat  15px 0px;
+	height:24px;
+	padding-left:40px;
+	padding-top:2px;
+	cursor:pointer;
+	margin:10px 0px;
+}
+/*单位登陆后
+对应HTML
+
+<div class="EnterpriseLogined SetFloatLeft">
+                    <div class="loginbtn">
+                    </div>
+                    <div class="loginmain">
+
+                      <div class="loginmainarae">
+                      <div class="NameLay"><span class="SetFloatLeft"> 欢迎回来，</span><span class="Strong SetFloatLeft">润恒溪小姐</span><span class="SetFloatRight"><a href="#">[退出]</a></span></div>
+                      <div class="clearboth"></div>
+                      <div class="TimeShow">您最近的登陆时间：<span>2011-1-1 15:44</span></div>
+                      <div>
+                      <div class="RapidEntry">
+                      <div title="我的邀请面试" class="FirstImage">(<span>22222</span>)</div>
+                      <div><a href="#">单位信息</a></div>
+                      </div>
+                      <div class="RapidEntry">
+                      <div title="我发布的职位" class="SecendImage">(<span>5</span>)</div>
+                      <div><a href="#">简历管理</a></div>
+                      </div>
+                      <div class="RapidEntry">
+                      <div title="求职信" class="ThirdImage">(<span>1</span>)</div>
+                      <div><a href="#">服务申请</a></div>
+                      </div>
+                      </div>
+                     </div>
+                    </div>
+                    <div class="LoginRight">
+                    </div>
+                </div>
+*/

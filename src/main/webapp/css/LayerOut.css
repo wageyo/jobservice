@@ -1,0 +1,190 @@
+﻿/*调用代码：
+    <div class="LayerOut">
+        <div class="HeaderBar">
+            <div class="LayerTitle"><strong>地区选择</strong> (您最多可以选择5各地区)</div>
+            <div class="LayerBtn"><a href="#">[确定]</a></div>
+        </div>
+        <div class="你需要的东西">
+
+         </div>
+    </div>
+*/
+.LayerOut
+{
+    height:auto;
+    background:white;
+    font-size:12px; 
+    text-align:left;
+    border:1px solid #168ffd;
+    position:absolute;
+    top:0px;
+    left:0px;
+    margin:0 auto;
+    display:none;
+}
+.LayerOut .HeaderBar
+{
+    height:31px; 
+    line-height:31px;
+    border-bottom:1px solid #168ffd; 
+    background:#4876FF url(../images/zonechoice/header.gif) repeat-x;
+    color:White;
+}
+.LayerOut .HeaderBar .LayerTitle
+{
+    float:left;
+    margin-left:5px;
+}
+.LayerOut .HeaderBar .LayerBtn
+{
+    float:right;
+    margin-right:20px;
+    _margin-right:10px;
+    cursor:pointer;
+}
+.LayerOut .HeaderBar .LayerBtn a
+{
+  color:white;
+}
+.LayerOut .HeaderBar .LayerBtn a:hover
+{
+  color: #F60;
+}
+div.Header strong,
+div.allCitys strong
+{
+    margin-left:5px;
+    font-size:14px;
+}
+/*层的二级菜单样式*/
+.showChildren
+{
+	position:absolute;
+	background: #F3FAFF;
+	border: 1px solid #8CC9FE;
+	display:none;
+}
+.showChildren .Strong
+{
+	font-weight:700;	
+}
+.showChildren table
+{
+	text-align:left;
+	margin:5px 0px;
+}
+.showChildren table td
+{
+	padding:0px 10px;
+	white-space:nowrap;
+	cursor:pointer;
+}
+
+.LayerOut .remark
+{
+ padding-left:15px;
+}
+.LayerOut .remark .firsttd
+{
+	width:70px; 
+	font-size:14px;
+}
+
+.LayerOut .remark .textarea
+{
+	width:265px; height:100px; overflow:auto;
+	 padding:5px;
+}
+.LayerOut .remark .centertd
+{
+	width:85px; text-align:center; 
+	border:10px solid white;
+	border-left:0;
+}
+.LayerOut .remark .centertd span
+{
+  display:block;
+  line-height:25px;
+  cursor:pointer;
+}
+.LayerOut .remark .centertd span.red
+{
+   background:#ffccbf;
+   border:1px solid #f58a6e;
+}
+.LayerOut .remark .centertd span.yellow
+{
+   background:#fef6ce;
+   border:1px solid #ead483;
+}
+.LayerOut .remark .centertd span.blue
+{
+   background:#def2fe;
+   border:1px solid #92e2fd;
+}
+.LayerOut .remark .SaveBtn
+{
+ text-align:center;
+}
+.LayerOut .remark .SaveBtn input
+{
+ background:url(../images/AccountOverview/save.gif) no-repeat;
+ width:82px;
+ height:29px;
+ border:0;
+ margin-top:5px;
+ margin-bottom:5px;
+ cursor:pointer;
+}
+/*
+    <div class="showChildren">
+    <table cellpadding="0" cellspacing="0">
+    <tr><td colspan="5" class="Strong">安徽省</td></tr>
+    <tr><td>合肥</td><td>芜湖</td><td>安庆</td><td>马鞍山</td><td>蚌埠</td></tr>
+    <tr><td>阜阳</td><td>铜陵</td><td>滁州</td><td>黄山</td><td>淮南</td></tr>
+    <tr><td>六安</td><td>巢湖</td><td>宣城</td><td>池州</td><td>宿州</td></tr>
+    <tr><td>淮北</td><td>亳州</td><td></td><td></td><td></td></tr>
+    </table>
+    </div>
+*/
+/*
+<div class="showChildren">放置内容</div>
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+<!-- 职业备注调用必要文件  <link href="CSS/PublicCSS/LayerOut.css" rel="stylesheet" type="text/css" />     -->
+      <div class="LayerOut" id="remarks" style="display:block; width:400px">
+        <div class="HeaderBar">
+            <div class="LayerTitle"><strong>职业备注</strong></div>
+            <div class="LayerBtn"><a href="#">[关闭]</a></div>
+        </div>
+        <div class="remark">
+            <table>
+            <tr><td class="firsttd" style="line-height:40px;">常用标签：</td><td class="centertd"><span class="red">很喜欢</span></td><td class="centertd"><span class="yellow">感兴趣</span></td><td class="centertd"><span class="blue">待会看</span></td></tr>
+            </table>
+            <table>
+            <tr><td class="firsttd" style="vertical-align:top;">职位备注：</td><td><textarea class="textarea" id="RemarksTextarea"></textarea> </td></tr>
+            <tr><td></td><td class="SaveBtn"><input id="SaveRemarks" type="button" />    </td></tr>
+            </table>
+         </div>
+    </div>
+    <script type="text/javascript">
+        jQuery(function () {
+            ///职业备注调用脚本
+            $("#remarks").find(".centertd").find("span").click(function () { $("#RemarksTextarea").attr("value", $(this).html()); })
+            $("#SaveRemarks").click(function () { alert("asdas"); })
+        })
+</script>
+*/

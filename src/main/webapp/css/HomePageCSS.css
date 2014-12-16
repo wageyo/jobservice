@@ -1,0 +1,160 @@
+﻿div.PublicframeTwo div.listpub
+{
+	width: 325px;
+	_width: 321px;
+	float: left;
+	margin-right: 5px;
+	_margin-right: 2px;
+}
+div.PublicframeTwo div.listpub dl
+{
+	width: 300px;
+	padding: 4px 8px;
+}
+div.PublicframeTwo div.listpub dl dt
+{
+	width: 100px;
+	height: 120px;
+	margin-top: 4px;
+	float: left;
+}
+div.PublicframeTwo div.listpub dl dt span
+{
+	display: block;
+	width: 100px;
+	height: 20px;
+	line-height: 20px;
+}
+div.PublicframeTwo div.listpub dl dd
+{
+	text-align: left;
+	color: #006cd1;
+	width: 150px;
+	float: left;
+	margin-left: 8px;
+	line-height: 22px;
+	background: url("../images/HomePageImage/sy_xxjz/Sy_Grzx_Sxjz_listimg.gif") no-repeat 5px 10px;
+	height: 22px;
+	text-indent: 1em;
+	overflow: hidden;
+	list-style-type: disc;
+}
+div.PublicframeTwo div.listpub dl dd a:link
+{
+	color: #006cd1;
+	text-decoration: none;
+}
+div.PublicframeTwo div.listpub dl dd a:visited
+{
+	color: #006cd1;
+	text-decoration: none;
+}
+div.PublicframeTwo div.listpub dl dd a:hover
+{
+	color: #F60;
+	text-decoration: none;
+	cursor: pointer;
+}
+div.PublicframeTwo div.listpub dl dd a:active
+{
+	color: #006cd1;
+	text-decoration: none;
+}
+.SetPositionOne
+{
+	float: left;
+	width: 327px;
+	_width: 323px;
+}
+.SetMarginLeft
+{
+	margin-left: 4px;
+}
+.SetMarginTop
+{
+	margin-top: 10px;
+}
+#List_mqzp ul
+{
+	margin: 10px 0px;
+}
+#List_mqzp ul li
+{
+	float: left;
+	width: 300px;
+	_width: 290px;
+	text-align: left;
+	padding-left: 16px;
+	height: 22px;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-left: 12px;
+	line-height: 22px;
+	margin-bottom: 5px;
+	background: url("Image/qiyexinxiImage/grey_point.gif") no-repeat left;
+}
+#List_rdzp ul
+{
+	margin: 10px 0px;
+}
+#List_rdzp ul li
+{
+	float: left;
+	width: 300px;
+	_width: 290px;
+	text-align: left;
+	padding-left: 16px;
+	height: 22px;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-left: 12px;
+	line-height: 22px;
+	margin-bottom: 5px;
+	background: url("Image/qiyexinxiImage/grey_point.gif") no-repeat left;
+}
+#List_Tab .TabContentStyle
+{
+	border: 1px solid #b6d3eb;
+	border-top: none;
+	overflow: hidden;
+	background: #FFFFFF;
+	padding-bottom: 10px;
+}
+#List_Tab ul
+{
+	float: left;
+}
+#List_Tab_Content ul li
+{
+	float: left;
+	width:300px;
+	_width: 290px;
+	text-align: left;
+	padding-left: 16px;
+	margin-left: 12px;
+	height: 22px;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-top: 5px;
+	background: url("Image/qiyexinxiImage/grey_point.gif") no-repeat left;
+}
+.AdvertisementStyle
+{
+	width: 990px;
+}
+.AdvertisementStyle ul li
+{
+	float: left;
+	width: 322px;
+	height: 53px;
+	margin: 3px;
+	_margin: 2px;
+	border: 1px solid #eee;
+}
+.position
+{
+	margin-left: 1em;
+}
+
+
+

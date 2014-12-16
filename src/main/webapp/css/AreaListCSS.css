@@ -1,0 +1,161 @@
+﻿.AreaList
+      {
+       
+      }
+      .AreaList .TdHover
+      {
+        background-color: #dbeeff;
+        cursor:pointer;
+      }
+      .AreaList .SetWidth
+      {
+       width:85px;
+      }
+      .AreaList .SelectedShow
+    {
+	   width:100%;
+       line-height:25px;
+    }
+     .AreaList .SelectedShow  ul li 
+     {
+       line-height :25px;
+       float:left;
+       margin-right:10px;
+       width:160px;
+       cursor:pointer;
+     }
+     .AreaList table
+     {
+      width:100%;
+     }
+      .SetAreaListWidth
+      {
+       width:600px;
+      }
+      .AreaList .CityList
+      {
+       width:450px;
+       margin-left:88px;
+       _margin-left:92px;
+      }
+      .AreaList .CityList .CityChecked  input
+      {
+        display:none;
+      }
+      .AreaList .CityList tr
+      {
+       line-height:30px;
+      }
+      .AreaList .CityListShow
+      {
+       height:120px;	
+      }
+    .AreaList .dashed /*虚线*/
+    {
+        width: 590px;
+        height: 1px;
+        overflow: hidden; /*IE6*/
+        margin-left: 3px;
+        margin-bottom: 3px;
+        background: url("../images/zonechoice/dashedOne.gif");
+    }
+    .AreaList .MainCityShow
+     {
+         background:#f8f8f8;
+         font-weight:bold;
+         font-size:14px;
+         line-height:30px;
+         padding-left:5px;
+     }
+   
+    .AreaList .MainCityShow .ProvinceText
+    {
+    	 margin-left:23px;
+         margin-left:19px\9;
+         cursor:pointer;
+    }
+      @media screen and (-webkit-min-device-pixel-ratio:0) {
+			.AreaList .MainCityShow .ProvinceText
+		{
+			 margin-left:16px;
+			 cursor:pointer;
+		}
+	}
+	
+
+    .AreaList .ProvinceList .ProvinceBg
+    {
+        background:#f8f8f8;
+        line-height:25px;
+    }
+    .AreaList .ProvinceList tr
+    {
+        line-height:25px;
+    }
+    .AreaList .ProvinceList tr td
+    {
+         padding-left:5px;
+         padding-top:5px;
+         cursor:pointer;
+    }
+    .AreaList .ProvinceList tr td  input
+    {
+       display:none;
+    }
+    .AreaList .Others .OthersBg
+    {
+        background:#f8f8f8;
+        line-height:25px;
+    }
+    .AreaList .Others tr
+    {
+        line-height:25px;
+    }
+    .AreaList .Others tr td
+    {
+         padding-left:5px;
+         padding-top:5px;
+    }
+        .AreaList .Others
+    {
+         margin-bottom:20px;
+    }
+    .showChildren .ProvinceCheckedBar
+    {
+         text-align:left;
+         font-weight:bold;
+         font-size:13px;
+         cursor:pointer;
+         line-height:30px;
+         padding-left:10px;
+         color: #1190ff;
+         border-bottom:1px dashed gray;
+    }
+    .showChildren .ShowDistrict
+    {
+        margin-bottom:20px;
+    }
+        .showChildren .ShowDistrict tr td
+    {
+         line-height:25px;
+    }
+    .SetColorBlue
+    {
+        color: #1190ff;
+        font-weight:bold;
+        font-size:14px;
+    }
+    .SetBold
+    {
+     font-weight:bold;	
+    }
+    .SetColorBlueTd
+    {
+        color: #1190ff;
+        font-weight:bold;
+        width:77px;
+    }
+    .SetPadding
+    {
+        padding-top:5px;
+    }

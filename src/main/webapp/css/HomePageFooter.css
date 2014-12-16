@@ -1,0 +1,120 @@
+﻿.footer
+{
+	width: 990px;
+	margin: 0 auto;
+}
+.friendlink
+{
+	height: 65px;
+	margin: 2px 2px;
+	background: url(../images/HomePageImage/FooterImage/link_bg.gif);
+}
+.footer .friendlink .friendlink_left
+{
+	width: 17px;
+	height: 65px;
+	float: left;
+	background: url(../images/HomePageImage/FooterImage/link_left.gif) no-repeat left;
+}
+.footer .friendtext
+{
+	height: 65px;
+	background: url(../images/HomePageImage/FooterImage/linktext_right.gif) no-repeat right;
+	float: left;
+	padding-right: 5px;
+	color: #fff;
+}
+.footer .friendtext span
+{
+	float: left;
+	height: 65px;
+	width:90px;
+	border: none;
+	letter-spacing: 2px;
+	line-height: 62px;
+	line-height: 65px!improtant;
+	font-size: 14px;
+	background: url(../images/HomePageImage/FooterImage/linktext_bg.gif);
+	cursor:default;
+}
+.footer .friendlink .friendlink_right
+{
+	width: 5px;
+	height: 65px;
+	float: right;
+	background: url(../images/HomePageImage/FooterImage/link_right.gif) no-repeat right;
+}
+.footer .friendlink .friendlinklist
+{
+	float: left;
+	height: 65px;
+}
+.footer .friendlink .friendlinklist ul
+{
+	margin-top: 16px;
+	margin-left: 12px;
+}
+.footer .friendlink .friendlinklist li
+{
+	border: 1px solid #b6d3eb;
+	list-style-type: none;
+	width: 90px;
+	font-size: 14px;
+	margin-left: 9px;
+	padding: 5px 9px;
+	float: left;
+	vertical-align: middle;
+}
+.footer .footertext
+{
+	width: 990px;
+	height: 109px;
+	background: url(../images/HomePageImage/FooterImage/linkbottom_bg.gif) repeat-x;
+	padding-top: 15px;
+}
+}
+
+/*
+
+        <div class="footer" id="footer" style="margin-top: 10px;">
+            <div class="friendlink">
+                <div class="friendlink_left">
+                </div>
+                <div>
+                    <div class="friendtext">
+                        <span title="友情连接">友情连接</span>
+                    </div>
+                    <div class="friendlinklist">
+                        <ul>
+                            <li><a href="#" title="#">中国人才网</a></li>
+                            <li><a href="#" title="#">中国人才网</a></li>
+                            <li><a href="#" title="#">中国人才网</a></li>
+                            <li><a href="#" title="#">人才网</a></li>
+                            <li><a href="#" title="#">中国人才网</a></li>
+                            <li><a href="#" title="#">人才网</a></li>
+                            <li><a href="#" title="#">招聘网</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="friendlink_right">
+                </div>
+            </div>
+            <div style="clear: both">
+            </div>
+            <div class="footertext">
+                <p>
+                    <a href="#" title="关于网站">关于网站</a>&nbsp;|&nbsp;<a href="#" title="网站声明">网站声明</a>&nbsp;|&nbsp;<a
+                        href="#" title="服务中心">服务中心</a>&nbsp;|&nbsp;<a href="#" title="用户反馈">用户反馈</a>&nbsp;|&nbsp;<a
+                            href="#" title="合作伙伴">合作伙伴</a>&nbsp;|&nbsp;<a href="#" title="友情链接">友情链接</a>&nbsp;|&nbsp;<a
+                                href="#" title="联系我们">联系我们</a></p>
+                <p>
+                    <a href="#" title="广东残疾人就业网">广东残疾人就业网</a>&nbsp;&nbsp;<a href="#" title="中国人残疾人就业网">中国人残疾人就业网</a>&nbsp;&nbsp;<a
+                        href="#" title="中国福利单位人才招聘网">中国福利单位人才招聘网</a>&nbsp;&nbsp;版权所有 泸ICP备054658号</p>
+                <p>
+                    Copyright(c) 2010 - 2012 gdcjr.com All Rigths Reserved</p>
+                <p>
+                    客服电话: 13516816888 邮件: gdcir@163.com</p>
+            </div>
+        </div>
+
+*/

@@ -1,0 +1,99 @@
+﻿.VerticalLineUL
+{
+}
+.VerticalLineUL li
+{
+	float: left;
+	color: #20a4fe;
+}
+.VerticalLineUL .LiEven
+{
+	width: 20px;
+}
+
+/***/
+.CitySearch
+{
+	margin-top: 7px;
+}
+.CitySearch .CitySearchImg
+{
+	background: url(../images/HomePageImage/SearchImage/CitySearchBg.gif) no-repeat;
+	width: 71px;
+	height: 25px;
+	line-height: 25px;
+	color: #666666;
+}
+.CitySearch .CitySearchList
+{
+}
+.CitySearch .CitySearchList li
+{
+	float: left;
+	margin-left: 10px;
+	display: block;
+	line-height: 25px;
+	_height: 20px;
+	_overflow: hidden;
+}
+.CitySearch .CitySearchList li a
+{
+}
+.CitySearch .BlueTriangle
+{
+	background: url(../images/HomePageImage/SearchImage/BlueTriangle.gif) no-repeat right;
+	width: 55px;
+	line-height: 25px;
+}
+.GradualChangeBg
+{
+	margin: 0;
+}
+.GradualChangeBg .left
+{
+	background: url(../images/HomePageImage/LoginImage/LeftBg.gif) no-repeat left;
+	width: 5px;
+	height: 131px;
+}
+.GradualChangeBg .center
+{
+	background: url(../images/HomePageImage/LoginImage/CenterBg.gif) repeat-x;
+	width: 710px;
+	height: 131px;
+}
+
+.GradualChangeBg .right
+{
+	background: url(../images/HomePageImage/LoginImage/RightBg.gif) no-repeat right;
+	width: 5px;
+	height: 131px;
+}
+
+.GradualChangeBg .center .main
+{
+	width: 690px;
+	height: 118px;
+	margin-top: 5px;
+	margin-left: 9px;
+	margin-left: 1px!improtant;
+}
+/*火狐*/
+.ShadowBg
+{
+	background: url(../images/HomePageImage/LoginImage/ShadowBg.gif) repeat-x;
+	height: 10px;
+	margin-top: -1px;
+}
+/* IE6 */
+* html .ShadowBg
+{
+	background: url(../images/HomePageImage/LoginImage/ShadowBg.gif) repeat-x;
+	height: 10px;
+}
+/* IE7 */
+* + html .ShadowBg
+{
+	background: url(../images/HomePageImage/LoginImage/ShadowBg.gif) repeat-x;
+	height: 10px;
+	margin-top: -1px;
+}

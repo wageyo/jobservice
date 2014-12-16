@@ -1,0 +1,60 @@
+﻿.PublicframeOne
+{
+	border: 1px solid #b6d3eb;
+	background-color: #FFFFFF;
+}
+
+.PublicframeOne .PublicframeOneHeaderBar
+{
+	width: auto;
+	height: 28px;
+	border-bottom:1px solid #b6d3eb;
+	background: url("../images/PublicImage/PublicframeOneImage/PublicframeOneHeaderBar.jpg") repeat-x;
+}
+
+.PublicframeOne .PublicframeOneHeaderBar .PublicframeOneHeaderBarLeft
+{
+	float: left;
+	height: 23px;
+	font-size: 14px;
+	font-weight: 700;
+	color: White;
+	line-height: 23px;
+	padding: 1px 15px 1px 15px;
+	margin-top: 2px;
+	margin-left: 13px;
+	background: url("../images/PublicImage/PublicframeOneImage/PublicframeOneHeaderBarLeft.jpg") repeat-x;
+}
+
+.PublicframeOne .PublicframeOneHeaderBar .PublicframeOneHeaderBarRight
+{
+	float: right;
+	line-height: 23px;
+	margin-right: 20px;
+	_margin-right: 10px;
+	margin-top:3px;
+}
+/*使用说明：
+
+*页面引用该css
+
+*形如：
+
+
+<div class="PublicframeOne">
+                <div class="PublicframeOneHeaderBar">
+                    <div class="PublicframeOneHeaderBarLeft">
+                        名企招聘</div>
+                    <div class="PublicframeOneHeaderBarRight">
+                        <a href="#">更多</a></div>
+                </div>
+                <div>内容放置</div>
+            </div>
+
+
+都可得到该样式
+*/
+
+
+
+

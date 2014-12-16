@@ -1,0 +1,69 @@
+﻿/*本css使用说明
+*本css是专门用来设置更换首页头部样式的，可灵活多变的设置头部样式的变更
+*/
+
+
+/*设置模式一介绍：
+*该模式适用于首页头部是一块整图的时候，只需要设置样式SetHeaderWholeBg的background属性
+其余SetHeaderLeft，SetHeaderRight为空即可
+*例：
+.SetHeaderBg//左右一像素平铺
+{
+ background:url("../images/HomePageImage/HeaderImage/Header/OnepxBg.gif") repeat-x;
+}
+.HeaderStyle .SetHeaderWholeBg{background:url(图片路径);}//注明图片规格为990*110
+.HeaderStyle .HeaderMainBg .SetHeaderLeft{}
+.HeaderStyle .HeaderMainBg .SetHeaderRight{}
+*/
+
+
+
+/*设置模式二介绍：
+*该模式适用于头部左右两边有图片，中间部分为纯色（或渐变）
+*
+
+*例：
+.SetHeaderBg//左右一像素平铺
+{
+ background:url("../images/HomePageImage/HeaderImage/Header/OnepxBg.gif") repeat-x;
+}
+.HeaderStyle .SetHeaderWholeBg
+{
+	background: white;
+}
+.HeaderStyle .HeaderMainBg .SetHeaderLeft//图片规格280*110
+{
+	background: url("../images/HomePageImage/HeaderImage/Header/HeaderLeft.gif") no-repeat;
+}
+.HeaderStyle .HeaderMainBg .SetHeaderRight//图片规格280*110
+{
+	background: url("../images/HomePageImage/HeaderImage/Header/HeaderRight.gif") no-repeat;
+}
+
+
+*/
+/*左右图模式设置*/
+/*图片规格1*110px*/
+.HeaderMainBg
+{
+ background:url("../images/HomePageImage/HeaderImage/OnepxBg2.jpg") no-repeat;
+}
+
+
+
+
+/*导航菜单样式设置 图片规格：1*35px*/
+.HeaderStyle .SetNavigationBar
+{
+	background: url("../images/HomePageImage/HeaderImage/Navbg.gif") repeat-x;
+}
+/*广告图位图片1设置 广告图片规格270*50px*/
+.HeaderStyle .Advertisement .SetAdvertisementOne
+{
+	background: url("../images/HomePageImage/HeaderImage/Advertisement1.gif") no-repeat;
+}
+/*广告图位图片2设置 广告图片规格270*50px*/
+.HeaderStyle .Advertisement .SetAdvertisementTwo
+{
+	background: url("../images/HomePageImage/HeaderImage/Advertisement2.gif") no-repeat;
+}

@@ -1,0 +1,183 @@
+﻿/*内容样式*/
+.setFunctionCategory
+{
+    width:908px;
+}
+/*表格样式*/
+.FunctionCategory table
+{
+    margin-left:5px;
+    width:898px;
+    margin-bottom:10px;
+}
+.FunctionCategory table tr.showSelect
+{
+    height:30px;
+    line-height:30px;
+}
+.FunctionCategory table tr.line td div.dotted
+{
+    border-top:1px dashed gray;
+    height:5px;
+
+}
+.FunctionCategory table tr.addTd
+{
+    background:#F7F7F7;
+}
+.FunctionCategory table tr td.FirstTd
+{
+    color:#168FFD;
+    width:150px;
+}
+/*
+     <div class="LayerOut setFunctionCategory">
+        <div class="HeaderBar">
+            <div class="LayerTitle"><strong>职能类别</strong> (您最多可以选择5个职能)</div>
+            <div class="LayerBtn"><a href="#">[确定]</a></div>
+        </div>
+         <div class="FunctionCategory" >
+          <table id="Table1">
+            <tr class="showSelect">
+                <td class="FirstTd"><strong>已选职能：</strong></td>
+                <td colspan="4">
+                    <ul id="Ul1"></ul>
+                </td>
+            </tr>
+            <tr class="line">
+                <td colspan="5"><div class="dotted"></div></td>
+            </tr>
+
+            <tr class="addTd">
+                <td rowspan="3" class="FirstTd">计算机/互联网/通讯/电子</td>
+                <td>计算机软件</td>
+                <td>计算机硬件</td>
+                <td>互联网/网游</td>
+                <td>计算机服务(系统、数据服务、维护)</td>
+            </tr>
+            <tr class="addTd">
+                <td>IT-管理</td>
+                <td>IT-品管、技术支持及其他</td>
+                <td>通信技术开发及应用</td>
+                <td></td>
+            </tr>
+            <tr class="addTd">
+                <td>电子/电器/半导体/仪器仪表</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td class="FirstTd">销售/客服/技术支持</td>
+                <td>销售管理</td>
+                <td>销售人员</td>
+                <td>销售行政及商务</td>
+                <td>客服及技术支持</td>
+            </tr>
+
+            <tr class="addTd">
+                <td class="FirstTd">会计/金融/银行/保险</td>
+                <td>财务/审计/税务</td>
+                <td>金融/证券/期货/投资</td>
+                <td>银行</td>
+                <td>保险</td>
+            </tr>
+
+            <tr>
+                <td rowspan="3" class="FirstTd">生产/营运/采购/物流</td>
+                <td>生产/营运</td>
+                <td>质量/安全管理</td>
+                <td>工程/机械/能源</td>
+                <td>汽车</td>
+            </tr>
+            <tr>
+                <td>技工</td>
+                <td>服装/纺织/皮革</td>
+                <td>采购</td>
+                <td>贸易</td>
+            </tr>
+            <tr>
+                <td>物流/仓储</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr class="addTd">
+                <td class="FirstTd">生物/制药/医疗/护理</td>
+                <td>生物/制药/医疗器械</td>
+                <td>化工</td>
+                <td>医院/医疗/护理</td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="FirstTd">广告/市场/媒体/艺术</td>
+                <td>广告</td>
+                <td>公关/媒介</td>
+                <td>市场/营销</td>
+                <td>影视/媒体</td>
+            </tr>
+            <tr>
+                <td>写作/出版/印刷</td>
+                <td>艺术/设计</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr class="addTd">
+                <td class="FirstTd">建筑/房地产：</td>
+                <td>建筑装潢/市政建设</td>
+                <td>房地产</td>
+                <td>物业管理</td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="FirstTd">咨询/法律/教育/科研</td>
+                <td>咨询/顾问</td>
+                <td>律师/法务/合规</td>
+                <td>教师</td>
+                <td>培训</td>
+            </tr>
+            <tr>
+                <td>科研人员</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr class="addTd">
+                <td rowspan="2" class="FirstTd">服务业：</td>
+                <td>餐饮/娱乐</td>
+                <td>酒店/旅游</td>
+                <td>美容/健身/体育</td>
+                <td>百货/连锁/零售服务</td>
+            </tr>
+            <tr class="addTd">
+                <td>交通运输服务</td>
+                <td>保安/家政/其他服务</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="FirstTd">公务员/翻译/其他：</td>
+                <td>公务员</td>
+                <td>翻译</td>
+                <td>在校学生</td>
+                <td>储备干部/培训生/实习生</td>
+            </tr>
+            <tr>
+                <td>兼职</td>
+                <td>其他</td>
+                <td>环保</td>
+                <td>农/林/牧/渔</td>
+            </tr>
+
+        </table>
+         </div>
+    </div>
+
+*/

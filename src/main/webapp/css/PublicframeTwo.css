@@ -1,0 +1,94 @@
+﻿.PublicframeTwo
+        {
+            background-color: #FFFFFF;
+            width:100%;
+          
+        }
+        .PublicframeTwo .PublicframeTwoHeadBar
+        {
+            width:100%;
+            height:39px;
+            background:url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBar.jpg);
+        }
+        .PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarLeft
+        {
+            width:21px;
+            height:39px;
+            background:url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarLeft.jpg) no-repeat left;
+            float:left;
+        }
+        .PublicframeTwo .PublicframeTwoHeadBarTittle
+        {
+            height:39px;
+            background:url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarTittle.jpg) no-repeat right;
+            padding-right:9px;
+            color:#fff;
+            float:left;        
+        }
+       .PublicframeTwo .PublicframeTwoHeadBarTittle .PublicframeTwoHeadBarTittleSpan
+       {
+            height:39px;
+            float:left;
+            line-height:30px;
+            font-weight:700;
+            font-size:14px;
+            padding:0px 6px 0px 8px;
+            letter-spacing:2px;
+            background:url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarTittleSpan.jpg) repeat-x;
+       }
+       .PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarRight
+       {
+            width:5px;
+            height:39px;
+            float:right;
+            background:url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarRight.gif) no-repeat right;
+       }
+        .PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarMore
+       {
+            height:39px;
+            float:right;  
+            padding:0px 20px 0px 0px;
+       }
+       .PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarMore .PublicframeTwoHeadBarMoreSpan
+       {
+			line-height:35px;
+			cursor:pointer;
+       }
+      .PublicframeTwo .PublicframeTwoContent
+       {
+            height:100%;
+            border:1px solid #b6d3eb;
+            border-top:none;
+            text-align:left;
+    
+       }
+
+.Square /*li前面的小方块*/
+{
+   background: url("../images/Sy_HRsqImage/Square.jpg") no-repeat 0 4px;
+    padding-left:15px;
+    line-height:25px;
+    text-align:left;
+}
+       
+/*
+*使用说明：
+引用该CSS
+*形如：
+    <div class="PublicframeTwo">   
+            <div class="PublicframeTwoHeadBar">
+            
+                <div class="PublicframeTwoHeadBarLeft"></div>
+                <div class="PublicframeTwoHeadBarTittle" >
+                    <span class="PublicframeTwoHeadBarTittleSpan">职业培训</span>
+                </div>
+                
+                <div class="PublicframeTwoHeadBarRight"></div>
+                <div class="PublicframeTwoHeadBarMore"><span class="PublicframeTwoHeadBarMoreSpan">更多</span></div>
+                
+            </div>
+
+            <div class="PublicframeTwoContent">内容位置</div>
+    </div>
+即可获得该样式
+*/

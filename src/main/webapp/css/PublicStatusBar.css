@@ -1,0 +1,61 @@
+﻿.StatusBar
+{
+	height: 31px;
+	background: url('../images/HomePageImage/StatusBarImage/StatusBarBg.gif') repeat-x;
+}
+.StatusBar .StatusBarMain
+{
+	width: 990px;
+	line-height: 31px;
+	margin: 0px auto;
+}
+.StatusBar .StatusBarMain .left
+{
+	float: left;
+}
+.StatusBar .StatusBarMain .right
+{
+	float: right;
+}
+.StatusBar .StatusBarMain .right .Wellcome
+{
+	color: #0298fc;
+	float: left;
+}
+.StatusBar .StatusBarMain .right .ListBtn
+{
+	float: left;
+}
+.StatusBar .StatusBarMain .right .ListBtn li
+{
+	float: left;
+	margin-left: 10px;
+}
+.StatusBar .StatusBarMain .right .ListBtn .ChangeCity
+{
+	background: url('../images/HomePageImage/StatusBarImage/triangle.gif') no-repeat right;
+	padding-right: 12px;
+}
+
+
+/*
+*状态条使用：
+<div class="StatusBar">
+<div class="StatusBarMain">
+<div class="left"><span>当前位置: </span><span><a href="#">首页</a> ><a href="#">个人中心</a>><a href="#">我的服务</a></span></div>
+<div class="right"><div class="Wellcome">你好，xxx！</div><div class="ListBtn">
+<ul>
+<li><a href="#">加为收藏</a></li>
+<li>|</li>
+<li><a href="#">手机登陆</a></li>
+<li>|</li>
+<li><a href="#">联系我们</a></li>
+<li>|</li>
+<li class="ChangeCity"><a href="#">切换城市</a></li>
+<li>|</li>
+<li><a href="#">安全退出/会员登陆</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+*/

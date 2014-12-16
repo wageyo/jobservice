@@ -10,9 +10,22 @@
 	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 	<meta content="残疾人招聘就业" name="description" />
 	
-	<link href="${contextPath}/css/public.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/Login.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/VerticalLineUL.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicSearch.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicframeOne.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicframeTwo.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/hp_fwdt.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageCSS.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/tabCSS.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
 	
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/easyTab.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/index.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/potoschange.js"></script>
@@ -23,7 +36,7 @@
 		}
 	</script>
 </head>
-<body style="height:1900px;min-height:900px;">
+<body>
 	<div id="container" class="container">
 	
 		<!-- 顶部工具条栏 -->
@@ -450,9 +463,5 @@
 		<div class="clearboth"></div>
 		<jsp:include page="formatter/footer.jsp" />
 	</div>
-
-<script type="text/javascript">
-		
-	</script>
 </body>
 </html>
