@@ -140,22 +140,22 @@ public class UserController {
 			ra.addFlashAttribute("message", "登录错误");
 			return "redirect:/index";
 		}
-		// 判断验证码是否正确
-		String codeStr = request.getParameter("LoginVerifyCode");
-		String captchaId = request.getSession().getId();
-		System.out.println("codeStr : " + codeStr + "  captchaId : "
-				+ captchaId);
-		try {
-			Boolean isResponseCorrect = CaptchaServiceSingleton.getInstance()
-					.validateResponseForID(captchaId, codeStr);
-			if (!isResponseCorrect) {
-				ra.addFlashAttribute("messageType", "0");
-				ra.addFlashAttribute("message", "验证码错误");
-				return "redirect:/index";
-			}
-		} catch (CaptchaServiceException e) {
-			log.error("error in check", e);
-		}
+//		// 判断验证码是否正确
+//		String codeStr = request.getParameter("LoginVerifyCode");
+//		String captchaId = request.getSession().getId();
+//		System.out.println("codeStr : " + codeStr + "  captchaId : "
+//				+ captchaId);
+//		try {
+//			Boolean isResponseCorrect = CaptchaServiceSingleton.getInstance()
+//					.validateResponseForID(captchaId, codeStr);
+//			if (!isResponseCorrect) {
+//				ra.addFlashAttribute("messageType", "0");
+//				ra.addFlashAttribute("message", "验证码错误");
+//				return "redirect:/index";
+//			}
+//		} catch (CaptchaServiceException e) {
+//			log.error("error in check", e);
+//		}
 		log.debug("user : " + user);
 		user = userService.check(user);
 		if (user == null) {
@@ -187,11 +187,11 @@ public class UserController {
 		CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
 		CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
-		//地区代码设为永久,如果当前cookie中不存在地区code, 才使用当前用户的
-		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		if(acode == null || "".equals(acode)){
-			CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
-		}
+//		//地区代码设为永久,如果当前cookie中不存在地区code, 才使用当前用户的
+//		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+//		if(acode == null || "".equals(acode)){
+//			CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
+//		}
 		return "redirect:/index";
 	}
 

@@ -13,6 +13,8 @@
 	<link href="${contextPath}/css/public.css" rel="stylesheet" type="text/css" />
 	
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/easyTab.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/index.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/potoschange.js"></script>
 	<script type="text/javascript">
 		function getimgcode(){
@@ -34,44 +36,79 @@
 		<!-- ******* 中部内容显示区 ******* start ********** -->
 		<div id="content" class="content">
 			<div>
-				<div class="login SetFloatLeft">
-					<div class="loginbtn">
-						<div title="个人用户登录" id="PersonalTab" class="BlueFirst" style="cursor: auto;"></div>
-						<div title="企业用户登录" id="BusinessTab" class="WhiteLast" style="cursor: auto;"></div>
-					</div>
-					<div class="loginmain">
-						<div class="loginmainarae">
-							<div>
-								<div class="divtext">
-									<div>
-										<input type="text" value="请输入用户名或身份证" id="UserName" class="text DefaultText" title="请输入用户名或身份证" style="color: Gray;" />
-									</div>
-									<div class="righttext">
-										<input type="text" value="请输入用户密码" id="Password0" class="text DefaultText" title="输入密码" style="color: Gray;" />
-									</div>
-								</div>
-								<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
-							</div>
-							<div class="clearboth"></div>
-							<div class="divchk">
-								<div >
-									<a style="cursor:pointer;">找回密码</a>
-									<%--<span title="自动登录" class="zdword">自动登录</span>
-								--%>
-								<a style="cursor: pointer;">找回用户</a></div>
-							</div>
-							<div class="clearboth"></div>
-							<div class="registerdiv">
-								<div title="注册个人会员" id="PersonalRegister" class="personalregister" 
-								style="cursor: auto; background: url(${contextPath}/images/HomePageImage/LoginImage/PersonalRegister.gif);"></div>
-								<div title="注册用人单位" id="BusinessRegister" class="businessregister" 
-								style="cursor: auto; background: url(${contextPath}/images/HomePageImage/LoginImage/BusinessRegister.gif);"></div>
-							</div>
-							<div class="clearboth"></div>
+			
+				<!-- 登陆前的登陆框  begin -->
+				<c:if test="${cookie.username.value == null || cookie.username.value == ''}">
+					<div class="login SetFloatLeft">
+						<div class="loginbtn">
+							<div title="个人用户登录" id="PersonalTab" class="BlueFirst" style="cursor: auto;"></div>
+							<div title="企业用户登录" id="BusinessTab" class="WhiteLast" style="cursor: auto;"></div>
 						</div>
+						<div class="loginmain">
+							<div class="loginmainarae">
+								<form action="${contextPath }/user/login" method="post">
+									<div>
+										<div class="divtext">
+											<div>
+												<input type="text" value="请输入用户名" id="loginName" name="loginName" class="text DefaultText" title="请输入用户名" style="color: Gray;" />
+											</div>
+											<div class="righttext">
+												<input type="password" value="" id="passWord" name="passWord" class="text DefaultText" title="输入密码" style="color: Gray;" />
+											</div>
+										</div>
+										<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
+									</div>
+								</form>
+								<div class="clearboth"></div>
+								<div class="divchk">
+									<div style="letter-spacing:4px;">
+										<a style="cursor:pointer;padding-right:20px;">找回密码</a>
+										<%--<span title="自动登录" class="zdword">自动登录</span>
+									--%>
+									<a style="cursor: pointer;">找回用户</a></div>
+								</div>
+								<div class="clearboth"></div>
+								<div class="registerdiv">
+									<div title="注册个人会员" id="PersonalRegister" class="personalregister" 
+									style="cursor: auto; background: url(${contextPath}/images/HomePageImage/LoginImage/PersonalRegister.gif);"></div>
+									<div title="注册用人单位" id="BusinessRegister" class="businessregister" 
+									style="cursor: auto; background: url(${contextPath}/images/HomePageImage/LoginImage/BusinessRegister.gif);"></div>
+								</div>
+								<div class="clearboth"></div>
+							</div>
+						</div>
+						<div class="LoginRight"></div>
 					</div>
-					<div class="LoginRight"></div>
-				</div>
+				</c:if>
+				<!-- 登陆前的登陆框  end -->
+				
+				<!-- 登陆后的状态栏  begin -->
+				<c:if test="${cookie.username.value != null && cookie.username.value != ''}">
+					<div class="login SetFloatLeft">
+						<div class="LoginLeft"></div>
+						<div class="loginmain" style="width:250px;">
+							<div class="loginmainarae">
+								内耗啊,${cookie.username.value }<br/>
+								您的注册时间: ${cookie.registertime.value }<br/>
+								现在您可以进入
+								<a href="${contextPath }/user/goCenter">
+									<c:if test="${cookie.identity.value == 'person' }">
+										个人中心
+									</c:if>
+									<c:if test="${cookie.identity.value == 'company' }">
+										企业管理中心
+									</c:if>
+									<c:if test="${cookie.identity.value == 'admin' || cookie.identity.value == ''}">
+										管理员后台
+									</c:if>
+								</a>
+							</div>
+						</div>
+						<div class="LoginRight"></div>
+					</div>
+				</c:if>
+				<!-- 登陆后的状态栏   end -->
+				
 				<div class="GradualChangeBg SetFloatRight">
 					<div class="SetFloatLeft left"></div>
 					<div class="SetFloatLeft center">
@@ -101,31 +138,15 @@
 									<div class="SetFloatLeft">常用职位搜索：</div>
 									<div>
 										<ul class="VerticalLineUL">
-											<li> <a title="计算机" href="#" style="color: rgb(32, 164, 254);">计算机</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="业务员" href="#" style="color: rgb(32, 164, 254);">业务员</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="程序员" href="#" style="color: rgb(32, 164, 254);">程序员</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="化妆品" href="#" style="color: rgb(32, 164, 254);">化妆品</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="软件工程师" href="#" style="color: rgb(32, 164, 254);">软件工程师</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="设计" href="#" style="color: rgb(32, 164, 254);">设计</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="文员" href="#" style="color: rgb(32, 164, 254);">文员</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="会计" href="#" style="color: rgb(32, 164, 254);">会计</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="项目经理" href="#" style="color: rgb(32, 164, 254);">项目经理</a> </li>
-											<li class="LiEven">|</li>
-											<li> <a title="客服" href="#" style="color: rgb(32, 164, 254);">客服</a> </li>
-											<li class="LiEven">|</li>
+											<c:forEach items="${hotJobCategoryList }" var="jobCategory" varStatus="status">
+												<li> <a title="${jobCategory.name }" href="#" style="color: rgb(32, 164, 254);">${jobCategory.name }</a> </li>
+												<c:if test="${status.index < 9 }"><li class="LiEven">|</li></c:if>
+											</c:forEach>
 										</ul>
 									</div>
 								</div>
 								<div class="clearboth"></div>
-								<div class="CitySearch">
+							<!-- 	<div class="CitySearch">
 									<div class="CitySearchImg SetFloatLeft">热门城市</div>
 									<div id="HotCity" class="CitySearchList SetFloatLeft">
 										<ul id="hotCity">
@@ -146,7 +167,7 @@
 											<li> <a name="445200" title="揭阳" href="#">揭阳</a> </li>
 										</ul>
 									</div>
-								</div>
+								</div>	 -->
 							</div>
 						</div>
 					</div>
@@ -222,7 +243,7 @@
 									</tr>
 									<c:forEach items="${resumeList }" var="resume">
 										<tr class="resumeMessageheaderOther">
-											<td><a  href="${contextPath }/resume/getOneForShow?id=${resume.id}">${resume.name }</a></td>
+											<td><a href="${contextPath }/resume/getOneForShow?id=${resume.id}" style="color: #0868C8;">${resume.name }</a></td>
 											<td>${resume.education }</td>
 											<td>${resume.disabilityCategory }</td>
 											<td>${resume.disabilityLevel }</td>
@@ -246,14 +267,14 @@
 								<tbody>
 									<tr class="resumeMessageheaderOne">
 										<th>用人单位名称</th>
-										<th>招聘职位</th>
+										<th>所在行业</th>
 										<th>日期</th>
 									</tr>
 									<c:forEach items="${companyList }" var="company">
 										<tr class="resumeMessageheaderOther">
 											<td>
 												<div style="white-space:nowrap; width:130px; text-overflow:ellipsis;-moz-text-overflow: ellipsis; overflow:hidden">
-													<a  href="${contextPath }/company/getOneForShow?id=${company.id}" title="${company.name }">${company.name }</a>
+													<a  href="${contextPath }/company/getOneForShow?id=${company.id}" title="${company.name }" style="color: #0868C8;">${company.name }</a>
 												</div>
 											</td>
 											<td><a  href="" title="${company.businessScope.name}">${company.businessScope.name}</a></td>
@@ -315,13 +336,20 @@
 				<div id="List_Tab" style="margin-top: 10px;">
 					<div class="clearboth"></div>
 					<ul class="TabCss">
-						<li id="001"> <span class="firstWhite"></span> <span class="whitebg">计算机/互联网/通信</span> </li>
-						<li id="002"> <span class="rightWhiteOfCenter"></span> <span class="whitebg bluebg" onclick="changeShowJob('10020000');">会计/金融/银行/保险</span> </li>
-						<li id="003"> <span class="rightWhiteOfCenter rightBlueOfCenter"></span> <span class="whitebg bluebg">贸易/消费/制造/营运</span> </li>
-						<li id="004"> <span class="rightWhiteOfCenter rightBlueOfCenter"></span> <span class="whitebg bluebg">制药/医疗</span> </li>
-						<li id="005"> <span class="rightWhiteOfCenter rightBlueOfCenter"></span> <span class="whitebg bluebg">广告/媒体</span> </li>
-						<li id="007"> <span class="rightWhiteOfCenter rightBlueOfCenter"></span> <span class="whitebg bluebg">专业服务/教育/培训</span> </li>
-						<li> <span class="lastBlue"></span> <span class=""></span> </li>
+						<c:forEach items="${jobCategoryList }" var="jobCategory" varStatus="index">
+							<li> 
+								<span
+									<c:if test="${index.index == 0}">class="firstWhite"</c:if>
+									<c:if test="${index.index == 1}">class="rightWhiteOfCenter"</c:if>
+									<c:if test="${index.index > 1}">class="rightWhiteOfCenter rightBlueOfCenter" </c:if>
+								></span> 
+								<span 
+									<c:if test="${index.index == 0}">class="whitebg"</c:if>
+									<c:if test="${index.index > 0}">class="whitebg bluebg" </c:if>
+									onclick="changeShowJob('${jobCategory.code}',this);"
+								>${jobCategory.name }</span> 
+							</li>
+						</c:forEach>
 					</ul>
 					<div class="clearboth"></div>
 					<div id="List_Tab_Content" class="TabContentStyle">
@@ -332,7 +360,7 @@
 							<c:forEach items="${jobByCategoryList }" var="job">
 								<li class="">
 									<a href="${contextPath }/company/getOneForShow?id=${job.companyId}">${job.companyName }</a>
-									<a href="${contextPath }/job/getOneForShow?id=${job.id}" style="color:#0868C8" class="position">${job.jobName }</a>
+									<a href="${contextPath }/job/getOneForShow?id=${job.jobId}" style="color:#0868C8" class="position">${job.jobName }</a>
 								</li>
 							</c:forEach>
 							</ul>
@@ -424,67 +452,6 @@
 	</div>
 
 <script type="text/javascript">
-		$(function () {
-			/*首页、找工作鼠标效果*/
-			$("#Mainnav").find("ul").find("li").find("a:not(.Nav_sy)").hover(function () {
-				$(this).css("color", "yellow");
-			}, function () { $(this).css("color", "white"); });
-			/*设置热门搜索字体颜色*/
-			$(".VerticalLineUL").find("a").css("color", "#20a4fe");
-			
-			/*******  个人注册/企业注册   ********/
-			$("#PersonalRegister").bind("click", function () {
-            	window.location.href = ""; //个人注册
-			});
-			$("#BusinessRegister").bind("click", function () {
-				window.location.href = ""; //企业注册
-			});
-			
-			/*******  个人单位切换   ********/
-			$("#PersonalTab").bind("click", function () {
-				LoginType = 0; $(this).removeClass().addClass("BlueFirst"); $("#BusinessTab").removeClass().addClass("WhiteLast"); $(".loginmain").removeClass("loginmain2"); $(".LoginRight").removeClass("LoginRight2"); $("#LoginBtn").removeClass("loginbtnimg2"); $("#LinkHrefBtn").attr("href", ""); $("#UserName").val("请输入用户名或身份证");
-			}).mouseover(function () { this.style.cursor = "pointer"; }).mouseout(function () { this.style.cursor = "auto"; });
-	
-			$("#BusinessTab").bind("click", function () {
-				LoginType = 1; $(this).removeClass().addClass("BlueLast"); $("#PersonalTab").removeClass().addClass("WhiteFirst "); $(".loginmain").addClass("loginmain2"); $(".LoginRight").addClass("LoginRight2"); $("#LoginBtn").addClass("loginbtnimg2"); $("#LinkHrefBtn").attr("href", ""); $("#UserName").val("请输入用户名或营业执照");
-			}).mouseover(function () {
-				this.style.cursor = "pointer";
-			}).mouseout(function () {
-				this.style.cursor = "auto";
-			});
-			
-			 /*******  鼠标mouseover效果   ********/
-			$("#LoginBtn").mouseover(function () { this.src = "${contextPath}/images/HomePageImage/LoginImage/HoverLogin.gif"; this.style.cursor = "pointer"; }).mouseout(function () { this.src = "${contextPath}/images/HomePageImage/LoginImage/LoginButtom.gif"; this.style.cursor = "pointer"; })
-			$("#PersonalRegister").mouseover(function () { this.style.background = 'url(${contextPath}/images/HomePageImage/LoginImage/HoverPersonalRegister.gif)'; this.style.cursor = "pointer"; }).mouseout(function () { this.style.background = 'url(${contextPath}/images/HomePageImage/LoginImage/PersonalRegister.gif)'; this.style.cursor = "auto"; })
-			$("#BusinessRegister").mouseover(function () { this.style.background = 'url(${contextPath}/images/HomePageImage/LoginImage/HoverBusinessRegister.gif)'; this.style.cursor = "pointer"; }).mouseout(function () { this.style.background = 'url(${contextPath}/images/HomePageImage/LoginImage/BusinessRegister.gif)'; this.style.cursor = "auto"; })
-		});
-		
-		/*******  不同种类职位轮换效果   ********/
-		function changeShowJob(jobCategory){
-			//异步请求数据
-			$.ajax({
-				url : '${contextPath}/job/getByCategory/' + jobCategory,
-				type : 'post',
-				dataType : 'json',
-				success : function(data){
-					//如果有数据返回, 则遍历数据进行显示
-					if(data.jobByCategoryList != null && data.jobByCategoryList.length > 0){
-						$.each(data.jobByCategoryList, function(i, item){
-							var str = '<a href="${contextPath }/company/getOneForShow?id=' + item.companyId+ '">${job.companyName }</a>';
-							str += '<a href="${contextPath }/job/getOneForShow?id=${job.id}" style="color:#0868C8" class="position">${job.jobName }</a>';
-							
-							//先清除当前TabsMainShow div框中的所有li子元素, 然后添加上新的招聘信息
-							$('#TabsMainShow').find('ul').children().remove();
-							
-						});
-					}
-				},
-				error : function(){
-					alert("请求数据发生错误, 请联系管理员.");
-				}
-			});
-			
-		}
 		
 	</script>
 </body>

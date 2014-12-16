@@ -65,10 +65,10 @@ public class JobCategoryService {
 	}
 	
 	// 获得最受欢迎职位种类列表
-	public List<JobCategory> getPopularJobCategory() {
+	public List<JobCategory> getPopularJobCategory(String markKeyWords) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		JobCategory jc = new JobCategory();
-		jc.setMark("hot");
+		jc.setMark(markKeyWords);
 		map.put("jobCategory", jc);
 		map.put("start", 0);
 		map.put("size", 9999);

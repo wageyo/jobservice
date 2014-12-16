@@ -88,7 +88,11 @@ public class NewsService {
 	public List<News> getByNew(String acode, int size, String type) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		News news = new News();
-		news.setArea(new Area(acode));
+		if(Constants.AREACOUNTRY.equals(acode)){
+			news.setArea(new Area(null));
+		}else{
+			news.setArea(new Area(acode));
+		}
 		news.setType(type);
 		map.put("news", news);
 		map.put("start", Constants.START);

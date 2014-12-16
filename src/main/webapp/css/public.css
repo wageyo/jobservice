@@ -464,7 +464,8 @@ a:active
 .Search
 {
 	width: 675px;
-	height: 64px;
+	height: 70px;
+	padding-top: 10px;
 }
 .Search .SearchTab
 {
@@ -1089,6 +1090,13 @@ div#gettextmessagebox div#gettextmessagecontent span sup{
 	height: 131px;
 	width: 230px;
 	float: left;	
+}
+.login .LoginLeft
+{
+	background: url(../images/HomePageImage/LoginImage/loginedLeft.gif) no-repeat right;
+	height: 131px;
+	width: 5px;
+	float: left;
 }
 .login .LoginRight
 {

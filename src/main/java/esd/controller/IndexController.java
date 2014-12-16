@@ -109,6 +109,9 @@ public class IndexController {
 			acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		}
 		ModelAndView mav = new ModelAndView("index");
+		//得到10个热门职位
+		List<JobCategory> hotJobCategory = jcService.getPopularJobCategory(Constants.JOB_CATEGORY_HOT);
+		mav.addObject("hotJobCategoryList",hotJobCategory);
 		// 得到最新的10个公司
 		List<Company> companyList = companyService.getByNew(acode,10);
 		mav.addObject("companyList", companyList);
@@ -124,6 +127,9 @@ public class IndexController {
 		// 最新的9条消息
 		List<News> newsList = newsService.getByNew(acode, 9,Constants.ARTICLE_TYPE_NEWS);
 		mav.addObject("newsList", newsList);
+		//得到6个常用的职位种类
+		List<JobCategory> jobCategoryList = jcService.getPopularJobCategory(Constants.JOB_CATEGORY_MAIN);
+		mav.addObject("jobCategoryList",jobCategoryList);
 		//获得下面按类别显示的51条数据
 		Job object = new Job();
 		object.setJobCategory(new JobCategory("10010000"));

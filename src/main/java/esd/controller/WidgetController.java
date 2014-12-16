@@ -82,7 +82,7 @@ public class WidgetController {
 	public Map<String, Object> getPopularJobCategory() {
 		log.info("--- getJobCategory ---");
 		Map<String, Object> json = new HashMap<String, Object>();
-		List<JobCategory> jcList = jcService.getPopularJobCategory();
+		List<JobCategory> jcList = jcService.getPopularJobCategory(Constants.JOB_CATEGORY_HOT);
 		if (jcList == null || jcList.size() == 0) {
 			json.put("notice", Notice.FAILURE.toString());
 			return json;

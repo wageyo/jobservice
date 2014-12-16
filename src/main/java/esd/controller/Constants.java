@@ -60,6 +60,8 @@ public class Constants {
 
 	public static final String NO_LIMIT = "不限"; // 不限字段
 
+	public static final String JOB_CATEGORY_MAIN = "main"; // 职位种类--主页显示
+	public static final String JOB_CATEGORY_HOT = "hot"; // 职位种类--主页显示
 	/**
 	 * 文章类型
 	 */
