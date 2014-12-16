@@ -6,8 +6,23 @@
 	<div class="HeaderMainBg SetHeaderWholeBg">
 		<div class="HeaderMainLeft SetHeaderLeft">
 			<div class="logo">
-				<a title="残疾人就业服务网" href="index.htm?crumbs=001"> 
-					<img id="imgLogo" src="${contextPath}/images/Logo.png" />
+				<a title="残疾人就业服务网" href="${contextPath}/index"> 
+					<!-- 如果能显示对应省市的则显示对应省份的logo, 否则显示全国的log -->
+					<c:choose>
+						<c:when test="${cookie.area.value != null && cookie.area.value != '' }">
+							<c:choose>
+								<c:when test="${cookie.area.value != '10000000' }">
+									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/${cookie.area.value }.png" /> 
+								</c:when>
+								<c:otherwise>
+									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" id="bg2" />
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" id="bg2" /> 
+						</c:otherwise>
+					</c:choose>
 				</a>
 			</div>
 		</div>
