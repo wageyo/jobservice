@@ -122,17 +122,6 @@ verify.isPort = function(str) {
 };
 
 /*
- * 用途：检查输入对象的值是否符合E-Mail格式 输入：str 输入的字符串 返回：如果通过验证返回true,否则返回false
- * 
- */
-verify.isEmail = function isEmail(str) {
-	var myReg = /^([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i;
-	if (myReg.test(str))
-		return true;
-	return false;
-};
-
-/*
  * 用途：检查输入字符串是否符合金额格式 格式定义为带小数的正数，小数点后最多三位 输入： s：字符串 返回： 如果通过验证返回true,否则返回false
  * 
  */
@@ -279,13 +268,13 @@ verify.checkTwoDate = function(startDate, endDate) {
  * 用途：检查输入的Email信箱格式是否正确 输入： strEmail：字符串 返回： 如果通过验证返回true,否则返回false
  * 
  */
-verify.checkEmail = function(strEmail) {
+verify.isEmail = function(strEmail) {
 	// var emailReg = /^[_a-z0-9]+@([_a-z0-9]+\.)+[a-z0-9]{2,3}$/;
 	var emailReg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
 	if (emailReg.test(strEmail)) {
+		//符合规则
 		return true;
 	} else {
-		alert("您输入的Email地址格式不正确！");
 		return false;
 	}
 };
@@ -470,6 +459,21 @@ verify.checkSecCode = function(secCode) {
 		return false;
 	}
 	return true;
+};
+
+/*
+ * 用途：检查用户名是否符合 英文, 数字和下划线的规则,  如果通过验证返回true,否则返回false
+ * 
+ */
+verify.checkname = function(name) {
+	var reg_username = /[a-zA-Z0-9_]{5,20}/;
+	if (reg_username.test(name)) {
+		//符合规则
+		return true;
+	} else {
+		return false;
+	}
+	
 };
 
 /*******************************************************************************

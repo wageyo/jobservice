@@ -1,195 +1,147 @@
 
 $(document).ready(function(){
+	// 账号校验
+	$('#loginName').focus(function(){
+		$('#showUserNameMsg').css('color','black').html('由5-20位字母、数字或下划线组成.');
+	}).blur(function(){
+		var loginName = $(this).val();
+		if(!verify.checkname(loginName)){
+			$('#showUserNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+			$('#showUserNameMsg').css('color','red').html('由5-20位字母、数字或下划线组成.');
+			return;
+		}
+		$.ajax({
+			url : server.url + 'user/check/' + loginName,
+			dataType : 'json',
+			type : 'GET',
+			async : false,
+			success : function(json) {
+				//存在时
+				if(json.notice == 'success'){
+					$('#showUserNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+					$('#showUserNameMsg').css('color','black').html('该用户名可以使用.');
+					return false;
+				}
+				if(json.notice == 'failure'){
+					$('#showUserNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+					$('#showUserNameMsg').css('color','red').html('该用户名已经存在.');
+					return false;
+				}
+			},
+		});
+	});
 	
+	//密码校验
+	$('#txtPassWord').focus(function(){
+		$('#showPasswordImg').css('color','black');
+		$('#showPasswordMsg').html('请输入英文字母、数字或下划线，长度5-20个字符.');
+	}).blur(function(){
+		var pwd = $(this).val();
+		if(!verify.checkname(pwd)){
+			$('#showPasswordImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+			$('#showPasswordMsg').css('color','red').html('请输入英文字母、数字或下划线，长度5-20个字符.');
+		}else{
+			$('#showPasswordImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+			$('#showPasswordMsg').css('color','black').html('密码校验正确.');
+		}
+	});
+	
+	//确认密码
+	$('#passWordConfirm').focus(function(){
+		$('#showPassWordConfirmImg').css('color','black');
+		$('#showPassWordConfirmMsg').html('请输入英文字母、数字或下划线，长度5-20个字符.');
+	}).blur(function(){
+		var pwd = $('#txtPassWord').val();
+		var conpwd = $(this).val();
+		if(conpwd != '' && conpwd != null && conpwd != undefined && conpwd == pwd){
+			$('#showPassWordConfirmImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+			$('#showPassWordConfirmMsg').css('color','black').html('确认密码正确.');
+		}else{
+			$('#showPassWordConfirmImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+			$('#showPassWordConfirmMsg').css('color','red').html('确认密码错误.');
+		}
+	});
+	
+	//email
+	$('#email').focus(function(){
+		$('#showEmailImg').css('color','black');
+		$('#showEmailMsg').html('请输入英文字母、数字或下划线，长度5-20个字符.');
+	}).blur(function(){
+		var email = $(this).val();
+		if(!verify.isEmail(email)){
+			$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+			$('#showEmailMsg').css('color','red').html('请输入正确的email格式, 以便在您忘记用户名或密码的时候找回使用.');
+		}else{
+			$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+			$('#showEmailMsg').css('color','black').html('邮箱格式正确.');
+		}
+	});
+	
+	//验证码
+	$('#LoginVerifyCode').focus(function(){
+		$('#showCheckCodeImg').css('color','black');
+		$('#showCheckCodeMsg').html('请输入验证码.');
+	}).blur(function(){
+		var val = $(this).val();
+		if(val == null || val == '' || val == undefined){
+			$('#showCheckCodeImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+			$('#showCheckCodeMsg').css('color','red').html('请输入验证码.');
+		}else{
+			$('#showCheckCodeImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+			$('#showCheckCodeMsg').css('color','black').html('已输入验证码.');
+		}
+	});
 });
 
+
+//注册按钮点击事件
+function registerSubmit(){
+	$('#registerForm').submit();
+}
+
+//账号信息校验方法
 function check(){
 	//账号
-	var reg_loginName = /[a-zA-Z0-9_]{5,20}/;
 	var loginName = $('#loginName').val();
-	if(!reg_loginName.test(loginName)){
-		$('#loginNameNotice').html('×');
+	if(!verify.checkname(loginName)){
+		$('#showUserNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+		$('#showUserNameMsg').css('color','red').html('由5-20位字母、数字或下划线组成.');
 		$('#loginName').focus();
 		return false;
 	}
 	//密码
-	var reg_number = /[a-zA-Z0-9]{5,20}/;
-	var passWord = $('#passWord').val();
-	if(!reg_number.test(passWord)){
-		$('#passWordNotice').html('×');
-		$('#passWord').focus();
+	var passWord = $('#txtPassWord').val();
+	if(!verify.checkname(passWord)){
+		$('#showPasswordImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+		$('#showPasswordMsg').css('color','red').html('请输入英文字母、数字或下划线，长度5-20个字符.');
+		$('#txtPassWord').focus();
 		return false;
 	}
-	//两次密码是否一致
-	var confirmPassWord = $('#confirmPassWord').val();
-	if(confirmPassWord != passWord ){
-		$('#confirmPassWordNotice').html('×');
-		$('#confirmPassWord').focus();
+	//确认密码
+	var conpwd = $('#passWordConfirm').val();
+	if(conpwd != passWord){
+		$('#showPassWordConfirmImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+		$('#showPassWordConfirmMsg').css('color','red').html('确认密码错误.');
+		$('#passWordConfirm').focus();
 		return false;
 	}
-	//电话/手机--暂时去掉所有电话的check项, 只保留非空
-	var phone = $('#phone').val();
-	if(phone == null || phone == ''){
-		$('#phoneNotice').html('×');
-		$('#phone').focus();
-	}
-/*	if(!verify.checkTel(phone)){
-		$('#phoneNotice').html('×');
-		$('#phone').focus();
-		return false;
-	}	*/
-	
-	//暂时去掉所有邮箱的check项, 只保留非空
+	//email
 	var email = $('#email').val();
-	if(email == null || email == ''){
-		$('#email').html('×');
-		$('#email').focus();
-	}
-/*	
 	if(!verify.isEmail(email)){
-		$('#emailNotice').html('请输入正确的邮箱格式,如:tudou@163.com');
+		$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+		$('#showEmailMsg').css('color','red').html('请输入正确的email格式, 以便在您忘记用户名或密码的时候找回使用.');
 		$('#email').focus();
 		return false;
-	}	*/
-	//地区
-/*	var area_lv3 = $('#area_lv3').val();
-	if(area_lv3 == null || area_lv3 == ''){
-		$('#areaNotice').html('为方便残联中心和您沟通,请填写准确的所在地区');
-		$('#area_lv1').focus();
-		return false;
-	}	*/
+	}
 	//验证码
 	var LoginVerifyCode = $('#LoginVerifyCode').val();
-	if(LoginVerifyCode == null || LoginVerifyCode == ''){
-		$('#LoginVerifyCodeNotice').html('请填写验证码');
+	if(LoginVerifyCode == null || LoginVerifyCode == '' || LoginVerifyCode == undefined){
+		$('#showCheckCodeImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+		$('#showCheckCodeMsg').css('color','red').html('请输入验证码.');
 		$('#LoginVerifyCode').focus();
 		return false;
 	}
 	return true;
 }
 
-//用户名焦点离开
-function blur_loginName(){
-	//职位名称
-	var reg_loginName = /[a-zA-Z0-9_]{6,16}/;
-	var loginName = $('#loginName').val();
-	if(!reg_loginName.test(loginName)){
-		$('#loginNameNotice').html('×');
-		return false;
-	}
-	$.ajax({
-		url : server.url + 'user/check/' + loginName,
-		dataType : 'json',
-		type : 'GET',
-		async : false,
-		success : function(json) {
-			//存在时
-			if(json.notice == 'success'){
-				$('#loginNameNotice').html('√');
-				//选中时
-				$('#btn-submit').removeClass('gray').addClass('blue').removeAttr('disabled');
-				return false;
-			}
-			if(json.notice == 'failure'){
-				$('#loginNameNotice').html('该用户名已经存在, 请重新填写一个.');
-				//按钮变灰
-				$('#btn-submit').removeClass('blue').addClass('gray').attr('disabled','disabled');
-				return false;
-			}
-		},
-	});
-}
 
-//用户名获得焦点
-function focus_loginName(){
-	$('#loginNameNotice').html('用户名只能为字母, 数字和下划线_, 长度为5-20位.');
-}
-
-//密码焦点获得
-function focus_passWord(){
-	$('#passWordNotice').html('密码只能为字母, 数字, 长度为5-20位');
-}
-
-//密码焦点离开
-function blur_passWord(){
-	var passWord = $('#passWord').val();
-	if(verify.isNumberOr_Letter(passWord)){
-		$('#passWordNotice').html('√');
-	}else{
-		$('#passWordNotice').html('×');
-	}
-}
-
-//确认密码密码焦点离开
-function blur_confirmPassWord(){
-	var passWord = $('#passWord').val();
-	var confirmPassWord = $('#confirmPassWord').val();
-	if(confirmPassWord == null || confirmPassWord == ''){
-		$('#confirmPassWordNotice').html('×');
-		return false;
-	}
-	if(passWord == confirmPassWord){
-		$('#confirmPassWordNotice').html('√');
-	}else{
-		$('#confirmPassWordNotice').html('×');
-	}
-}
-
-//联系电话焦点获得
-function focus_phone(){
-	$('#phoneNotice').html('联系方式为手机或座机');
-}
-
-//联系电话焦点离开
-function blur_phone(){
-	var phone = $('#phone').val();
-	if(verify.checkTel(phone)){
-		$('#phoneNotice').html('√');
-	}else{
-		$('#phoneNotice').html('×');
-	}
-}
-
-//邮箱焦点获得
-function focus_email(){
-	$('#emailNotice').html('请输入正确的邮箱格式,如:tudou@163.com');
-}
-
-//邮箱焦点离开
-function blur_email(){
-	var email = $('#email').val();
-	if(verify.isEmail(email)){
-		$('#emailNotice').html('√');
-	}else{
-		$('#emailNotice').html('×');
-	}
-}
-
-//验证码焦点获得
-function focus_email(){
-	$('#LoginVerifyCodeNotice').html('请填写验证码');
-}
-
-//验证码焦点离开
-function blur_email(){
-	var LoginVerifyCode = $('#LoginVerifyCode').val();
-	if(LoginVerifyCode == null || LoginVerifyCode == ''){
-		$('#LoginVerifyCode').html('×');
-	}else{
-		$('#LoginVerifyCode').html('√');
-	}
-}
-
-
-//复选框来控制提交按钮是否可用
-function ckb_agree(){
-	var agree = $('#ckb-agree').is(':checked');
-	if(agree){
-		//选中时
-		$('#btn-submit').removeClass('gray').addClass('blue').removeAttr('disabled');
-	}else{
-		//没选中时
-		//按钮变灰
-		$('#btn-submit').removeClass('blue').addClass('gray').attr('disabled','disabled');
-	}
-}

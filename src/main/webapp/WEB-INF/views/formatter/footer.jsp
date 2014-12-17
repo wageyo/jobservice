@@ -7,26 +7,80 @@
 	<!-- 脚部 begin -->
 	<div class="footertext">
 		<p>
-			<a href="ContactUs.aspx?crumbs=001044" title="关于网站">关于网站</a>&nbsp;|&nbsp;<a
-				href="ContactUs.aspx?crumbs=001044" title="网站声明">网站声明</a>&nbsp;|&nbsp;<a
-				href="ContactUs.aspx?crumbs=001044" title="服务中心">服务中心</a>&nbsp;|&nbsp;<a
-				href="ContactUs.aspx?crumbs=001044" title="用户反馈">用户反馈</a>&nbsp;|&nbsp;<a
-				href="ContactUs.aspx?crumbs=001044" title="合作伙伴">合作伙伴</a>&nbsp;|&nbsp;<a
-				href="ContactUs.aspx?crumbs=001044" title="友情链接">友情链接</a>&nbsp;|&nbsp;<a
-				href="ContactUs.aspx?crumbs=001044" title="联系我们">联系我们</a>&nbsp;|&nbsp;<a
-				href="http://manager.jyfw.org.cn" target="_blank">后台登陆</a>
+			<a href="${contextPath }/index">首页</a>&nbsp;|&nbsp;
+			<a href="http://www.hrbesd.com" target="_blank">关于我们</a>&nbsp;|&nbsp;
+			<a href="#">意见反馈</a>&nbsp;|&nbsp;
+			<a href="${contextPath }/contact" >联系我们</a>&nbsp;|&nbsp;
+			<a href="javascript:alert('建设中');" target="_blank" title="站长统计">站长统计</a>&nbsp;|&nbsp;
+			<a href="${contextPath }/loginManage/login" title="登陆管理后台" style="color:blue;">管理后台</a>
 		</p>
-		<p>广东省残疾人就业服务中心 &nbsp;&nbsp;版权所有 粤ICP备1401007号 &nbsp;&nbsp;</p>
-		<p>Copyright(c) 2010 - 2016 jyfw.org.cn All Rigths Reserved</p>
-		<p>就业指导：020-83351933,职业培训：020-39075705,职业能力测评：020-38976543邮件:
-			CJR_jiuyezhongxin@163.com</p>
+		<p>&copy; 2013 hrbesd.com, Inc. 哈尔滨亿时代数码科技开发有限公司, All rights reserved. 黑ICP备10202513号</p>
 	</div>
 	<!-- 脚部 end -->
 	
 	<!-- 脚部弹出层 begin -->
-	<div style="text-align:center; margin:0 auto; width:520px;">
-		
-	</div>
+	<script type="text/javascript">
+		/*
+		    alertWindow by taozhi
+		    消息框
+		 */
+		jQuery.extend({
+		    alertWindow:function(title,content,bgcolor){
+		        var title = title; //标题
+		        var content = content; //内容
+		        var color1; //背景颜色
+		        if(bgcolor===undefined){
+		            color1 = "#FF7C00";
+		        }else{
+		            color1 = bgcolor;
+		        }
+		        //查找body中是否存在该消息框
+		        if($("body").find(".alertWindow1").length===0){
+		        //不存在
+		            var alertHtml = '<div  class="alertWindow1" style="width: 100%;height: 100%; background:rgba(0,0,0,0.5);position: fixed; left:0px; top: 0px; z-index: 9999;">'+
+		                                '<div  style="width: 400px; height: 200px;background: #FFF;margin: 180px auto;border: 2px solid #CFCFCF; border-bottom: 10px solid '+color1+';">'+
+		                                    '<div  style="width: inherit;height: 20px;">'+
+		                                        '<div class="alertWindowCloseButton1" style="float: right; width: 10px; height: 20px;margin-right:5px;font-family:\'microsoft yahei\';color:'+color1+';cursor: pointer;">X</div>'+
+		                                    '</div>'+
+		                                    '<h1 class="alertWindowTitle" style="margin-top:20px;text-align:center;font-family:\'宋体\';font-size: 18px;font-weight: normal;color: '+color1+';">'+title+'</h1>'+
+		                                    '<div class="alertWindowContent" style="width:360px;px;height: 60px;padding-left:20px;padding-right:20px;text-align:center;font-size: 15px;color: #7F7F7F;">'+content+'</div>'+
+		                                    '<p><input class="alertWindowCloseSure1" type="button" value="确定" style="width: 100px;height: 50px;background:'+color1+';border:none;position: relative;bottom: 18px;font-size:18px;color:#FFFFFF;-webkit-border-radius: 10px;-moz-border-radius: 10px;border-radius: 10px;cursor: pointer;"></p>'+
+		                                '</div>'+
+		                           '</div>';
+		            $("body").append(alertHtml);
+		            /*
+		             绑定事件
+		             */
+		            var $alertWindow = $(".alertWindow1"); //窗口对象
+		            //右上角关闭按钮
+		            $(".alertWindowCloseButton1").click(function(){
+		                $alertWindow.hide();
+		            });
+		            //确定按钮
+		            $(".alertWindowCloseSure1").click(function(){
+		                $alertWindow.hide();
+		            });
+		        }else{
+		        //存在
+		            //设置标题
+		            $(".alertWindowTitle").text(title);
+		            //设置内容
+		            $(".alertWindowContent").text(content);
+		            //显示
+		            $(".alertWindow1").show();
+		        }
+		    }
+		});
+		</script>
+	
+	<c:if test="${message != null}">
+		<input type="hidden" value="${messageType }" id="messageType" />
+		<input type="hidden" value="${message }" id="message" />
+		<script type="text/javascript">
+			var message = $('#message').val();
+			jQuery.alertWindow("提示信息",message);
+		</script>
+	</c:if>
 	<!-- 脚部弹出层 end -->
 	
 </div>

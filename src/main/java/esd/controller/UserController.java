@@ -64,7 +64,11 @@ public class UserController {
 			if (!isResponseCorrect) {
 				redirectAttributes.addFlashAttribute("messageType", "0");
 				redirectAttributes.addFlashAttribute("message", "验证码错误");
-				return "redirect:/regP";
+					if(Constants.Identity.COMPANY.getValue().equals(user.getIdentity())){
+						return "redirect:/regC";
+					}else{
+						return "redirect:/regP";
+					}
 			}
 		} catch (CaptchaServiceException e) {
 			log.error("error in check", e);
@@ -99,6 +103,7 @@ public class UserController {
 		if (u_bl) {
 			redirectAttributes.addFlashAttribute("messageType", "0");
 			redirectAttributes.addFlashAttribute("message", "注册请求已提交, 请等待管理员审核");
+			return "redirect:/index";
 		} else {
 			CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
 			CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
@@ -106,8 +111,8 @@ public class UserController {
 			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
 			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+			return "redirect:/user/goCenter";
 		}
-		return "redirect:/index";
 	}
 
 	// 根据id得到一个账号对象

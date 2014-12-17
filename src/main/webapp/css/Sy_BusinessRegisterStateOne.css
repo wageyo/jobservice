@@ -1,0 +1,170 @@
+﻿.RegisterMain
+{
+	width: 915px;
+	margin: 10px auto;
+}
+.RegisterMain .RegisterButtom
+{
+	background: url( '../images/BusinessRegister/RegisterButton.gif' ) no-repeat;
+	width: 182px;
+	height: 52px;
+	border: 0px;
+	float: left;
+	margin-top: 20px;
+	margin-left: 100px;
+	cursor: pointer;
+}
+.RegisterMain .BusinessRegisterText
+{
+	background: url( '../images/BusinessRegister/BusinessRegisterText.jpg' ) no-repeat left;
+	width: 915px;
+	height: 60px;
+	border-bottom: 3px solid #daeeff;
+}
+.RegisterMain .BusinessRegisterText .text
+{
+	float: right;
+	margin-top: 40px;
+	margin-right: 20px;
+}
+.RegisterMain .RegisterTable
+{
+	width: 915px;
+	height: 360px;
+}
+.RegisterMain .RegisterTable a
+{
+	color: #168ff5;
+}
+.RegisterMain .RegisterTable tr th
+{
+    height:60px;
+    line-height:60px;
+    font-size:18px;
+    text-align:left;
+}
+.RegisterMain .RegisterTable td
+{
+	height: 50px;
+	line-height: 50px;
+	white-space: nowrap;
+}
+.RegisterMain .RegisterTable td.printText
+{
+    text-align:left;
+}
+/*输入框样式*/
+.RegisterMain .RegisterTable td div.print
+{
+    width:246px;
+    height:41px;
+    background:url(../images/Sy_Qzzx_Grzc/print1.gif) no-repeat;
+}
+.RegisterMain .RegisterTable td div.print input
+{
+    border:0;
+    margin-top:5px;
+    margin-left:9px;
+    width:228px;
+    height:28px;
+    line-height:28px;
+    font-size:20px;
+}
+.RegisterMain .RegisterTable td div.printhover
+{
+    width:246px;
+    height:41px;
+    background:url(../images/Sy_Qzzx_Grzc/print2.gif) no-repeat
+}
+.RegisterMain .RegisterTable td div.printhover input
+{
+    border:0;
+    margin-top:5px;
+    margin-left:9px;
+    width:228px;
+    height:28px;
+    line-height:28px;
+    font-size:20px;
+}
+
+.RegisterMain .RegisterTable td div.print2
+{
+    margin:15px 0 0 2px;
+    width:119px;
+    height:30px;
+    border:1px solid #dddddd;
+}
+.RegisterMain .RegisterTable td div.print2 input
+{
+    width:109px;
+    margin-top:2px;
+    height:27px;
+    line-height:27px;
+    border:0;
+    font-size:20px;
+}
+
+.RegisterMain .RegisterTable .red
+{
+	color: Red;
+}
+.RegisterMain .RegisterTable .Verification
+{
+	width: auto;
+}
+
+.Verification div
+{
+	float: left;
+	height: 60px;
+	line-height: 60px;
+}
+ .ChangeAnother
+{
+	color: #168ff5;
+	cursor: pointer;
+}
+
+ .ChangeAnother .VerificationImage
+{
+	float: left;
+	background: url( '../images/BusinessRegister/VerificationImage.gif' ) no-repeat;
+	width: 68px;
+	height: 25px;
+	margin: 17px 5px 0px 10px;
+}
+.RegisterMain .RegisterTable .textAlignLeft
+{
+	text-align: left;
+}
+.RegisterMain .RegisterTable .FontSize
+{
+	text-align: left;
+}
+.RegisterMain .RegisterTable .textAlignRight
+{
+	text-align: right;
+}
+.RegisterMain .RegisterTable .VerticalAlign
+{
+	vertical-align: middle;
+	cursor: pointer;
+}
+ .CorrectFormtips /*中间内容_右边（登录信息：正确提示框）*/
+{
+    width: 14px;
+    height: 14px;
+    float: left;
+    margin-top:18px;
+    background: url("../images/Sy_QyhydlImage/Correct.gif") no-repeat;
+    
+}
+.ErrorFormtips /*中间内容_右边（登录信息：错误提示框）*/
+{
+    width: 14px;
+    height: 14px;
+    float: left;
+    margin-top:18px;
+    background: url("../images/Sy_QyhydlImage/ErrorTip.gif") no-repeat;
+   
+}
