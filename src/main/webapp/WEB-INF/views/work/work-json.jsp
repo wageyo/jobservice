@@ -6,22 +6,22 @@
 	<div class="list11">
 		<table width="990px" border="0" cellspacing="0" cellpadding="0">
 		<c:forEach items="${entity.list}" var="item">
-			<tr class="list11">
+			<tr class="list11"><%--
 				<td width="29px" height="30">&nbsp;</td>
-				<td width="200px" class="s13_blue_b">
-					<a href='${contextPath }/job/getOneForShow?id=${item.id}'> <span id="Repeater1_ctl00_Label1" style="color:#345478;">${item.name}</span> </a>
+				--%><td width="200px" class="s13_blue_b" id="tabaleDataStyle">
+					<a href='${contextPath }/job/getOneForShow?id=${item.id}'> <span id="Repeater1_ctl00_Label1" style="color: #0868C8;">${item.name}</span> </a>
 				</td>
-				<td width="203px" class="s13_blue_b" style="color: #345478">
-					 <a href="${contextPath }/company/getOneForShow?id=${item.companyid}"><span id="Repeater1_ctl00_Label2" style="color:#345478;">${item.company}</span></a>
+				<td width="203px" class="s13_blue_b" id="tabaleDataStyle">
+					 <a href="${contextPath }/company/getOneForShow?id=${item.companyid}"><span id="Repeater1_ctl00_Label2" >${item.company}</span></a>
 				</td>
-				<td width="122px" class="s13_blue_b" style="color: #345478">
-					<span id="Repeater1_ctl00_Label3" style="color:#345478;">${item.area}</span>
+				<td width="122px" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label3" >${item.area}</span>
 				</td>
-				<td width="145px" class="s13_blue_b" style="color: #345478;">
-					<span id="Repeater1_ctl00_Label6" style="color:#345478;">${item.experience}</span>
+				<td width="145px" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label6" >${item.experience}</span>
 				</td>
-				<td width="150px" class="s13_blue_b" style="color: #345478; text-align: center">
-					<span id="Repeater1_ctl00_Label7" style="color:#345478;">${item.date}</span>
+				<td width="150px" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label7" >${item.date}</span>
 				</td>
 			</tr>
 		</c:forEach>
