@@ -4,36 +4,37 @@
 
 <div id="data" style="display: none">
 	<div class="list11">
-		<table width="990px" border="0" cellspacing="0" cellpadding="0">
+		<table width="988px" border="0" cellspacing="0" cellpadding="0">
 		<c:forEach items="${entity.list}" var="item">
-			<tr class="list11" style="text-align: center;">
-				<td width="20px" height="30">&nbsp;<input type="hidden" name="id" value="${item.id }"/></td>
-				<td width="70px" class="s13_blue_b" style="color: #345478;">
-					 <span id="Repeater1_ctl00_Label2" style="color:#345478;">${item.title}</span>
+			<tr class="list11" style="text-align: center;"><%--
+				<td width="20px" height="30">&nbsp;</td>
+				--%><td width="90px" class="s13_blue_b" id="tabaleDataStyle"><input type="hidden" name="id" value="${item.id }"/>
+					 <span id="Repeater1_ctl00_Label2" >${item.title}</span>
 				</td>
 				<td width="70px" class="s13_blue_b">
-					<a href='${contextPath }/resume/getOneForShow?id=${item.id}'> <span id="Repeater1_ctl00_Label1" style="color:#345478;">${item.name}</span> </a>
+					<a href='${contextPath }/resume/getOneForShow?id=${item.id}'>
+					 <span id="Repeater1_ctl00_Label1" style="color: #0868C8;">${item.name}</span> </a>
 				</td>
-				<td width="50px" class="s13_blue_b" style="color: #345478;">
-					 <span id="Repeater1_ctl00_Label2" style="color:#345478;">${item.gender}</span>
+				<td width="50px" class="s13_blue_b" id="tabaleDataStyle">
+					 <span id="Repeater1_ctl00_Label2" >${item.gender}</span>
 				</td>
-				<td width="50px" class="s13_blue_b" style="color: #345478;">
-					<span id="Repeater1_ctl00_Label3" style="color:#345478;">${item.education}</span>
+				<td width="50px" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label3">${item.education}</span>
 				</td>
-				<td width="100px" class="s13_blue_b" style="color: #345478;">
-					<span id="Repeater1_ctl00_Label6" style="color:#345478;">${item.major}</span>
+				<td width="100px" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label6">${item.major}</span>
 				</td>
-				<td width="80" class="s13_blue_b" style="color: #345478;">
-					<span id="Repeater1_ctl00_Label7" style="color:#345478;">${item.experience}</span>
+				<td width="80" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label7">${item.experience}</span>
 				</td>
-				<td width="100" class="s13_blue_b" style="color: #345478;">
-					<span id="Repeater1_ctl00_Label7" style="color:#345478;">${item.desireJob}</span>
+				<td width="100" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label7">${item.desireJob}</span>
 				</td>
-				<td width="80" class="s13_blue_b" style="color: #345478;">
-					<span id="Repeater1_ctl00_Label7" style="color:#345478;">${item.desireAddress}</span>
+				<td width="100" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label7">${item.desireAddress}</span>
 				</td>
-				<td width="120" class="s13_blue_b" style="color: #345478;">
-					<span id="Repeater1_ctl00_Label7" style="color:#345478;">${item.desireSalary}</span>
+				<td width="80" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label7">${item.desireSalary}</span>
 				</td>
 			</tr>
 		</c:forEach>

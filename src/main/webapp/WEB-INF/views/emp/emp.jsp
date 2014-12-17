@@ -8,10 +8,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 <meta content="残疾人招聘就业" name="description" />
-<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/body_job.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/search.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/public.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/body_job.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/search.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/Login.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/VerticalLineUL.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicSearch.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicframeOne.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicframeTwo.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/hp_fwdt.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageCSS.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/tabCSS.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 <title>残疾人就业信息网</title>
 <script type="text/javascript">
@@ -63,13 +75,10 @@
 <body>
 <div id="container" class="container">
 	<jsp:include page="../formatter/status-bar.jsp" />
-	<jsp:include page="../header.jsp" />
+	<jsp:include page="../formatter/header.jsp" />
 
 
-	<div id="xdAC">
-		<div class="imga">
-			<img src="${contextPath}/images/c2e34940b08940b48f3255b493b4ba68_zph_2013_ad_full.gif" alt="招聘频道" width="990" height="80" border='0'>
-		</div>
+	<div id="xdAC">	
 		<div class="title4">简历搜索</div>
 		<div class="xinxi">
 			<div id="xdSearch2">
@@ -80,14 +89,14 @@
 				<div class="sousuo2">
 					<p>
 						就职意向： 
-						<select name="jobCategory" id="jobCategory" style="width: 270px">
+						<select name="jobCategory" id="jobCategory" style="width: 270px;height:23px">
 							<c:forEach items="${jcList }" var="jc">
 								<option value="${jc.code }">${jc.name }</option>
 							</c:forEach>
 						</select>
 					</p>
 					<p class="p1">
-						学历： <select name="education" id="education" style="width: 100px">
+						学历： <select name="education" id="education" style="width: 100px;height:23px">
 							<c:forEach items="${params }" var="p">
 								<c:if test="${p.type == 'education' }">
 									<option value="${p.value }">${p.name }</option>
@@ -105,7 +114,7 @@
 						</select>
 					</p> -->
 					<p>
-						就职方式： <select name="jobNature" id="jobNature" style="width: 100px">
+						就职方式： <select name="jobNature" id="jobNature" style="width: 100px;height:23px">
 							<c:forEach items="${params }" var="p">
 								<c:if test="${p.type == 'jobNature' }">
 									<option value="${p.value }">${p.name }</option>
@@ -116,7 +125,7 @@
 
 					
 					<p>
-						性别： <select name="gender" id="gender" style="width: 80px">
+						性别： <select name="gender" id="gender" style="width: 80px;height:23px">
 							<c:forEach items="${params }" var="p">
 								<c:if test="${p.type == 'gender' }">
 									<option value="${p.value }">${p.name }</option>
@@ -126,10 +135,11 @@
 						</select>
 					</p>
 					<p>
-						关键词： <input name="keyWord" type="text" id="keyWord" style="width: 140px">
+						关键词： <input name="keyWord" type="text" id="keyWord" style="width: 140px;height:19px">
 					</p>
 					<p>
-						<input type="image" name="ImageButton1" id="ImageButton1" onclick="common.pagination(1)" class="send55" src="images/search_but.gif" style="border-width:0px;">
+				
+						<input type="image" name="ImageButton1" id="ImageButton1" onclick="common.pagination(1)" class="send55" src="images/HomePageImage/SearchImage/SearchBtn.gif" style="border-width:0px;">
 					</p>
 				</div>
 			</div>
@@ -149,8 +159,8 @@
 			</div>
 		</div>
 		<div style="clear: both;"></div>
-		<div class="xBandEnterpriseH" style="background-image: url(images/menu_bg_r16_c7.jpg);
-                border-left: 1px solid #AACCEF; border-right: 1px solid #AACCEF;">
+		<div class="xBandEnterpriseH" style="background-image: url(images/PublicImage/PublicframeOneImage/PublicframeOneHeaderBar.jpg);
+                repeat-x">
 			<div class="xBandEnterpriseHRight"></div>
 			<span style="margin-left: 10px;">最新更新的招聘信息</span>
 		</div>
@@ -158,25 +168,25 @@
 			<div id="ctl00_ctl00_cph_cph_div_NewPosts" class="NewPosts">
 				<div class="job_list">
 
-					<table width="990px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
-						<tr style="background-color: #ECF4FF; text-align: center">
+					<table width="988px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
+						<tr style="background-color: #ECF4FF; text-align: center"><%--
 							<td width="20" height="30">&nbsp;</td>
-							<td width="70px" class="s13_blue_b" style="color: #345478">简历标题</td>
-							<td width="70px" class="s13_blue_b" style="color: #345478">姓名</td>
-							<td width="50px" class="s13_blue_b" style="color: #345478;">性别</td>
-							<td width="80px" class="s13_blue_b" style="color: #345478">学历</td>
-							<td width="70px" class="s13_blue_b" style="color: #345478">专业</td>
-							<td width="80px" class="s13_blue_b" style="color: #345478;">工作经验</td>
-							<td width="100px" class="s13_blue_b" style="color: #345478">求职岗位</td>
-							<td width="80px" class="s13_blue_b" style="color: #345478">期望工作地</td>
-							<td width="120px" class="s13_blue_b" style="color: #345478">期望薪资</td>
+							--%><td  height="30" width="90px" class="s13_blue_b" id="tableHeadStyle">简历标题</td>
+							<td width="70px" class="s13_blue_b" id="tableHeadStyle">姓名</td>
+							<td width="50px" class="s13_blue_b" id="tableHeadStyle">性别</td>
+							<td width="80px" class="s13_blue_b" id="tableHeadStyle">学历</td>
+							<td width="70px" class="s13_blue_b" id="tableHeadStyle">专业</td>
+							<td width="80px" class="s13_blue_b" id="tableHeadStyle">工作经验</td>
+							<td width="100px" class="s13_blue_b" id="tableHeadStyle">求职岗位</td>
+							<td width="100px" class="s13_blue_b" id="tableHeadStyle">期望工作地</td>
+							<td width="80px" class="s13_blue_b" id="tableEndStyle">期望薪资</td>
 						</tr>
 					</table>
 					<div id="main"></div>
 				</div>
 			</div>
 		</div>
-		<jsp:include page="../footer.jsp" />
+		<jsp:include page="../formatter/footer.jsp" />
 		</div>
 </body>
 </html>
