@@ -2587,3 +2587,56 @@ padding-top: 10px;
 
     border: 0px;
 }
+/* emp.jsp页面样式 */
+/* #maincontent {
+width: 990px;
+margin: 0 auto;
+height: 100%;
+}
+div#container div#leftsidebar {
+width: 709px;
+float: left;
+margin-right: 5px;
+}
+div#leftsidebar div.s_search {
+padding: 8px 0 12px 0;
+margin-bottom: 8px;
+border: 1px solid #b5d3eb;
+background: url("../images/HomePageImage/search/s_seacherpd.gif") repeat-x;
+}
+div.s_search div.Search {
+margin-left: auto;
+margin-right: auto;
+}
+div.s_search div.Search {
+height: 66px;
+width: 675px;
+}
+.Search .SearchInputText {
+margin-top: 5px;
+}
+.Search .InputTextBg {
+background: url(../images/HomePageImage/SearchImage/SearchImage.gif) no-repeat left;
+width: 394px;
+border: 1px solid #7fc5fe;
+}
+.SetFloatLeft {
+float: left;
+}
+.Search .InputTextBg .InputTextBlank {
+line-height: 24px;
+border: 0px;
+height: 24px;
+width: 365px;
+float: right;
+color: gray;
+}
+.SetFloatLeft {
+float: left;
+}
+.Search .SearchButtom {
+background: url(../images/HomePageImage/SearchImage/SearchBtn.gif) no-repeat right;
+width: 87px;
+height: 26px;
+margin-left: 10px;
+} */
