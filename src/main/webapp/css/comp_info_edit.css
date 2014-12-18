@@ -1,0 +1,694 @@
+body
+{
+    margin: 0 auto;
+}
+em
+{
+    color: Red;
+}
+
+#main_content
+{
+    border: 1px solid #b9d5eb;
+    margin: 5px 0;
+    background-color: #eef8ff;
+}
+
+#main0 ul
+{
+    display: none;
+}
+
+#main0 ul.block
+{
+    display: block;
+}
+/*#main0 ul li input
+{
+    height:20px;
+    line-height:20px;
+}*/
+#progessbar
+{
+    width: 100px;
+}
+.style1
+{
+    height: 25px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+
+.tab_list li
+{
+    display: block;
+    color: #0095ff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tab_list li.hover
+{
+    color: Orange;
+    background: url(../images/PublicImage/PublicframeFourImage/PublicPositionImage_bottomline.gif) no-repeat 0 bottom;
+}
+
+.main0
+{
+    padding: 8px;
+    text-align: center;
+}
+
+.main0 em
+{
+    font-style: normal;
+    color: Red;
+}
+
+.form_head
+{
+    text-align: left;
+    margin: 1em 3em;
+}
+
+.form_title
+{
+    color: #0462be;
+    font-weight: bold;
+    border: none;
+}
+
+.tbl1
+{
+    float: left;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    border-collapse: collapse;
+    _border-right: 1px solid #e2e2e2;
+    line-height: 30px;
+    width:100%;
+}
+.tbl1 td
+{
+    border: 1px solid #e2e2e2;
+    text-align: left;
+    padding-left: 2em;
+}
+.tbl1 td select
+{
+	display:inline-block;
+	width:232px;
+	padding: 2px 3px;
+}
+
+.tbl1 tr.MepValidateTD td
+{
+    border: 1px solid #e2e2e2;
+    text-align: left;
+    padding-left: 2em;
+}
+.length
+{
+    width: 200px;
+}
+.tbl1c1
+{
+    width: 80px;
+    background-color: #f3f7fa;
+}
+
+.tbl1c2
+{
+    padding-left: 2em;
+}
+
+.tbl2
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    border-collapse: collapse;
+    line-height: 30px;
+    height: 29px;
+    border: 1px solid #b9d5ed;
+    border-top: none;
+}
+
+.tbl2 th
+{
+    background-image: url(../images/qyzx_qyxxImage/tab_list_bg.gif);
+    text-align: center;
+    border-left: 1px solid #c8d2db;
+    _border-bottom: 1px solid #c8d2db;
+    border-right: 1px solid #c8d2db;
+}
+.tbl2 td
+{
+    /* border-bottom: #c0c0c0 1px solid;*/
+    text-align: center;
+    line-height: 40px;
+}
+
+.tbl2c1
+{
+    width: 70px;
+}
+
+.tbl2c2
+{
+    width: 245px;
+}
+
+.tbl2c3
+{
+    width: 175px;
+}
+
+.tbl2c4
+{
+    width: 140px;
+}
+
+.tbl2c5
+{
+    width: 140px;
+}
+
+.tbl2c2, .tbl2c3, .tbl2c4
+{
+    text-align: left;
+    padding-left: 1em;
+}
+
+.clearboth
+{
+    clear: both;
+}
+
+td.preview
+{
+    width: 140px;
+    background-color: #f9f9f9;
+    border: 1px solid #e2e2e2;
+    padding: 1em;
+    vertical-align: top;
+    text-align: center;
+}
+
+.preview span
+{
+    float: left;
+    width: 80%;
+    margin-left: 1em;
+    margin-bottom: 2em;
+    text-align: left;
+}
+
+.preview a
+{
+    position: relative;
+    top: 10%;
+}
+
+.s_icon
+{
+    line-height: 2em;
+    width: 60px;
+    margin: 0 auto;
+}
+
+.b_icon
+{
+    line-height: 2em;
+    margin-top: 2em;
+    width: 120px;
+    margin: 20px auto;
+}
+
+a.buttons
+{
+    position: relative;
+    top: 7px;
+}
+
+input[type="text"]
+{
+    width: 220px;
+    height:20px;
+    line-height:20px;
+    border: 1px solid #c5c5c5;
+	display: inline;
+	padding: 2px 5px;
+}
+
+.content .positionbottom
+{
+    height: 100%;
+}
+
+.radio
+{
+    width: 100%;
+    display: inline;
+}
+.radio span
+{
+    padding: 0 20px;
+    display: block;
+    float: left;
+    width: 60px;
+    margin: 5px 60px 10px 30px;
+    _margin: 5px 83px 10px 10px;
+}
+.radio span input
+{
+    vertical-align: middle;
+}
+.Ctrl
+{
+    text-align: left;
+    padding-left: 240px;
+}
+.Ctrl a
+{
+    margin-left: 10px;
+}
+.footertext
+{
+    width: 990px;
+    height: 109px;
+    background: url(../../image/HomePageImage/FooterImage/linkbottom_bg.gif) repeat-x;
+    padding-top: 15px;
+}
+.tbl1 .textTop
+{
+	width:120px;
+    padding-left: 0em;
+    text-align: right;
+    border: 1px solid #e2e2e2;
+    background-color: #f3f7fa;
+}
+
+
+.blue
+{
+    background-color: #56b0ff;
+}
+.green1
+{
+    background-color: #74da2b;
+}
+.green2
+{
+    background-color: #52a222;
+}
+.orange
+{
+    background-color: #ff8c00;
+}
+
+
+/*按钮样式*/
+/*保存按钮*/
+.saveBtn
+{
+    width: 80px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/btn_submit.gif) no-repeat;
+    border-style: none;
+}
+.saveGrayBtn
+{
+    width: 80px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/saveGrayBtn.gif) no-repeat;
+    border-style: none;
+}
+.tableUpdateBtn
+{
+    width: 19px;
+    height: 17px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/btn_edit.gif) no-repeat;
+    border-style: none;
+}
+.cancelBtn
+{
+    width: 80px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/AccountOverview/cancel.gif) no-repeat;
+    border-style: none;
+}
+.yulanBtn
+{
+    width: 82px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/yulan.gif) no-repeat;
+    border-style: none;
+}
+
+/*删除按钮*/
+.tableDeleteBtn
+{
+    width: 19px;
+    height: 17px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/btn_delete.gif) no-repeat;
+    border-style: none;
+}
+.deleteBtn
+{
+    width: 80px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/delete.gif) no-repeat;
+    border-style: none;
+}
+
+/*添加部门按钮*/
+.addDepBtn
+{
+    width: 82px;
+    height: 22px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/btn_add_dep.gif) no-repeat;
+    border-style: none;
+}
+/*重置按钮*/
+.resetBtn
+{
+    width: 80px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/reset.gif) no-repeat;
+    border-style: none;
+    margin-left: 30px;
+}
+/*上传按钮*/
+.upLoadingBtn
+{
+    width: 78px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/uploading.gif) no-repeat;
+}
+
+/*按钮们的margin值*/
+.BtnMarginTop_10px
+{
+    margin-top: 10px;
+}
+.BtnMarginAuto
+{
+    margin: 10px auto 0;
+}
+.BtnMarginRight_10px
+{
+    margin-right: 10px;
+}
+.BtnMarginLeft_10px
+{
+    margin-left: 10px;
+    _display: inline;
+}
+
+/*相片管理按钮float值*/
+.btnFloat
+{
+    float: left;
+}
+/*相片管理按钮float值*/
+.btnFloat
+{
+    float: left;
+}
+
+
+/*图片上传*/
+div.positionmiddletext table tr td div.divRedactImg
+{
+    width: 450px;
+    height: 300px;
+    margin: 0 auto;
+    color: Gray;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 300px;
+    background: url(../images/qyzx_qyxxImage/updateLey.jpg) no-repeat;
+}
+/*图片上传*/
+div.positionmiddletext table tr td div.divRedactImg_160_90
+{
+    width: 160px;
+    height: 90px;
+    margin: 0 auto;
+    color: Gray;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 90px;
+    background: url(../images/qyzx_qyxxImage/updateLey_160_90.jpg) no-repeat;
+}
+
+
+
+.enterprise_preview, .bisinesslicense_preview
+{
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+}
+.enterprise_preview, .bisinesslicense_preview
+{
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+}
+
+#businesslicenseUploaderUploader
+{
+    margin-top: 10px;
+}
+#enterpriseImageUploaderUploader
+{
+    margin-top: 10px;
+}
+
+.uqdateclick
+{
+    margin-top: 5px;
+    width: 45px;
+    height: 17px;
+    background: url(../images/PublicImage/PublicframeFourImage/update.jpg) no-repeat;
+    cursor: pointer;
+    border-style: none;
+}
+.saveclick
+{
+    width: 45px;
+    height: 17px;
+    background: url(../images/PublicImage/PublicframeFourImage/minsave.jpg) no-repeat;
+    cursor: pointer;
+    border-style: none;
+}
+.cancelclick
+{
+    margin-top: 10px;
+    width: 45px;
+    height: 17px;
+    background: url(../images/PublicImage/PublicframeFourImage/cancel.gif) no-repeat;
+    cursor: pointer;
+    border-style: none;
+}
+.morenBtn
+{
+    width: 82px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/moren.gif) no-repeat;
+    border-style: none;
+}
+
+.companyNameBtn
+{
+    width: 106px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/CompanyName.gif) no-repeat;
+    border-style: none;
+}
+.jobhunterBtn
+{
+    width: 116px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/jobhunter.gif) no-repeat;
+    border-style: none;
+}
+.positionBtn
+{
+    width: 106px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/position.gif) no-repeat;
+    border-style: none;
+}
+.closeBtn
+{
+    width: 81px;
+    height: 29px;
+    cursor: pointer;
+    background: url(../images/qyzx_qyxxImage/close.gif) no-repeat;
+    border-style: none;
+}
+
+.Sexs
+{
+    float: left;
+    border-style: none;
+}
+.Sexs td
+{
+    float: left;
+    border-style: none;
+    text-align: left;
+    padding-left: 0;
+}
+.informationEdits
+{
+    display: none;
+}
+#informationUpdate
+{
+    display: none;
+}
+.contactEdits
+{
+    display: none;
+}
+#contactUpdate
+{
+    display: none;
+}
+#txtEmailTitle
+{
+    width: 630px; *width: 645px; _width: 645px;
+}
+
+
+
+/*单位模板*/
+.qiye_head
+{
+    width:100%;
+    height:90px;
+}
+/*上传单位横幅*/
+.qiye_head .qiye_title
+{
+    width:252px;
+    height:79px;
+    line-height:79px;
+    border:1px solid #ccc;
+    font-size:16px;
+    font-weight:bold;
+    text-align:center;
+    float:left;
+}
+.qiye_head .qiye_title img{ width:248px; height:75px; margin:2px;}
+.qiye_head .qiye_Update
+{
+    width:auto;
+    padding-top:10px;
+    padding-left:20px;
+    float:left;
+}
+.qiye_head .qiye_Update input{ border:0 none; background:none;}
+.qiye_head .qiye_Update p{height:50px; line-height:50px;}
+.qiye_head .qiye_Update .btn_Update
+{
+    width:78px;
+    height:27px;
+    background:url(../images/uploadifyImage/images/selectfiles.gif) no-repeat;
+}
+
+/*选择单位模板*/
+.qiye_master
+{
+    width:100%;
+    padding-top:10px;
+}
+.qiye_master .master_title
+{
+    width:100%;
+    height:30px;
+    line-height:30px;
+    text-indent:1em;
+    background:#f0f7ff;
+}
+.qiye_master .master_main
+{
+    width:100%;
+    margin-bottom:30px;
+}
+#main0 .form0 .form_head .qiye_master .master_main ul{ display:block;}
+.qiye_master .master_main ul li
+{
+    width:152px;
+    height:162px;
+    float:left;
+    margin-right:20px;
+    margin-top:10px;
+    display:inline;  
+}
+.qiye_master .master_main ul li a
+{
+    width:152px;
+    height:162px;
+    display:block;
+    background:url(../images/qyzx_qyxxImage/selected_bg1.gif) no-repeat;
+}
+.qiye_master .master_main ul li a:hover
+{
+     background:url(../images/qyzx_qyxxImage/selected_bg2.gif) no-repeat;
+}
+.qiye_master .master_main ul li a.style_bg
+{
+    background:url(../images/qyzx_qyxxImage/selected_bg3.gif) no-repeat;
+}
+
+.qiye_master .master_main ul li a img
+{
+    margin-left:17px;
+    margin-top:7px;
+}
+.qiye_master .master_main ul li a span
+{
+    display:block;
+    width:80px;
+    color:#606060;
+    margin:10px 0 0 50px;
+    #margin:0px 0 0 50px;
+}
+.qiye_master .master_main ul li a span input{ vertical-align:text-bottom \9;}
+
+
+/*预览按钮*/
+.btn_Preview{
+    width:82px;
+    height:29px;
+    border:0 none;
+    background:url(../images/qyzx_qyxxImage/yulan.gif) no-repeat;
+}
+
+
+
+.tbl1 td.td_styleFP
+{
+    padding:0;
+    font-weight:bold;
+}

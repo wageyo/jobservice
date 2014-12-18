@@ -5,174 +5,123 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
-<meta content="残疾人招聘就业" name="description" />
-<link href="${contextPath}/css/header.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/style.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/user/style.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/user/StyleSheet.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
-<script type="text/javascript" src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
-<title>企业管理中心</title>
-<script type="text/javascript">
-	$(document).ready(function(){
-		//定义绑定上传按钮事件
-		var button = $('#picFileImport');
-		/*
-		 * 异步 上传图片方法函数
-		 */
-		new AjaxUpload(button, {
-			action: '${contextPath}/user/uploadPic',
-			name: 'pic',// 更改上传的文件名
-			autoSubmit:true,
-			type:'POST',
-			data: {},
-			onSubmit : function(file , ext){
-				button.val('上传图片中ing...');
-				/**
-				 *	①验证上传文件格式
-				 **/
-				
-		/*		if(!(ext && /^(jpg|xlsx)$/.test(ext))){
-					$.messager.alert('提示','您上传的文件格式不对, 或者不是excel文件, 请重新选择','info');
-					$('#picfileTitle').val('');
-					return false;
-				}	*/
-				/**
-				 *	②设置上传参数
-				 **/
-				this.setData({
-					'userid':'${cookie.userid.value}'
-				});
-				
-			},
-			onComplete : function(file,response){
-				if(response != 'success'){
-					alert('上传图片失败,'+response);
-				}else{
-					//刷新新上传的图片
-					$('#headImage').attr('src','');
-					$('#headImage').attr('src','${contextPath }/user/downloadPic/${cookie.userid.value}');
-				}
-				button.val('上传图片');
-				this.enable();
-			}
-		});
-	});
-</script>
+	<title>残疾人就业信息网</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
+	<meta content="残疾人招聘就业" name="description" />
+	
+	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicframeFour.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicTableOne.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicAccordion.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/ManagePositions.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
+	<script type="text/javascript">
+	</script>
 </head>
 <body>
-	<jsp:include page="../header.jsp" />
-	<jsp:include page="../nav.jsp" />
-
-	<div class="w988 ptb10 center">
-		<jsp:include page="left-nav.jsp" />
-
-		<div class="Air">
-			<table class="w770" border="0" cellspacing="0" cellpadding="0" align="center">
-				<tbody>
-					<tr valign="top">
-						<td>
-							<table border="0" cellspacing="0" cellpadding="0" class="table_boder" align="center">
-								<tbody>
-									<tr>
-										<td class="uu1" align="left" colspan="2"><b> <span id="ctl00_ContentPlaceHolder1_Label1">企业管理中心</span> </b>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="AntAccout_Center table_boder p10 mb10 center">
-				<div class="AntAccout_Center_Warning">
-					<span>系统登录信息：</span>
-					<div>
-						<ul id="AntAccountmq">
-							<li></li>
-							<li></li>
-						</ul>
-					</div>
+	<div id="container" class="container">
+	
+		<!-- 顶部工具条栏 -->
+		<jsp:include page="../formatter/status-bar.jsp" />
+		
+		<!-- 头部导航及图片栏目 -->
+		<jsp:include page="../formatter/header.jsp" />
+		<div class="clearboth"></div>
+		
+		<!-- ******* 中部内容显示区 ******* start ********** -->
+		<div id="content" class="content">
+			
+			<!-- 上部区域xx中心提示文字 -->
+            <div class="positiontopbg">
+                <div class="positiontopleft">
+                    <span style="cursor:pointer;" onclick="javascript:window.location.href = '${contextPath}/user/goCenter'">企业管理中心</span>
 				</div>
-				<div class="AntAccout_Center_User" id="w726">
-					<div class="AntAccout_Center_Left">
-						<img id="headImage" src="${contextPath }/user/downloadPic/${cookie.userid.value}" style="height:90px;width:90px;border-width:0px;" />
-								<input type="button" name="file" value="上传图片" id="picFileImport"/>
-					</div>
+                <div class="positiontopright">
+                </div>
+            </div>
+            <!-- 下部具体内容显示   start -->
+            <div class="positionbottom">
+                <div class="positionleftline">
+                </div>
+                
+                <!----------- 管理中心左边菜单栏  ------start ----------->
+                <jsp:include page="left-nav.jsp" />
+                <!----------- 管理中心左边菜单栏  ------end ----------->
+                
+                <div class="positionrightline">
+                </div>
+                <!----------- 管理中心右边 详细内容显示  ------start ----------->
+                <div id="main0" class="positionmiddletext">
+                	<div class="form0" style="margin-bottom: -10px; _margin-bottom: -30px;">
+                        <div style="width: 780px;" class="contraction" id="ModelOneID">
+                            <div class="contractiontop">
+                                <div class="contractionleft">
+                                </div>
+                                <div class="contractiontoptext">
+									<span class="spanFirst">当前位置:</span><span class="spanSecond">企业管理中心 &gt;&gt; 首页</span></div>
+                                <div class="contractionright">
+                                </div>
+                                <div class="contractionclick">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <ul class="block zwgl">
+                        <li>
+                            <div class="contraction_gl">
+                                <div class="PublicTableOne PublicTable " id="PublicTable_zwgl">
+                                    <!--UpBar-->
+                                    <div class="UpBar">
+                                        <div class="Left">
+                                            
+                                            <div class="Buttom x">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--TableMain-->
+                                    <div id="TableListShow" if="ParttimejobsList"><table class="TableMain" runat="server" id="TableList" cellpadding="0" cellspacing="0"><tbody><tr class="TheaderBg"><th class="firstTh"><input class="CheckedAll" id="confirmedCB" type="checkbox"></th><th>姓名</th><th>性别</th><th>年龄</th><th>残疾类别</th><th>残疾等级</th><th>学历</th><th>推荐人</th><th>推荐日期</th><th>推荐职位</th><th>招聘人数</th><th>站内推荐</th><th>操作</th></tr></tbody></table></div>
+                                    <!--DownBar-->
+                                    <div class="DownBar">
+                                        <div class="Left">
+                                        </div>
+                                        <div id="pageList" class="Right"></div>
+                                    </div>
+                                </div>
+                                <div class="btn_bottom">
+                                    <img src="Image/ZwglImage/invite.gif" class="CursorPointer" alt="邀请面试" id="InvitePersonal">
+                                    <img src="Image/ZwglImage/employ.gif" class="CursorPointer" alt="直接录用" id="EmployPersonal">
+                                    <img src="Image/ZwglImage/refuse.gif" class="CursorPointer" alt="不录用" id="RefusePersonal">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="clearboth">
+                    </div>
+                </div>
+                <!----------- 管理中心右边 详细内容显示  ------end ----------->
+                
+            </div>
+            <!-- 下部具体内容显示   end -->
+        
 
-					<input type="file" name="ctl00$ContentPlaceHolder1$File1" id="ctl00_ContentPlaceHolder1_File1" class="cdaaassdf" onchange="$('#File2').val($('#File1').val());"> <input id="File2"
-						type="file" class="cdaaassdf">
-							<ul class="AntAccout_Center_Rithg">
-								<li class="A" style="text-align: left">您好，<span id="ctl00_ContentPlaceHolder1_userlable"></span>：欢迎您！</li>
-								<li class="B">您的用户等级：<span id="ctl00_ContentPlaceHolder1_tag">企业用户</span>
-								</li>
-								<li class="C" style="text-align: left">
-								<c:if test="${user.createDate != null}">
-									<fmt:formatDate value="${user.createDate}" type="both" timeStyle="default" pattern="yyyy-MM-dd HH:mm:ss" var="createDate" />
-								</c:if> 
-								注册时间：<span id="ctl00_ContentPlaceHolder1_addtime">${createDate }</span></li>
-								<li class="D">邮箱：<span id="ctl00_ContentPlaceHolder1_uemail">${user.email }</span></li>
-								<li class="D">联系方式：<span id="ctl00_ContentPlaceHolder1_uemail">${user.phone }</span></li>
-								<li class="F" style="display: none;"><span class="Integral"> <a href="money/jf_add.aspx" target="_self">充值</a> </span>
-								</li>
-							</ul>
-				</div>
 
 
 
-
-				<div class="clear"></div>
-
-			</div>
 		</div>
-		<!-- 
-		<div id="ctl00_ContentPlaceHolder1_geren" class="Air">
-			<table class="w770" border="0" cellspacing="0" cellpadding="0" align="center">
-				<tbody>
-					<tr valign="top">
-						<td>
-							<table border="0" cellspacing="0" cellpadding="0" class="table_boder" align="center">
-								<tbody>
-									<tr>
-										<td class="uu1" align="left" colspan="2"><b> <span id="ctl00_ContentPlaceHolder1_Label8">热点招聘信息</span> </b>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="AntAccout_Center table_boder mb10 center" style="padding: 10px 10px 0;
-            width: 746px;">
-				<ul class="hotbrand">
-
-					<li><img src="${contextPath}/images/hot_icon.gif" align="absbottom"><a class="f14" href="/Comjoblist_56.html" target="_blank">慈溪易商网络信息技术有限公...</a><br> <img
-								src="${contextPath}/images/bro_icon.gif" align="absbottom">
-					</li>
-					<li><img src="${contextPath}/images/hot_icon.gif" align="absbottom"><a class="f14" href="/Comjoblist_59.html" target="_blank">慈溪锐智网络信息技术有限公...</a><br> <img
-								src="${contextPath}/images/bro_icon.gif" align="absbottom"> <a href="/Sejob_74.html" class="cBlock" title="客服人员 3名">客服人员</a>&nbsp;<a href="/Sejob_73.html" class="cBlock" title="销售代表 6名">销售代表</a>&nbsp;
-
-							
-					</li>
-					<li><img src="${contextPath}/images/hot_icon.gif" align="absbottom"><a class="f14" href="/Comjoblist_60.html" target="_blank">中企动力科技股份有限公司慈...</a><br> <img
-								src="${contextPath}/images/bro_icon.gif" align="absbottom"> <a href="/Sejob_81.html" class="cBlock" title="业务员">业务员</a>&nbsp;<a href="/Sejob_80.html" class="cBlock" title="电话营销">电话营销</a>&nbsp;<a
-									href="/Sejob_79.html" class="cBlock" title="储备商务经理">储备商务</a>&nbsp; 
-					</li>
-
-
-				</ul>
-			</div>
-		</div>
-
-		<div style="clear: both;"></div>
-		 -->
+		<!-- ******* 中部内容显示区 ******* end ********** -->
+		
+		<!-- 尾部footer区 -->
+		<div class="clearboth"></div>
+		<jsp:include page="../formatter/footer.jsp" />
 	</div>
-
-	<jsp:include page="../footer.jsp" />
-
-
 </body>
 </html>
