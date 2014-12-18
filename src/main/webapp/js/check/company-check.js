@@ -1,4 +1,11 @@
+$(document).ready(function(){
+	
+	//保存按钮点击事件
+	$('#SaveAllBtn').click(function(){
+		$('#companyInfo').submit();
+	});
 
+});
 
 function company_check(){
 	//姓名
@@ -16,12 +23,12 @@ function company_check(){
 		return false;
 	}
 	//工商登记证号
-	var commercialCode = $('#commercialCode').val();
+/*	var commercialCode = $('#commercialCode').val();
 	if(commercialCode == null || commercialCode == ''){
 		alert('工商登记号码不能为空!');
 		$('#commercialCode').focus();
 		return false;
-	}
+	}	*/
 	//电话/手机
 	var telephone = $('#telephone').val();
 	if(telephone == null || telephone == ''){
@@ -29,11 +36,6 @@ function company_check(){
 		$('#telephone').focus();
 		return false;
 	}
-/*	if(!verify.checkTel(telephone)){
-        alert('请检查你输入的电话/手机号码!');
-		$('#telephone').focus();
-		return false;
-	}	*/
 	//联系人
 	var contactPerson = $('#contactPerson').val();
 	if(contactPerson == null || contactPerson == ''){

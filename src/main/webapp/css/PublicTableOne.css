@@ -1,0 +1,420 @@
+
+        .PublicTableOne
+        {
+         width:100%;
+        }
+        
+          /*头部的bar*/
+        .PublicTableOne .UpBar
+        {
+           width:100%;
+           margin:0;
+           padding:0;
+           margin-top:10px;
+            margin-bottom:10px;
+             _margin-bottom:0px;
+       }
+        .PublicTableOne .UpBar .Left
+        {
+            float:left;
+            margin-left:10px;
+        }
+        .PublicTableOne .UpBar .Left .ButtomPlace
+        {
+            float:left;
+            margin-right:5px;
+            _display:inline;/*IE6*/
+            height:27px;
+            line-height:27px;
+            cursor:pointer;
+        }
+        .PublicTableOne .UpBar .Left .cx
+        {
+             padding-top:5px;
+              #padding-top:px;
+              _padding-top:2px;
+            }
+         .PublicTableOne .UpBar .Left .Buttom
+        {
+            float:left;
+            margin-right:5px;
+            _display:inline;/*IE6*/
+            height:15px;
+            line-height:15px;
+           
+        }
+        
+        .PublicTableOne .UpBar .Right
+        {
+            padding-right:20px;
+            height:27px;
+            text-align:right;
+            float:right;
+        }
+        
+         .PublicTableOne  .UpBar .Right .pageUp
+        {
+            float:right;
+            margin-right:5px;
+        } 
+        .PublicTableOne  .UpBar .Right .List
+        {  
+            float:right;
+            width:100px;
+            text-align:center;
+            line-height:25px;
+            font-size:14px;
+            font-weight:bold;
+        }         
+         .PublicTableOne  .UpBar .Right .pageDown
+        {
+
+            float:right;
+            margin-left:5px;
+        } 
+                
+               
+         /*table主信息*/
+        .PublicTableOne  .TableMain
+        {
+		  width:100%;
+          margin-top:5px;
+        }
+      
+        .PublicTableOne  .TableMain td
+        {
+            text-align:center;
+            vertical-align:middle;
+            padding:5px;
+            height:25px;
+            font-size:12px;
+            border-bottom:1px solid #C5E2F6;
+        }
+        .PublicTableOne  .TableMain td a
+        {
+            color:#0095ff;
+        }
+        .PublicTableOne  .TableMain td a:hover
+        {
+            color:red;
+        }
+        .PublicTableOne  .TableMain td img
+        {
+			 vertical-align:middle;
+        }
+        .PublicTableOne  .TableMain td ipunt
+        {
+            margin-top:0px;
+            *margin-top:-4px;
+            vertical-align:middle;
+        }
+        /*表头背景切换 */
+        .PublicTableOne  .TableMain .TheaderBg
+        {         
+            height:30px;
+            background:url(../images/PublicTableOneImage/lanmu_bg.gif) repeat-x;
+        }
+           
+        .PublicTableOne  .TableMain .TheaderBg th
+        {         
+             font-size:12px;
+             border-right:1px solid #c5e2f6;
+             white-space:nowrap;
+
+        }
+        .PublicTableOne  .TableMain .TheaderBg .firstTh
+        {         
+             border-left:1px solid #c5e2f6;
+             width:40px;
+        }
+        .PublicTableOne  .TableMain .AlignLeft   /*td的对齐方式  */
+        {
+			 text-align:left;
+			 padding-left:10px;
+        }
+        .PublicTableOne  .TableMain .AlignRight   /*td的对齐方式  */
+        {
+			 text-align:right;
+			 padding-right:10px;
+        }
+
+        
+        
+        
+        
+        
+        
+                /*底部的bar*/
+        .PublicTableOne  .DownBar
+        {
+            width:100%;
+            padding-top:10px;
+        }      
+         .PublicTableOne  .DownBar .Left
+        {
+            height:27px;
+            padding-top:2px;
+            margin-left:2px;
+			_margin-left:1px;
+            float:left;
+
+        } 
+     
+        .PublicTableOne  .DownBar .Left .CheckAll
+        {
+            #line-height:0px;/*IE7*/
+            _line-height:0px;/*IE6*/
+            padding-top:2px\9;/*IE8*/
+            #padding-top:0px;/*IE7*/
+            _padding-top:0px;/*IE6*/
+        } 
+
+        .PublicTableOne  .DownBar .Left li
+        {
+            float:left;
+            white-space:nowrap; 
+            height:24px;
+            padding:0 2px;
+            line-height:20px;
+            #line-height:24px;
+            _line-height:24px;
+        } 
+        .PublicTableOne  .DownBar .Left li input
+        {
+            vertical-align:middle;
+            padding:0px;
+        } 
+        .PublicTableOne  .DownBar .Middle
+        {
+            float:left;
+        }
+        .PublicTableOne  .DownBar .Right
+        {
+            float:right;    
+            padding-right:20px;      
+        } 
+        
+         .PublicTableOne  .DownBar .Right .pageUp
+        {
+            float:right;
+            margin-right:5px;
+        } 
+        .PublicTableOne  .DownBar .Right .List
+        {
+
+            width:100px;
+            float:right;
+            text-align:center;
+
+        } 
+        .PublicTableOne  .DownBar .Right .List li
+        {
+            float:left;
+            padding:0 5px;
+            line-height:25px;
+            text-decoration:underline;
+        } 
+        .PublicTableOne  .DownBar .Right .pageDown
+        {
+         
+            float:right;
+            margin-left:5px;
+        } 
+        .PageDownImage0
+        {
+            width:31px;
+            height:27px;
+            cursor:pointer;
+            background:url(../images/PublicTableOneImage/botton_right0.gif) no-repeat;  
+        }
+        .PageDownImage
+        {
+         background:url('../images/PublicTableOneImage/botton_right.gif') no-repeat;
+         width:31px;
+         height:27px;
+         cursor:pointer; 
+        }
+        .PageUpImage
+        {
+            width:31px;
+            height:27px;
+            cursor:pointer;
+            background:url('../images/PublicTableOneImage/botton_left.gif') no-repeat;
+        }
+        .PageUpImage0
+        {
+            width:31px;
+            height:27px;
+            cursor:pointer;
+            background:url(../images/PublicTableOneImage/botton_left0.gif) no-repeat;
+        }
+        .text
+        {
+            width:24px;
+            margin-top:4px;
+            text-align:center;
+            
+        }
+        .pageGo
+        {
+            width:31px;
+            height:27px;
+            cursor:pointer;
+            background:url(../images/PublicTableOneImage/go.gif) no-repeat;
+        }
+/*
+*使用说明：
+HTML：
+
+ <div class="PublicTableOne" id="PublicTableOne">
+        <!--UpBar-->
+        <div class="UpBar">
+            <div class="Left">
+                <div class="ButtomPlace">
+                    排序方式:</div>
+                <div class="ButtomPlace SortDateBtn" title="按更新日排序">
+                </div>
+                <div class="ButtomPlace SortDateBtn" title="按首发日排序">
+                </div>
+                <div class="ButtomPlace SortDateBtn" title="按相关度排序">
+                </div>
+            </div>
+            <div class="Right">
+                <div class="pageDown PageDownImage" title="下一页">
+                </div>
+                <div class="List">
+                    <span>1-30</span> <span>/</span> <span>31895</span>
+                </div>
+                <div class="pageUp PageUpImage" title="上一页">
+                </div>
+            </div>
+        </div>
+        <!--TableMain-->
+        <table border="0" cellpadding="0" cellspacing="0" class="TableMain">
+            <tr class="TheaderBg">
+                <th class="firstTh">
+                    <input type="checkbox" />
+                </th>
+                <th>
+                    姓名
+                </th>
+                <th>
+                    性别
+                </th>
+                <th>
+                    学历
+                </th>
+                <th>
+                    从事职业
+                </th>
+                <th>
+                    居住地区
+                </th>
+                <th>
+                    工作经验
+                </th>
+                <th>
+                    更新日期
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" />
+                </td>
+                <td>
+                    
+                        刘永
+                        <img src="Image/PublicTableOneImage/zhaopian.gif" />
+                    
+                </td>
+                <td>
+                    男
+                </td>
+                <td>
+                    本科
+                </td>
+                <td>
+                    客户服务类
+                </td>
+                <td>
+                    福建泉州
+                </td>
+                <td>
+                    1年以上
+                </td>
+                <td>
+                    2012-2-14
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" />
+                </td>
+                <td>
+                    
+                        刘永波
+                        <img src="Image/PublicTableOneImage/zhaopian.gif" />
+                        刘永波
+                        <img src="Image/PublicTableOneImage/zhaopian.gif" />
+                        刘永波
+                        <img src="Image/PublicTableOneImage/zhaopian.gif" />
+                    
+                </td>
+                <td>
+                    男
+                </td>
+                <td>
+                    本科
+                </td>
+                <td class="thTdPaddingLeftAlign2">
+                    福建泉州福建泉州福建泉州福建泉州福建泉州福建泉州福建泉州
+                </td>
+                <td>
+                    福建泉州福建泉州福建泉州福建泉州
+                </td>
+                <td>
+                    1年以上
+                </td>
+                <td>
+                    2012-2-14
+                </td>
+            </tr>
+        </table>
+        <!--DownBar-->
+        <div class="DownBar">
+            <div class="Left">
+                <ul>
+                    <li class="CheckAll">
+                        <input type="checkbox" /></li>
+                    <li>全选</li>
+                    <li>|</li>
+                    <li><a href="#">邀请面试</a></li>
+                    <li>|</li>
+                    <li><a href="#">收藏简历</a></li>
+                    <li>|</li>
+                    <li><a href="#">浏览简历</a></li>
+                </ul>
+            </div>
+            <div class="Right">
+                <div class="pageDown PageDownImage" title="下一页">
+                </div>
+                <div class="List">
+                    <ul>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                    </ul>
+                </div>
+                <div class="pageUp PageUpImage" title="上一页">
+                </div>
+            </div>
+        </div>
+    </div>
+
+*配置使用： SetTableUpBarButton.css      PublicTableOne.js
+
+
+
+*/

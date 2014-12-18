@@ -1,0 +1,90 @@
+.contraction
+{
+	margin: 3px auto;
+
+}
+.contraction .contractiontop
+{
+	background: url(../images/PublicImage/PublicContractionImage/PublicContraction_bg.gif) repeat-x;
+	height: 30px;
+
+}
+.contraction .contractionleft
+{
+	background: url(../images/PublicImage/PublicContractionImage/PublicContraction_left.gif) no-repeat left;
+	height: 30px;
+	width: 8px;
+	float: left;
+}
+.contraction .contractiontoptext
+{
+	text-align: left;
+	padding-top: 5px;
+	padding-left: 10px;
+	float: left;
+}
+.contraction .contractiontoptext .spanFirst
+{
+	
+	font-weight: bold;
+	color:#0462be;
+}
+.contraction .contractiontoptext .spanSecond
+{
+	margin-left: 20px;
+}
+.contraction .contractionright
+{
+	background: url(../images/PublicImage/PublicContractionImage/PublicContraction_right.gif) no-repeat right;
+	height: 30px;
+	width: 8px;
+	float: right;
+}
+.contraction .contractionclick
+{
+	float: right;
+	background: url(../images/PublicImage/PublicContractionImage/PublicContraction_contraction.gif) no-repeat left;
+	width: 43px;
+	height: 30px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.contraction .contractionclickone
+{
+	float: right;
+	background: url(../images/PublicImage/PublicContractionImage/PublicContraction_spread.gif) no-repeat left;
+	width: 43px;
+	height: 30px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.contraction .contractioncontent
+{
+	margin-top: 10px;
+	height:100%;
+
+}
+
+/*
+*使用说明：
+HTML：
+
+   <div class="contraction">
+   <div class="contractiontop">
+     <div class="contractionleft"></div>
+     <div class ="contractiontoptext"><span class="spanFirst">职位信息(*必填项)</span><span class="spanSecond">为确保贵公司能快速，准确的招聘到合适的人才，请仔细填写发布职位时的各项数据</span></div>     
+     <div class="contractionright"></div>
+     <div class ="contractionclick"></div>
+   </div>
+   <div class="clearboth"></div>
+   <div class="contractioncontent">
+   内容放置
+
+   </div>
+   </div>
+
+js：PublicAccordion.js
+
+ $(".contraction").BarClick({ width: 900, show: false, callback: function (obj) {alert(obj.id)} });//如果id赋值
+*/

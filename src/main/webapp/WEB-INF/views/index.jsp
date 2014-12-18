@@ -137,7 +137,7 @@
 								<div class="clearboth"></div>
 								<div class="SearchInputText">
 									<div class="SetFloatLeft InputTextBg">
-										<input id="KeyWord" class="InputTextBlank DefaultText" type="text" value="请输入关键字" title="请输入关键字" style="color: Gray;">
+										<input id="KeyWord" class="InputTextBlank DefaultText" type="text" value="请输入关键字" title="请输入关键字" style="color: Gray;" />
 									</div>
 									<div class="SearchBtn SetFloatLeft">
 										<div id="areaBtn" class="SearchDistrictBtn SetFloatLeft" title="选择地区" style="cursor: auto;"> <span>选择地区</span> </div>
@@ -418,7 +418,7 @@
 						</div>
 						<div class="PublicframeTwoContent listpub">
 							<dl class="jdmb">
-								<dt> <img src="${contextPath}/images/HomePageImage/临时图/p2.jpg" alt="面试技巧"> <span>面试技巧指南</span> </dt>
+								<dt> <img src="${contextPath}/images/HomePageImage/临时图/p2.jpg" alt="面试技巧" /> <span>面试技巧指南</span> </dt>
 								<dd> <a title="面试官的常用陷阱手段" href="" >面试官的常用陷阱手段</a> </dd>
 								<dd> <a title="教你应付8类难缠的面试官" href="" >教你应付8类难缠的面试官</a> </dd>
 								<dd> <a title="如何与招聘面试官打好交道" href="" >如何与招聘面试官打好交道</a> </dd>
@@ -443,7 +443,7 @@
 						</div>
 						<div class="PublicframeTwoContent listpub">
 							<dl class="jdmb">
-								<dt> <img src="${contextPath}/images/HomePageImage/临时图/p1.jpg" alt="职场资讯"> <span>新鲜的资讯信息</span> </dt>
+								<dt> <img src="${contextPath}/images/HomePageImage/临时图/p1.jpg" alt="职场资讯" /> <span>新鲜的资讯信息</span> </dt>
 								<dd> <a title="IT培训班进修火引争议" href="" >IT培训班进修火引争议</a> </dd>
 								<dd> <a title="职业规划有什么作用？" href="" >职业规划有什么作用？</a> </dd>
 								<dd> <a title="想转行 你准备好了吗?" href="" >想转行 你准备好了吗?</a> </dd>
