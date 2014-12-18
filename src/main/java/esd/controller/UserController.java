@@ -202,6 +202,7 @@ public class UserController {
 				return "person/password-set";
 			}
 		}
+		
 		//如果用户没有设置密码, 则强行跳转到设置密码页面
 		if(user.getPassWord() == null || "".equals(user.getPassWord())){
 			//相关的用户信息放到cookie中
@@ -225,6 +226,12 @@ public class UserController {
 				Constants.CheckStatus.WEITONGGUO.toString())) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户名没有通过审核, 请重新申请!");
+			return "redirect:/index";
+		}
+		//如果输入的密码为空, 则跳转到前台进行提示
+		if(passWord == null || "".equals(passWord)){
+			ra.addFlashAttribute("messageType", "0");
+			ra.addFlashAttribute("message", "残疾证号已经被注册过, 请输入密码!");
 			return "redirect:/index";
 		}
 		if (user.getIdentity().equals(Identity.COMPANY.toString())) {
