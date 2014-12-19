@@ -21,7 +21,9 @@
 	<link href="${contextPath}/css/ManagePositions.css" rel="stylesheet" type="text/css" />
 	
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/uploadHeadImage.js"></script>
 	<script type="text/javascript">
 	</script>
 </head>
@@ -77,28 +79,40 @@
                     <ul class="block zwgl">
                         <li>
                             <div class="contraction_gl">
-                                <div class="PublicTableOne PublicTable " id="PublicTable_zwgl">
+                                <div class="PublicTableOne" >
                                     <!--UpBar-->
                                     <div class="UpBar">
                                         <div class="Left">
-                                            
                                             <div class="Buttom x">
                                             </div>
                                         </div>
                                     </div>
                                     <!--TableMain-->
-                                    <div id="TableListShow" if="ParttimejobsList"><table class="TableMain" runat="server" id="TableList" cellpadding="0" cellspacing="0"><tbody><tr class="TheaderBg"><th class="firstTh"><input class="CheckedAll" id="confirmedCB" type="checkbox"></th><th>姓名</th><th>性别</th><th>年龄</th><th>残疾类别</th><th>残疾等级</th><th>学历</th><th>推荐人</th><th>推荐日期</th><th>推荐职位</th><th>招聘人数</th><th>站内推荐</th><th>操作</th></tr></tbody></table></div>
+                                    <div id="TableListShow" >
+                                    	<div class="TableUserCenter">
+												<div class="TableUserCenterLeft">
+													<img id="headImage" src="${contextPath }/user/downloadPic/${cookie.userid.value }" style="height:90px;width:90px;border-width:0px;" title="90*90格式" />
+													<input type="button" name="file" value="上传图片" id="picFileImport" class=" " />
+													<input type="hidden" id="userid" name="userid" value="${cookie.userid.value }" />
+												</div>
+							
+												<ul class="TableUserCenterRight">
+													<li >您好：<span>${cookie.username.value }</span>，欢迎您！</li>
+													<li >您的用户等级：<span> 企业用户  </span></li>
+													<li >
+														注册时间：<span>${cookie.registertime.value }</span>
+													</li>
+													<li >邮箱：<span>${user.email }</span></li>
+												</ul>
+											</div>
+                                    </div>
                                     <!--DownBar-->
                                     <div class="DownBar">
                                         <div class="Left">
+                                        	
                                         </div>
                                         <div id="pageList" class="Right"></div>
                                     </div>
-                                </div>
-                                <div class="btn_bottom">
-                                    <img src="Image/ZwglImage/invite.gif" class="CursorPointer" alt="邀请面试" id="InvitePersonal">
-                                    <img src="Image/ZwglImage/employ.gif" class="CursorPointer" alt="直接录用" id="EmployPersonal">
-                                    <img src="Image/ZwglImage/refuse.gif" class="CursorPointer" alt="不录用" id="RefusePersonal">
                                 </div>
                             </div>
                         </li>
