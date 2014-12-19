@@ -2297,3 +2297,346 @@ send55 {
 #tabaleDataStyle{
 	color: #606060;
 }
+
+
+/* direact.jsp页面的样式 */
+.PublicframeTwo {
+background-color: #FFFFFF;
+width: 100%;
+}
+.PublicframeTwo .PublicframeTwoHeadBar {
+width: 100%;
+height: 39px;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBar.jpg);
+}
+.PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarLeft {
+width: 21px;
+height: 39px;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarLeft.jpg) no-repeat left;
+float: left;
+}
+.PublicframeTwo .PublicframeTwoHeadBarTittle {
+height: 39px;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarTittle.jpg) no-repeat right;
+padding-right: 9px;
+color: #fff;
+float: left;
+}
+.PublicframeTwo .PublicframeTwoHeadBarTittle .PublicframeTwoHeadBarTittleSpan {
+height: 39px;
+float: left;
+line-height: 30px;
+font-weight: 700;
+font-size: 14px;
+padding: 0px 6px 0px 8px;
+letter-spacing: 2px;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarTittleSpan.jpg) repeat-x;
+}
+.PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarRight {
+width: 5px;
+height: 39px;
+float: right;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarRight.gif) no-repeat right;
+}
+.PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarMore {
+height: 39px;
+float: right;
+padding: 0px 15px 0px 0px;
+}
+.PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarMore .PublicframeTwoHeadBarMoreSpan {
+line-height: 35px;
+cursor: pointer;
+}
+.PublicframeTwo .PublicframeTwoContent {
+width: 238px;
+text-align: left;
+border: 1px solid #b6d3eb;
+border-top: none;
+}
+
+#directBody {
+width: 990px;
+height: 100%;
+margin: 0 auto;
+margin-top: 10px;
+_margin-top: 10px;
+margin-bottom: 10px;
+_margin-bottom: 10px;
+}
+.MainRight {
+width: 220px;
+float: left;
+margin-left: 9px;
+_margin-left: 0px;
+}
+.MainRightOne {
+width: 240px;
+}
+.PublicframeTwo {
+background-color: #FFFFFF;
+width: 100%;
+}
+.PublicframeTwo .PublicframeTwoHeadBar {
+width: 100%;
+height: 39px;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBar.jpg);
+}
+.PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarLeft {
+width: 21px;
+height: 39px;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarLeft.jpg) no-repeat left;
+float: left;
+}
+.PublicframeTwo .PublicframeTwoHeadBarTittle {
+height: 39px;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarTittle.jpg) no-repeat right;
+padding-right: 9px;
+color: #fff;
+float: left;
+}
+.PublicframeTwo .PublicframeTwoHeadBarTittle .PublicframeTwoHeadBarTittleSpan {
+height: 39px;
+float: left;
+line-height: 30px;
+font-weight: 700;
+font-size: 14px;
+padding: 0px 6px 0px 8px;
+letter-spacing: 2px;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarTittleSpan.jpg) repeat-x;
+}
+.PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarRight {
+width: 5px;
+height: 39px;
+float: right;
+background: url(../images/PublicImage/PublicframeTwoImage/PublicframeTwoHeadBarRight.gif) no-repeat right;
+}
+.PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarMore {
+height: 39px;
+float: right;
+padding: 0px 15px 0px 0px;
+}
+.PublicframeTwo .PublicframeTwoHeadBar .PublicframeTwoHeadBarMore .PublicframeTwoHeadBarMoreSpan {
+line-height: 35px;
+cursor: pointer;
+}
+
+.MainLeft {
+    width: 740px;
+    float: left;
+}
+.PublicframeTwo .PublicframeTwoContent {
+width: 238px;
+text-align: left;
+border: 1px solid #b6d3eb;
+border-top: none;
+}
+.PublicframeTwo .PublicframeTwoContent {
+height: 100%;
+border: 1px solid #b6d3eb;
+border-top: none;
+text-align: left;
+}
+.ArticleSearchFrame {
+width: 220px;
+height: 26px;
+padding-top: 2px;
+margin: 0 auto;
+}
+.Search {
+width: 220px;
+height: 26px;
+_height: 20px;
+margin: 0 auto;
+}
+.Search .SearchInputText {
+margin-top: 5px;
+}
+.Search .InputTextBg {
+background: url(../images/HomePageImage/SearchImage/SearchImage.gif) no-repeat left;
+width: 200px;
+border: 1px solid #7fc5fe;
+}
+ .Search .InputTextBg {
+/* width: 29px; */
+height: 22px;
+line-height: 22px;
+margin-top: -5px;
+
+/* background: url(../images/HomePageImage/SearchImage/SearchImage.gif) no-repeat left; */
+} 
+.Search .InputTextBg .InputTextBlank {
+line-height: 22px;
+border: 0px;
+height: 22px;
+width: 170px;
+float: right;
+color: gray;
+font-size: 12px;
+font-family: ����;
+top: 0px;
+left: 0px;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleKind {
+width: 220px;
+height: 20px;
+margin: 0 auto;
+margin-top: 10px;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleKindTitle {
+float: left;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleSelectFrame {
+width: 130px;
+height: 21px;
+float: left;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleSelectDropDown {
+width: 130px;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleTime {
+width: 220px;
+height: 20px;
+margin: 0 auto;
+margin-top: 10px;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleTimeTitle {
+float: left;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleTimeFrame {
+width: 130px;
+height: 21px;
+float: left;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleSelectDropDown {
+width: 130px;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleHot {
+width: 220px;
+color: #40a9fe;
+margin: 0 auto;
+font-weight: 500;
+cursor: pointer;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleHot ul li {
+float: left;
+line-height: 16px;
+padding-left: 0px;
+margin-top: 10px;
+}
+.PublicframeTwo .PublicframeTwoContent ul li.ArticleHotLine {
+line-height: 14px;
+margin-left: 1px;
+margin-right: 3px;
+}
+.PublicframeTwo .PublicframeTwoContent .ArticleBtn {
+width: 87px;
+height: 26px;
+margin: 0 auto;
+margin-top: 10px;
+margin-bottom: 10px;
+background: url("../images/HomePageImage/SearchImage/SearchBtn.gif");
+}
+.Square {
+background: url("../images/Sy_HRsqImage/Square.jpg") no-repeat 0 4px;
+padding-left: 15px;
+line-height: 25px;
+text-align: left;
+
+}
+ul li, ol li {
+list-style: none;
+color: #606060;
+}
+.MainRightTwo {
+width: 240px;
+margin-top: 10px;
+}
+/* news-detail.jsp页面的样式 */
+.news_info_l {
+padding-bottom: 0px;
+padding-left: 15px;
+width: 30%;
+padding-right: 0px;
+float: left;
+padding-top: 10px;
+height:30px;
+}
+.news_info_c {
+text-align: center;
+padding-bottom: 0px;
+padding-left: 0px;
+width: 35%;
+padding-right: 0px;
+float: left;
+padding-top: 10px;
+height:30px;
+}
+.news_info_r {
+text-align: right;
+padding-bottom: 0px;
+padding-left: 0px;
+width: 30%;
+padding-right: 15px;
+float: right;
+padding-top: 10px;
+ height:30px;
+}
+
+.PublicframeTwoContentNew {
+    height: 100%;
+
+    border: 0px;
+}
+/* emp.jsp页面样式 */
+/* #maincontent {
+width: 990px;
+margin: 0 auto;
+height: 100%;
+}
+div#container div#leftsidebar {
+width: 709px;
+float: left;
+margin-right: 5px;
+}
+div#leftsidebar div.s_search {
+padding: 8px 0 12px 0;
+margin-bottom: 8px;
+border: 1px solid #b5d3eb;
+background: url("../images/HomePageImage/search/s_seacherpd.gif") repeat-x;
+}
+div.s_search div.Search {
+margin-left: auto;
+margin-right: auto;
+}
+div.s_search div.Search {
+height: 66px;
+width: 675px;
+}
+.Search .SearchInputText {
+margin-top: 5px;
+}
+.Search .InputTextBg {
+background: url(../images/HomePageImage/SearchImage/SearchImage.gif) no-repeat left;
+width: 394px;
+border: 1px solid #7fc5fe;
+}
+.SetFloatLeft {
+float: left;
+}
+.Search .InputTextBg .InputTextBlank {
+line-height: 24px;
+border: 0px;
+height: 24px;
+width: 365px;
+float: right;
+color: gray;
+}
+.SetFloatLeft {
+float: left;
+}
+.Search .SearchButtom {
+background: url(../images/HomePageImage/SearchImage/SearchBtn.gif) no-repeat right;
+width: 87px;
+height: 26px;
+margin-left: 10px;
+} */

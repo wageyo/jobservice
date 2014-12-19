@@ -8,21 +8,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 <meta content="残疾人招聘就业" name="description" />
-<link href="${contextPath}/css/header.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/body_job.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/news.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
 <title>残疾人就业信息网</title>
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 </head>
 <body>
-	<jsp:include page="../header.jsp" />
-
-	<jsp:include page="../nav.jsp" />
-
-
+	<jsp:include page="../formatter/status-bar.jsp" />
+	<jsp:include page="../formatter/header.jsp" />
 	<div id="xBody">
-		<!--头部结束--->
 		<div id="xdAL" style="width: 1px;"></div>
 		<!--内容页面开始-->
 		<div class="imga">
@@ -35,11 +33,9 @@
 		<div style="width: 980px; margin-top: 10px; height: 100%;">
 			<div style="width: 710px; float: left; height: 100%; border-left: 1px solid #b3cee3;
 		                border-right: 1px solid #b3cee3; border-bottom: 1px solid #b3cee3">
-				<div
-					style="width: 710px; height: 37px; line-height: 37px; background-image: url(${contextPath}/images/menu_bg_r16_c7.jpg);
+				<div style="width: 710px; height: 37px; line-height: 37px; background-image: url(${contextPath}/images/menu_bg_r16_c7.jpg);
 		                    color: #0980df; font-family: 微软雅黑; overflow: hidden">
-					<div
-						style="color: #ffffff; font-family: 宋体; overflow: hidden; text-align: center;
+					<div style="color: #ffffff; font-family: 宋体; overflow: hidden; text-align: center;
 		                        padding-top: 2px; margin-left: 10px; font-weight: bold; width: 120px; font-size: 13px;
 		                        background: url(${contextPath}/images/menu_bg_r16_c2.jpg) no-repeat left top">
 						最新咨询</div>
@@ -100,13 +96,12 @@
 						</table>
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 
 		<div style="clear: both;"></div>
 	</div>
-	<jsp:include page="../footer.jsp" />
+<jsp:include page="../formatter/footer.jsp" />
+		
 </body>
 </html>

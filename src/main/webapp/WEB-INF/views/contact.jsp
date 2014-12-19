@@ -7,14 +7,61 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 <meta content="残疾人招聘就业" name="description" />
-<link href="${contextPath}/css/header.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/style.css" rel="stylesheet" type="text/css" />
-<link href="${contextPath}/css/sj.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
+
 <title>残疾人就业信息网</title>
 </head>
 <body>
-	<jsp:include page="header.jsp" />
-	<jsp:include page="nav.jsp" />
+		<!-- 顶部工具条栏 -->
+	<jsp:include page="formatter/status-bar.jsp" />	
+	<!-- 头部导航及图片栏目 -->
+	<jsp:include page="formatter/header.jsp" />		
+	<div id="directBody">
+		<div class="MainLeft" style="width:988px">
+			<div class="MainLeftRightHead1">
+	           <div class="PublicframeTwo ">
+	               <div class="PublicframeTwoHeadBar">
+	                 <div class="PublicframeTwoHeadBarLeft"></div>
+	                   <div class="PublicframeTwoHeadBarTittle">
+	                       <span class="PublicframeTwoHeadBarTittleSpan">联系我们</span>
+	                   </div>
+	                   <div class="PublicframeTwoHeadBarRight">
+	                   </div>
+	                   <div class="PublicframeTwoHeadBarMore">
+	                       <span class="PublicframeTwoHeadBarMoreSpan"></span>
+	                   </div>
+	               </div>
+	               <div class="PublicframeTwoContent" style="width: auto; padding: 3px 5px 5px;" id="">
+	                   <div class="MainLeftTwo">
+	                       <div class="MainLeftTwoLeft">
+	                          <div id="PublicframeOne11" class="PublicframeOne ">                          
+	                       			<div style="width: 988px; text-align: left; margin: 50px 160px 80px 230px;line-height: 30px; ">
+										<p>地&nbsp;&nbsp;&nbsp;&nbsp;址：黑龙江省哈尔滨市香坊区红旗大街108号七0三科技创业中心（广瀚大厦7楼707室）</p>
+										<p>电&nbsp;&nbsp;&nbsp;&nbsp;话：0451-55664482</p>
+										<p style="margin-left:49px;">0451-55663342</p>
+										<p>传&nbsp;&nbsp;&nbsp;&nbsp;真：0451-55664482-8018</p>
+										<p>网&nbsp;&nbsp;&nbsp;&nbsp;址：www.hrbesd.com</p>
+										<p>邮&nbsp;&nbsp;&nbsp;&nbsp;箱：hrbesd@yahoo.com.cn</p>
+										<p style="margin-left:49px;">esdbgs@163.com</p>
+										<p>市场部资讯电话：0451-55664482-8013/8014</p>
+										<p style="margin-left:96px;">0451-55176366</p>
+										<p>技术部资讯电话：0451-55664482-8004</p>
+									</div>                          
+							  </div>
+	                       </div>                     
+	                   </div>
+	                   <div style="clear: both"></div>           
+					</div>
+	           </div>
+		    </div>	
+		</div>	
+	</div>		
+		<%--
 
 	<div align="center">
 		<div class="clear" style=" height:10px;">&nbsp;</div>
@@ -43,8 +90,8 @@
 		</div>
 	</div>
 
-	<jsp:include page="footer.jsp" />
-
-
+		--%><!-- 尾部footer区 -->
+		<div class="clearboth"></div>
+		<jsp:include page="formatter/footer.jsp" />
 </body>
 </html>
