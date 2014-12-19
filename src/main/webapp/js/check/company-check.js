@@ -7,7 +7,7 @@ $(document).ready(function(){
 
 });
 
-function company_check(){
+function check(){
 	//姓名
 	var name = $('#name').val();
 	if(name == null || name == ''){

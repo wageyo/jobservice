@@ -97,28 +97,52 @@
 				
 				<!-- 登陆后的状态栏  begin -->
 				<c:if test="${cookie.username.value != null && cookie.username.value != ''}">
-					<div class="login SetFloatLeft">
-						<div class="LoginLeft"></div>
-						<div class="loginmain" style="width:250px;">
+					<div class="SetFloatLeft PersonalLogined">
+						<div class="loginbtn"></div>
+						<div class="loginmain">
 							<div class="loginmainarae">
-								内耗啊,${cookie.username.value }<br/>
-								您的注册时间: ${cookie.registertime.value }<br/>
-								现在您可以进入
-								<a href="${contextPath }/user/goCenter">
-									<c:if test="${cookie.identity.value == 'person' }">
-										个人中心
-									</c:if>
-									<c:if test="${cookie.identity.value == 'company' }">
-										企业管理中心
-									</c:if>
-									<c:if test="${cookie.identity.value == 'admin' || cookie.identity.value == ''}">
-										管理员后台
-									</c:if>
-								</a>
+								<div class="NameLay">
+									<span class="SetFloatLeft"> 欢迎回来，</span>
+									<span class="Strong SetFloatLeft">${cookie.username.value }</span>
+									<span class="SetFloatRight">
+										<a href="${contextPath }/user/logout">[退出]</a>
+									</span>
+								</div>
+								<div class="clearboth">
+								</div>
+								<div class="TimeShow">您最近的登陆时间：<span></span></div>
+								<div>
+									<div class="RapidEntry">
+										<a href="${contextPath }/secure/company/update" title="我的搜索器">
+											<div class="FirstImage"><span>&nbsp;</span></div>
+										</a>
+										<div>
+											<a href="${contextPath }/secure/company/update">企业信息</a>
+										</div>
+									</div>
+									<div class="RapidEntry">
+										<a href="${contextPath }/secure/job/getManage?page=1">
+											<div title="我发布的职位" class="SecendImage"><span>&nbsp;</span></div>
+										</a>
+										<div>
+											<a href="${contextPath }/secure/job/getManage?page=1" title="职位管理">职位管理</a>
+										</div>
+									</div>
+									<div class="RapidEntry">
+										<a href="${contextPath }/secure/company/getAllGotResume/1">
+											<div title="应聘简历" class="ThirdImage"><span>&nbsp;</span></div>
+										</a>
+										<div>
+											<a href="${contextPath }/secure/company/getAllGotResume/1" title="收到简历">收到简历</a>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
+						
 						<div class="LoginRight"></div>
 					</div>
+					
 				</c:if>
 				<!-- 登陆后的状态栏   end -->
 				

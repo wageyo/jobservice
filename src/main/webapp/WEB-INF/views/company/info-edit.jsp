@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 	
-                	<form action="${contextPath }/secure/company/update" method="post" onsubmit="return company_check();" id="companyInfo">
+                	<form action="${contextPath }/secure/company/update" method="post" onsubmit="return check();" id="companyInfo">
 	                	<ul class="block">
 	                        <li>
 	                            <div class="form0">
