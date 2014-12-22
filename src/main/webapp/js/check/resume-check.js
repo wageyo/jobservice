@@ -1,5 +1,21 @@
 
-function resume_check() {
+$(document).ready(function(){
+		//新增按钮
+		$('#add_we').toggle(
+			function(){
+				$('#div_we').show();
+			},
+			function(){
+				$('#div_we').hide();
+			}	
+		);
+});
+function resume_save(){
+	$('#resumeInfo').submit();
+}
+
+
+function resume_check(type) {
 	// 标题
 	var title = $('#title').val();
 	if (title == null || title == '') {
@@ -102,18 +118,19 @@ function resume_check() {
 
 //增加简历中 用于工作经历的js
 function add_tr(){
-	var str = '<tr style="text-align:left;">';
-		str += '<td>';
-			str += '<p><span class="span_assign_width" style="width:250px;">公司 : <input type="text" size="35" name="companyName"/></span>在职时间 : <input type="text" name="workTime"/> <span style="color:red;"> (格式:2003.2-2005.8)</span></p>';
-			str += '<p><span class="span_assign_width" style="width:250px;">职位 : <input type="text" size="35" name="jobName"/></span>离职原因 : <input type="text" size="45" name="leaveReason"/></p>';
-			str += '<p><span class="span_assign_width" style="width:36px;">&nbsp;</span><textarea rows="4" cols="100" name="jobContent" onfocus="if (this.value == &#39;自我评价,所负责的事物等等.&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;自我评价,所负责的事物等等.&#39;;}">自我评价,所负责的事物等等.</textarea></p>';
-			str += '<hr/>';
+//	var len = $('#tableExperience tr').length;
+	var str = '<tr>';
+		str += '<td class="textTop" style="text-align:center;">工作经历：</td>';
+		str += '<td colspan="2">';
+		str += '<p>所在公司：<input name="companyName" type="text" value="" type="text" />在职时间：<input name="workTime" type="text" value="" type="text" /></p>';
+		str += '<p>所在职位：<input name="jobName" type="text" value="" type="text" />离职原因：<input name="leaveReason" type="text" value="" type="text" /></p>';
+		str += '<p>自我评价：<textarea rows="4" cols="100" name="jobContent" style="width:522px;" onfocus="if (this.value == \'自我评价,所负责的事物等等.\') {this.value = \'\';}" onblur="if (this.value == \'\') {this.value = \'自我评价,所负责的事物等等.\';}">自我评价,所负责的事物等等.</textarea></p>';
 		str += '</td>';
-		str += '<td onClick="del_tr(this)" onmouseover="mouseover_td(this);" onmouseout="mouseout_td(this)">';
+		str += '<td style="width:40px;padding:0px; text-align:center;" onclick="del_tr(this)">';
 			str += '<a href="javascript:void(0);">删除</a>';
 		str += '</td>';
 	str += '</tr>';
-	$('#tb').append(str);
+	$('#tableExperience').append(str);
 }
 
 function del_tr(obj){
@@ -124,12 +141,61 @@ function del_tr(obj){
 }
 
 
-//增加, 修改简历中 用于工作经历的公用js
-function mouseover_td(obj){
-	$(obj).css('text-decoration','underline');
+//修改简历中  工作经历的公用js
+function del_edit_we(wid){
+//	var rid = $('#rid').val();
+	var bl = window.confirm('确定要删除此工作经历么? 此操作不可恢复!');
+	if(bl){
+		$.ajax({
+			url: server.url + '/secure/resume/deleteExperience/'+wid,
+			type:'POST',
+			dataType:'json',
+			success:function(json){
+				if(json.notice == 'success'){
+					alert('删除成功!');
+					//window.location.href='${contextPath}/secure/resume/update?id='+rid;
+					window.location.reload();
+				}else{
+					alert('删除失败了...');
+				}
+			},
+			error:function(){
+				alert('操作失败!');
+			}
+		});
+	}
 }
 
-function mouseout_td(obj){
-	$(obj).css('text-decoration','none');
+//关闭增加div 按钮
+function close_add(){
+	$('#div_we').hide();
+}
+
+//增加单个工作经历
+function save_we(){
+	var rid = $('#rid').val();
+	var new_companyName = $('#new_companyName').val();
+	var new_workTime = $('#new_workTime').val();
+	var new_jobName = $('#new_jobName').val();
+	var new_jobContent = $('#new_jobContent').val();
+	var new_leaveReason = $('#new_leaveReason').val();
+	$.ajax({
+		url: server.url + '/secure/resume/saveExperience',
+		type:'POST',
+		dataType:'json',
+		data:{'resume.id':rid,'companyName':new_companyName,'jobName':new_jobName,'jobContent':new_jobContent,'leaveReason':new_leaveReason},
+		success:function(json){
+			if(json.notice == 'success'){
+				alert('保存成功!');
+			//	window.location.href='${contextPath}/secure/resume/update?id='+rid;
+				window.location.reload();
+			}else{
+				alert('保存失败了...');
+			}
+		},
+		error:function(){
+			alert('操作失败!');
+		}
+	});
 }
 

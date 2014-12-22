@@ -1,7 +1,7 @@
 .contraction
 {
 	margin: 3px auto;
-
+	width: 780px;
 }
 .contraction .contractiontop
 {
@@ -43,8 +43,8 @@
 .contraction .contractionclick
 {
 	float: right;
-	background: url(../images/PublicImage/PublicContractionImage/PublicContraction_contraction.gif) no-repeat left;
-	width: 43px;
+/*	background: url(../images/PublicImage/PublicContractionImage/PublicContraction_contraction.gif) no-repeat left;
+*/	width: 43px;
 	height: 30px;
 	margin-right: 10px;
 	cursor: pointer;

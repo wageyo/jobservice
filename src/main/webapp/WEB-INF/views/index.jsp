@@ -9,7 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 	<meta content="残疾人招聘就业" name="description" />
-	
+	<link rel="shortcut icon" href="${contextPath}/images/HomePageImage/favicon.ico" type="image/x-icon" />
 	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
@@ -103,7 +103,9 @@
 							<div class="loginmainarae">
 								<div class="NameLay">
 									<span class="SetFloatLeft"> 欢迎回来，</span>
-									<span class="Strong SetFloatLeft">${cookie.username.value }</span>
+									<span class="Strong SetFloatLeft">
+										<a href="${contextPath }/user/goCenter">${cookie.username.value }</a>
+									</span>
 									<span class="SetFloatRight">
 										<a href="${contextPath }/user/logout">[退出]</a>
 									</span>
@@ -112,30 +114,62 @@
 								</div>
 								<div class="TimeShow">您最近的登陆时间：<span></span></div>
 								<div>
-									<div class="RapidEntry">
-										<a href="${contextPath }/secure/company/update" title="我的搜索器">
-											<div class="FirstImage"><span>&nbsp;</span></div>
-										</a>
-										<div>
-											<a href="${contextPath }/secure/company/update">企业信息</a>
+									<!-- 企业用户显示的菜单项目 begin -->
+									<c:if test="${cookie.identity.value == 'company' }">
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/company/update" title="企业信息">
+												<div class="FirstImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/company/update">企业信息</a>
+											</div>
 										</div>
-									</div>
-									<div class="RapidEntry">
-										<a href="${contextPath }/secure/job/getManage?page=1">
-											<div title="我发布的职位" class="SecendImage"><span>&nbsp;</span></div>
-										</a>
-										<div>
-											<a href="${contextPath }/secure/job/getManage?page=1" title="职位管理">职位管理</a>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/job/getManage?page=1">
+												<div title="我发布的职位" class="SecendImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/job/getManage?page=1" title="职位管理">职位管理</a>
+											</div>
 										</div>
-									</div>
-									<div class="RapidEntry">
-										<a href="${contextPath }/secure/company/getAllGotResume/1">
-											<div title="应聘简历" class="ThirdImage"><span>&nbsp;</span></div>
-										</a>
-										<div>
-											<a href="${contextPath }/secure/company/getAllGotResume/1" title="收到简历">收到简历</a>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/company/getAllGotResume/1">
+												<div title="应聘简历" class="ThirdImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/company/getAllGotResume/1" title="收到简历">收到简历</a>
+											</div>
 										</div>
-									</div>
+									</c:if>
+									<!-- 企业用户显示的菜单项目 end -->
+									<!-- 个人用户显示的菜单项目 begin -->
+									<c:if test="${cookie.identity.value == 'person' }">
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/resume/getManage" title="我的简历">
+												<div class="FirstImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/resume/getManage">我的简历</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/resume/getReceivedInvite/1">
+												<div title="我发布的职位" class="ThirdImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/resume/getReceivedInvite/1" title="收到邀请">收到邀请</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/user/passWordEdit">
+												<div title="应聘简历" class="SecendImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/user/passWordEdit" title="修改密码">修改密码</a>
+											</div>
+										</div>
+									</c:if>
+									<!-- 个人用户显示的菜单项目 end -->
 								</div>
 							</div>
 						</div>
