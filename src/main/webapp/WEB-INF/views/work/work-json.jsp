@@ -3,16 +3,24 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <div id="data" style="display: none">
-	<div class="list11">
-		<table width="990px" border="0" cellspacing="0" cellpadding="0">
-		<c:forEach items="${entity.list}" var="item">
-			<tr class="list11"><%--
-				<td width="29px" height="30">&nbsp;</td>
-				--%><td width="200px" class="s13_blue_b" id="tabaleDataStyle">
-					<a href='${contextPath }/job/getOneForShow?id=${item.id}'> <span id="Repeater1_ctl00_Label1" style="color: #0868C8;">${item.name}</span> </a>
+  <div class="list11">
+    <table width="990px" border="0" cellspacing="0" cellpadding="0">
+	  <c:forEach items="${entity.list}" var="item" varStatus="j">
+	    <c:if test="${(j.index + 1)%2==0 }">
+			<tr class="list11" style="background:#f6f6f6;">
+				<td width="200px" class="s13_blue_b" id="tabaleDataStyle">
+					<a href='${contextPath }/job/getOneForShow?id=${item.id}'> 
+						<span id="Repeater1_ctl00_Label1" style="color: #0868C8;">
+							${item.name}
+						</span> 
+					</a>
 				</td>
 				<td width="203px" class="s13_blue_b" id="tabaleDataStyle">
-					 <a href="${contextPath }/company/getOneForShow?id=${item.companyid}"><span id="Repeater1_ctl00_Label2" >${item.company}</span></a>
+					 <a href="${contextPath }/company/getOneForShow?id=${item.companyid}">
+						   <span id="Repeater1_ctl00_Label2" >
+						   		${item.company}
+						   </span>
+					 </a>
 				</td>
 				<td width="122px" class="s13_blue_b" id="tabaleDataStyle">
 					<span id="Repeater1_ctl00_Label3" >${item.area}</span>
@@ -24,10 +32,37 @@
 					<span id="Repeater1_ctl00_Label7" >${item.date}</span>
 				</td>
 			</tr>
-		</c:forEach>
-		</table>
-	</div>
-
+		</c:if>
+		<c:if test="${(j.index + 1)%2!=0 }">
+			<tr class="list11">
+				<td width="200px" class="s13_blue_b" id="tabaleDataStyle">
+					<a href='${contextPath }/job/getOneForShow?id=${item.id}'> 
+						<span id="Repeater1_ctl00_Label1" style="color: #0868C8;">
+							${item.name}
+						</span> 
+					</a>
+				</td>
+				<td width="203px" class="s13_blue_b" id="tabaleDataStyle">
+					 <a href="${contextPath }/company/getOneForShow?id=${item.companyid}">
+						   <span id="Repeater1_ctl00_Label2" >
+						   		${item.company}
+						   </span>
+					 </a>
+				</td>
+				<td width="122px" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label3" >${item.area}</span>
+				</td>
+				<td width="145px" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label6" >${item.experience}</span>
+				</td>
+				<td width="150px" class="s13_blue_b" id="tabaleDataStyle">
+					<span id="Repeater1_ctl00_Label7" >${item.date}</span>
+				</td>
+			</tr>
+		</c:if>
+	   </c:forEach>
+	  </table>
+    </div>
 	<div style="padding:15px;" class="pages0">
 		<span id="lbCount" class="total">共${entity.pagination.records}条记录</span> 
 		<span id="lbTotalPage" class="total">总页:${entity.pagination.countPages}页</span> 

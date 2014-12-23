@@ -16,13 +16,12 @@
 </script>
 <title>残疾人就业信息网</title>
 </head>
-<body>
-	<jsp:include page="../header.jsp" />
+<body><%--
+	<jsp:include page="../formatter/status-bar.jsp" />
+	<jsp:include page="../formatter/header.jsp" />
 
-	<jsp:include page="../nav.jsp" />
 
-
-	<div id="xBody">
+	--%><div id="xBody">
 		<!--头部结束--->
 		<div id="xdAL" style="width: 1px;"></div>
 		<!--内容页面开始-->
@@ -89,7 +88,7 @@
 				</tbody>
 			</table>
 		</div>
-	</div>
+	</div><%--
 	<jsp:include page="../footer.jsp" />
-</body>
+--%></body>
 </html>

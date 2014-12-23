@@ -9,20 +9,10 @@
 <meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 <meta content="残疾人招聘就业" name="description" />
 	<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/body_job.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/search.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/Login.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/VerticalLineUL.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/PublicSearch.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/PublicframeOne.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/PublicframeTwo.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/hp_fwdt.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/HomePageCSS.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/tabCSS.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 <title>残疾人就业信息网</title>
@@ -73,12 +63,127 @@
 </style>
 </head>
 <body>
-<div id="container" class="container">
 	<jsp:include page="../formatter/status-bar.jsp" />
 	<jsp:include page="../formatter/header.jsp" />
-
-
-	<div id="xdAC">	
+	<div id="maincontent">
+      <div style="margin-top: 10px;">
+         <div id="leftsidebar" style="width: 989px; ">
+           <div class="s_search">
+             <div class="Search">
+               <div class="SearchInputText">
+                 <div class="SetFloatLeft InputTextBgEmp">
+                    <input name="keyWord" type="text" id="keyWord"  title="请输入关键字" class="InputTextBlank DefaultText" style="color: gray;"/>
+                 </div>
+                 <div class="SearchBtn SetFloatLeft">
+	                <input class="SearchButtom SetFloatLeft"  type="image" name="ImageButton1" id="ImageButton1" 
+	                  onclick="common.pagination(1)" class="send55" src="images/HomePageImage/SearchImage/SearchBtn.gif" style="border-width:0px;"/>
+	                <div class="SetFloatLeft AdvancedSearch"> </div>
+                 </div>
+              </div>
+            </div>
+            <div class="pot"></div>
+            <ul class="list_condition">
+              <li class="list_selt" style=" height:30px;">
+           	    <div>
+                  <div style="float:left;">   就职意向： </div>
+                    <div class="PublicButtomBar">
+						<select name="jobCategory" id="jobCategory" style="width: 170px;height:23px">
+							<c:forEach items="${jcList }" var="jc">
+							  <option value="${jc.code }">${jc.name }</option>
+							</c:forEach>
+						</select>
+                    </div>
+                </div>
+              </li>
+              <li class="list_selt" style=" height:30px;">
+                <div>
+             	 <div style="float:left;">	学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历： </div>
+                   <div class="PublicButtomBar">
+                     <select name="education" id="education" style="width: 170px;height:23px">
+						<c:forEach items="${params }" var="p">
+							<c:if test="${p.type == 'education' }">
+								<option value="${p.value }">${p.name }</option>
+							</c:if>
+						</c:forEach>
+					  </select>
+             	  </div>
+                </div>
+              </li>
+              <li class="list_selt" style=" height:30px;">
+               <div>
+                <div style="float:left;">	性别： </div>
+                 <div class="PublicButtomBar">
+             	  <select name="gender" id="gender" style="width: 100px;height:23px">
+					<c:forEach items="${params }" var="p">
+					  <c:if test="${p.type == 'gender' }">
+						<option value="${p.value }">${p.name }</option>
+					  </c:if>
+					</c:forEach>
+				  </select>
+                </div>
+               </div>
+             </li>
+           </ul>
+           <ul class="list_condition">
+             <li class="list_selt" style=" height:30px;">
+               <div>
+                 <div style="float:left;">工作地区：</div>
+                   <div class="PublicButtomBar">  
+					<select name="areaCode" id="areaCode" style="width: 170px;height:23px">
+						<option value="">请选择</option>
+							<c:forEach items="${areaList }" var="t">
+								<option value="${t.code }" <c:if test="${fn:substring(area.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
+							</c:forEach>
+					</select>
+                   </div>
+               </div>
+             </li>
+             <li class="list_selt" style=" height:30px;">
+               <div>
+                <div style="float:left;">	    	就职方式： </div>
+                  <div class="PublicButtomBar">
+				   <select name="jobNature" id="jobNature" style="width: 170px;height:23px">
+					<c:forEach items="${params }" var="p">
+						<c:if test="${p.type == 'jobNature' }">
+							<option value="${p.value }">${p.name }</option>
+						</c:if>
+					</c:forEach>
+				   </select>
+                  </div>
+               </div>
+            </li>    
+          </ul>
+          <div class="clearboth">  </div>
+        </div>
+       </div>
+       <div class="advertisement"></div>
+      </div>
+      <div class="clearboth"></div>
+      <div id="contentright" class="contentright">
+        <div style="clear: both"></div>
+        <div class="zxzw_center">
+			<div class="job_list">
+				<table width="988px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
+					<tr style="background-color: #ECF4FF; text-align: center;
+					background-image: url(images/HomePageImage/SearchImage/center_1px.gif);background-repeat: repeat-x;">
+						<td width="90px" height="26" class="s13_blue_b" id="tableHeadStyle">简历标题</td>
+						<td width="70px" class="s13_blue_b" id="tableHeadStyle">姓名</td>
+						<td width="50px" class="s13_blue_b" id="tableHeadStyle">性别</td>
+						<td width="80px" class="s13_blue_b" id="tableHeadStyle">学历</td>
+						<td width="70px" class="s13_blue_b" id="tableHeadStyle">专业</td>
+						<td width="80px" class="s13_blue_b" id="tableHeadStyle">工作经验</td>
+						<td width="100px" class="s13_blue_b" id="tableHeadStyle">求职岗位</td>
+						<td width="100px" class="s13_blue_b" id="tableHeadStyle">期望工作地</td>
+						<td width="80px" class="s13_blue_b" id="tableEndStyle" style="border-right: 1px solid #c5e2f6;">期望薪资</td>
+					</tr>
+				</table>
+				<div id="main"></div>
+			</div>            
+         </div>
+         <jsp:include page="../formatter/footer.jsp" />
+      </div>
+	</div>
+	<%--	
 		<div class="title4">简历搜索</div>
 		<div class="xinxi">
 			<div id="xdSearch2">
@@ -169,9 +274,9 @@
 				<div class="job_list">
 
 					<table width="988px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
-						<tr style="background-color: #ECF4FF; text-align: center"><%--
+						<tr style="background-color: #ECF4FF; text-align: center">
 							<td width="20" height="30">&nbsp;</td>
-							--%><td  height="30" width="90px" class="s13_blue_b" id="tableHeadStyle">简历标题</td>
+							<td  height="30" width="90px" class="s13_blue_b" id="tableHeadStyle">简历标题</td>
 							<td width="70px" class="s13_blue_b" id="tableHeadStyle">姓名</td>
 							<td width="50px" class="s13_blue_b" id="tableHeadStyle">性别</td>
 							<td width="80px" class="s13_blue_b" id="tableHeadStyle">学历</td>
@@ -186,7 +291,6 @@
 				</div>
 			</div>
 		</div>
-		<jsp:include page="../formatter/footer.jsp" />
-		</div>
+		--%>
 </body>
 </html>

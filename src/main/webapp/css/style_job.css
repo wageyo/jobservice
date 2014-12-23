@@ -2286,13 +2286,12 @@ send55 {
 }
 #tableHeadStyle{
 	color: #4682B4;
-	border-right: 1px solid #C5E2F6;
-	border-bottom: 1px solid rgb(197, 226, 246);
-
+	border-left: 1px solid #C5E2F6;
+border-right: 1px solid #C5E2F6;
 }
 #tableEndStyle{
 	color: #4682B4;
-	border-bottom: 1px solid #C5E2F6;
+	border-right: 1px solid #C5E2F6;
 }
 #tabaleDataStyle{
 	color: #606060;
@@ -2587,8 +2586,8 @@ padding-top: 10px;
 
     border: 0px;
 }
-/* emp.jsp页面样式 */
-/* #maincontent {
+/*  emp.jsp页面样式  */
+ #maincontent {
 width: 990px;
 margin: 0 auto;
 height: 100%;
@@ -2609,13 +2608,19 @@ margin-left: auto;
 margin-right: auto;
 }
 div.s_search div.Search {
-height: 66px;
+height: 53px;
 width: 675px;
 }
+/* .SearchStyle{
+	width: 575px;
+margin-left: 230px;
+height: 66px;
+} */
 .Search .SearchInputText {
-margin-top: 5px;
+margin-top: 20px;
+margin-left: 50px;
 }
-.Search .InputTextBg {
+.Search .InputTextBgEmp {
 background: url(../images/HomePageImage/SearchImage/SearchImage.gif) no-repeat left;
 width: 394px;
 border: 1px solid #7fc5fe;
@@ -2623,7 +2628,7 @@ border: 1px solid #7fc5fe;
 .SetFloatLeft {
 float: left;
 }
-.Search .InputTextBg .InputTextBlank {
+.Search .InputTextBgEmp .InputTextBlank {
 line-height: 24px;
 border: 0px;
 height: 24px;
@@ -2639,4 +2644,47 @@ background: url(../images/HomePageImage/SearchImage/SearchBtn.gif) no-repeat rig
 width: 87px;
 height: 26px;
 margin-left: 10px;
-} */
+}
+
+div#container div#leftsidebar {
+width: 709px;
+float: left;
+margin-right: 5px;
+}
+.Search .AdvancedSearch {
+margin-left: 20px;
+line-height: 26px;
+}
+div.s_search div.pot {
+height: 1px;
+border-top: 1px #1d91e4 dashed;
+width: 95%;
+margin-left: auto;
+margin-right: auto;
+}
+ul.list_condition {
+padding-left: 158px;
+}
+ul.list_condition li.list_selt {
+width: 260px;
+}
+ul.list_condition li {
+float: left;
+width: 190px;
+margin-left: 3px;
+text-align: left;
+height: 22px;
+line-height: 22px;
+margin-top: 10px;
+overflow: hidden;
+}
+.zxzw_center .ul1 {
+background-image: url(../../Image/ZxzwImage/center_1px.gif);
+_background-image: url(../../Image/ZxzwImage/center_1px2.gif);
+background-repeat: repeat-x;
+height: 27px;
+border-left: 1px solid #c5e2f6;
+border-right: 1px solid #c5e2f6;
+font-weight: bold;
+width: 100%;
+}
