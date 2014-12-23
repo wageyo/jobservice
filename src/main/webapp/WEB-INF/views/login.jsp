@@ -20,7 +20,7 @@ function getimgcode(){
 <title>残疾人就业信息网</title>
 </head>
 <body>
-	<jsp:include page="header.jsp" />
+	<jsp:include page="formatter/header.jsp" />
 	<jsp:include page="nav.jsp" />
 
 	<div align="center">

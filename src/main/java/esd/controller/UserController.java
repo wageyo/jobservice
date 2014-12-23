@@ -140,10 +140,12 @@ public class UserController {
 	// 登陆
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(User user, HttpServletRequest request,HttpServletResponse response, RedirectAttributes ra) {
+		System.out.println(request.getRequestURI());
+		String refererUrl = request.getHeader("referer");
 		if (user == null) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "登录错误");
-			return "redirect:/index";
+			return refererUrl;
 		}
 //		// 判断验证码是否正确
 //		String codeStr = request.getParameter("LoginVerifyCode");
@@ -166,18 +168,18 @@ public class UserController {
 		if (user == null) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户名或密码错误!");
-			return "redirect:/index";
+			return "redirect:"+refererUrl;
 		}
 		if (user.getCheckStatus().equals(
 				Constants.CheckStatus.DAISHEN.toString())) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户正在审核中, 请稍后登陆!");
-			return "redirect:/index";
+			return "redirect:"+refererUrl;
 		} else if (user.getCheckStatus().equals(
 				Constants.CheckStatus.WEITONGGUO.toString())) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "用户名没有通过审核, 请重新申请!");
-			return "redirect:/index";
+			return "redirect:"+refererUrl;
 		}
 		if (user.getIdentity().equals(Identity.COMPANY.toString())) {
 			Company company = companyService.getByAccount(user.getId());

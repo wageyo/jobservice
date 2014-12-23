@@ -12,7 +12,7 @@
 			<a href="#">意见反馈</a>&nbsp;|&nbsp;
 			<a href="${contextPath }/contact" >联系我们</a>&nbsp;|&nbsp;
 			<a href="javascript:alert('建设中');" target="_blank" title="站长统计">站长统计</a>&nbsp;|&nbsp;
-			<a href="${contextPath }/loginManage/login" title="登陆管理后台" style="color:blue;">管理后台</a>
+			<a href="${contextPath }/loginManage/login" title="登陆管理后台" style="color:rgb(69, 69, 243);">管理后台</a>
 		</p>
 		<p>&copy; 2013 hrbesd.com, Inc. 哈尔滨亿时代数码科技开发有限公司, All rights reserved. 黑ICP备10202513号</p>
 	</div>

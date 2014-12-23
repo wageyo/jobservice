@@ -23,8 +23,7 @@
 	
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
-	<script type="text/javascript" src="${contextPath}/js/widget.js"></script>
-	<script type="text/javascript" src="${contextPath}/js/check/job-check.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/check/company-check.js"></script>
 	<script type="text/javascript">
 	</script>
 </head>
@@ -68,7 +67,7 @@
                                 <div class="contractionleft">
                                 </div>
                                 <div class="contractiontoptext">
-                                    <span class="spanFirst">当前位置:</span><span class="spanSecond">企业管理中心 &gt;&gt; 职位管理 &gt;&gt; 发布职位</span></div>
+                                    <span class="spanFirst">当前位置:</span><span class="spanSecond">企业管理中心 &gt;&gt; 控制面板 &gt;&gt; 添加企业信息</span></div>
                                 <div class="contractionright">
                                 </div>
                                 <div class="contractionclick">
@@ -77,7 +76,7 @@
                         </div>
                     </div>
                 	
-                	<form action="${contextPath }/secure/job/save" method="post" onsubmit="return check('save');" id="jobInfo">
+                	<form action="${contextPath }/secure/company/save" method="post" onsubmit="return check();" id="companyInfo">
 	                	<ul class="block">
 	                        <li>
 	                            <div class="form0">
@@ -87,7 +86,7 @@
 	                                            <tbody>
 		                                            <tr>
 		                                                <td class="textTop">
-	                                                  		 <em style="display: inline;">* </em>职位名称：
+	                                                  		 <em style="display: inline;">* </em>单位名称：
 		                                                </td>
 		                                                <td>
 		                                                	<input id="name" name="name" type="text" value="" type="text" />
@@ -95,77 +94,69 @@
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		 <em style="display: inline;">* </em>招聘人数：
+	                                                  		 <em style="display: inline;">* </em>法人代表：
 		                                                </td>
 		                                                <td>
-		                                                	<input id="hireNumber" name="hireNumber" type="text" value="" type="text" />
+		                                                	<input id="corporateRepresentative" name="corporateRepresentative" type="text" value="" type="text" />
 		                                                </td>
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		提供薪资：
+	                                                  		 组织机构代码：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="salary" id="salary" class="length informationEdits needSyncValue NeedValidate" >
-		                                                    	<c:forEach items="${params }" var="p">
-																	<c:if test="${p.type == 'salary' }">
-																		<option value="${p.value }">${p.name }</option>
-																	</c:if>
-																</c:forEach>
-		                                                    </select>
+		                                                	<input id="organizationCode" name="organizationCode" type="text" value="" type="text" />
 		                                                </td>
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		 <em style="display: inline;">* </em>最低学历：
+	                                                  		 工商登记号码：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="education" id="education" class="length informationEdits needSyncValue NeedValidate" >
-		                                                    	<c:forEach items="${params }" var="p">
-																	<c:if test="${p.type == 'education' }">
-																		<option value="${p.value }">${p.name }</option>
-																	</c:if>
-																</c:forEach>
-		                                                    </select>
+		                                                	<input id="commercialCode" name="commercialCode" type="text" value="" type="text" />
 		                                                </td>
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		<em style="display: inline;">* </em>工作经验：
+	                                                  		税务编码：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="experience" id="experience" class="length informationEdits needSyncValue NeedValidate" >
-		                                                    	<c:forEach items="${params }" var="p">
-																	<c:if test="${p.type == 'experience' }">
-																		<option value="${p.value }">${p.name }</option>
-																	</c:if>
-																</c:forEach>
-		                                                    </select>
+		                                                	<input id="taxCode" name="taxCode" type="text" value="" type="text" />
 		                                                </td>
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		 性别：
+	                                                  		 社保登记证号：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="gender" id="gender" class="length informationEdits needSyncValue NeedValidate" >
-		                                                    	<c:forEach items="${params }" var="p">
-																	<c:if test="${p.type == 'gender' }">
-																		<option value="${p.value }">${p.name }</option>
-																	</c:if>
-																</c:forEach>
-		                                                    </select>
+		                                                	<input id="socialSecurityCode" name="socialSecurityCode" type="text" value="" type="text" />
 		                                                </td>
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		<em style="display: inline;">* </em>岗位性质：
+	                                                  		 网站ID：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="nature" id="nature" class="length informationEdits needSyncValue NeedValidate" >
+		                                                	<input id="webSiteId" name="webSiteId" type="text" value="" type="text" />
+		                                                </td>
+		                                            </tr>
+		                                             <tr>
+		                                                <td class="textTop">
+	                                                  		 市劳网号：
+		                                                </td>
+		                                                <td>
+		                                                	<input id="laoWangCode" name="laoWangCode" type="text" value="" type="text" />
+		                                                </td>
+		                                            </tr>
+		                                            <tr>
+		                                                <td class="textTop">
+		                                                    <em></em><em style="display: inline;">* </em>单位规模：
+		                                                </td>
+		                                                <td>
+		                                                    <select name="scale" id="scale" class="length informationEdits needSyncValue NeedValidate" >
 		                                                    	<c:forEach items="${params }" var="p">
-																	<c:if test="${p.type == 'jobNature' }">
-																		<option value="${p.value }">${p.name }</option>
+																	<c:if test="${p.type == 'scale' }">
+																		<option value="${p.value }" >${p.name }</option>
 																	</c:if>
 																</c:forEach>
 		                                                    </select>
@@ -173,70 +164,50 @@
 		                                            </tr>
 		                                            <tr>
 		                                                <td class="textTop">
-	                                                  		<em style="display: inline;">* </em>有效期：
+		                                                	单位性质：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="effectiveDays" id="effectiveDays" class="length informationEdits needSyncValue NeedValidate" >
-		                                                    	<c:forEach items="${params }" var="p">
-																	<c:if test="${p.type == 'effectiveTime' }">
-																		<option value="${p.value }">${p.name }</option>
+															<select name="nature" id="nature">
+																<c:forEach items="${params }" var="p">
+																	<c:if test="${p.type == 'companyNature' }">
+																		<option value="${p.value }" >${p.name }</option>
 																	</c:if>
 																</c:forEach>
-		                                                    </select>
-		                                                </td>
-		                                            </tr>
-		                                            <tr>
-		                                                <td class="textTop">
-	                                                  		<em style="display: inline;">* </em>工作地点：
-		                                                </td>
-		                                                <td>
-		                                                	<select name="workPlace.code" id="area_lv1" class="select_border" style="width:150px;">
-																<c:forEach items="${provinceList }" var="area">
-																	<option value="${area.code }">${area.name }</option>
-																</c:forEach>
-															</select> <select name="area_lv2" id="area_lv2" class="select_border" style="width:150px;">
-																<option value="">请选择城市</option>
-															</select> <select name="area_lv3" id="area_lv3" class="select_border" style="width:150px;">
-																<option value="">请选择区域</option>
 															</select>
 		                                                </td>
 		                                            </tr>
 		                                            <tr>
 		                                                <td class="textTop">
-	                                                  		<em style="display: inline;">* </em>工作种类：
+		                                                	经济类型：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="jobCategory.code" id="jobCategory_lv1" class="select_border" style="width:150px;">
-																<c:forEach items="${jcList }" var="p">
-																	<option value="${p.code }">${p.name }</option>
+															 <select name="economyType" id="economyType">
+															 	<c:forEach items="${params }" var="p">
+																	<c:if test="${p.type == 'economyType' }">
+																		<option value="${p.value }" >${p.name }</option>
+																	</c:if>
 																</c:forEach>
-															</select> 
-															<select name="jobCategory_lv2" id="jobCategory_lv2" class="select_border" style="width:150px;">
-																<option value="">请选择</option>
-															</select> 
-															<select name="jobCategory_lv3" id="jobCategory_lv3" class="select_border" style="width:150px;">
-																<option value="">请选择</option>
 															</select>
 		                                                </td>
 		                                            </tr>
 		                                            <tr>
 		                                                <td class="textTop">
-	                                                  		其他福利：
+		                                                    <em style="display: inline;">* </em>所属行业：
 		                                                </td>
 		                                                <td>
-		                                                	<c:forEach items="${params }" var="p">
-																<c:if test="${p.type == 'benefit' }">
-																	<input type="checkbox" value="${p.value }" name="provideBenefit" />${p.name }&nbsp;&nbsp;
-																	</c:if>
-															</c:forEach>
+		                                                	<select name="businessScope.id" id="businessScope.id">
+															 	<c:forEach items="${bsList }" var="bs">
+																	<option value="${bs.id }" >${bs.name }</option>
+																</c:forEach>
+															</select>
 		                                                </td>
 		                                            </tr>
 		                                            <tr>
 		                                                <td class="textTop">
-		                                                    <em></em><em style="display: inline;">* </em>职位描述：
+		                                                    <em></em><em style="display: inline;">* </em>单位介绍：
 		                                                </td>
 		                                                <td>
-		                                                    <textarea name="description" id="description" rows="2" cols="20" style="height:80px;width:619px;font-size: 12px; padding: 6px;"></textarea>
+		                                                    <textarea name="introduction" rows="2" cols="20" style="height:80px;width:619px;font-size: 12px; padding: 6px;"></textarea>
 		                                                </td>
 		                                            </tr>
 		                                        </tbody></table>
@@ -262,7 +233,7 @@
 		                                                    <em style="display: inline;">* </em>联 系 人：
 		                                                </td>
 		                                                <td style="border-right:0 none;">
-		                                                	<input name="contactPerson" type="text" value="${company.contactPerson }" id="contactPerson" />
+		                                                	<input name="contactPerson" type="text" value="" id="contactPerson" />
 		                                                </td>
 		                                                <td style="border-left:0 none;">
 		                                                	&nbsp;
@@ -273,7 +244,7 @@
 		                                                    <em style="display: inline;">* </em>联系电话：
 		                                                </td>
 		                                                <td style="border-right:0 none;">
-		                                                	<input name="contactTel" type="text" value="${company.telephone }" id="contactTel" />
+		                                                	<input name="telephone" type="text" value="" id="telephone" />
 		                                                </td>
 		                                                <td style="border-left:0 none;">
 		                                                	&nbsp;
@@ -281,10 +252,43 @@
 		                                            </tr>
 		                                            <tr>
 		                                                <td class="textTop">
-															邮箱：
+															联系部门：
 		                                                </td>
 		                                                <td style="border-right:0 none;">
-		                                                	<input name="contactEmail" type="text" value="${company.email }" id="contactEmail" />
+		                                                	<input name="contactDept" type="text" value="" id="contactDept" />
+		                                                </td>
+		                                                <td style="border-left:0 none;">
+		                                                	&nbsp;
+		                                                </td>
+		                                            </tr>
+		                                            <tr>
+		                                                <td class="textTop">
+															传真：
+		                                                </td>
+		                                                <td style="border-right:0 none;">
+		                                                	<input name="fax" type="text" value="" id="fax" />
+		                                                </td>
+		                                                <td style="border-left:0 none;">
+		                                                	&nbsp;
+		                                                </td>
+		                                            </tr>
+		                                            <tr>
+		                                                <td class="textTop">
+		                                                    <em style="display: inline;">* </em>邮箱：
+		                                                </td>
+		                                                <td style="border-right:0 none;">
+		                                                	<input name="email" type="text" value="" id="email" />
+		                                                </td>
+		                                                <td style="border-left:0 none;">
+		                                                	&nbsp;
+		                                                </td>
+		                                            </tr>
+		                                            <tr>
+		                                                <td class="textTop">
+															公司地址：
+		                                                </td>
+		                                                <td style="border-right:0 none;">
+		                                                	<input name="address" type="text" value="" id="address" />
 		                                                </td>
 		                                                <td style="border-left:0 none;">
 		                                                	&nbsp;

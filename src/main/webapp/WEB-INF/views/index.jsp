@@ -9,7 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 	<meta content="残疾人招聘就业" name="description" />
-	
+	<link rel="shortcut icon" href="${contextPath}/images/HomePageImage/favicon.ico" type="image/x-icon" />
 	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
@@ -26,6 +26,7 @@
 	
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/verify.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/easyTab.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/index.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/potoschange.js"></script>
@@ -67,6 +68,7 @@
 											</div>
 											<div class="righttext">
 												<input type="password" value="" id="passWord" name="passWord" class="text DefaultText" title="输入密码" style="color: Gray;" />
+												<input type="hidden" id="identity" name="identity" value="person" />
 											</div>
 										</div>
 										<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
@@ -97,28 +99,98 @@
 				
 				<!-- 登陆后的状态栏  begin -->
 				<c:if test="${cookie.username.value != null && cookie.username.value != ''}">
-					<div class="login SetFloatLeft">
-						<div class="LoginLeft"></div>
-						<div class="loginmain" style="width:250px;">
+					<div class="SetFloatLeft PersonalLogined">
+						<div class="loginbtn"></div>
+						<div class="loginmain">
 							<div class="loginmainarae">
-								内耗啊,${cookie.username.value }<br/>
-								您的注册时间: ${cookie.registertime.value }<br/>
-								现在您可以进入
-								<a href="${contextPath }/user/goCenter">
-									<c:if test="${cookie.identity.value == 'person' }">
-										个人中心
-									</c:if>
+								<div class="NameLay">
+									<span class="SetFloatLeft"> 欢迎回来，</span>
+									<span class="Strong SetFloatLeft">
+										<a href="${contextPath }/user/goCenter">${cookie.username.value }</a>
+									</span>
+									<span class="SetFloatRight">
+										<a href="${contextPath }/user/logout">[退出]</a>
+									</span>
+								</div>
+								<div class="clearboth">
+								</div>
+								<div class="TimeShow">您最近的登陆时间：<span></span></div>
+								<div>
+									<!-- 企业用户显示的菜单项目 begin -->
 									<c:if test="${cookie.identity.value == 'company' }">
-										企业管理中心
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/company/update" title="企业信息">
+												<div class="FirstImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/company/update">企业信息</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/job/getManage?page=1">
+												<div title="我发布的职位" class="SecendImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/job/getManage?page=1" title="职位管理">职位管理</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/company/getAllGotResume/1">
+												<div title="应聘简历" class="ThirdImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/company/getAllGotResume/1" title="收到简历">收到简历</a>
+											</div>
+										</div>
 									</c:if>
-									<c:if test="${cookie.identity.value == 'admin' || cookie.identity.value == ''}">
-										管理员后台
+									<!-- 企业用户显示的菜单项目 end -->
+									<!-- 个人用户显示的菜单项目 begin -->
+									<c:if test="${cookie.identity.value == 'person' }">
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/resume/getManage" title="我的简历">
+												<div class="FirstImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/resume/getManage">我的简历</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/resume/getReceivedInvite/1">
+												<div title="我发布的职位" class="ThirdImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/resume/getReceivedInvite/1" title="收到邀请">收到邀请</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/user/passWordEdit">
+												<div title="应聘简历" class="SecendImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/user/passWordEdit" title="修改密码">修改密码</a>
+											</div>
+										</div>
 									</c:if>
-								</a>
+									<!-- 个人用户显示的菜单项目 end -->
+									<!-- 管理员用户显示的菜单项目 begin -->
+									<c:if test="${cookie.identity.value == 'admin' || cookie.identity.value == 'superadmin' }">
+										<div class="RapidEntry">
+											<a href="${contextPath }/manage/index" title="管理后台">
+												<div class="FirstImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/manage/index">管理后台</a>
+											</div>
+										</div>
+									</c:if>
+									<!-- 管理员用户显示的菜单项目 end -->
+								</div>
 							</div>
 						</div>
+						
 						<div class="LoginRight"></div>
 					</div>
+					
 				</c:if>
 				<!-- 登陆后的状态栏   end -->
 				
@@ -384,7 +456,26 @@
 				</div>
 				<div class="clearboth"></div>
 				<div class="SetMarginTop">
-					<div class="PublicframeTwo SetPositionOne">
+					<!-- 临时显示相关链接 -->
+					<div class="PublicframeTwo SetPositionOne" style="width:100%;">
+						<div class="PublicframeTwoHeadBar">
+							<div class="PublicframeTwoHeadBarLeft"></div>
+							<div class="PublicframeTwoHeadBarTittle">
+								<span class="PublicframeTwoHeadBarTittleSpan" title="友情链接">友情链接</span>
+							</div>
+							<div class="PublicframeTwoHeadBarRight"></div>
+							<div class="PublicframeTwoHeadBarMore">
+							</div>
+						</div>
+						<div class="PublicframeTwoContent listpub" style="width:988px;">
+							<!-- 引入相关链接列表页面 -->
+							<jsp:include page="formatter/links.jsp" />
+							<div class="clearboth"></div>
+						</div>
+					</div>
+					
+				<!-- 下面三个部分未来再做  begin-->
+				<!-- 	<div class="PublicframeTwo SetPositionOne">
 						<div class="PublicframeTwoHeadBar">
 							<div class="PublicframeTwoHeadBarLeft"></div>
 							<div class="PublicframeTwoHeadBarTittle">
@@ -452,7 +543,9 @@
 							</dl>
 							<div class="clearboth"></div>
 						</div>
-					</div>
+					</div> -->
+					<!-- 下面三个部分未来再做  end-->
+					
 					<div class="clearboth"></div>
 				</div>
 			</div>

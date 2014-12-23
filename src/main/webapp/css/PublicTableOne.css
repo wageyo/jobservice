@@ -1,267 +1,273 @@
+.PublicTableOne {
+	width: 100%;
+}
 
-        .PublicTableOne
-        {
-         width:100%;
-        }
-        
-          /*头部的bar*/
-        .PublicTableOne .UpBar
-        {
-           width:100%;
-           margin:0;
-           padding:0;
-           margin-top:10px;
-            margin-bottom:10px;
-             _margin-bottom:0px;
-       }
-        .PublicTableOne .UpBar .Left
-        {
-            float:left;
-            margin-left:10px;
-        }
-        .PublicTableOne .UpBar .Left .ButtomPlace
-        {
-            float:left;
-            margin-right:5px;
-            _display:inline;/*IE6*/
-            height:27px;
-            line-height:27px;
-            cursor:pointer;
-        }
-        .PublicTableOne .UpBar .Left .cx
-        {
-             padding-top:5px;
-              #padding-top:px;
-              _padding-top:2px;
-            }
-         .PublicTableOne .UpBar .Left .Buttom
-        {
-            float:left;
-            margin-right:5px;
-            _display:inline;/*IE6*/
-            height:15px;
-            line-height:15px;
-           
-        }
-        
-        .PublicTableOne .UpBar .Right
-        {
-            padding-right:20px;
-            height:27px;
-            text-align:right;
-            float:right;
-        }
-        
-         .PublicTableOne  .UpBar .Right .pageUp
-        {
-            float:right;
-            margin-right:5px;
-        } 
-        .PublicTableOne  .UpBar .Right .List
-        {  
-            float:right;
-            width:100px;
-            text-align:center;
-            line-height:25px;
-            font-size:14px;
-            font-weight:bold;
-        }         
-         .PublicTableOne  .UpBar .Right .pageDown
-        {
+/*头部的bar*/
+.PublicTableOne .UpBar {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	_margin-bottom: 0px;
+}
 
-            float:right;
-            margin-left:5px;
-        } 
-                
-               
-         /*table主信息*/
-        .PublicTableOne  .TableMain
-        {
-		  width:100%;
-          margin-top:5px;
-        }
-      
-        .PublicTableOne  .TableMain td
-        {
-            text-align:center;
-            vertical-align:middle;
-            padding:5px;
-            height:25px;
-            font-size:12px;
-            border-bottom:1px solid #C5E2F6;
-        }
-        .PublicTableOne  .TableMain td a
-        {
-            color:#0095ff;
-        }
-        .PublicTableOne  .TableMain td a:hover
-        {
-            color:red;
-        }
-        .PublicTableOne  .TableMain td img
-        {
-			 vertical-align:middle;
-        }
-        .PublicTableOne  .TableMain td ipunt
-        {
-            margin-top:0px;
-            *margin-top:-4px;
-            vertical-align:middle;
-        }
-        /*表头背景切换 */
-        .PublicTableOne  .TableMain .TheaderBg
-        {         
-            height:30px;
-            background:url(../images/PublicTableOneImage/lanmu_bg.gif) repeat-x;
-        }
-           
-        .PublicTableOne  .TableMain .TheaderBg th
-        {         
-             font-size:12px;
-             border-right:1px solid #c5e2f6;
-             white-space:nowrap;
+.PublicTableOne .UpBar .Left {
+	float: left;
+	margin-left: 10px;
+}
 
-        }
-        .PublicTableOne  .TableMain .TheaderBg .firstTh
-        {         
-             border-left:1px solid #c5e2f6;
-             width:40px;
-        }
-        .PublicTableOne  .TableMain .AlignLeft   /*td的对齐方式  */
-        {
-			 text-align:left;
-			 padding-left:10px;
-        }
-        .PublicTableOne  .TableMain .AlignRight   /*td的对齐方式  */
-        {
-			 text-align:right;
-			 padding-right:10px;
-        }
+.PublicTableOne .UpBar .Left .ButtomPlace {
+	float: left;
+	margin-right: 5px;
+	_display: inline; /*IE6*/
+	height: 27px;
+	line-height: 27px;
+	cursor: pointer;
+}
 
-        
-        
-        
-        
-        
-        
-                /*底部的bar*/
-        .PublicTableOne  .DownBar
-        {
-            width:100%;
-            padding-top:10px;
-        }      
-         .PublicTableOne  .DownBar .Left
-        {
-            height:27px;
-            padding-top:2px;
-            margin-left:2px;
-			_margin-left:1px;
-            float:left;
+.PublicTableOne .UpBar .Left .cx {
+	padding-top: 5px; #
+	padding-top: px;
+	_padding-top: 2px;
+}
 
-        } 
-     
-        .PublicTableOne  .DownBar .Left .CheckAll
-        {
-            #line-height:0px;/*IE7*/
-            _line-height:0px;/*IE6*/
-            padding-top:2px\9;/*IE8*/
-            #padding-top:0px;/*IE7*/
-            _padding-top:0px;/*IE6*/
-        } 
+.PublicTableOne .UpBar .Left .Buttom {
+	float: left;
+	margin-right: 5px;
+	_display: inline; /*IE6*/
+	height: 15px;
+	line-height: 15px;
+}
 
-        .PublicTableOne  .DownBar .Left li
-        {
-            float:left;
-            white-space:nowrap; 
-            height:24px;
-            padding:0 2px;
-            line-height:20px;
-            #line-height:24px;
-            _line-height:24px;
-        } 
-        .PublicTableOne  .DownBar .Left li input
-        {
-            vertical-align:middle;
-            padding:0px;
-        } 
-        .PublicTableOne  .DownBar .Middle
-        {
-            float:left;
-        }
-        .PublicTableOne  .DownBar .Right
-        {
-            float:right;    
-            padding-right:20px;      
-        } 
-        
-         .PublicTableOne  .DownBar .Right .pageUp
-        {
-            float:right;
-            margin-right:5px;
-        } 
-        .PublicTableOne  .DownBar .Right .List
-        {
+.PublicTableOne .UpBar .Right {
+	padding-right: 20px;
+	height: 27px;
+	text-align: right;
+	float: right;
+}
 
-            width:100px;
-            float:right;
-            text-align:center;
+.PublicTableOne  .UpBar .Right .pageUp {
+	float: right;
+	margin-right: 5px;
+}
 
-        } 
-        .PublicTableOne  .DownBar .Right .List li
-        {
-            float:left;
-            padding:0 5px;
-            line-height:25px;
-            text-decoration:underline;
-        } 
-        .PublicTableOne  .DownBar .Right .pageDown
-        {
-         
-            float:right;
-            margin-left:5px;
-        } 
-        .PageDownImage0
-        {
-            width:31px;
-            height:27px;
-            cursor:pointer;
-            background:url(../images/PublicTableOneImage/botton_right0.gif) no-repeat;  
-        }
-        .PageDownImage
-        {
-         background:url('../images/PublicTableOneImage/botton_right.gif') no-repeat;
-         width:31px;
-         height:27px;
-         cursor:pointer; 
-        }
-        .PageUpImage
-        {
-            width:31px;
-            height:27px;
-            cursor:pointer;
-            background:url('../images/PublicTableOneImage/botton_left.gif') no-repeat;
-        }
-        .PageUpImage0
-        {
-            width:31px;
-            height:27px;
-            cursor:pointer;
-            background:url(../images/PublicTableOneImage/botton_left0.gif) no-repeat;
-        }
-        .text
-        {
-            width:24px;
-            margin-top:4px;
-            text-align:center;
-            
-        }
-        .pageGo
-        {
-            width:31px;
-            height:27px;
-            cursor:pointer;
-            background:url(../images/PublicTableOneImage/go.gif) no-repeat;
-        }
+.PublicTableOne  .UpBar .Right .List {
+	float: right;
+	width: 100px;
+	text-align: center;
+	line-height: 25px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.PublicTableOne  .UpBar .Right .pageDown {
+	float: right;
+	margin-left: 5px;
+}
+
+/*table主信息*/
+.PublicTableOne  .TableMain {
+	width: 100%;
+	margin-top: 5px;
+}
+
+.PublicTableOne  .TableMain td {
+	text-align: center;
+	vertical-align: middle;
+	padding: 5px;
+	height: 25px;
+	font-size: 12px;
+	border-bottom: 1px solid #C5E2F6;
+}
+
+.PublicTableOne  .TableMain td a {
+	color: #0095ff;
+}
+
+.PublicTableOne  .TableMain td a:hover {
+	color: red;
+}
+
+.PublicTableOne  .TableMain td img {
+	vertical-align: middle;
+}
+
+.PublicTableOne  .TableMain td ipunt {
+	margin-top: 0px;
+	*margin-top: -4px;
+	vertical-align: middle;
+}
+/*表头背景切换 */
+.PublicTableOne  .TableMain .TheaderBg {
+	height: 30px;
+	background: url(../images/PublicTableOneImage/lanmu_bg.gif) repeat-x;
+}
+
+.PublicTableOne  .TableMain .TheaderBg th {
+	font-size: 12px;
+	border-right: 1px solid #c5e2f6;
+	white-space: nowrap;
+}
+
+.PublicTableOne  .TableMain .TheaderBg .firstTh {
+	border-left: 1px solid #c5e2f6;
+	width: 40px;
+}
+
+.PublicTableOne  .TableMain .AlignLeft /*td的对齐方式  */ {
+	text-align: left;
+	padding-left: 10px;
+}
+
+.PublicTableOne  .TableMain .AlignRight /*td的对齐方式  */ {
+	text-align: right;
+	padding-right: 10px;
+}
+/*	个人/企业中心显示基本信息的div样式	*/
+.PublicTableOne .TableUserCenter{
+	float: left;
+	width: 500px;
+	margin: 10px 0px;
+	overflow: hidden;
+	border: solid 1px #D4DCE5;
+	padding: 20px 0px 0px 18px;
+}
+.PublicTableOne .TableUserCenter .TableUserCenterLeft{
+	width: 142px;
+	height: 143px;
+	overflow: hidden;
+	float: left;
+	text-align: center;
+}
+.PublicTableOne .TableUserCenter .TableUserCenterRight{
+	width: 338px;
+	height: auto;
+	overflow: hidden;
+	float: left;
+	padding-left: 15px;
+	color: #404040;
+	line-height: 2em;
+}
+.PublicTableOne .TableUserCenter .TableUserCenterRight li{
+	text-align:left;
+}
+
+
+
+/*底部的bar*/
+.PublicTableOne  .DownBar {
+	width: 100%;
+	padding-top: 10px;
+}
+
+.PublicTableOne  .DownBar .Left {
+	height: 27px;
+	padding-top: 2px;
+	margin-left: 2px;
+	_margin-left: 1px;
+	float: left;
+}
+
+.PublicTableOne  .DownBar .Left .CheckAll { #
+	line-height: 0px; /*IE7*/
+	_line-height: 0px; /*IE6*/
+	padding-top: 2px\9; /*IE8*/ #
+	padding-top: 0px; /*IE7*/
+	_padding-top: 0px; /*IE6*/
+}
+
+.PublicTableOne  .DownBar .Left li {
+	float: left;
+	white-space: nowrap;
+	height: 24px;
+	padding: 0 2px;
+	line-height: 20px; #
+	line-height: 24px;
+	_line-height: 24px;
+}
+
+.PublicTableOne  .DownBar .Left li input {
+	vertical-align: middle;
+	padding: 0px;
+}
+
+.PublicTableOne  .DownBar .Middle {
+	float: left;
+}
+
+.PublicTableOne  .DownBar .Right {
+	float: right;
+	padding-right: 20px;
+}
+
+.PublicTableOne  .DownBar .Right .pageUp {
+	float: right;
+	margin-right: 5px;
+}
+
+.PublicTableOne  .DownBar .Right .List {
+	width: 100px;
+	float: right;
+	text-align: center;
+}
+
+.PublicTableOne  .DownBar .Right .List li {
+	float: left;
+	padding: 0 5px;
+	line-height: 25px;
+	text-decoration: underline;
+}
+
+.PublicTableOne  .DownBar .Right .pageDown {
+	float: right;
+	margin-left: 5px;
+}
+
+.PageDownImage0 {
+	width: 31px;
+	height: 27px;
+	cursor: pointer;
+	background: url(../images/PublicTableOneImage/botton_right0.gif)
+		no-repeat;
+}
+
+.PageDownImage {
+	background: url('../images/PublicTableOneImage/botton_right.gif')
+		no-repeat;
+	width: 31px;
+	height: 27px;
+	cursor: pointer;
+}
+
+.PageUpImage {
+	width: 31px;
+	height: 27px;
+	cursor: pointer;
+	background: url('../images/PublicTableOneImage/botton_left.gif')
+		no-repeat;
+}
+
+.PageUpImage0 {
+	width: 31px;
+	height: 27px;
+	cursor: pointer;
+	background: url(../images/PublicTableOneImage/botton_left0.gif)
+		no-repeat;
+}
+
+.text {
+	width: 24px;
+	margin-top: 4px;
+	text-align: center;
+}
+
+.pageGo {
+	width: 31px;
+	height: 27px;
+	cursor: pointer;
+	background: url(../images/PublicTableOneImage/go.gif) no-repeat;
+}
 /*
 *使用说明：
 HTML：

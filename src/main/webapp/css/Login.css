@@ -237,7 +237,7 @@
 	float: left;
 	height: 131px;
 	width: 5px;
-	background: url(../images/HomePageImage/LoginImage/LoginedLeft.gif) no-repeat left;
+	background: url(../images/HomePageImage/LoginImage/loginedLeft.gif) no-repeat left;
 }
 .PersonalLogined .loginmain
 {
@@ -299,7 +299,7 @@
 /*谁看过我*/
 .PersonalLogined .loginmain .loginmainarae .FirstImage
 {
-	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResume.gif) no-repeat  15px 0px;
+	background: url(../images/HomePageImage/LoginImage/ViewedCoachesResume.gif) no-repeat  25px 0px;
 	height:24px;
 	padding-left:40px;
 	padding-top:2px;
@@ -319,7 +319,7 @@
 /*简历订阅*/
 .PersonalLogined .loginmain .loginmainarae .SecendImage
 {
-	background: url(../images/HomePageImage/LoginImage/MyResume.gif) no-repeat  15px 0px;
+	background: url(../images/HomePageImage/LoginImage/MyResume.gif) no-repeat  25px 0px;
 	height:24px;
 	padding-left:40px;
 	padding-top:2px;
@@ -339,7 +339,7 @@
 /*简历管理*/
 .PersonalLogined .loginmain .loginmainarae .ThirdImage
 {
-	background: url(../images/HomePageImage/LoginImage/Email.gif) no-repeat  15px 0px;
+	background: url(../images/HomePageImage/LoginImage/Email.gif) no-repeat  25px 0px;
 	height:24px;
 	padding-left:40px;
 	padding-top:2px;

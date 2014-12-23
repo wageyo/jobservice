@@ -1,0 +1,224 @@
+*
+{
+    margin:0;
+    padding:0;
+}
+
+.LoginContent
+{
+    width:990px;
+    height:auto;
+    margin:10px auto;
+    
+}
+/*左边框的样式*/
+.LoginContent .Left
+{
+    width:630px;
+    float:left;
+}
+.LoginContent .Left .Img_Ad
+{
+    width:625px;
+    height:400px;
+    background:url(../images/login/Img_Ad.gif) no-repeat;
+}
+
+/*右边框的样式*/
+.LoginContent .Right
+{
+    float:right;
+    width:358px;
+    margin-top:20px;
+}
+.LoginContent .Right .Login
+{
+    width:304px;
+    height:327px;
+    margin:0 auto;
+    border:1px solid #bad5eb;
+}
+/*登陆样式*/
+.LoginContent .Right .Login .Login_Head
+{
+    height:42px;
+    border-bottom:1px solid #bad5eb;
+    background:url(../images/login/Login_Head.gif) repeat-x;
+}
+.LoginContent .Right .Login .Login_Head div.User_Login
+{
+    width:82px;
+    height:42px;
+    margin-left:10px;
+    float:left;
+    background:url(../images/login/User_Login.gif) no-repeat;
+}
+.LoginContent .Right .Login .Login_Head div.User_attention
+{
+    width:200px;
+    height:42px;
+    line-height:42px;
+    float:right;
+    color:#1e9eee;
+}
+/*登陆界面样式*/
+.LoginContent .Right .Login .Login_Content
+{
+    height:300px;
+}
+.LoginContent .Right .Login .Login_Content .User
+{
+    height:auto;
+    margin-top:10px;
+    text-align:left;
+}
+.LoginContent .Right .Login .Login_Content .User div.UserName,
+.LoginContent .Right .Login .Login_Content .User div.UserPwd
+{
+    width:auto;
+    height:35px;
+    line-height:35px;
+}
+.LoginContent .Right .Login .Login_Content .User div.UserName .Name,
+.LoginContent .Right .Login .Login_Content .User div.UserPwd .Pwd
+{
+    float:left;
+    margin-left:25px;
+    _margin-left:10px;
+}
+input.user_in
+{
+    border:0;
+    width:174px;
+    height:19px;
+    line-height:19px;
+    font-size:14px;
+    margin:3px 3px;
+
+}
+.LoginContent .Right .Login .Login_Content .User div.UserName .Name_print,
+.LoginContent .Right .Login .Login_Content .User div.UserPwd .Pwd_print
+{
+    width:180px;
+    float:left;
+    margin-left:2px;
+    #margin-left:1px;/*ie7样式*/
+    height:25px;
+    border:1px solid #828282;
+}
+.LoginContent .Right .Login .Login_Content .User div.UserName .error
+{
+    float:right;
+    margin-right:20px;
+    _margin-right:10px;
+    width:16px;
+    height:14px;
+    margin-top:5px;
+    background:url("../images/login/error.gif") no-repeat;
+    display:none;
+}
+.LoginContent .Right .Login .Login_Content .User div.UserName .IsOk
+{
+    float:right;
+    margin-right:20px;
+    _margin-right:10px;
+    width:16px;
+    height:14px;
+    margin-top:5px;
+    background:url("../images/login/finish.gif") no-repeat;
+    display:none;
+}
+.LoginContent .Right .Login .Login_Content .User div.UserPwd .error
+{
+    float:right;
+    margin-right:20px;
+    _margin-right:10px;
+    width:16px;
+    height:14px;
+    margin-top:5px;
+    background:url("../images/login/error.gif") no-repeat;
+    display:none;
+}
+.LoginContent .Right .Login .Login_Content .User div.UserPwd .IsOk
+{
+    float:right;
+    margin-right:20px;
+    _margin-right:10px;
+    width:16px;
+    height:14px;
+    margin-top:5px;
+    background:url("../images/login/finish.gif") no-repeat;
+    display:none;
+}
+.LoginContent .Right .Login .Login_Content .User div.User1 .attention
+{
+    width:175px;
+    height:25px;
+    line-height:25px;
+    color:red;
+    padding-left:5px;
+    background:#fef3ef;
+    border:1px solid #ff7dcb;
+    margin-left:75px;
+    _margin-left:69px;
+    display:none;
+}
+.LoginContent .Right .Login .Login_Content .User div.Login_Img
+{
+    height:35px;
+    margin-top:10px;
+}
+.LoginContent .Right .Login .Login_Content .User div.Login_Img .L_mg
+{	
+	border:0px;
+    margin:0 0 0 75px;
+    _margin-left:34px;
+    width:112px;
+    height:32px;
+    cursor:pointer;
+    float:left;
+    background:url(../images/login/Login.gif) no-repeat;
+}
+.LoginContent .Right .Login .Login_Content .User div.Login_Img div.Secret
+{
+    height:32px;
+    line-height:32px;    
+    float:left;
+    margin:0 0 0 15px;
+}
+.LoginContent .Right .Login .Login_Content .User div.Login_Img div.Secret a
+{
+    color:#1e9eee;
+}
+/*线的样式*/
+.LoginContent .Right .Login .Login_Content .Boundary
+{
+    width:301px;
+    height:1px;
+    margin-top:10px;
+    background:url(../images/login/Boundary.gif) no-repeat;
+}
+
+/*注册div样式*/
+.LoginContent .Right .Login .Login_Content .Regester
+{
+    height:35px;
+    line-height:35px;
+    margin:10px 28px;
+    _margin-top:0;
+}
+.LoginContent .Right .Login .Login_Content .Regester div
+{
+    float:left;
+}
+/*联系电话样式*/
+.LoginContent .Right .Login .Login_Content .PhoneNum
+{
+    margin-top:10px;
+    _margin-top:0;
+    font-size:22px;
+}
+.LoginContent .Right .Login .Login_Content .PhoneNum span
+{
+    color:Orange;
+}

@@ -1,6 +1,13 @@
+$(document).ready(function(){
+	
+	//保存按钮点击事件
+	$('#SaveAllBtn').click(function(){
+		$('#jobInfo').submit();
+	});
 
+});
 
-function job_check(){
+function check(type){
 	//职位名称
 	var name = $('#name').val();
 	if(name == null || name == ''){
@@ -38,11 +45,13 @@ function job_check(){
 		return false;
 	}
 	//有效时间
-	var effectiveDays = $('#effectiveDays').val();
-	if(effectiveDays == null || effectiveDays == ''){
-		alert('请选择职位有效期!');
-		$('#effectiveDays').focus();
-		return false;
+	if(type == 'save'){
+		var effectiveDays = $('#effectiveDays').val();
+		if(effectiveDays == null || effectiveDays == ''){
+			alert('请选择职位有效期!');
+			$('#effectiveDays').focus();
+			return false;
+		}
 	}
 	//地区
 	var area_lv1 = $('#area_lv1').val();

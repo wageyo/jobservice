@@ -27,11 +27,29 @@ $(function () {
 	
 	/*******  个人单位切换   ********/
 	$("#PersonalTab").bind("click", function () {
-		LoginType = 0; $(this).removeClass().addClass("BlueFirst"); $("#BusinessTab").removeClass().addClass("WhiteLast"); $(".loginmain").removeClass("loginmain2"); $(".LoginRight").removeClass("LoginRight2"); $("#LoginBtn").removeClass("loginbtnimg2"); $("#LinkHrefBtn").attr("href", ""); $("#loginName").val("请输入用户名");
-	}).mouseover(function () { this.style.cursor = "pointer"; }).mouseout(function () { this.style.cursor = "auto"; });
+		$('#identity').val('person');
+		$(this).removeClass().addClass("BlueFirst"); 
+		$("#BusinessTab").removeClass().addClass("WhiteLast"); 
+		$(".loginmain").removeClass("loginmain2"); 
+		$(".LoginRight").removeClass("LoginRight2"); 
+		$("#LoginBtn").removeClass("loginbtnimg2"); 
+		$("#LinkHrefBtn").attr("href", ""); 
+		$("#loginName").val("请输入用户名");
+	}).mouseover(function () { 
+		this.style.cursor = "pointer"; 
+	}).mouseout(function () { 
+		this.style.cursor = "auto"; 
+	});
 
 	$("#BusinessTab").bind("click", function () {
-		LoginType = 1; $(this).removeClass().addClass("BlueLast"); $("#PersonalTab").removeClass().addClass("WhiteFirst "); $(".loginmain").addClass("loginmain2"); $(".LoginRight").addClass("LoginRight2"); $("#LoginBtn").addClass("loginbtnimg2"); $("#LinkHrefBtn").attr("href", ""); $("#loginName").val("请输入用户名");
+		$('#identity').val('company');
+		$(this).removeClass().addClass("BlueLast"); 
+		$("#PersonalTab").removeClass().addClass("WhiteFirst "); 
+		$(".loginmain").addClass("loginmain2"); 
+		$(".LoginRight").addClass("LoginRight2"); 
+		$("#LoginBtn").addClass("loginbtnimg2"); 
+		$("#LinkHrefBtn").attr("href", ""); 
+		$("#loginName").val("请输入用户名");
 	}).mouseover(function () {
 		this.style.cursor = "pointer";
 	}).mouseout(function () {
@@ -96,17 +114,15 @@ function changeShowJob(jobCategory,obj){
 /*******  登陆用户名和密码校验   ********/
 function check(){
 	//账号
-	var reg_loginName = /[a-zA-Z0-9_]{5,20}/;
 	var loginName = $('#loginName').val();
-	if(!reg_loginName.test(loginName)){
+	if(!verify.checkname(loginName)){
 		alert('用户名只能为5-20为的英文, 数字或下划线_组成.');
 		$('#loginName').focus();
 		return false;
 	}
 	//密码
-	var reg_number = /[a-zA-Z0-9]{5,20}/;
 	var passWord = $('#passWord').val();
-	if(!reg_number.test(passWord)){
+	if(!verify.checkname(passWord)){
 		alert('密码只能为5-20为的英文, 数字或下划线_组成.');
 		$('#passWord').focus();
 		return false;
