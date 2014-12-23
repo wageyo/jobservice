@@ -2611,14 +2611,10 @@ div.s_search div.Search {
 height: 53px;
 width: 675px;
 }
-/* .SearchStyle{
-	width: 575px;
-margin-left: 230px;
-height: 66px;
-} */
+
 .Search .SearchInputText {
-margin-top: 20px;
-margin-left: 50px;
+/* margin-top: 20px;
+margin-left: 50px; */
 }
 .Search .InputTextBgEmp {
 background: url(../images/HomePageImage/SearchImage/SearchImage.gif) no-repeat left;

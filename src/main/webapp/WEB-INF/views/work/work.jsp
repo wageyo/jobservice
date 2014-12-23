@@ -57,7 +57,7 @@
          <div id="leftsidebar" style="width: 989px; ">
            <div class="s_search">
              <div class="Search">
-               <div class="SearchInputText">
+               <div class="SearchInputText" style="margin-top: 20px;margin-left: 50px;">
                  <div class="SetFloatLeft InputTextBgEmp">
                     <input name="keyWord" type="text" id="keyWord"  title="请输入关键字" class="InputTextBlank DefaultText" style="color: gray;"/>
                  </div>
