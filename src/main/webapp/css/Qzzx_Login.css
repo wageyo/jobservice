@@ -34,7 +34,7 @@
 .LoginContent .Right .Login
 {
     width:304px;
-    height:327px;
+    height:250px;
     margin:0 auto;
     border:1px solid #bad5eb;
 }
@@ -47,11 +47,10 @@
 }
 .LoginContent .Right .Login .Login_Head div.User_Login
 {
-    width:82px;
+    width:120px;
     height:42px;
     margin-left:10px;
     float:left;
-    background:url(../images/login/User_Login.gif) no-repeat;
 }
 .LoginContent .Right .Login .Login_Head div.User_attention
 {

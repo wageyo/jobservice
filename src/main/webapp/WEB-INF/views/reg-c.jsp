@@ -5,10 +5,11 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>残疾人就业信息网</title>
+	<title>企业用户注册</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 	<meta content="残疾人招聘就业" name="description" />
+	<link rel="shortcut icon" href="${contextPath}/images/HomePageImage/favicon.ico" type="image/x-icon" />
 	
 	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
@@ -43,7 +44,7 @@
 			<!-- ******* 注册企业账号 ******* start ********** -->
 			<div class="RegisterMain" id="RegisterOne">
 	        	<form action="${contextPath }/user/save" method="post" onsubmit="return check();" id="registerForm">
-		            <div class="BusinessRegisterText"> 
+		            <div class="BusinessRegisterText" style="background: url( '${contextPath}/images/BusinessRegister/BusinessRegisterTextCompany.jpg' ) no-repeat left;"> 
 		            	<div class="text">如果有疑问，可以致电我们的服务热线。
 		            	<a href="${contextPath }/contact" target="_blank" style="color:orange;">详请请点击</a>
 		            	</div>

@@ -46,7 +46,7 @@
 				<!-- 登陆界面 begin-->
 				<div class="Login">
 					<div class="Login_Head">
-						<div class="User_Login" title="用户登录"></div>
+						<div class="User_Login" title="用户登录" style="background:url(${contextPath}/images/login/User_Login_Company.jpg) no-repeat;"></div>
 					<!-- 	<div class="User_attention">如果是老用户，请先登录！！！</div> -->
 					</div>
 					<div class="clearboth"></div>
@@ -84,17 +84,18 @@
 						<div class="Regester">
 							<div class="Att">您还没有成为我们的会员？</div>
 							<div class="Regester_Img">
-								<a href="${contextPath }/regP"> 
+								<a href="${contextPath }/regC"> 
 									<img src="${contextPath }/images/login/Register_Free.gif" alt="免费注册" />
 								</a>
 							</div>
 						</div>
 						<div class="clearboth"></div>
 
+					<!-- 
 						<div class="DocDesption"
 							style="margin-top:30px; font-size:16px; font-weight:bold;">
 							<a href="UserFiles\DocDesption\广东省残疾人就业服务平台-个人功能篇 V1.3.Doc">个人用户使用手册下载</a>
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<!-- 登陆界面 end-->
