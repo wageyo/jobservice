@@ -5,10 +5,11 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>残疾人就业信息网</title>
+	<title>简历管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 	<meta content="残疾人招聘就业" name="description" />
+	<link rel="shortcut icon" href="${contextPath}/images/HomePageImage/favicon.ico" type="image/x-icon" />
 	
 	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
@@ -48,7 +49,7 @@
 			<!-- 上部区域xx中心提示文字 -->
             <div class="positiontopbg">
                 <div class="positiontopleft">
-                    <span style="cursor:pointer;" onclick="javascript:window.location.href = '${contextPath}/user/goCenter'">企业管理中心</span></div>
+                    <span style="cursor:pointer;" onclick="javascript:window.location.href = '${contextPath}/user/goCenter'">个人管理中心</span></div>
                 <div class="positiontopright">
                 </div>
             </div>

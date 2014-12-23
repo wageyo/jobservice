@@ -26,6 +26,7 @@
 	
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/verify.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/easyTab.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/index.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/potoschange.js"></script>
@@ -67,6 +68,7 @@
 											</div>
 											<div class="righttext">
 												<input type="password" value="" id="passWord" name="passWord" class="text DefaultText" title="输入密码" style="color: Gray;" />
+												<input type="hidden" id="identity" name="identity" value="person" />
 											</div>
 										</div>
 										<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
@@ -170,6 +172,18 @@
 										</div>
 									</c:if>
 									<!-- 个人用户显示的菜单项目 end -->
+									<!-- 管理员用户显示的菜单项目 begin -->
+									<c:if test="${cookie.identity.value == 'admin' || cookie.identity.value == 'superadmin' }">
+										<div class="RapidEntry">
+											<a href="${contextPath }/manage/index" title="管理后台">
+												<div class="FirstImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/manage/index">管理后台</a>
+											</div>
+										</div>
+									</c:if>
+									<!-- 管理员用户显示的菜单项目 end -->
 								</div>
 							</div>
 						</div>
@@ -442,7 +456,26 @@
 				</div>
 				<div class="clearboth"></div>
 				<div class="SetMarginTop">
-					<div class="PublicframeTwo SetPositionOne">
+					<!-- 临时显示相关链接 -->
+					<div class="PublicframeTwo SetPositionOne" style="width:100%;">
+						<div class="PublicframeTwoHeadBar">
+							<div class="PublicframeTwoHeadBarLeft"></div>
+							<div class="PublicframeTwoHeadBarTittle">
+								<span class="PublicframeTwoHeadBarTittleSpan" title="友情链接">友情链接</span>
+							</div>
+							<div class="PublicframeTwoHeadBarRight"></div>
+							<div class="PublicframeTwoHeadBarMore">
+							</div>
+						</div>
+						<div class="PublicframeTwoContent listpub" style="width:988px;">
+							<!-- 引入相关链接列表页面 -->
+							<jsp:include page="formatter/links.jsp" />
+							<div class="clearboth"></div>
+						</div>
+					</div>
+					
+				<!-- 下面三个部分未来再做  begin-->
+				<!-- 	<div class="PublicframeTwo SetPositionOne">
 						<div class="PublicframeTwoHeadBar">
 							<div class="PublicframeTwoHeadBarLeft"></div>
 							<div class="PublicframeTwoHeadBarTittle">
@@ -510,7 +543,9 @@
 							</dl>
 							<div class="clearboth"></div>
 						</div>
-					</div>
+					</div> -->
+					<!-- 下面三个部分未来再做  end-->
+					
 					<div class="clearboth"></div>
 				</div>
 			</div>

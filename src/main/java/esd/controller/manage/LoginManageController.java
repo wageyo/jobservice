@@ -18,6 +18,7 @@ import esd.bean.User;
 import esd.controller.Constants;
 import esd.controller.Constants.Authority;
 import esd.service.CookieHelper;
+import esd.service.KitService;
 import esd.service.UserService;
 
 /**
@@ -77,6 +78,7 @@ public class LoginManageController {
 				CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
 				CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 				CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+				CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
 				try {
 					String nickName = URLEncoder.encode(user.getNickName(), "UTF-8");
 					CookieHelper.setCookie(response, Constants.USERNICKNAME,nickName);

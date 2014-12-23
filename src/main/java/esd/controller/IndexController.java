@@ -171,12 +171,19 @@ public class IndexController {
 		return mav;
 	}
 
-	//登陆页面
-	@RequestMapping("/login")
-	public ModelAndView login(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("login");
+	//个人登陆页面
+	@RequestMapping("/loginP")
+	public ModelAndView loginP(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("login/login-p");
 		return mav;
 	}
+	
+	//企业登陆页面
+		@RequestMapping("/loginC")
+		public ModelAndView loginC(HttpServletRequest request) {
+			ModelAndView mav = new ModelAndView("login/login-c");
+			return mav;
+		}
 
 	//企业用户
 	@RequestMapping("/regC")

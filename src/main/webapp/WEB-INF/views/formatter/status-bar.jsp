@@ -12,32 +12,35 @@
 			<div class="ListBtn">
 				<ul class="">
 					<li class="">
-						<a target="_blank" href="${contextPath }/contact" target="_blank">联系我们</a>
+						<a target="_blank" href="${contextPath }/contact" >联系我们</a>
 					</li>
-					<!-- 没有用户登陆时/登陆的用户为个人用户 -->
+					<!-- 没有用户登陆时/登陆的用户为个人用户时 -->
 					<c:if test="${(cookie.username.value == null || cookie.username.value == '') || (cookie.identity.value != null && cookie.identity.value != '' && cookie.identity.value == 'person')}">
 						<li class="">|</li>
 						<li class="">
-							<a href="${contextPath }/">企业登录</a>
+							<a href="${contextPath }/loginC">企业登录</a>
 						</li>
 					</c:if>
-					<!-- 没有用户登陆时/登陆的用户为公司用户 -->
+					<!-- 没有用户登陆时/登陆的用户为公司用户时 -->
 					<c:if test="${(cookie.username.value == null || cookie.username.value == '') || (cookie.identity.value != null && cookie.identity.value != '' && cookie.identity.value == 'company')}">
 						<li class="">|</li>
 						<li class="">
-							<a href="HP_PersonLogin.aspx?crumbs=001003">个人登录</a>
+							<a href="${contextPath }/loginP">个人登录</a>
 						</li>
 					</c:if>
-					<c:if test="${cookie.username.value != null || cookie.username.value != ''}">
+					<!-- 没有用户登陆时时-->
+					<c:if test="${cookie.username.value == null || cookie.username.value == ''}">
+						<li class="">|</li>
+						<li class="">
+							<a href="${contextPath }/loginManage/login" title="登陆管理后台" style="color:rgb(69, 69, 243);">登陆管理后台</a>
+						</li>
+					</c:if>
+					<c:if test="${cookie.username.value != null && cookie.username.value != ''}">
 						<li class="">|</li>
 						<li class="">
 							<a href="${contextPath}/user/logout">安全退出</a>
 						</li>
 					</c:if>
-			<!-- 		<li class="">|</li>
-					<li class="">
-						<a href="javascript:void(0)" id="showATB" style="font-weight:bold; color:#0298fc;" title="显示无障碍工具条" hightcontrastoledstyle="font-weight:bold; color:#0298fc;" class="" oledstyle="font-weight:bold; color:#0298fc;">无障碍工具条</a>
-					</li>	 -->
 				</ul>
 			</div>
 		</div>
