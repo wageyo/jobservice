@@ -4,7 +4,7 @@
 
 <div id="data" style="display: none">
   <div class="list11">
-	<table width="988px"  border="0" cellpadding="0" cellspacing="0">
+	<table style="width:988px;" border="0" cellpadding="0" cellspacing="0">
 		<c:forEach items="${entity.list}" var="item" varStatus="i">
 		  <c:if test="${(i.index + 1)%2==0 }">
 		      <tr class="list11" style="border-bottom: 1px solid #c0c0c0;background:#f6f6f6;">

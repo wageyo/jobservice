@@ -54,7 +54,7 @@
 			//alert("fewfew");
 			//${contextPath }/resume/getOneForShow?id=${item.id}
 		});
-	}
+	};
 </script>
 <style type="text/css">
 .list11:hover {

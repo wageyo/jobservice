@@ -85,7 +85,7 @@
           		  <div class="Search">
           			<div class="SearchInputText">
           			 <div class="SetFloat InputTextBg">
-          			  <input type="text" title="请输入关键字" id="KeyWord" class="InputTextBlank DefaultText" value="请输入关键字" style="color: gray;">
+          			  <input type="text" title="请输入关键字" id="KeyWord" class="InputTextBlank DefaultText" value="请输入关键字" style="color: gray;" />
           			 </div>
           			</div>
           		   </div>

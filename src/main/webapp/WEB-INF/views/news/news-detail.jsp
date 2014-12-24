@@ -181,8 +181,8 @@
 									<tr>
 										<td><div style="width: 150px;white-space: nowrap;text-overflow: ellipsis; -o-text-overflow: ellipsis; overflow: hidden;">
 												<a href="${contextPath }/news/getOneForShow?id=${news.id}" title="${news.title }">
-												<img src="${contextPath}/images/Sy_HRsqImage/Square.jpg" style="padding-left: 8px;line-height: 25p;text-align: left;">
-												<span  style="margin-left:0px;">${news.title }</span> 
+												<img src="${contextPath}/images/Sy_HRsqImage/Square.jpg" style="padding-left: 8px;line-height: 25p;text-align: left;" />
+												<span style="margin-left:0px;">${news.title }</span> 
 												</a>
 											</div></td>
 										<td style="width:80px">

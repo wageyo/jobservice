@@ -92,8 +92,8 @@
                                         </div>
                                     </div>
                                     <!--TableMain-->
-                                    <div id="TableListShow" if="ParttimejobsList">
-                                    	<table class="TableMain" runat="server" id="TableList" cellpadding="0" cellspacing="0">
+                                    <div id="TableListShow" >
+                                    	<table class="TableMain" id="TableList" cellpadding="0" cellspacing="0">
                                     		<tbody>
                                     			<tr class="TheaderBg">
                                     				<th class="firstTh">
