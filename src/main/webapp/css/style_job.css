@@ -1749,7 +1749,13 @@ ul.list_condition li {
 }
 
 /** 显示岗位信息的table **/
-/**         ---by yufu **/ 
+/**         ---by yufu **/
+.maincontent{
+	padding:10px 30px;
+}
+.maincontent p{
+	margin-top:15px;
+}
 #tableworker{
 	width: 100%;
 }

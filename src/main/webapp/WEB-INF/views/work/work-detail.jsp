@@ -63,11 +63,10 @@
 	                   <div class="MainLeftTwo">
 	                       <div class="MainLeftTwoLeft">
 	                          <div id="PublicframeOne11" class="PublicframeOne ">
-	                          	<div id="main" style="padding:10px 30px;">
+	                          	<div id="main" class="maincontent">
 	                          		<p>企业性质：${job.company.nature }</p>
 									<p>公司地址：${job.company.address }</p>
 									<p>联系人：${job.company.contactPerson }</p>
-	                          	
 	                          	</div>
 							  </div>
 	                       </div>
@@ -94,7 +93,7 @@
 	                   <div class="MainLeftTwo">
 	                       <div class="MainLeftTwoLeft">
 	                          <div id="PublicframeOne11" class="PublicframeOne ">
-	                          	<div id="main" style="padding:10px 30px;">
+	                          	<div id="main" class="maincontent">
 	                          		<table id="tableworker">
 	                          			<thead>
 	                          				<tr>
@@ -181,7 +180,7 @@
 	                   <div class="MainLeftTwo">
 	                       <div class="MainLeftTwoLeft">
 	                          <div id="PublicframeOne11" class="PublicframeOne ">
-	                          	<div id="main" style="padding:10px 30px;">
+	                          	<div id="main" class="maincontent">
 	                          		<c:choose>
 	                          			<c:when test="${job.description == null || job.description == ''}">
 	                          				暂无
@@ -216,7 +215,7 @@
 	                   <div class="MainLeftTwo">
 	                       <div class="MainLeftTwoLeft">
 	                          <div id="PublicframeOne11" class="PublicframeOne ">
-	                          	<div id="main" style="padding:10px 30px;">
+	                          	<div id="main" class="maincontent">
 	                          		<c:choose>
 	                          			<c:when test="${cookie.username == null || cookie.username == ''}">
 	                          				个人会员请 <a href="${contextPath}/loginP" style="color:blue;">登录</a> 查看联系方式！如果您不是个人会员，请先 <a href="${contextPath }/regP" style="color:blue;">免费注册</a> 成为个人会员！
@@ -253,7 +252,7 @@
 	                   <div class="MainLeftTwo">
 	                       <div class="MainLeftTwoLeft">
 	                          <div id="PublicframeOne11" class="PublicframeOne ">
-	                          	<div id="main" style="padding:10px 30px;">
+	                          	<div id="main" class="maincontent">
 	                          		<table id="tablecompany">
 	                          			<thead>
 	                          				<tr>
@@ -277,8 +276,8 @@
 												<c:otherwise>
 													<c:forEach items="${jobList }" var = "jj">
 														<c:if test="${jj.id != job.id }">
-															<tr class="zhaopin1">
-																<td class="jobs01"><a href="${contextPath }/job/getOneForShow?id=${jj.id}">${jj.name }</a></td>
+															<tr>
+																<td><a href="${contextPath }/job/getOneForShow?id=${jj.id}">${jj.name }</a></td>
 																<td>${jj.hireNumber }</td>
 																<td>${job.jobCategory.name }</td>
 																<td>${job.education }</td>
