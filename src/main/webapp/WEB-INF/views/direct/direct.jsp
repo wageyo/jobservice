@@ -46,7 +46,7 @@
                <div class="PublicframeTwoHeadBar">
                  <div class="PublicframeTwoHeadBarLeft"></div>
                    <div class="PublicframeTwoHeadBarTittle">
-                       <span class="PublicframeTwoHeadBarTittleSpan">个人服务</span>
+                       <span class="PublicframeTwoHeadBarTittleSpan">就业指导</span>
                    </div>
                    <div class="PublicframeTwoHeadBarRight">
                    </div>
