@@ -1,0 +1,60 @@
+.content table
+{
+    width:100%;
+    text-align:left;
+    border-top:1px solid #C8E3F6;
+}
+.content table tr th
+{
+    height:25px;
+    line-height:25px;
+    text-indent:20px;
+    background:#F6FBFF;
+    text-align:left;
+    font-size:15px;
+    font-weight:bold;
+    color:#0090FF;
+}
+.content table tr td
+{
+    height:25px;
+    line-height:25px;
+    text-indent:20px;
+}
+.content .textStyle{ text-indent:20px;}
+.content .textStyleTow{ text-indent:0px;}
+.content .textColor{color:#0090FF;}
+/*目前年薪*/
+.content .atPresentSalary{width:745px;margin:10px;}
+.content .atPresentSalary table{border:0 none;}
+/*自我评价*/
+.content .self_assessment{width:745px;margin:10px;}
+
+/*求职意向*/
+.content .jobIntension{width:745px;margin:10px;}
+/*工作经验*/
+.content .workExperience{width:745px;margin:10px;}
+/*教育经历*/
+.content .educationExperience{width:745px;margin:10px;}
+/*.content .educationExperience table{table-layout:fixed}*/
+.content .educationExperience table tr td{height:30px; line-height:30px;}
+/*培训经历*/
+.content .trainingExperience{width:745px;margin:10px;}
+
+/*语言能力*/
+.content .linguisticCompetence{width:745px;margin:10px;}
+
+/*项目经验*/
+.content .projectExperience{width:745px;margin:10px;}
+
+/*证　　书*/
+.content .certificate{width:745px;margin:10px;}
+
+/*IT技能*/
+.content .ITskill{width:745px;margin:10px;}
+.content .ITskill table tr.trStyle td{ border-bottom:1px solid #E0E0E0;}
+.content .ITskill table tr td{ height:30px; line-height:30px;}
+
+/*生活照片*/
+
+.content .lifephoto{width:745px;margin:10px;}
