@@ -53,7 +53,7 @@ function check(type){
 			return false;
 		}
 	}
-	//地区
+/*	//地区
 	var area_lv1 = $('#area_lv1').val();
 	if(area_lv1 == null || area_lv1 == ''){
 		alert('请选择具体的工作地!');
@@ -65,6 +65,13 @@ function check(type){
 	if(jobCategory_lv1 == null || jobCategory_lv1 == ''){
 		alert('请选择工作类别!');
 		$('#jobCategory_lv1').focus();
+		return false;
+	}*/
+	//职位描述
+	var name = $('#description').val();
+	if(name == null || name == ''){
+		alert('职位描述不能为空!');
+		$('#description').focus();
 		return false;
 	}
 	//联系人
