@@ -1,3 +1,6 @@
+/*********************************************/
+/************* 网站首页js脚本 *****************/
+/*********************************************/
 $(function () {
 	/*首页、找工作鼠标效果*/
 	$("#Mainnav").find("ul").find("li").find("a:not(.Nav_sy)").hover(function () {
@@ -78,12 +81,26 @@ $(function () {
 		$('form:first').submit();
 	});
 	
-	//初始化职位种类切换效果...
-	easyTab(".TabCss").click(function(data){
-	//	alert(data);
+	/******* 初始化职位种类切换效果 ********/
+	easyTab(".TabCss").click(function(data){});
+	
+	
+	$('#keyWord').focus(function(){
+		if($(this).val() == keyword){
+			$(this).val('');
+		}
+	}).blur(function(){
+		if($(this).val() == '' || $(this).val() == null || $(this).val() == undefined){
+			$(this).val(keyword);
+		}
+	});
+	
+	$('#SearchButton').click(function(){
+		$('#searchObj').submit();
 	});
 });
 
+var keyword = '请输入关键字';
 /*******  不同种类职位轮换效果   ********/
 function changeShowJob(jobCategory,obj){
 	//异步请求数据

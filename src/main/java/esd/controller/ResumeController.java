@@ -80,90 +80,90 @@ public class ResumeController {
 		return mav;
 	}
 
-	// 多条件职位简历
-	@RequestMapping(value = "/search/{page}", method = RequestMethod.POST)
-	public ModelAndView search(HttpServletRequest request,
-			@PathVariable(value = "page") Integer page,
-			HttpServletResponse response) {
-		log.info("--- search ---");
-		Map<String, Object> entity = new HashMap<String, Object>();
-		Resume resume = new Resume();
-		// 从cookie读取acode
-		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		resume.setArea(new Area(acode));
-
-		String keyWord = request.getParameter("keyWord");
-		if (keyWord != null && !"".equals(keyWord)) {
-			resume.setTitle(keyWord);
-		}
-		String jcCode = request.getParameter("jcCode");
-		if (jcCode != null && !"".equals(jcCode)) {
-			resume.setDesireJob(new JobCategory(jcCode));
-		}
-		String education = request.getParameter("education");
-		if (education != null && !"".equals(education)) {
-			resume.setEducation(education);
-		}
-		String jobNature = request.getParameter("jobNature");
-		if (jobNature != null && !"".equals(jobNature)) {
-			resume.setJobNature(jobNature);
-		}
-		String gender = request.getParameter("gender");
-		if (gender != null && !"".equals(gender)) {
-			resume.setGender(gender);
-		}
-		List<Resume> resumeList = resumeService.getForListShow(resume, page,
-				Constants.SIZE);
-		Integer records = resumeService.getTotalCount(resume,Boolean.TRUE);
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		if (resumeList != null && records != null && records > 0) {
-			try {
-				for (Iterator<Resume> iterator = resumeList.iterator(); iterator
-						.hasNext();) {
-					Resume it = (Resume) iterator.next();
-					log.debug(it.toString());
-					Map<String, String> map = new HashMap<String, String>();
-					map.put("id", String.valueOf(it.getId()));
-					map.put("title", it.getTitle());
-					map.put("name", it.getName());
-					map.put("gender", it.getGender());
-					map.put("education", it.getEducation());
-					map.put("major", it.getMajor());
-					map.put("experience", it.getExperience());
-					if (it.getDesireJob() != null) {
-						if (it.getDesireJob().getName() != null
-								&& !"".equals(it.getDesireJob().getName())) {
-							map.put("desireJob", it.getDesireJob().getName());
-						}
-					} else {
-						map.put("desireJob", Constants.NO_LIMIT);
-					}
-					if (it.getDesireAddress() != null) {
-						if (it.getDesireAddress().getName() != null
-								&& !"".equals(it.getDesireAddress().getName())) {
-							map.put("desireAddress", it.getDesireAddress()
-									.getName());
-						}
-					} else {
-						map.put("desireAddress", Constants.NO_LIMIT);
-					}
-					map.put("desireSalary", it.getDesireSalary());
-					list.add(map);
-				}
-			} catch (Exception e) {
-				log.error("error in list", e);
-			}
-		}
-		while (list.size() < Constants.SIZE) {
-			Map<String, String> map = new HashMap<String, String>();
-			list.add(map);
-		}
-
-		entity.put("list", list);
-		PaginationUtil pagination = new PaginationUtil(page, records);
-		entity.put("pagination", pagination.getHandler());
-		return new ModelAndView("emp/emp-json", "entity", entity);
-	}
+//	// 多条件职位简历
+//	@RequestMapping(value = "/search/{page}", method = RequestMethod.POST)
+//	public ModelAndView search(HttpServletRequest request,
+//			@PathVariable(value = "page") Integer page,
+//			HttpServletResponse response) {
+//		log.info("--- search ---");
+//		Map<String, Object> entity = new HashMap<String, Object>();
+//		Resume resume = new Resume();
+//		// 从cookie读取acode
+//		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+//		resume.setArea(new Area(acode));
+//
+//		String keyWord = request.getParameter("keyWord");
+//		if (keyWord != null && !"".equals(keyWord)) {
+//			resume.setTitle(keyWord);
+//		}
+//		String jcCode = request.getParameter("jcCode");
+//		if (jcCode != null && !"".equals(jcCode)) {
+//			resume.setDesireJob(new JobCategory(jcCode));
+//		}
+//		String education = request.getParameter("education");
+//		if (education != null && !"".equals(education)) {
+//			resume.setEducation(education);
+//		}
+//		String jobNature = request.getParameter("jobNature");
+//		if (jobNature != null && !"".equals(jobNature)) {
+//			resume.setJobNature(jobNature);
+//		}
+//		String gender = request.getParameter("gender");
+//		if (gender != null && !"".equals(gender)) {
+//			resume.setGender(gender);
+//		}
+//		List<Resume> resumeList = resumeService.getForListShow(resume, page,
+//				Constants.SIZE);
+//		Integer records = resumeService.getTotalCount(resume,Boolean.TRUE);
+//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+//		if (resumeList != null && records != null && records > 0) {
+//			try {
+//				for (Iterator<Resume> iterator = resumeList.iterator(); iterator
+//						.hasNext();) {
+//					Resume it = (Resume) iterator.next();
+//					log.debug(it.toString());
+//					Map<String, String> map = new HashMap<String, String>();
+//					map.put("id", String.valueOf(it.getId()));
+//					map.put("title", it.getTitle());
+//					map.put("name", it.getName());
+//					map.put("gender", it.getGender());
+//					map.put("education", it.getEducation());
+//					map.put("major", it.getMajor());
+//					map.put("experience", it.getExperience());
+//					if (it.getDesireJob() != null) {
+//						if (it.getDesireJob().getName() != null
+//								&& !"".equals(it.getDesireJob().getName())) {
+//							map.put("desireJob", it.getDesireJob().getName());
+//						}
+//					} else {
+//						map.put("desireJob", Constants.NO_LIMIT);
+//					}
+//					if (it.getDesireAddress() != null) {
+//						if (it.getDesireAddress().getName() != null
+//								&& !"".equals(it.getDesireAddress().getName())) {
+//							map.put("desireAddress", it.getDesireAddress()
+//									.getName());
+//						}
+//					} else {
+//						map.put("desireAddress", Constants.NO_LIMIT);
+//					}
+//					map.put("desireSalary", it.getDesireSalary());
+//					list.add(map);
+//				}
+//			} catch (Exception e) {
+//				log.error("error in list", e);
+//			}
+//		}
+//		while (list.size() < Constants.SIZE) {
+//			Map<String, String> map = new HashMap<String, String>();
+//			list.add(map);
+//		}
+//
+//		entity.put("list", list);
+//		PaginationUtil pagination = new PaginationUtil(page, records);
+//		entity.put("pagination", pagination.getHandler());
+//		return new ModelAndView("emp/emp-json", "entity", entity);
+//	}
 
 	// 根据id得到一个简历返回前台
 	@RequestMapping("/getOneForShow")

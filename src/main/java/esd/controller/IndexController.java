@@ -2,6 +2,7 @@ package esd.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -179,8 +180,8 @@ public class IndexController {
 	}
 	
 	//企业登陆页面
-		@RequestMapping("/loginC")
-		public ModelAndView loginC(HttpServletRequest request) {
+	@RequestMapping("/loginC")
+	public ModelAndView loginC(HttpServletRequest request) {
 			ModelAndView mav = new ModelAndView("login/login-c");
 			return mav;
 		}
@@ -222,14 +223,76 @@ public class IndexController {
 		// 获得职位总数
 		int totalCount = jobService.getTotalCount(null,true);
 		mav.addObject("totalCount", totalCount);
-		// 如果request中有传过来地区code, 则读取地区码,放入到cookie中
+		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中; 有则直接使用传递过来的
 		String acode = request.getParameter("acode");
+		String localCode = CookieHelper.getCookieValue(request, Constants.AREA);
 		log.info("acode [" + acode + "]");
 		if (acode != null && !"".equals(acode)) {
-			CookieHelper.setCookie(response, Constants.AREA, acode);
+			if(localCode == null || "".equals(localCode)){
+				CookieHelper.setCookie(response, Constants.AREA, acode);
+			}
 		}else{
-			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+			acode = localCode;
 		}
+		Area area = areaService.getByCode(acode);
+		//读取职位查询信息
+		log.info("--- work job search ---");
+		Job job = new Job();
+		job.setArea(area);
+		
+		String keyWord = request.getParameter("keyWord");
+		if (keyWord != null && !"".equals(keyWord)) {
+			job.setName(keyWord);
+		}
+		request.setAttribute("keyWord", keyWord);
+		String jcCode = request.getParameter("jobCategory");
+		if (jcCode != null && !"".equals(jcCode)) {
+			job.setJobCategory(new JobCategory(jcCode));
+		}
+		request.setAttribute("jcCode", jcCode);
+		String education = request.getParameter("education");
+		if (education != null && !"".equals(education)) {
+			job.setEducation(education);
+		}
+		request.setAttribute("education", education);
+		String jobNature = request.getParameter("jobNature");
+		if (jobNature != null && !"".equals(jobNature)) {
+			job.setNature(jobNature);
+		}
+		request.setAttribute("jobNature", jobNature);
+		job.setIsActiveEffectiveTime(true);
+		String pageStr = request.getParameter("page");
+		if(pageStr ==null || "".equals(pageStr)){
+			pageStr = "1";
+		}
+		Integer page = KitService.getInt(pageStr);
+		List<Job> jobList = jobService
+				.getListForShow(job, page, Constants.SIZE);
+		Integer records = jobService.getTotalCount(job,Boolean.TRUE);
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		if (jobList != null && records != null && records > 0) {
+			try {
+				for (Iterator<Job> iterator = jobList.iterator(); iterator
+						.hasNext();) {
+					Job it = (Job) iterator.next();
+					log.debug(it.toString());
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("id", String.valueOf(it.getId()));
+					map.put("name", it.getName());
+					map.put("company", it.getCompany().getName());
+					map.put("companyid", it.getCompany().getId() + "");
+					map.put("area", it.getArea().getName());
+					map.put("experience", it.getExperience());
+					map.put("date", KitService.dateForShow(it.getUpdateDate()));
+					list.add(map);
+				}
+			} catch (Exception e) {
+				log.error("error in list", e);
+			}
+		}
+		mav.addObject("list", list);
+		PaginationUtil pagination = new PaginationUtil(page, records);
+		mav.addObject("pagination", pagination.getHandler());
 		return mav;
 	}
 
@@ -249,16 +312,105 @@ public class IndexController {
 		mav.addObject("areaList", alist);
 		// 获得简历总数
 		int totalCount = resumeService.getTotalCount(null,Boolean.TRUE);
-		log.info("*********************************************" + totalCount);
 		mav.addObject("totalCount", totalCount);
-		// 如果request中有传过来地区code, 则读取地区码,放入到cookie中
+		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中; 有则直接使用传递过来的
 		String acode = request.getParameter("acode");
+		String localCode = CookieHelper.getCookieValue(request, Constants.AREA);
 		log.info("acode [" + acode + "]");
 		if (acode != null && !"".equals(acode)) {
-			CookieHelper.setCookie(response, Constants.AREA, acode);
+			if(localCode == null || "".equals(localCode)){
+				CookieHelper.setCookie(response, Constants.AREA, acode);
+			}
 		}else{
-			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+			acode = localCode;
 		}
+		Area area = areaService.getByCode(acode);
+		//读取简历查询信息
+		log.info("--- emp resume search ---");
+		Resume resume = new Resume();
+		resume.setArea(area);
+		request.setAttribute("tarArea", area);
+		
+		String keyWord = request.getParameter("keyWord");
+		if (keyWord != null && !"".equals(keyWord)) {
+			resume.setTitle(keyWord);
+		}
+		request.setAttribute("keyWord", keyWord);
+		String jcCode = request.getParameter("jobCategory");
+		if (jcCode != null && !"".equals(jcCode)) {
+			resume.setDesireJob(new JobCategory(jcCode));
+		}
+		request.setAttribute("jcCode", jcCode);
+		String education = request.getParameter("education");
+		if (education != null && !"".equals(education)) {
+			resume.setEducation(education);
+		}
+		request.setAttribute("education", education);
+		String jobNature = request.getParameter("jobNature");
+		if (jobNature != null && !"".equals(jobNature)) {
+			resume.setJobNature(jobNature);
+		}
+		request.setAttribute("jobNature", jobNature);
+		String gender = request.getParameter("gender");
+		if (gender != null && !"".equals(gender)) {
+			resume.setGender(gender);
+		}
+		request.setAttribute("gender", gender);
+		String pageStr = request.getParameter("page");
+		if(pageStr ==null || "".equals(pageStr)){
+			pageStr = "1";
+		}
+		Integer page = KitService.getInt(pageStr);
+		List<Resume> resumeList = resumeService.getForListShow(resume, page,
+				Constants.SIZE);
+		Integer records = resumeService.getTotalCount(resume,Boolean.TRUE);
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		if (resumeList != null && records != null && records > 0) {
+			try {
+				for (Iterator<Resume> iterator = resumeList.iterator(); iterator
+						.hasNext();) {
+					Resume it = (Resume) iterator.next();
+					log.debug(it.toString());
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("id", String.valueOf(it.getId()));
+					map.put("title", it.getTitle());
+					map.put("name", it.getName());
+					map.put("gender", it.getGender());
+					map.put("education", it.getEducation());
+					map.put("major", it.getMajor());
+					map.put("experience", it.getExperience());
+					if (it.getDesireJob() != null) {
+						if (it.getDesireJob().getName() != null
+								&& !"".equals(it.getDesireJob().getName())) {
+							map.put("desireJob", it.getDesireJob().getName());
+						}
+					} else {
+						map.put("desireJob", Constants.NO_LIMIT);
+					}
+					if (it.getDesireAddress() != null) {
+						if (it.getDesireAddress().getName() != null
+								&& !"".equals(it.getDesireAddress().getName())) {
+							map.put("desireAddress", it.getDesireAddress()
+									.getName());
+						}
+					} else {
+						map.put("desireAddress", Constants.NO_LIMIT);
+					}
+					map.put("desireSalary", it.getDesireSalary());
+					list.add(map);
+				}
+			} catch (Exception e) {
+				log.error("error in list", e);
+			}
+		}
+		while (list.size() < Constants.SIZE) {
+			Map<String, String> map = new HashMap<String, String>();
+			list.add(map);
+		}
+
+		mav.addObject("list", list);
+		PaginationUtil pagination = new PaginationUtil(page, records);
+		mav.addObject("pagination", pagination.getHandler());
 		return mav;
 	}
 

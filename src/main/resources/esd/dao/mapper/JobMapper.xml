@@ -536,11 +536,12 @@
 				</if>
 				<if test="job.jobCategory != null ">
 					<if test="job.jobCategory.code != null and job.jobCategory.code != '' and job.jobCategory.code != '不限'">
-					<!-- 	and job.jccode like concat('%',#{job.jobCategory.code},'%')	 -->
-						and ${job.jobCategory.code, jdbcType=VARCHAR}
+						and job.jccode like #{job.jobCategory.code}
+						<!-- below is also works ! -->
+					<!-- and ${job.jobCategory.code}	 -->
 					</if>
 				</if>
-				<choose>
+ 				<choose>
 					<when test="job.checkStatus != null and job.checkStatus != ''">
 						and job.check_status = #{job.checkStatus, jdbcType=VARCHAR}
 					</when>

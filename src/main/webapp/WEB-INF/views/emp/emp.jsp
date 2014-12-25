@@ -18,44 +18,10 @@
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<title>残疾人就业信息网</title>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			common.pagination(1);
-			common.lineOnclick();
-		});
-		common = {};
-		common.pagination = function(page) {
-			var keyWord = $('#keyWord').val();
-			var jcCode = $('#jobCategory').val();
-			var education = $('#education').val();
-		//	var areaCode = $('#areaCode').val();
-			var jobNature = $('#jobNature').val();
-			var gender = $('#gender').val();
-			var url = '${contextPath}/resume/search/' + page;
-			$.ajax({
-				url : url,
-				type : 'POST',
-				data : {
-					'keyWord' : keyWord,
-					'jcCode' : jcCode,
-					'education' : education,
-			//		'areaCode' : areaCode,
-					'jobNature' : jobNature,
-					'gender' : gender,
-				},
-				success : function(e) {
-					$('#main').html(e);
-					$('#data').fadeIn();
-				},
-				dataType : 'html',
-				async : false
-			});
-		};
-		common.lineOnclick=function(){
-			$("tr").click(function(){
-				//alert("fewfew");
-				//${contextPath }/resume/getOneForShow?id=${item.id}
-			});
-		};
+		function searchObj(page){
+			$('#page').val(page);
+			$('#searchObj').submit();
+		}
 	</script>
 	<style type="text/css">
 	.list11:hover {
@@ -68,95 +34,99 @@
 	<jsp:include page="../formatter/header.jsp" />
 	<div id="maincontent">
       <div style="margin-top: 10px;">
-         <div id="leftsidebar" style="width: 989px; ">
-           <div class="s_search">
-             <div class="Search">
-               <div class="SearchInputText" style="margin-top: 20px;margin-left: 50px;">
-                 <div class="SetFloatLeft InputTextBgEmp">
-                    <input name="keyWord" type="text" id="keyWord"  title="请输入关键字" class="InputTextBlank DefaultText" style="color: gray;"/>
-                 </div>
-                 <div class="SearchBtn SetFloatLeft">
-	                <input class="SearchButtom SetFloatLeft"  type="image" name="ImageButton1" id="ImageButton1" 
-	                  onclick="common.pagination(1)" class="send55" src="images/HomePageImage/SearchImage/SearchBtn.gif" style="border-width:0px;"/>
-	                <div class="SetFloatLeft AdvancedSearch"> </div>
-                 </div>
-              </div>
-            </div>
-            <div class="pot"></div>
-            <ul class="list_condition">
-              <li class="list_selt" style=" height:30px;">
-           	    <div>
-                  <div style="float:left;">   就职意向： </div>
-                    <div class="PublicButtomBar">
-						<select name="jobCategory" id="jobCategory" style="width: 170px;height:23px">
-							<c:forEach items="${jcList }" var="jc">
-							  <option value="${jc.code }">${jc.name }</option>
+      	<form action="${contextPath }/emp" id="searchObj">
+	         <div id="leftsidebar" style="width: 989px; ">
+	           <div class="s_search">
+	             <div class="Search">
+	               <div class="SearchInputText" style="margin-top: 20px;margin-left: 50px;">
+	                 <div class="SetFloatLeft InputTextBgEmp">
+	                    <input name="keyWord" type="text" id="keyWord" value="${keyWord }"  title="请输入关键字" class="InputTextBlank DefaultText" style="color: gray;"/>
+	                    <input type="hidden" id="page" name="page" />
+	                 </div>
+	                 <div class="SearchBtn SetFloatLeft">
+		                <input class="SearchButtom SetFloatLeft"  type="image" name="ImageButton1" id="ImageButton1" 
+		                  onclick="searchObj(1);" class="send55" src="images/HomePageImage/SearchImage/SearchBtn.gif" style="border-width:0px;"/>
+		                <div class="SetFloatLeft AdvancedSearch"> </div>
+	                 </div>
+	              </div>
+	            </div>
+	            <div class="pot"></div>
+	            <ul class="list_condition">
+	              <li class="list_selt" style=" height:30px;">
+	           	    <div>
+	                  <div style="float:left;">   就职意向： </div>
+	                    <div class="PublicButtomBar">
+							<select name="jobCategory" id="jobCategory" style="width: 170px;height:23px">
+								<c:forEach items="${jcList }" var="jc">
+								  <option value="${jc.code }" <c:if test="${jcCode == jc.code }">selected=selected</c:if>>${jc.name }</option>
+								</c:forEach>
+							</select>
+	                    </div>
+	                </div>
+	              </li>
+	              <li class="list_selt" style=" height:30px;">
+	                <div>
+	             	 <div style="float:left;">	学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历： </div>
+	                   <div class="PublicButtomBar">
+	                     <select name="education" id="education" style="width: 170px;height:23px">
+							<c:forEach items="${params }" var="p">
+								<c:if test="${p.type == 'education' }">
+									<option value="${p.value }" <c:if test="${education == p.value }">selected=selected</c:if>>${p.name }</option>
+								</c:if>
 							</c:forEach>
-						</select>
-                    </div>
-                </div>
-              </li>
-              <li class="list_selt" style=" height:30px;">
-                <div>
-             	 <div style="float:left;">	学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历： </div>
-                   <div class="PublicButtomBar">
-                     <select name="education" id="education" style="width: 170px;height:23px">
+						  </select>
+	             	  </div>
+	                </div>
+	              </li>
+	              <li class="list_selt" style=" height:30px;">
+	               <div>
+	                <div style="float:left;">	性别： </div>
+	                 <div class="PublicButtomBar">
+	             	  <select name="gender" id="gender" style="width: 100px;height:23px">
 						<c:forEach items="${params }" var="p">
-							<c:if test="${p.type == 'education' }">
-								<option value="${p.value }">${p.name }</option>
-							</c:if>
+						  <c:if test="${p.type == 'gender' }">
+							<option value="${p.value }" <c:if test="${gender == p.value }">selected=selected</c:if>>${p.name }</option>
+						  </c:if>
 						</c:forEach>
 					  </select>
-             	  </div>
-                </div>
-              </li>
-              <li class="list_selt" style=" height:30px;">
-               <div>
-                <div style="float:left;">	性别： </div>
-                 <div class="PublicButtomBar">
-             	  <select name="gender" id="gender" style="width: 100px;height:23px">
-					<c:forEach items="${params }" var="p">
-					  <c:if test="${p.type == 'gender' }">
-						<option value="${p.value }">${p.name }</option>
-					  </c:if>
-					</c:forEach>
-				  </select>
-                </div>
-               </div>
-             </li>
-           </ul>
-           <ul class="list_condition">
-             <li class="list_selt" style=" height:30px;">
-               <div>
-                 <div style="float:left;">工作地区：</div>
-                   <div class="PublicButtomBar">  
-					<select name="areaCode" id="areaCode" style="width: 170px;height:23px">
-						<option value="">请选择</option>
-							<c:forEach items="${areaList }" var="t">
-								<option value="${t.code }" <c:if test="${fn:substring(area.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
-							</c:forEach>
-					</select>
-                   </div>
-               </div>
-             </li>
-             <li class="list_selt" style=" height:30px;">
-               <div>
-                <div style="float:left;">	    	就职方式： </div>
-                  <div class="PublicButtomBar">
-				   <select name="jobNature" id="jobNature" style="width: 170px;height:23px">
-					<c:forEach items="${params }" var="p">
-						<c:if test="${p.type == 'jobNature' }">
-							<option value="${p.value }">${p.name }</option>
-						</c:if>
-					</c:forEach>
-				   </select>
-                  </div>
-               </div>
-            </li>    
-          </ul>
-          <div class="clearboth">  </div>
-        </div>
-       </div>
+	                </div>
+	               </div>
+	             </li>
+	           </ul>
+	           <ul class="list_condition">
+	             <li class="list_selt" style=" height:30px;">
+	               <div>
+	                 <div style="float:left;">工作地区：</div>
+	                   <div class="PublicButtomBar">
+						<select name="acode" id="acode" style="width: 170px;height:23px">
+							<option value="">请选择</option>
+								<c:forEach items="${areaList }" var="t">
+									<option value="${t.code }" <c:if test="${fn:substring(tarArea.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
+								</c:forEach>
+						</select>
+	                   </div>
+	               </div>
+	             </li>
+	             <li class="list_selt" style=" height:30px;">
+	               <div>
+	                <div style="float:left;">	    	就职方式： </div>
+	                  <div class="PublicButtomBar">
+					   <select name="jobNature" id="jobNature" style="width: 170px;height:23px">
+						<c:forEach items="${params }" var="p">
+							<c:if test="${p.type == 'jobNature' }">
+								<option value="${p.value }" <c:if test="${jobNature == p.value }">selected=selected</c:if>>${p.name }</option>
+							</c:if>
+						</c:forEach>
+					   </select>
+	                  </div>
+	               </div>
+	            </li>    
+	          </ul>
+	          <div class="clearboth">  </div>
+	        </div>
+	       </div>
+       </form>
+       
        <div class="advertisement"></div>
       </div>
       <div class="clearboth"></div>
@@ -178,7 +148,98 @@
 						<td width="80px" class="s13_blue_b" id="tableEndStyle" style="border-right: 1px solid #c5e2f6;">期望薪资</td>
 					</tr>
 				</table>
-				<div id="main"></div>
+				<div id="main">
+					<div id="data">
+						<!-- 上部显示列表信息  begin -->
+						<div class="list11">
+							<table width="990px" border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<c:choose>
+										<c:when test="${list == null || fn:length(list) == 0}">
+											<tr>
+												<td colspan="5">
+													没有查到您所需要的信息.
+												</td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${list }" var="obj" varStatus="status">
+												<tr class="list11" <c:if test="${status.index % 2 == 1 }">style="background:#f6f6f6;"</c:if>>
+													<td width="90px" class="s13_blue_b" id="tabaleDataStyle" >
+														 <input type="hidden" name="id" value="${obj.id }"/>
+														 <span id="Repeater1_ctl00_Label2" >${obj.title}</span>
+													</td>
+													<td width="70px" class="s13_blue_b">
+														<a href='${contextPath }/resume/getOneForShow?id=${obj.id}'>
+														<span id="Repeater1_ctl00_Label1" style="color: #0868C8;font-weight: bold;">${obj.name}</span> </a>
+													</td>
+													<td width="50px" class="s13_blue_b" id="tabaleDataStyle">
+														 <span id="Repeater1_ctl00_Label2" >${obj.gender}</span>
+													</td>
+													<td width="80px" class="s13_blue_b" id="tabaleDataStyle">
+														<span id="Repeater1_ctl00_Label3">${obj.education}</span>
+													</td>
+													<td width="70px" class="s13_blue_b" id="tabaleDataStyle">
+														<span id="Repeater1_ctl00_Label6">${obj.major}</span>
+													</td>
+													<td width="80" class="s13_blue_b" id="tabaleDataStyle">
+														<span id="Repeater1_ctl00_Label7">${obj.experience}</span>
+													</td>
+													<td width="100" class="s13_blue_b" id="tabaleDataStyle">
+														<span id="Repeater1_ctl00_Label7">${obj.desireJob}</span>
+													</td>
+													<td width="100" class="s13_blue_b" id="tabaleDataStyle">
+														<span id="Repeater1_ctl00_Label7">${obj.desireAddress}</span>
+													</td>
+													<td width="80" class="s13_blue_b" id="tabaleDataStyle">
+														<span id="Repeater1_ctl00_Label7">${obj.desireSalary}</span>
+													</td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</tbody>
+							</table>
+						</div>
+						<!-- 上部显示列表信息  end -->
+						
+						<!-- 下部显示页码数  begin -->
+						<div style="padding:15px;" class="pages0">
+							<span id="lbCount" class="total">共${pagination.records}条记录</span> 
+							<span id="lbTotalPage" class="total">总页:${pagination.countPages}页</span> 
+							<span id="lbCurPage" class="total">当前页:第${pagination.currentPage}页</span> 
+							<c:if test="${pagination.currentPage==1 }">
+								<a id="LBUP"  class="total" href="javascript:searchObj(1);">上页</a>
+							</c:if>
+							<c:if test="${pagination.currentPage>1 }">
+								<a id="LBUP"  class="total" href="javascript:searchObj(${pagination.currentPage-1 });">上页</a>
+							</c:if>
+							<c:forEach begin="${pagination.start }" end="${pagination.end }" var="p">
+								<c:if test="${pagination.currentPage==p}">
+									<a id="LB${p}" class="current" href="javascript:searchObj(${p});">${p}</a>
+								</c:if>
+								<c:if test="${pagination.currentPage!=p}">
+										<a id="LB${p}" href="javascript:searchObj(${p});">${p}</a>
+								</c:if>
+							</c:forEach>
+							<c:if test="${pagination.currentPage<pagination.countPages}">
+								<a id="LBNEXT" class="total" href="javascript:searchObj(${pagination.currentPage+1 });">下页</a>
+							</c:if>
+							<c:if test="${pagination.currentPage==pagination.countPages }">
+								<a id="LBNEXT" class="total" href="javascript:searchObj(${pagination.countPages });">下页</a>
+							</c:if>
+							<span class="total">到第 
+								<select name="LbDPG" onchange="javascript:searchObj(this.selectedIndex+1)" id="LbDPG">
+									<c:forEach begin="1" end="${pagination.countPages }" var="p">
+										<option <c:if test="${pagination.currentPage==p}">selected="selected"</c:if> value="${p}">${p}</option>
+									</c:forEach>
+							</select> 页 </span>
+						</div>
+						<!-- 下部显示页码数  end -->
+						
+					</div>
+				
+				</div>
 			</div>            
          </div>
          <jsp:include page="../formatter/footer.jsp" />

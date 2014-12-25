@@ -202,22 +202,25 @@
 							<div class="Search">
 								<div class="SearchTab">
 									<ul>
-										<li class="SearchTextWhiteBg" title="职位名" style="cursor: auto;">职位名</li>
-										<li class="SearchImg">|</li>
-										<li class="SearchTextBlueBg" title="单位名" style="cursor: auto;">单位名</li>
+										<li class="SearchTextBlueBg" title="职位名" style="cursor: auto;">职位名</li>
+									<!-- 	<li class="SearchImg">|</li>
+										<li class="SearchTextWhiteBg" title="单位名" style="cursor: auto;">单位名</li>
+									 -->
 									</ul>
 								</div>
 								<div class="clearboth"></div>
-								<div class="SearchInputText">
-									<div class="SetFloatLeft InputTextBg">
-										<input id="KeyWord" class="InputTextBlank DefaultText" type="text" value="请输入关键字" title="请输入关键字" style="color: Gray;" />
+								<form action="${contextPath }/work" id="searchObj">
+									<div class="SearchInputText">
+										<div class="SetFloatLeft InputTextBg">
+											<input id="keyWord" name="keyWord" class="InputTextBlank DefaultText" type="text" value="请输入关键字" title="请输入关键字" style="color: Gray;" />
+										</div>
+										<div class="SearchBtn SetFloatLeft">
+										<!-- 	<div id="areaBtn" class="SearchDistrictBtn SetFloatLeft" title="选择地区" style="cursor: auto;"> <span>选择地区</span> </div> -->
+											<div class="SearchButtom SetFloatLeft" title="搜索" id="SearchButton" style="cursor: auto;"></div>
+										<!-- 	<div class="SetFloatLeft AdvancedSearch"> <a title="高级搜索" href="HP_AdvancedSearch.aspx">高级搜索</a> </div> -->
+										</div>
 									</div>
-									<div class="SearchBtn SetFloatLeft">
-										<div id="areaBtn" class="SearchDistrictBtn SetFloatLeft" title="选择地区" style="cursor: auto;"> <span>选择地区</span> </div>
-										<div class="SearchButtom SetFloatLeft" title="搜索" style="cursor: auto;"></div>
-										<div class="SetFloatLeft AdvancedSearch"> <a title="高级搜索" href="HP_AdvancedSearch.aspx">高级搜索</a> </div>
-									</div>
-								</div>
+								</form>
 							</div>
 							<div style="*padding-left:6px;">
 								<div style=" height:20px;">
@@ -225,7 +228,7 @@
 									<div>
 										<ul class="VerticalLineUL">
 											<c:forEach items="${hotJobCategoryList }" var="jobCategory" varStatus="status">
-												<li> <a title="${jobCategory.name }" href="#" style="color: rgb(32, 164, 254);">${jobCategory.name }</a> </li>
+												<li> <a title="${jobCategory.name }" href="${contextPath }/work?jobCategory=${jobCategory.code}" style="color: rgb(32, 164, 254);">${jobCategory.name }</a> </li>
 												<c:if test="${status.index < 9 }"><li class="LiEven">|</li></c:if>
 											</c:forEach>
 										</ul>
