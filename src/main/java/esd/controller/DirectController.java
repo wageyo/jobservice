@@ -1,6 +1,7 @@
 package esd.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -52,15 +53,26 @@ public class DirectController {
 		log.info("--- search ---");
 		// 读取地区码
 		// 得到地区code
+	
 		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		News n = new News();
 		n.setType(Constants.ARTICLE_TYPE_DIRECT);
 		n.setArea(new Area(acode));
+		String keyWord = request.getParameter("keyWord");
+		if (keyWord != null && !"".equals(keyWord)) {
+			n.setTitle(keyWord);
+		}
+		String releaseDateStr = request.getParameter("releaseDate");
+		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
+			Integer releaseDate = Integer.valueOf(releaseDateStr);
+			Date update_Date=KitService.getreleaseTime(releaseDate.longValue());
+			n.setUpdateDate(update_Date);
+			
+		}
 		Map<String, Object> entity = new HashMap<String, Object>();
 		List<News> newsList = newsService.getListForShow(n, page,
 				Constants.SIZE);
-		Integer records = newsService.getTotalCount(new News(
-				Constants.ARTICLE_TYPE_DIRECT));
+		Integer records = newsService.getTotalCount(n);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (newsList != null && records != null && records > 0) {
 			try {

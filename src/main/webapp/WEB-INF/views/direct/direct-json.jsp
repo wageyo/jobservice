@@ -9,7 +9,7 @@
 		<c:forEach items="${entity.list}" var="item">
 			<c:if test="${item.id !=null }">
 				<li class="Square" style="line-height: 25px; padding-left: 0px; ">
-				<a href="${contextPath }/news/getOneForShow?id=${item.id}" class="Empa"><span style="margin-left:20px;">${item.title }</span></a>
+				<a href="${contextPath }/direct/getOneForShow?id=${item.id}" class="Empa"><span style="margin-left:20px;">${item.title }</span></a>
 				<span style="float: right;margin-left:20px;">${item.createDate }</span>
 				<span style="float: right;color:gray;">${item.areaName }</span>
 			</li>
