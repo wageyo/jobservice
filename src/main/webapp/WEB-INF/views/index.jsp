@@ -78,10 +78,10 @@
 								<div class="clearboth"></div>
 								<div class="divchk">
 									<div style="letter-spacing:4px;">
-										<a style="cursor:pointer;padding-right:20px;">找回密码</a>
+										<a href="${contextPath }/getBackPassWord" style="cursor:pointer;padding-right:20px;">找回密码</a>
 										<%--<span title="自动登录" class="zdword">自动登录</span>
 									--%>
-									<a style="cursor: pointer;">找回用户</a></div>
+									<a href="${contextPath }/getBackUserName" style="cursor: pointer;">找回用户</a></div>
 								</div>
 								<div class="clearboth"></div>
 								<div class="registerdiv">

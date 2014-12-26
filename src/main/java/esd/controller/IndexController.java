@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +37,7 @@ import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.JobService;
 import esd.service.KitService;
+import esd.service.MailService;
 import esd.service.NewsService;
 import esd.service.ParameterService;
 import esd.service.ResumeService;
@@ -73,6 +75,9 @@ public class IndexController {
 
 	@Autowired
 	private NewsService newsService;
+	
+	@Autowired
+	private MailService mailService;
 
 	//首页
 	@RequestMapping("/index")
@@ -599,6 +604,56 @@ public class IndexController {
 		return mav;
 	}
 
+		// 跳转到找回用户名页面
+		@RequestMapping(value = "/getBackUserName", method = RequestMethod.GET)
+		public ModelAndView getBackUserNameGet(HttpServletRequest request) {
+			log.debug(request.getRequestURI());
+			ModelAndView mav = new ModelAndView("func/getback-username");
+			return mav;
+		}
+
+		// 跳转到找回密码页面
+		@RequestMapping(value = "/getBackPassWord", method = RequestMethod.GET)
+		public ModelAndView getBackPassWordGet(HttpServletRequest request) {
+			log.debug(request.getRequestURI());
+			ModelAndView mav = new ModelAndView("func/getback-password");
+			return mav;
+		}
+
+		// 找回用户名
+		@RequestMapping(value = "/getBack", method = RequestMethod.POST)
+		@ResponseBody
+		public Map<String,Object> getBackUserNamePost(HttpServletRequest request) {
+			log.debug(request.getRequestURI());
+			Map<String,Object> map = new HashMap<String,Object>();
+			String email = request.getParameter("email");
+			String type = request.getParameter("type");	//找回类型  username用户名; password密码
+			//根据邮箱查找到对应的注册用户
+			User param = new User();
+			param.setEmail(email);
+			User user = userService.check(param);
+			String val ="";
+			if("username".equals(type)){
+				val = user.getLoginName();
+			}else if("password".equals(type)){
+				val=user.getPassWord();
+			}else{
+				map.put(Constants.NOTICE, "传递的发送类型为空, 请联系管理员.");
+				return map;
+			}
+			Boolean bl = mailService.sendUserNamePwd(email, type,val);
+			if(bl){
+				map.put(Constants.NOTICE,Constants.Notice.SUCCESS.getValue());
+			}else{
+				map.put(Constants.NOTICE, "发送失败 ");
+			}
+			return map;
+		}
+		
+		
+		
+		
+		
 	@RequestMapping("/jsonp")
 	public String jsonp() {
 		return "test";

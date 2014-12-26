@@ -224,6 +224,30 @@ public class UserController {
 		return json;
 	}
 
+	// 检查一个邮箱是否存在
+		@RequestMapping(value = "/checkEmail", method = RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> checkEmail(HttpServletRequest request) {
+			log.info("--- check ---");
+			String email = request.getParameter("email");
+			log.info("--- email ---" + email);
+			Map<String, Object> json = new HashMap<String, Object>();
+			if (email == null || "".equals(email)) {
+				json.put("notice", Notice.ERROR);
+				return json;
+			}
+			User param = new User();
+			param.setEmail(email);
+			User user = userService.check(param);
+			if (user != null) {
+				// 存在
+				json.put("notice", Notice.SUCCESS.getValue());
+				return json;
+			}
+			// 该用户不存在
+			json.put("notice", Notice.FAILURE.getValue());
+			return json;
+		}
 	// 登出
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
