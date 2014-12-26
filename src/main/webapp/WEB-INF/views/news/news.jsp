@@ -25,9 +25,12 @@
 	common = {};
 	common.pagination = function(page) {
 		var url = '${contextPath}/news/search/' + page;
+		var keyWord = $("input[type='text'][name='keyWordNews']").val(); 
+		var releaseDate = $('#releaseDate').val();
 		$.ajax({
 			url : url,
 			type : 'GET',
+			data :{"keyWord":keyWord,releaseDate:releaseDate},
 			success : function(e) {
 				$('#main').html(e);
 				$('#data').fadeIn();
@@ -60,24 +63,17 @@
                    <div class="MainLeftTwo">
                        <div class="MainLeftTwoLeft">
                           <div id="PublicframeOne11" class="PublicframeOne ">
-                          
-                          
                           	<div id="main"></div>
-                          
-                          
 						  </div>
                        </div>
-                     
                    </div>
                    <div style="clear: both">
                    </div>
-                
-
                </div>
            </div>
 	    </div>	
 	</div>
-	<div class="MainRight">
+		<div class="MainRight">
       <div class="MainRightOne">
           <div class="PublicframeTwo ">
           	<div class="PublicframeTwoHeadBar">
@@ -95,67 +91,30 @@
           		  <div class="Search">
           			<div class="SearchInputText">
           			 <div class="SetFloat InputTextBg">
-          			  <input type="text" title="请输入关键字" id="KeyWord" class="InputTextBlank DefaultText" value="请输入关键字" style="color: gray;">
+          			  <input type="text" name="keyWordNews"  title="请输入关键字1" id="keyWordNews" class="InputTextBlank DefaultText" value="${keyWordNews}" style="color: gray;" />
           			 </div>
           			</div>
           		   </div>
           		 </div>
-          		 <div class="ArticleKind">
-          		  <div class="ArticleKindTitle">文章类别：</div>
-          		  <div class="ArticleSelectFrame">
-          		    <select name="ArticleSelect" id="ArticleCategory" class="ArticleSelectDropDown">
-          		     <option value="default">--请选择--</option>
-          		     <option value="1">职业能力测评</option>
-          		     <option value="2">就业指导</option>
-          		     <option value="3">培训需求（个人）</option>
-          		     <option value="4">面试技巧</option>
-          		     <option value="5">职场资讯</option>
-          		     <option value="6">面试宝典</option>
-          		     <option value="7">安置残疾人优惠政策</option>
-          		     <option value="8">培训需求（单位）</option>
-          		     <option value="9">薪酬福利</option>
-          		     <option value="10">职场观察</option>
-          		     <option value="11">残疾人政策法规</option>
-          		     <option value="12">职场八卦</option>
-          		     <option value="50">一般政策法规</option>
-          		     <option value="51"> 就业指导</option>
-          		     <option value="53">服务动态</option>
-          		    </select>
-          		   </div>
-          		  </div>
+     
           		  <div class="ArticleTime">
           		    <div class="ArticleTimeTitle">发布时间：</div>
           		    <div class="ArticleTimeFrame">
-          		      <select name="ArticleSelect" id="ArticleDateIssued" class="ArticleSelectDropDown">
-          		        <option value="default">--请选择--</option>
-          		        <option value="1">近一天</option>
-          		        <option value="2">近两天</option>
-          		        <option value="3">近三天</option>
-          		        <option value="7">近一周</option>
-          		        <option value="14">近两周</option>
-          		        <option value="30">近一月</option>
-          		        <option value="60">近两月</option>
-          		        <option value="35600">长期有效</option>
+          		      <select name="releaseDate" id="releaseDate" class="ArticleSelectDropDown">
+        		       	<c:forEach items="${params }" var="p1">
+							<c:if test="${p1.type == 'releaseDate' }">
+								<option value="${p1.value }" >${p1.name }</option>
+							</c:if>
+						</c:forEach>
           		       </select>
           		     </div>
           		    </div>
-          		    <div class="ArticleHot">
-          		        <ul>
-          		            <li>热门文章搜索：</li>
-          		            <li><a href="" style="color: #40a9fe;" title="计算机">计算机</a></li>
-          		            <li class="ArticleHotLine">|</li>
-          		            <li><a href="" title="业务员"style="color: #40a9fe;">业务员</a></li>
-          		            <li class="ArticleHotLine">|</li><li><a href="" style="color: #40a9fe;" title="程序员">程序员</a></li>
-          		         </ul>
-          		     </div>
           		     <div style="clear: both"></div>
-          		     <div class="ArticleBtn" id="SeachBtn"></div>
+          		     <div class="ArticleBtn" id="SeachBtn"   onclick="common.pagination(1)"></div>
           		 </div>
             </div>
-      </div>
-     
-   
-	</div>
+	      </div> 
+		</div>
 	</div>
 	
 	

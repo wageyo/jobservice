@@ -191,6 +191,9 @@
 						and n.acode like concat('%',#{news.area.code,jdbcType=VARCHAR},'%')
 					</if>
 				</if>
+				<if test="news.updateDate != null and news.updateDate != ''">
+				 and n.update_date between #{news.updateDate, jdbcType=TIMESTAMP} and now()
+				</if>
 			</if>
 		</trim>
 		order by n.create_date desc 
@@ -219,6 +222,9 @@
 					<if test="news.area.code != null and news.area.code != '' ">
 						and n.acode like concat('%',#{news.area.code,jdbcType=VARCHAR},'%')
 					</if>
+				</if>
+				<if test="news.updateDate != null and news.updateDate != ''">
+				 and n.update_date between #{news.updateDate, jdbcType=TIMESTAMP} and now()
 				</if>
 			</if>
 		</trim>

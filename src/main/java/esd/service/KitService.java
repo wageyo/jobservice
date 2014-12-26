@@ -145,6 +145,20 @@ public class KitService {
 		}
 		return new Date(today.getTime() + effectiveDays * 24 * 60 * 60 * 1000);
 	}
+	/**
+	 * 得到近几天发布时间
+	 * 
+	 * @param effectiveDays
+	 * @return
+	 */
+	public static Date getreleaseTime(Long releaseDays) {
+		Date today = new Date();
+		// 时间为零, 则返回今天
+		if (releaseDays <= 0) {
+			return today;
+		}
+		return new Date(today.getTime() - releaseDays * 24 * 60 * 60 * 1000);
+	}
 
 	/**
 	 * 将id转换为数字id

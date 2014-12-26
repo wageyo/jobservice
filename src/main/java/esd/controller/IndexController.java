@@ -1,6 +1,7 @@
 package esd.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -415,18 +416,186 @@ public class IndexController {
 	}
 
 	//最新消息列表浏览页面
+//	@RequestMapping("/news")
+//	public ModelAndView news(HttpServletRequest request) {
+//		log.debug(request.getRequestURI());
+//		ModelAndView mav = new ModelAndView("news/news");
+//		return mav;
+//	}
 	@RequestMapping("/news")
-	public ModelAndView news(HttpServletRequest request) {
+	public ModelAndView news(HttpServletRequest request, HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("news/news");
+		List<Parameter> plist = parameterService.getAll();
+		// 各种参数
+		mav.addObject("params", plist);
+		
+		// 获得简历总数
+		int totalCount = newsService.getTotalCount(null);
+		mav.addObject("totalCount", totalCount);
+		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中; 有则直接使用传递过来的
+		String acode = request.getParameter("acode");
+		String localCode = CookieHelper.getCookieValue(request, Constants.AREA);
+		log.info("acode [" + acode + "]");
+		if (acode != null && !"".equals(acode)) {
+			if(localCode == null || "".equals(localCode)){
+				CookieHelper.setCookie(response, Constants.AREA, acode);
+			}
+		}else{
+			acode = localCode;
+		}
+		Area area = areaService.getByCode(acode);
+		//读取查询信息
+		
+		log.info("--- emp news search ---");
+		News news = new News();
+		news.setArea(area);
+		request.setAttribute("tarArea", area);
+		
+		String keyWord = request.getParameter("keyWord");
+		if (keyWord != null && !"".equals(keyWord)) {
+			news.setTitle(keyWord);
+		}
+		request.setAttribute("keyWord", keyWord);
+		
+		String releaseDateStr = request.getParameter("releaseDate");	
+		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
+			Integer releaseDate = Integer.valueOf(releaseDateStr);
+			Date update_Date=KitService.getreleaseTime(releaseDate.longValue());
+			news.setUpdateDate(update_Date);
+			
+		}
+		request.setAttribute("releaseDate", releaseDateStr);
+		
+		String pageStr = request.getParameter("page");
+		if(pageStr ==null || "".equals(pageStr)){
+			pageStr = "1";
+		}
+		Integer page = KitService.getInt(pageStr);
+		List<News> newsList = newsService.getForListShow(news, page,
+				Constants.SIZE);
+		Integer records = newsService.getTotalCount(news);
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		if (newsList != null && records != null && records > 0) {
+			try {
+				for (Iterator<News> iterator = newsList.iterator(); iterator
+						.hasNext();) {
+					News it = (News) iterator.next();
+					log.debug(it.toString());
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("id", String.valueOf(it.getId()));
+					map.put("title", it.getTitle());
+					map.put("content", it.getContent());
+					map.put("author", it.getAuthor());
+					map.put("source", it.getSource());
+					map.put("type", it.getType());
+					list.add(map);
+				}
+			} catch (Exception e) {
+				log.error("error in list", e);
+			}
+		}
+		while (list.size() < Constants.SIZE) {
+			Map<String, String> map = new HashMap<String, String>();
+			list.add(map);
+		}
+
+		mav.addObject("list", list);
+		PaginationUtil pagination = new PaginationUtil(page, records);
+		mav.addObject("pagination", pagination.getHandler());
 		return mav;
 	}
+		
 
+//	//就业指导信息 列表浏览页面
+//	@RequestMapping("/direct")
+//	public ModelAndView direct(HttpServletRequest request) {
+//		log.debug(request.getRequestURI());
+//		ModelAndView mav = new ModelAndView("direct/direct");
+//		return mav;
+//	}
 	//就业指导信息 列表浏览页面
-	@RequestMapping("/direct")
-	public ModelAndView direct(HttpServletRequest request) {
+		@RequestMapping("/direct")
+	public ModelAndView direct(HttpServletRequest request, HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("direct/direct");
+		List<Parameter> plist = parameterService.getAll();
+		// 各种参数
+		mav.addObject("params", plist);
+		
+		// 获得简历总数
+		int totalCount = newsService.getTotalCount(null);
+		mav.addObject("totalCount", totalCount);
+		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中; 有则直接使用传递过来的
+		String acode = request.getParameter("acode");
+		String localCode = CookieHelper.getCookieValue(request, Constants.AREA);
+		log.info("acode [" + acode + "]");
+		if (acode != null && !"".equals(acode)) {
+			if(localCode == null || "".equals(localCode)){
+				CookieHelper.setCookie(response, Constants.AREA, acode);
+			}
+		}else{
+			acode = localCode;
+		}
+		Area area = areaService.getByCode(acode);
+		//读取查询信息
+		
+		log.info("--- emp news search ---");
+		News news = new News();
+		news.setArea(area);
+		request.setAttribute("tarArea", area);
+		
+		String keyWord = request.getParameter("keyWord");
+		if (keyWord != null && !"".equals(keyWord)) {
+			news.setTitle(keyWord);
+		}
+		request.setAttribute("keyWord", keyWord);
+		String releaseDateStr = request.getParameter("releaseDate");
+	
+		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
+			Integer releaseDate = Integer.valueOf(releaseDateStr);
+			Date update_Date=KitService.getreleaseTime(releaseDate.longValue());
+			news.setUpdateDate(update_Date);
+			
+		}
+		request.setAttribute("releaseDate", releaseDateStr);
+		
+		String pageStr = request.getParameter("page");
+		if(pageStr ==null || "".equals(pageStr)){
+			pageStr = "1";
+		}
+		Integer page = KitService.getInt(pageStr);
+		List<News> newsList = newsService.getForListShow(news, page,
+				Constants.SIZE);
+		Integer records = newsService.getTotalCount(news);
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		if (newsList != null && records != null && records > 0) {
+			try {
+				for (Iterator<News> iterator = newsList.iterator(); iterator
+						.hasNext();) {
+					News it = (News) iterator.next();
+					log.debug(it.toString());
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("id", String.valueOf(it.getId()));
+					map.put("title", it.getTitle());
+					map.put("content", it.getContent());
+					map.put("author", it.getAuthor());
+					map.put("source", it.getSource());
+					map.put("type", it.getType());
+					list.add(map);
+				}
+			} catch (Exception e) {
+				log.error("error in list", e);
+			}
+		}
+		while (list.size() < Constants.SIZE) {
+			Map<String, String> map = new HashMap<String, String>();
+			list.add(map);
+		}
+
+		mav.addObject("list", list);
+		PaginationUtil pagination = new PaginationUtil(page, records);
+		mav.addObject("pagination", pagination.getHandler());
 		return mav;
 	}
 

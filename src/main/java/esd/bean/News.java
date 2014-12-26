@@ -1,5 +1,7 @@
 package esd.bean;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +19,9 @@ public class News extends PrimaryKey {
 	private String source; // 来源/来路
 	private String type; // 文章类型
 	private Area area; // 所属地区
+	private Date updateDate; // 岗位有效日期截至
+	private Date releaseDate; 
+	
 
 	@Override
 	public String toString() {
@@ -80,4 +85,26 @@ public class News extends PrimaryKey {
 		this.area = area;
 	}
 
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	
+
+
+
+	
+	
 }

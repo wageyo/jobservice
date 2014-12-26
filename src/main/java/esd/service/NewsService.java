@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import esd.bean.Area;
 import esd.bean.News;
+import esd.bean.Parameter;
 import esd.controller.Constants;
 import esd.dao.NewsDao;
+import esd.dao.ParameterDao;
 
 /**
  * 消息操作类
@@ -26,7 +28,9 @@ public class NewsService {
 
 	@Autowired
 	private KitService kitService;
-
+	
+	@Autowired
+	private ParameterDao parameterDao;
 	// 保存一个对象
 	public boolean save(News news) {
 		return dao.save(news);
@@ -68,7 +72,40 @@ public class NewsService {
 		List<News> list = dao.getByPage(map);
 		return list;
 	}
-
+	/**
+	 * 分页查询方法, 其中数据已被处理成适合前台展示的形式 前台--使用
+	 * 
+	 * @param object
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<News> getForListShow(News object, int startPage, int size) {
+		if (object != null) {
+			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+			if (object.getArea() != null) {
+				if (object.getArea().getCode() != null
+						&& !"".equals(object.getArea().getCode())) {
+					Parameter parameter = parameterDao
+							.getShareScopeByArea(object.getArea().getCode());
+					if (parameter != null) {
+						String areaSql = KitService.getAreaSqlFromShareScope(
+								parameter.getValue(), object.getArea()
+										.getCode());
+						object.setArea(new Area(areaSql));
+					}
+				}
+			}
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("news", object);
+		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
+				* (size <= 0 ? Constants.SIZE : size));
+		map.put("size", size <= 0 ? Constants.SIZE : size);
+		List<News> list = dao.getByPage(map);
+		list = kitService.getForShowNews(list);
+		return list;
+	}
 	/**
 	 * 分页查询方法, 其中数据已被处理成适合前台展示的
 	 * 前台--使用
