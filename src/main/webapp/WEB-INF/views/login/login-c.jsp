@@ -39,7 +39,7 @@
 		<!-- ******* 中部内容显示区 ******* begin ********** -->
 		<div class="LoginContent">
 			<div class="Left">
-				<div class="Img_Ad"></div>
+				<div class="Img_Ad" style="background: url(${contextPath}/images/login/Img_Ad_Company.jpg) no-repeat;"></div>
 			</div>
 			<div class="Right">
 				<!-- 登陆界面 begin-->
