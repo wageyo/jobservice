@@ -63,7 +63,7 @@
                                     </div>
 								</div>
 								<div class="UserPwd">
-									<div class="Pwd">密&nbsp;&nbsp;&nbsp;&nbsp;码：</div>
+									<div class="Pwd" style="background:url(${contextPath}/images/login/password.jpg) no-repeat;width:48px;height:39px"></div>
 									<div class="Pwd_print">
 										<input name="passWord" type="password" id="passWord" class="user_in" />
 									</div>
