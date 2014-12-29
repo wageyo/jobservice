@@ -162,7 +162,7 @@ public class IndexController {
 	 */
 	@RequestMapping("/contact")
 	public ModelAndView contact(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("contact");
+		ModelAndView mav = new ModelAndView("func/contact");
 		return mav;
 	}
 
@@ -174,7 +174,7 @@ public class IndexController {
 	 */
 	@RequestMapping("/about")
 	public ModelAndView about(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("about");
+		ModelAndView mav = new ModelAndView("func/about");
 		return mav;
 	}
 
@@ -195,7 +195,7 @@ public class IndexController {
 	//企业用户
 	@RequestMapping("/regC")
 	public ModelAndView regC(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("reg-c");
+		ModelAndView mav = new ModelAndView("register/reg-c");
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
 		mav.addObject("provinceList", alist);
@@ -205,7 +205,7 @@ public class IndexController {
 	//个人用户注册
 	@RequestMapping("/regP")
 	public ModelAndView regP(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("reg-p");
+		ModelAndView mav = new ModelAndView("register/reg-p");
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
 		mav.addObject("provinceList", alist);
@@ -604,51 +604,51 @@ public class IndexController {
 		return mav;
 	}
 
-		// 跳转到找回用户名页面
-		@RequestMapping(value = "/getBackUserName", method = RequestMethod.GET)
-		public ModelAndView getBackUserNameGet(HttpServletRequest request) {
-			log.debug(request.getRequestURI());
-			ModelAndView mav = new ModelAndView("func/getback-username");
-			return mav;
-		}
+	// 跳转到找回用户名页面
+	@RequestMapping(value = "/getBackUserName", method = RequestMethod.GET)
+	public ModelAndView getBackUserNameGet(HttpServletRequest request) {
+		log.debug(request.getRequestURI());
+		ModelAndView mav = new ModelAndView("func/getback-username");
+		return mav;
+	}
 
-		// 跳转到找回密码页面
-		@RequestMapping(value = "/getBackPassWord", method = RequestMethod.GET)
-		public ModelAndView getBackPassWordGet(HttpServletRequest request) {
-			log.debug(request.getRequestURI());
-			ModelAndView mav = new ModelAndView("func/getback-password");
-			return mav;
-		}
+	// 跳转到找回密码页面
+	@RequestMapping(value = "/getBackPassWord", method = RequestMethod.GET)
+	public ModelAndView getBackPassWordGet(HttpServletRequest request) {
+		log.debug(request.getRequestURI());
+		ModelAndView mav = new ModelAndView("func/getback-password");
+		return mav;
+	}
 
-		// 找回用户名
-		@RequestMapping(value = "/getBack", method = RequestMethod.POST)
-		@ResponseBody
-		public Map<String,Object> getBackUserNamePost(HttpServletRequest request) {
-			log.debug(request.getRequestURI());
-			Map<String,Object> map = new HashMap<String,Object>();
-			String email = request.getParameter("email");
-			String type = request.getParameter("type");	//找回类型  username用户名; password密码
-			//根据邮箱查找到对应的注册用户
-			User param = new User();
-			param.setEmail(email);
-			User user = userService.check(param);
-			String val ="";
-			if("username".equals(type)){
-				val = user.getLoginName();
-			}else if("password".equals(type)){
-				val=user.getPassWord();
-			}else{
-				map.put(Constants.NOTICE, "传递的发送类型为空, 请联系管理员.");
-				return map;
-			}
-			Boolean bl = mailService.sendUserNamePwd(email, type,val);
-			if(bl){
-				map.put(Constants.NOTICE,Constants.Notice.SUCCESS.getValue());
-			}else{
-				map.put(Constants.NOTICE, "发送失败 ");
-			}
+	// 找回用户名
+	@RequestMapping(value = "/getBack", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> getBackUserNamePost(HttpServletRequest request) {
+		log.debug(request.getRequestURI());
+		Map<String,Object> map = new HashMap<String,Object>();
+		String email = request.getParameter("email");
+		String type = request.getParameter("type");	//找回类型  username用户名; password密码
+		//根据邮箱查找到对应的注册用户
+		User param = new User();
+		param.setEmail(email);
+		User user = userService.check(param);
+		String val ="";
+		if("username".equals(type)){
+			val = user.getLoginName();
+		}else if("password".equals(type)){
+			val=user.getPassWord();
+		}else{
+			map.put(Constants.NOTICE, "传递的发送类型为空, 请联系管理员.");
 			return map;
 		}
+		Boolean bl = mailService.sendUserNamePwd(email, type,val);
+		if(bl){
+			map.put(Constants.NOTICE,Constants.Notice.SUCCESS.getValue());
+		}else{
+			map.put(Constants.NOTICE, "发送失败 ");
+		}
+		return map;
+	}
 		
 		
 		
