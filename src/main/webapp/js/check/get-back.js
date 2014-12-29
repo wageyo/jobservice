@@ -12,7 +12,16 @@ function setGetBack(type,email){
 		data:{'email':email,'type':type},
 		success:function(json){
 			if(json.notice == 'success'){
-				alert('发送成功!');
+				var notice = '';
+				if(type == 'username'){
+					notice += '用户名';
+				}else{
+					notice = '密码';
+				}
+				notice += '已经发送到您注册的邮箱中, 请到邮箱中查看.';
+				$('.buttonGetBack').val('发送完成!');
+				alert(notice);
+				$('.buttonGetBack').val('发送');
 			}else{
 				alert(json.notice);
 			}
@@ -33,6 +42,7 @@ function getBack(type){
 	var email = $('#email').val();
 	if(!verify.isEmail(email)){
 		alert('您输入的邮箱不符合规则, 请重新输入.');
+		$('#email').focus();
 		return false;
 	}else{
 		$.ajax({
@@ -42,6 +52,7 @@ function getBack(type){
 			data:{'email':email},
 			success:function(json){
 				if(json.notice == 'success'){
+					$('.buttonGetBack').val('发送中...请暂时不要操作.');
 					setGetBack(type,email);
 					return true;
 				}else{

@@ -362,3 +362,13 @@ a:active
     line-height:25px;
     text-align:left;
 }
+
+/** 找回用户名/密码 发送按钮 **/
+.buttonGetBack{
+	border-top: 0px;
+	border-left: 0px;
+	border-right: 2px solid rgb(113, 113, 230);
+	border-bottom: 2px solid rgb(113, 113, 230);
+	padding: 3px 12px;
+	font-size: 15px;
+}

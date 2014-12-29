@@ -390,12 +390,14 @@
 									<li class="Square"> <a  title="职业规划：人生一堂必修课" href="">职业规划：人生一堂必修课</a> </li>
 									<li class="Square"> <a  title="职场规划为了什么" href="">职场规划为了什么</a> </li>
 								</ul>
+								<!-- 
 								<a href="" >
 									<div id="btn_Link" class="LinkButton"></div>
 								</a>
+								 -->
 							</div>
-							<div>
-								<a href="" >
+							<div style="padding-top:30px;">
+								<a href="${contextPath }/loginP" >
 									<div id="btn_Link1" class="LinkButton1"></div>
 								</a>
 							</div>

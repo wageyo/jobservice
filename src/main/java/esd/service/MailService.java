@@ -17,10 +17,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailService {
 	private String host = "smtp.163.com";
+	
+	/**
+	 * 暂时使用此邮箱
+	 */
 	private String user = "supertestabc@163.com";
 	private String pwd = "abc123";
 	private String from = "supertestabc@163.com";
-	private String to = "254043921@qq.com";
+	
+	/**
+	 * 过几天使用以下的邮箱
+	 */
+//	private String user = "jobservicehelper@163.com";
+//	private String pwd = "superesd123$%^";
+//	private String from = "jobservicehelper@163.com";
+	
+	
+//	private String to = "254043921@qq.com";
 	private String subjectUserName = "残疾人就业信息网找回用户名";
 	private String subjectPassWord = "残疾人就业信息网找回密码";
 	/**
@@ -39,7 +52,7 @@ public class MailService {
 		try {
 			message.setFrom(new InternetAddress(from));
 			message.setRecipient(Message.RecipientType.TO, new InternetAddress(
-					to));
+					email));
 			// 整封邮件
 			MimeMultipart bodyMultipart = new MimeMultipart();
 

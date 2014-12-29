@@ -6,7 +6,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>找回用户名</title>
+	<title>找回密码</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 	<meta content="残疾人招聘就业" name="description" />
@@ -38,7 +38,7 @@
 	               <div class="PublicframeTwoHeadBar">
 	                 <div class="PublicframeTwoHeadBarLeft"></div>
 	                   <div class="PublicframeTwoHeadBarTittle">
-	                       <span class="PublicframeTwoHeadBarTittleSpan">找回用户名</span>
+	                       <span class="PublicframeTwoHeadBarTittleSpan">找回密码</span>
 	                   </div>
 	                   <div class="PublicframeTwoHeadBarRight">
 	                   </div>
@@ -62,7 +62,7 @@
 	                          			</tr>
 	                          			<tr>
 	                          				<td colspan="2" style="text-align:center;">
-	                          					<input type="button" class="buttonGetBack" onclick="getBack('username');" value="发送" style=""/>
+	                          					<input type="button" class="buttonGetBack" onclick="getBack('username');" value=" 发 送 " style=""/>
 	                          				</td>
 	                          			</tr>
 	                          		</table>
