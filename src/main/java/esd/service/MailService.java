@@ -65,14 +65,14 @@ public class MailService {
 			String typeContent ="";
 			if("username".equals(type)){
 				message.setSubject(subjectUserName);
-				typeContent = "用户名";
+				typeContent = "用_户_名_";
 			}else if("password".equals(type)){
 				message.setSubject(subjectPassWord);
-				typeContent = "密码";
+				typeContent = "密_码_";
 			}else{
-				typeContent = "传递的类型参数为空, 请联系管理员";
+				typeContent = " 传 递 的 类 型 参 数 为 空,  请 联 系 管 理 员";
 			}
-			String content = "您的"+typeContent+"为: <b>" + val + "</b>, 请妥善保管.";
+			String content = "您_的_"+typeContent+"为: <b>" + val + "</b>, 请_妥_善_保_管.";
 			bodyPart.setContent(content,
 					"text/html;charset=UTF-8");
 

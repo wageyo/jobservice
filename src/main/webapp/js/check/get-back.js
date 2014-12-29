@@ -4,6 +4,7 @@
 
 //向邮箱发送用户名/密码功能
 function setGetBack(type,email){
+	
 	//异步提交发送邮箱的方法
 	$.ajax({
 		url: server.url + 'getBack',
@@ -18,8 +19,9 @@ function setGetBack(type,email){
 				}else{
 					notice = '密码';
 				}
-				notice += '已经发送到您注册的邮箱中, 请到邮箱中查看.';
+				notice += '已经发送到您注册的邮箱中, 请到邮箱中查看; 如果收件箱中没有的话, 请查看邮箱的垃圾箱中';
 				$('.buttonGetBack').val('发送完成!');
+				$('.buttonGetBack').removeAttr('disabled')
 				alert(notice);
 				$('.buttonGetBack').val('发送');
 			}else{
@@ -53,10 +55,12 @@ function getBack(type){
 			success:function(json){
 				if(json.notice == 'success'){
 					$('.buttonGetBack').val('发送中...请暂时不要操作.');
+					$('.buttonGetBack').attr('disabled',true)
 					setGetBack(type,email);
 					return true;
 				}else{
 					alert('该邮箱不存在.');
+					$('.buttonGetBack').removeAttr('disabled')
 					return false;
 				}
 			},

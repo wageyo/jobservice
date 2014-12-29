@@ -62,7 +62,7 @@
 	                          			</tr>
 	                          			<tr>
 	                          				<td colspan="2" style="text-align:center;">
-	                          					<input type="button" class="buttonGetBack" onclick="getBack('username');" value=" 发 送 " style=""/>
+	                          					<input type="button" class="buttonGetBack" onclick="getBack('username');" value=" 发 送 " style="" />
 	                          				</td>
 	                          			</tr>
 	                          		</table>

@@ -1,5 +1,6 @@
 
 $(document).ready(function(){
+
 	// 账号校验
 	$('#loginName').focus(function(){
 		$('#showUserNameMsg').css('color','black').html('由5-20位字母、数字或下划线组成.');
@@ -72,8 +73,26 @@ $(document).ready(function(){
 			$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
 			$('#showEmailMsg').css('color','red').html('请输入正确的email格式, 以便在您忘记用户名或密码的时候找回使用.');
 		}else{
-			$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
-			$('#showEmailMsg').css('color','black').html('邮箱格式正确.');
+			$.ajax({
+				url: server.url + 'user/checkEmail',
+				type:'POST',
+				dataType:'json',
+				data:{'email':email},
+				success:function(json){
+					if(json.notice == 'success'){
+						$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+						$('#showEmailMsg').css('color','red').html('该邮箱已经存在, 请重新输入.');
+					}else{
+						$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+						$('#showEmailMsg').css('color','black').html('邮箱通过验证正确.');
+					}
+				},
+				error:function(){
+					$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+					$('#showEmailMsg').css('color','red').html('验证邮箱发生错误, 请重新刷新页面后重新尝试或者联系管理员.');
+				}
+			});
+			
 		}
 	});
 	
@@ -96,7 +115,35 @@ $(document).ready(function(){
 
 //注册按钮点击事件
 function registerSubmit(){
-	$('#registerForm').submit();
+	var email = $('#email').val();
+	if(!verify.isEmail(email)){
+		$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+		$('#showEmailMsg').css('color','red').html('请输入正确的email格式, 以便在您忘记用户名或密码的时候找回使用.');
+	}else{
+		$.ajax({
+			url: server.url + 'user/checkEmail',
+			type:'POST',
+			dataType:'json',
+			data:{'email':email},
+			success:function(json){
+				if(json.notice == 'success'){
+					$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+					$('#showEmailMsg').css('color','red').html('该邮箱已经存在, 请重新输入.');
+					$('#email').select();
+				}else{
+					$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+					$('#showEmailMsg').css('color','black').html('邮箱通过验证正确.');
+					$('#registerForm').submit();
+				}
+			},
+			error:function(){
+				$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+				$('#showEmailMsg').css('color','red').html('验证邮箱发生错误, 请重新刷新页面后重新尝试或者联系管理员.');
+			}
+		});
+		
+	}
+	
 }
 
 //账号信息校验方法
@@ -126,13 +173,13 @@ function check(){
 		return false;
 	}
 	//email
-	var email = $('#email').val();
+/*	var email = $('#email').val();
 	if(!verify.isEmail(email)){
 		$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
 		$('#showEmailMsg').css('color','red').html('请输入正确的email格式, 以便在您忘记用户名或密码的时候找回使用.');
 		$('#email').focus();
 		return false;
-	}
+	}	*/
 	//验证码
 	var LoginVerifyCode = $('#LoginVerifyCode').val();
 	if(LoginVerifyCode == null || LoginVerifyCode == '' || LoginVerifyCode == undefined){
