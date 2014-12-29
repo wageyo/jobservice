@@ -39,7 +39,7 @@
 		<!-- ******* 中部内容显示区 ******* begin ********** -->
 		<div class="LoginContent">
 			<div class="Left">
-				<div class="Img_Ad"></div>
+				<div class="Img_Ad" style="background: url(${contextPath}/images/login/Img_Ad_Company.jpg) no-repeat;"></div>
 			</div>
 			<div class="Right">
 				<!-- 登陆界面 begin-->
@@ -54,7 +54,7 @@
 						<form action="${contextPath }/user/login" method="post" onsubmit="return check();" id="formLogin">
 							<div class="User">
 								<div class="UserName">
-									<div class="Name">用户名：</div>
+									<div class="Name">用户名 : </div>
 									<div class="Name_print">
 										<input name="loginName" type="text" id="loginName" class="user_in" value="请输入用户名" style="color:#ccc" />
 										<input type="hidden" id="identity" name="identity" value="company" />
@@ -63,7 +63,9 @@
                                     </div>
 								</div>
 								<div class="UserPwd">
-									<div class="Pwd" style="background:url(${contextPath}/images/login/password.jpg) no-repeat;width:48px;height:39px"></div>
+									<div class="Pwd">
+										密&nbsp;&nbsp;&nbsp;码 : 
+									</div>
 									<div class="Pwd_print">
 										<input name="passWord" type="password" id="passWord" class="user_in" />
 									</div>

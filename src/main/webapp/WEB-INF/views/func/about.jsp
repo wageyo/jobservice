@@ -19,10 +19,10 @@
 </head>
 <body>
 <!-- 顶部工具条栏 -->
-<jsp:include page="formatter/status-bar.jsp" />
+<jsp:include page="../formatter/status-bar.jsp" />
 
 <!-- 头部导航及图片栏目 -->
-<jsp:include page="formatter/header.jsp" />
+<jsp:include page="../formatter/header.jsp" />
 <div id="directBody">
 	<div class="MainLeft" style="width:988px">
 		<div class="MainLeftRightHead1">
@@ -74,6 +74,6 @@
 	</div>
 
 	--%>
-	<jsp:include page="formatter/footer.jsp" />
+	<jsp:include page="../formatter/footer.jsp" />
 </body>
 </html>

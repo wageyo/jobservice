@@ -9,6 +9,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 	<meta content="残疾人招聘就业" name="description" />
+	
+	<link rel="shortcut icon" href="${contextPath}/images/HomePageImage/favicon.ico" type="image/x-icon" />
 	<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
@@ -99,7 +101,7 @@
 	               <div class="PublicframeTwoHeadBar">
 	                 <div class="PublicframeTwoHeadBarLeft"></div>
 	                   <div class="PublicframeTwoHeadBarTittle">
-	                       <span class="PublicframeTwoHeadBarTittleSpan">该公司的其他招聘信息</span>
+	                       <span class="PublicframeTwoHeadBarTittleSpan">该公司的招聘信息</span>
 	                   </div>
 	                   <div class="PublicframeTwoHeadBarRight">
 	                   </div>
