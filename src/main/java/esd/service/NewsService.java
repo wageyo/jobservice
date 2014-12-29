@@ -147,11 +147,9 @@ public class NewsService {
 	}
 
 	// 取得不带内容的新闻列表
-	public List<News> getTitleList(String type, int startPage, int size) {
+	public List<News> getTitleList(News object, int startPage, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		News news = new News();
-		news.setType(type);
-		map.put("news", news);
+		map.put("news", object);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);

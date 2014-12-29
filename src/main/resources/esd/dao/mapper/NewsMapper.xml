@@ -250,7 +250,7 @@
 				</if>
 				<if test="news.area != null">
 					<if test="news.area.code != null and news.area.code != '' ">
-						n.acode like concat('%',#{area.code, jdbcType=VARCHAR},'%')
+					  and	n.acode like concat('%',#{news.area.code,jdbcType=VARCHAR},'%')
 					</if>
 				</if>
 			</if>

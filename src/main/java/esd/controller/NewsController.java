@@ -53,7 +53,6 @@ public class NewsController {
 		log.info("--- search ---");
 		//从cookie读取acode
 		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-		
 		News n = new News();
 		n.setType(Constants.ARTICLE_TYPE_NEWS);
 		n.setArea(new Area(acode));
@@ -118,10 +117,14 @@ public class NewsController {
 			return "/error";
 		}
 		// 将news放入到request中
+		String acode = CookieHelper.getCookieValue(req, Constants.AREA);
 		News news = newsService.getOneForShow(id);
 		req.setAttribute("news", news);
-		// 再取15条信息放入到request中
-		List<News> list = newsService.getTitleList(news.getType(), 1, 15);
+		News newsparameter=new News();
+		newsparameter.setType(news.getType());
+		newsparameter.setArea(new Area(acode));
+		
+		List<News> list = newsService.getTitleList(newsparameter, 1, 15);
 		req.setAttribute("newsList", list);
 		return "news/news-detail";
 	}

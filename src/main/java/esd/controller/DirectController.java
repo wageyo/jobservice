@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import esd.bean.Area;
 import esd.bean.News;
+import esd.service.AreaService;
 import esd.service.CookieHelper;
 import esd.service.KitService;
 import esd.service.NewsService;
@@ -39,6 +40,8 @@ public class DirectController {
 
 	@Autowired
 	private NewsService newsService;
+	@Autowired
+	private AreaService areaService;
 
 	@RequestMapping("/search")
 	public ModelAndView work(HttpServletRequest request) {
@@ -120,8 +123,14 @@ public class DirectController {
 		// 将direct放入到request中
 		News news = newsService.getOneForShow(id);
 		req.setAttribute("news", news);
+		String acode = CookieHelper.getCookieValue(req, Constants.AREA);
+		Area area = areaService.getByCode(acode);
+		News newsparameter=new News();
+		newsparameter.setType(Constants.ARTICLE_TYPE_DIRECT);
+		newsparameter.setArea(area);
+		
 		// 再取15条信息放入到request中
-		List<News> list = newsService.getTitleList(Constants.ARTICLE_TYPE_DIRECT,
+		List<News> list = newsService.getTitleList(newsparameter,
 				1, 15);
 		req.setAttribute("newsList", list);
 		return "direct/direct-detail";
