@@ -256,7 +256,13 @@ public class JobService {
 		return dao.getTotalCount(map);
 	}
 
-	// 根据公司id, 得到他所发布的职位列表--用作前台显示
+	/**
+	 *  根据公司id, 得到他所发布的职位列表--用作前台显示
+	 * @param cid
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
 	public List<Job> getByCompanyForShow(int cid, int startPage, int size) {
 		Job jj = new Job();
 		jj.setCompany(new Company(cid));

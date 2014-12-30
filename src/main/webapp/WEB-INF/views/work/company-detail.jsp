@@ -127,7 +127,7 @@
 	                          			</thead>
 										<tbody>
 											<c:choose>
-												<c:when test="${jobList == null || fn:length(jogList) == 0}">
+												<c:when test="${jobList == null || fn:length(jobList) == 0}">
 													<tr>
 														<td colspan="6" style="text-align:center;">
 															暂时没有招聘信息
@@ -139,12 +139,12 @@
 														<tr>
 															<td><a href="${contextPath }/job/getOneForShow?id=${jj.id}">${jj.name }</a></td>
 															<td>${jj.hireNumber }</td>
-															<td>${job.jobCategory.name }</td>
-															<td>${job.education }</td>
+															<td>${jj.jobCategory.name }</td>
+															<td>${jj.education }</td>
 															<td>
-																<fmt:formatDate value="${job.updateDate }"  dateStyle="default" pattern="yyyy-MM-dd HH:mm:ss"/>
+																<fmt:formatDate value="${jj.updateDate }"  dateStyle="default" pattern="yyyy-MM-dd HH:mm:ss"/>
 															</td>
-															<td>${job.nature }</td>
+															<td>${jj.nature }</td>
 														</tr>
 													</c:forEach>
 												</c:otherwise>
