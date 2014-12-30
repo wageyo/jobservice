@@ -61,7 +61,7 @@
 						</div>
 						<div class="loginmain">
 							<div class="loginmainarae">
-								<form action="${contextPath }/user/login" method="post">
+								<form action="${contextPath }/user/login" method="post" onsubmit="return check();">
 									<div>
 										<div class="divtext">
 											<div>

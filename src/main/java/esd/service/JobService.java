@@ -256,22 +256,6 @@ public class JobService {
 		return dao.getTotalCount(map);
 	}
 
-	// 根据公司id, 得到他所发布的职位列表--用作编辑处理
-	public List<Job> getByCompany(int cid, int startPage, int size) {
-		Job jj = new Job();
-		jj.setCompany(new Company(cid));
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("job", jj);
-		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
-				* (size <= 0 ? Constants.SIZE : size));
-		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<Job> list = dao.getByPage(map);
-		for (Job job : list) {
-			job = kitService.getForShow(job);
-		}
-		return list;
-	}
-
 	// 根据公司id, 得到他所发布的职位列表--用作前台显示
 	public List<Job> getByCompanyForShow(int cid, int startPage, int size) {
 		Job jj = new Job();
@@ -289,13 +273,35 @@ public class JobService {
 		return list;
 	}
 
-	// 根据公司id, 得到他所发布的所有职位数量
-	public int getByCompanyCount(int cid) {
-		Job jj = new Job();
-		jj.setCompany(new Company(cid));
+	/**
+	 *  根据公司id, 得到他所发布的职位列表--用作编辑处理
+	 * @param cid
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Job> getByCompany(int cid, int startPage, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("job", jj);
-		return dao.getTotalCount(map);
+		map.put("cid", cid);
+		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
+				* (size <= 0 ? Constants.SIZE : size));
+		map.put("size", size <= 0 ? Constants.SIZE : size);
+		List<Job> list = dao.getByCompany(map);
+		for (Job job : list) {
+			job = kitService.getForShow(job);
+		}
+		return list;
+	}
+	
+	/**
+	 *  根据公司id, 得到他所发布的所有职位数量
+	 * @param cid
+	 * @return
+	 */
+	public int getByCompanyCount(int cid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cid", cid);
+		return dao.getByCompanyCount(map);
 
 	}
 

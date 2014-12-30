@@ -110,11 +110,10 @@
 													<tr>
 														<td><input type="checkbox" /></td>
 														<td>${i.index + 1 }</td>
-														<td>< <a href="${contextPath }/job/getOneForShow?id=${record.jID}">${record.jName }</a>
+														<td><a href="${contextPath }/job/getOneForShow?id=${record.jID}">${record.jName }</a>
 														</td>
 														<td>${record.jSalary }</td>
 														<td>${record.jContactPerson }</td>
-														<td>${job.checkStatus }</td>
 														<td>
 															${record.jContactTel }
 														</td>

@@ -554,9 +554,16 @@
 	</select>
 	
 	<!-- get by company -->
-	<select id="getByCompany" resultMap="ResultJob" parameterType="java.lang.Integer">
+	<select id="getByCompany" resultMap="ResultJob" parameterType="map">
 		select
 			<include refid="base_column"/>
+		from <include refid="from_table"/>
+		where job.cid = #{cid, jdbcType=INTEGER}
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+	
+	<select id="getByCompanyCount" resultType="int" parameterType="map">
+		select count(*)
 		from <include refid="from_table"/>
 		where job.cid = #{cid, jdbcType=INTEGER}
 	</select>

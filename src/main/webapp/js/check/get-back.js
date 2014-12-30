@@ -19,7 +19,7 @@ function setGetBack(type,email){
 				}else{
 					notice = '密码';
 				}
-				notice += '已经发送到您注册的邮箱中, 请到邮箱中查看; 如果收件箱中没有的话, 请查看邮箱的垃圾箱中';
+				notice += '已经发送到您注册的邮箱中, 请到邮箱中查看; 如果收件箱中没有的话, 请查看邮箱中的垃圾箱.';
 				$('.buttonGetBack').val('发送完成!');
 				$('.buttonGetBack').removeAttr('disabled')
 				alert(notice);

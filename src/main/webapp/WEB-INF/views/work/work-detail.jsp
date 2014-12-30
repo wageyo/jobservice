@@ -258,7 +258,7 @@
 	                          		<table id="tablecompany">
 	                          			<thead>
 	                          				<tr>
-												<th class="t0">职位名称</th>
+												<th class="t0">职位名称${fn:length(jogList) }</th>
 												<th>招聘人数</th>
 												<th>岗位类型</th>
 												<th>学历要求</th>
@@ -268,7 +268,7 @@
 	                          			</thead>
 										<tbody>
 											<c:choose>
-												<c:when test="${jobList == null || fn:length(jogList) == 0}">
+												<c:when test="${jobList == null || fn:length(jobList) == 0}">
 													<tr>
 														<td colspan="6" style="text-align:center;">
 															暂时没有其他的招聘信息
