@@ -268,7 +268,7 @@
 	                          			</thead>
 										<tbody>
 											<c:choose>
-												<c:when test="${jobList == null || fn:length(jogList) == 0}">
+												<c:when test="${jobList == null || fn:length(jobList) == 0}">
 													<tr>
 														<td colspan="6" style="text-align:center;">
 															暂时没有其他的招聘信息
