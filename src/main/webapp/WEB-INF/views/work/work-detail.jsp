@@ -138,12 +138,12 @@
 		<div class="zhimiao">
 			<table class="xxE1Bt">
 				<tbody>
-					<c:if test="${cookie.username == null || cookie.username == ''}">
+					<c:if test="${cookie.username.value == null || cookie.username.value == ''}">
 						<tr>
 							<td colspan="2">个人会员请 <a href="${contextPath}/login" style="color:blue;">登录</a> 查看联系方式！如果您不是个人会员，请先 <a href="${contextPath }/regP" style="color:blue;">免费注册</a> 成为个人会员！</td>
 						</tr>
 					</c:if>
-					<c:if test="${cookie.username == null && cookie.username == '' }">
+					<c:if test="${cookie.username.value != null && cookie.username.value != '' }">
 						<tr >
 							<td width="100px" >电话：</td>
 							<td><span id="ctl00_ctl00_cph_cph_lb_age">${job.company.telephone }</span></td>
