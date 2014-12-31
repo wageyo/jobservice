@@ -30,7 +30,7 @@
              <div class="PublicframeTwoContentNew" style="width: auto; padding: 3px 5px 5px;">        
                <div class="banner">
                     <a href="#" title="图片">
-                        <img src="${contextPath}/images/ArticleReadImage/article_2.jpg" alt="图片">
+                        <img src="${contextPath}/images/ArticleReadImage/article_2.jpg" alt="图片" />
                     </a>
                 </div>                         
                 <div style="width: 710px;">
@@ -53,13 +53,17 @@
 						<div class="news_info_r">来源:${news.source }</div>--%>
 					</div>
 					<div>
-						<hr style="width: 700px; margin: 10px auto; border-style: dotted; border-color:#CCC;">
+						<hr style="width: 700px; margin: 10px auto; border-style: dotted; border-color:#CCC;" />
 						<div class="news_info_l">时间:${createDate }</div>
 						<div class="news_info_c">责任编辑:${news.author }</div>
 						<div class="news_info_r">来源:${news.source }</div>
 					</div>
 					<!--news_title-->
 					<div class="news_contain" style="text-align: left;font-size: 13px;width: 690px;  margin:0 auto;color:#000000;text-indent:0px;margin-bottom: 10px;">
+						<!-- 如果存在图片则显示出来 -->
+						<c:if test="${news.imageId != null && news.imageId != '' }">
+							<p style="text-align:center;"><img src="${contextPath }/image/downloadPic/${news.imageId}" style="width:500px;"/></p>
+						</c:if>
 						<p>${news.content }</p>
 					</div>
 					<!--news_contain-->

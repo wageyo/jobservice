@@ -17,9 +17,11 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
+	<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/widget.js"></script>
 	<script src="${contextPath}/js/manage/news.js"></script>
+	<script src="${contextPath}/js/manage/upload.js"></script>
 </head>
 
 <body>
@@ -106,6 +108,25 @@
 										</td>
 										<td>
 											<textarea id="content" style="width:650px;height:450px;">${obj.content }</textarea> 
+										</td>
+									</tr>
+									<tr>
+										<td>
+											文中图片:
+										</td>
+										<td colspan="3">
+											<img id="newsImage" 
+												<c:choose>
+													<c:when test="${obj.imageId != null && obj.imageId != '' }" >
+														 src="${contextPath }/image/downloadPic/${obj.imageId}" 
+													</c:when>
+													<c:otherwise>
+														 src = "" 
+													</c:otherwise>
+												</c:choose>
+											style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="picFileImport" />
+											<input type="hidden" id="imageId" name="imageId" value="" />
 										</td>
 									</tr>
 									<tr>

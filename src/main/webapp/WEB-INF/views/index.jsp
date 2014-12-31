@@ -235,28 +235,6 @@
 									</div>
 								</div>
 								<div class="clearboth"></div>
-							<!-- 	<div class="CitySearch">
-									<div class="CitySearchImg SetFloatLeft">热门城市</div>
-									<div id="HotCity" class="CitySearchList SetFloatLeft">
-										<ul id="hotCity">
-											<li> <a name="440100" title="广州" href="#">广州</a> </li>
-											<li> <a name="440300" title="深圳" href="#">深圳</a> </li>
-											<li> <a name="442000" title="中山" href="#">中山</a> </li>
-											<li> <a name="441300" title="惠州" href="#">惠州</a> </li>
-											<li> <a name="440500" title="汕头" href="#">汕头</a> </li>
-											<li> <a name="441900" title="东莞" href="#">东莞</a> </li>
-											<li> <a name="440400" title="珠海" href="#">珠海</a> </li>
-											<li> <a name="440600" title="佛山" href="#">佛山</a> </li>
-											<li> <a name="445100" title="潮州" href="#">潮州</a> </li>
-											<li> <a name="440700" title="江门" href="#">江门</a> </li>
-											<li> <a name="440800" title="湛江" href="#">湛江</a> </li>
-											<li> <a name="441200" title="肇庆" href="#">肇庆</a> </li>
-											<li> <a name="440900" title="茂名" href="#">茂名</a> </li>
-											<li> <a name="441500" title="汕尾" href="#">汕尾</a> </li>
-											<li> <a name="445200" title="揭阳" href="#">揭阳</a> </li>
-										</ul>
-									</div>
-								</div>	 -->
 							</div>
 						</div>
 					</div>
@@ -270,26 +248,13 @@
 						<div class="PublicframeOneHeaderBarLeft">最新资讯</div>
 						<div class="PublicframeOneHeaderBarRight"> <a  href="P_WorkplaceInformation.aspx">更多</a> </div>
 					</div>
+					<!-- 图片轮换div -->
 					<div class="photo">
 						<dl id="scrollimg2" class="tagon3">
 							<c:forEach items="${imagesList }" var="n" varStatus="status">
-								<dt class="pic${status.index + 1 }"> <a title="${n.title }"  href=""> <img title="${n.title }" alt="${n.title }" style=" width:255px; height:208px; " src="${contextPath }/image/downloadPic/${n.imageId}" /> </a> </dt>
+								<dt class="pic${status.index + 1 }"> <a title="${n.title }"  href="${contextPath }/news/getOneForShow?id=${n.id}"> <img title="${n.title }" alt="${n.title }" style=" width:255px; height:208px; " src="${contextPath }/image/downloadPic/${n.imageId}" /> </a> </dt>
 								<dd class="tag${status.index + 1 }"> <a onfocus="imgScroll(${status.index + 1 })" onmousemove="imgScroll(${status.index + 1 })"  title="${n.title }" href="">${status.index + 1 }</a> </dd>
 							</c:forEach>
-							
-						<!-- 	<dt class="pic1"> <a title="[简历模板] 英语简历范文"  href=""> <img title="[简历模板] 英语简历范文" alt="[简历模板] 英语简历范文" style=" width:255px; height:208px; " src="images/Article/test/6.jpg"> </a> </dt>
-							<dd class="tag1"> <a onfocus="imgScroll(1)" onmousemove="imgScroll(1)"  title="[简历模板] 英语简历范文" href="">1</a> </dd>
-							<dt class="pic2"> <a title="[简历模板] 金融学专业简历范文"  href=""> <img title="[简历模板] 金融学专业简历范文" alt="[简历模板] 金融学专业简历范文" style=" width:255px; height:208px; " src="images/Article/test/5.jpg"> </a> </dt>
-							<dd class="tag2"> <a onfocus="imgScroll(2)" onmousemove="imgScroll(2)"  title="[简历模板] 金融学专业简历范文" href="">2</a> </dd>
-							<dt class="pic3"> <a title="[简历模板] 市场营销专业简历样本"  href=""> <img title="[简历模板] 市场营销专业简历样本" alt="[简历模板] 市场营销专业简历样本" style=" width:255px; height:208px; " src="images/Article/test/4.jpg"> </a> </dt>
-							<dd class="tag3"> <a onfocus="imgScroll(3)" onmousemove="imgScroll(3)"  title="[简历模板] 市场营销专业简历样本" href="">3</a> </dd>
-							<dt class="pic4"> <a title="[面试]面试承诺是否有效？"  href=""> <img title="[面试]面试承诺是否有效？" alt="[面试]面试承诺是否有效？" style=" width:255px; height:208px; " src="images/Article/test/3.jpg"> </a> </dt>
-							<dd class="tag4"> <a onfocus="imgScroll(4)" onmousemove="imgScroll(4)"  title="[面试]面试承诺是否有效？" href="">4</a> </dd>
-							<dt class="pic5"> <a title="[面试]三分钟定面试成败"  href=""> <img title="[面试]三分钟定面试成败" alt="[面试]三分钟定面试成败" style=" width:255px; height:208px; " src="images/Article/test/2.jpg"> </a> </dt>
-							<dd class="tag5"> <a onfocus="imgScroll(5)" onmousemove="imgScroll(5)"  title="[面试]三分钟定面试成败" href="">5</a> </dd>
-							<dt class="pic6"> <a title="[面试]面试后关键：如何写好感谢信"  href=""> <img title="[面试]面试后关键：如何写好感谢信" alt="[面试]面试后关键：如何写好感谢信" style=" width:255px; height:208px; " src="images/Article/test/1.jpg"> </a> </dt>
-							<dd class="tag6"> <a onfocus="imgScroll(6)" onmousemove="imgScroll(6)"  title="[面试]面试后关键：如何写好感谢信" href="">6</a> </dd>
-						 -->
 						</dl>
 					</div>
 					<div class="hp_fwdt">

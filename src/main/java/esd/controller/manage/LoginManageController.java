@@ -85,11 +85,8 @@ public class LoginManageController {
 					String title = URLEncoder.encode(user.getTitle(), "UTF-8");
 					CookieHelper.setCookie(response, Constants.USERTITLE,title);
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//地区代码
-				CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode());
 
 				log.debug("管理用户登陆成功:" + user);
 				return "redirect:/manage/index";
@@ -135,14 +132,13 @@ public class LoginManageController {
 	 */
 	@RequestMapping(value = "/quit", method = RequestMethod.GET)
 	public String quit(HttpServletRequest request, HttpServletResponse response) {
-		//杀死所有cookie
+		//杀死所有cookie除地区code外的所有
 		CookieHelper.setCookie(response, Constants.USERID, null, 0);
 		CookieHelper.setCookie(response, Constants.USERNAME, null, 0);
 		CookieHelper.setCookie(response, Constants.USERIDENTITY, null, 0);
 		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
 		CookieHelper.setCookie(response, Constants.USERNICKNAME, null, 0);
 		CookieHelper.setCookie(response, Constants.USERTITLE, null, 0);
-		CookieHelper.setCookie(response, Constants.AREA, null, 0);
 		log.error("管理员用户退出");
 		return "redirect:/loginManage/login";
 	}
