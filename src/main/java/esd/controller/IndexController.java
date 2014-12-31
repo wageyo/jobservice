@@ -151,6 +151,9 @@ public class IndexController {
 			jobByCategoryList.add(j);
 		}
 		mav.addObject("jobByCategoryList",jobByCategoryList);
+		//获取5个存在图片的新闻
+		List<News> imagesList = newsService.getFiveChangeList(acode);
+		mav.addObject("imagesList",imagesList);
 		return mav;
 	}
 

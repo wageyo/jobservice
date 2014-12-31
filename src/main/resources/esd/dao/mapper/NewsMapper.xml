@@ -14,6 +14,7 @@
 		<result column="n_author" property="author" jdbcType="VARCHAR" />
 		<result column="n_source" property="source" jdbcType="VARCHAR" />
 		<result column="n_type" property="type" jdbcType="VARCHAR" />
+		<result column="n_image_id" property="imageId" jdbcType="VARCHAR" />
 		<association property="area" javaType="Area" resultMap="ResultArea"/>
 	</resultMap>
 
@@ -25,7 +26,7 @@
 	
 	<sql id="base_column">
 		n.id as n_id, n.create_date as n_create_date, n.update_check as n_update_check, n.update_date as n_update_date, 
-		n.title as n_title, n.content as n_content, n.author as n_author, n.source as n_source, n.type as n_type,
+		n.title as n_title, n.content as n_content, n.author as n_author, n.source as n_source, n.type as n_type, n.image_id as n_image_id, 
 		a.code as a_code, a.name as a_name
 	</sql>
 	
@@ -59,6 +60,9 @@
 			<if test="type != null and type != ''">
 				type,
 			</if>
+			<if test="imageId != null and imageId != ''">
+				image_id,
+			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
 					acode
@@ -84,6 +88,9 @@
 			</if>
 			<if test="type != null and type != ''">
 				#{type, jdbcType=VARCHAR},
+			</if>
+			<if test="imageId != null and imageId != ''">
+				#{imageId, jdbcType=VARCHAR},
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
@@ -120,6 +127,9 @@
 			</if>
 			<if test="type != null and type != ''">
 				type = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="imageId != null and imageId != ''">
+				image_id = #{imageId, jdbcType=VARCHAR},
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
@@ -257,5 +267,17 @@
 		</trim>
 		order by n.create_date desc
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+
+	<!-- get five with image -->
+	<select id="getFiveWithImage" resultMap="ResultNews" parameterType="map">
+		select n.id as n_id, n.create_date as n_create_date, n.update_check as n_update_check, n.update_date as n_update_date, 
+		n.title as n_title, n.author as n_author, n.source as n_source, n.type as n_type, n.image_id as n_image_id 
+		from <include refid="from_table"/> 
+		where n.image_id &lt;&gt; '' and image_id is not null
+			and acode = #{area, jdbcType=VARCHAR}
+			and type = #{type, jdbcType=VARCHAR}
+		order by n.update_date desc
+		limit 0, 5;
 	</select>
 </mapper>

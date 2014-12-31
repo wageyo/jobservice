@@ -272,7 +272,12 @@
 					</div>
 					<div class="photo">
 						<dl id="scrollimg2" class="tagon3">
-							<dt class="pic1"> <a title="[简历模板] 英语简历范文"  href=""> <img title="[简历模板] 英语简历范文" alt="[简历模板] 英语简历范文" style=" width:255px; height:208px; " src="images/Article/test/6.jpg"> </a> </dt>
+							<c:forEach items="${imagesList }" var="n" varStatus="status">
+								<dt class="pic${status.index + 1 }"> <a title="${n.title }"  href=""> <img title="${n.title }" alt="${n.title }" style=" width:255px; height:208px; " src="${contextPath }/image/downloadPic/${n.imageId}" /> </a> </dt>
+								<dd class="tag${status.index + 1 }"> <a onfocus="imgScroll(${status.index + 1 })" onmousemove="imgScroll(${status.index + 1 })"  title="${n.title }" href="">${status.index + 1 }</a> </dd>
+							</c:forEach>
+							
+						<!-- 	<dt class="pic1"> <a title="[简历模板] 英语简历范文"  href=""> <img title="[简历模板] 英语简历范文" alt="[简历模板] 英语简历范文" style=" width:255px; height:208px; " src="images/Article/test/6.jpg"> </a> </dt>
 							<dd class="tag1"> <a onfocus="imgScroll(1)" onmousemove="imgScroll(1)"  title="[简历模板] 英语简历范文" href="">1</a> </dd>
 							<dt class="pic2"> <a title="[简历模板] 金融学专业简历范文"  href=""> <img title="[简历模板] 金融学专业简历范文" alt="[简历模板] 金融学专业简历范文" style=" width:255px; height:208px; " src="images/Article/test/5.jpg"> </a> </dt>
 							<dd class="tag2"> <a onfocus="imgScroll(2)" onmousemove="imgScroll(2)"  title="[简历模板] 金融学专业简历范文" href="">2</a> </dd>
@@ -284,6 +289,7 @@
 							<dd class="tag5"> <a onfocus="imgScroll(5)" onmousemove="imgScroll(5)"  title="[面试]三分钟定面试成败" href="">5</a> </dd>
 							<dt class="pic6"> <a title="[面试]面试后关键：如何写好感谢信"  href=""> <img title="[面试]面试后关键：如何写好感谢信" alt="[面试]面试后关键：如何写好感谢信" style=" width:255px; height:208px; " src="images/Article/test/1.jpg"> </a> </dt>
 							<dd class="tag6"> <a onfocus="imgScroll(6)" onmousemove="imgScroll(6)"  title="[面试]面试后关键：如何写好感谢信" href="">6</a> </dd>
+						 -->
 						</dl>
 					</div>
 					<div class="hp_fwdt">

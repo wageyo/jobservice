@@ -20,14 +20,13 @@ public class News extends PrimaryKey {
 	private String type; // 文章类型
 	private Area area; // 所属地区
 	private Date updateDate; // 岗位有效日期截至
-	private Date releaseDate; 
-	
+	private Date releaseDate;
+	private String imageId; // 图片id
 
 	@Override
 	public String toString() {
-		return "News [title=" + title + ", author="
-				+ author + ", source=" + source + ", type=" + type + ", area="
-				+ area + "]";
+		return "News [title=" + title + ", author=" + author + ", source="
+				+ source + ", type=" + type + ", area=" + area + "]";
 	}
 
 	public News() {
@@ -101,10 +100,12 @@ public class News extends PrimaryKey {
 		this.updateDate = updateDate;
 	}
 
-	
+	public String getImageId() {
+		return imageId;
+	}
 
+	public void setImageId(String imageId) {
+		this.imageId = imageId;
+	}
 
-
-	
-	
 }

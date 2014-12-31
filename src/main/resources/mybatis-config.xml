@@ -15,6 +15,7 @@
 		<mapper resource="esd/dao/mapper/CompanyMapper.xml" /> 
 		<mapper resource="esd/dao/mapper/EducationBackgroundMapper.xml" />
 		<mapper resource="esd/dao/mapper/FamilyMemberMapper.xml" />
+		<mapper resource="esd/dao/mapper/ImageMapper.xml" />
 		<mapper resource="esd/dao/mapper/IP2CityMapper.xml" />	 
 		<mapper resource="esd/dao/mapper/JobCategoryMapper.xml" />
 	 	<mapper resource="esd/dao/mapper/JobMapper.xml" />

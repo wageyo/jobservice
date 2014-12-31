@@ -106,6 +106,7 @@ public class NewsService {
 		list = kitService.getForShowNews(list);
 		return list;
 	}
+	
 	/**
 	 * 分页查询方法, 其中数据已被处理成适合前台展示的
 	 * 前台--使用
@@ -161,5 +162,17 @@ public class NewsService {
 //		}
 		return list;
 
+	}
+
+	/**
+	 * 获得指定地区最新的5个带图片的新闻
+	 * @param acode
+	 * @return
+	 */
+	public List<News> getFiveChangeList(String acode){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("area", acode);
+		map.put("type", Constants.ARTICLE_TYPE_NEWS);
+		return dao.getFiveWithImage(map);
 	}
 }

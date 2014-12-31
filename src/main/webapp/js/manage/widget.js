@@ -1,6 +1,4 @@
-$(document).ready(function() {
-	
-});
+
 /**
  * 地区三联动按钮, 命名规则为inputValueId, btnTextId, dropdownId, inputValue1,btnText2,dropdown3 分别代表省市区三级联动, 其中数字不用传入
  */

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.ImageDao">
+
+	<!-- result map of user -->
+	<resultMap id="ResultImage" type="Image">
+		<id column="i_id" property="id" jdbcType="VARCHAR"/>
+		<result column="i_create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="i_update_check" property="updateCheck" jdbcType="INTEGER"/>
+		<result column="i_update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="i_log_user" property="logUser" jdbcType="VARCHAR"/>
+		<result column="i_image_name" property="imageName" jdbcType="VARCHAR" />
+		<result column="i_image_title" property="imageTitle" jdbcType="VARCHAR" />
+		<result column="i_nid" property="nid" jdbcType="INTEGER" />
+		<result column="i_mark" property="mark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="base_column">
+		i.id as i_id, i.create_date as i_create_date, i.update_check as i_update_check, 
+			i.update_date as i_update_date, i.log_user as i_log_user, i.image_name as i_image_name,
+			i.image_title as i_image_title, i.nid as i_nid, i.mark as i_mark
+	</sql>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="Image" useGeneratedKeys="true" keyProperty="id">
+		insert into image
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="image != null ">
+				image,
+			</if>
+			<if test="imageName != null and imageName != ''">
+				image_name,
+			</if>
+			<if test="imageTitle != null and imageTitle != ''">
+				image_title,
+			</if>
+			<if test="nid != null and nid > 0">
+				nid,
+			</if>
+			<if test="mark != null and mark != ''">
+				mark
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}, now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="image != null ">
+				#{image,jdbcType=BLOB},
+			</if>
+			<if test="imageName != null and imageName != ''">
+				#{imageName, jdbcType=VARCHAR},
+			</if>
+			<if test="imageTitle != null and imageTitle != ''">
+				#{imageTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="nid != null and nid > 0">
+				#{nid, jdbcType=INTEGER},
+			</if>
+			<if test="mark != null and mark != ''">
+				#{mark, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from image where id = #{id, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- update -->
+	<update id="update" parameterType="Image">
+		update image
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="image != null ">
+				image = #{image,jdbcType=BLOB},
+			</if>
+			<if test="imageName != null and imageName != ''">
+				image_name = #{imageName, jdbcType=VARCHAR},
+			</if>
+			<if test="imageTitle != null and imageTitle != ''">
+				image_title = #{imageTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="nid != null and nid > 0">
+				nid = #{nid, jdbcType=INTEGER},
+			</if>
+			<if test="mark != null and mark != ''">
+				mark = #{mark, jdbcType=VARCHAR}
+			</if>
+			update_check = update_check + 1 
+		</trim>
+		where id= #{id, jdbcType=VARCHAR} and update_check = #{updateCheck, jdbcType=INTEGER}
+	</update>
+
+	<!-- get update check by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select update_check from image where id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getById" resultMap="ResultImage" parameterType="java.lang.String">
+		select <include refid="base_column" />
+		from image as i
+		where i.id = #{id, jdbcType=VARCHAR}
+	</select>
+
+	<!-- get image -->
+	<select id="getImageById" resultType="java.util.HashMap" parameterType="java.lang.String" >
+		select image_title, image
+		from image
+		where id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getImageByNid" resultType="java.util.HashMap" parameterType="java.lang.Integer" >
+		select image_title, image
+		from image
+		where nid = #{nid, jdbcType=INTEGER}
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map" resultMap="ResultImage">
+		select <include refid="base_column" />
+		from image as i
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="image != null">
+				<if test="image.imageName != '' and image.imageName != null">
+					and i.image_name like concat('%', #{image.imageName, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="image.imageTitle != '' and image.imageTitle != null">
+					and i.image_title like concat('%', #{image.imageTitle, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="image.nid != null and image.nid > 0">
+					and i.nid = #{image.nid, jdbcType=INTEGER}
+				</if>
+				<if test="image.mark != null and image.mark != ''">
+					and i.mark = #{image.mark, jdbcType=VARCHAR}
+				</if>
+			</if>
+		</trim>
+		order by i.create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(*)
+		from image as i
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="image != null">
+				<if test="image.imageName != '' and image.imageName != null">
+					and i.image_name like concat('%', #{image.imageName, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="image.imageTitle != '' and image.imageTitle != null">
+					and i.image_title like concat('%', #{image.imageTitle, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="image.nid != null and image.nid > 0">
+					and i.nid = #{image.nid, jdbcType=INTEGER}
+				</if>
+				<if test="image.mark != null and image.mark != ''">
+					and i.mark = #{image.mark, jdbcType=VARCHAR}
+				</if>
+			</if>
+		</trim>
+	</select>
+
+</mapper>
