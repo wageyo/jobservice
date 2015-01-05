@@ -142,7 +142,7 @@ public class LoginManageController {
 		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
 		CookieHelper.setCookie(response, Constants.USERNICKNAME, null, 0);
 		CookieHelper.setCookie(response, Constants.USERTITLE, null, 0);
-		CookieHelper.setCookie(response, Constants.AREA, null, 0);
+//		CookieHelper.setCookie(response, Constants.AREA, null, 0);
 		log.error("管理员用户退出");
 		return "redirect:/loginManage/login";
 	}

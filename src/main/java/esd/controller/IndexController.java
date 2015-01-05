@@ -112,8 +112,10 @@ public class IndexController {
 			//②不为空则是第一次进来, 将其中的acode放到cookie中
 			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
 		}else{
+			acode= "10650000";
+			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
 			//③为空在则检查cookie是中没有地区信息
-			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+//			acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		}
 		ModelAndView mav = new ModelAndView("index");
 		//得到10个热门职位
@@ -328,7 +330,9 @@ public class IndexController {
 				CookieHelper.setCookie(response, Constants.AREA, acode);
 			}
 		}else{
-			acode = localCode;
+			acode = localCode;	
+			acode="10650000";
+			CookieHelper.setCookie(response, Constants.AREA, acode);
 		}
 		Area area = areaService.getByCode(acode);
 		//读取简历查询信息
@@ -448,6 +452,8 @@ public class IndexController {
 			}
 		}else{
 			acode = localCode;
+			acode="10650000";
+			CookieHelper.setCookie(response, Constants.AREA, acode);
 		}
 		Area area = areaService.getByCode(acode);
 		//读取查询信息
@@ -540,7 +546,9 @@ public class IndexController {
 				CookieHelper.setCookie(response, Constants.AREA, acode);
 			}
 		}else{
-			acode = localCode;
+			acode = localCode;	
+			acode="10650000";
+			CookieHelper.setCookie(response, Constants.AREA, acode);
 		}
 		Area area = areaService.getByCode(acode);
 		//读取查询信息

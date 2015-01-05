@@ -76,6 +76,9 @@ public class ResumeController {
 		if (acode != null && !"".equals(acode)) {
 			CookieHelper.setCookie(response, Constants.AREA, acode,
 					Integer.MAX_VALUE);
+		}else{
+			CookieHelper.setCookie(response, Constants.AREA, "10650000",
+					Integer.MAX_VALUE);
 		}
 		return mav;
 	}
@@ -181,6 +184,7 @@ public class ResumeController {
 		} else {
 			// ③为空在则检查cookie是中没有地区信息
 			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+			acode="10650000";
 		}
 
 		String idStr = request.getParameter("id");
