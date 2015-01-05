@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.CookieHelper;
+import esd.service.UserService;
 
 /**
  * 用户登陆过滤器
@@ -30,9 +33,15 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	@Value("${login.url}")
 	private String loginUrl;
-
+	
 	@Value("${loginManage.url}")
 	private String loginManageUrl;
+	
+	@Value("${password.set}")
+	private String setPassWordUrl;
+	
+	@Autowired
+	private UserService userService;
 
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object arg2, Exception arg3)
@@ -48,6 +57,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) {
 		if (request.getRequestURI().indexOf("/secure") != -1) {
+			//未登录则跳转到登陆页面
 			String username = CookieHelper.getCookieValue(request, Constants.USERNAME);
 			if (username == null) {
 				PrintWriter out = null;
@@ -71,6 +81,35 @@ public class LoginInterceptor implements HandlerInterceptor {
 				}
 
 			}
+			//如果用户密码为空的话, 则跳转到设置密码页面
+			User user = userService.check(username);
+			if (user.getPassWord() == null || "".equals(user.getPassWord())) {
+			PrintWriter out = null;
+			try {
+			out = response.getWriter();
+			StringBuilder builder = new StringBuilder();
+			builder.append("<script type=\"text/javascript\" charset=\"UTF-8\">");
+			builder.append("window.top.location.href='");
+			builder.append(setPassWordUrl);
+			builder.append("';");
+			builder.append("</script>");
+			out.print(builder.toString());
+			out.close();
+			return false;
+			} catch (IOException e) {
+			logger.error(e.getMessage());
+			} finally {
+			if (out != null) {
+			out.close();
+			}
+			}
+			}
+			
+			
+			
+			
+			
+			
 		}
 
 		/*

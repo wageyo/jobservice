@@ -100,6 +100,7 @@
 				
 				<!-- 登陆后的状态栏  begin -->
 				<c:if test="${cookie.username.value != null && cookie.username.value != ''}">
+				<c:if test="${cookie.password.value != null && cookie.password.value != ''}">
 					<div class="SetFloatLeft PersonalLogined">
 						<div class="loginbtn"></div>
 						<div class="loginmain">
@@ -188,10 +189,52 @@
 								</div>
 							</div>
 						</div>
-						
 						<div class="LoginRight"></div>
 					</div>
-					
+				</c:if>
+				<c:if test="${cookie.password.value == null || cookie.password.value == ''}">
+					<div class="login SetFloatLeft">
+						<div class="loginbtn">
+							<div title="个人用户登录" id="PersonalTab" class="BlueFirst" style="cursor: auto;"></div>
+							<div title="企业用户登录" id="BusinessTab" class="WhiteLast" style="cursor: auto;"></div>
+						</div>
+						<div class="loginmain">
+							<div class="loginmainarae">
+								<form action="${contextPath }/user/login" method="post">
+									<div>
+										<div class="divtext">
+											<div>
+												<input type="text" value="请输入用户名" id="loginName" name="loginName" class="text DefaultText" title="请输入用户名" style="color: Gray;" />
+											</div>
+											<div class="righttext">
+												<input type="password" value="" id="passWord" name="passWord" class="text DefaultText" title="输入密码" style="color: Gray;" />
+												<input type="hidden" id="identity" name="identity" value="person" />
+											</div>
+										</div>
+										<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
+									</div>
+								</form>
+								<div class="clearboth"></div>
+								<div class="divchk">
+									<div style="letter-spacing:4px;">
+										<a href="${contextPath }/getBackPassWord" style="cursor:pointer;padding-right:20px;">找回密码</a>
+										<%--<span title="自动登录" class="zdword">自动登录</span>
+									--%>
+									<a href="${contextPath }/getBackUserName" style="cursor: pointer;">找回用户</a></div>
+								</div>
+								<div class="clearboth"></div>
+								<div class="registerdiv">
+									<div title="注册个人会员" id="PersonalRegister" class="personalregister" 
+									style="cursor: auto; background: url(${contextPath}/images/HomePageImage/LoginImage/PersonalRegister.gif);"></div>
+									<div title="注册用人单位" id="BusinessRegister" class="businessregister" 
+									style="cursor: auto; background: url(${contextPath}/images/HomePageImage/LoginImage/BusinessRegister.gif);"></div>
+								</div>
+								<div class="clearboth"></div>
+							</div>
+						</div>
+						<div class="LoginRight"></div>
+				</div>	
+				</c:if>
 				</c:if>
 				<!-- 登陆后的状态栏   end -->
 				
@@ -332,7 +375,9 @@
 									</tr>
 									<c:forEach items="${resumeList }" var="resume">
 										<tr class="resumeMessageheaderOther">
-											<td><a href="${contextPath }/resume/getOneForShow?id=${resume.id}" style="color: #0868C8;">${resume.name }</a></td>
+											<td><div style="white-space:nowrap; width:50px; text-overflow:ellipsis;-moz-text-overflow: ellipsis; overflow:hidden">
+													<a href="${contextPath }/resume/getOneForShow?id=${resume.id}" style="color: #0868C8;">${resume.name }</a>
+													</div></td>
 											<td>${resume.education }</td>
 											<td>${resume.disabilityCategory }</td>
 											<td>${resume.disabilityLevel }</td>

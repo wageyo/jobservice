@@ -78,7 +78,10 @@ $(function () {
 	
 	 /*******  点击登陆   ********/
 	$("#LoginBtn").click(function(){
-		$('form:first').submit();
+		if(check()){
+			$('form:first').submit();
+		}
+		
 	});
 	
 	/******* 初始化职位种类切换效果 ********/
@@ -137,14 +140,22 @@ function check(){
 		$('#loginName').focus();
 		return false;
 	}
-	//密码
-	var passWord = $('#passWord').val();
-	if(!verify.checkname(passWord)){
-		alert('密码只能为5-20为的英文, 数字或下划线_组成.');
-		$('#passWord').focus();
-		return false;
+	var reg = /^[0-9]{14}[0-9a-zA-Z]{4}[1-7]{1}[1-4]{1}[B]?[0-9]?/;
+	var checkResult = reg.test(loginName);
+	//如果不是残疾证号, 则对密码进行校验
+	if(!checkResult){
+		//密码
+		var passWord = $('#passWord').val();
+		if(passWord == null || passWord == '' ){
+			if(!verify.checkname(passWord)){
+				alert('您输入的不是残疾证号, 请输入密码!');
+				$('#passWord').focus();
+				return false;
+			}
+		}
 	}
 	return true;
+
 }
 
 /*******  登陆   ********/
