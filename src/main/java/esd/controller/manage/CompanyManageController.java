@@ -95,7 +95,6 @@ public class CompanyManageController {
 		Integer total = companyService.getTotalCount(paramEntity, Boolean.TRUE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
-			System.out.println("resultList.size()" + resultList.size());
 			for (Company tmp : resultList) {
 				Map<String, Object> tempMap = new HashMap<>();
 				tempMap.put("id", tmp.getId());// id

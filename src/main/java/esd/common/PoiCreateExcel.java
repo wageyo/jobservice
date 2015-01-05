@@ -608,8 +608,6 @@ public class PoiCreateExcel {
 				if (resume.getDesireJob().getCode() != null
 						&& !"".equals(resume.getDesireJob().getCode())) {
 					cell = row.createCell(38);
-					System.out.println(resume.getDesireJob().getName()
-							+ "********8");
 					cell.setCellValue(resume.getDesireJob().getName());
 				}
 			}
