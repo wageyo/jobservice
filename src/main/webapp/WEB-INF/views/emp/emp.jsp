@@ -36,7 +36,7 @@
 	<div id="maincontent">
       <div style="margin-top: 10px;">
       	<form action="${contextPath }/emp" id="searchObj">
-	         <div id="leftsidebar" style="width: 989px; ">
+	         <div id="leftsidebar" >
 	           <div class="s_search">
 	             <div class="Search">
 	               <div class="SearchInputText" style="margin-top: 20px;margin-left: 50px;">

@@ -62,18 +62,16 @@
 						<div class="loginmain">
 							<div class="loginmainarae">
 								<form action="${contextPath }/user/login" method="post" onsubmit="return check();">
-									<div>
-										<div class="divtext">
-											<div>
-												<input type="text" value="请输入用户名" id="loginName" name="loginName" class="text DefaultText" title="请输入用户名" style="color: Gray;" />
-											</div>
-											<div class="righttext">
-												<input type="password" value="" id="passWord" name="passWord" class="text DefaultText" title="输入密码" style="color: Gray;" />
-												<input type="hidden" id="identity" name="identity" value="person" />
-											</div>
+									<div class="divtext">
+										<div>
+											<input type="text" value="请输入用户名" id="loginName" name="loginName" class="text DefaultText" title="请输入用户名" style="color: Gray;" />
 										</div>
-										<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
+										<div class="righttext">
+											<input type="password" value="" id="passWord" name="passWord" class="text DefaultText" title="输入密码" style="color: Gray;" />
+											<input type="hidden" id="identity" name="identity" value="person" />
+										</div>
 									</div>
+									<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
 								</form>
 								<div class="clearboth"></div>
 								<div class="divchk">
