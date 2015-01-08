@@ -301,11 +301,17 @@
 									</tr>
 									<c:forEach items="${resumeList }" var="resume">
 										<tr class="resumeMessageheaderOther">
-											<td><a href="${contextPath }/resume/getOneForShow?id=${resume.id}" style="color: #0868C8;">${resume.name }</a></td>
+											<td>
+												<div class="exceedHidden" style="width:80px;">
+													<a href="${contextPath }/resume/getOneForShow?id=${resume.id}" style="color: #0868C8;">${resume.name }</a>
+												</div>
+											</td>
 											<td>${resume.education }</td>
 											<td>${resume.disabilityCategory }</td>
 											<td>${resume.disabilityLevel }</td>
-											<td><div>${resume.desireJob.name }</div></td>
+											<td>
+												<div class="exceedHidden" style="width:100px;">${resume.desireJob.name }</div>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -331,7 +337,7 @@
 									<c:forEach items="${companyList }" var="company">
 										<tr class="resumeMessageheaderOther">
 											<td>
-												<div style="white-space:nowrap; width:130px; text-overflow:ellipsis;-moz-text-overflow: ellipsis; overflow:hidden">
+												<div class="exceedHidden" style="width:130px;">
 													<a  href="${contextPath }/company/getOneForShow?id=${company.id}" title="${company.name }" style="color: #0868C8;">${company.name }</a>
 												</div>
 											</td>
