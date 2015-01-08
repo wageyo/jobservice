@@ -34,12 +34,12 @@
 									<img alt="残疾人就业信息网" src="${contextPath }/images/logoProvince/${cookie.area.value }.png" onclick="window.location.href='${contextPath}/index';" style="width:auto;height:60px;" />
 								</c:when>
 								<c:otherwise>
-									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" id="bg2" style="width:auto;height:60px;" />
+									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" onclick="window.location.href='${contextPath}/index';" id="bg2" style="width:auto;height:60px;" />
 								</c:otherwise>
 							</c:choose>
 						</c:when>
 						<c:otherwise>
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" id="bg2" style="width:auto;height:60px;" /> 
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" onclick="window.location.href='${contextPath}/index';" id="bg2" style="width:auto;height:60px;" /> 
 						</c:otherwise>
 					</c:choose>
 			
