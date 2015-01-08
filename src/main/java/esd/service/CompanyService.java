@@ -196,13 +196,15 @@ public class CompanyService<T> {
 	 */
 	public List<Company> getByNew(String acode, int size) {
 		Company company = new Company();
-		// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+		// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围; 如不存在则使用默认传递进来的地区code
 		if (acode != null) {
 			Parameter parameter = parameterDao.getShareScopeByArea(acode);
 			if (parameter != null) {
 				String areaSql = KitService.getAreaSqlFromShareScope(
 						parameter.getValue(), acode);
 				company.setArea(new Area(areaSql));
+			}else{
+				company.setArea(new Area(acode));
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();

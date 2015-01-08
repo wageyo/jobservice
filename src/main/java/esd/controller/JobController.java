@@ -54,69 +54,6 @@ public class JobController {
 		return mav;
 	}
 
-//	// 多条件职位简历
-//	@RequestMapping(value = "/search/{page}", method = RequestMethod.POST)
-//	public ModelAndView search(HttpServletRequest request,
-//			@PathVariable(value = "page") Integer page, HttpServletResponse response) {
-//		log.info("--- search ---");
-//		Map<String, Object> entity = new HashMap<String, Object>();
-//		Job job = new Job();
-//		//从cookie读取acode
-//		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-//		job.setArea(new Area(acode));
-//		
-//		String keyWord = request.getParameter("keyWord");
-//		if (keyWord != null && !"".equals(keyWord)) {
-//			job.setName(keyWord);
-//		}
-//		String jcCode = request.getParameter("jcCode");
-//		if (jcCode != null && !"".equals(jcCode)) {
-//			job.setJobCategory(new JobCategory(jcCode));
-//		}
-//		String education = request.getParameter("education");
-//		if (education != null && !"".equals(education)) {
-//			job.setEducation(education);
-//		}
-//		String jobNature = request.getParameter("jobNature");
-//		if (jobNature != null && !"".equals(jobNature)) {
-//			job.setNature(jobNature);
-//		}
-//		job.setIsActiveEffectiveTime(true);
-//		List<Job> jobList = jobService
-//				.getListForShow(job, page, Constants.SIZE);
-//		Integer records = jobService.getTotalCount(job,Boolean.TRUE);
-//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-//		if (jobList != null && records != null && records > 0) {
-//			try {
-//				for (Iterator<Job> iterator = jobList.iterator(); iterator
-//						.hasNext();) {
-//					Job it = (Job) iterator.next();
-//					log.debug(it.toString());
-//					Map<String, String> map = new HashMap<String, String>();
-//					map.put("id", String.valueOf(it.getId()));
-//					map.put("name", it.getName());
-//					map.put("company", it.getCompany().getName());
-//					map.put("companyid", it.getCompany().getId() + "");
-//					map.put("area", it.getArea().getName());
-//					map.put("experience", it.getExperience());
-//					map.put("date", KitService.dateForShow(it.getUpdateDate()));
-//					list.add(map);
-//				}
-//			} catch (Exception e) {
-//				log.error("error in list", e);
-//			}
-//		}
-//		while (list.size() < Constants.SIZE) {
-//			Map<String, String> map = new HashMap<String, String>();
-//			list.add(map);
-//		}
-//
-//		entity.put("list", list);
-//		PaginationUtil pagination = new PaginationUtil(page, records);
-//		entity.put("pagination", pagination.getHandler());
-//		return new ModelAndView("work/work-json", "entity", entity);
-//	}
-
 	// 根据id得到一个职位返回前台显示
 	@RequestMapping("/getOneForShow")
 	public String getOneForShow(HttpServletRequest request, HttpServletResponse response, RedirectAttributes ra) {
@@ -200,8 +137,10 @@ public class JobController {
 	@RequestMapping(value="/getByCategory/{jobCategoryCode}", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> getByJobCategory(@PathVariable(value="jobCategoryCode") String jobCategoryCode, HttpServletRequest request){
+		String acode = CookieHelper.getLocalArea(request);
 		Map<String, Object> map = new HashMap<String, Object>();
 		Job object = new Job();
+		object.setArea(new Area(acode));
 		object.setJobCategory(new JobCategory(jobCategoryCode));
 		List<Job> jobByCategoryResult = jobService.getListForShow(object, Constants.START, 51);
 		List<Map<String,Object>> jobByCategoryList = new ArrayList<Map<String,Object>>();
@@ -217,25 +156,6 @@ public class JobController {
 		return map;
 	}
 	
-	
-	
-//	// 获得职位总个数
-//	@RequestMapping("/getTotalCount")
-//	@ResponseBody
-//	public Map<String, Object> getTotalCount(HttpServletRequest request, HttpServletResponse response) {
-//		log.info("--- getTotalCount ---");
-//		//从cookie读取acode
-//		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-//		//如果地区code为三级, 为防止信息过少, 则自动转成显示本省内信息
-//		acode = KitService.getProvinceCode(acode);
-//		Map<String, Object> json = new HashMap<String, Object>();
-//		Job job = new Job();
-//		job.setArea(new Area(acode));
-//		int total = jobService.getTotalCount(job,Boolean.TRUE);
-//		json.put("totalCount321", total);
-//		return json;
-//	}
-
 	// 多条件查询职位--给opencms框架使用
 	@RequestMapping(value = "/searchForOpenCms", method = RequestMethod.GET)
 	@ResponseBody

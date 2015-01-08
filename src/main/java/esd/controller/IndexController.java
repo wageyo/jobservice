@@ -140,6 +140,7 @@ public class IndexController {
 		//获得下面按类别显示的51条数据
 		Job object = new Job();
 		object.setJobCategory(new JobCategory("10010000"));
+		object.setArea(new Area(acode));
 		List<Job> jobByCategoryResult = jobService.getListForShow(object, Constants.START, 51);
 		List<Map<String,Object>> jobByCategoryList = new ArrayList<Map<String,Object>>();
 		for(Job job :jobByCategoryResult){

@@ -56,7 +56,7 @@ public class Constants {
 	public static final String SHARE_SCOPE_SWITCH = "shareScopeSwitch"; // 分享信息范围
 																		// 选项标示符
 	public static final String SHARE_SCOPE = "shareScope"; // 分享信息范围 值
-	public static final String SHARE_SCOPE_INIT = "local"; // 分享信息范围默认值 默认为市级
+	public static final String SHARE_SCOPE_INIT = "local"; // 分享信息范围默认值 默认为本地
 
 	public static final String NO_LIMIT = "不限"; // 不限字段
 
