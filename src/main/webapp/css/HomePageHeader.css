@@ -64,7 +64,8 @@
 	font-size: 14px;
 	font-weight: 900;
 	color: White;
-	margin-left: 30px;	
+	margin-left: 30px;
+	padding-top:3px;
 }
 .HeaderStyle .NavigationBar ul li a
 {
@@ -73,6 +74,7 @@
     #padding-top:5px;
 	
 }
+
 .HeaderStyle .NavigationBar ul li a:hover
 {
 	color: #b75a00;
@@ -80,10 +82,8 @@
 	height: 24px;
 	padding:3px 10px;
     #padding-top:5px;
-	background: url("../images/HomePageImage/HeaderImage/Nav_sybutton.gif") repeat-x;
+	background: url("../images/HomePageImage/HeaderImage/Nav_sybutton80.png") repeat-x;
 }
-
-
 
 		
 #sonMenuList ul li
@@ -130,7 +130,7 @@
     #padding-bottom:5px;
 	width: 80px;
 	height: 24px;
-	background: url("../images/HomePageImage/HeaderImage/Nav_sybutton.gif") repeat-x;
+	background: url("../images/HomePageImage/HeaderImage/Nav_sybutton80.png") repeat-x;
 }
 
 .HeaderStyle .Advertisement

@@ -39,7 +39,7 @@
 		<div id="mainnav" class="NavigationBar SetNavigationBar">
 			<div>
 				<ul id="jsmenu">
-					<li><a title="首页" <c:if test="${fn:contains(requestUrl,'index') }">class="SelectStyle"</c:if> href="${contextPath}/index">首页</a></li>
+					<li><a title="首页" <c:if test="${fn:contains(requestUrl,'index') }">class="SelectStyle"</c:if> href="${contextPath}/index">&nbsp;&nbsp;首&nbsp;&nbsp;页&nbsp;&nbsp;</a></li>
 					<li><a title="个人求职" <c:if test="${fn:contains(requestUrl,'emp') }">class="SelectStyle"</c:if> href="${contextPath}/emp">个人求职</a></li>
 					<li><a title="单位招聘" <c:if test="${fn:contains(requestUrl,'work') }">class="SelectStyle"</c:if> href="${contextPath}/work">单位招聘</a></li>
 					<li><a title="服务机构" <c:if test="${fn:contains(requestUrl,'direct') }">class="SelectStyle"</c:if> href="${contextPath}/direct">就业指导</a></li>

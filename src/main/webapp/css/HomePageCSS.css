@@ -74,25 +74,6 @@ div.PublicframeTwo div.listpub dl dd a:active
 {
 	margin-top: 10px;
 }
-#List_mqzp ul
-{
-	margin: 10px 0px;
-}
-#List_mqzp ul li
-{
-	float: left;
-	width: 300px;
-	_width: 290px;
-	text-align: left;
-	padding-left: 16px;
-	height: 22px;
-	overflow: hidden;
-	white-space: nowrap;
-	margin-left: 12px;
-	line-height: 22px;
-	margin-bottom: 5px;
-	background: url("Image/qiyexinxiImage/grey_point.gif") no-repeat left;
-}
 #List_rdzp ul
 {
 	margin: 10px 0px;
@@ -110,7 +91,6 @@ div.PublicframeTwo div.listpub dl dd a:active
 	margin-left: 12px;
 	line-height: 22px;
 	margin-bottom: 5px;
-	background: url("Image/qiyexinxiImage/grey_point.gif") no-repeat left;
 }
 #List_Tab .TabContentStyle
 {
@@ -136,7 +116,6 @@ div.PublicframeTwo div.listpub dl dd a:active
 	overflow: hidden;
 	white-space: nowrap;
 	margin-top: 5px;
-	background: url("Image/qiyexinxiImage/grey_point.gif") no-repeat left;
 }
 .AdvertisementStyle
 {
