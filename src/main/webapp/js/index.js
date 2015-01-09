@@ -24,7 +24,11 @@ $(function () {
 		}
 	}).blur(function(){
 		if(this.value == '' || this.value == null || this.value == undefined){
-			this.value = '请输入用户名或残疾证号';
+			if($('#identity').val() == 'person'){
+				this.value = '请输入用户名或残疾证号';
+			}else{
+				this.value = '请输入用户名';
+			}
 		}
 	});
 	
