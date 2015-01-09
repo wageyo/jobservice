@@ -411,6 +411,7 @@ public class UserController {
 		request.setAttribute(Constants.USERNAME, userNamesString);
 		return "person/password-set";
 	}
+	
 	// 设置密码
 	@RequestMapping(value = "/setPassWord", method = RequestMethod.POST)
 	public String setPassWordPost(HttpServletRequest request, HttpServletResponse response,
