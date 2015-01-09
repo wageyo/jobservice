@@ -19,7 +19,7 @@ $(function () {
 	
 	/*******  光标focus效果   ********/
 	$('#loginName').focus(function(){
-		if(this.value == '请输入用户名或残疾证号'){
+		if(this.value == '请输入用户名或残疾证号' || this.value == '请输入用户名'){
 			this.value = '';
 		}
 	}).blur(function(){
