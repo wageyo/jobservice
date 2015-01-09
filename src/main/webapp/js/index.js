@@ -139,17 +139,24 @@ function check(){
 		$('#loginName').focus();
 		return false;
 	}
-	//密码
-	var passWord = $('#passWord').val();
-	if(!verify.checkname(passWord)){
-		alert('请输入密码, 且密码只能由5-20位的英文, 数字或下划线_组成.');
-		$('#passWord').focus();
-		return false;
+	var reg = /^[0-9]{14}[0-9a-zA-Z]{4}[1-7]{1}[1-4]{1}[B]?[0-9]?/;
+	var checkResult = reg.test(loginName);
+	//如果不是残疾证号, 则对密码进行校验
+	if(!checkResult){
+		//密码
+		var passWord = $('#passWord').val();
+		if(passWord == null || passWord == '' ){
+			if(!verify.checkname(passWord)){
+				alert('您输入的不是残疾证号, 请输入密码!');
+				$('#passWord').focus();
+				return false;
+			}
+		}
 	}
 	return true;
 }
 
-/*******  登陆   ********/
+/*******  用户名焦点离开   ********/
 function blur_loginName(){
 	var loginName = $('#loginName').val();
 	$.ajax({

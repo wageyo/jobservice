@@ -8,7 +8,9 @@
 			<span>当前位置: </span> <span>首页</span>
 		</div>
 		<div class="right">
-			<div class="Wellcome">您好, ${cookie.username.value }</div>
+			<div class="Wellcome">
+				您好, <c:if test="${cookie.password.value != null && cookie.password.value != ''}">${cookie.username.value }</c:if>
+			</div>
 			<div class="ListBtn">
 				<ul class="">
 					<li class="">

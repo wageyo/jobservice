@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -139,36 +141,51 @@ public class UserController {
 
 	// 登陆
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(User user, HttpServletRequest request,HttpServletResponse response, RedirectAttributes ra) {
-		System.out.println(request.getRequestURI());
+	public String login(User userIndex, HttpServletRequest request,HttpServletResponse response, RedirectAttributes ra) {
 		String refererUrl = request.getHeader("referer");
-		if (user == null) {
+		String loginName = userIndex.getLoginName();
+	    String passWord = userIndex.getPassWord();
+		if (loginName == null) {
 			ra.addFlashAttribute("messageType", "0");
-			ra.addFlashAttribute("message", "登录错误");
-			return refererUrl;
-		}
-//		// 判断验证码是否正确
-//		String codeStr = request.getParameter("LoginVerifyCode");
-//		String captchaId = request.getSession().getId();
-//		System.out.println("codeStr : " + codeStr + "  captchaId : "
-//				+ captchaId);
-//		try {
-//			Boolean isResponseCorrect = CaptchaServiceSingleton.getInstance()
-//					.validateResponseForID(captchaId, codeStr);
-//			if (!isResponseCorrect) {
-//				ra.addFlashAttribute("messageType", "0");
-//				ra.addFlashAttribute("message", "验证码错误");
-//				return "redirect:/index";
-//			}
-//		} catch (CaptchaServiceException e) {
-//			log.error("error in check", e);
-//		}
-		log.debug("user : " + user);
-		user = userService.check(user);
-		if (user == null) {
-			ra.addFlashAttribute("messageType", "0");
-			ra.addFlashAttribute("message", "用户名或密码错误!");
+			ra.addFlashAttribute("message", "用户名为空");
 			return "redirect:"+refererUrl;
+		}
+		// 判断验证码是否正确
+		log.debug("user : " + userIndex);
+		User userSql=new User();
+		userSql.setLoginName(loginName);
+		User user=new User();
+		user = userService.check(userSql);
+		//判断是否存在该用户
+		if (user == null) {
+			String check = "(([0-9]{17}([0-9]|X))|([0-9]{15}))[1-7]{1}[1-4]{1}";
+			Pattern regex = Pattern.compile(check);  
+			Matcher matcher = regex.matcher(loginName);  
+			boolean isMatched = matcher.matches();  
+			//判断是否符合残疾号登入
+			if(isMatched){
+				CookieHelper.setCookie(response, Constants.USERNAME,userSql.getLoginName());
+				request.setAttribute(Constants.USERNAME, userSql.getLoginName());
+				return "person/password-set";
+			}else {
+				//不符合残疾号登入提示用户名错误
+				ra.addFlashAttribute("messageType", "0");
+				ra.addFlashAttribute("message", "您的用户名不为残疾证号或者密码错误!");
+				return "redirect:"+refererUrl;
+			}
+		}else{
+			//如果有该用户判断是否密码正确
+			if(!user.getIdentity().equals(userIndex.getIdentity())){
+				ra.addFlashAttribute("messageType", "0");
+				ra.addFlashAttribute("message", "用户名或密码错误!");
+				return "redirect:"+refererUrl;
+			}
+			//如果有该用户判断是否密码正确
+			if(!user.getPassWord().equals(passWord)){
+				ra.addFlashAttribute("messageType", "0");
+				ra.addFlashAttribute("message", "密码错误!");
+				return "redirect:"+refererUrl;
+			}
 		}
 		if (user.getCheckStatus().equals(
 				Constants.CheckStatus.DAISHEN.toString())) {
@@ -181,6 +198,12 @@ public class UserController {
 			ra.addFlashAttribute("message", "用户名没有通过审核, 请重新申请!");
 			return "redirect:"+refererUrl;
 		}
+		//如果输入的密码为空, 则跳转到前台进行提示
+		if(passWord == null || "".equals(passWord)){
+		 ra.addFlashAttribute("messageType", "0");
+		 ra.addFlashAttribute("message", "残疾证号已经被注册过, 请输入密码!");
+			return "redirect:"+refererUrl;
+		}
 		if (user.getIdentity().equals(Identity.COMPANY.toString())) {
 			Company company = companyService.getByAccount(user.getId());
 			log.debug("company " + company);
@@ -189,16 +212,12 @@ public class UserController {
 			}
 		}
 		log.debug("login: " + user);
-		CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+    	CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
 		CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
+		CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
 		CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
 		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
 		CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
-//		//地区代码设为永久,如果当前cookie中不存在地区code, 才使用当前用户的
-//		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-//		if(acode == null || "".equals(acode)){
-//			CookieHelper.setCookie(response, Constants.AREA,user.getArea().getCode(),Integer.MAX_VALUE);
-//		}
 		return "redirect:/index";
 	}
 
@@ -383,5 +402,50 @@ public class UserController {
 			map.put(Constants.NOTICE, "用户名或者密码错误.");
 		}
 		return new JSONPObject(callback, map);
+	}
+	
+	// 设置密码
+	@RequestMapping(value = "/setPassWord", method = RequestMethod.GET)
+	public String setPassWordGet(HttpServletRequest request) {
+		String 	userNamesString= CookieHelper.getCookieValue(request, Constants.USERNAME);
+		request.setAttribute(Constants.USERNAME, userNamesString);
+		return "person/password-set";
+	}
+	// 设置密码
+	@RequestMapping(value = "/setPassWord", method = RequestMethod.POST)
+	public String setPassWordPost(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes ra) {
+		log.info("--- passWordEdit post---");
+		String 	userNamesString= CookieHelper.getCookieValue(request, Constants.USERNAME);
+		String passWord = request.getParameter("newPassWord");
+	    User user = new User();
+		user.setLoginName(userNamesString);
+		user.setPassWord(passWord);
+		user.setIdentity(Constants.Identity.PERSON.getValue());
+		user.setAuthority(Constants.Authority.PERSON.getValue());
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		user.setArea(new Area(acode));
+		//保存用户
+		Boolean bl = userService.save(user);
+		log.info("update password bl = " + bl);
+		if (!bl) {
+			ra.addFlashAttribute("messageType", "0");
+			ra.addFlashAttribute("message", "设置密码失败, 请联系管理员.");
+			return "redirect:/secure/user/setPassWord";
+		}
+		// //将基本属性设置到cookie中
+		User userSql=new User();
+		userSql.setLoginName(userNamesString);
+		User userCookie=new User();
+		userCookie = userService.check(userSql);
+		CookieHelper.setCookie(response, Constants.USERID, String.valueOf(userCookie.getId()));
+		CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
+		CookieHelper.setCookie(response, Constants.USERNAME,userCookie.getLoginName());
+		CookieHelper.setCookie(response, Constants.USERIDENTITY,userCookie.getIdentity());
+		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(userCookie.getAuthority()));
+		CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(userCookie.getCreateDate()));
+		ra.addFlashAttribute("messageType", "1");
+		ra.addFlashAttribute("message", "操作成功!");
+		return "redirect:/user/goCenter";
 	}
 }
