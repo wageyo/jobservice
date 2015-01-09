@@ -109,19 +109,21 @@ function changeShowJob(jobCategory,obj){
 		type : 'post',
 		dataType : 'json',
 		success : function(data){
+			$('#TabsMainShow').find('ul').children().remove();
+			var str ='';
 			//如果有数据返回, 则遍历数据进行显示
 			if(data.jobByCategoryList != null && data.jobByCategoryList.length > 0){
-				$('#TabsMainShow').find('ul').children().remove();
-				var str ='';
 				$.each(data.jobByCategoryList, function(i, item){
 					str += '<li class="">';
 					str += '<a href="company/getOneForShow?id=' + item.companyId+ '">' + item.companyName + '</a>';
 					str += '<a href="job/getOneForShow?id=' + item.jobId + '" style="color:#0868C8" class="position">' + item.jobName + '</a>';
 					str += '</li>';
 				});
-				//先清除当前TabsMainShow div框中的所有li子元素, 然后添加上新的招聘信息
-				$('#TabsMainShow').find('ul').html(str);
+			}else{
+				str += '<li>没有查询到相应的数据!</li>';
 			}
+			//先清除当前TabsMainShow div框中的所有li子元素, 然后添加上新的招聘信息
+			$('#TabsMainShow').find('ul').html(str);
 		},
 		error : function(){
 			alert("请求数据发生错误, 请联系管理员.");
