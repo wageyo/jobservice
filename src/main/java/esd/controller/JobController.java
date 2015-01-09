@@ -58,16 +58,14 @@ public class JobController {
 	@RequestMapping("/getOneForShow")
 	public String getOneForShow(HttpServletRequest request, HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
-		//①先查看request中有没有传过来的acode, 
-		String acode= request.getParameter("acode");
-		if(acode != null){
-			/**** 不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息	****/
+		// ①从cookie得到地区code, 如没有, 或者不等于昌吉的地区code, 则替换
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		String changji = "20652300";
+		if (!changji.equals(acode)) {
+			/**** 不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息 ****/
 			CookieHelper.killAllCookie(response, true);
-			//②不为空则是第一次进来, 将其中的acode放到cookie中
-			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
-		}else{
-			//③为空在则检查cookie是中没有地区信息
-			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+			CookieHelper.setCookie(response, Constants.AREA, changji,
+					Integer.MAX_VALUE);
 		}
 				
 		String idStr = request.getParameter("id");

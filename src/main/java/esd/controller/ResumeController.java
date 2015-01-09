@@ -80,107 +80,19 @@ public class ResumeController {
 		return mav;
 	}
 
-//	// 多条件职位简历
-//	@RequestMapping(value = "/search/{page}", method = RequestMethod.POST)
-//	public ModelAndView search(HttpServletRequest request,
-//			@PathVariable(value = "page") Integer page,
-//			HttpServletResponse response) {
-//		log.info("--- search ---");
-//		Map<String, Object> entity = new HashMap<String, Object>();
-//		Resume resume = new Resume();
-//		// 从cookie读取acode
-//		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-//		resume.setArea(new Area(acode));
-//
-//		String keyWord = request.getParameter("keyWord");
-//		if (keyWord != null && !"".equals(keyWord)) {
-//			resume.setTitle(keyWord);
-//		}
-//		String jcCode = request.getParameter("jcCode");
-//		if (jcCode != null && !"".equals(jcCode)) {
-//			resume.setDesireJob(new JobCategory(jcCode));
-//		}
-//		String education = request.getParameter("education");
-//		if (education != null && !"".equals(education)) {
-//			resume.setEducation(education);
-//		}
-//		String jobNature = request.getParameter("jobNature");
-//		if (jobNature != null && !"".equals(jobNature)) {
-//			resume.setJobNature(jobNature);
-//		}
-//		String gender = request.getParameter("gender");
-//		if (gender != null && !"".equals(gender)) {
-//			resume.setGender(gender);
-//		}
-//		List<Resume> resumeList = resumeService.getForListShow(resume, page,
-//				Constants.SIZE);
-//		Integer records = resumeService.getTotalCount(resume,Boolean.TRUE);
-//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-//		if (resumeList != null && records != null && records > 0) {
-//			try {
-//				for (Iterator<Resume> iterator = resumeList.iterator(); iterator
-//						.hasNext();) {
-//					Resume it = (Resume) iterator.next();
-//					log.debug(it.toString());
-//					Map<String, String> map = new HashMap<String, String>();
-//					map.put("id", String.valueOf(it.getId()));
-//					map.put("title", it.getTitle());
-//					map.put("name", it.getName());
-//					map.put("gender", it.getGender());
-//					map.put("education", it.getEducation());
-//					map.put("major", it.getMajor());
-//					map.put("experience", it.getExperience());
-//					if (it.getDesireJob() != null) {
-//						if (it.getDesireJob().getName() != null
-//								&& !"".equals(it.getDesireJob().getName())) {
-//							map.put("desireJob", it.getDesireJob().getName());
-//						}
-//					} else {
-//						map.put("desireJob", Constants.NO_LIMIT);
-//					}
-//					if (it.getDesireAddress() != null) {
-//						if (it.getDesireAddress().getName() != null
-//								&& !"".equals(it.getDesireAddress().getName())) {
-//							map.put("desireAddress", it.getDesireAddress()
-//									.getName());
-//						}
-//					} else {
-//						map.put("desireAddress", Constants.NO_LIMIT);
-//					}
-//					map.put("desireSalary", it.getDesireSalary());
-//					list.add(map);
-//				}
-//			} catch (Exception e) {
-//				log.error("error in list", e);
-//			}
-//		}
-//		while (list.size() < Constants.SIZE) {
-//			Map<String, String> map = new HashMap<String, String>();
-//			list.add(map);
-//		}
-//
-//		entity.put("list", list);
-//		PaginationUtil pagination = new PaginationUtil(page, records);
-//		entity.put("pagination", pagination.getHandler());
-//		return new ModelAndView("emp/emp-json", "entity", entity);
-//	}
-
 	// 根据id得到一个简历返回前台
 	@RequestMapping("/getOneForShow")
 	public String getOneForShow(HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
-		// ①先查看request中有没有传过来的acode,
-		String acode = request.getParameter("acode");
-		if (acode != null) {
-			/**** 不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息	****/
+		// ①从cookie得到地区code, 如没有, 或者不等于昌吉的地区code, 则替换
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		String changji = "20652300";
+		if (!changji.equals(acode)) {
+			/**** 不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息 ****/
 			CookieHelper.killAllCookie(response, true);
-			// ②不为空则是第一次进来, 将其中的acode放到cookie中
-			CookieHelper.setCookie(response, Constants.AREA, acode,
+			CookieHelper.setCookie(response, Constants.AREA, changji,
 					Integer.MAX_VALUE);
-		} else {
-			// ③为空在则检查cookie是中没有地区信息
-			acode = CookieHelper.getCookieValue(request, Constants.AREA);
 		}
 
 		String idStr = request.getParameter("id");

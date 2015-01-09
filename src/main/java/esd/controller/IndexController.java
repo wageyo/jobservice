@@ -44,9 +44,10 @@ import esd.service.ResumeService;
 import esd.service.UserService;
 
 /**
- * 首页  菜单, 跳转用controller
+ * 首页 菜单, 跳转用controller
+ * 
  * @author Administrator
- *
+ * 
  */
 @Controller
 public class IndexController {
@@ -54,7 +55,7 @@ public class IndexController {
 
 	@Autowired
 	private UserService<User> userService;
-	
+
 	@Autowired
 	private CompanyService<Company> companyService;
 
@@ -75,86 +76,97 @@ public class IndexController {
 
 	@Autowired
 	private NewsService newsService;
-	
+
 	@Autowired
 	private MailService mailService;
 
-	//首页
+	// 首页
 	@RequestMapping("/index")
-	public ModelAndView index(HttpServletRequest request,HttpServletResponse response) {
+	public ModelAndView index(HttpServletRequest request,
+			HttpServletResponse response) {
 		log.debug("=========================" + request.getRequestURI());
-		//如果存在从网站群接收来的用户名, 密码, 则证明是从网站群登陆过来的, 则将该用户的相关信息和登陆一样, 放到cookie中
+		// 如果存在从网站群接收来的用户名, 密码, 则证明是从网站群登陆过来的, 则将该用户的相关信息和登陆一样, 放到cookie中
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		if(username != null && !"".equals(username) && password != null && !"".equals(password)){
+		if (username != null && !"".equals(username) && password != null
+				&& !"".equals(password)) {
 			User user = userService.check(username);
 			/*********** 设置用户信息到cookie中 ************/
 			if (user.getIdentity().equals(Identity.COMPANY.toString())) {
 				Company company = companyService.getByAccount(user.getId());
 				log.debug("company " + company);
-				if(company != null){
-					CookieHelper.setCookie(response, Constants.USERCOMPANYID, String.valueOf(company.getId()));
+				if (company != null) {
+					CookieHelper.setCookie(response, Constants.USERCOMPANYID,
+							String.valueOf(company.getId()));
 				}
 			}
 			log.debug("login: " + user);
-			CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
-			CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
-			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
-			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
-			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+			CookieHelper.setCookie(response, Constants.USERID,
+					String.valueOf(user.getId()));
+			CookieHelper.setCookie(response, Constants.USERNAME,
+					user.getLoginName());
+			CookieHelper.setCookie(response, Constants.USERIDENTITY,
+					user.getIdentity());
+			CookieHelper.setCookie(response, Constants.USERAUTHORITY,
+					String.valueOf(user.getAuthority()));
+			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,
+					KitService.dateForShow(user.getCreateDate()));
 		}
-		
- 		//①先查看request中有没有传过来的acode, 
-		String acode= request.getParameter("acode");
-		if(acode != null && !"".equals(acode)){
-			/**** 不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息	****/
+
+		// ①从cookie得到地区code, 如没有, 或者不等于昌吉的地区code, 则替换
+		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		String changji = "20652300";
+		if (!changji.equals(acode)) {
+			/**** 不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息 ****/
 			CookieHelper.killAllCookie(response, true);
-			//②不为空则是第一次进来, 将其中的acode放到cookie中
-			CookieHelper.setCookie(response, Constants.AREA, acode, Integer.MAX_VALUE);
-		}else{
-			//③为空在则检查cookie是中没有地区信息
-			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+			CookieHelper.setCookie(response, Constants.AREA, changji,
+					Integer.MAX_VALUE);
 		}
 		ModelAndView mav = new ModelAndView("index");
-		//得到10个热门职位
-		List<JobCategory> hotJobCategory = jcService.getPopularJobCategory(Constants.JOB_CATEGORY_HOT);
-		mav.addObject("hotJobCategoryList",hotJobCategory);
+		// 得到10个热门职位
+		List<JobCategory> hotJobCategory = jcService
+				.getPopularJobCategory(Constants.JOB_CATEGORY_HOT);
+		mav.addObject("hotJobCategoryList", hotJobCategory);
 		// 得到最新的10个公司
-		List<Company> companyList = companyService.getByNew(acode,10);
+		List<Company> companyList = companyService.getByNew(acode, 10);
 		mav.addObject("companyList", companyList);
 		// 最新的12条热点招聘信息
-		List<Job> hotJobList = jobService.getByNew(acode,12);
+		List<Job> hotJobList = jobService.getByNew(acode, 12);
 		mav.addObject("hotJobList", hotJobList);
 		// 最新的21条简历信息
-		List<Resume> resumeList = resumeService.getByNew(acode,10);
+		List<Resume> resumeList = resumeService.getByNew(acode, 10);
 		mav.addObject("resumeList", resumeList);
 		// 最新的9条就业指导信息
-		List<News> directList = newsService.getByNew(acode, 9,Constants.ARTICLE_TYPE_DIRECT);
+		List<News> directList = newsService.getByNew(acode, 9,
+				Constants.ARTICLE_TYPE_DIRECT);
 		mav.addObject("directList", directList);
 		// 最新的9条消息
-		List<News> newsList = newsService.getByNew(acode, 9,Constants.ARTICLE_TYPE_NEWS);
+		List<News> newsList = newsService.getByNew(acode, 9,
+				Constants.ARTICLE_TYPE_NEWS);
 		mav.addObject("newsList", newsList);
-		//得到6个常用的职位种类
-		List<JobCategory> jobCategoryList = jcService.getPopularJobCategory(Constants.JOB_CATEGORY_MAIN);
-		mav.addObject("jobCategoryList",jobCategoryList);
-		//获得下面按类别显示的51条数据
+		// 得到6个常用的职位种类
+		List<JobCategory> jobCategoryList = jcService
+				.getPopularJobCategory(Constants.JOB_CATEGORY_MAIN);
+		mav.addObject("jobCategoryList", jobCategoryList);
+		// 获得下面按类别显示的51条数据
 		Job object = new Job();
 		object.setJobCategory(new JobCategory("10010000"));
 		object.setArea(new Area(acode));
-		List<Job> jobByCategoryResult = jobService.getListForShow(object, Constants.START, 51);
-		List<Map<String,Object>> jobByCategoryList = new ArrayList<Map<String,Object>>();
-		for(Job job :jobByCategoryResult){
-			Map<String,Object> j = new HashMap<String,Object>();
+		List<Job> jobByCategoryResult = jobService.getListForShow(object,
+				Constants.START, 51);
+		List<Map<String, Object>> jobByCategoryList = new ArrayList<Map<String, Object>>();
+		for (Job job : jobByCategoryResult) {
+			Map<String, Object> j = new HashMap<String, Object>();
 			j.put("jobId", job.getId());
 			j.put("jobName", job.getName());
 			j.put("companyId", job.getCompany().getId());
 			j.put("companyName", job.getCompany().getName());
 			jobByCategoryList.add(j);
 		}
-		mav.addObject("jobByCategoryList",jobByCategoryList);
-		//获取5个存在图片的新闻
+		mav.addObject("jobByCategoryList", jobByCategoryList);
+		// 获取5个存在图片的新闻
 		List<News> imagesList = newsService.getFiveChangeList(acode);
-		mav.addObject("imagesList",imagesList);
+		mav.addObject("imagesList", imagesList);
 		return mav;
 	}
 
@@ -182,21 +194,21 @@ public class IndexController {
 		return mav;
 	}
 
-	//个人登陆页面
+	// 个人登陆页面
 	@RequestMapping("/loginP")
 	public ModelAndView loginP(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("login/login-p");
 		return mav;
 	}
-	
-	//企业登陆页面
+
+	// 企业登陆页面
 	@RequestMapping("/loginC")
 	public ModelAndView loginC(HttpServletRequest request) {
-			ModelAndView mav = new ModelAndView("login/login-c");
-			return mav;
-		}
+		ModelAndView mav = new ModelAndView("login/login-c");
+		return mav;
+	}
 
-	//企业用户
+	// 企业用户
 	@RequestMapping("/regC")
 	public ModelAndView regC(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("register/reg-c");
@@ -206,7 +218,7 @@ public class IndexController {
 		return mav;
 	}
 
-	//个人用户注册
+	// 个人用户注册
 	@RequestMapping("/regP")
 	public ModelAndView regP(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("register/reg-p");
@@ -216,9 +228,10 @@ public class IndexController {
 		return mav;
 	}
 
-	//职位列表浏览页面
+	// 职位列表浏览页面
 	@RequestMapping("/work")
-	public ModelAndView work(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView work(HttpServletRequest request,
+			HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("work/work");
 		List<Parameter> plist = parameterService.getAll();
@@ -231,25 +244,15 @@ public class IndexController {
 		List<Area> alist = areaService.getProvinceList();
 		mav.addObject("areaList", alist);
 		// 获得职位总数
-		int totalCount = jobService.getTotalCount(null,true);
+		int totalCount = jobService.getTotalCount(null, true);
 		mav.addObject("totalCount", totalCount);
-		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中; 有则直接使用传递过来的
-		String acode = request.getParameter("acode");
-		String localCode = CookieHelper.getCookieValue(request, Constants.AREA);
-		log.info("acode [" + acode + "]");
-		if (acode != null && !"".equals(acode)) {
-			if(localCode == null || "".equals(localCode)){
-				CookieHelper.setCookie(response, Constants.AREA, acode);
-			}
-		}else{
-			acode = localCode;
-		}
-		Area area = areaService.getByCode(acode);
-		//读取职位查询信息
+		// 使用固定的昌吉地区code
+		Area area = areaService.getByCode(Constants.AREACHANGJI);
+		// 读取职位查询信息
 		log.info("--- work job search ---");
 		Job job = new Job();
 		job.setArea(area);
-		
+
 		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
 			job.setName(keyWord);
@@ -272,13 +275,13 @@ public class IndexController {
 		request.setAttribute("jobNature", jobNature);
 		job.setIsActiveEffectiveTime(true);
 		String pageStr = request.getParameter("page");
-		if(pageStr ==null || "".equals(pageStr)){
+		if (pageStr == null || "".equals(pageStr)) {
 			pageStr = "1";
 		}
 		Integer page = KitService.getInt(pageStr);
 		List<Job> jobList = jobService
 				.getListForShow(job, page, Constants.SIZE);
-		Integer records = jobService.getTotalCount(job,Boolean.TRUE);
+		Integer records = jobService.getTotalCount(job, Boolean.TRUE);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (jobList != null && records != null && records > 0) {
 			try {
@@ -306,9 +309,10 @@ public class IndexController {
 		return mav;
 	}
 
-	//简历列表浏览页面
+	// 简历列表浏览页面
 	@RequestMapping("/emp")
-	public ModelAndView emp(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView emp(HttpServletRequest request,
+			HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("emp/emp");
 		List<Parameter> plist = parameterService.getAll();
@@ -321,26 +325,16 @@ public class IndexController {
 		List<Area> alist = areaService.getProvinceList();
 		mav.addObject("areaList", alist);
 		// 获得简历总数
-		int totalCount = resumeService.getTotalCount(null,Boolean.TRUE);
+		int totalCount = resumeService.getTotalCount(null, Boolean.TRUE);
 		mav.addObject("totalCount", totalCount);
-		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中; 有则直接使用传递过来的
-		String acode = request.getParameter("acode");
-		String localCode = CookieHelper.getCookieValue(request, Constants.AREA);
-		log.info("acode [" + acode + "]");
-		if (acode != null && !"".equals(acode)) {
-			if(localCode == null || "".equals(localCode)){
-				CookieHelper.setCookie(response, Constants.AREA, acode);
-			}
-		}else{
-			acode = localCode;
-		}
-		Area area = areaService.getByCode(acode);
-		//读取简历查询信息
+		// 使用固定的昌吉地区code
+		Area area = areaService.getByCode(Constants.AREACHANGJI);
+		// 读取简历查询信息
 		log.info("--- emp resume search ---");
 		Resume resume = new Resume();
 		resume.setArea(area);
 		request.setAttribute("tarArea", area);
-		
+
 		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
 			resume.setTitle(keyWord);
@@ -367,13 +361,13 @@ public class IndexController {
 		}
 		request.setAttribute("gender", gender);
 		String pageStr = request.getParameter("page");
-		if(pageStr ==null || "".equals(pageStr)){
+		if (pageStr == null || "".equals(pageStr)) {
 			pageStr = "1";
 		}
 		Integer page = KitService.getInt(pageStr);
 		List<Resume> resumeList = resumeService.getForListShow(resume, page,
 				Constants.SIZE);
-		Integer records = resumeService.getTotalCount(resume,Boolean.TRUE);
+		Integer records = resumeService.getTotalCount(resume, Boolean.TRUE);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (resumeList != null && records != null && records > 0) {
 			try {
@@ -424,60 +418,63 @@ public class IndexController {
 		return mav;
 	}
 
-	//最新消息列表浏览页面
-//	@RequestMapping("/news")
-//	public ModelAndView news(HttpServletRequest request) {
-//		log.debug(request.getRequestURI());
-//		ModelAndView mav = new ModelAndView("news/news");
-//		return mav;
-//	}
+	// 最新消息列表浏览页面
+	// @RequestMapping("/news")
+	// public ModelAndView news(HttpServletRequest request) {
+	// log.debug(request.getRequestURI());
+	// ModelAndView mav = new ModelAndView("news/news");
+	// return mav;
+	// }
 	@RequestMapping("/news")
-	public ModelAndView news(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView news(HttpServletRequest request,
+			HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("news/news");
 		List<Parameter> plist = parameterService.getAll();
 		// 各种参数
 		mav.addObject("params", plist);
-		
+
 		// 获得简历总数
 		int totalCount = newsService.getTotalCount(null);
 		mav.addObject("totalCount", totalCount);
-		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中; 有则直接使用传递过来的
+		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中;
+		// 有则直接使用传递过来的
 		String acode = request.getParameter("acode");
 		String localCode = CookieHelper.getCookieValue(request, Constants.AREA);
 		log.info("acode [" + acode + "]");
 		if (acode != null && !"".equals(acode)) {
-			if(localCode == null || "".equals(localCode)){
+			if (localCode == null || "".equals(localCode)) {
 				CookieHelper.setCookie(response, Constants.AREA, acode);
 			}
-		}else{
+		} else {
 			acode = localCode;
 		}
 		Area area = areaService.getByCode(acode);
-		//读取查询信息
-		
+		// 读取查询信息
+
 		log.info("--- emp news search ---");
 		News news = new News();
 		news.setArea(area);
 		request.setAttribute("tarArea", area);
-		
+
 		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
 			news.setTitle(keyWord);
 		}
 		request.setAttribute("keyWord", keyWord);
-		
-		String releaseDateStr = request.getParameter("releaseDate");	
+
+		String releaseDateStr = request.getParameter("releaseDate");
 		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
 			Integer releaseDate = Integer.valueOf(releaseDateStr);
-			Date update_Date=KitService.getreleaseTime(releaseDate.longValue());
+			Date update_Date = KitService.getreleaseTime(releaseDate
+					.longValue());
 			news.setUpdateDate(update_Date);
-			
+
 		}
 		request.setAttribute("releaseDate", releaseDateStr);
-		
+
 		String pageStr = request.getParameter("page");
-		if(pageStr ==null || "".equals(pageStr)){
+		if (pageStr == null || "".equals(pageStr)) {
 			pageStr = "1";
 		}
 		Integer page = KitService.getInt(pageStr);
@@ -514,63 +511,65 @@ public class IndexController {
 		mav.addObject("pagination", pagination.getHandler());
 		return mav;
 	}
-		
 
-//	//就业指导信息 列表浏览页面
-//	@RequestMapping("/direct")
-//	public ModelAndView direct(HttpServletRequest request) {
-//		log.debug(request.getRequestURI());
-//		ModelAndView mav = new ModelAndView("direct/direct");
-//		return mav;
-//	}
-	//就业指导信息 列表浏览页面
-		@RequestMapping("/direct")
-	public ModelAndView direct(HttpServletRequest request, HttpServletResponse response) {
+	// //就业指导信息 列表浏览页面
+	// @RequestMapping("/direct")
+	// public ModelAndView direct(HttpServletRequest request) {
+	// log.debug(request.getRequestURI());
+	// ModelAndView mav = new ModelAndView("direct/direct");
+	// return mav;
+	// }
+	// 就业指导信息 列表浏览页面
+	@RequestMapping("/direct")
+	public ModelAndView direct(HttpServletRequest request,
+			HttpServletResponse response) {
 		log.debug(request.getRequestURI());
 		ModelAndView mav = new ModelAndView("direct/direct");
 		List<Parameter> plist = parameterService.getAll();
 		// 各种参数
 		mav.addObject("params", plist);
-		
+
 		// 获得简历总数
 		int totalCount = newsService.getTotalCount(null);
 		mav.addObject("totalCount", totalCount);
-		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中; 有则直接使用传递过来的
+		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中;
+		// 有则直接使用传递过来的
 		String acode = request.getParameter("acode");
 		String localCode = CookieHelper.getCookieValue(request, Constants.AREA);
 		log.info("acode [" + acode + "]");
 		if (acode != null && !"".equals(acode)) {
-			if(localCode == null || "".equals(localCode)){
+			if (localCode == null || "".equals(localCode)) {
 				CookieHelper.setCookie(response, Constants.AREA, acode);
 			}
-		}else{
+		} else {
 			acode = localCode;
 		}
 		Area area = areaService.getByCode(acode);
-		//读取查询信息
-		
+		// 读取查询信息
+
 		log.info("--- emp news search ---");
 		News news = new News();
 		news.setArea(area);
 		request.setAttribute("tarArea", area);
-		
+
 		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
 			news.setTitle(keyWord);
 		}
 		request.setAttribute("keyWord", keyWord);
 		String releaseDateStr = request.getParameter("releaseDate");
-	
+
 		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
 			Integer releaseDate = Integer.valueOf(releaseDateStr);
-			Date update_Date=KitService.getreleaseTime(releaseDate.longValue());
+			Date update_Date = KitService.getreleaseTime(releaseDate
+					.longValue());
 			news.setUpdateDate(update_Date);
-			
+
 		}
 		request.setAttribute("releaseDate", releaseDateStr);
-		
+
 		String pageStr = request.getParameter("page");
-		if(pageStr ==null || "".equals(pageStr)){
+		if (pageStr == null || "".equals(pageStr)) {
 			pageStr = "1";
 		}
 		Integer page = KitService.getInt(pageStr);
@@ -627,37 +626,34 @@ public class IndexController {
 	// 找回用户名
 	@RequestMapping(value = "/getBack", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> getBackUserNamePost(HttpServletRequest request) {
+	public Map<String, Object> getBackUserNamePost(HttpServletRequest request) {
 		log.debug(request.getRequestURI());
-		Map<String,Object> map = new HashMap<String,Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		String email = request.getParameter("email");
-		String type = request.getParameter("type");	//找回类型  username用户名; password密码
-		//根据邮箱查找到对应的注册用户
+		String type = request.getParameter("type"); // 找回类型 username用户名;
+													// password密码
+		// 根据邮箱查找到对应的注册用户
 		User param = new User();
 		param.setEmail(email);
 		User user = userService.check(param);
-		String val ="";
-		if("username".equals(type)){
+		String val = "";
+		if ("username".equals(type)) {
 			val = user.getLoginName();
-		}else if("password".equals(type)){
-			val=user.getPassWord();
-		}else{
+		} else if ("password".equals(type)) {
+			val = user.getPassWord();
+		} else {
 			map.put(Constants.NOTICE, "传递的发送类型为空, 请联系管理员.");
 			return map;
 		}
-		Boolean bl = mailService.sendUserNamePwd(email, type,val);
-		if(bl){
-			map.put(Constants.NOTICE,Constants.Notice.SUCCESS.getValue());
-		}else{
+		Boolean bl = mailService.sendUserNamePwd(email, type, val);
+		if (bl) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
 			map.put(Constants.NOTICE, "发送失败 ");
 		}
 		return map;
 	}
-		
-		
-		
-		
-		
+
 	@RequestMapping("/jsonp")
 	public String jsonp() {
 		return "test";
@@ -671,19 +667,10 @@ public class IndexController {
 		map.put("pi", "hello,I'm Fjt");
 		return new JSONPObject(callback, map);
 		/**
-		 * 前台方法写法 
-		 * function jsonp() { 
-		 * 		var url = 'http://192.168.170.154:8080/jobservice/jsonptest'; 
-		 * 		$.ajax({ 
-		 * 			url : url, 
-		 * 			type : 'GET', 
-		 * 			dataType : 'jsonp', 
-		 * 			async : true ,
-		 * 			success : function(e) { 
-		 * 				alert(e.pi); 
-		 * 			}
-		 * 		}); 
-		 * };
+		 * 前台方法写法 function jsonp() { var url =
+		 * 'http://192.168.170.154:8080/jobservice/jsonptest'; $.ajax({ url :
+		 * url, type : 'GET', dataType : 'jsonp', async : true , success :
+		 * function(e) { alert(e.pi); } }); };
 		 **/
 	}
 }

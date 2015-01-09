@@ -47,6 +47,7 @@ public class Constants {
 	/****************** 放入cookie中的key值 ********************/
 
 	public static final String AREACOUNTRY = "10000000"; // 全国地区code
+	public static final String AREACHANGJI = "20652300"; // 昌吉地区code
 
 	public static final String WORKABILITY = "workAbility"; // 有无劳动能力
 
