@@ -66,7 +66,7 @@
 		<%--
 
 	<div align="center">
-		<div class="clear" style=" height:10px;">&nbsp;</div>
+		<div class="clearboth" style=" height:10px;">&nbsp;</div>
 		<div align="center">
 			<div style="width: 900px; text-align: left;">您当前的位置 : 联系我们</div>
 			<div class="topt"></div>

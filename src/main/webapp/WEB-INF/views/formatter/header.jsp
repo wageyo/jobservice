@@ -1,9 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="requestUrl" value="${pageContext.request.requestURL}" />
+<jsp:useBean id="date" class="java.util.Date" />
+<fmt:formatDate value="${date}" type="both" dateStyle="long" pattern="yyyyMMddHHmmss" var="now" />
 <div id="header" class="HeaderStyle SetHeaderBg">
 	<div class="HeaderMainBg SetHeaderWholeBg">
 		<div class="HeaderMainLeft SetHeaderLeft">
@@ -14,15 +17,15 @@
 						<c:when test="${cookie.area.value != null && cookie.area.value != '' }">
 							<c:choose>
 								<c:when test="${cookie.area.value != '10000000' }">
-									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/${cookie.area.value }.png" /> 
+									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/${cookie.area.value }.png?timestamp=${now}" /> 
 								</c:when>
 								<c:otherwise>
-									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" id="bg2" />
+									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png?timestamp=${now}" id="bg2" />
 								</c:otherwise>
 							</c:choose>
 						</c:when>
 						<c:otherwise>
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" id="bg2" /> 
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png?timestamp=${now}" id="bg2" /> 
 						</c:otherwise>
 					</c:choose>
 				</a>

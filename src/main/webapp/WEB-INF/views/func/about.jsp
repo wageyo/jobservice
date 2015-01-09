@@ -59,7 +59,7 @@
 		
 	<%--
 	<div align="center">
-		<div class="clear" style=" height:10px;">&nbsp;</div>
+		<div class="clearboth" style=" height:10px;">&nbsp;</div>
 		<div align="center">
 			<div style="width: 900px; text-align: left;">您当前的位置 : 关于本站</div>
 			<div class="topt"></div>

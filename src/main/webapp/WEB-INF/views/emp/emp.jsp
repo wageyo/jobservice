@@ -10,8 +10,8 @@
 	<meta content="残疾人招聘就业" name="description" />
 	
 	<link rel="shortcut icon" href="${contextPath}/images/HomePageImage/favicon.ico" type="image/x-icon" />
-	<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
+	<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
@@ -135,25 +135,25 @@
         <div style="clear: both"></div>
         <div class="zxzw_center">
 			<div class="job_list">
-				<table width="988px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
-					<tr style="background-color: #ECF4FF; text-align: center;
-					background-image: url(images/HomePageImage/SearchImage/center_1px.gif);background-repeat: repeat-x;">
-						<td width="90px" height="26" class="s13_blue_b" id="tableHeadStyle">简历标题</td>
-						<td width="70px" class="s13_blue_b" id="tableHeadStyle">姓名</td>
-						<td width="50px" class="s13_blue_b" id="tableHeadStyle">性别</td>
-						<td width="80px" class="s13_blue_b" id="tableHeadStyle">学历</td>
-						<td width="70px" class="s13_blue_b" id="tableHeadStyle">专业</td>
-						<td width="80px" class="s13_blue_b" id="tableHeadStyle">工作经验</td>
-						<td width="100px" class="s13_blue_b" id="tableHeadStyle">求职岗位</td>
-						<td width="100px" class="s13_blue_b" id="tableHeadStyle">期望工作地</td>
-						<td width="80px" class="s13_blue_b" id="tableEndStyle" style="border-right: 1px solid #c5e2f6;">期望薪资</td>
-					</tr>
-				</table>
 				<div id="main">
 					<div id="data">
 						<!-- 上部显示列表信息  begin -->
 						<div class="list11">
 							<table width="990px" border="0" cellspacing="0" cellpadding="0">
+								<thead style="background-color: #ECF4FF; text-align: center;
+										background-image: url(images/HomePageImage/SearchImage/center_1px.gif);background-repeat: repeat-x;">
+										<tr>
+											<th width="90px" height="26" class="s13_blue_b" id="tableHeadStyle">简历标题</th>
+											<th width="70px" class="s13_blue_b" id="tableHeadStyle">姓名</th>
+											<th width="50px" class="s13_blue_b" id="tableHeadStyle">性别</th>
+											<th width="80px" class="s13_blue_b" id="tableHeadStyle">学历</th>
+											<th width="70px" class="s13_blue_b" id="tableHeadStyle">专业</th>
+											<th width="80px" class="s13_blue_b" id="tableHeadStyle">工作经验</th>
+											<th width="100px" class="s13_blue_b" id="tableHeadStyle">求职岗位</th>
+											<th width="100px" class="s13_blue_b" id="tableHeadStyle">期望工作地</th>
+											<th width="80px" class="s13_blue_b" id="tableEndStyle" style="border-right: 1px solid #c5e2f6;">期望薪资</th>
+										</tr>
+								</thead>
 								<tbody>
 									<c:choose>
 										<c:when test="${list == null || fn:length(list) == 0}">
@@ -168,11 +168,10 @@
 												<tr class="list11" <c:if test="${status.index % 2 == 1 }">style="background:#f6f6f6;"</c:if>>
 													<td width="90px" class="s13_blue_b" id="tabaleDataStyle" >
 														 <input type="hidden" name="id" value="${obj.id }"/>
-														 <span id="Repeater1_ctl00_Label2" >${obj.title}</span>
+														 <span id="Repeater1_ctl00_Label2" class="exceedHidden" style="display:-moz-inline-box;display:inline-block; width:98px;" >${obj.title}</span>
 													</td>
 													<td width="70px" class="s13_blue_b">
-														<a href='${contextPath }/resume/getOneForShow?id=${obj.id}'>
-														<span id="Repeater1_ctl00_Label1" style="color: #0868C8;font-weight: bold;">${obj.name}</span> </a>
+														<a href='${contextPath }/resume/getOneForShow?id=${obj.id}' class="exceedHidden" style="width:65px;">${obj.name}</a>
 													</td>
 													<td width="50px" class="s13_blue_b" id="tabaleDataStyle">
 														 <span id="Repeater1_ctl00_Label2" >${obj.gender}</span>
@@ -181,7 +180,7 @@
 														<span id="Repeater1_ctl00_Label3">${obj.education}</span>
 													</td>
 													<td width="70px" class="s13_blue_b" id="tabaleDataStyle">
-														<span id="Repeater1_ctl00_Label6">${obj.major}</span>
+														<span id="Repeater1_ctl00_Label6" class="exceedHidden" style="display:-moz-inline-box;display:inline-block; width:70px;" >${obj.major}</span>
 													</td>
 													<td width="80" class="s13_blue_b" id="tabaleDataStyle">
 														<span id="Repeater1_ctl00_Label7">${obj.experience}</span>
