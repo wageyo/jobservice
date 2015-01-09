@@ -19,12 +19,12 @@ $(function () {
 	
 	/*******  光标focus效果   ********/
 	$('#loginName').focus(function(){
-		if(this.value == '请输入用户名'){
+		if(this.value == '请输入用户名或残疾证号'){
 			this.value = '';
 		}
 	}).blur(function(){
 		if(this.value == '' || this.value == null || this.value == undefined){
-			this.value = '请输入用户名';
+			this.value = '请输入用户名或残疾证号';
 		}
 	});
 	
@@ -37,7 +37,7 @@ $(function () {
 		$(".LoginRight").removeClass("LoginRight2"); 
 		$("#LoginBtn").removeClass("loginbtnimg2"); 
 		$("#LinkHrefBtn").attr("href", ""); 
-		$("#loginName").val("请输入用户名");
+		$("#loginName").val("请输入用户名或残疾证号");
 	}).mouseover(function () { 
 		this.style.cursor = "pointer"; 
 	}).mouseout(function () { 
