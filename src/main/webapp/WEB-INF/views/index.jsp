@@ -64,7 +64,7 @@
 								<form action="${contextPath }/user/login" method="post" onsubmit="return check();">
 									<div class="divtext">
 										<div>
-											<input type="text" value="请输入用户名或残疾证号" id="loginName" name="loginName" class="text DefaultText" title="请输入用户名" style="color: Gray;" />
+											<input type="text" value="请输入用户名或残疾证号" id="loginName" name="loginName" class="text DefaultText" title="请输入用户名或残疾证号" style="color: Gray;" />
 										</div>
 										<div class="righttext">
 											<input type="password" value="" id="passWord" name="passWord" class="text DefaultText" title="输入密码" style="color: Gray;" />
