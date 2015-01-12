@@ -290,7 +290,7 @@
 				<div class="PublicframeOne SetMarginTop hp_fwdt" style=" width:707px; float:left; height:255px;">
 					<div class="PublicframeOneHeaderBar" style=" width:707px">
 						<div class="PublicframeOneHeaderBarLeft">最新资讯</div>
-						<div class="PublicframeOneHeaderBarRight"> <a  href="P_WorkplaceInformation.aspx">更多</a> </div>
+						<div class="PublicframeOneHeaderBarRight"> <a  href="${contextPath}/news">更多</a> </div>
 					</div>
 					<!-- 图片轮换div -->
 					<div class="photo">
@@ -305,7 +305,7 @@
 						<ul>
 							<c:forEach items="${newsList }" var="news">
 								<li class="Square2"> 
-										<a href="${contextPath }/news/getOneForShow?id=${news.id}" title="${news.title }">${news.title }</a>
+									<a href="${contextPath }/news/getOneForShow?id=${news.id}" title="${news.title }">${news.title }</a>
 								</li>
 							</c:forEach>
 						
@@ -315,12 +315,16 @@
 				<div class="PublicframeOne SetMarginTop hp_fwxx" style=" width:274px; height:255px; float:left; margin-left:5px;">
 					<div style=" width:274px" class="PublicframeOneHeaderBar">
 						<div class="PublicframeOneHeaderBarLeft">就业指导</div>
-						<div class="PublicframeOneHeaderBarRight"> <a  href="HP_VocationalTraining.aspx">更多</a> </div>
+						<div class="PublicframeOneHeaderBarRight"> <a  href="${contextPath}/direct">更多</a> </div>
 					</div>
 					<div >
 						<ul>
 							<c:forEach items="${directList }" var="direct">
-								<li class="Square"> <a  title="最新职业能力测评" href="${contextPath }/news/getOneForShow?id=${direct.id}" title="${direct.title }">${direct.title }</a> </li>
+								<li class="Square" > 
+									<div class="exceedHidden" style="width:230px;">
+										<a  title="最新职业能力测评" href="${contextPath }/news/getOneForShow?id=${direct.id}" title="${direct.title }">${direct.title }</a>
+									</div> 
+								</li>
 							</c:forEach>
 						</ul>
 						<div class="clearboth"></div>
@@ -387,7 +391,11 @@
 													<a  href="${contextPath }/company/getOneForShow?id=${company.id}" title="${company.name }" style="color: #0868C8;">${company.name }</a>
 												</div>
 											</td>
-											<td><a  href="" title="${company.businessScope.name}">${company.businessScope.name}</a></td>
+											<td>
+												<div class="exceedHidden" style="width:100px;">
+													<a  href="" title="${company.businessScope.name}">${company.businessScope.name}</a>
+												</div>
+											</td>
 											<td><fmt:formatDate value="${company.updateDate }" type="both" pattern="yyyy/MM/dd" /></td>
 										</tr>
 									</c:forEach>
