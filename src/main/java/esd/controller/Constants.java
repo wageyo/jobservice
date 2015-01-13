@@ -43,9 +43,10 @@ public class Constants {
 	public static final String USERTITLE = "title"; // 用户标题--管理员用户显示标题使用
 	public static final String USERCOMPANYID = "companyid"; // 企业id
 	public static final String USERREGISTERTIME = "registertime"; // 注册时间
-	public static final String AREA = "area"; // 地区key
+	public static final String AREACODE = "areacode"; // 地区key
+	public static final String AREANAME = "areaname"; // 地区名称
 	/****************** 放入cookie中的key值 ********************/
-
+	
 	public static final String AREACOUNTRY = "10000000"; // 全国地区code
 
 	public static final String WORKABILITY = "workAbility"; // 有无劳动能力

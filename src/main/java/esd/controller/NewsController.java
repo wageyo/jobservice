@@ -52,7 +52,7 @@ public class NewsController {
 			@PathVariable(value = "page") Integer page) {
 		log.info("--- search ---");
 		//从cookie读取acode
-		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		String acode = CookieHelper.getCookieValue(request, Constants.AREACODE);
 		News n = new News();
 		n.setType(Constants.ARTICLE_TYPE_NEWS);
 		n.setArea(new Area(acode));
@@ -117,7 +117,7 @@ public class NewsController {
 			return "/error";
 		}
 		// 将news放入到request中
-		String acode = CookieHelper.getCookieValue(req, Constants.AREA);
+		String acode = CookieHelper.getCookieValue(req, Constants.AREACODE);
 		News news = newsService.getOneForShow(id);
 		req.setAttribute("news", news);
 		News newsparameter=new News();

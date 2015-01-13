@@ -107,12 +107,7 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("message", "注册请求已提交, 请等待管理员审核");
 			return "redirect:/index";
 		} else {
-			CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
-			CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
-			CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
-			CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
-			CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
-			CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+			CookieHelper.setCookie(response, request, user, null);
 			return "redirect:/user/goCenter";
 		}
 	}
@@ -212,12 +207,7 @@ public class UserController {
 			}
 		}
 		log.debug("login: " + user);
-    	CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
-		CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
-		CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
-		CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
-		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
-		CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+    	CookieHelper.setCookie(response, request, user, null);
 		return "redirect:/index";
 	}
 
@@ -267,18 +257,13 @@ public class UserController {
 		json.put("notice", Notice.FAILURE.getValue());
 		return json;
 	}
+	
 	// 登出
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		log.info("--- 登出 ---");
 		//杀死除地区code外的所有cookie
-		CookieHelper.setCookie(response, Constants.USERID, null, 0);
-		CookieHelper.setCookie(response, Constants.USERNAME, null, 0);
-		CookieHelper.setCookie(response, Constants.USERPASSWORD, null, 0);
-		CookieHelper.setCookie(response, Constants.USERIDENTITY, null, 0);
-		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
-		CookieHelper.setCookie(response, Constants.USERREGISTERTIME, null, 0);
-		CookieHelper.setCookie(response, Constants.USERCOMPANYID, null, 0);
+		CookieHelper.killAllCookie(response, false);
 		return "redirect:/index";
 	}
 
@@ -424,7 +409,7 @@ public class UserController {
 		user.setPassWord(passWord);
 		user.setIdentity(Constants.Identity.PERSON.getValue());
 		user.setAuthority(Constants.Authority.PERSON.getValue());
-		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		String acode = CookieHelper.getCookieValue(request, Constants.AREACODE);
 		user.setArea(new Area(acode));
 		//保存用户
 		Boolean bl = userService.save(user);
@@ -439,12 +424,7 @@ public class UserController {
 		userSql.setLoginName(userNamesString);
 		User userCookie=new User();
 		userCookie = userService.check(userSql);
-		CookieHelper.setCookie(response, Constants.USERID, String.valueOf(userCookie.getId()));
-		CookieHelper.setCookie(response, Constants.USERPASSWORD,user.getPassWord());
-		CookieHelper.setCookie(response, Constants.USERNAME,userCookie.getLoginName());
-		CookieHelper.setCookie(response, Constants.USERIDENTITY,userCookie.getIdentity());
-		CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(userCookie.getAuthority()));
-		CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(userCookie.getCreateDate()));
+		CookieHelper.setCookie(response, request, userCookie, null);
 		ra.addFlashAttribute("messageType", "1");
 		ra.addFlashAttribute("message", "操作成功!");
 		return "redirect:/user/goCenter";

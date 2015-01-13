@@ -57,7 +57,7 @@ public class DirectController {
 		// 读取地区码
 		// 得到地区code
 	
-		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
+		String acode = CookieHelper.getCookieValue(request, Constants.AREACODE);
 		News n = new News();
 		n.setType(Constants.ARTICLE_TYPE_DIRECT);
 		n.setArea(new Area(acode));
@@ -123,7 +123,7 @@ public class DirectController {
 		// 将direct放入到request中
 		News news = newsService.getOneForShow(id);
 		req.setAttribute("news", news);
-		String acode = CookieHelper.getCookieValue(req, Constants.AREA);
+		String acode = CookieHelper.getCookieValue(req, Constants.AREACODE);
 		Area area = areaService.getByCode(acode);
 		News newsparameter=new News();
 		newsparameter.setType(Constants.ARTICLE_TYPE_DIRECT);

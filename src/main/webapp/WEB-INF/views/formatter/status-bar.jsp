@@ -2,10 +2,28 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<script type="text/javascript">
+	//解码本网站所在位置名
+	function decodeTitle(){
+		var areaname = decodeURIComponent('${cookie.areaname.value}');
+		$('#currentLocation').html(areaname + '站');
+	}
+</script>
 <div class="StatusBar">
 	<div class="StatusBarMain">
 		<div class="left">
-			<span>当前位置: </span> <span>首页</span>
+			<span>当前位置: </span> 
+			<!-- request中传过来的areaname不为空时 则显示出来,否则显示cookie中的areaname -->
+			<span id="currentLocation">
+				<c:choose>
+					<c:when test="${areaname != null && areaname != '' }">${areaname }站</c:when>
+					<c:otherwise>
+						<script type="text/javascript">
+							decodeTitle();
+						</script>
+					</c:otherwise>
+				</c:choose>
+			</span>
 		</div>
 		<div class="right">
 			<div class="Wellcome">

@@ -1,9 +1,14 @@
 package esd.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import esd.bean.Area;
+import esd.bean.User;
 import esd.controller.Constants;
 
 /**
@@ -131,6 +136,40 @@ public class CookieHelper {
 		cookie.setPath("/");
 		response.addCookie(cookie);
 	}
+	
+	/**
+	 * 
+	 * @desc 添加新的Cookie信息
+	 * @param response
+	 * @param name
+	 * @param value
+	 * @param maxAge
+	 */
+	public static void setCookie(HttpServletResponse response, HttpServletRequest request, User user, Area area) {
+		//user不为空, 则将user信息放入到cookie中 
+		if(user != null){
+			setCookie(response, Constants.USERID, String.valueOf(user.getId()));
+			setCookie(response, Constants.USERNAME,user.getLoginName());
+			setCookie(response, Constants.USERPASSWORD,user.getPassWord());
+			setCookie(response, Constants.USERIDENTITY,user.getIdentity());
+			setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
+			setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+		}
+		//area不为空, 则将area信息放入到cookie中 
+		if(area!=null){
+			setCookie(response,Constants.AREACODE,area.getCode(),Integer.MAX_VALUE);
+			request.setAttribute(Constants.AREACODE, area.getCode());
+			//地区名称不为空时, 才将其encode后放入到cookie中
+			if(area.getName()!=null){
+				try {
+					request.setAttribute(Constants.AREANAME, area.getName());
+					setCookie(response,Constants.AREANAME,URLEncoder.encode(area.getName(),"utf-8"),Integer.MAX_VALUE);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	/**
 	 * 杀死所有cookie信息, bl 为true 则包括地区code, false或者null不包括
@@ -148,7 +187,8 @@ public class CookieHelper {
 		CookieHelper.setCookie(response, Constants.USERREGISTERTIME, null, 0);
 		CookieHelper.setCookie(response, Constants.USERCOMPANYID, null, 0);
 		if (bl) {
-			CookieHelper.setCookie(response, Constants.AREA, null, 0);
+			CookieHelper.setCookie(response, Constants.AREACODE, null, 0);
+			CookieHelper.setCookie(response, Constants.AREANAME, null, 0);
 		}
 	}
 
@@ -159,7 +199,7 @@ public class CookieHelper {
 	 * @return
 	 */
 	public static String getLocalArea(HttpServletRequest request) {
-		String area = getCookieValue(request, Constants.AREA);
+		String area = getCookieValue(request, Constants.AREACODE);
 		if (area == null || "".equals(area)) {
 			area = Constants.AREACOUNTRY;
 		}

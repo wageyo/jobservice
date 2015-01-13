@@ -4,6 +4,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<title>残疾人就业信息网</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
 	<meta content="残疾人招聘就业" name="description" />
@@ -15,8 +16,9 @@
 	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 
-<title>残疾人就业信息网</title>
 </head>
 <body>
 		<!-- 顶部工具条栏 -->

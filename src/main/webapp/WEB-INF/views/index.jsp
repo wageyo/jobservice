@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -268,13 +269,49 @@
 							</div>
 							<div style="*padding-left:6px;">
 								<div style=" height:20px;">
-									<div class="SetFloatLeft">常用职位搜索：</div>
+									<div class="SetFloatLeft">下辖地区：</div>
 									<div>
+										<!-- 根据当前地区code, 得到上级地区code -->
+										<c:choose>
+											<c:when test="${areaname != null && areaname != '' }">
+												<c:set var="currentlocation">${areacode}</c:set>
+											</c:when>
+											<c:otherwise>
+												<c:set var="currentlocation">${cookie.areacode.value }</c:set>
+											</c:otherwise>
+										</c:choose>
+										<!-- 有当前地区code得到上一级目录 地区code-->
+										<c:choose>
+											<c:when test="${currentlocation == '10000000'}">
+												<c:set var="uplevellocation"></c:set>
+											</c:when>
+											<c:when test="${fn:startsWith(currentlocation,'10')}">
+												<c:set var="uplevellocation">10000000</c:set>
+											</c:when>
+											<c:when test="${fn:startsWith(currentlocation,'20')}">
+												<c:set var="uplevellocation">10${fn:substring(currentlocation,2,4) }0000</c:set>
+											</c:when>
+											<c:when test="${fn:startsWith(currentlocation,'30')}">
+												<c:set var="uplevellocation">20${fn:substring(currentlocation,2,6) }00</c:set>
+											</c:when>
+											<c:otherwise>
+												<c:set var="uplevellocation">10000000</c:set>
+											</c:otherwise>
+										</c:choose>
 										<ul class="VerticalLineUL">
-											<c:forEach items="${hotJobCategoryList }" var="jobCategory" varStatus="status">
-												<li> <a title="${jobCategory.name }" href="${contextPath }/work?jobCategory=${jobCategory.code}" style="color: rgb(32, 164, 254);">${jobCategory.name }</a> </li>
-												<c:if test="${status.index < 9 }"><li class="LiEven">|</li></c:if>
+											<!-- 数组总长度 -->
+											<c:set var="subAreaListLength">${fn:length(subAreaList) }</c:set>
+											<c:forEach items="${subAreaList }" var="subArea" varStatus="status">
+												<li> <a title="${subArea.name }" href="${contextPath }/index?acode=${subArea.code}" style="color: rgb(32, 164, 254);">${subArea.name }</a> </li>
+												<!-- 最后一个 | 不显示 -->
+												<c:if test="${status.index + 1 < subAreaListLength }">
+													<li class="LiEven">|</li>
+												</c:if>
 											</c:forEach>
+											<c:if test="${uplevellocation != null && uplevellocation != '' }">
+												<li class="LiEven">|</li>
+												<li> <a title="返回上级地区" href="${contextPath }/index?acode=${uplevellocation}" style="color: rgb(18, 0, 223);">返回上级地区</a> </li>
+											</c:if>
 										</ul>
 									</div>
 								</div>

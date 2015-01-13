@@ -3,10 +3,7 @@ package esd.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -34,7 +30,6 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
-import esd.bean.JobCategory;
 import esd.bean.Resume;
 import esd.common.PoiCreateExcel;
 import esd.service.AreaService;
@@ -42,7 +37,6 @@ import esd.service.CompanyService;
 import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
-import esd.service.ParameterService;
 import esd.service.ResumeService;
 
 @Controller
@@ -63,125 +57,38 @@ public class ResumeController {
 
 	@Autowired
 	private CompanyService companyService;
-	
+
+	@Autowired
+	private AreaService areaService;
+
 	private static Logger log = Logger.getLogger(ResumeController.class);
-
-	@RequestMapping("/search")
-	public ModelAndView resume(HttpServletRequest request,
-			HttpServletResponse response) {
-		log.debug(request.getRequestURI());
-		ModelAndView mav = new ModelAndView("emp/emp");
-		// 先查看request中有没有传过来的acode, 不为空则是第一次进来, 将其中的acode放到cookie中
-		String acode = request.getParameter("acode");
-		if (acode != null && !"".equals(acode)) {
-			CookieHelper.setCookie(response, Constants.AREA, acode,
-					Integer.MAX_VALUE);
-		}
-		return mav;
-	}
-
-//	// 多条件职位简历
-//	@RequestMapping(value = "/search/{page}", method = RequestMethod.POST)
-//	public ModelAndView search(HttpServletRequest request,
-//			@PathVariable(value = "page") Integer page,
-//			HttpServletResponse response) {
-//		log.info("--- search ---");
-//		Map<String, Object> entity = new HashMap<String, Object>();
-//		Resume resume = new Resume();
-//		// 从cookie读取acode
-//		String acode = CookieHelper.getCookieValue(request, Constants.AREA);
-//		resume.setArea(new Area(acode));
-//
-//		String keyWord = request.getParameter("keyWord");
-//		if (keyWord != null && !"".equals(keyWord)) {
-//			resume.setTitle(keyWord);
-//		}
-//		String jcCode = request.getParameter("jcCode");
-//		if (jcCode != null && !"".equals(jcCode)) {
-//			resume.setDesireJob(new JobCategory(jcCode));
-//		}
-//		String education = request.getParameter("education");
-//		if (education != null && !"".equals(education)) {
-//			resume.setEducation(education);
-//		}
-//		String jobNature = request.getParameter("jobNature");
-//		if (jobNature != null && !"".equals(jobNature)) {
-//			resume.setJobNature(jobNature);
-//		}
-//		String gender = request.getParameter("gender");
-//		if (gender != null && !"".equals(gender)) {
-//			resume.setGender(gender);
-//		}
-//		List<Resume> resumeList = resumeService.getForListShow(resume, page,
-//				Constants.SIZE);
-//		Integer records = resumeService.getTotalCount(resume,Boolean.TRUE);
-//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-//		if (resumeList != null && records != null && records > 0) {
-//			try {
-//				for (Iterator<Resume> iterator = resumeList.iterator(); iterator
-//						.hasNext();) {
-//					Resume it = (Resume) iterator.next();
-//					log.debug(it.toString());
-//					Map<String, String> map = new HashMap<String, String>();
-//					map.put("id", String.valueOf(it.getId()));
-//					map.put("title", it.getTitle());
-//					map.put("name", it.getName());
-//					map.put("gender", it.getGender());
-//					map.put("education", it.getEducation());
-//					map.put("major", it.getMajor());
-//					map.put("experience", it.getExperience());
-//					if (it.getDesireJob() != null) {
-//						if (it.getDesireJob().getName() != null
-//								&& !"".equals(it.getDesireJob().getName())) {
-//							map.put("desireJob", it.getDesireJob().getName());
-//						}
-//					} else {
-//						map.put("desireJob", Constants.NO_LIMIT);
-//					}
-//					if (it.getDesireAddress() != null) {
-//						if (it.getDesireAddress().getName() != null
-//								&& !"".equals(it.getDesireAddress().getName())) {
-//							map.put("desireAddress", it.getDesireAddress()
-//									.getName());
-//						}
-//					} else {
-//						map.put("desireAddress", Constants.NO_LIMIT);
-//					}
-//					map.put("desireSalary", it.getDesireSalary());
-//					list.add(map);
-//				}
-//			} catch (Exception e) {
-//				log.error("error in list", e);
-//			}
-//		}
-//		while (list.size() < Constants.SIZE) {
-//			Map<String, String> map = new HashMap<String, String>();
-//			list.add(map);
-//		}
-//
-//		entity.put("list", list);
-//		PaginationUtil pagination = new PaginationUtil(page, records);
-//		entity.put("pagination", pagination.getHandler());
-//		return new ModelAndView("emp/emp-json", "entity", entity);
-//	}
 
 	// 根据id得到一个简历返回前台
 	@RequestMapping("/getOneForShow")
 	public String getOneForShow(HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
+		/**
+		 * 处理地区code和如何存放到cookie中的问题
+		 */
 		// ①先查看request中有没有传过来的acode,
 		String acode = request.getParameter("acode");
-		if (acode != null) {
-			/**** 不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息	****/
+		if (acode != null && !"".equals(acode)) {
+			// ②不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息
 			CookieHelper.killAllCookie(response, true);
-			// ②不为空则是第一次进来, 将其中的acode放到cookie中
-			CookieHelper.setCookie(response, Constants.AREA, acode,
-					Integer.MAX_VALUE);
 		} else {
-			// ③为空在则检查cookie是中没有地区信息
-			acode = CookieHelper.getCookieValue(request, Constants.AREA);
+			// ③为空在则检查cookie是中没有地区信息, 如果cookie中也没有, 则说明是首次访问首页且不是从网站群跳转过来的,
+			// 那么使用全国code
+			String cookieAreaCode = CookieHelper.getCookieValue(request,
+					Constants.AREACODE);
+			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
+				cookieAreaCode = Constants.AREACOUNTRY;
+			}
+			acode = cookieAreaCode;
 		}
+		// ④得到地区信息对象, 将地区名称放入到cookie中
+		Area area = areaService.getByCode(acode);
+		CookieHelper.setCookie(response, request, null, area);
 
 		String idStr = request.getParameter("id");
 		log.info("idStr = " + idStr);
@@ -192,37 +99,38 @@ public class ResumeController {
 		Resume resume = resumeService.getOneForShow(id);
 		request.setAttribute("resume", resume);
 		// 如果为公司用户访问该简历, 则查询出公司的基本信息
-		String companyId = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
-		if (companyId != null &&!"".equals(companyId)) {
-				int cid = Integer.parseInt(companyId);
-				// 公司基本信息
-				Company company = companyService.getById(cid);
-				if (company == null) {
-					ra.addFlashAttribute("messageType", "0");
-					ra.addFlashAttribute("message", "请先完善公司信息");
-					return "forward:/secure/company/save";
-				}
-				Company model = new Company();
-				model.setId(company.getId());
-				model.setContactPerson(company.getContactPerson());
-				model.setContactDept(company.getContactDept());
-				model.setTelephone(company.getTelephone());
-				// 发布的职位信息
-				List<Job> list = jobService.getByCompany(company.getId(),
-						Constants.START, Constants.SIZE);
-				List<Job> jobList = new ArrayList<Job>();
-				Job head = new Job();
-				head.setId(0);
-				head.setName("请选择");
-				jobList.add(head);
-				for (Job job : list) {
-					Job j = new Job();
-					j.setId(job.getId());
-					j.setName(job.getName());
-					jobList.add(j);
-				}
-				request.setAttribute("company", model);
-				request.setAttribute("jobList", jobList);
+		String companyId = CookieHelper.getCookieValue(request,
+				Constants.USERCOMPANYID);
+		if (companyId != null && !"".equals(companyId)) {
+			int cid = Integer.parseInt(companyId);
+			// 公司基本信息
+			Company company = companyService.getById(cid);
+			if (company == null) {
+				ra.addFlashAttribute("messageType", "0");
+				ra.addFlashAttribute("message", "请先完善公司信息");
+				return "forward:/secure/company/save";
+			}
+			Company model = new Company();
+			model.setId(company.getId());
+			model.setContactPerson(company.getContactPerson());
+			model.setContactDept(company.getContactDept());
+			model.setTelephone(company.getTelephone());
+			// 发布的职位信息
+			List<Job> list = jobService.getByCompany(company.getId(),
+					Constants.START, Constants.SIZE);
+			List<Job> jobList = new ArrayList<Job>();
+			Job head = new Job();
+			head.setId(0);
+			head.setName("请选择");
+			jobList.add(head);
+			for (Job job : list) {
+				Job j = new Job();
+				j.setId(job.getId());
+				j.setName(job.getName());
+				jobList.add(j);
+			}
+			request.setAttribute("company", model);
+			request.setAttribute("jobList", jobList);
 		}
 		return "emp/emp-detail";
 	}
@@ -234,7 +142,7 @@ public class ResumeController {
 			@RequestParam(value = "callback") String callback,
 			HttpServletRequest req) {
 		log.info("--- searchForOpenCms ---");
-		 //接收从网站群接收来的地区code, 根据他查找所属地区的职位
+		// 接收从网站群接收来的地区code, 根据他查找所属地区的职位
 		String acode = req.getParameter("acode");
 		String pageSizeStr = req.getParameter("pageSize");
 		// 初始化为10
@@ -312,9 +220,9 @@ public class ResumeController {
 		}
 		return null;
 	}
-	
-	// 下载所选简历信息    --别删
-	@RequestMapping(value = "/resumeExportSelected", method = RequestMethod.POST  )
+
+	// 下载所选简历信息 --别删
+	@RequestMapping(value = "/resumeExportSelected", method = RequestMethod.POST)
 	@ResponseBody
 	public String ExportSelected(
 			@RequestParam(value = "params[]") int params[],
@@ -325,7 +233,7 @@ public class ResumeController {
 		for (int i = 0; i < params.length; i++) {
 			resumes.add(resumeService.getOneForShow(params[i]));
 		}
-		
+
 		String url = req.getRealPath("/");
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");
@@ -345,56 +253,57 @@ public class ResumeController {
 		// 导出文件
 		b = PoiCreateExcel.createResumeExcel(exportPath, resumes);
 		if (b) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
-			FileDownloadPath = "http://" + destPath + "/upload/resumes/" + uuid + ".xls";
+			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
+					+ req.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/resumes/" + uuid
+					+ ".xls";
 		}
 		return FileDownloadPath;
 	}
-	
-	
-	
-	// 批量下载信息    --别删
-		@RequestMapping(value = "/resumeExportAll", method = RequestMethod.POST  )
-		@ResponseBody
-		public String ExportAll(Resume param,
-				HttpServletRequest req) {
-			boolean b = true;
-			Resume paramEntity = new Resume();
-			String targetName = param.getTargetName();
-			String checkStatus = param.getCheckStatus();
-			if (checkStatus == null || "".equals(checkStatus)) {
-				checkStatus = Constants.CheckStatus.DAISHEN.getValue();
-			}
-			paramEntity.setName(targetName);
-			paramEntity.setCheckStatus(checkStatus);
-			Integer total = resumeService.getTotalCount(paramEntity,Boolean.FALSE);
-			Integer page=1;
-			List<Resume> resume = resumeService.getListShowForManage(
-					paramEntity, page, total);
-			String url = req.getRealPath("/");
-		
-			// 创建导出文件夹
-			File uploadPath = new File(url + "upload");
-			// 导出文件夹
-			String exportFolder = uploadPath + File.separator + "resume";
-			File resumePath = new File(exportFolder);
-			if (!(uploadPath.exists())) {
-				uploadPath.mkdir();
-			}
-			if (!(resumePath.exists())) {
-				resumePath.mkdir();
-			}
-			// 创建文件唯一名称
-			String uuid = UUID.randomUUID().toString();
-			String exportPath = exportFolder + File.separator + uuid + ".xls";
-			String FileDownloadPath = "null";
-			// 导出文件
-			b = PoiCreateExcel.createResumeExcel(exportPath, resume);
-			if (b) {
-				String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
-				FileDownloadPath = "http://" + destPath + "/upload/resume/" + uuid + ".xls";
-			}
-			return FileDownloadPath;
+
+	// 批量下载信息 --别删
+	@RequestMapping(value = "/resumeExportAll", method = RequestMethod.POST)
+	@ResponseBody
+	public String ExportAll(Resume param, HttpServletRequest req) {
+		boolean b = true;
+		Resume paramEntity = new Resume();
+		String targetName = param.getTargetName();
+		String checkStatus = param.getCheckStatus();
+		if (checkStatus == null || "".equals(checkStatus)) {
+			checkStatus = Constants.CheckStatus.DAISHEN.getValue();
 		}
-	
+		paramEntity.setName(targetName);
+		paramEntity.setCheckStatus(checkStatus);
+		Integer total = resumeService.getTotalCount(paramEntity, Boolean.FALSE);
+		Integer page = 1;
+		List<Resume> resume = resumeService.getListShowForManage(paramEntity,
+				page, total);
+		String url = req.getRealPath("/");
+
+		// 创建导出文件夹
+		File uploadPath = new File(url + "upload");
+		// 导出文件夹
+		String exportFolder = uploadPath + File.separator + "resume";
+		File resumePath = new File(exportFolder);
+		if (!(uploadPath.exists())) {
+			uploadPath.mkdir();
+		}
+		if (!(resumePath.exists())) {
+			resumePath.mkdir();
+		}
+		// 创建文件唯一名称
+		String uuid = UUID.randomUUID().toString();
+		String exportPath = exportFolder + File.separator + uuid + ".xls";
+		String FileDownloadPath = "null";
+		// 导出文件
+		b = PoiCreateExcel.createResumeExcel(exportPath, resume);
+		if (b) {
+			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
+					+ req.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/resume/" + uuid
+					+ ".xls";
+		}
+		return FileDownloadPath;
+	}
+
 }

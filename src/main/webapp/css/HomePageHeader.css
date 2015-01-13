@@ -23,7 +23,7 @@
 }
 .HeaderStyle .HeaderMainBg .HeaderMainLeft .logo
 {
-	width: 360px;
+	width: 700px;
 	height: 88px;
 	position:static;
 	margin-top:25px;
@@ -31,6 +31,23 @@
 	left: 20px;
 	#left: -20px;
 	z-index:0;
+}
+
+.HeaderStyle .HeaderMainBg .HeaderMainLeft .logo .logoimage
+{
+	float:left;
+	height: 88px;
+	width: 85px;
+}
+
+.HeaderStyle .HeaderMainBg .HeaderMainLeft .logo .logospan
+{
+	font-size:22px;
+	font-weight:bold;
+	float:left;
+	letter-spacing: 4px;
+	line-height: 85px;
+	color: rgb(111, 111, 250);
 }
 
 .HeaderStyle .HeaderMainBg .HeaderMainRight
