@@ -54,7 +54,7 @@
 			<div>
 			
 				<!-- 登陆前的登陆框  begin -->
-				<c:if test="${cookie.username.value == null || cookie.username.value == ''}">
+				<c:if test="${cookie.userid.value == null || cookie.userid.value == ''}">
 					<div class="login SetFloatLeft">
 						<div class="loginbtn">
 							<div title="个人用户登录" id="PersonalTab" class="BlueFirst" style="cursor: auto;"></div>
@@ -98,145 +98,100 @@
 				<!-- 登陆前的登陆框  end -->
 				
 				<!-- 登陆后的状态栏  begin -->
-				<c:if test="${cookie.username.value != null && cookie.username.value != ''}">
-					<c:if test="${cookie.password.value != null && cookie.password.value != ''}">
-						<div class="SetFloatLeft PersonalLogined">
-							<div class="loginbtn"></div>
-							<div class="loginmain">
-								<div class="loginmainarae">
-									<div class="NameLay">
-										<span class="SetFloatLeft"> 欢迎回来，</span>
-										<span class="Strong SetFloatLeft">
-											<a href="${contextPath }/user/goCenter">
-												<span class="exceedHidden" style="display:-moz-inline-box;display:inline-block; width:110px;">${cookie.username.value }</span>
+				<c:if test="${cookie.userid.value != null && cookie.userid.value != ''}">
+					<div class="SetFloatLeft PersonalLogined">
+						<div class="loginbtn"></div>
+						<div class="loginmain">
+							<div class="loginmainarae">
+								<div class="NameLay">
+									<span class="SetFloatLeft"> 欢迎回来，</span>
+									<span class="Strong SetFloatLeft">
+										<a href="${contextPath }/user/goCenter">
+											<span class="exceedHidden" style="display:-moz-inline-box;display:inline-block; width:110px;">${cookie.username.value }</span>
+										</a>
+									</span>
+									<span class="SetFloatRight">
+										<a href="${contextPath }/user/logout">[退出]</a>
+									</span>
+								</div>
+								<div class="clearboth">
+								</div>
+								<div class="TimeShow">您最近的登陆时间：<span></span></div>
+								<div>
+									<!-- 企业用户显示的菜单项目 begin -->
+									<c:if test="${cookie.identity.value == 'company' }">
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/company/update" title="企业信息">
+												<div class="FirstImage"><span>&nbsp;</span></div>
 											</a>
-										</span>
-										<span class="SetFloatRight">
-											<a href="${contextPath }/user/logout">[退出]</a>
-										</span>
-									</div>
-									<div class="clearboth">
-									</div>
-									<div class="TimeShow">您最近的登陆时间：<span></span></div>
-									<div>
-										<!-- 企业用户显示的菜单项目 begin -->
-										<c:if test="${cookie.identity.value == 'company' }">
-											<div class="RapidEntry">
-												<a href="${contextPath }/secure/company/update" title="企业信息">
-													<div class="FirstImage"><span>&nbsp;</span></div>
-												</a>
-												<div>
-													<a href="${contextPath }/secure/company/update">企业信息</a>
-												</div>
+											<div>
+												<a href="${contextPath }/secure/company/update">企业信息</a>
 											</div>
-											<div class="RapidEntry">
-												<a href="${contextPath }/secure/job/getManage?page=1">
-													<div title="我发布的职位" class="SecendImage"><span>&nbsp;</span></div>
-												</a>
-												<div>
-													<a href="${contextPath }/secure/job/getManage?page=1" title="职位管理">职位管理</a>
-												</div>
-											</div>
-											<div class="RapidEntry">
-												<a href="${contextPath }/secure/company/getAllGotResume/1">
-													<div title="应聘简历" class="ThirdImage"><span>&nbsp;</span></div>
-												</a>
-												<div>
-													<a href="${contextPath }/secure/company/getAllGotResume/1" title="收到简历">收到简历</a>
-												</div>
-											</div>
-										</c:if>
-										<!-- 企业用户显示的菜单项目 end -->
-										<!-- 个人用户显示的菜单项目 begin -->
-										<c:if test="${cookie.identity.value == 'person' }">
-											<div class="RapidEntry">
-												<a href="${contextPath }/secure/resume/getManage" title="我的简历">
-													<div class="FirstImage"><span>&nbsp;</span></div>
-												</a>
-												<div>
-													<a href="${contextPath }/secure/resume/getManage">我的简历</a>
-												</div>
-											</div>
-											<div class="RapidEntry">
-												<a href="${contextPath }/secure/resume/getReceivedInvite/1">
-													<div title="我发布的职位" class="ThirdImage"><span>&nbsp;</span></div>
-												</a>
-												<div>
-													<a href="${contextPath }/secure/resume/getReceivedInvite/1" title="收到邀请">收到邀请</a>
-												</div>
-											</div>
-											<div class="RapidEntry">
-												<a href="${contextPath }/secure/user/passWordEdit">
-													<div title="应聘简历" class="SecendImage"><span>&nbsp;</span></div>
-												</a>
-												<div>
-													<a href="${contextPath }/secure/user/passWordEdit" title="修改密码">修改密码</a>
-												</div>
-											</div>
-										</c:if>
-										<!-- 个人用户显示的菜单项目 end -->
-										<!-- 管理员用户显示的菜单项目 begin -->
-										<c:if test="${cookie.identity.value == 'admin' || cookie.identity.value == 'superadmin' }">
-											<div class="RapidEntry">
-												<a href="${contextPath }/manage/index" title="管理后台">
-													<div class="FirstImage"><span>&nbsp;</span></div>
-												</a>
-												<div>
-													<a href="${contextPath }/manage/index">管理后台</a>
-												</div>
-											</div>
-										</c:if>
-										<!-- 管理员用户显示的菜单项目 end -->
-									</div>
-								</div>
-							</div>
-							
-							<div class="LoginRight"></div>
-						</div>
-					<c:if test="${cookie.password.value == null || cookie.password.value == ''}">
-						<div class="login SetFloatLeft">
-							<div class="loginbtn">
-								<div title="个人用户登录" id="PersonalTab" class="BlueFirst" style="cursor: auto;"></div>
-								<div title="企业用户登录" id="BusinessTab" class="WhiteLast" style="cursor: auto;"></div>
-							</div>
-							<div class="loginmain">
-								<div class="loginmainarae">
-									<form action="${contextPath }/user/login" method="post">
-										<div>
-											<div class="divtext">
-												<div>
-													<input type="text" value="请输入用户名" id="loginName" name="loginName" class="text DefaultText" title="请输入用户名" style="color: Gray;" />
-												</div>
-												<div class="righttext">
-													<input type="password" value="" id="passWord" name="passWord" class="text DefaultText" title="输入密码" style="color: Gray;" />
-													<input type="hidden" id="identity" name="identity" value="person" />
-												</div>
-											</div>
-											<div id="LoginBtn" class="loginbtnimg" style="cursor: pointer;"></div>
 										</div>
-									</form>
-									<div class="clearboth"></div>
-									<div class="divchk">
-										<div style="letter-spacing:4px;">
-											<a href="${contextPath }/getBackPassWord" style="cursor:pointer;padding-right:20px;">找回密码</a>
-											<%--<span title="自动登录" class="zdword">自动登录</span>
-										--%>
-										<a href="${contextPath }/getBackUserName" style="cursor: pointer;">找回用户</a></div>
-									</div>
-									<div class="clearboth"></div>
-									<div class="registerdiv">
-										<div title="注册个人会员" id="PersonalRegister" class="personalregister" 
-										style="cursor: auto; background: url(${contextPath}/images/HomePageImage/LoginImage/PersonalRegister.gif);"></div>
-										<div title="注册用人单位" id="BusinessRegister" class="businessregister" 
-										style="cursor: auto; background: url(${contextPath}/images/HomePageImage/LoginImage/BusinessRegister.gif);"></div>
-									</div>
-									<div class="clearboth"></div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/job/getManage?page=1">
+												<div title="我发布的职位" class="SecendImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/job/getManage?page=1" title="职位管理">职位管理</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/company/getAllGotResume/1">
+												<div title="应聘简历" class="ThirdImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/company/getAllGotResume/1" title="收到简历">收到简历</a>
+											</div>
+										</div>
+									</c:if>
+									<!-- 企业用户显示的菜单项目 end -->
+									<!-- 个人用户显示的菜单项目 begin -->
+									<c:if test="${cookie.identity.value == 'person' }">
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/resume/getManage" title="我的简历">
+												<div class="FirstImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/resume/getManage">我的简历</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/resume/getReceivedInvite/1">
+												<div title="我发布的职位" class="ThirdImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/resume/getReceivedInvite/1" title="收到邀请">收到邀请</a>
+											</div>
+										</div>
+										<div class="RapidEntry">
+											<a href="${contextPath }/secure/user/passWordEdit">
+												<div title="应聘简历" class="SecendImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/secure/user/passWordEdit" title="修改密码">修改密码</a>
+											</div>
+										</div>
+									</c:if>
+									<!-- 个人用户显示的菜单项目 end -->
+									<!-- 管理员用户显示的菜单项目 begin -->
+									<c:if test="${cookie.identity.value == 'admin' || cookie.identity.value == 'superadmin' }">
+										<div class="RapidEntry">
+											<a href="${contextPath }/manage/index" title="管理后台">
+												<div class="FirstImage"><span>&nbsp;</span></div>
+											</a>
+											<div>
+												<a href="${contextPath }/manage/index">管理后台</a>
+											</div>
+										</div>
+									</c:if>
+									<!-- 管理员用户显示的菜单项目 end -->
 								</div>
 							</div>
-							<div class="LoginRight"></div>
-					</div>	
-				</c:if>
-				</c:if>
+						</div>
+						
+						<div class="LoginRight"></div>
+					</div>
 				</c:if>
 				<!-- 登陆后的状态栏   end -->
 				

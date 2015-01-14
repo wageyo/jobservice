@@ -84,7 +84,10 @@ public class ResumeManageController {
 		paramEntity.setCheckStatus(checkStatus);
 
 		// 获取地区码
-		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+		if(userId == null || "".equals(userId)){
+			return new ModelAndView("redirect:/loginManage/login");
+		}
 		Integer uid = Integer.parseInt(userId);
 		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据

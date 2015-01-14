@@ -16,7 +16,7 @@
 	
 	//获得菜单
 	function getMenu(){
-		var authority = '${cookie.authority.value}';
+		var authority = '${cookie.adminauthority.value}';
 		$.ajax({
 			url:'${contextPath}/manage/getMenu/' + authority,
 			type:'POST',

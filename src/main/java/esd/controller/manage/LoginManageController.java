@@ -46,8 +46,7 @@ public class LoginManageController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes ra) {
-		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
-		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
 		// 判断是否登录
 		if (userId == null || "".equals(userId)) {
 			log.debug("进入到后台管理登录页面。");
@@ -74,19 +73,7 @@ public class LoginManageController {
 						return "redirect:/loginManage/login";
 					}
 				}
-				CookieHelper.setCookie(response, Constants.USERID, String.valueOf(user.getId()));
-				CookieHelper.setCookie(response, Constants.USERNAME,user.getLoginName());
-				CookieHelper.setCookie(response, Constants.USERIDENTITY,user.getIdentity());
-				CookieHelper.setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
-				CookieHelper.setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
-				try {
-					String nickName = URLEncoder.encode(user.getNickName(), "UTF-8");
-					CookieHelper.setCookie(response, Constants.USERNICKNAME,nickName);
-					String title = URLEncoder.encode(user.getTitle(), "UTF-8");
-					CookieHelper.setCookie(response, Constants.USERTITLE,title);
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
+				CookieHelper.setCookie(response, request, user, null);
 
 				log.debug("管理用户登陆成功:" + user);
 				return "redirect:/manage/index";
@@ -108,7 +95,7 @@ public class LoginManageController {
 	@RequestMapping(value = "/password_edit", method = RequestMethod.POST)
 	public String password_edit_post(HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes ra) {
-		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
 		String return_password_edit = "redirect:/loginManage/password_edit";
 		User user = userService.getById(Integer.parseInt(userId));
 		String oldPassWord = request.getParameter("oldPassWord");
@@ -133,12 +120,7 @@ public class LoginManageController {
 	@RequestMapping(value = "/quit", method = RequestMethod.GET)
 	public String quit(HttpServletRequest request, HttpServletResponse response) {
 		//杀死所有cookie除地区code外的所有
-		CookieHelper.setCookie(response, Constants.USERID, null, 0);
-		CookieHelper.setCookie(response, Constants.USERNAME, null, 0);
-		CookieHelper.setCookie(response, Constants.USERIDENTITY, null, 0);
-		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
-		CookieHelper.setCookie(response, Constants.USERNICKNAME, null, 0);
-		CookieHelper.setCookie(response, Constants.USERTITLE, null, 0);
+		CookieHelper.killAdminCookie(response, false);
 		log.error("管理员用户退出");
 		return "redirect:/loginManage/login";
 	}

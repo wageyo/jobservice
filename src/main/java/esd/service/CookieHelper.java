@@ -47,6 +47,23 @@ public class CookieHelper {
 	 * 
 	 * @desc 删除指定Cookie
 	 * @param response
+	 * @param name
+	 */
+	public static void removeCookie(HttpServletRequest request,
+			HttpServletResponse response, String name) {
+		Cookie cookie = getCookie(request, name);
+		if (cookie != null) {
+			cookie.setPath("/");
+			cookie.setValue("");
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+		}
+	}
+
+	/**
+	 * 
+	 * @desc 删除指定Cookie
+	 * @param response
 	 * @param cookie
 	 * @param domain
 	 */
@@ -136,7 +153,7 @@ public class CookieHelper {
 		cookie.setPath("/");
 		response.addCookie(cookie);
 	}
-	
+
 	/**
 	 * 
 	 * @desc 添加新的Cookie信息
@@ -145,25 +162,53 @@ public class CookieHelper {
 	 * @param value
 	 * @param maxAge
 	 */
-	public static void setCookie(HttpServletResponse response, HttpServletRequest request, User user, Area area) {
-		//user不为空, 则将user信息放入到cookie中 
-		if(user != null){
-			setCookie(response, Constants.USERID, String.valueOf(user.getId()));
-			setCookie(response, Constants.USERNAME,user.getLoginName());
-			setCookie(response, Constants.USERPASSWORD,user.getPassWord());
-			setCookie(response, Constants.USERIDENTITY,user.getIdentity());
-			setCookie(response, Constants.USERAUTHORITY,String.valueOf(user.getAuthority()));
-			setCookie(response, Constants.USERREGISTERTIME,KitService.dateForShow(user.getCreateDate()));
+	public static void setCookie(HttpServletResponse response,
+			HttpServletRequest request, User user, Area area) {
+		// user不为空, 则将user信息放入到cookie中
+		if (user != null) {
+			if (Constants.Authority.ADMIN.getValue() > user.getAuthority()) {
+				// 普通用户存放cookie方式
+				setCookie(response, Constants.USERID,
+						String.valueOf(user.getId()));
+				setCookie(response, Constants.USERNAME, user.getLoginName());
+				setCookie(response, Constants.USERPASSWORD, user.getPassWord());
+				setCookie(response, Constants.USERIDENTITY, user.getIdentity());
+				setCookie(response, Constants.USERAUTHORITY,
+						String.valueOf(user.getAuthority()));
+				setCookie(response, Constants.USERREGISTERTIME,
+						KitService.dateForShow(user.getCreateDate()));
+			} else {
+				// 管理员用户存放cookie方式
+				setCookie(response, Constants.ADMINUSERID,
+						String.valueOf(user.getId()));
+				setCookie(response, Constants.ADMINUSERNAME, user.getLoginName());
+				setCookie(response, Constants.ADMINUSERIDENTITY, user.getIdentity());
+				setCookie(response, Constants.ADMINUSERAUTHORITY,
+						String.valueOf(user.getAuthority()));
+				try {
+					String title = URLEncoder.encode(user.getTitle(), "UTF-8");
+					setCookie(response, Constants.ADMINUSERTITLE, title);
+					String nickName = URLEncoder.encode(user.getNickName(),
+							"UTF-8");
+					setCookie(response, Constants.ADMINUSERNICKNAME, nickName);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
-		//area不为空, 则将area信息放入到cookie中 
-		if(area!=null){
-			setCookie(response,Constants.AREACODE,area.getCode(),Integer.MAX_VALUE);
+		// area不为空, 则将area信息放入到cookie中
+		if (area != null) {
+			setCookie(response, Constants.AREACODE, area.getCode(),
+					Integer.MAX_VALUE);
 			request.setAttribute(Constants.AREACODE, area.getCode());
-			//地区名称不为空时, 才将其encode后放入到cookie中
-			if(area.getName()!=null){
+			// 地区名称不为空时, 才将其encode后放入到cookie中
+			if (area.getName() != null) {
 				try {
 					request.setAttribute(Constants.AREANAME, area.getName());
-					setCookie(response,Constants.AREANAME,URLEncoder.encode(area.getName(),"utf-8"),Integer.MAX_VALUE);
+					setCookie(response, Constants.AREANAME,
+							URLEncoder.encode(area.getName(), "utf-8"),
+							Integer.MAX_VALUE);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
@@ -172,23 +217,43 @@ public class CookieHelper {
 	}
 
 	/**
-	 * 杀死所有cookie信息, bl 为true 则包括地区code, false或者null不包括
+	 * 杀死所有普通用户的cookie信息, bl 为true 则包括地区code, false或者null不包括
 	 * 
 	 * @param response
 	 * @param bl
 	 */
-	public static void killAllCookie(HttpServletResponse response, Boolean bl) {
+	public static void killUserCookie(HttpServletResponse response, Boolean bl) {
 		// 杀死所有cookie
-		CookieHelper.setCookie(response, Constants.USERID, null, 0);
-		CookieHelper.setCookie(response, Constants.USERNAME, null, 0);
-		CookieHelper.setCookie(response, Constants.USERPASSWORD, null, 0);
-		CookieHelper.setCookie(response, Constants.USERIDENTITY, null, 0);
-		CookieHelper.setCookie(response, Constants.USERAUTHORITY, null, 0);
-		CookieHelper.setCookie(response, Constants.USERREGISTERTIME, null, 0);
-		CookieHelper.setCookie(response, Constants.USERCOMPANYID, null, 0);
+		setCookie(response, Constants.USERID, null, 0);
+		setCookie(response, Constants.USERNAME, null, 0);
+		setCookie(response, Constants.USERPASSWORD, null, 0);
+		setCookie(response, Constants.USERIDENTITY, null, 0);
+		setCookie(response, Constants.USERAUTHORITY, null, 0);
+		setCookie(response, Constants.USERREGISTERTIME, null, 0);
+		setCookie(response, Constants.USERCOMPANYID, null, 0);
 		if (bl) {
-			CookieHelper.setCookie(response, Constants.AREACODE, null, 0);
-			CookieHelper.setCookie(response, Constants.AREANAME, null, 0);
+			setCookie(response, Constants.AREACODE, null, 0);
+			setCookie(response, Constants.AREANAME, null, 0);
+		}
+	}
+
+	/**
+	 * 杀死所有管理员用户的cookie信息, bl 为true 则包括地区code, false或者null不包括
+	 * 
+	 * @param response
+	 * @param bl
+	 */
+	public static void killAdminCookie(HttpServletResponse response, Boolean bl) {
+		// 杀死所有cookie
+		setCookie(response, Constants.ADMINUSERID, null, 0);
+		setCookie(response, Constants.ADMINUSERNAME, null, 0);
+		setCookie(response, Constants.ADMINUSERIDENTITY, null, 0);
+		setCookie(response, Constants.ADMINUSERAUTHORITY, null, 0);
+		setCookie(response, Constants.ADMINUSERTITLE, null, 0);
+		setCookie(response, Constants.ADMINUSERNICKNAME, null, 0);
+		if (bl) {
+			setCookie(response, Constants.AREACODE, null, 0);
+			setCookie(response, Constants.AREANAME, null, 0);
 		}
 	}
 

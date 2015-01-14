@@ -49,7 +49,10 @@ public class SetupManageController {
 			HttpServletResponse response) {
 		log.error("goto 系统设置");
 		// 获取地区码
-		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+		if(userId == null || "".equals(userId)){
+			return new ModelAndView("redirect:/loginManage/login");
+		}
 		Integer uid = Integer.parseInt(userId);
 		User userObj = userService.getById(uid);
 		String code = userObj.getArea().getCode();

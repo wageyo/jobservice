@@ -263,7 +263,7 @@ public class UserController {
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		log.info("--- 登出 ---");
 		//杀死除地区code外的所有cookie
-		CookieHelper.killAllCookie(response, false);
+		CookieHelper.killUserCookie(response, false);
 		return "redirect:/index";
 	}
 

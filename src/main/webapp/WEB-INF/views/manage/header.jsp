@@ -9,9 +9,9 @@
 
 	//解码title, nickName
 	function decodeTitle(){
-		var adminNickName = decodeURIComponent('${cookie.nickname.value}');
+		var adminNickName = decodeURIComponent('${cookie.adminnickname.value}');
 		$('#adminNickName').html(adminNickName);
-		var title = decodeURIComponent('${cookie.title.value}');
+		var title = decodeURIComponent('${cookie.admintitle.value}');
 		$('#adminTitle').html(title);
 	}
 </script>

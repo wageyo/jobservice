@@ -75,7 +75,7 @@ public class ResumeController {
 		String acode = request.getParameter("acode");
 		if (acode != null && !"".equals(acode)) {
 			// ②不为空时, 则表示为从残联网站跳转过来的, 则清除原来可能存在的所有用户, 地区等cookie信息
-			CookieHelper.killAllCookie(response, true);
+			CookieHelper.killUserCookie(response, true);
 		} else {
 			// ③为空在则检查cookie是中没有地区信息, 如果cookie中也没有, 则说明是首次访问首页且不是从网站群跳转过来的,
 			// 那么使用全国code

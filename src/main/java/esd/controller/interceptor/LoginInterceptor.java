@@ -110,6 +110,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 		 * 后台登陆过滤器
 		 */
 		if (request.getRequestURI().indexOf("/manage") != -1) {
+			String adminuserid = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+			if(adminuserid != null && !"".equals(adminuserid)){
+				return true;
+			}
 			String username = CookieHelper.getCookieValue(request, Constants.USERNAME);
 			String authorityStr = CookieHelper.getCookieValue(request, Constants.USERAUTHORITY);
 			Integer authority = 0;

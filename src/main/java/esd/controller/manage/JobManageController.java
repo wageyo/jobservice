@@ -84,7 +84,7 @@ public class JobManageController {
 		paramEntity.setCheckStatus(checkStatus);
 		
 		//获取当前管理员所在地区code
-		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
 		if(userId == null || "".equals(userId)){
 			return new ModelAndView("redirect:/loginManage/login");
 		}

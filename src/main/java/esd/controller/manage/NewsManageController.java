@@ -70,7 +70,10 @@ public class NewsManageController {
 		paramEntity.setType(articleType);
 
 		// 获取地区码
-		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+		if(userId == null || "".equals(userId)){
+			return new ModelAndView("redirect:/loginManage/login");
+		}
 		Integer uid = Integer.parseInt(userId);
 		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
@@ -134,7 +137,11 @@ public class NewsManageController {
 		log.debug(" 增加文章" + params);
 		Map<String, Object> result = new HashMap<String, Object>();
 		//获取当前登录用户所在地区
-		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+		if(userId == null || "".equals(userId)){
+			result.put(Constants.NOTICE, "用户为登陆, 请刷新页面登陆后重新尝试.");
+			return result;
+		}
 		Integer uid = Integer.parseInt(userId);
 		User userObj = userService.getById(uid);
 		params.setArea(userObj.getArea());
