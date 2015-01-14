@@ -701,4 +701,10 @@ public class IndexController {
 		 * function(e) { alert(e.pi); } }); };
 		 **/
 	}
+
+	@RequestMapping("/footer")
+	public String footer(HttpServletRequest request){
+		request.setAttribute("message", "我是脚部的提示信息.");
+		return "formatter/footer";
+	}
 }

@@ -45,35 +45,36 @@
 <body>
 	<jsp:include page="../formatter/status-bar.jsp" />
 	<jsp:include page="../formatter/header.jsp" />
+	
 	<div id="directBody">
-	<div class="MainLeft">
-		<div class="MainLeftRightHead1">
-           <div class="PublicframeTwo ">
-               <div class="PublicframeTwoHeadBar">
-                 <div class="PublicframeTwoHeadBarLeft"></div>
-                   <div class="PublicframeTwoHeadBarTittle">
-                       <span class="PublicframeTwoHeadBarTittleSpan">就业指导</span>
-                   </div>
-                   <div class="PublicframeTwoHeadBarRight">
-                   </div>
-                   <div class="PublicframeTwoHeadBarMore">
-                       <span class="PublicframeTwoHeadBarMoreSpan"></span>
-                   </div>
-               </div>
-               <div class="PublicframeTwoContent" style="width: auto; padding: 3px 5px 5px;" id="">
-                   <div class="MainLeftTwo">
-                       <div class="MainLeftTwoLeft">
-                          <div id="PublicframeOne11" class="PublicframeOne ">
-                          	<div id="main"></div>
-						  </div>
-                       </div>
-                   </div>
-                   <div style="clear: both"></div>     
-               </div>
-           </div>
-	    </div>	
-	</div>
-	<div class="MainRight">
+		<div class="MainLeft">
+			<div class="MainLeftRightHead1">
+	           <div class="PublicframeTwo ">
+	               <div class="PublicframeTwoHeadBar">
+	                 <div class="PublicframeTwoHeadBarLeft"></div>
+	                   <div class="PublicframeTwoHeadBarTittle">
+	                       <span class="PublicframeTwoHeadBarTittleSpan">就业指导</span>
+	                   </div>
+	                   <div class="PublicframeTwoHeadBarRight">
+	                   </div>
+	                   <div class="PublicframeTwoHeadBarMore">
+	                       <span class="PublicframeTwoHeadBarMoreSpan"></span>
+	                   </div>
+	               </div>
+	               <div class="PublicframeTwoContent" style="width: auto; padding: 3px 5px 5px;" id="">
+	                   <div class="MainLeftTwo">
+	                       <div class="MainLeftTwoLeft">
+	                          <div id="PublicframeOne11" class="PublicframeOne ">
+	                          	<div id="main"></div>
+							  </div>
+	                       </div>
+	                   </div>
+	                   <div style="clear: both"></div>     
+	               </div>
+	           </div>
+		    </div>	
+		</div>
+		<div class="MainRight">
       <div class="MainRightOne">
           <div class="PublicframeTwo ">
           	<div class="PublicframeTwoHeadBar">
@@ -117,7 +118,7 @@
 		</div>
 	</div>
 	
-<jsp:include page="../formatter/footer.jsp" />
+	<jsp:include page="../formatter/footer.jsp" />
 		
 </body>
 </html>

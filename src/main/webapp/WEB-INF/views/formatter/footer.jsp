@@ -2,6 +2,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
+<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 <div class="footer" id="footer">
 	<div style="clear: both"></div>
 	<!-- 脚部 begin -->
@@ -19,45 +22,104 @@
 	<!-- 脚部 end -->
 	
 	<!-- 脚部弹出层 begin -->
+	<style type="text/css">
+		.alertWindow{
+			width: 100%;
+			height: 100%; 
+			background:rgba(0,0,0,0.5);
+			position: fixed; 
+			left:0px; 
+			top: 0px; 
+			z-index: 9999;
+		}
+		.alertWindow .alertWindowBody{
+			width: 400px; 
+			height: 200px;
+			background: #FFF;
+			margin: 180px auto;
+			border: 3px solid #A396FF
+		}
+		.alertWindow .alertWindowBody .alertWindowcloseButtonDiv{
+			width: inherit;
+			height: 20px;
+		}
+		.alertWindow .alertWindowBody .alertWindowcloseButtonDiv .alertWindowCloseButton{
+			float: right; 
+			width: 10px; 
+			height: 20px;
+			margin-right:8px;
+			margin-top: 5px;
+			color:#6066FD;
+			cursor: pointer;
+		}
+		.alertWindow .alertWindowBody .alertWindowcloseButtonDiv .alertWindowCloseButton:hover{
+			font-size:15px;
+			font-weight:bold;
+		}
+		.alertWindow .alertWindowBody .alertWindowTitle{
+			margin-top:10px;
+			text-align:center;
+			font-size: 18px;
+			font-weight: normal;
+			color: #7866FF;
+		}
+		.alertWindow .alertWindowBody .alertWindowContent{
+			width:360px;
+			height: 60px;
+			padding: 10px 20px;
+			text-align:center;
+			font-size: 15px;
+			color: #7F7F7F;
+		}
+		.alertWindow .alertWindowBody .alertWindowSureClose{
+			width: 100px;
+			height: 40px;
+			background:#7D6ACC;
+			border:none;
+			position: relative;
+			bottom: 18px;
+			font-size:18px;
+			color:#FFFFFF;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	</style>
 	<script type="text/javascript">
 		/*
-		    alertWindow by taozhi
+		    alertWindow by yufu
 		    消息框
 		 */
 		jQuery.extend({
-		    alertWindow:function(title,content,bgcolor){
+		    alertWindow:function(title,content){
 		        var title = title; //标题
 		        var content = content; //内容
-		        var color1; //背景颜色
-		        if(bgcolor===undefined){
-		            color1 = "#FF7C00";
-		        }else{
-		            color1 = bgcolor;
-		        }
+		        var color1= "#FF7C00"; //背景颜色
 		        //查找body中是否存在该消息框
-		        if($("body").find(".alertWindow1").length===0){
+		        if($("body").find(".alertWindow").length===0){
 		        //不存在
-		            var alertHtml = '<div  class="alertWindow1" style="width: 100%;height: 100%; background:rgba(0,0,0,0.5);position: fixed; left:0px; top: 0px; z-index: 9999;">'+
-		                                '<div  style="width: 400px; height: 200px;background: #FFF;margin: 180px auto;border: 2px solid #CFCFCF; border-bottom: 10px solid '+color1+';">'+
-		                                    '<div  style="width: inherit;height: 20px;">'+
-		                                        '<div class="alertWindowCloseButton1" style="float: right; width: 10px; height: 20px;margin-right:5px;font-family:\'microsoft yahei\';color:'+color1+';cursor: pointer;">X</div>'+
+		            var alertHtml = '<div class="alertWindow">'+
+		                                '<div class="alertWindowBody">'+
+		                                    '<div class="alertWindowcloseButtonDiv">'+
+		                                        '<div class="alertWindowCloseButton">X</div>'+
 		                                    '</div>'+
-		                                    '<h1 class="alertWindowTitle" style="margin-top:20px;text-align:center;font-family:\'宋体\';font-size: 18px;font-weight: normal;color: '+color1+';">'+title+'</h1>'+
-		                                    '<div class="alertWindowContent" style="width:360px;px;height: 60px;padding-left:20px;padding-right:20px;text-align:center;font-size: 15px;color: #7F7F7F;">'+content+'</div>'+
-		                                    '<p><input class="alertWindowCloseSure1" type="button" value="确定" style="width: 100px;height: 50px;background:'+color1+';border:none;position: relative;bottom: 18px;font-size:18px;color:#FFFFFF;-webkit-border-radius: 10px;-moz-border-radius: 10px;border-radius: 10px;cursor: pointer;"></p>'+
+		                                    '<h1 class="alertWindowTitle">'+title+'</h1>'+
+		                                    '<div class="alertWindowContent">'+content+'</div>'+
+		                                    '<p><input class="alertWindowSureClose" type="button" value="确  定" style=""></p>'+
 		                                '</div>'+
 		                           '</div>';
 		            $("body").append(alertHtml);
 		            /*
 		             绑定事件
 		             */
-		            var $alertWindow = $(".alertWindow1"); //窗口对象
+		            var $alertWindow = $(".alertWindow"); //窗口对象
 		            //右上角关闭按钮
-		            $(".alertWindowCloseButton1").click(function(){
+		            $(".alertWindowCloseButton").click(function(){
 		                $alertWindow.hide();
 		            });
 		            //确定按钮
-		            $(".alertWindowCloseSure1").click(function(){
+		            $(".alertWindowSureClose").click(function(){
 		                $alertWindow.hide();
 		            });
 		        }else{
@@ -67,11 +129,11 @@
 		            //设置内容
 		            $(".alertWindowContent").text(content);
 		            //显示
-		            $(".alertWindow1").show();
+		            $(".alertWindow").show();
 		        }
 		    }
 		});
-		</script>
+	</script>
 	
 	<c:if test="${message != null}">
 		<input type="hidden" value="${messageType }" id="messageType" />

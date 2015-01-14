@@ -582,6 +582,7 @@
 		<!-- 尾部footer区 -->
 		<div class="clearboth"></div>
 		<jsp:include page="formatter/footer.jsp" />
+		
 	</div>
 </body>
 </html>

@@ -26,6 +26,7 @@
 <body>
 	<jsp:include page="../formatter/status-bar.jsp" />
 	<jsp:include page="../formatter/header.jsp" />
+	
 	<div id="directBody">
 		<div class="MainLeft" style="width:100%;">
 			<div class="MainLeftRightHead1">
@@ -163,7 +164,7 @@
 		</div>
 	</div>
 	
-<jsp:include page="../formatter/footer.jsp" />
+	<jsp:include page="../formatter/footer.jsp" />
 		
 </body>
 </html>

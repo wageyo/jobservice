@@ -27,9 +27,9 @@
 	</script>
 </head>
 <body>
-	<jsp:include page="../formatter/status-bar.jsp" />
-	<jsp:include page="../formatter/header.jsp" />
 	<div id="maincontent">
+		<jsp:include page="../formatter/status-bar.jsp" />
+		<jsp:include page="../formatter/header.jsp" />
 		<div style="margin-top: 10px;">
 			<form action="${contextPath }/work" id="searchObj">
 				<div id="leftsidebar" >
@@ -193,108 +193,10 @@
 					</div>
 				</div>
 			</div>
-			<jsp:include page="../formatter/footer.jsp" />
 		</div>
+		<jsp:include page="../formatter/footer.jsp" />
 	</div>
 
 
-
-
-	<%--
-
-	<div id="xdAC">
-	
-		<div class="title4">职位搜索</div>
-		<div class="xinxi">
-			<div id="xdSearch2">
-				<!--职业搜索-->
-				<div style="width: 80px; height: 80px; float: left; margin: 5px 0 0 5px;">
-					<img src="images/search11.gif" />
-				</div>
-				<div class="sousuo2">
-
-					<p>
-						工作类别： <select name="jobCategory" id="jobCategory" class="dropdownlist" style="width: 260px;height:23px">
-							<c:forEach items="${jcList }" var="jc">
-								<option value="${jc.code }">${jc.name }</option>
-							</c:forEach>
-						</select>
-					</p>
-					<p>
-						学历要求： <select name="education" id="education" class="dropdownlist" style="width: 65px;height:23px">
-							<c:forEach items="${params }" var="p">
-								<c:if test="${p.type == 'education' }">
-									<option value="${p.value }">${p.name }</option>
-								</c:if>
-							</c:forEach>
-						</select>
-					</p>
-			<!-- 		<p>
-						工作地点：
-						<select name="areaCode" id="areaCode" class="dropdownlist" style="width: 130px; margin-right:100px;">
-							<option value="">请选择</option>
-							<c:forEach items="${areaList }" var="t">
-								<option value="${t.code }" <c:if test="${fn:substring(area.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
-							</c:forEach>
-						</select>
-					</p> -->
-					<p>
-						工作性质： <select name="jobNature" id="jobNature" class="dropdownlist" style="width: 100px;height:23px">
-							<c:forEach items="${params }" var="p">
-								<c:if test="${p.type == 'jobNature' }">
-									<option value="${p.value }">${p.name }</option>
-								</c:if>
-							</c:forEach>
-
-						</select>
-					</p>
-					<p>
-						关键词： <input name="keyWord" id="keyWord" type="text" id="TextBox1" style="width: 140px;height:19px" />
-					</p>
-					<p>
-						<input type="image" name="btn-search" id="btn-search" onclick="common.pagination(1)" src="images/HomePageImage/SearchImage/SearchBtn.gif" style="border-width:0px;" />
-					</p>
-				</div>
-			</div>
-			<div style="padding-left: 250px; line-height: 35px; background-image: url(images/zgz_r2_c2.jpg)">
-				<table style="width: 100%;">
-					<tr>
-						<td>&nbsp;&nbsp;&nbsp;&nbsp;共有：<span id="Label8" style="color:Red;">${totalCount }</span>个工作岗位供您选择
-						<c:if test="${cookie.companyid.value == null || cookie.companyid.value == ''}">
-							<a href="${contextPath}/regC" style="color: #f00;">我也要发布</a>
-						</c:if>
-						</td>
-						<td></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		<div style="clear: both;"></div>
-		<div class="xBandEnterpriseH" style="background-image: url(images/PublicImage/PublicframeOneImage/PublicframeOneHeaderBar.jpg); repeat-x">
-			<div class="xBandEnterpriseHRight"></div>
-			<span style="margin-left: 10px;">最新更新的招聘信息</span>
-		</div>
-		<div class="xBandEnterpriseK">
-			<div id="ctl00_ctl00_cph_cph_div_NewPosts" class="NewPosts">
-				<div class="job_list">
-
-					<table width="988px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
-						<tr style="background-color: #ECF4FF;">
-							<td width="29" height="30">&nbsp;</td>
-							<td height="30" width="200px" class="s13_blue_b"  id="tableHeadStyle">招聘职位</td>
-							<td width="203px"  class="s13_blue_b" id="tableHeadStyle">公司名称</td>
-							<td width="122px"  class="s13_blue_b" id="tableHeadStyle">工作地区</td>
-							<td width="145px" class="s13_blue_b" id="tableHeadStyle">经验要求</td>
-							<td width="150px" class="s13_blue_b" id="tableEndStyle" >更新时间</td>
-						</tr>
-					</table>
-					<div id="main"></div>
-				</div>
-			</div>
-		</div>
-		
-			<jsp:include page="../formatter/footer.jsp" />
-			</div>
---%>
 </body>
 </html>

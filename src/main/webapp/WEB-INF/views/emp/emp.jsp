@@ -33,6 +33,7 @@
 <body>
 	<jsp:include page="../formatter/status-bar.jsp" />
 	<jsp:include page="../formatter/header.jsp" />
+	
 	<div id="maincontent">
       <div style="margin-top: 10px;">
       	<form action="${contextPath }/emp" id="searchObj">
@@ -242,117 +243,9 @@
 				</div>
 			</div>            
          </div>
-         <jsp:include page="../formatter/footer.jsp" />
       </div>
 	</div>
-	<%--	
-		<div class="title4">简历搜索</div>
-		<div class="xinxi">
-			<div id="xdSearch2">
-				<!--职业搜索-->
-				<div style="width: 80px; height: 80px; float: left; margin: 5px 0 0 5px;">
-					<img src="images/search11.gif">
-				</div>
-				<div class="sousuo2">
-					<p>
-						就职意向： 
-						<select name="jobCategory" id="jobCategory" style="width: 270px;height:23px">
-							<c:forEach items="${jcList }" var="jc">
-								<option value="${jc.code }">${jc.name }</option>
-							</c:forEach>
-						</select>
-					</p>
-					<p class="p1">
-						学历： <select name="education" id="education" style="width: 100px;height:23px">
-							<c:forEach items="${params }" var="p">
-								<c:if test="${p.type == 'education' }">
-									<option value="${p.value }">${p.name }</option>
-								</c:if>
-							</c:forEach>
-						</select>
-					</p>
-			<!-- 		<p>
-						工作地区：
-						<select name="areaCode" id="areaCode" style="width: 130px">
-							<option value="">请选择</option>
-							<c:forEach items="${areaList }" var="t">
-								<option value="${t.code }"  <c:if test="${fn:substring(area.code,2,4) == fn:substring(t.code,2,4) }">selected="selected"</c:if>>${t.name }</option>
-							</c:forEach>
-						</select>
-					</p> -->
-					<p>
-						就职方式： <select name="jobNature" id="jobNature" style="width: 100px;height:23px">
-							<c:forEach items="${params }" var="p">
-								<c:if test="${p.type == 'jobNature' }">
-									<option value="${p.value }">${p.name }</option>
-								</c:if>
-							</c:forEach>
-						</select>
-					</p>
-
-					
-					<p>
-						性别： <select name="gender" id="gender" style="width: 80px;height:23px">
-							<c:forEach items="${params }" var="p">
-								<c:if test="${p.type == 'gender' }">
-									<option value="${p.value }">${p.name }</option>
-								</c:if>
-							</c:forEach>
-
-						</select>
-					</p>
-					<p>
-						关键词： <input name="keyWord" type="text" id="keyWord" style="width: 140px;height:19px">
-					</p>
-					<p>
-				
-						<input type="image" name="ImageButton1" id="ImageButton1" onclick="common.pagination(1)" class="send55" src="images/HomePageImage/SearchImage/SearchBtn.gif" style="border-width:0px;">
-					</p>
-				</div>
-			</div>
-			<div style="padding-left: 250px; line-height: 35px; background-image: url(images/zgz_r2_c2.jpg)">
-				<table style="width: 100%;">
-					<tbody>
-						<tr>
-							<td>&nbsp;&nbsp;&nbsp;&nbsp;共有：<span id="Label8" style="color:Red;">${totalCount }</span>份人才简历供您选择 
-							<c:if test="${user == null }">
-								<a href="${contextPath}/regP" style="color: #f00;">我也要加入</a>
-							</c:if>
-							</td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div style="clear: both;"></div>
-		<div class="xBandEnterpriseH" style="background-image: url(images/PublicImage/PublicframeOneImage/PublicframeOneHeaderBar.jpg);
-                repeat-x">
-			<div class="xBandEnterpriseHRight"></div>
-			<span style="margin-left: 10px;">最新更新的招聘信息</span>
-		</div>
-		<div class="xBandEnterpriseK">
-			<div id="ctl00_ctl00_cph_cph_div_NewPosts" class="NewPosts">
-				<div class="job_list">
-
-					<table width="988px" border="0" cellspacing="0" cellpadding="0" style="font-weight: bold;">
-						<tr style="background-color: #ECF4FF; text-align: center">
-							<td width="20" height="30">&nbsp;</td>
-							<td  height="30" width="90px" class="s13_blue_b" id="tableHeadStyle">简历标题</td>
-							<td width="70px" class="s13_blue_b" id="tableHeadStyle">姓名</td>
-							<td width="50px" class="s13_blue_b" id="tableHeadStyle">性别</td>
-							<td width="80px" class="s13_blue_b" id="tableHeadStyle">学历</td>
-							<td width="70px" class="s13_blue_b" id="tableHeadStyle">专业</td>
-							<td width="80px" class="s13_blue_b" id="tableHeadStyle">工作经验</td>
-							<td width="100px" class="s13_blue_b" id="tableHeadStyle">求职岗位</td>
-							<td width="100px" class="s13_blue_b" id="tableHeadStyle">期望工作地</td>
-							<td width="80px" class="s13_blue_b" id="tableEndStyle">期望薪资</td>
-						</tr>
-					</table>
-					<div id="main"></div>
-				</div>
-			</div>
-		</div>
-		--%>
+	
+    <jsp:include page="../formatter/footer.jsp" />
 </body>
 </html>

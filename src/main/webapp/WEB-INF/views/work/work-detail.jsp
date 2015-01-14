@@ -306,7 +306,7 @@
 		</div>
 	</div>
 	
-<jsp:include page="../formatter/footer.jsp" />
+	<jsp:include page="../formatter/footer.jsp" />
 		
 </body>
 </html>

@@ -57,27 +57,12 @@
 			</div>
 		</div>
 		<div class="content">
-		<!-- 
-			<div class="lockinfotop">
-				<div>
-					<span class="lockinfokeyword">简历关键字：</span><span id="spanKeyWords"></span>
-				</div>
-				<div class="lockinfocode">
-					<ul>
-						<li>简历编号：</li>
-						<li id="liCode">5654865484648</li>
-						<li>|</li>
-						<li>更新日期：</li>
-						<li id="liUpdateDate">2014年12月2日</li>
-					</ul>
-				</div>
-			</div> -->
 			<!-- 基本信息 begin -->
 			<div class="lockinfofirst">
 				<div class="lockinfofirsttitle" id="divUserName">${resume.name } ${resume.disabilityCategory } ${resume.disabilityLevel }</div>
-				<div class="lockinfolist">
-					<div class="lockinfolistone">
-						<input type="hidden" id="resumeid" value="${resume.id }" />
+			<div class="lockinfolist">
+				<div class="lockinfolistone">
+					<input type="hidden" id="resumeid" value="${resume.id }" />
 						<ul>
 							<li id="liPWorkexperience">${resume.name }</li>
 							<li>|</li>
@@ -108,8 +93,8 @@
 					</div>
 					<div class="clearboth"></div>
 				</div>
-				<!-- 个人头像功能暂未开发 -->
-				<div class="lockinfoimage">
+			<!-- 个人头像功能暂未开发 -->
+			<div class="lockinfoimage">
 					<div id="divImg" class="lockinfopic">
 						<img width="96px" height="108px" src="${contextPath }/images/person/not-open.png" />
 					</div>
@@ -251,67 +236,67 @@
 			</c:if>
 	</div>
 	
-	<!-- 以下是弹出窗 -->
-	<div id="bg"></div>
-	<div id="popbox">
-		<!-- 标题div -->
-		<div class="poptitle">
-			<div style="width:90%;float:left;">
-				<span style="margin-left:10px;">面试邀请</span>
+		下是弹出窗 -->
+		<div id="bg"></div>
+		<div id="popbox">
+			<!-- 标题div -->
+			<div class="poptitle">
+				<div style="width:90%;float:left;">
+					<span style="margin-left:10px;">面试邀请</span>
+				</div>
+				<div style="float:left;width:10%;">
+					<a href="javascript:pupclose();">关闭</a>
+				</div>
 			</div>
-			<div style="float:left;width:10%;">
-				<a href="javascript:pupclose();">关闭</a>
+			
+			<!-- 邀请内容 -->
+			<div class="popcontent">
+				<table>
+					<tr>
+						<td style="width:70px;">受邀请人:</td>
+						<td style="width:150px;">${resume.name }</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>应聘岗位:</td>
+						<td>
+							<input type="hidden" id="companyId" name="companyId" value="${company.id }" />
+							<select name="choosenJob" id="choosenJob">
+								<c:forEach items="${jobList }" var="job">
+									<option value="${job.id }">${job.name }</option>
+								</c:forEach>
+							</select>
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>联系人:</td>
+						<td>
+							${company.contactPerson }
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>联系电话:</td>
+						<td>
+							${company.telephone }
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>留言内容:</td>
+						<td colspan="2" >
+							<textarea cols="36" rows="10" name="leaveMessage" id="leaveMessage"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" style="text-align:center;height:40px;">
+							<a href="javascript:sendInvite();" style="font-size: 16px;font-weight: bold;border: 2px solid rgb(235, 138, 138);padding: 2px 7px;background-color: rgb(253, 189, 189);">发&nbsp;&nbsp;送</a>
+						</td>
+					</tr>
+				</table>
 			</div>
 		</div>
-		
-		<!-- 邀请内容 -->
-		<div class="popcontent">
-			<table>
-				<tr>
-					<td style="width:70px;">受邀请人:</td>
-					<td style="width:150px;">${resume.name }</td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td>应聘岗位:</td>
-					<td>
-						<input type="hidden" id="companyId" name="companyId" value="${company.id }" />
-						<select name="choosenJob" id="choosenJob">
-							<c:forEach items="${jobList }" var="job">
-								<option value="${job.id }">${job.name }</option>
-							</c:forEach>
-						</select>
-					</td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td>联系人:</td>
-					<td>
-						${company.contactPerson }
-					</td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td>联系电话:</td>
-					<td>
-						${company.telephone }
-					</td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td>留言内容:</td>
-					<td colspan="2" >
-						<textarea cols="36" rows="10" name="leaveMessage" id="leaveMessage"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3" style="text-align:center;height:40px;">
-						<a href="javascript:sendInvite();" style="font-size: 16px;font-weight: bold;border: 2px solid rgb(235, 138, 138);padding: 2px 7px;background-color: rgb(253, 189, 189);">发&nbsp;&nbsp;送</a>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
 		
 		
 		
