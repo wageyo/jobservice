@@ -8,14 +8,24 @@
 }
 .header .logo
 {
-    /*background:url(../../Image/HomePageImage/HeaderImage/logo.png) no-repeat;*/
-    width:190px;
+    background-color: rgb(240, 240, 255);
     height:60px;
     float:left;
+    padding-right:10px;
 }
 .header .logo:hover
 {
     cursor:pointer;
+}
+
+.header a img
+{
+    height: 60px;float: left;
+}
+
+.header span
+{
+    line-height: 60px;
 }
 .header .headerright
 {

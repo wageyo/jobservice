@@ -19,30 +19,35 @@
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/resume.js"></script>
 	<script type="text/javascript">
-		
+		//解码
+		function decodeareaname(){
+			var areaname = decodeURIComponent('${cookie.areaname.value}');
+			$('#logospanname').html(areaname + '残疾人就业信息网');
+		}
 	</script>
 </head>
 <body>
 	<div id="container">
 		<div class="header">
-			<div class="logo" title="返回网站首页">
+			<div class="logo" title="返回网站首页" >
 				<!-- 如果能显示对应省市的则显示对应省份的logo, 否则显示全国的log -->
+				<a title="残疾人就业服务网" href="${contextPath}/index">
 					<c:choose>
-						<c:when test="${cookie.areacode.value != null && cookie.areacode.value != '' }">
-							<c:choose>
-								<c:when test="${cookie.areacode.value != '10000000' }">
-									<img alt="残疾人就业信息网" src="${contextPath }/images/logoProvince/${cookie.areacode.value }.png" onclick="window.location.href='${contextPath}/index';" style="width:auto;height:60px;" />
-								</c:when>
-								<c:otherwise>
-									<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" onclick="window.location.href='${contextPath}/index';" id="bg2" style="width:auto;height:60px;" />
-								</c:otherwise>
-							</c:choose>
+						<c:when test="${areacode != null && areacode != '' }">
+							<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/logo.png?timestamp1=${now}" /> 
+							<span >${areaname }残疾人就业信息网</span>
 						</c:when>
-						<c:otherwise>
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/10000000.png" onclick="window.location.href='${contextPath}/index';" id="bg2" style="width:auto;height:60px;" /> 
+						<c:otherwise>	
+							<c:if test="${cookie.areacode.value != null && cookie.areacode.value != '' }">
+								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/logo.png?timestamp2=${now}" /> 
+								<span id="logospanname"></span>
+								<script type="text/javascript">
+									decodeareaname();
+								</script>
+							</c:if> 
 						</c:otherwise>
 					</c:choose>
-			
+				</a>
 			</div>
 			<div class="headerright">
 				<div class="choosemodel"></div>
