@@ -1394,5 +1394,26 @@ public class KitService {
 		}
 		return newsList;
 	}
-
+	/**
+	 * 根据对应的值
+	 * 
+	 * @param switchValue
+	 * @return
+	 */
+	public static String getMateNature(String switchValue) {
+		if (switchValue == null || "".equals(switchValue)) {
+			return null;
+		}
+		if (switchValue.equals("全职")) {
+			return "full";
+		}
+		if (switchValue.equals("兼职")) {
+			return "half";
+		}
+		if (switchValue.equals("实习")) {
+			return "practice";
+		}
+		return null;
+	}
+	
 }

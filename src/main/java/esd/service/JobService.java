@@ -313,4 +313,23 @@ public class JobService {
 
 	}
 
+	/**
+	 *  根据公司id, 得到他所发布的职位列表--用作编辑处理
+	 * @param cid
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Job> getByCompanyMate(int cid, int startPage, int size) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cid", cid);
+		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
+				* (size <= 0 ? Constants.SIZE : size));
+		map.put("size", size <= 0 ? Constants.SIZE : size);
+		List<Job> list = dao.getByCompanyMate(map);
+		for (Job job : list) {
+			job = kitService.getForShow(job);
+		}
+		return list;
+	}
 }

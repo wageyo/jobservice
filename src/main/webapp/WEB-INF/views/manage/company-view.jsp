@@ -20,7 +20,63 @@
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/widget.js"></script>
 	<script src="${contextPath}/js/manage/company.js"></script>
-</head>
+	
+	
+	
+	
+<script type="text/javascript" src="${contextPath}/js/lib/fancybox/jquery-1.2.3.pack.js"></script>
+<script type="text/javascript" src="${contextPath}/js/lib/fancybox/jquery.fancybox-1.0.0.js"></script>
+<script type="text/javascript" src="${contextPath}/js/lib/fancybox/jquery.pngFix.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/lib/fancybox/fancy.css"/>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("a#businessLicenseHref").fancybox();
+
+			$("a#institutionalFrameworkHref").fancybox();
+
+			$("a#taxRegistrationHref").fancybox();
+		});
+	</script>
+	
+	<%--
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/jquery.fancybox.css" media="screen" />
+	
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+
+	<script type="text/javascript" src="${contextPath}/js/lib/jquery.fancybox-1.3.4.pack.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/lib/jquery.fancybox-1.3.4.pack.js"></script>  
+    <link rel="stylesheet" type="text/css" href="${contextPath}/css/jquery.fancybox.css" media="screen" />  
+	<script type="text/javascript">
+	    $("#fancybox").fancybox({  
+        'width'                : '30%',  
+        'height'               : '20%',  
+        'autoScale'            : false,  
+        'transitionIn'         : 'none',  
+        'transitionOut'        : 'none',  
+        'onClosed' : function() {alert('test');}  
+    });  
+	</script>
+	    --%>
+	
+	
+	<%--<script type="text/javascript">
+		$(document).ready(function() {
+			$("a#example1").fancybox();
+
+			$("a#example2").fancybox({
+				'overlayShow'	: false,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic'
+			});
+
+			$("a#example3").fancybox({
+				'transitionIn'	: 'none',
+				'transitionOut'	: 'none'	
+			});
+		});
+	</script>
+--%></head>
 
 <body>
 	
@@ -79,7 +135,7 @@
 									</tr>
 									<tr>
 										<td>
-											组织机构代码:
+											<span style="color:red;">* </span>组织机构代码:
 										</td>
 										<td>
 											<input name="organizationCode" type="text" value="${obj.organizationCode }" id="organizationCode" />
@@ -218,6 +274,101 @@
 											</div>
 										</td>
 									</tr>
+									
+									<tr height=60px>
+										<td>
+											<span style="color:red;">* </span>营业执照副本图片：
+										</td>
+										<td>
+										<a id='businessLicenseHref' 										
+											<c:choose>
+												<c:when test="${obj.businessLicense != null && obj.businessLicense != '' }" >
+													 href="${contextPath }/image/downloadPic/${obj.businessLicense}.jpg" 
+												</c:when>
+												<c:otherwise>
+													 href= "" 
+												</c:otherwise>
+											</c:choose>>
+											<img id="businessLicenseImg" 
+												<c:choose>
+													<c:when test="${obj.businessLicense != null && obj.businessLicense != '' }" >
+														 src="${contextPath }/image/downloadPic/${obj.businessLicense}" 
+													</c:when>
+													<c:otherwise>
+														src= "" 
+													</c:otherwise>
+												</c:choose>
+											style="height:50px;width:200px;border-width:0px;"/></a>
+											<input type="hidden" id="businessLicense" name="businessLicense" value="" />
+										
+										</td>
+										<td>
+											<span style="color:red;">* </span>组织机构代码图片：
+										</td>
+										<td>
+											<a id='institutionalFrameworkHref' <c:choose>
+													<c:when test="${obj.institutionalFramework != null && obj.institutionalFramework != '' }" >
+														 href="${contextPath }/image/downloadPic/${obj.institutionalFramework}.jpg" 
+													</c:when>
+													<c:otherwise>
+														href= "" 
+													</c:otherwise>
+												</c:choose>>	
+											<img id="institutionalFrameworkImg" 
+												<c:choose>
+													<c:when test="${obj.institutionalFramework != null && obj.institutionalFramework != '' }" >
+														 src="${contextPath }/image/downloadPic/${obj.institutionalFramework}" 
+													</c:when>
+													<c:otherwise>
+														 src = "" 
+													</c:otherwise>
+												</c:choose>
+											style="height:50px;width:200px;border-width:0px;"/></a>
+											<input type="hidden" id="institutionalFramework" name="institutionalFramework" value="" />
+										
+										</td>
+									</tr>
+									
+									
+									<tr height=60px>
+									<td>
+										<span style="color:red;">* </span>税务登记证图片：
+									</td>
+									<td>
+									<a id='taxRegistrationHref' 
+									<c:choose>
+												<c:when test="${obj.taxRegistration != null && obj.taxRegistration != '' }" >
+									href="${contextPath }/image/downloadPic/${obj.taxRegistration}.jpg" 
+											</c:when>
+											<c:otherwise>
+												 href= "" 
+											</c:otherwise>
+										</c:choose>>
+										<img id="taxRegistrationImg" 
+											<c:choose>
+												<c:when test="${obj.taxRegistration != null && obj.taxRegistration != '' }" >
+									src="${contextPath }/image/downloadPic/${obj.taxRegistration}" 
+											</c:when>
+											<c:otherwise>
+												 src = "" 
+											</c:otherwise>
+										</c:choose>
+									style="height:50px;width:200px;border-width:0px;"/></a>
+											<input type="hidden" id="taxRegistration" name="taxRegistration" value="" />
+										
+										</td>
+										<td>
+										</td>
+										<td>
+									
+										</td>
+									</tr>
+									
+									
+									
+									
+									
+									
 									<tr>
 										<td>
 											企业简介 :

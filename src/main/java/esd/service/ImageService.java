@@ -40,6 +40,11 @@ public class ImageService {
 	public boolean delete(int id) {
 		return dao.delete(id);
 	}
+	
+	// 删除一个对象
+		public boolean deleteId(String id) {
+			return dao.delete(id);
+		}
 
 	// 更新一个对象
 	public boolean update(Image image) {

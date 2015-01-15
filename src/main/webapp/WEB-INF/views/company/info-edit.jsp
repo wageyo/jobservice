@@ -25,6 +25,7 @@
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/check/company-check.js"></script>
+		<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	<script type="text/javascript">
 	</script>
 </head>
@@ -204,6 +205,63 @@
 															</select>
 		                                                </td>
 		                                            </tr>
+		                      		<tr>
+										<td class="textTop">
+											<em style="display: inline;">* </em>营业执照副本图片：
+										</td>
+										<td colspan="3">
+											<img id="businessLicenseImg" 
+												<c:choose>
+													<c:when test="${company.businessLicense != null && company.businessLicense != '' }" >
+														 src="${contextPath }/image/downloadPic/${company.businessLicense}" 
+													</c:when>
+													<c:otherwise>
+														 src = "" 
+													</c:otherwise>
+												</c:choose>
+											style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="businessLicenseImport" />
+											<input type="hidden" id="businessLicense" name="businessLicense" value="" />
+										</td>
+									</tr>
+											<tr>
+										<td class="textTop">
+											<em style="display: inline;">* </em>组织机构代码图片：
+										</td>
+										<td colspan="3">
+											<img id="institutionalFrameworkImg" 
+												<c:choose>
+													<c:when test="${company.institutionalFramework != null && company.institutionalFramework != '' }" >
+														 src="${contextPath }/image/downloadPic/${company.institutionalFramework}" 
+													</c:when>
+													<c:otherwise>
+														 src = "" 
+													</c:otherwise>
+												</c:choose>
+											style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="institutionalFrameworkImport" />
+											<input type="hidden" id="institutionalFramework" name="institutionalFramework" value="" />
+										</td>
+									</tr>
+											<tr>
+										<td class="textTop">
+											<em style="display: inline;">* </em>税务登记证图片：
+										</td>
+										<td colspan="3">
+											<img id="taxRegistrationImg" 
+												<c:choose>
+													<c:when test="${company.taxRegistration != null && company.taxRegistration != '' }" >
+														 src="${contextPath }/image/downloadPic/${company.taxRegistration}" 
+													</c:when>
+													<c:otherwise>
+														 src = "" 
+													</c:otherwise>
+												</c:choose>
+											style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="taxRegistrationImport" />
+											<input type="hidden" id="taxRegistration" name="taxRegistration" value="" />
+										</td>
+									</tr>
 		                                            <tr>
 		                                                <td class="textTop">
 		                                                    <em></em><em style="display: inline;">* </em>单位介绍：

@@ -1,7 +1,6 @@
 /***********************************************
  *******  后台管理页面框架脚本--企业管理  ********
  ***********************************************/
-
 //收集参数并进入后台查询方法
 function query(page,checkStatus){
 	var paramStr = '';	//查询字符串
@@ -108,7 +107,10 @@ function updateEntity(submitType,objId){
 				contactDept:param.contactDept,
 				fax:param.fax,
 				email:param.email,
-				address:param.address
+				address:param.address,
+				businessLicense:param.businessLicense,
+				institutionalFramework:param.institutionalFramework,
+				taxRegistration:param.taxRegistration
 			},
 			success:function(data){
 				if(data.notice == 'success'){
@@ -231,6 +233,18 @@ function checkObject(){
 	var address = $('#address').val();
 	if(address != null && address != ''){
 		param.address = address;
+	}
+	var businessLicense = $('#businessLicense').val();
+	if(businessLicense != null && businessLicense != ''){
+		param.businessLicense = businessLicense;
+	}
+	var institutionalFramework = $('#institutionalFramework').val();
+	if(institutionalFramework != null && institutionalFramework != ''){
+		param.institutionalFramework = institutionalFramework;
+	}
+	var taxRegistration = $('#taxRegistration').val();
+	if(taxRegistration != null && taxRegistration != ''){
+		param.taxRegistration = taxRegistration;
 	}
 	return param;
 }

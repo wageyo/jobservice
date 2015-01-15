@@ -14,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
+import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.bean.Parameter;
 import esd.bean.Resume;
@@ -26,6 +28,7 @@ import esd.controller.Constants;
 import esd.service.AreaService;
 import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
+import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ParameterService;
 import esd.service.ResumeService;
@@ -62,6 +65,10 @@ public class ResumeManageController {
 
 	@Autowired
 	private JobCategoryService jcService;
+	
+	@Autowired
+	private JobService jobService;
+	
 
 	// 转到简历管理列表页面
 	@RequestMapping(value = "/resume_list", method = RequestMethod.GET)
@@ -233,4 +240,107 @@ public class ResumeManageController {
 		}
 		return map;
 	}
+	
+	// 转到自动匹配简历管理列表页面
+	@RequestMapping(value = "/resume_mate_list1", method = RequestMethod.GET)
+	public ModelAndView mate_list_get1(HttpServletRequest request) {
+		log.debug("goto：自动匹配简历 后台管理 列表");
+		Map<String, Object> entity = new HashMap<>();
+		String pageStr = request.getParameter("page");
+		Integer page = KitService.getInt(pageStr) > 0 ? KitService
+				.getInt(pageStr) : 1;
+//		Integer rows = Constants.SIZE;
+				Integer rows = Constants.SIZE;
+		List<Parameter> plist = pService.getAll();
+		entity.put("params", plist);
+		Resume paramEntity = new Resume();
+		String resumeMat = request.getParameter("resumeMat");
+		if (resumeMat != null && !"".equals(resumeMat)) {
+			resumeMat=resumeMat+"%";
+		}
+		// 获取地区码
+		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
+		// 根据管理员用户所属地区, 查询他下面所属的所有数据
+		String acode = userObj.getArea().getCode();
+		paramEntity.setArea(new Area(acode));
+
+		List<Resume> resultList = resumeService.getForListShow(paramEntity,
+				page, rows);
+		Integer total = resumeService.getTotalCount(paramEntity,Boolean.FALSE); // 数据总条数
+		try {
+			List<Map<String, Object>> list = new ArrayList<>();
+			for (Resume tmp : resultList) {
+				Map<String, Object> tempMap = new HashMap<>();
+				tempMap.put("id", tmp.getId());// id
+				tempMap.put("title", tmp.getTitle());// 简历名称
+				tempMap.put("name", tmp.getName());// 姓名
+				tempMap.put("gender", tmp.getGender());// 性别
+				tempMap.put("disabilityCard", tmp.getDisabilityCard());	//残疾证号
+				tempMap.put("disabilityCategory", tmp.getDisabilityCategory());	//残疾类别
+				tempMap.put("disabilityLevel",tmp.getDisabilityLevel());	//残疾等级
+				tempMap.put("phone", tmp.getPhone());	//联系电话
+				List<Job> jobResultList = null ;
+				String mark = request.getParameter("mark");
+				//判断查询条件是否为空，组成查询条件
+				if(mark != null && !"".equals(mark)){
+				Job jobEntity = new Job();
+				jobEntity.setArea(new Area(acode));
+				String jccode = request.getParameter("jccode");
+				if (jccode != null && !"".equals(jccode)) {
+					jobEntity.setJobCategory(tmp.getDesireJob());
+				}
+				String work_place = request.getParameter("work_place");
+				if (work_place != null && !"".equals(work_place)) {
+					jobEntity.setWorkPlace(tmp.getDesireAddress());
+				}
+					
+				String nature = request.getParameter("nature");
+				if (nature != null && !"".equals(nature)) {
+					String JobNature=KitService.getMateNature(tmp.getJobNature());
+					jobEntity.setNature(JobNature);
+				}
+				
+				String name = request.getParameter("name");
+				if (name != null && !"".equals(name)) {
+					jobEntity.setName(tmp.getName());
+				}
+				String education = request.getParameter("education");
+				if (education != null && !"".equals(education)) {
+					jobEntity.setEducation(tmp.getEducation());
+				}
+				String experience = request.getParameter("experience");
+				if (experience != null && !"".equals(experience)) {
+					jobEntity.setExperience(tmp.getExperience());
+				}
+				String salary = request.getParameter("salary");
+				if (salary != null && !"".equals(salary)) {
+					jobEntity.setSalary(tmp.getDesireSalary());
+				}
+				String gender = request.getParameter("gender");
+				if (gender != null && !"".equals(gender)) {
+					jobEntity.setGender(tmp.getGender());
+				}
+				jobResultList = jobService.getListForShow(jobEntity,1, Integer.MAX_VALUE);
+				}
+				tempMap.put("jobResultList",jobResultList);
+				
+				list.add(tempMap);
+			}
+			entity.put("total", total);
+			entity.put("entityList", list);
+			log.debug("获取 简历 信息，size():" + total);
+		} catch (Exception e) {
+			log.error("获取 简历 时发生错误。");
+			e.printStackTrace();
+		}
+		
+		// 放入当前页数, 总页数, 简历名, 审核状态
+		entity.put("currentPage", page);
+		entity.put("totalPage", KitService.getTotalPage(total));
+    	entity.put("resumeMatchPerName", resumeMat);
+		return new ModelAndView("manage/resume-mate-list", entity);
+	}
+			
 }

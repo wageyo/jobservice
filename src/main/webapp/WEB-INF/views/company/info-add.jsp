@@ -25,6 +25,8 @@
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/check/company-check.js"></script>
+		<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
+	
 	<script type="text/javascript">
 	</script>
 </head>
@@ -103,7 +105,7 @@
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		 组织机构代码：
+	                                                  		<em style="display: inline;">* </em> 组织机构代码：
 		                                                </td>
 		                                                <td>
 		                                                	<input id="organizationCode" name="organizationCode" type="text" value="" type="text" />
@@ -119,7 +121,7 @@
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		税务编码：
+	                                                  		<em style="display: inline;">* </em>税务编码：
 		                                                </td>
 		                                                <td>
 		                                                	<input id="taxCode" name="taxCode" type="text" value="" type="text" />
@@ -202,7 +204,45 @@
 																</c:forEach>
 															</select>
 		                                                </td>
-		                                            </tr>
+		                                            </tr>		                                            
+		                                            <tr>
+										                <td class="textTop">
+											                <em style="display: inline;">* </em>营业执照副本图片：
+										                </td>
+										<td colspan="3">
+											<img id="businessLicenseImg" src="" style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="businessLicenseImport" />
+											<input type="hidden" id="businessLicense" name="businessLicense" value="" />
+										</td>
+									</tr>
+		                                                      
+		                               <tr>
+										<td class="textTop">
+											<em style="display: inline;">* </em>组织机构代码图片：
+										</td>
+										<td colspan="3">
+											<img id="institutionalFrameworkImg" src="" style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="institutionalFrameworkImport" />
+											<input type="hidden" id="institutionalFramework" name="institutionalFramework" value="" />
+										</td>
+									</tr>
+		                                                         
+		                               <tr>
+										<td class="textTop">
+											 <em style="display: inline;">* </em>税务登记证图片：
+										</td>
+										<td colspan="3">
+											<img id="taxRegistrationImg" src="" style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="taxRegistrationImport" />
+											<input type="hidden" id="taxRegistration" name="taxRegistration" value="" />
+										</td>
+									</tr>
+		                                               
+		                                            
+		                                            
+		                                            
+		                                            
+		                                            
 		                                            <tr>
 		                                                <td class="textTop">
 		                                                    <em></em><em style="display: inline;">* </em>单位介绍：

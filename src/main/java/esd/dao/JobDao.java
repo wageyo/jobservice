@@ -28,4 +28,5 @@ public interface JobDao extends IDao<Job>{
 	
 	//更具公司id, 删除他的所有职位
 	Integer deleteByCompany(Integer cid);
+	public List<Job> getByCompanyMate(Map<String,Object> map);
 }

@@ -15,11 +15,15 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
+	<link rel="stylesheet" type="text/css" href="jquery-foxibox-0.2.css" />
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/widget.js"></script>
 	<script src="${contextPath}/js/manage/company.js"></script>
+	<script src="${contextPath}/js/manage/companyUploadImg.js"></script>
+	<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
+	
 </head>
 
 <body>
@@ -79,7 +83,7 @@
 									</tr>
 									<tr>
 										<td>
-											组织机构代码:
+											<span style="color:red;">* </span>组织机构代码:
 										</td>
 										<td>
 											<input name="organizationCode" type="text" value="${obj.organizationCode }" id="organizationCode" />
@@ -218,6 +222,73 @@
 											</div>
 										</td>
 									</tr>
+									
+									<tr>
+										<td>
+											<span style="color:red;">* </span>营业执照副本图片：
+										</td>
+										<td>
+											<img id="businessLicenseImg" 
+												<c:choose>
+													<c:when test="${obj.businessLicense != null && obj.businessLicense != '' }" >
+														 src="${contextPath }/image/downloadPic/${obj.businessLicense}" 
+													</c:when>
+													<c:otherwise>
+														 src = "" 
+													</c:otherwise>
+												</c:choose>
+											style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="businessLicenseImport" />
+											<input type="hidden" id="businessLicense" name="businessLicense" value="" />
+										
+										</td>
+										<td>
+											<span style="color:red;">* </span>组织机构代码图片：
+										</td>
+										<td>
+											<img id="institutionalFrameworkImg" 
+												<c:choose>
+													<c:when test="${obj.institutionalFramework != null && obj.institutionalFramework != '' }" >
+														 src="${contextPath }/image/downloadPic/${obj.institutionalFramework}" 
+													</c:when>
+													<c:otherwise>
+														 src = "" 
+													</c:otherwise>
+												</c:choose>
+											style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="institutionalFrameworkImport" />
+											<input type="hidden" id="institutionalFramework" name="institutionalFramework" value="" />
+										
+										</td>
+									</tr>
+									
+									
+									<tr>
+									<td>
+										<span style="color:red;">* </span>税务登记证图片：
+									</td>
+									<td>
+										<img id="taxRegistrationImg" 
+											<c:choose>
+												<c:when test="${obj.taxRegistration != null && obj.taxRegistration != '' }" >
+									src="${contextPath }/image/downloadPic/${obj.taxRegistration}" 
+											</c:when>
+											<c:otherwise>
+												 src = "" 
+											</c:otherwise>
+										</c:choose>
+									style="height:26px;width:70px;border-width:0px;"/>
+											<input type="button" name="file" value="上传图片" id="taxRegistrationImport" />
+											<input type="hidden" id="taxRegistration" name="taxRegistration" value="" />
+										
+										</td>
+										<td>
+										</td>
+										<td>
+									
+										</td>
+									</tr>	
+									
 									<tr>
 										<td>
 											企业简介 :

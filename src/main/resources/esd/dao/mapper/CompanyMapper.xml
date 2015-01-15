@@ -53,6 +53,9 @@
 		<result column="c_remark" property="remark" jdbcType="VARCHAR" />
 		<result column="c_view_count" property="viewCount" jdbcType="INTEGER" />
 		<result column="c_check_status" property="checkStatus" jdbcType="VARCHAR" />
+		<result column="c_institutional_framework" property="institutionalFramework" jdbcType="VARCHAR" />
+		<result column="c_tax_registration" property="taxRegistration" jdbcType="VARCHAR" />
+		<result column="c_business_license" property="businessLicense" jdbcType="VARCHAR" />
 		<association property="user" javaType="User" resultMap="ResultUser"/>
 		<association property="area" javaType="Area" resultMap="ResultArea"/>
 		<association property="businessScope" javaType="BusinessScope" resultMap="ResultBusinessScope" />
@@ -66,7 +69,9 @@
 			c.introduction as c_introduction, c.organization_code as c_organization_code, c.commercial_code as c_commercial_code, 
 			c.tax_code as c_tax_code, c.social_security_code as c_social_security_code, c.web_site_id as c_web_site_id, 
 			c.lao_wang_code as c_lao_wang_code, c.scale as c_scale, c.nature as c_nature, c.economy_type as c_economy_type, 
-			c.remark c_remark, c.view_count as c_view_count, c.check_status as c_check_status,
+			c.remark c_remark, c.view_count as c_view_count, c.check_status as c_check_status,			
+			c.institutional_framework as c_institutional_framework,
+			c.tax_registration as c_tax_registration,c.business_license as c_business_license,			
 		u.id as u_id, u.login_name as u_login_name, u.pass_word as u_pass_word, u.identity as u_identity, 
 		a.code as a_code, a.name as a_name,
 		b.id as b_id, b.name as b_name, b.code as b_code
@@ -159,6 +164,17 @@
 					uid,
 				</if>
 			</if>
+			
+			<if test="businessLicense != null and businessLicense != ''">
+				business_license,
+			</if>
+			<if test="institutionalFramework != null and institutionalFramework != ''">
+				institutional_framework,
+			</if>
+			<if test="taxRegistration != null and taxRegistration != ''">
+				tax_registration,
+			</if>
+			
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
 					acode,
@@ -243,6 +259,18 @@
 					#{user.id, jdbcType=INTEGER},
 				</if>
 			</if>
+			
+			<if test="businessLicense != null and businessLicense != ''">
+				#{businessLicense, jdbcType=VARCHAR},
+			</if>
+			<if test="institutionalFramework != null and institutionalFramework != ''">
+				#{institutionalFramework, jdbcType=VARCHAR},
+			</if>
+			<if test="taxRegistration != null and taxRegistration != ''">
+				#{taxRegistration, jdbcType=VARCHAR},
+			</if>
+			
+			
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
 					#{area.code, jdbcType=VARCHAR},
@@ -331,6 +359,15 @@
 			</if>
 			<if test="checkStatus != null and checkStatus != ''">
 				check_status = #{checkStatus, jdbcType=VARCHAR},
+			</if>
+			<if test="businessLicense != null and businessLicense != ''">
+				business_license = #{businessLicense, jdbcType=VARCHAR},
+			</if>
+			<if test="institutionalFramework != null and institutionalFramework != ''">
+				institutional_framework = #{institutionalFramework, jdbcType=VARCHAR},
+			</if>
+			<if test="taxRegistration != null and taxRegistration != ''">
+				tax_registration = #{taxRegistration, jdbcType=VARCHAR},
 			</if>
 			<if test="user != null">
 				<if test="user.id != null and user.id > 0">
@@ -424,7 +461,7 @@
 				</choose>
 			</if>
 		</trim>
-		order by c.create_date desc
+		order by c.create_date
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 

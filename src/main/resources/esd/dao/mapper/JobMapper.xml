@@ -94,13 +94,26 @@
 		a.code as a_code, a.name as a_name,
 		jc.code as jc_code, jc.name as jc_name 
 	</sql>
-
+	<sql id="base_column_mate">
+		job.id as j_id,	job.create_date as j_create_date, job.update_check as j_update_check, job.update_date as j_update_date, job.log_user as j_log_user,
+			job.name as j_name, job.hire_number as j_hire_number, job.salary as j_salary, job.education as j_education, 
+			job.experience as j_experience, job.gender as j_gender, job.age as j_age, job.description as j_description, 
+			job.provide_benefit as j_provide_benefit,job.contact_person as j_contact_person, job.contact_tel as j_contact_tel, 
+			job.contact_email as j_contact_email, job.view_count as j_view_count, job.nature as j_nature, job.effective_time as j_effective_time, 
+			job.work_place as j_work_place, job.bed as j_bed, job.lunch as j_lunch, job.check_status as j_check_status, job.mark as j_mark,  
+		a.code as a_code, a.name as a_name,
+		jc.code as jc_code, jc.name as jc_name 
+	</sql>
 	<sql id="from_table">
 		job left join company as c on job.cid = c.id 
 			left join area as a on job.acode =a.code 
 			left join job_category as jc on job.jccode = jc.code  
 	</sql>
 	
+	<sql id="from_table_mate">
+		job left join area as a on job.acode =a.code 
+			left join job_category as jc on job.jccode = jc.code 
+	</sql> 
 	<!-- insert -->
 	<insert id="save" parameterType="Job" useGeneratedKeys="true" keyProperty="id">
 		<selectKey resultType="java.lang.Integer" order="AFTER"
@@ -561,7 +574,12 @@
 		where job.cid = #{cid, jdbcType=INTEGER}
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
-	
+		<!-- get by company -->
+	<select id="getByCompanyMate" resultMap="ResultJob" parameterType="map">
+		select  <include refid="base_column_mate"/> from <include refid="from_table_mate"/> 
+		where job.cid = #{cid, jdbcType=INTEGER}
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
 	<select id="getByCompanyCount" resultType="int" parameterType="map">
 		select count(*)
 		from <include refid="from_table"/>

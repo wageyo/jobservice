@@ -41,6 +41,9 @@ public class Company extends PrimaryKey {
 	private BusinessScope businessScope; // 所属行业/经营范围
 	private int idtotal[];//企业总id数组
 	private String targetName; // 查询条件
+	private String businessLicense; // 营业执照副本图片id
+	private String institutionalFramework; // 组织机构代码图片id
+	private String taxRegistration; // 税务登记证图片id
 
 	@Override
 	public String toString() {
@@ -272,6 +275,30 @@ public class Company extends PrimaryKey {
 
 	public void setTargetName(String targetName) {
 		this.targetName = targetName;
+	}
+
+	public String getBusinessLicense() {
+		return businessLicense;
+	}
+
+	public void setBusinessLicense(String businessLicense) {
+		this.businessLicense = businessLicense;
+	}
+
+	public String getInstitutionalFramework() {
+		return institutionalFramework;
+	}
+
+	public void setInstitutionalFramework(String institutionalFramework) {
+		this.institutionalFramework = institutionalFramework;
+	}
+
+	public String getTaxRegistration() {
+		return taxRegistration;
+	}
+
+	public void setTaxRegistration(String taxRegistration) {
+		this.taxRegistration = taxRegistration;
 	}
 
 	
