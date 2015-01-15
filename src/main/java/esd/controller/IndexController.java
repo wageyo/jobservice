@@ -113,13 +113,14 @@ public class IndexController {
 			CookieHelper.killUserCookie(response, true);
 		} else {
 			// ③为空在则检查cookie是中没有地区信息, 如果cookie中也没有, 则说明是首次访问首页且不是从网站群跳转过来的,
-			// 那么使用全国code
+			// ****************那么使用昌吉州code ************************* //
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.AREACOUNTRY;
+				cookieAreaCode = "20652300";
 			}
 			acode = cookieAreaCode;
+			// ****************那么使用全国code ************************* //
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);
