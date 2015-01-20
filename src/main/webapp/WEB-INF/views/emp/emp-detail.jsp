@@ -236,7 +236,7 @@
 			</c:if>
 	</div>
 	
-		下是弹出窗 -->
+		<!-- 以下是弹出窗 -->
 		<div id="bg"></div>
 		<div id="popbox">
 			<!-- 标题div -->
