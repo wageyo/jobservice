@@ -423,6 +423,15 @@
 					</otherwise>
 				</choose>
 			</if>
+			<choose>
+				<when test="company != null">
+					<if test="company.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and c.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 		order by c.create_date desc
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -447,7 +456,7 @@
 						and c.bid = #{company.businessScope.id, jdbcType=INTEGER} 
 					</if>
 				</if>
-		 		<choose>
+				<choose>
 					<when test="company.checkStatus != null and company.checkStatus != ''">
 						and c.check_status = #{company.checkStatus, jdbcType=VARCHAR}
 					</when>
@@ -456,6 +465,15 @@
 					</otherwise>
 				</choose>
 			</if>
+			<choose>
+				<when test="company != null">
+					<if test="company.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and c.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 	</select> 
 	

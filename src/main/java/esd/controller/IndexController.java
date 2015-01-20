@@ -120,7 +120,6 @@ public class IndexController {
 				cookieAreaCode = "20652300";
 			}
 			acode = cookieAreaCode;
-			// ****************那么使用全国code ************************* //
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);

@@ -481,6 +481,15 @@
 					</otherwise>
 				</choose>
 			</if>
+			<choose>
+				<when test="job != null">
+					<if test="job.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and job.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 		order by job.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -550,6 +559,15 @@
 					</otherwise>
 				</choose>
 			</if>
+			<choose>
+				<when test="job != null">
+					<if test="job.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and job.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 	
