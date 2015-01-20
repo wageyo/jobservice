@@ -7,11 +7,13 @@
 		<ul style="padding-bottom: 0px; list-style-type: none; margin: 0px; padding-left: 0px;
                         padding-right: 0px; padding-top: 0px">
 		<c:forEach items="${entity.list}" var="item">
-			<li style="line-height: 25px; padding-left: 10px; ">
-				<a href="${contextPath }/news/getOneForShow?id=${item.id}" class="Empa"><span style="margin-left:20px;">${item.title }</span></a>
-				<span style="float: right;margin-left:20px;">${item.createDate }</span>
-				<span style="float: right;color:gray;">${item.areaName }</span>
-			</li>
+			<c:if test="${item.id !=null }">
+				<li style="line-height: 25px; padding-left: 10px; ">
+					<a href="${contextPath }/news/getOneForShow?id=${item.id}" class="Empa"><span style="margin-left:20px;">${item.title }</span></a>
+					<span style="float: right;margin-left:20px;">${item.createDate }</span>
+					<span style="float: right;color:gray;">${item.areaName }</span>
+				</li>
+			</c:if>
 		</c:forEach>
 		</ul>
 	</div>

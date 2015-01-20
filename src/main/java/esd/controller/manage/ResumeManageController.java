@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,12 +43,6 @@ import esd.service.UserService;
 @RequestMapping("/manage/resume")
 public class ResumeManageController {
 	private static Logger log = Logger.getLogger(ResumeManageController.class);
-
-//	@Value("${templateFile}")
-//	private String templateFile;
-//
-//	@Value("${destFileName}")
-//	private String destFileName;
 
 	@Autowired
 	private UserService<User> userService;
@@ -242,7 +235,7 @@ public class ResumeManageController {
 	}
 	
 	// 转到自动匹配简历管理列表页面
-	@RequestMapping(value = "/resume_mate_list1", method = RequestMethod.GET)
+	@RequestMapping(value = "/matere", method = RequestMethod.GET)
 	public ModelAndView mate_list_get1(HttpServletRequest request) {
 		log.debug("goto：自动匹配简历 后台管理 列表");
 		Map<String, Object> entity = new HashMap<>();
@@ -259,7 +252,7 @@ public class ResumeManageController {
 			resumeMat=resumeMat+"%";
 		}
 		// 获取地区码
-		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
 		Integer uid = Integer.parseInt(userId);
 		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据

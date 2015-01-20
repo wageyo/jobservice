@@ -27,9 +27,11 @@
 	</script>
 </head>
 <body>
+
+	<jsp:include page="../formatter/status-bar.jsp" />
+	<jsp:include page="../formatter/header.jsp" />
+	
 	<div id="maincontent">
-		<jsp:include page="../formatter/status-bar.jsp" />
-		<jsp:include page="../formatter/header.jsp" />
 		<div style="margin-top: 10px;">
 			<form action="${contextPath }/work" id="searchObj">
 				<div id="leftsidebar" >
@@ -194,9 +196,9 @@
 				</div>
 			</div>
 		</div>
-		<jsp:include page="../formatter/footer.jsp" />
 	</div>
 
+	<jsp:include page="../formatter/footer.jsp" />
 
 </body>
 </html>

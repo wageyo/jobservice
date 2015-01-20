@@ -42,12 +42,6 @@ import esd.service.UserService;
 public class JobManageController {
 	private static Logger log = Logger.getLogger(JobManageController.class);
 
-//	@Value("${templateFile}")
-//	private String templateFile;
-//
-//	@Value("${destFileName}")
-//	private String destFileName;
-
 	@Autowired
 	private UserService<User> userService;
 	

@@ -33,7 +33,10 @@ import esd.service.UserService;
 @RequestMapping("/manage/admin")
 public class AdminManageController {
 	private static Logger log = Logger.getLogger(AdminManageController.class);
-
+	
+	// @Value("${destFileName}")
+	// private String destFileName;
+	
 	@Autowired
 	private UserService<User> userService;
 	

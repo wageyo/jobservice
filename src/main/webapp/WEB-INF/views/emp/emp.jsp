@@ -31,6 +31,7 @@
 	</style>
 </head>
 <body>
+
 	<jsp:include page="../formatter/status-bar.jsp" />
 	<jsp:include page="../formatter/header.jsp" />
 	

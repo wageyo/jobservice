@@ -61,7 +61,7 @@
 	                       <span class="PublicframeTwoHeadBarMoreSpan"></span>
 	                   </div>
 	               </div>
-	               <div class="PublicframeTwoContent" style="width: auto; padding: 3px 5px 5px;" id="">
+	               <div class="PublicframeTwoContent" style="width: auto; padding: 3px 5px 5px;">
 	                   <div class="MainLeftTwo">
 	                       <div class="MainLeftTwoLeft">
 	                          <div id="PublicframeOne11" class="PublicframeOne ">
@@ -75,46 +75,50 @@
 		    </div>	
 		</div>
 		<div class="MainRight">
-      <div class="MainRightOne">
-          <div class="PublicframeTwo ">
-          	<div class="PublicframeTwoHeadBar">
-          		<div class="PublicframeTwoHeadBarLeft"></div>
-          		<div class="PublicframeTwoHeadBarTittle">
-          			<span class="PublicframeTwoHeadBarTittleSpan">文章搜索</span>
-          		</div>
-          		<div class="PublicframeTwoHeadBarRight"></div>
-          		<div class="PublicframeTwoHeadBarMore">
-          			<span class="PublicframeTwoHeadBarMoreSpan"></span>
-          		</div>
-          	</div>
-          	<div class="PublicframeTwoContent" id="">
-          		<div class="ArticleSearchFrame">
-          		  <div class="Search">
-          			<div class="SearchInputText">
-          			 <div class="SetFloat InputTextBg">
-          			  <input type="text" name="keyWord1"  title="请输入关键字1" id="KeyWord1" class="InputTextBlank DefaultText" value="${keyWord1}" style="color: gray;" />
-          			 </div>
-          			</div>
-          		   </div>
-          		 </div>
-     
-          		  <div class="ArticleTime">
-          		    <div class="ArticleTimeTitle">发布时间：</div>
-          		    <div class="ArticleTimeFrame">
-          		      <select name="releaseDate" id="releaseDate" class="ArticleSelectDropDown">
-        		       	<c:forEach items="${params }" var="p1">
-							<c:if test="${p1.type == 'releaseDate' }">
-								<option value="${p1.value }" >${p1.name }</option>
-							</c:if>
-						</c:forEach>
-          		       </select>
-          		     </div>
-          		    </div>
-          		     <div style="clear: both"></div>
-          		     <div class="ArticleBtn" id="SeachBtn"   onclick="common.pagination(1)"></div>
-          		 </div>
-            </div>
-	      </div> 
+			<div class="MainRightOne">
+				<div class="PublicframeTwo ">
+					<div class="PublicframeTwoHeadBar">
+						<div class="PublicframeTwoHeadBarLeft"></div>
+						<div class="PublicframeTwoHeadBarTittle">
+							<span class="PublicframeTwoHeadBarTittleSpan">文章搜索</span>
+						</div>
+						<div class="PublicframeTwoHeadBarRight"></div>
+						<div class="PublicframeTwoHeadBarMore">
+							<span class="PublicframeTwoHeadBarMoreSpan"></span>
+						</div>
+					</div>
+					<div class="PublicframeTwoContent" id="">
+						<div class="ArticleSearchFrame">
+							<div class="Search">
+								<div class="SearchInputText">
+									<div class="SetFloat InputTextBg">
+										<input type="text" name="keyWord1" title="请输入关键字1"
+											id="KeyWord1" class="InputTextBlank DefaultText"
+											value="${keyWord1}" style="color: gray;" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="ArticleTime">
+							<div class="ArticleTimeTitle">发布时间：</div>
+							<div class="ArticleTimeFrame">
+								<select name="releaseDate" id="releaseDate"
+									class="ArticleSelectDropDown">
+									<c:forEach items="${params }" var="p1">
+										<c:if test="${p1.type == 'releaseDate' }">
+											<option value="${p1.value }">${p1.name }</option>
+										</c:if>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						<div style="clear: both"></div>
+						<div class="ArticleBtn" id="SeachBtn"
+							onclick="common.pagination(1)"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	

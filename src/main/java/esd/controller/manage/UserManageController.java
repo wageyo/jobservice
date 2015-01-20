@@ -40,12 +40,6 @@ import esd.service.UserService;
 public class UserManageController {
 	private static Logger log = Logger.getLogger(UserManageController.class);
 
-	// @Value("${templateFile}")
-	// private String templateFile;
-	//
-	// @Value("${destFileName}")
-	// private String destFileName;
-
 	@Autowired
 	private UserService<User> userService;
 

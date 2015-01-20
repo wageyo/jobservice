@@ -70,7 +70,7 @@
 							<label for="loginName" style="display:initial;width:60px;">用户名:</label> 
 						</td>
 						<td>
-							<input id="loginName" name="loginName" value="" type="text" />
+							<input id="loginName" name="loginName" value="hljtest" type="text" />
 						</td>
 						<td>
 						 &nbsp;
@@ -84,7 +84,7 @@
 						 	<label for="passWord" style="display:initial;width:60px;">密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
 						</td>
 						<td>
-							<input id="passWord" name="passWord" value="" type="password" style=""/>
+							<input id="passWord" name="passWord" value="123123" type="password" style=""/>
 						</td>
 						<td>
 						 &nbsp;

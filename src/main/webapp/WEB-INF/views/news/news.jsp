@@ -4,17 +4,25 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
-	<meta content="残疾人招聘就业" name="description" />
-	
-	<link rel="shortcut icon" href="${contextPath}/images/HomePageImage/favicon.ico" type="image/x-icon" />
-	<link href="${contextPath}/css/style_job.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/Public.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet" type="text/css" />
-	<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="keywords" content="残疾人招聘信息,残疾人就业信息,残疾人人才网,残疾人找工作" />
+<meta content="残疾人招聘就业" name="description" />
+
+<link rel="shortcut icon"
+	href="${contextPath}/images/HomePageImage/favicon.ico"
+	type="image/x-icon" />
+<link href="${contextPath}/css/style_job.css" rel="stylesheet"
+	type="text/css" />
+<link href="${contextPath}/css/Public.css" rel="stylesheet"
+	type="text/css" />
+<link href="${contextPath}/css/PublicStatusBar.css" rel="stylesheet"
+	type="text/css" />
+<link href="${contextPath}/css/HomePageHeader.css" rel="stylesheet"
+	type="text/css" />
+<link href="${contextPath}/css/SetHeaderStyle.css" rel="stylesheet"
+	type="text/css" />
+<link href="${contextPath}/css/HomePageFooter.css" rel="stylesheet"
+	type="text/css" />
 
 <script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 <title>残疾人就业信息网</title>
@@ -25,12 +33,15 @@
 	common = {};
 	common.pagination = function(page) {
 		var url = '${contextPath}/news/search/' + page;
-		var keyWord = $("input[type='text'][name='keyWordNews']").val(); 
+		var keyWord = $("input[type='text'][name='keyWordNews']").val();
 		var releaseDate = $('#releaseDate').val();
 		$.ajax({
 			url : url,
 			type : 'GET',
-			data :{"keyWord":keyWord,releaseDate:releaseDate},
+			data : {
+				"keyWord" : keyWord,
+				releaseDate : releaseDate
+			},
 			success : function(e) {
 				$('#main').html(e);
 				$('#data').fadeIn();
@@ -44,83 +55,87 @@
 <body>
 	<jsp:include page="../formatter/status-bar.jsp" />
 	<jsp:include page="../formatter/header.jsp" />
+
 	<div id="directBody">
-	<div class="MainLeft">
-		<div class="MainLeftRightHead1">
-           <div class="PublicframeTwo ">
-               <div class="PublicframeTwoHeadBar">
-                 <div class="PublicframeTwoHeadBarLeft"></div>
-                   <div class="PublicframeTwoHeadBarTittle">
-                       <span class="PublicframeTwoHeadBarTittleSpan">最新资讯</span>
-                   </div>
-                   <div class="PublicframeTwoHeadBarRight">
-                   </div>
-                   <div class="PublicframeTwoHeadBarMore">
-                       <span class="PublicframeTwoHeadBarMoreSpan"></span>
-                   </div>
-               </div>
-               <div class="PublicframeTwoContent" style="width: auto; padding: 3px 5px 5px;" id="">
-                   <div class="MainLeftTwo">
-                       <div class="MainLeftTwoLeft">
-                          <div id="PublicframeOne11" class="PublicframeOne ">
-                          	<div id="main"></div>
-						  </div>
-                       </div>
-                   </div>
-                   <div style="clear: both">
-                   </div>
-               </div>
-           </div>
-	    </div>	
-	</div>
-		<div class="MainRight">
-      <div class="MainRightOne">
-          <div class="PublicframeTwo ">
-          	<div class="PublicframeTwoHeadBar">
-          		<div class="PublicframeTwoHeadBarLeft"></div>
-          		<div class="PublicframeTwoHeadBarTittle">
-          			<span class="PublicframeTwoHeadBarTittleSpan">文章搜索</span>
-          		</div>
-          		<div class="PublicframeTwoHeadBarRight"></div>
-          		<div class="PublicframeTwoHeadBarMore">
-          			<span class="PublicframeTwoHeadBarMoreSpan"></span>
-          		</div>
-          	</div>
-          	<div class="PublicframeTwoContent" id="">
-          		<div class="ArticleSearchFrame">
-          		  <div class="Search">
-          			<div class="SearchInputText">
-          			 <div class="SetFloat InputTextBg">
-          			  <input type="text" name="keyWordNews"  title="请输入关键字1" id="keyWordNews" class="InputTextBlank DefaultText" value="${keyWordNews}" style="color: gray;" />
-          			 </div>
-          			</div>
-          		   </div>
-          		 </div>
-     
-          		  <div class="ArticleTime">
-          		    <div class="ArticleTimeTitle">发布时间：</div>
-          		    <div class="ArticleTimeFrame">
-          		      <select name="releaseDate" id="releaseDate" class="ArticleSelectDropDown">
-        		       	<c:forEach items="${params }" var="p1">
-							<c:if test="${p1.type == 'releaseDate' }">
-								<option value="${p1.value }" >${p1.name }</option>
-							</c:if>
-						</c:forEach>
-          		       </select>
-          		     </div>
-          		    </div>
-          		     <div style="clear: both"></div>
-          		     <div class="ArticleBtn" id="SeachBtn"   onclick="common.pagination(1)"></div>
-          		 </div>
-            </div>
-	      </div> 
+		<div class="MainLeft">
+			<div class="MainLeftRightHead1">
+				<div class="PublicframeTwo ">
+					<div class="PublicframeTwoHeadBar">
+						<div class="PublicframeTwoHeadBarLeft"></div>
+						<div class="PublicframeTwoHeadBarTittle">
+							<span class="PublicframeTwoHeadBarTittleSpan">最新资讯</span>
+						</div>
+						<div class="PublicframeTwoHeadBarRight"></div>
+						<div class="PublicframeTwoHeadBarMore">
+							<span class="PublicframeTwoHeadBarMoreSpan"></span>
+						</div>
+					</div>
+					<div class="PublicframeTwoContent" style="width: auto; padding: 3px 5px 5px;">
+						<div class="MainLeftTwo">
+							<div class="MainLeftTwoLeft">
+								<div id="PublicframeOne11" class="PublicframeOne ">
+									<div id="main"></div>
+								</div>
+							</div>
+						</div>
+						<div style="clear: both"></div>
+					</div>
+				</div>
+			</div>
 		</div>
+		<div class="MainRight">
+			<div class="MainRightOne">
+				<div class="PublicframeTwo ">
+					<div class="PublicframeTwoHeadBar">
+						<div class="PublicframeTwoHeadBarLeft"></div>
+						<div class="PublicframeTwoHeadBarTittle">
+							<span class="PublicframeTwoHeadBarTittleSpan">文章搜索</span>
+						</div>
+						<div class="PublicframeTwoHeadBarRight"></div>
+						<div class="PublicframeTwoHeadBarMore">
+							<span class="PublicframeTwoHeadBarMoreSpan"></span>
+						</div>
+					</div>
+					<div class="PublicframeTwoContent" id="">
+						<div class="ArticleSearchFrame">
+							<div class="Search">
+								<div class="SearchInputText">
+									<div class="SetFloat InputTextBg">
+										<input type="text" name="keyWordNews" title="请输入关键字1"
+											id="keyWordNews" class="InputTextBlank DefaultText"
+											value="${keyWordNews}" style="color: gray;" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="ArticleTime">
+							<div class="ArticleTimeTitle">发布时间：</div>
+							<div class="ArticleTimeFrame">
+								<select name="releaseDate" id="releaseDate"
+									class="ArticleSelectDropDown">
+									<c:forEach items="${params }" var="p1">
+										<c:if test="${p1.type == 'releaseDate' }">
+											<option value="${p1.value }">${p1.name }</option>
+										</c:if>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						<div style="clear: both"></div>
+						<div class="ArticleBtn" id="SeachBtn"
+							onclick="common.pagination(1)"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
-	
-	
-	
-	
+
+
+
+
 	<jsp:include page="../formatter/footer.jsp" />
-		
+
 </body>
 </html>

@@ -134,15 +134,15 @@ DROP TABLE IF EXISTS `image`;
 
 CREATE TABLE `image` (
   `id` varchar(50) NOT NULL,
-  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '´´½¨Ê±¼ä',
-  `update_check` int(11) DEFAULT '1' COMMENT '¸üĞÂÑéÖ¤',
-  `update_date` timestamp NULL DEFAULT NULL COMMENT '¸üĞÂÊ±¼ä',
-  `log_user` varchar(50) DEFAULT NULL COMMENT '¼ÇÂ¼²Ù×÷ÈË',
-  `image` mediumblob COMMENT 'Í¼Æ¬',
-  `image_name` varchar(255) DEFAULT NULL COMMENT 'Í¼Æ¬ÎÄ¼şÃû',
-  `image_title` varchar(255) DEFAULT NULL COMMENT 'Í¼Æ¬±êÌâ',
-  `nid` int(11) DEFAULT NULL COMMENT 'ËùÊôÎÄÕÂid',
-  `mark` varchar(255) DEFAULT NULL COMMENT '±¸×¢',
+  `create_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'åˆ›å»ºæ—¶é—´',
+  `update_check` int(11) DEFAULT '1' COMMENT 'æ›´æ–°éªŒè¯Ö¤',
+  `update_date` timestamp NULL DEFAULT NULL COMMENT 'æ›´æ–°æ—¶é—´',
+  `log_user` varchar(50) DEFAULT NULL COMMENT 'è®°å½•æ“ä½œäºº',
+  `image` mediumblob COMMENT 'å›¾ç‰‡',
+  `image_name` varchar(255) DEFAULT NULL COMMENT 'å›¾ç‰‡æ–‡ä»¶å',
+  `image_title` varchar(255) DEFAULT NULL COMMENT 'å›¾ç‰‡æ ‡é¢˜',
+  `nid` int(11) DEFAULT NULL COMMENT 'æ‰€å±æ–‡ç« id',
+  `mark` varchar(255) DEFAULT NULL COMMENT 'å¤‡æ³¨',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -238,7 +238,7 @@ CREATE TABLE `news` (
   `author` varchar(50) DEFAULT NULL COMMENT 'ä½œè€…',
   `source` varchar(255) DEFAULT NULL COMMENT 'æ¥æº',
   `type` varchar(50) DEFAULT NULL COMMENT 'æ–‡ç« ç±»å‹',
-  `image_id` varchar(50) DEFAULT NULL COMMENT '±£´æÔÚimage±íÖĞµÄÍ¼Æ¬id  ',
+  `image_id` varchar(50) DEFAULT NULL COMMENT 'ä¿å­˜åœ¨imageè¡¨ä¸­çš„å›¾ç‰‡id',
   `acode` varchar(10) DEFAULT NULL COMMENT 'æ‰€å±åœ°åŒºcode',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;

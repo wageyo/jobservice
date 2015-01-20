@@ -17,9 +17,10 @@ function query(page,matchRate){
 		matchRate = $('#matchRate').val();
 	}
 	paramStr +="&matchRate="+matchRate;
-    window.location.href = getRootPath() + '/manage/mre?' + paramStr;
+    window.location.href = getRootPath() + '/manage/mjb?' + paramStr;
 
 }
+
 //查看自动匹配数据
 function lookMatchData(i,id,obj){
 	var paramStr = '';
@@ -27,7 +28,7 @@ function lookMatchData(i,id,obj){
 	var	matchRate=$('#matchRate').val();
 	if(matchRate != null && matchRate != undefined && matchRate != '' && matchRate > 0){
 		paramStr +="&matchRate="+matchRate;
-		var url = getRootPath() + '/manage/resume_match_json?' + paramStr;
+		var url = getRootPath() + '/manage/job_match_json?' + paramStr;
 		$.ajax({
 			url : url,
 			type : 'GET',
@@ -65,5 +66,3 @@ function selectButtonPer(valueButton,resumeMatchName, nameButton, value, name){
 	$('#'+nameButton).text(name);
 	$('#'+resumeMatchName).val(name);
 }
-
-
