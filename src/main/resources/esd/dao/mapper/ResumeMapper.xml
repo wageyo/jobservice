@@ -756,12 +756,24 @@
 				<if test="resume.gender != null and resume.gender != ''">
 					and r.gender = #{resume.gender, jdbcType=VARCHAR} 
 				</if>
-				<if test="resume.checkStatus != null and resume.checkStatus != ''">
- 					and r.check_status = #{resume.checkStatus, jdbcType=VARCHAR} 
- 				</if>
-				<!-- 薪水范围 -->
-				
+				<choose>
+					<when test="resume.checkStatus != null and resume.checkStatus != ''">
+						and r.check_status = #{resume.checkStatus, jdbcType=VARCHAR} 
+					</when>
+					<otherwise>
+						and r.check_status = 'ok'
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="resume != null">
+					<if test="resume.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and r.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 		order by r.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -819,12 +831,24 @@
 				<if test="resume.gender != null and resume.gender != ''">
 					and r.gender = #{resume.gender, jdbcType=VARCHAR} 
 				</if>
-				<if test="resume.checkStatus != null and resume.checkStatus != ''">
- 					and r.check_status = #{resume.checkStatus, jdbcType=VARCHAR} 
- 				</if>
-				<!-- 薪水范围 -->
-				
+				<choose>
+					<when test="resume.checkStatus != null and resume.checkStatus != ''">
+						and r.check_status = #{resume.checkStatus, jdbcType=VARCHAR} 
+					</when>
+					<otherwise>
+						and r.check_status = 'ok'
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="resume != null">
+					<if test="resume.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and r.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 	</select> 
 

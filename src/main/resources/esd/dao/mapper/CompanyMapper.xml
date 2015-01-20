@@ -460,6 +460,15 @@
 					</otherwise>
 				</choose>
 			</if>
+			<choose>
+				<when test="company != null">
+					<if test="company.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and c.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 		order by c.create_date
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -493,6 +502,15 @@
 					</otherwise>
 				</choose>
 			</if>
+			<choose>
+				<when test="company != null">
+					<if test="company.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and c.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 	</select> 
 	
