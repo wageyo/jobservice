@@ -162,6 +162,9 @@ public class MatchManageController {
 		}
 		List<Job> mateList = jobService.getListForShow(paramEntity, Constants.START, Constants.SIZE);
 		entity.put("entityList", mateList);
+		if(mateList !=null){
+			entity.put("matchedNumber", mateList.size());
+		}
 		return new ModelAndView("manage/resume-match-json", entity);
 	}
 
@@ -297,7 +300,10 @@ public class MatchManageController {
 					resumeResultList = resumeService.getForListShow(
 							paramEntity, 1, Integer.MAX_VALUE);
 				tempMap.put("resumeResultList", resumeResultList);
-
+				if(resumeResultList !=null){
+					tempMap.put("matchedNumber", resumeResultList.size());
+				}
+				
 				list.add(tempMap);
 			}
 			entity.put("entityList", list);

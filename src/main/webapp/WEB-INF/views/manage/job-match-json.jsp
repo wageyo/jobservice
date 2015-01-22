@@ -12,6 +12,13 @@
 				<!-- 显示单个职位的基本信息 -->
 				<thead >
 					<tr >
+						<th>
+							匹配结果:
+							<c:choose>
+								<c:when test="${entity.matchedNumber != null }">${entity.matchedNumber }</c:when>
+								<c:otherwise>0</c:otherwise>
+							</c:choose>个
+						</th>
 						<th >
 							职位名称: ${job.name }
 						</th>
@@ -24,7 +31,7 @@
 						<th>
 							岗位性质: ${job.nature }
 						</th>
-						<th colspan="6">
+						<th colspan="5">
 							<fmt:formatDate value="${job.createDate }" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" var="createDate"/>
 							发布日期: ${createDate }
 						</th>

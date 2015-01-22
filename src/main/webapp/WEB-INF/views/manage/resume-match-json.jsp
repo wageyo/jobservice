@@ -11,6 +11,10 @@
 			<tr >
 				<th colspan="10">
 					匹配结果:
+					<c:choose>
+						<c:when test="${matchedNumber != null }">${matchedNumber }</c:when>
+						<c:otherwise>0</c:otherwise>
+					</c:choose>个
 				</th>
 			</tr>
 		</thead>
