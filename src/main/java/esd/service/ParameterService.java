@@ -20,6 +20,9 @@ public class ParameterService {
 		return dao.save(p);
 	}
 
+	public Parameter getById(String id){
+		return dao.getById(id);
+	}
 	/**
 	 * 根据类型获得对应参数列表
 	 * 

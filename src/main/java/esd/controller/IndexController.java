@@ -681,6 +681,24 @@ public class IndexController {
 		}
 		return map;
 	}
+	
+	//跳转到禁止访问提示页面
+	@RequestMapping(value = "/forbid", method = RequestMethod.GET)
+	public ModelAndView forbid(HttpServletRequest request) {
+		log.debug(request.getRequestURI());
+		ModelAndView mav = new ModelAndView("error/forbid");
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping("/jsonp")
 	public String jsonp() {
@@ -707,4 +725,6 @@ public class IndexController {
 		request.setAttribute("message", "我是脚部的提示信息.");
 		return "formatter/footer";
 	}
+	
+	
 }

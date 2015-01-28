@@ -1,7 +1,5 @@
 package esd.controller;
 
-import org.apache.log4j.Logger;
-
 /**
  * 常用工具常量类
  * 
@@ -44,8 +42,8 @@ public class Constants {
 	public static final String USERREGISTERTIME = "registertime"; // 注册时间
 	public static final String AREACODE = "areacode"; // 地区key
 	public static final String AREANAME = "areaname"; // 地区名称
-	
-	//管理员专用的cookie key值
+
+	// 管理员专用的cookie key值
 	public static final String ADMINUSERID = "adminuserid"; // 管理员用户id
 	public static final String ADMINUSERNAME = "adminusername"; // 管理员用户名
 	public static final String ADMINUSERIDENTITY = "adminidentity"; // 管理员用户身份值
@@ -53,7 +51,7 @@ public class Constants {
 	public static final String ADMINUSERTITLE = "admintitle"; // 管理员用户用户标题
 	public static final String ADMINUSERNICKNAME = "adminnickname"; // 管理员用户昵称
 	/****************** 放入cookie中的key值 ********************/
-	
+
 	public static final String AREACOUNTRY = "10000000"; // 全国地区code
 
 	public static final String WORKABILITY = "workAbility"; // 有无劳动能力
@@ -83,11 +81,16 @@ public class Constants {
 	 */
 	public static final String ARTICLE_TYPE_DIRECT = "direct"; // 就业指导类型
 
+	/***
+	 * 白名单功能开关id
+	 */
+	public static final String WHITE_LIST_SWITCH = "whitelistswitch";
+
 	/**
-	 *  几种用户类型
+	 * 几种用户类型
+	 * 
 	 * @author yufu
-	 * @email ilxly01@126.com
-	 * 2014-12-11
+	 * @email ilxly01@126.com 2014-12-11
 	 */
 	public enum Identity {
 		// 利用构造函数传参 级.
@@ -113,10 +116,10 @@ public class Constants {
 	}
 
 	/**
-	 *  几种权限值
+	 * 几种权限值
+	 * 
 	 * @author yufu
-	 * @email ilxly01@126.com
-	 * 2014-12-11
+	 * @email ilxly01@126.com 2014-12-11
 	 */
 	public enum Authority {
 		// 利用构造函数传参 级.
@@ -145,10 +148,10 @@ public class Constants {
 	}
 
 	/**
-	 *  几种审核状态
+	 * 几种审核状态
+	 * 
 	 * @author yufu
-	 * @email ilxly01@126.com
-	 * 2014-12-11
+	 * @email ilxly01@126.com 2014-12-11
 	 */
 	public enum CheckStatus {
 		// 利用构造函数传参 级.
@@ -173,10 +176,10 @@ public class Constants {
 	}
 
 	/**
-	 *  几种开关名称
+	 * 几种开关名称
+	 * 
 	 * @author yufu
-	 * @email ilxly01@126.com
-	 * 2014-12-11
+	 * @email ilxly01@126.com 2014-12-11
 	 */
 	public enum Switch {
 		// 利用构造函数传参 级.
@@ -201,10 +204,10 @@ public class Constants {
 	}
 
 	/**
-	 *  json格式前台返回提示符
+	 * json格式前台返回提示符
+	 * 
 	 * @author yufu
-	 * @email ilxly01@126.com
-	 * 2014-12-11
+	 * @email ilxly01@126.com 2014-12-11
 	 */
 	public enum Notice {
 		SUCCESS("success"), ERROR("error"), WRONG("wrong"), INFO("info"), FAILURE(
@@ -228,15 +231,15 @@ public class Constants {
 	}
 
 	/**
-	 *  几种信息分享范围
+	 * 几种信息分享范围
+	 * 
 	 * @author yufu
-	 * @email ilxly01@126.com
-	 * 2014-12-11
+	 * @email ilxly01@126.com 2014-12-11
 	 */
 	public enum SHARESCOPE {
 		// 利用构造函数传参 级.
 		COUNTRY("country"), PROVINCE("province"), CITY("city"), DISTRICT(
-				"district"),LOCAL("local");
+				"district"), LOCAL("local");
 
 		// 定义私有变量
 		private String val;

@@ -149,7 +149,7 @@
 					and typeName = #{menu.typeName, jdbcType=VARCHAR}
 				</if>
 				<if test="menu.authority != null and menu.authority > 0">
-				 	and authority &lt;= #{menu.authority, jdbcType=INTEGER}	
+				 	and authority = #{menu.authority, jdbcType=INTEGER}	
 				</if>
 			</if>
 		</trim>

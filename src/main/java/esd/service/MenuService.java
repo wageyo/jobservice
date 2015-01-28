@@ -49,19 +49,19 @@ public class MenuService {
 		map.put("start", Constants.START);
 		map.put("size", Integer.MAX_VALUE);
 		List<Menu> list = dao.getByPage(map);
-		List<Menu> destList = new ArrayList<Menu>();
-		for (Menu m : list) {
-			if (authority == 999) {
-				if (m.getUrl().equals("/jobservice/manage/setup")) {
-					continue; // 暂时拿掉
-				}
-			}
-			Attributes a = new Attributes();
-			a.setUrl(m.getUrl());
-			m.setAttributes(a);
-			destList.add(m);
-		}
-		return destList;
+//		List<Menu> destList = new ArrayList<Menu>();
+//		for (Menu m : list) {
+//			if (authority == 999) {
+//				if (m.getUrl().equals("/jobservice/manage/setup")) {
+//					continue; // 暂时拿掉
+//				}
+//			}
+//			Attributes a = new Attributes();
+//			a.setUrl(m.getUrl());
+//			m.setAttributes(a);
+//			destList.add(m);
+//		}
+		return list;
 	}
 
 	// 获得所有菜单状态

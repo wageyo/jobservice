@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.WhiteListDao">
+
+	<!-- result map of WhiteList -->
+	<resultMap id="ResultWhiteList" type="WhiteList">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_check" property="updateCheck" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="domain_name" property="domainName" jdbcType="VARCHAR" />
+		<result column="full_name" property="fullName" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="WhiteList">
+		insert into  white_list
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="title != null and title != ''">
+				title,
+			</if>
+			<if test="domainName != null and domainName != ''">
+				domain_name,
+			</if>
+			<if test="fullName != null and fullName != ''">
+				full_name,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}, now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null and title !=''">
+				#{title, jdbcType=VARCHAR},
+			</if>
+			<if test="domainName != null and domainName !=''">
+				#{domainName, jdbcType=VARCHAR},
+			</if>
+			<if test="fullName != null and fullName != ''">
+				#{fullName, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark, jdbcType=VARCHAR}
+			</if>
+		</trim>	
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from white_list 
+		where id = #{id, jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="WhiteList">
+		update white_list
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="domainName != null and domainName != ''">
+				domain_name = #{domainName, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null and title != ''">
+				title = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="fullName != null and fullName != ''">
+				full_name = #{fullName, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR}
+			</if>
+		</trim>
+		where id = #{id, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultWhiteList" parameterType="java.lang.String">
+		select * 
+		from white_list 
+		where id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map" resultMap="ResultWhiteList">
+		select *
+		from white_list
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="white_list != null">
+				<if test="whiteList.title != null and whiteList.title != ''">
+					title like concat('%',#{whiteList.title, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="whiteList.domainName != null and whiteList.domainName != ''">
+					and domain_name like concat('%',#{whiteList.domainName, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="whiteList.fullName != null and whiteList.fullName != ''">
+					and full_name like concat('%', #{whiteList.fullName, jdbcType=VARCHAR}, '%') 
+				</if>
+			</if>
+		</trim>
+		order by create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+	
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int" parameterType="map">
+		select count(*)
+		from white_list
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="whiteList != null">
+				<if test="whiteList.title != null and whiteList.title != ''">
+					title like concat('%',#{whiteList.title, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="whiteList.domainName != null and whiteList.domainName != ''">
+					and domain_name like concat('%',#{whiteList.domainName, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="whiteList.fullName != null and whiteList.fullName != ''">
+					and full_name like concat('%', #{whiteList.fullName, jdbcType=VARCHAR}, '%') 
+				</if>
+			</if>
+		</trim>
+	</select> 
+	
+</mapper>

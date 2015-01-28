@@ -1,7 +1,18 @@
 /***********************************************
- *******  后台管理页面框架脚本--管理员用户管理  ********
+ *******  后台管理页面框架脚本--白名单管理  ********
  ***********************************************/
-
+$(document).ready(function(){
+	//初始化所有bootstrap开关
+	if($("[name='switchAudit']").length == 1){
+		$("[name='switchAudit']").bootstrapSwitch();
+	}
+	
+	$('#whitelistcheck').on('switch-change', function (e, data) {
+	    var $el = $(data.el)
+	      , value = data.value;
+	    alert(e + $el + value);
+	});
+});
 //收集参数并进入后台查询方法
 function query(page,checkStatus){
 	var paramStr = '';	//查询字符串
@@ -17,15 +28,8 @@ function query(page,checkStatus){
 	if(targetName != null && targetName != undefined && targetName != ''){
 		paramStr += '&targetName=' + targetName; 
 	}
-	if(checkStatus == null || checkStatus == undefined || checkStatus == ''){
-	//	var checkStatus = $('#checkStatus').val();
-		checkStatus = 'ok';	//管理员账号 统一写死为 ok 状态
-		paramStr += '&checkStatus=' + checkStatus; 
-	}else{
-		paramStr += '&checkStatus=' + checkStatus; 
-	}
 	// 跳转提交
-	window.location.href = getRootPath() + '/manage/admin/admin_list?' + paramStr;
+	window.location.href = getRootPath() + '/manage/white/white_list?' + paramStr;
 }
 
 // 新增, 修改, 返回  综合方法
@@ -42,15 +46,13 @@ function updateEntity(submitType,objId){
 			return false;
 		}
 		$.ajax({
-			url:server.url + 'manage/admin/add',
+			url:server.url + 'manage/white/add',
 			type:'post',
 			dataType:'json',
 			data:{
-				'loginName':param.loginName,
-				'passWord':param.passWord,
-				'nickName':param.nickName,
 				'title':param.title,
-				'area.code':param.area
+				'domainName':param.domainName,
+				'remark':param.remark
 			},
 			success:function(data){
 				if(data.notice == 'success'){
@@ -69,7 +71,7 @@ function updateEntity(submitType,objId){
 			return;
 		}
 		$.ajax({
-			url:server.url + 'manage/admin/delete/' + objId,
+			url:server.url + 'manage/white/delete/' + objId,
 			type:'post',
 			dataType:'json',
 			data:{},
@@ -90,16 +92,14 @@ function updateEntity(submitType,objId){
 			return false;
 		}
 		$.ajax({
-			url:server.url + 'manage/admin/edit',
+			url:server.url + 'manage/white/edit',
 			type:'post',
 			dataType:'json',
 			data:{
 				'id':objId,
-				'loginName':param.loginName,
-				'passWord':param.passWord,
-				'nickName':param.nickName,
 				'title':param.title,
-				'area.code':param.area
+				'domainName':param.domainName,
+				'remark':param.remark
 			},
 			success:function(data){
 				if(data.notice == 'success'){
@@ -117,43 +117,43 @@ function updateEntity(submitType,objId){
 //校验提交表单中所有控件方法
 function checkObject(){
 	var param  = new Object();
-	var loginName = $('#loginName').val();
-	if(loginName == null || loginName == ''){
-		$('#loginName').focus();
-		return false;
-	}
-	param.loginName = loginName;
-	var passWord = $('#passWord').val();
-	if(passWord == null || passWord == ''){
-		$('#passWord').focus();
-		return false;
-	}
-	param.passWord = passWord;
-	var nickName = $('#nickName').val();
-	if(nickName != null && nickName != ''){
-		param.nickName = nickName;
-	}
 	var title = $('#title').val();
 	if(title == null || title == ''){
 		$('#title').focus();
 		return false;
 	}
 	param.title = title;
-	// 账号所属地区
-	var area = '';
-	var areaValue3 = $('#areaValue3').val();
-	var areaValue2 = $('#areaValue2').val();
-	var areaValue1 = $('#areaValue1').val();
-	if(areaValue3 != null && areaValue3 != ''){
-		area = areaValue3;
-	}else if(areaValue2 != null && areaValue2 != ''){
-		area = areaValue2;
-	}else if(areaValue1 != null && areaValue1 != ''){
-		area = areaValue1;
-	}else{
-		alert('工作地点不能为空, 请重新选择.');
+	var domainName = $('#domainName').val();
+	if(domainName == null || domainName == ''){
+		$('#domainName').focus();
 		return false;
 	}
-	param.area = area;
+	param.domainName = domainName;
+	var remark = $('#remark').val();
+	if(remark != null && remark != ''){
+		param.remark = remark;
+	}
 	return param;
+}
+
+//异步更新 白名单开关是否开启方法
+function updateSwitch(switchid,switchStatus){
+	if(switchStatus){
+		switchStatus = 'on';
+	}else{
+		switchStatus = 'off';
+	}
+	$.ajax({
+		url:'/jobservice/manage/white/update_switch',
+		type:'post',
+		data:{'id':switchid,'value':switchStatus},
+		dataType:'json',
+		success:function(data){
+			if(data.notice == 'success'){
+			//	alert('成功!');
+			}else{
+				alert(data.notice);
+			}
+		}
+	});
 }
