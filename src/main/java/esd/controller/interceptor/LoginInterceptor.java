@@ -67,6 +67,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) {
+		System.out.println("1 request.getRemoteAddr():  " + request.getRemoteAddr());
+		System.out.println("2 request.getRemoteHost():  " + request.getRemoteHost());
+		System.out.println("3 request.getRemotePort():  " + request.getRemotePort());
+		System.out.println("4 request.getRemoteUser():  " + request.getRemoteUser());
+		System.out.println("5 request.getRequestURL():  " + request.getRequestURL());
+		System.out.println("6 request.getRequestURI():  " + request.getRequestURI());
+		System.out.println("7 request.getServerName():  " + request.getServerName());
 		// 检查白名单功能是否开启
 		Parameter whiteList = parameterService
 				.getById(Constants.WHITE_LIST_SWITCH);
@@ -74,13 +81,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (Constants.SWITCH_ON.equals(whiteList.getValue())) {
 			Integer result = whiteListService.checkWhiteList(request.getRemoteAddr());
 			System.out.println("result:  " + result);
-			System.out.println("1:  " + request.getRemoteAddr());
-			System.out.println("2:  " + request.getRemoteHost());
-			System.out.println("3:  " + request.getRemotePort());
-			System.out.println("4:  " + request.getRemoteUser());
-			System.out.println("5:  " + request.getRequestURL());
-			System.out.println("6:  " + request.getRequestURI());
-			System.out.println("7:  " + request.getServerName());
 			// 如果请求的url地址中包含的域名 不在白名单中, 则跳转到提示拒绝访问页面
 			if (result == 0) {
 				return false;
