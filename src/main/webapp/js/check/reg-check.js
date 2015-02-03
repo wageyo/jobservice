@@ -47,6 +47,21 @@ $(document).ready(function(){
 		}
 	});
 	
+	//真实姓名
+	$('#nickName').focus(function(){
+		$('#showNickNameImg').css('color','black');
+		$('#showNickNameMsg').html('请输入您的真实姓名, 以方便残联就业管理中心进行管理.');
+	}).blur(function(){
+		var nickName = $(this).val();
+		if(verify.isNull(nickName)){
+			$('#showNickNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+			$('#showNickNameMsg').css('color','red').html('请输入您的真实姓名, 以方便残联就业管理中心进行管理.');
+		}else{
+			$('#showNickNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+			$('#showNickNameMsg').css('color','black').html('校验正确.');
+		}
+	});
+	
 	//确认密码
 	$('#passWordConfirm').focus(function(){
 		$('#showPassWordConfirmImg').css('color','black');
@@ -172,14 +187,22 @@ function check(){
 		$('#passWordConfirm').focus();
 		return false;
 	}
+	//真实姓名
+	var nickName = $('#nickName').val();
+	if(verify.isNull(nickName)){
+		$('#showNickNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+		$('#showNickNameMsg').css('color','red').html('请输入您的真实姓名, 以方便残联就业管理中心进行管理.');
+		$('#nickName').focus();
+		return false;
+	}
 	//email
-/*	var email = $('#email').val();
+	var email = $('#email').val();
 	if(!verify.isEmail(email)){
 		$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
 		$('#showEmailMsg').css('color','red').html('请输入正确的email格式, 以便在您忘记用户名或密码的时候找回使用.');
 		$('#email').focus();
 		return false;
-	}	*/
+	}
 	//验证码
 	var LoginVerifyCode = $('#LoginVerifyCode').val();
 	if(LoginVerifyCode == null || LoginVerifyCode == '' || LoginVerifyCode == undefined){

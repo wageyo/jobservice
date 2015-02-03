@@ -30,6 +30,7 @@ import com.octo.captcha.service.CaptchaServiceException;
 import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.User;
+import esd.common.disability.CheckCardService;
 import esd.controller.Constants.Identity;
 import esd.controller.Constants.Notice;
 import esd.controller.checkcode.CaptchaServiceSingleton;
@@ -51,6 +52,9 @@ public class UserController {
 
 	@Autowired
 	private ParameterService pService;
+	
+	@Autowired
+	private CheckCardService checkCardService;
 
 	// 注册
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -428,5 +432,43 @@ public class UserController {
 		ra.addFlashAttribute("messageType", "1");
 		ra.addFlashAttribute("message", "操作成功!");
 		return "redirect:/user/goCenter";
+	}
+
+	// 进入初始化密码页面
+	@RequestMapping(value = "/setInitPassWord", method = RequestMethod.GET)
+	public String setInitPassWord(HttpServletRequest request) {
+		String tempUserName = request.getParameter("tempUserName");
+		request.setAttribute("tempUserName", tempUserName);
+		return "person/init-password-set";
+	}
+
+	// 提交初始化密码页面
+	@RequestMapping(value = "/setInitPassWord", method = RequestMethod.POST)
+	public String setInitPassWordPost(User user,HttpServletRequest request,HttpServletResponse response,RedirectAttributes redirectAttributes) {
+		//设置地区code
+		user.setArea(new Area(CookieHelper.getLocalArea(request)));
+		// 设置个人用户身份和权限值
+		user.setIdentity(Constants.Identity.PERSON.getValue());
+		user.setAuthority(Constants.Authority.PERSON.getValue());
+
+		//如果没有保存成功, 则将该对象原样返回前台, 同时给出提示文字
+		request.setAttribute("user", user);
+
+		//远程到中残联网站校验 姓名和残疾证号 
+		Boolean bl = checkCardService.check(user.getNickName(), user.getLoginName());
+		if(!bl){
+			request.setAttribute("messageType", "0");
+			request.setAttribute("message", "您的姓名和残疾证号不一致, 请检查后重新输入.");
+			return "person/init-password-set";
+		}
+		
+		Boolean bl2 = userService.save(user);
+		if(bl2){
+			CookieHelper.setCookie(response, request, user, null);
+			return "redirect:/user/goCenter";
+		}
+		redirectAttributes.addFlashAttribute("messageType", "0");
+		redirectAttributes.addFlashAttribute("message", "注册请求已提交, 请等待管理员审核");
+		return "person/init-password-set";
 	}
 }

@@ -82,6 +82,68 @@ $(function () {
 	
 	 /*******  点击登陆   ********/
 	$("#LoginBtn").click(function(){
+		//先判断是否是残疾证号
+		var loginName = $('#loginName').val();
+		var passWord = $('#passWord').val();
+		if(!verify.checkname(loginName)){
+			alert('请输入用户名, 且密码只能由5-20位的英文, 数字或下划线_组成.');
+			$('#loginName').focus();
+			return false;
+		}
+		var reg = /^[0-9]{14}[0-9a-zA-Z]{4}[1-7]{1}[1-4]{1}[B]?[0-9]?/;
+		var checkResult = reg.test(loginName);
+		//情况① 如果不是残疾证号, 则对密码进行校验
+		if(!checkResult){
+			//密码
+			if(passWord == null || passWord == '' ){
+				if(!verify.checkname(passWord)){
+					alert('您输入的不是残疾证号, 请输入密码!');
+					$('#passWord').focus();
+					return false;
+				}
+			}else{
+				//有密码, 则提交form表单
+				$('form:first').submit();
+			}
+		}else{
+		//情况② 如果是残疾证号, 则查询一下数据库中是否已经存在
+			$.ajax({
+				url : server.url + 'user/check/' + loginName,
+				dataType : 'json',
+				type : 'GET',
+				async : false,
+				success : function(json) {
+					//不存在时, 则跳转到输入汉字名字和初始密码页面
+					if(json.notice == 'success'){
+						window.location.href = server.url + 'user/setInitPassWord?tempUserName=' + loginName;
+					}else{
+						//存在时, 看看有没有输入密码, 
+						//没有输入密码, 进行提示
+						if(passWord == null || passWord == '' ){
+							if(!verify.checkname(passWord)){
+								alert('您的残疾证号已经被注册过, 请输入密码!');
+								$('#passWord').focus();
+								return;
+							}
+						}else{
+							//有密码, 则提交form表单
+							$('form:first').submit();
+						}
+					}
+					if(json.notice == 'failure'){
+						$('#loginNameNotice').html('该用户名已经存在, 请重新填写一个.');
+						//按钮变灰
+						$('#btn-submit').removeClass('blue').addClass('gray').attr('disabled','disabled');
+						return false;
+					}
+				},
+			});
+		}
+		return true;
+		
+		
+		
+		
 		$('form:first').submit();
 	});
 	
@@ -164,7 +226,7 @@ function check(){
 function blur_loginName(){
 	var loginName = $('#loginName').val();
 	$.ajax({
-		url : server.url + 'user/',
+		url : server.url + 'user/check/' + loginName,
 		dataType : 'json',
 		type : 'GET',
 		async : false,

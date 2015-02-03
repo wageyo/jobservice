@@ -91,7 +91,19 @@
 		                    <div id="showPassWordConfirmMsg" class="SetFloatLeft">请再次输入密码</div>
 		                    </td>
 		                </tr>
-		                 <tr>
+		                <tr>
+		                    <td class="textAlignRight FontSize"><span class="red">*</span>真实姓名：</td>
+		                    <td class="printText">
+		                        <div class="print">
+		                        	<input name="nickName" id="nickName" class="TextInput" type="text" />
+		                        </div>
+		                    </td>
+		                    <td class="textAlignLeft">
+		                    <div id="showNickNameImg" class="SetFloatLeft"></div>
+		                    <div id="showNickNameMsg" class="SetFloatLeft">请输入您的真实姓名, 以方便残联就业管理中心进行管理.</div>
+		                    </td>
+		                </tr>
+		                <tr>
 		                    <td class="textAlignRight FontSize">联系方式：</td>
 		                    <td class="printText">
 		                        <div class="print">

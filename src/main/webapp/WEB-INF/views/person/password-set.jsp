@@ -22,28 +22,8 @@
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/verify.js"></script>
-	<script type="text/javascript" src="${contextPath}/js/check/get-back.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/check/password-set.js"></script>
 	<script type="text/javascript">
-	</script>
-    <script type="text/javascript">
-	function check(){
-		//密码
-		var reg_pwd = /[a-zA-Z0-9]{6,12}/;
-		var newPassWord = $('#newPassWord').val();
-		if(!reg_pwd.test(newPassWord)){
-			alert('密码格式不正确,请重新填写!');
-			$('#newPassWord').focus();
-			return false;
-		}
-		//两次密码是否一致
-		var conPassWord = $('#conPassWord').val();
-		if(conPassWord != newPassWord ){
-			alert('两次输入的密码不一致!');
-			$('#conPassWord').focus();
-			return false;
-		}
-		return true;
-	}
 	</script>
 </head>
 <body>
