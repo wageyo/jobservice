@@ -117,7 +117,7 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.AREACOUNTRY;
+				cookieAreaCode = "20652300";
 			}
 			acode = cookieAreaCode;
 		}
@@ -222,7 +222,7 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.AREACOUNTRY;
+				cookieAreaCode = "20652300";
 			}
 			acode = cookieAreaCode;
 		}
@@ -253,7 +253,7 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.AREACOUNTRY;
+				cookieAreaCode = "20652300";
 			}
 			acode = cookieAreaCode;
 		}
@@ -300,7 +300,7 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.AREACOUNTRY;
+				cookieAreaCode = "20652300";
 			}
 			acode = cookieAreaCode;
 		}
@@ -402,7 +402,7 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.AREACOUNTRY;
+				cookieAreaCode = "20652300";
 			}
 			acode = cookieAreaCode;
 		}

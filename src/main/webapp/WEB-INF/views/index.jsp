@@ -263,7 +263,8 @@
 													<li class="LiEven">|</li>
 												</c:if>
 											</c:forEach>
-											<c:if test="${uplevellocation != null && uplevellocation != '' }">
+											<!-- *************************  昌吉州地区限定, 不可以上到上级省, 全国.   *************************** -->
+											<c:if test="${uplevellocation == '20652300'}">
 												<li class="LiEven">|</li>
 												<li> <a title="返回上级地区" href="${contextPath }/index?acode=${uplevellocation}" style="color: rgb(18, 0, 223);">返回上级地区</a> </li>
 											</c:if>
