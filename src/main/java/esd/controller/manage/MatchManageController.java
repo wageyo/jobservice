@@ -300,6 +300,7 @@ public class MatchManageController {
 					resumeResultList = resumeService.getForListShow(
 							paramEntity, 1, Integer.MAX_VALUE);
 				tempMap.put("resumeResultList", resumeResultList);
+				System.out.println("matchedNumber " + resumeResultList.size());
 				if(resumeResultList !=null){
 					tempMap.put("matchedNumber", resumeResultList.size());
 				}

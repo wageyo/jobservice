@@ -15,7 +15,7 @@
 						<th>
 							匹配结果:
 							<c:choose>
-								<c:when test="${entity.matchedNumber != null }">${entity.matchedNumber }</c:when>
+								<c:when test="${job.matchedNumber != null }">${job.matchedNumber }</c:when>
 								<c:otherwise>0</c:otherwise>
 							</c:choose>个
 						</th>
