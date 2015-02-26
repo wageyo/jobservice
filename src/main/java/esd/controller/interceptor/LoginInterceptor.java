@@ -67,13 +67,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) {
-		System.out.println("1 request.getRemoteAddr():  " + request.getRemoteAddr());
-		System.out.println("2 request.getRemoteHost():  " + request.getRemoteHost());
-		System.out.println("3 request.getRemotePort():  " + request.getRemotePort());
-		System.out.println("4 request.getRemoteUser():  " + request.getRemoteUser());
-		System.out.println("5 request.getRequestURL():  " + request.getRequestURL());
-		System.out.println("6 request.getRequestURI():  " + request.getRequestURI());
-		System.out.println("7 request.getServerName():  " + request.getServerName());
+//		System.out.println("1 request.getRemoteAddr():  " + request.getRemoteAddr());
+//		System.out.println("2 request.getRemoteHost():  " + request.getRemoteHost());
+//		System.out.println("3 request.getRemotePort():  " + request.getRemotePort());
+//		System.out.println("4 request.getRemoteUser():  " + request.getRemoteUser());
+//		System.out.println("5 request.getRequestURL():  " + request.getRequestURL());
+//		System.out.println("6 request.getRequestURI():  " + request.getRequestURI());
+//		System.out.println("7 request.getServerName():  " + request.getServerName());
 		// 检查白名单功能是否开启
 		Parameter whiteList = parameterService
 				.getById(Constants.WHITE_LIST_SWITCH);
