@@ -59,7 +59,7 @@
 		                    <td class="printText">
 		                        <div class="print">
 		                        	<input name="loginName" id="loginName" class="TextInput" type="text" />
-		                        	<input type="hidden" value="person" name="identity" />
+		                        	<input type="hidden" value="person" name="identity"  id="identity"/>
 		                        </div>
 		                    </td>
 		                    <td class="textAlignLeft">

@@ -59,7 +59,7 @@
 		                    <td class="printText">
 		                        <div class="print">
 		                        	<input name="loginName" id="loginName" class="TextInput" type="text" />
-		                        	<input type="hidden" value="company" name="identity" />
+		                        	<input type="hidden" value="company" name="identity" id="identity" />
 		                        </div>
 		                    </td>
 		                    <td class="textAlignLeft">
@@ -67,7 +67,7 @@
 		                    <div id="showUserNameMsg" class="SetFloatLeft">可由5-20位字母、数字或下划线组成,首字母不能是数字</div>
 		                    </td>
 		                </tr>
-		                <tr class="bgColor">
+		                 <tr class="bgColor">
 		                    <td class="textAlignRight FontSize"><span class="red">*</span>密码：</td>
 		                    <td class="printText">
 		                        <div class="print">

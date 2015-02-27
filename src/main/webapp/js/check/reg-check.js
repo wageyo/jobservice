@@ -187,13 +187,17 @@ function check(){
 		$('#passWordConfirm').focus();
 		return false;
 	}
-	//真实姓名
-	var nickName = $('#nickName').val();
-	if(verify.isNull(nickName)){
-		$('#showNickNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
-		$('#showNickNameMsg').css('color','red').html('请输入您的真实姓名, 以方便残联就业管理中心进行管理.');
-		$('#nickName').focus();
-		return false;
+	var identity = $('#identity').val();
+	//只有个人用户才进行检测真实姓名的操作
+	if(identity == 'person'){
+		//真实姓名
+		var nickName = $('#nickName').val();
+		if(verify.isNull(nickName)){
+			$('#showNickNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+			$('#showNickNameMsg').css('color','red').html('请输入您的真实姓名, 以方便残联就业管理中心进行管理.');
+			$('#nickName').focus();
+			return false;
+		}
 	}
 	//email
 	var email = $('#email').val();
