@@ -269,10 +269,11 @@ public class MatchManageController {
 	}
 
 	//向个人发送推送的职位***参数分别为：matchRate-匹配度       mark-推送范围标示符,all为全部， ids-传递的id数组
-	@RequestMapping(value="/sendJob/{matchRate}/{type}/{ids}", method=RequestMethod.POST)
+	@RequestMapping(value="/sendJob/{matchRate}/{type}", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> sendJob(@PathVariable("matchRate") Integer matchRate, @PathVariable("type") String type,@PathVariable("ids") Integer[] ids,HttpServletRequest request){
+	public Map<String,Object> sendJob(@PathVariable("matchRate") Integer matchRate, @PathVariable("type") String type,HttpServletRequest request){
 		//①整理前台传进来的参数, 并判断是全部推送还是选中推送
+		Integer[] ids = null;
 		Resume tmp = new Resume();
 		// 获取地区码
 		String userId = CookieHelper.getCookieValue(request,
@@ -291,6 +292,8 @@ public class MatchManageController {
 		if("all".equals(type)){
 			resumeList = resumeService.getListShowForManage(tmp, Constants.START, Integer.MAX_VALUE);
 		}else{
+			String[] idsStr = request.getParameterValues("ids");
+			System.out.println(ids);
 			resumeList = resumeService.getByIds(ids);
 		}
 		//③向每个 推送职位个数不为零的简历发送推送信息

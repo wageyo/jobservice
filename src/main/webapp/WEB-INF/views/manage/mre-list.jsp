@@ -67,7 +67,10 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<button type="button" class="btn btn-info" onclick="" style="float:right;">推送招聘信息</button>
+						<div style="float:right;">
+						<button type="button" class="btn btn-info" onclick="sendTuiSong(null);">向选中简历推送招聘信息</button>
+						<button type="button" class="btn btn-info" onclick="sendTuiSong('all');">向全部简历推送招聘信息</button>
+						</div>
 					</div>
 					<!-- 上方条件查询框  结束-->
 						
@@ -78,6 +81,9 @@
 								<%--第一个公司表	标题						--%>
 								<thead>
 									<tr style="background:#5599FF ;color:#ffffff">
+										<th style="width:2%;">
+											<input type="checkbox" id="checkedAll" onclick="selectAll();" />
+										</th>
 									 	<th style="width:4%;">
 											序号
 										</th>
@@ -122,6 +128,9 @@
 									<!-- 简历列表数据 -->
 									<c:forEach items="${entityList }" var="entity" varStatus="row">
 										<tr style="font-size:13px;background:#ffffff;border-color: #ffffff">
+											<td>
+												<input type="checkbox" name="items" onclick="setSelectAll();" value="${entity.id }"/>
+											</td>
 											<td>
 												${(row.index + 1 + (currentPage - 1) * 20) }
 											</td>
@@ -196,11 +205,11 @@
 				<!-- 让body-right div的高度跟随内容自动变化 -->
 			<div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
 		</div>
+		</div>
 		<!-- 中间主体div 结束 -->
 		
 		<!-- 尾部div -->
 		<%@ include file="footer.jsp"%>
-
 	</div>
 	<!-- 整个页面div  结束 -->
 </body>

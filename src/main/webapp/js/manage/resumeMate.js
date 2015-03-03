@@ -66,4 +66,52 @@ function selectButtonPer(valueButton,resumeMatchName, nameButton, value, name){
 	$('#'+resumeMatchName).val(name);
 }
 
+//复选框事件
+//全选、取消全选的事件
+function selectAll(){
+	var checked = $('#checkedAll').prop('checked');
+	 $(":checkbox").prop("checked", checked);  
+}
+//子复选框的事件
+function setSelectAll(){
+	//当没有选中某个子复选框时，SelectAll取消选中
+	var checkedsub = $("input[name='items']:checked").length; //获取选中的subcheck的个数
+	var chsub = $("input[name='items']").length; //获取subcheck的个数
+	var checked = chsub == checkedsub ? true:false;
+	$('#checkedAll').prop('checked', checked);
+}
+
+//发送推送招聘信息
+function sendTuiSong(type){
+	var	matchRate=$('#matchRate').val();
+	if(matchRate == null || matchRate == undefined || matchRate == '' || matchRate <= 0){
+		alert("请选择匹配百分比");
+		return;
+	}
+	//选中的简历
+	var arrChk = [];
+	if(type != 'all'){
+		var checkedsub = $("input[name='items']:checked");
+		if(checkedsub.length == 0){
+			alert('你还没有选中任何需要推送招聘信息的简历.');
+			return;
+		}
+		$($("input[name='items']:checked")).each(function(){
+			arrChk.push($(this).val()); 
+		});
+	}
+	var url = getRootPath() + '/manage/sendJob/' + matchRate + '/' + type;
+	alert(url);
+	$.ajax({
+		url : url,
+		type : 'POST',
+		data : {'ids':arrChk},
+		dataType : 'json',
+		success : function(e) {
+			alert(e);
+		},
+		async : false
+	});
+}
+
 
