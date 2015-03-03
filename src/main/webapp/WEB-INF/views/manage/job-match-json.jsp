@@ -43,7 +43,7 @@
 					<c:if test="${job.resumeResultList[0] == null}">
 						<tr style="">
 							<td colspan="10" class="warning" style="font-size: 12px;text-align: center;color:red;">
-								没有匹配的简历!
+								没有匹配上的简历!
 							</td>
 						</tr>
 					</c:if>

@@ -49,7 +49,7 @@
 			<c:if test="${entityList == null || entityList[0] == null}">
 				<tr style="">
 					<td colspan="10" class="warning" style="font-size: 12px;text-align: center;color:red;">
-						没有匹配的简历!
+						没有匹配上的招聘信息!
 					</td>
 				</tr>
 			</c:if>

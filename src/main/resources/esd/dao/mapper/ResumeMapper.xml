@@ -56,7 +56,7 @@
 		<result column="r_provide_other" property="provideOther" jdbcType="VARCHAR" />
 		<result column="r_work_shift" property="workShift" jdbcType="TINYINT" />
 		<result column="r_state" property="state" jdbcType="VARCHAR" />
-		<result column="r_is_default" property="isDefault" jdbcType="VARCHAR" />
+		<result column="r_is_default" property="isDefault" jdbcType="BIT" />
 		<result column="r_check_status" property="checkStatus" jdbcType="VARCHAR" />
 		<result column="r_view_count" property="viewCount" jdbcType="INTEGER" />
 		<result column="r_career_test" property="careerTest" jdbcType="VARCHAR" />
@@ -764,6 +764,10 @@
 						and r.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<!-- 是否是默认投递的简历 -->
+				<if test="resume.isDefault != null">
+					and r.is_default = #{resume.isDefault, jdbcType=BIT} 
+				</if>
 			</if>
 			<choose>
 				<when test="resume != null">
@@ -839,6 +843,10 @@
 						and r.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<!-- 是否是默认投递的简历 -->
+				<if test="resume.isDefault != null">
+					and r.is_default = #{resume.isDefault, jdbcType=BIT} 
+				</if>
 			</if>
 			<choose>
 				<when test="resume != null">
@@ -852,6 +860,17 @@
 		</trim>
 	</select> 
 
+	<!-- get by ids 
+	<select id="getByIds" resultMap="ResultResume" parameterType="array">
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		where  <include refid="sql_condition" />
+			and r.id in 
+			<foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+	</select>-->
+	
 	<!-- getByUser-->
 	<select id="getByUser" resultMap="ResultResume" parameterType="java.lang.Integer">
 		select <include refid="base_column" />

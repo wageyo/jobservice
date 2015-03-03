@@ -143,7 +143,7 @@
 												<td>
 													<c:if test="${entity.jobCount != null && entity.jobCount != 0}">
 														<a href="javascript:void(0);" onclick="lookMatchData(1,${entity.id },this)">查看匹配信息</a>
-														<a href="javascript:void(0);" onclick="hideMatchData(this)" style="display:none;">隐藏匹配信息</a>
+														<a href="javascript:void(0);" onclick="hideMatchData(this);" style="display:none;">隐藏匹配信息</a>
 													</c:if>
 													<c:if test="${entity.jobCount == null || entity.jobCount == 0}">
 														<span style="color:red;">没有招聘信息</span>

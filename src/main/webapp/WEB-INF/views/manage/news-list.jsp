@@ -69,7 +69,6 @@
 					
 					<!-- 下方结果显示框  开始 -->
 					<div class="row-fluid">
-						
 						<div class="span12">
 							<table class="table">
 								<thead>

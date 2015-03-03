@@ -22,6 +22,10 @@ public interface ResumeDao extends IDao<Resume> {
 
 	//得到个人用户默认选中作为投递的简历
 	public Resume getDefaultResume(int uid);
+	
+	//根据id数组得到一组简历列表
+	public List<Resume> getByIds(Integer[] ids);
+	
 	///
 	///以下给录入员等管理员使用
 	///

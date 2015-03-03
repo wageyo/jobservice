@@ -391,6 +391,16 @@ public class ResumeService {
 		return list;
 	}
 
+	/**
+	 * 根据id数据得到简历列表
+	 * @param ids
+	 * @return
+	 */
+	public List<Resume> getByIds(Integer[] ids){
+		List<Resume> list = dao.getByIds(ids);
+		return list;
+	}
+	
 	// 根据用户id, 得到此人简历
 	public List<Resume> getByUser(int uid) {
 		List<Resume> list = dao.getByUser(uid);

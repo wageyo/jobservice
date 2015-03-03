@@ -584,6 +584,17 @@
 		</trim>
 	</select>
 	
+	<!-- get by ids -->
+	<select id="getByIds" resultMap="ResultJob">
+		select
+			<include refid="base_column"/>
+		from <include refid="from_table"/>
+		where job.id in 
+			<foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+	</select>	
+	
 	<!-- get by company -->
 	<select id="getByCompany" resultMap="ResultJob" parameterType="map">
 		select
@@ -592,7 +603,8 @@
 		where job.cid = #{cid, jdbcType=INTEGER}
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
-		<!-- get by company -->
+	
+	<!-- get by company -->
 	<select id="getByCompanyMate" resultMap="ResultJob" parameterType="map">
 		select  <include refid="base_column_mate"/> from <include refid="from_table_mate"/> 
 		where job.cid = #{cid, jdbcType=INTEGER}
