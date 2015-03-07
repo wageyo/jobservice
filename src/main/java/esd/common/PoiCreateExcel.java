@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -19,9 +20,10 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.Resume;
+import esd.common.disability.test;
 
 public class PoiCreateExcel {
-
+	private static Logger log = Logger.getLogger(PoiCreateExcel.class);
 	/**
 	 * 导出职位信息
 	 * 
@@ -608,7 +610,7 @@ public class PoiCreateExcel {
 				if (resume.getDesireJob().getCode() != null
 						&& !"".equals(resume.getDesireJob().getCode())) {
 					cell = row.createCell(38);
-					System.out.println(resume.getDesireJob().getName()
+					log.info(resume.getDesireJob().getName()
 							+ "********8");
 					cell.setCellValue(resume.getDesireJob().getName());
 				}

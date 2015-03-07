@@ -93,7 +93,7 @@ public class JobManageController {
 		Integer total = jobService.getTotalCount(paramEntity,Boolean.FALSE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
-			System.out.println("resultList.size()" + resultList.size());
+			log.info("resultList.size()" + resultList.size());
 			for (Job tmp : resultList) {
 				Map<String, Object> tempMap = new HashMap<>();
 				tempMap.put("id", tmp.getId());// id

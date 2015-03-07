@@ -78,6 +78,25 @@ $(document).ready(function(){
 		}
 	});
 	
+	//联系电话
+	$('#phone').focus(function(){
+		$('#showPhoneImg').css('color','black');
+		$('#showPhoneMsg').html('个人用户必须联系方式, 方便残疾人就业指导中心联系你及推送招聘信息用.');
+	}).blur(function(){
+		var nickName = $(this).val();
+		var identity = $('#identity').val();
+		//只有个人用户才进行检测真实姓名的操作
+		if(identity == 'person'){
+			if(verify.isNull(nickName)){
+				$('#showPhoneImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+				$('#showPhoneMsg').css('color','red').html('个人用户必须联系方式, 方便残疾人就业指导中心联系你及推送招聘信息用.');
+			}else{
+				$('#showPhoneImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+				$('#showPhoneMsg').css('color','black').html('校验正确.');
+			}
+		}
+	});
+	
 	//email
 	$('#email').focus(function(){
 		$('#showEmailImg').css('color','black');
@@ -196,6 +215,17 @@ function check(){
 			$('#showNickNameImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
 			$('#showNickNameMsg').css('color','red').html('请输入您的真实姓名, 以方便残联就业管理中心进行管理.');
 			$('#nickName').focus();
+			return false;
+		}
+	}
+	//只有个人用户才进行检测电话号码是否存在
+	if(identity == 'person'){
+		//电话号码
+		var phone = $('#phone').val();
+		if(verify.isNull(phone)){
+			$('#showPhoneImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+			$('#showPhoneMsg').css('color','red').html('请填写联系方式, 方便残疾人就业指导中心联系你及推送招聘信息用.');
+			$('#phone').focus();
 			return false;
 		}
 	}

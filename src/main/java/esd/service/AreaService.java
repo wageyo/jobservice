@@ -2,6 +2,7 @@ package esd.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import esd.dao.AreaDao;
  */
 @Service
 public class AreaService {
-
+	private static Logger log = Logger.getLogger(AreaService.class);
 	@Autowired
 	private AreaDao dao;
 
@@ -37,7 +38,7 @@ public class AreaService {
 
 	// 按id查询一个对象
 	public Area getById(int id) {
-		System.out.println("id in service = " + id);
+		log.info("id in service = " + id);
 		return (Area) dao.getById(id);
 	}
 

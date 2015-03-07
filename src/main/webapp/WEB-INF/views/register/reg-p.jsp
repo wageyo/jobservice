@@ -104,7 +104,7 @@
 		                    </td>
 		                </tr>
 		                <tr>
-		                    <td class="textAlignRight FontSize">联系方式：</td>
+		                    <td class="textAlignRight FontSize"><span class="red">*</span>联系方式：</td>
 		                    <td class="printText">
 		                        <div class="print">
 		                        	<input name="phone" id="phone" class="TextInput" type="text" />
@@ -112,7 +112,7 @@
 		                    </td>
 		                    <td class="textAlignLeft">
 		                    <div id="showPhoneImg" class="SetFloatLeft"></div>
-		                    <div id="showPhoneMsg" class="SetFloatLeft">请填写联系方式, 方便残疾人就业指导中心联系你.</div>
+		                    <div id="showPhoneMsg" class="SetFloatLeft">请填写联系方式, 方便残疾人就业指导中心联系你及推送招聘信息用.</div>
 		                    </td>
 		                </tr> 
 		                <tr class="bgColor">

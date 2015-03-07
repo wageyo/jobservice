@@ -1,7 +1,10 @@
 package esd.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +15,7 @@ import esd.dao.ParameterDao;
 
 @Service
 public class ParameterService {
-
+	private static Logger log = Logger.getLogger(ParameterService.class);
 	@Autowired
 	private ParameterDao dao;
 
@@ -59,7 +62,7 @@ public class ParameterService {
 	 * @return
 	 */
 	public List<Parameter> getAll() {
-		System.out.println("************" + dao.getByPage(null).size());
+		log.info("************" + dao.getByPage(null).size());
 		return dao.getByPage(null);
 	}
 
@@ -196,4 +199,18 @@ public class ParameterService {
 	public List<Parameter> getByParameter(Parameter p) {
 		return dao.getByObj(p);
 	}
+	
+	/**
+	 * 根据类型和地区code获得单一个parameter对象
+	 * @param type
+	 * @param acode
+	 * @return
+	 */
+	public Parameter getOnebyTypeAndAcode(String type,String acode){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("type", type);
+		map.put("acode", acode);
+		return dao.getOneByTypeAndArea(map);
+	}
+	
 }

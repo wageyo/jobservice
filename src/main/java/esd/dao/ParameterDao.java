@@ -1,6 +1,7 @@
 package esd.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import esd.bean.Parameter;
 
@@ -51,4 +52,11 @@ public interface ParameterDao extends IDao<Parameter> {
 	 * @return
 	 */
 	public List<Parameter> getShareScopeListByArea(String acode);
+	
+	/**
+	 * 根据type和地区code获得单一的parameter对象
+	 * @param type
+	 * @return
+	 */
+	public Parameter getOneByTypeAndArea(Map<String,Object> map);
 }

@@ -53,3 +53,27 @@ function updateShareScope(id,shareScopeValue,name){
 		}
 	});
 }
+
+//异步推送信息显示/发送条数
+function updateTuiSong(id,sendValue,name, type,btnName){
+	if(sendValue > 10 && type == 'matchedSendNumber'){
+		if(!confirm('短信推送10条以上数据可能会超出最大字符数错误, 仍要继续么?')){
+			return;
+		}
+	}
+	$.ajax({
+		url:'/jobservice/manage/setup/update_matched',
+		type:'post',
+		data:{'id':id,'matchedValue':sendValue,'matchedName':name},
+		dataType:'json',
+		success:function(data){
+			if(data.notice == 'success'){
+				alert('设置成功!');
+				//给对应控件 赋name值
+				$('#' + btnName).text(name);
+			}else{
+				alert(data.notice);
+			}
+		}
+	});
+}

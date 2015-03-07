@@ -48,28 +48,16 @@
 
 				<div class="container-fluid">
 					<!-- 上方条件查询框  开始 -->
-					<div class="">
-						匹配度: 
-						<div class="btn-group" >
-							<c:forEach items="${params }" var="p">
-								<c:if test="${p.value == matchRate }">
-									<c:set var="companyMatchPerName">${p.name }</c:set>
-								</c:if>
-							</c:forEach>
-							<button class="btn" id="btncompanyMatchPer">${companyMatchPerName }</button> 
-							<input type="hidden" id="matchRate" name="matchRate" value="${matchRate }"/>
-							<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<c:forEach items="${params }" var="perCom">
-									<li>
-										<a href="javascript:query(1,'${perCom.value }');">${perCom.name }</a>
-									</li>
-								</c:forEach>
-							</ul>
-						</div>
+					<div id="searchBar" style="height:32px">
+						匹配度条件: 
+						<span class="label " onclick="selectAllCondition();" id="chooseall">全 选</span>&nbsp;&nbsp;
+						<c:forEach items="${params }" var="perCom">
+							<span name="mateCondition" class="label" value="${perCom.value }" onclick="conditionClick(this);">${perCom.name }</span>&nbsp;&nbsp;
+						</c:forEach>
+						<span class="label badge-inverse" onclick="resetCondition();">重置查询条件</span> 
 						<div style="float:right;">
-						<button type="button" class="btn btn-info" onclick="sendTuiSong(null);">向选中简历推送招聘信息</button>
-						<button type="button" class="btn btn-info" onclick="sendTuiSong('all');">向全部简历推送招聘信息</button>
+							<button type="button" class="btn btn-info" onclick="sendTuiSong('half');">向选中简历推送招聘信息</button>
+							<button type="button" class="btn btn-info" onclick="sendTuiSong('all');">向全部简历推送招聘信息</button>
 						</div>
 					</div>
 					<!-- 上方条件查询框  结束-->
@@ -176,7 +164,7 @@
 							<ul>
 								<li>
 									<input type="hidden" id="totalPage" value="${totalPage }" />
-									<a href="javascript:query(${currentPage - 1 },companyMatch);">上一页</a>
+									<a href="javascript:query(${currentPage - 1 });">上一页</a>
 								</li>
 								<c:forEach begin="1" end="${totalPage }" var="i">
 									<li <c:if test="${i == currentPage }">class="active"</c:if>>
@@ -187,14 +175,14 @@
 													href="javascript:void(0);" 
 												</c:when>
 												<c:otherwise>
-													href="javascript:query(${i },companyMatch);" 
+													href="javascript:query(${i });" 
 												</c:otherwise>
 											</c:choose>
 										>${i }</a>
 									</li>
 								</c:forEach>
 								<li>
-									<a href="javascript:query(${currentPage + 1 },companyMatch);">下一页</a>
+									<a href="javascript:query(${currentPage + 1 });">下一页</a>
 								</li>
 							</ul>
 						</div>

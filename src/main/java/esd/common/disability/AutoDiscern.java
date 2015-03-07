@@ -116,7 +116,7 @@ public class AutoDiscern {
 			}
 
 		}
-		// System.out.println("resemble:[" + resemble + "%]");
+		// log.info("resemble:[" + resemble + "%]");
 		return num[value];
 
 	}

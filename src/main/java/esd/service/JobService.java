@@ -83,7 +83,7 @@ public class JobService {
 
 	// 按id查询一个对象,用作编辑处理
 	public Job getById(int id) {
-		System.out.println("id in service = " + id);
+		log.info("id in service = " + id);
 		Job job = (Job) dao.getById(id);
 		// 工作地
 		if (job.getWorkPlace() != null) {
@@ -121,7 +121,7 @@ public class JobService {
 	 * @param size
 	 * @return
 	 */
-	public List<Job> getListForManage(Job object, int startPage, int size) {
+	public List<Job> getListForManage(Job object, Integer startPage, Integer size) {
 		if (object != null) {
 			// 职位种类code处理
 			if (object.getJobCategory() != null) {
@@ -152,7 +152,7 @@ public class JobService {
 	 * @param size
 	 * @return
 	 */
-	public List<Job> getListForShow(Job object, int startPage, int size) {
+	public List<Job> getListForShow(Job object, Integer startPage, Integer size) {
 		if (object != null) {
 			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
 			if (object.getArea() != null) {
@@ -196,7 +196,7 @@ public class JobService {
 	 * @param size
 	 * @return
 	 */
-	public List<Job> getByNew(String acode, int size) {
+	public List<Job> getByNew(String acode, Integer size) {
 		Job job = new Job();
 		// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围; 如不存在则使用默认传递进来的地区code
 		if (acode != null) {
@@ -265,7 +265,7 @@ public class JobService {
 	 * @param size
 	 * @return
 	 */
-	public List<Job> getByCompanyForShow(int cid, int startPage, int size) {
+	public List<Job> getByCompanyForShow(Integer cid, Integer startPage, Integer size) {
 		Job jj = new Job();
 		jj.setCompany(new Company(cid));
 		// 只显示审核通过的
@@ -288,16 +288,15 @@ public class JobService {
 	 * @param size
 	 * @return
 	 */
-	public List<Job> getByCompany(int cid, int startPage, int size) {
+	public List<Job> getByCompany(Integer cid, Integer startPage, Integer size) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cid", cid);
+		Job object = new Job();
+		map.put("job", object);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<Job> list = dao.getByCompany(map);
-		for (Job job : list) {
-			job = kitService.getForShow(job);
-		}
+		List<Job> list = dao.getByPage(map);
+		list = kitService.getForShowJob(list);
 		return list;
 	}
 	
@@ -306,30 +305,68 @@ public class JobService {
 	 * @param cid
 	 * @return
 	 */
-	public int getByCompanyCount(int cid) {
+	public Integer getByCompanyCount(int cid) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cid", cid);
-		return dao.getByCompanyCount(map);
+		Job object = new Job();
+		object.setCompany(new Company(cid));
+		map.put("job", object);
+		return dao.getTotalCount(map);
 
 	}
 
 	/**
-	 *  根据公司id, 得到他所发布的职位列表--用作编辑处理
+	 *  根据公司id, 得到他所发布的已审核通过的职位列表--用作编辑处理
 	 * @param cid
 	 * @param startPage
 	 * @param size
 	 * @return
 	 */
-	public List<Job> getByCompanyMate(int cid, int startPage, int size) {
+	public List<Job> getByCompanyMate(int cid, Integer startPage, Integer size) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("cid", cid);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<Job> list = dao.getByCompanyMate(map);
-		for (Job job : list) {
-			job = kitService.getForShow(job);
+		List<Job> list = dao.getByCompany(map);
+		list = kitService.getForShowJob(list);
+		return list;
+	}
+	
+	/**
+	 * 根据条件对象, 查询符合推送要求的职位信息
+	 * 
+	 * @param object
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
+	public List<Job> getTuiSongList(Job object, Integer startPage, Integer size) {
+		if (object != null) {
+			//工作地区code处理
+			if(object.getWorkPlace()!=null){
+				if(object.getWorkPlace().getCode()!=null){
+					object.setWorkPlace(new Area(KitService.workPlaceForJobSql(object.getWorkPlace().getCode())));
+				}
+			}
+			// 职位种类code处理
+			if (object.getJobCategory() != null) {
+				if (object.getJobCategory().getCode() != null) {
+					object.setJobCategory(new JobCategory(KitService
+							.jobCategoryCodeForJobSql(object.getJobCategory()
+									.getCode())));
+				}
+			}
+			
 		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("job", object);
+		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
+				* (size <= 0 ? Constants.SIZE : size));
+		map.put("size", size <= 0 ? Constants.SIZE : size);
+		List<Job> list = dao.getJobMate(map);
+		// 处理为适合前台显示的字段数据
+		list = kitService.getForShowJob(list);
+		log.info("jobList.size() = " + list.size());
 		return list;
 	}
 }

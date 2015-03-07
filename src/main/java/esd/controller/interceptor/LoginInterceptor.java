@@ -32,7 +32,7 @@ import esd.service.WhiteListService;
  * 
  */
 public class LoginInterceptor implements HandlerInterceptor {
-	private static Logger logger = Logger.getLogger(LoginInterceptor.class);
+	private static Logger log = Logger.getLogger(LoginInterceptor.class);
 
 	@Value("${login.url}")
 	private String loginUrl;
@@ -67,20 +67,20 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) {
-//		System.out.println("1 request.getRemoteAddr():  " + request.getRemoteAddr());
-//		System.out.println("2 request.getRemoteHost():  " + request.getRemoteHost());
-//		System.out.println("3 request.getRemotePort():  " + request.getRemotePort());
-//		System.out.println("4 request.getRemoteUser():  " + request.getRemoteUser());
-//		System.out.println("5 request.getRequestURL():  " + request.getRequestURL());
-//		System.out.println("6 request.getRequestURI():  " + request.getRequestURI());
-//		System.out.println("7 request.getServerName():  " + request.getServerName());
+//		log.info("1 request.getRemoteAddr():  " + request.getRemoteAddr());
+//		log.info("2 request.getRemoteHost():  " + request.getRemoteHost());
+//		log.info("3 request.getRemotePort():  " + request.getRemotePort());
+//		log.info("4 request.getRemoteUser():  " + request.getRemoteUser());
+//		log.info("5 request.getRequestURL():  " + request.getRequestURL());
+//		log.info("6 request.getRequestURI():  " + request.getRequestURI());
+//		log.info("7 request.getServerName():  " + request.getServerName());
 		// 检查白名单功能是否开启
 		Parameter whiteList = parameterService
 				.getById(Constants.WHITE_LIST_SWITCH);
 		// 如果白名单功能开启的话, 则检查请求url地址是否正确
 		if (Constants.SWITCH_ON.equals(whiteList.getValue())) {
 			Integer result = whiteListService.checkWhiteList(request.getRemoteAddr());
-			System.out.println("result:  " + result);
+			log.info("result:  " + result);
 			// 如果请求的url地址中包含的域名 不在白名单中, 则跳转到提示拒绝访问页面
 			if (result == 0) {
 				return false;
@@ -104,7 +104,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 					out.close();
 					return false;
 				} catch (IOException e) {
-					logger.error(e.getMessage());
+					log.error(e.getMessage());
 				} finally {
 					if (out != null) {
 						out.close();
@@ -128,7 +128,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 					out.close();
 					return false;
 				} catch (IOException e) {
-					logger.error(e.getMessage());
+					log.error(e.getMessage());
 				} finally {
 					if (out != null) {
 						out.close();
@@ -156,7 +156,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			}
 			if (username == null
 					|| authority < Constants.Authority.ADMIN.getValue()) {
-				logger.error("未登陆状态进入工作区被拦截");
+				log.error("未登陆状态进入工作区被拦截");
 				PrintWriter out = null;
 				try {
 					out = response.getWriter();
@@ -170,7 +170,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 					out.close();
 					return false;
 				} catch (IOException e) {
-					logger.error(e.getMessage());
+					log.error(e.getMessage());
 				} finally {
 					if (out != null) {
 						out.close();

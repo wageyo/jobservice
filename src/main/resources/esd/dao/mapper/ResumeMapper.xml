@@ -860,8 +860,8 @@
 		</trim>
 	</select> 
 
-	<!-- get by ids 
-	<select id="getByIds" resultMap="ResultResume" parameterType="array">
+	<!-- get by ids -->
+	<select id="getByIds" resultMap="ResultResume">
 		select <include refid="base_column" />
 		from <include refid="from_table" />
 		where  <include refid="sql_condition" />
@@ -869,7 +869,7 @@
 			<foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
 				#{id}
 			</foreach>
-	</select>-->
+	</select>
 	
 	<!-- getByUser-->
 	<select id="getByUser" resultMap="ResultResume" parameterType="java.lang.Integer">

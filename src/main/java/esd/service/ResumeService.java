@@ -690,6 +690,6 @@ public class ResumeService {
 	// public static void main(String[] args) {
 	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 	// String d = sdf.format(new Date(System.currentTimeMillis()));
-	// System.out.println(d);
+	// log.info(d);
 	// }
 }

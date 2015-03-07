@@ -12,6 +12,10 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
+import org.apache.log4j.Logger;
+
+import esd.service.ParameterService;
+
 /*
  * 用于把一个图片转化为12x18的01矩阵
  * 
@@ -19,6 +23,7 @@ import javax.imageio.stream.ImageOutputStream;
  * @version 1.0, 02/04/2010
  */
 public class BiImage {
+	private static Logger log = Logger.getLogger(BiImage.class);
 	/** 图片的宽 */
 	protected int width;
 
@@ -61,7 +66,7 @@ public class BiImage {
 		} else if (((bytes[0] & 0xFF) == 0x42) && ((bytes[1] & 0xFF) == 0x4D)) { // BMP
 			type = "bmp";
 		} else { // not supported type
-			// System.out.println("not supported type!");
+			// log.info("not supported type!");
 		}
 
 		in.close();
@@ -259,8 +264,8 @@ public class BiImage {
 					count++;
 				}
 			}
-		System.out.println(count);
-		System.out.println(n);
+		log.info(count);
+		log.info(n);
 		if ((i == w) && (j == h)) {
 			result = true;
 		} else {

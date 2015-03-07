@@ -129,7 +129,7 @@ public class CheckDisabilityCard {
 			AutoDiscern autoDiscern = new AutoDiscern();
 			// String rand = autoDiscern.discernPic(randImage);
 			String rand = autoDiscern.discernPic(bi);
-			// System.out.println("yzm:" + rand);
+			// log.info("yzm:" + rand);
 			is.close();
 			return rand;
 

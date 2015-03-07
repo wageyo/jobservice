@@ -145,6 +145,7 @@ public class KitService {
 		}
 		return new Date(today.getTime() + effectiveDays * 24 * 60 * 60 * 1000);
 	}
+	
 	/**
 	 * 得到近几天发布时间
 	 * 
@@ -244,6 +245,34 @@ public class KitService {
 		}
 		return sqlCode;
 	}
+	
+	/**
+	 * 处理传进来的目标工作地code, 变成适用于jobMapper中sql语句使用的格式
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public static String workPlaceForJobSql(String code) {
+		String sqlCode = "";
+		if (code == null || "".equals(code)) {
+			return null;
+		}
+		String mid;
+		if ("10000000".equals(code)) {
+			sqlCode = null;
+		} else if (code.startsWith("10")) {
+			mid = code.substring(2, 4);
+			sqlCode = "__" + mid + "____";
+		} else if (code.startsWith("20")) {
+			mid = code.substring(2, 6);
+			sqlCode = "__" + mid + "__";
+		} else if (code.startsWith("30")) {
+			sqlCode = code;
+		} else {
+			sqlCode = null;
+		}
+		return sqlCode;
+	}
 
 	/**
 	 * 处理传进来的职位种类code, 变成适用于jobMapper中sql语句使用的格式
@@ -329,7 +358,7 @@ public class KitService {
 	 * @param birth
 	 * @return
 	 */
-	public static int getAgeByBirth(String birth) {
+	public static Integer getAgeByBirth(String birth) {
 		if (birth == null || "".equals(birth)) {
 			return 0;
 		}
@@ -340,6 +369,29 @@ public class KitService {
 		String bornYear = birth.substring(0, 4);
 		int age = Integer.parseInt(curYear) - Integer.parseInt(bornYear);
 		return age;
+	}
+	
+	/**
+	 * 根据传进来的年龄, 返回出生日期字符串
+	 * 
+	 * @param birth
+	 * @return
+	 */
+	public static String getBirthByAge(Integer age) {
+		if (age == null) {
+			return null;
+		}
+		// 当前时间
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//今天
+		String today = sdf.format(new Date(System.currentTimeMillis()));
+		//今年
+		Integer thisYear = Integer.parseInt(today.substring(0,4));
+		//出生年份
+		Integer borthYear = thisYear - age;
+		//组装回出生日期
+		String birth = borthYear + today.substring(4);
+		return birth;
 	}
 
 	/**
@@ -577,11 +629,6 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 		for (Resume resume : resumeList) {
-			// // 出生日期
-			// if (resume.getBirth() != null && !"".equals(resume.getBirth())) {
-			// resume.setBirth(dateForShow(resume.getBirth()));
-			// }
-
 			// 性别
 			if (resume.getGender() != null && !"".equals(resume.getGender())) {
 				Parameter p = new Parameter();
@@ -1394,6 +1441,7 @@ public class KitService {
 		}
 		return newsList;
 	}
+	
 	/**
 	 * 根据对应的值
 	 * 

@@ -1,5 +1,9 @@
 package esd.controller;
 
+import org.apache.log4j.Logger;
+
+import esd.service.ParameterService;
+
 /**
  * 常用工具常量类
  * 
@@ -7,8 +11,11 @@ package esd.controller;
  * 
  */
 public class Constants {
-	public static final int START = 0;
-	public static final int SIZE = 20;
+	
+	private static Logger log = Logger.getLogger(Constants.class);
+	
+	public static final Integer START = 0;
+	public static final Integer SIZE = 20;
 
 	public static final String NOTICE = "notice"; // 提示文字key
 	public static final String BENEFIT = "benefit"; // 其他福利
@@ -68,6 +75,32 @@ public class Constants {
 
 	public static final String JOB_CATEGORY_MAIN = "main"; // 职位种类--主页显示
 	public static final String JOB_CATEGORY_HOT = "hot"; // 职位种类--主页显示
+	
+	/**
+	 * 匹配数量type关键字
+	 */
+	public static final String MATCHED_SHOW = "matchedShow";
+	
+	/**
+	 * 不同地区显示的匹配上的职位/简历数量
+	 */
+	public static final String MATCHED_SHOW_NUMBER = "matchedShowNumber";
+	
+	/**
+	 * 不同地区显示的匹配上的职位/简历数量--默认数量5
+	 */
+	public static final Integer MATCHED_NUMBER_DEFAULT = 5;
+	
+	/**
+	 * 不同地区推送的匹配上的职位/简历数量
+	 */
+	public static final String MATCHED_SEND_NUMBER = "matchedSendNumber";
+	
+	/**
+	 * 匹配条件参数 类型关键字
+	 */
+	public static final String RESUME_MATCH_PER = "resumeMatchPer";
+	
 	/**
 	 * 文章类型
 	 */
@@ -144,7 +177,7 @@ public class Constants {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Authority.SUPERADMIN.getValue());
+		log.info(Authority.SUPERADMIN.getValue());
 	}
 
 	/**

@@ -159,7 +159,7 @@ public class WhiteListManageController {
 
 	public static void main(String[] args) {
 		String uuid = UUID.randomUUID().toString();
-		System.out.println(uuid);
+		log.info(uuid);
 	}
 	// 更新白名单开关值
 	@RequestMapping(value="/update_switch")

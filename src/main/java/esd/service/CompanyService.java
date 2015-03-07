@@ -113,9 +113,7 @@ public class CompanyService<T> {
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
 		List<Company> clist = dao.getByPage(map);
-		for (Company c : clist) {
-			c = kitService.getForShow(c);
-		}
+		clist = kitService.getForShowCompany(clist);
 		return clist;
 	}
 

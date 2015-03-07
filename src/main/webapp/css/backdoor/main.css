@@ -89,4 +89,10 @@
 	line-height: 20px;
 	color: rgb(74, 81, 255);
 }
- 
+
+/**
+ * 匹配条件label条件标签样式
+ **/
+.label:hover{
+	cursor:pointer;
+}

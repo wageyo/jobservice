@@ -44,6 +44,7 @@
 			<div class="manage-body-right">
 			
 				<div class="span6" style="margin-top: 50px;margin-left:200px;">
+					<!-- 审核开关状态设置 -->
 					<h3>审核开关状态</h3>
 					<c:forEach items="${entityList }" var="entity">
 						<div class="control-group">
@@ -67,7 +68,33 @@
 									<a href="javascript:updateShareScope('${shareScope.id }','${sc.value }','${sc.name }');">${sc.name }</a>
 								</li>
 							</c:forEach>
-						</ul><span style="font-size:11px;color:red;">(县区级信息过少,暂不推荐)</span>
+						</ul><span >(县区级信息过少,暂不推荐)</span>
+					</div>
+					<!-- 短信推送条数设置-->
+					<h3>短信推送信息设置<span style="font-size:12px;font-weight:normal;">(设定职位匹配信息条数和短信推送条数)</span></h3>
+					<label>匹配信息<b>显示</b>条数:</label>
+					<div class="btn-group" >
+						<button class="btn" id="btnMatchedShowNumber">${matchedShowNumber.name }</button> 
+						<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<c:forEach items="${matchedShow }" var="ms">
+								<li>
+									<a href="javascript:updateTuiSong('${matchedShowNumber.id }','${ms.value }','${ms.name }','','btnMatchedShowNumber');">${ms.name }</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
+					<label>匹配信息<b>推送</b>条数:</label>
+					<div class="btn-group" >
+						<button class="btn" id="btnMatchedSendNumber">${matchedSendNumber.name }</button> 
+						<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<c:forEach items="${matchedShow }" var="ms">
+								<li>
+									<a href="javascript:updateTuiSong('${matchedSendNumber.id }','${ms.value }','${ms.name }','matchedSendNumber','btnMatchedSendNumber');">${ms.name }</a>
+								</li>
+							</c:forEach>
+						</ul>
 					</div>
 				</div>
 			</div>

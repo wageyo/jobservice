@@ -229,5 +229,10 @@
 		where type = 'shareScopeSwitch' and acode &lt;= #{acode, jdbcType=VARCHAR};
 	</select>
 	
+	<!-- getOneByTypeAndArea -->
+	<select id="getOneByTypeAndArea" resultType="Parameter" parameterType="map">
+		select * from parameter
+		where type = #{type, jdbcType=VARCHAR} and acode = #{acode, jdbcType=VARCHAR};
+	</select>
 	
 </mapper>

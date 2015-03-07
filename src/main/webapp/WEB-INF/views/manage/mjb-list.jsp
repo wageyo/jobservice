@@ -40,24 +40,18 @@
 			
 				<div class="container-fluid">
 				
-					<div class="">
 						<!-- 上方条件查询框  开始 -->
-						<div class="btn-group" >
-							<c:forEach items="${params }" var="p">
-								<c:if test="${p.value == matchRate }">
-									<c:set var="companyMatchPerName">${p.name }</c:set>
-								</c:if>
+						<div id="searchBar" style="height:32px">
+							匹配度条件: 
+							<span class="label " onclick="selectAllCondition();" id="chooseall">全 选</span>&nbsp;&nbsp;
+							<c:forEach items="${params }" var="perCom">
+								<span name="mateCondition" class="label" value="${perCom.value }" onclick="conditionClick(this);">${perCom.name }</span>&nbsp;&nbsp;
 							</c:forEach>
-							<button class="btn" id="btncompanyMatchPer">${companyMatchPerName }</button> 
-							<input type="hidden" id="matchRate" name="matchRate" value="${matchRate }"/>
-							<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<c:forEach items="${params }" var="perCom">
-									<li>
-										<a href="javascript:query(1,'${perCom.value }');">${perCom.name }</a>
-									</li>
-								</c:forEach>
-							</ul>
+							<span class="label badge-inverse" onclick="resetCondition();">重置查询条件</span> 
+					<!-- 		<div style="float:right;">
+								<button type="button" class="btn btn-info" onclick="sendTuiSong('half');">向选中简历推送招聘信息</button>
+								<button type="button" class="btn btn-info" onclick="sendTuiSong('all');">向全部简历推送招聘信息</button>
+							</div> -->
 						</div>
 						<!-- 上方条件查询框  结束-->
 						
@@ -69,6 +63,9 @@
 									<%-- 职位列表数据 --%>
 									<thead>
 										<tr style="background:#5599FF ;color:#ffffff">
+											<th style="width:2%;">
+												<input type="checkbox" id="checkedAll" onclick="selectAll();" />
+											</th>
 										 	<th style="width:4%;">
 												序号
 											</th>
@@ -97,7 +94,7 @@
 												所在地区
 											</th>
 											<th style="color:yellow;width:10%;">
-												查看匹配信息
+												匹配信息
 											</th>
 										</tr>
 									</thead>
@@ -113,6 +110,9 @@
 										<!--第一个公司表	数据					-->
 										<c:forEach items="${entityList }" var="entity" varStatus="row">
 											<tr style="font-size:13px;background:#ffffff;border-color: #ffffff">
+												<td>
+													<input type="checkbox" name="items" onclick="setSelectAll();" value="${entity.id }"/>
+												</td>
 												<td>
 													${(row.index + 1 + (currentPage - 1) * 20) }
 												</td>
@@ -187,7 +187,6 @@
 							</div>
 						</div>
 						<!-- 尾部分页 结束 -->
-					</div>
 			
 				</div>
 				
