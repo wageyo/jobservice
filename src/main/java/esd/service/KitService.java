@@ -73,6 +73,9 @@ public class KitService {
 		if (Constants.CheckStatus.OK.getValue().equals(checkStatus)) {
 			return "已通过";
 		}
+		if (Constants.CheckStatus.YIJIUYE.getValue().equals(checkStatus)) {
+			return "已就业";
+		}
 		return "未知状态";
 	}
 

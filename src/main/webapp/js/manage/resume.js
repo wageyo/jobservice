@@ -35,7 +35,7 @@ function selectButton(valueButton, nameButton, value, name){
 	$('#'+nameButton).text(name);
 }
 
-//保存, 通过, 拒绝, 返回  综合方法
+//保存, 通过, 拒绝, 已就业, 返回  综合方法
 function updateEntity(submitType,objId){
 	//返回
 	if(submitType == 'return'){
@@ -64,6 +64,24 @@ function updateEntity(submitType,objId){
 	if(submitType == 'approve'){
 		$.ajax({
 			url:server.url + 'manage/resume/approve/'+objId,
+			type:'post',
+			dataType:'json',
+			success:function(data){
+				if(data.notice == 'success'){
+					alert('操作成功!');
+					//重新载入页面--以刷新
+					window.location.reload();
+					return;
+				}else{
+					alert(data.notice);
+				}
+			}
+		});
+	}
+	//设为已就业
+	if(submitType == 'yiJiuYe'){
+		$.ajax({
+			url:server.url + 'manage/resume/yiJiuYe/'+objId,
 			type:'post',
 			dataType:'json',
 			success:function(data){

@@ -188,7 +188,7 @@ public class Constants {
 	 */
 	public enum CheckStatus {
 		// 利用构造函数传参 级.
-		DAISHEN("daiShen"), WEITONGGUO("weiTongGuo"), OK("ok");
+		DAISHEN("daiShen"), WEITONGGUO("weiTongGuo"), OK("ok"),YIJIUYE("yiJiuYe");
 
 		// 定义私有变量
 		private String val;

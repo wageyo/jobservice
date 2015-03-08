@@ -115,6 +115,9 @@
 								<li>
 									<a href="javascript:query(null,'ok');">已通过</a>
 								</li>
+								<li>
+									<a href="javascript:query(null,'yiJiuYe');">已就业</a>
+								</li>
 							</ul>
 						</div>
 						<button type="submit" class="btn" onclick="query(null,null);">查找</button>
@@ -211,11 +214,17 @@
 											<td>
 												<a href="${contextPath }/manage/resume/view/${entity.id}">查看</a>
 												<a href="${contextPath }/manage/resume/edit/${entity.id}">编辑</a> 
-												<c:if test="${checkStatus != 'weiTongGuo' }">
+												<c:if test="${checkStatus != 'weiTongGuo' && checkStatus != 'yiJiuYe' }">
 													<a href="javascript:updateEntity('refuse','${entity.id }');" style="color:red;">拒绝</a>
 												</c:if> 
-												<c:if test="${checkStatus != 'ok' }">
+												<c:if test="${checkStatus != 'ok' && checkStatus != 'yiJiuYe' }">
 													<a href="javascript:updateEntity('approve','${entity.id }');">通过</a>
+												</c:if>
+												<c:if test="${checkStatus == 'ok' }">
+													<a href="javascript:updateEntity('yiJiuYe','${entity.id }');">设为已就业</a>
+												</c:if>
+												<c:if test="${checkStatus == 'yiJiuYe' }">
+													<a href="javascript:updateEntity('approve','${entity.id }');">设为未就业</a>
 												</c:if>
 												<a href="javascript:updateEntity('delete','${entity.id }');">删除</a>
 											</td>
@@ -254,6 +263,9 @@
 								</c:forEach>
 								<li>
 									<a href="javascript:query(${currentPage + 1 },null);">下一页</a>
+								</li>
+								<li>
+									<a>总计  ${total } 条数据</a>
 								</li>
 							</ul>
 						</div>

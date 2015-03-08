@@ -43,11 +43,11 @@
 		
 	}
 </script>
-<div class="manage-body-left" style="background:url('${contextPath}/images/backdoor/ul_bg.jpg') repeat-y;">
+<div class="manage-body-left" style="">	<!-- background:url('${contextPath}/images/backdoor/ul_bg.jpg') repeat-y; -->
 	<div class="container-fluid" style="padding-left:0px;padding-right:0px;">
 		<div class="row-fluid">
 			<div class="span6" style="width:100%;">
-				<ul class="nav nav-list">
+				<ul class="nav nav-list well" style="min-height:560px;">
 				 	<li class="nav-header">
 						功能列表
 					</li> 

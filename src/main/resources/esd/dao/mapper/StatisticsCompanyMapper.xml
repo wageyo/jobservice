@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 实现esd.dao.CompanyDao接口 -->
+<mapper namespace="esd.dao.StatisticsCompanyDao">
+
+	<!-- result map of Area -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" jdbcType="VARCHAR"  />
+		<result column="a_name" property="name" jdbcType="VARCHAR"  />
+	</resultMap>
+	
+	<!-- result map of Company -->
+	<resultMap id="ResultStatisticsCompany" type="StatisticsCompany">
+		<result column="number_company" property="numberCompany" jdbcType="INTEGER"  />
+		<result column="number_job" property="numberJob" jdbcType="INTEGER"  />
+		<result column="number_hire" property="numberHire"  jdbcType="INTEGER" />
+		<association property="area" javaType="Area" resultMap="ResultArea"/>
+	</resultMap>
+	
+	<sql id="base_column">
+	</sql>
+	
+	<sql id="from_table">
+	</sql>
+
+	<!-- getCompanyCount -->
+	<select id="getCompanyCount" parameterType="map" resultType="java.lang.Integer">
+		select count(*) 
+		from company as c
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="areacode != null and areacode != ''">
+				c.acode like concat('%',#{areacode, jdbcType=VARCHAR},'%')
+			</if>
+			<choose>
+				<when test="checkStatus != null and checkStatus != ''">
+					and c.check_status = #{checkStatus, jdbcType=VARCHAR}
+				</when>
+				<otherwise>
+					and c.check_status = 'ok'
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+
+	<!-- getCompanyCount -->
+	<select id="getJobCount" parameterType="map" resultMap="ResultStatisticsCompany">
+		select count(*) as number_job,  sum(hire_number) as number_hire, a.code as a_code, a.name as a_name 
+		from job 
+		left join area as a on job.acode = a.code 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="areacode != null and areacode != ''">
+				acode like concat('%',#{areacode, jdbcType=VARCHAR},'%')
+			</if>
+			<choose>
+				<when test="checkStatus != null and checkStatus != ''">
+					and job.check_status = #{checkStatus, jdbcType=VARCHAR}
+				</when>
+				<otherwise>
+					and job.check_status = 'ok'
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+	
+</mapper>

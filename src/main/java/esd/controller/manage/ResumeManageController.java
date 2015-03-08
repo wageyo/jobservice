@@ -209,10 +209,10 @@ public class ResumeManageController {
 	public Map<String, Object> approve_object(
 			@PathVariable(value = "id") Integer id) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		Resume refuseEntity = resumeService.getById(id);
-		refuseEntity
+		Resume updateObject = resumeService.getById(id);
+		updateObject
 				.setCheckStatus(Constants.CheckStatus.OK.getValue());
-		if (resumeService.update(refuseEntity)) {
+		if (resumeService.update(updateObject)) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {
 			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
@@ -335,5 +335,21 @@ public class ResumeManageController {
     	entity.put("resumeMatchPerName", resumeMat);
 		return new ModelAndView("manage/resume-mate-list", entity);
 	}
-			
+	
+	// 同意简历通过
+	@RequestMapping(value="/yiJiuYe/{id}",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> yijiuye(
+			@PathVariable(value = "id") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Resume updateObject = resumeService.getById(id);
+		updateObject
+				.setCheckStatus(Constants.CheckStatus.YIJIUYE.getValue());
+		if (resumeService.update(updateObject)) {
+			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");
+		}
+		return map;
+	}
 }

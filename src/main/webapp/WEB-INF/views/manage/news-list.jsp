@@ -169,6 +169,9 @@
 								<li>
 									<a href="javascript:query(${currentPage + 1 },null);">下一页</a>
 								</li>
+								<li>
+									<a>总计  ${total } 条数据</a>
+								</li>
 							</ul>
 						</div>
 					</div>

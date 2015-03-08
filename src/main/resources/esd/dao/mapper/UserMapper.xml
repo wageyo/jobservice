@@ -276,7 +276,24 @@
 				<if test="user.nickName != null and user.nickName != ''">
 					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
 				</if>
+				<choose>
+					<when test="user.checkStatus != null and user.checkStatus != ''">
+						and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
+					</when>
+					<otherwise>
+						and u.check_status = 'ok'
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="user != null">
+					<if test="user.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and u.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 		order by u.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -318,7 +335,24 @@
 				<if test="user.nickName != null and user.nickName != ''">
 					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
 				</if>
+				<choose>
+					<when test="user.checkStatus != null and user.checkStatus != ''">
+						and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
+					</when>
+					<otherwise>
+						and u.check_status = 'ok'
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="user != null">
+					<if test="user.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and u.check_status = 'ok'
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 
