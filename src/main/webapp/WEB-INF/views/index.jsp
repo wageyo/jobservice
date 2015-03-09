@@ -263,7 +263,8 @@
 													<li class="LiEven">|</li>
 												</c:if>
 											</c:forEach>
-											<c:if test="${uplevellocation != null && uplevellocation != '' }">
+											<!-- *************************  广西地区限定, 不可以上到上级全国.   *************************** -->
+											<c:if test="${uplevellocation == '10450000' || fn:startsWith(uplevellocation,'20')}">
 												<li class="LiEven">|</li>
 												<li> <a title="返回上级地区" href="${contextPath }/index?acode=${uplevellocation}" style="color: rgb(18, 0, 223);">返回上级地区</a> </li>
 											</c:if>

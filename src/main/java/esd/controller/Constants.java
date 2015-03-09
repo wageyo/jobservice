@@ -49,6 +49,7 @@ public class Constants {
 	public static final String USERREGISTERTIME = "registertime"; // 注册时间
 	public static final String AREACODE = "areacode"; // 地区key
 	public static final String AREANAME = "areaname"; // 地区名称
+	public static final String CURRENT_AREA = "10450000"; // 当前网站地区code--用于首页等地方
 
 	// 管理员专用的cookie key值
 	public static final String ADMINUSERID = "adminuserid"; // 管理员用户id
