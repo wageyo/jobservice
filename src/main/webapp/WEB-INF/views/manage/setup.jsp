@@ -7,7 +7,7 @@
 <html lang="zh-cn">
 <head>
 
-	<title>职位管理列表</title>
+	<title>系统设置</title>
 	<meta http-equiv="keywords" content="残疾人,就业,招聘">
 	<meta http-equiv="description" content="残疾人就业招聘网站">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
