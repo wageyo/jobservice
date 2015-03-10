@@ -148,7 +148,7 @@ public class JobController {
 		object.setArea(new Area(acode));
 		object.setJobCategory(new JobCategory(jobCategoryCode));
 		List<Job> jobByCategoryResult = jobService.getListForShow(object,
-				Constants.START, 51);
+				Constants.START, 51,Boolean.TRUE);
 		List<Map<String, Object>> jobByCategoryList = new ArrayList<Map<String, Object>>();
 		for (Job job : jobByCategoryResult) {
 			Map<String, Object> j = new HashMap<String, Object>();

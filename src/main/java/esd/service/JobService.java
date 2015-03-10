@@ -150,21 +150,26 @@ public class JobService {
 	 * @param object
 	 * @param startPage
 	 * @param size
+	 * @param shareScope
+	 *             --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
 	 * @return
 	 */
-	public List<Job> getListForShow(Job object, Integer startPage, Integer size) {
+	public List<Job> getListForShow(Job object, Integer startPage, Integer size,
+			Boolean shareScope) {
 		if (object != null) {
 			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
-			if (object.getArea() != null) {
-				if (object.getArea().getCode() != null
-						&& !"".equals(object.getArea().getCode())) {
-					Parameter parameter = parameterDao
-							.getShareScopeByArea(object.getArea().getCode());
-					if (parameter != null) {
-						String areaSql = KitService.getAreaSqlFromShareScope(
-								parameter.getValue(), object.getArea()
-										.getCode());
-						object.setArea(new Area(areaSql));
+			if(shareScope){
+				if (object.getArea() != null) {
+					if (object.getArea().getCode() != null
+							&& !"".equals(object.getArea().getCode())) {
+						Parameter parameter = parameterDao
+								.getShareScopeByArea(object.getArea().getCode());
+						if (parameter != null) {
+							String areaSql = KitService.getAreaSqlFromShareScope(
+									parameter.getValue(), object.getArea()
+											.getCode());
+							object.setArea(new Area(areaSql));
+						}
 					}
 				}
 			}

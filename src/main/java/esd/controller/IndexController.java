@@ -160,7 +160,7 @@ public class IndexController {
 		object.setJobCategory(new JobCategory("10010000"));
 		object.setArea(new Area(acode));
 		List<Job> jobByCategoryResult = jobService.getListForShow(object,
-				Constants.START, 51);
+				Constants.START, 51,Boolean.TRUE);
 		List<Map<String, Object>> jobByCategoryList = new ArrayList<Map<String, Object>>();
 		for (Job job : jobByCategoryResult) {
 			Map<String, Object> j = new HashMap<String, Object>();
@@ -340,7 +340,7 @@ public class IndexController {
 		}
 		Integer page = KitService.getInt(pageStr);
 		List<Job> jobList = jobService
-				.getListForShow(job, page, Constants.SIZE);
+				.getListForShow(job, page, Constants.SIZE,Boolean.TRUE);
 		Integer records = jobService.getTotalCount(job, Boolean.TRUE);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (jobList != null && records != null && records > 0) {
@@ -447,7 +447,7 @@ public class IndexController {
 		}
 		Integer page = KitService.getInt(pageStr);
 		List<Resume> resumeList = resumeService.getForListShow(resume, page,
-				Constants.SIZE);
+				Constants.SIZE,Boolean.TRUE);
 		Integer records = resumeService.getTotalCount(resume, Boolean.TRUE);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (resumeList != null && records != null && records > 0) {

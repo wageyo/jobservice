@@ -942,7 +942,48 @@ public class KitService {
 				job.setWorkPlace(workPlace);
 			}
 		}
-
+		// 残疾类型
+		if (job.getDisabilityCategory() != null && !"".equals(job.getDisabilityCategory())) {
+			Parameter p = new Parameter();
+			p.setType(Constants.DISABILITYCATEGORY);
+			p.setValue(job.getDisabilityCategory());
+			for (Parameter pa : plist) {
+				if (pa.getType().equals(p.getType())
+						&& pa.getValue().equals(p.getValue())) {
+					p = pa;
+					break;
+				}
+			}
+			job.setDisabilityCategory(p.getName());
+		}
+		// 残疾等级
+		if (job.getDisabilityLevel() != null && !"".equals(job.getDisabilityLevel())) {
+			Parameter p = new Parameter();
+			p.setType(Constants.DISABILITYLEVEL);
+			p.setValue(job.getDisabilityLevel());
+			for (Parameter pa : plist) {
+				if (pa.getType().equals(p.getType())
+						&& pa.getValue().equals(p.getValue())) {
+					p = pa;
+					break;
+				}
+			}
+			job.setDisabilityLevel(p.getName());
+		}
+		// 残疾部位
+		if (job.getDisabilityPart() != null && !"".equals(job.getDisabilityPart())) {
+			Parameter p = new Parameter();
+			p.setType(Constants.DISABILITYPART);
+			p.setValue(job.getDisabilityPart());
+			for (Parameter pa : plist) {
+				if (pa.getType().equals(p.getType())
+						&& pa.getValue().equals(p.getValue())) {
+					p = pa;
+					break;
+				}
+			}
+			job.setDisabilityPart(p.getName());
+		}
 		// 审核状态
 		if (job.getCheckStatus() != null && !"".equals(job.getCheckStatus())) {
 			Parameter p = new Parameter();
@@ -1084,6 +1125,48 @@ public class KitService {
 							.getCode());
 					job.setWorkPlace(workPlace);
 				}
+			}
+			// 残疾类型
+			if (job.getDisabilityCategory() != null && !"".equals(job.getDisabilityCategory())) {
+				Parameter p = new Parameter();
+				p.setType(Constants.DISABILITYCATEGORY);
+				p.setValue(job.getDisabilityCategory());
+				for (Parameter pa : plist) {
+					if (pa.getType().equals(p.getType())
+							&& pa.getValue().equals(p.getValue())) {
+						p = pa;
+						break;
+					}
+				}
+				job.setDisabilityCategory(p.getName());
+			}
+			// 残疾等级
+			if (job.getDisabilityLevel() != null && !"".equals(job.getDisabilityLevel())) {
+				Parameter p = new Parameter();
+				p.setType(Constants.DISABILITYLEVEL);
+				p.setValue(job.getDisabilityLevel());
+				for (Parameter pa : plist) {
+					if (pa.getType().equals(p.getType())
+							&& pa.getValue().equals(p.getValue())) {
+						p = pa;
+						break;
+					}
+				}
+				job.setDisabilityLevel(p.getName());
+			}
+			// 残疾部位
+			if (job.getDisabilityPart() != null && !"".equals(job.getDisabilityPart())) {
+				Parameter p = new Parameter();
+				p.setType(Constants.DISABILITYPART);
+				p.setValue(job.getDisabilityPart());
+				for (Parameter pa : plist) {
+					if (pa.getType().equals(p.getType())
+							&& pa.getValue().equals(p.getValue())) {
+						p = pa;
+						break;
+					}
+				}
+				job.setDisabilityPart(p.getName());
 			}
 			// 审核状态
 			if (job.getCheckStatus() != null

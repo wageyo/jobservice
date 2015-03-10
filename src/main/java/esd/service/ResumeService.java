@@ -223,17 +223,18 @@ public class ResumeService {
 	public List<Resume> getListShowForManage(Resume resume, int startPage,
 			int size) {
 		if (resume != null) {
-			// 期望工作地  处理成适合sql查询的方式
+			// 期望工作地 处理成适合sql查询的方式
 			if (resume.getDesireAddress() != null) {
 				if (resume.getDesireAddress().getCode() != null
 						&& !"".equals(resume.getDesireAddress().getCode())) {
-					String sqlDesireAddress = KitService.desireAddressForResumeSql(resume
-							.getDesireAddress().getCode());
+					String sqlDesireAddress = KitService
+							.desireAddressForResumeSql(resume
+									.getDesireAddress().getCode());
 					resume.setDesireAddress(new Area(sqlDesireAddress));
 				}
 
 			}
-			// 目标职位  处理成适合sql查询的方式
+			// 目标职位 处理成适合sql查询的方式
 			if (resume.getDesireJob() != null) {
 				if (resume.getDesireJob().getCode() != null
 						&& !"".equals(resume.getDesireJob().getCode())) {
@@ -261,30 +262,37 @@ public class ResumeService {
 	 * @param object
 	 * @param startPage
 	 * @param size
+	 * @param shareScope
+	 *             --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
 	 * @return
 	 */
-	public List<Resume> getForListShow(Resume object, int startPage, int size) {
+	public List<Resume> getForListShow(Resume object, int startPage, int size,
+			Boolean shareScope) {
 		if (object != null) {
 			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
-			if (object.getArea() != null) {
-				if (object.getArea().getCode() != null
-						&& !"".equals(object.getArea().getCode())) {
-					Parameter parameter = parameterDao
-							.getShareScopeByArea(object.getArea().getCode());
-					if (parameter != null) {
-						String areaSql = KitService.getAreaSqlFromShareScope(
-								parameter.getValue(), object.getArea()
-										.getCode());
-						object.setArea(new Area(areaSql));
+			if (shareScope) {
+				if (object.getArea() != null) {
+					if (object.getArea().getCode() != null
+							&& !"".equals(object.getArea().getCode())) {
+						Parameter parameter = parameterDao
+								.getShareScopeByArea(object.getArea().getCode());
+						if (parameter != null) {
+							String areaSql = KitService
+									.getAreaSqlFromShareScope(parameter
+											.getValue(), object.getArea()
+											.getCode());
+							object.setArea(new Area(areaSql));
+						}
 					}
 				}
 			}
-			// 期望工作地  处理成适合sql查询的方式
+			// 期望工作地 处理成适合sql查询的方式
 			if (object.getDesireAddress() != null) {
 				if (object.getDesireAddress().getCode() != null
 						&& !"".equals(object.getDesireAddress().getCode())) {
-					String sqlDesireAddress = KitService.desireAddressForResumeSql(object
-							.getDesireAddress().getCode());
+					String sqlDesireAddress = KitService
+							.desireAddressForResumeSql(object
+									.getDesireAddress().getCode());
 					object.setDesireAddress(new Area(sqlDesireAddress));
 				}
 
@@ -346,12 +354,13 @@ public class ResumeService {
 					object.setDesireJob(new JobCategory(sqlDesireJob));
 				}
 			}
-			// 期望工作地  处理成适合sql查询的方式
+			// 期望工作地 处理成适合sql查询的方式
 			if (object.getDesireAddress() != null) {
 				if (object.getDesireAddress().getCode() != null
 						&& !"".equals(object.getDesireAddress().getCode())) {
-					String sqlDesireAddress = KitService.desireAddressForResumeSql(object
-							.getDesireAddress().getCode());
+					String sqlDesireAddress = KitService
+							.desireAddressForResumeSql(object
+									.getDesireAddress().getCode());
 					object.setDesireAddress(new Area(sqlDesireAddress));
 				}
 			}
@@ -377,7 +386,7 @@ public class ResumeService {
 				String areaSql = KitService.getAreaSqlFromShareScope(
 						parameter.getValue(), acode);
 				resume.setArea(new Area(areaSql));
-			}else{
+			} else {
 				resume.setArea(new Area(acode));
 			}
 		}
@@ -393,14 +402,15 @@ public class ResumeService {
 
 	/**
 	 * 根据id数据得到简历列表
+	 * 
 	 * @param ids
 	 * @return
 	 */
-	public List<Resume> getByIds(Integer[] ids){
+	public List<Resume> getByIds(Integer[] ids) {
 		List<Resume> list = dao.getByIds(ids);
 		return list;
 	}
-	
+
 	// 根据用户id, 得到此人简历
 	public List<Resume> getByUser(int uid) {
 		List<Resume> list = dao.getByUser(uid);
