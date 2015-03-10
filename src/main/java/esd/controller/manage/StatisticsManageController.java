@@ -1,6 +1,8 @@
 package esd.controller.manage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,9 +65,27 @@ public class StatisticsManageController {
 		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
 		String acode = userObj.getArea().getCode();
-		// 查询出该地区的企业及招聘信息数据
+		//查询出该地区的所有下辖子地区(不是孙地区喔!)
+		List<HashMap<String, Object>> entityList = new ArrayList<HashMap<String,Object>>();
+		entityList.add(getStatisticDate(userObj.getArea()));
+		// 为省, 市级地区时才循环查询出该地区的企业及招聘信息数据, 县区级时则不能查询下属的信息了！！！
+		if(!acode.startsWith("30")){
+			List<Area> subArea = areaService.getSubArea(acode);
+			// 先将当前地区信息仿佛list集合中
+			for(Area a:subArea){
+				entityList.add(getStatisticDate(a));
+			}
+		}
+		entity.put("entityList", entityList);
+		return new ModelAndView("manage/statistics", entity);
+	}
+
+	public HashMap<String,Object> getStatisticDate(Area area){
+		String acode = area.getCode();
+		HashMap<String,Object> entity = new HashMap<String,Object>();
 		try {
 			StatisticsCompany sc = statisticsCompanyService.getByArea(acode);
+			sc.setArea(area);
 			entity.put("statisticsCompany", sc);
 			log.debug("获取的本地区企业/招聘信息数据对象为:" + sc);
 		} catch (Exception e) {
@@ -75,7 +95,7 @@ public class StatisticsManageController {
 		// 查询出该地区的残疾人简历及已经就业数据
 		try {
 			StatisticsWorker sw = new StatisticsWorker();
-			sw.setArea(userObj.getArea()); // 地区
+			sw.setArea(new Area(acode)); // 地区
 			// 得到残疾人人数
 			User tmpUser = new User();
 			tmpUser.setArea(new Area(acode));
@@ -99,7 +119,7 @@ public class StatisticsManageController {
 			log.error("获取 本地区残疾职工信息数据 时发生错误。");
 			e.printStackTrace();
 		}
-		return new ModelAndView("manage/statistics", entity);
+		return entity;
 	}
-
+	
 }

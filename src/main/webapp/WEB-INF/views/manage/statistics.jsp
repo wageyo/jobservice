@@ -70,47 +70,6 @@
 										<th>
 											平均每家企业招聘职工数
 										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											${statisticsCompany.area.name }
-										</td>
-										<td>
-											${statisticsCompany.numberCompany }
-										</td>
-										<td>
-											${statisticsCompany.numberJob }
-										</td>
-										<td>
-											${statisticsCompany.numberHire }
-										</td>
-										<td>
-											${statisticsCompany.averageJob }
-										</td>
-										<td>
-											${statisticsCompany.averageHire }
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<!-- 显示企业招聘信息统计数据  end -->
-						
-						<!-- 显示残疾人就业信息统计数据 begin -->
-						<div class="span6" style="width: 90%;text-align: center;margin-left: 0px;">
-							<h3 class="text-success">
-								残疾人就业信息统计数据
-							</h3>
-						</div>
-						<div class="span12" style="width: 90%;">
-							<table class="table" >
-								<thead>
-									<tr>
-										<th>
-											地区
-										</th>
 										<th>
 											注册总人数
 										</th>
@@ -120,39 +79,56 @@
 										<th>
 											已就业人数
 										</th>
-										<th>
+								<!-- 		<th>
 											平均每人拥有简历数
 										</th>
 										<th>
 											就业率
-										</th>
+										</th> -->
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>
-											${statisticsWorker.area.name }
-										</td>
-										<td>
-											${statisticsWorker.numberUser }
-										</td>
-										<td>
-											${statisticsWorker.numberResume }
-										</td>
-										<td>
-											${statisticsWorker.numberHired }
-										</td>
-										<td>
-											${statisticsWorker.averageResume }
-										</td>
-										<td>
-											${statisticsWorker.averageHired }%
-										</td>
-									</tr>
+									<c:forEach items="${entityList }" var="entity">
+										<tr>
+											<td>
+												${entity.statisticsCompany.area.name }
+											</td>
+											<td>
+												${entity.statisticsCompany.numberCompany }
+											</td>
+											<td>
+												${entity.statisticsCompany.numberJob }
+											</td>
+											<td>
+												${entity.statisticsCompany.numberHire }
+											</td>
+											<td>
+												${entity.statisticsCompany.averageJob }
+											</td>
+											<td>
+												${entity.statisticsCompany.averageHire }
+											</td>
+											<td>
+												${entity.statisticsWorker.numberUser }
+											</td>
+											<td>
+												${entity.statisticsWorker.numberResume }
+											</td>
+											<td>
+												${entity.statisticsWorker.numberHired }
+											</td>
+									<!-- 		<td>
+												${entity.statisticsWorker.averageResume }
+											</td>
+											<td>
+												${entity.statisticsWorker.averageHired }%
+											</td> -->
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
-						<!-- 显示残疾人就业信息统计数据  end -->
+						<!-- 显示企业招聘信息统计数据  end -->
 						
 					</div>
 					<!-- 下方结果显示框  开始 -->

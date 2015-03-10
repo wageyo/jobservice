@@ -48,7 +48,7 @@
 
 				<div class="container-fluid">
 					<!-- 上方条件查询框  开始 -->
-					<div id="searchBar" style="height:32px">
+					<div id="searchBar" style="height:32px；width:1241px;">
 						匹配度条件: 
 						<span class="label " onclick="selectAllCondition();" id="chooseall">全 选</span>&nbsp;&nbsp;
 						<c:forEach items="${params }" var="perCom">
@@ -56,14 +56,14 @@
 						</c:forEach>
 						<span class="label badge-inverse" onclick="resetCondition();">重置查询条件</span> 
 						<div style="float:right;">
-							<button type="button" class="btn btn-info" onclick="sendTuiSong('half');">向选中简历推送招聘信息</button>
-							<button type="button" class="btn btn-info" onclick="sendTuiSong('all');">向全部简历推送招聘信息</button>
+							<button type="button" class="btn btn-info" onclick="sendTuiSong('half');">向选中推送</button>
+							<button type="button" class="btn btn-info" onclick="sendTuiSong('all');">向全部推送</button>
 						</div>
 					</div>
 					<!-- 上方条件查询框  结束-->
 						
 					<!-- 下方结果显示框  开始 -->
-					<div class="row-fluid">
+					<div class="row-fluid" style="width:1241px;">
 						<div class="span12">
 							<table class="table" id="t1" style="padding:0;border-spacing:0px; border-style:none; ">
 								<%--第一个公司表	标题						--%>

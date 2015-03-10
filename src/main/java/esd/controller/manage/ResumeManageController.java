@@ -260,7 +260,7 @@ public class ResumeManageController {
 		paramEntity.setArea(new Area(acode));
 
 		List<Resume> resultList = resumeService.getForListShow(paramEntity,
-				page, rows);
+				page, rows,Boolean.FALSE);
 		Integer total = resumeService.getTotalCount(paramEntity,Boolean.FALSE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
@@ -315,7 +315,7 @@ public class ResumeManageController {
 				if (gender != null && !"".equals(gender)) {
 					jobEntity.setGender(tmp.getGender());
 				}
-				jobResultList = jobService.getListForShow(jobEntity,1, Integer.MAX_VALUE);
+				jobResultList = jobService.getListForShow(jobEntity,1, Integer.MAX_VALUE,Boolean.FALSE);
 				}
 				tempMap.put("jobResultList",jobResultList);
 				

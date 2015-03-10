@@ -847,6 +847,7 @@ public class KitService {
 		List<Parameter> plist = pDao.getByPage(null);
 
 		// 薪水
+		String salary = "面议";
 		if (job.getSalary() != null && !"".equals(job.getSalary())) {
 			Parameter p = new Parameter();
 			p.setType(Constants.SALARY);
@@ -858,11 +859,9 @@ public class KitService {
 					break;
 				}
 			}
-			job.setSalary(p.getName());
-		} else {
-			// 薪水为空, 则显示不限
-			job.setSalary(Constants.NO_LIMIT);
+			salary = p.getName();
 		}
+		job.setSalary(salary);
 		// 学历
 		if (job.getEducation() != null && !"".equals(job.getEducation())) {
 			Parameter p = new Parameter();
@@ -1032,6 +1031,7 @@ public class KitService {
 		List<Parameter> plist = pDao.getByPage(null);
 		for (Job job : jobList) {
 			// 薪水
+			String salary = "面议";
 			if (job.getSalary() != null && !"".equals(job.getSalary())) {
 				Parameter p = new Parameter();
 				p.setType(Constants.SALARY);
@@ -1043,8 +1043,9 @@ public class KitService {
 						break;
 					}
 				}
-				job.setSalary(p.getName());
+				salary = p.getName();
 			}
+			job.setSalary(salary);
 			// 学历
 			if (job.getEducation() != null && !"".equals(job.getEducation())) {
 				Parameter p = new Parameter();

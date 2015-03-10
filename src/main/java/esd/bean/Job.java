@@ -20,6 +20,9 @@ public class Job extends PrimaryKey {
 	private String experience; // 要求的工作经验年限
 	private String gender; // 性别
 	private String age; // 年龄限制
+	private String disabilityCategory; // 需求残疾类别
+	private String disabilityLevel; // 需求残疾级别
+	private String disabilityPart; // 需求残疾部位
 	private String description; // 岗位描述
 	private String provideBenefit; // 工资和其他福利
 	private String contactPerson; // 联系人
@@ -133,6 +136,31 @@ public class Job extends PrimaryKey {
 
 	public void setAge(String age) {
 		this.age = age;
+	}
+
+	
+	public String getDisabilityCategory() {
+		return disabilityCategory;
+	}
+
+	public void setDisabilityCategory(String disabilityCategory) {
+		this.disabilityCategory = disabilityCategory;
+	}
+
+	public String getDisabilityLevel() {
+		return disabilityLevel;
+	}
+
+	public void setDisabilityLevel(String disabilityLevel) {
+		this.disabilityLevel = disabilityLevel;
+	}
+
+	public String getDisabilityPart() {
+		return disabilityPart;
+	}
+
+	public void setDisabilityPart(String disabilityPart) {
+		this.disabilityPart = disabilityPart;
 	}
 
 	public String getDescription() {
