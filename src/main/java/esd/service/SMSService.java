@@ -77,14 +77,19 @@ public class SMSService {
 		if(phone == null ||"".equals(phone)){
 			return false;
 		}
-		String msg = "可能符合你需求的就业信息:\n";
+		String msg = "推荐给您的就业信息:\n";
 		for (int i = 0; i < jobList.size(); i++) {
 			Job job = jobList.get(i);
-			msg += (i + 1) + ". " + job.getName() + "\t\t"; // 岗位名称
-			msg += job.getCompany().getName() + "\n"; // 企业名称名称
-//			msg += job.getCompany().getTelephone() + "\n"; // 联系电话
+			msg += (i + 1) + ". " + job.getName() + "["; // 岗位名称
+			msg += job.getCompany().getName() + "]_"; // 企业名称名称
+			msg += job.getWorkPlace().getName() + "_"; // 工作地点
+			String salary = "面议";
+			if(job.getSalary()!=null && !"".equals(job.getSalary())){
+				salary = job.getSalary();
+			}
+			msg += "要求: "+salary +"\n";	//薪资
 		}
-		msg += "残联就业指导中心电话: 010-88888888";
+		msg += "残联就业指导中心电话: 13077731875  13152689506";
 		//处理非法字符
 		msg = dealIllegalContent(msg,illegalFileUrl);
 		Boolean bl = sendOneMessage(phone, msg);

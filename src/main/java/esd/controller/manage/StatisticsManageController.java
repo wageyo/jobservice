@@ -84,6 +84,7 @@ public class StatisticsManageController {
 			// 简历总数
 			Resume tmpResume = new Resume();
 			tmpResume.setArea(new Area(acode));
+			
 			Integer numberResume = resumeService.getTotalCount(tmpResume,
 					Boolean.FALSE);
 			sw.setNumberResume(numberResume);

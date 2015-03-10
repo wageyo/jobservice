@@ -230,7 +230,7 @@ function checkObject(){
 		return false;
 	}
 	param.birth = year + '-' + month + '-' + day;
-	//户口所在地
+	//户籍所在地
 	var hukou = '';
 	var areaValue3 = $('#areaValue3').val();
 	var areaValue2 = $('#areaValue2').val();
@@ -242,7 +242,7 @@ function checkObject(){
 	}else if(areaValue1 != null && areaValue1 != ''){
 		hukou = areaValue1;
 	}else{
-		alert('户口所在地不能为空.');
+		alert('户籍所在地不能为空.');
 		return false;
 	}
 	param.hukou = hukou;
