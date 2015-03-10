@@ -96,7 +96,7 @@
 	color: #b75a00;
 	width: 80px;
 	height: 24px;
-	padding:4px 10px;
+	padding:2px 10px;
 	background: url("../images/HomePageImage/HeaderImage/Nav_sybutton80.png") repeat-x;
 }
 
@@ -140,7 +140,7 @@
 .HeaderStyle .NavigationBar .SelectStyle
 {
 	color: #b75a00;
-	padding:4px 10px;
+	padding:2px 10px;
 	width: 80px;
 	height: 24px;
 	background: url("../images/HomePageImage/HeaderImage/Nav_sybutton80.png") repeat-x;
