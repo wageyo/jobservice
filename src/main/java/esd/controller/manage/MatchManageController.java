@@ -67,7 +67,7 @@ public class MatchManageController {
 	// 转到 根据简历匹配职位 显示简历页面
 	@RequestMapping(value = "/mre", method = RequestMethod.GET)
 	public ModelAndView resume_match_list(HttpServletRequest request) {
-		log.debug("goto：转到简历 自动匹配 合适的职位 列表页面");
+		log.debug("goto：转到简历 自动匹配   列表页面");
 		Map<String, Object> entity = new HashMap<>();
 		String pageStr = request.getParameter("page");
 		Integer page = KitService.getInt(pageStr) > 0 ? KitService
@@ -89,7 +89,7 @@ public class MatchManageController {
 		paramEntity.setArea(new Area(acode));
 
 		List<Resume> resultList = resumeService.getForListShow(paramEntity,
-				page, rows);
+				page, rows,Boolean.FALSE);
 		Integer total = resumeService.getTotalCount(paramEntity, Boolean.FALSE); // 数据总条数
 			entity.put("total", total);
 			log.debug("获取 简历 信息，size():" + total);
@@ -237,7 +237,7 @@ public class MatchManageController {
 					paramEntity.setArea(new Area(acode));
 					paramEntity = getParamEntity(request, tmp);
 					resumeResultList = resumeService.getForListShow(
-							paramEntity, 1, Integer.MAX_VALUE);
+							paramEntity, 1, Integer.MAX_VALUE,Boolean.FALSE);
 				tempMap.put("resumeResultList", resumeResultList);
 				log.info("matchedNumber " + resumeResultList.size());
 				if(resumeResultList !=null){
@@ -365,6 +365,18 @@ public class MatchManageController {
 		String experience = request.getParameter("experience");
 		if(experience!=null && !"".equals(experience)){
 			paramEntity.setExperience(tmp.getExperience());
+		}
+		String disabilityPart = request.getParameter("disabilityPart");
+		if(disabilityPart!=null && !"".equals(disabilityPart)){
+			paramEntity.setDisabilityPart(tmp.getDisabilityPart());
+		}
+		String disabilityLevel = request.getParameter("disabilityLevel");
+		if(disabilityLevel!=null && !"".equals(disabilityLevel)){
+			paramEntity.setDisabilityLevel(tmp.getDisabilityLevel());
+		}
+		String disabilityCategory = request.getParameter("disabilityCategory");
+		if(disabilityCategory!=null && !"".equals(disabilityCategory)){
+			paramEntity.setDisabilityCategory(tmp.getDisabilityCategory());
 		}
 		String name = request.getParameter("name");
 		if(name!=null && !"".equals(name)){
