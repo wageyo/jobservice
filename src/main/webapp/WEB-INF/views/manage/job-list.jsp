@@ -171,7 +171,7 @@
 									<!-- 没有数据返回时, 显示提示文字 -->
 									<c:if test="${entityList[0] == null}">
 										<tr>
-											<td colspan="10" class="warning" style="color:red; text-align:center;">
+											<td colspan="11" class="warning" style="color:red; text-align:center;">
 												没有找到你需要的数据喔!
 											</td>
 										</tr>
