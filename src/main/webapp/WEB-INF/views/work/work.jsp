@@ -40,7 +40,7 @@
 							<div class="SearchInputText"
 								style="margin-top: 20px;margin-left: 50px;">
 								<div class="SetFloatLeft InputTextBgEmp">
-									<input name="keyWord" type="text" value="${keyWord } | ${key1}" id="keyWord" title="请输入关键字" class="InputTextBlank DefaultText" style="color: gray;" />
+									<input name="keyWord" type="text" value="${keyWord }" id="keyWord" title="请输入关键字" class="InputTextBlank DefaultText" style="color: gray;" />
 									<input type="hidden" id="page" name="page" />
 								</div>
 								<div class="SearchBtn SetFloatLeft">
