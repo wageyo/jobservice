@@ -167,13 +167,14 @@
 										</c:when>
 										<c:otherwise>
 											<c:forEach items="${list }" var="obj" varStatus="status">
-												<tr class="list11" <c:if test="${status.index % 2 == 1 }">style="background:#f6f6f6;"</c:if>>
+												<tr class="list11" <c:if test="${status.index % 2 == 1 }">style="background:#f6f6f6;"</c:if> 
+													onclick="javascript:location.href='${contextPath }/resume/getOneForShow?id=${obj.id}';">
 													<td width="90px" class="s13_blue_b" id="tabaleDataStyle" >
 														 <input type="hidden" name="id" value="${obj.id }"/>
 														 <span id="Repeater1_ctl00_Label2" class="exceedHidden" style="display:-moz-inline-box;display:inline-block; width:98px;" >${obj.title}</span>
 													</td>
 													<td width="70px" class="s13_blue_b">
-														<a href='${contextPath }/resume/getOneForShow?id=${obj.id}' class="exceedHidden" style="width:65px;">${obj.name}</a>
+														<a href='' class="exceedHidden" style="width:65px;">${obj.name}</a>
 													</td>
 													<td width="50px" class="s13_blue_b" id="tabaleDataStyle">
 														 <span id="Repeater1_ctl00_Label2" >${obj.gender}</span>
