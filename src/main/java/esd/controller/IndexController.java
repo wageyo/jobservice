@@ -318,7 +318,6 @@ public class IndexController {
 			job.setName(keyWord);
 		}
 		request.setAttribute("keyWord", keyWord);
-		mav.addObject("key1",keyWord);
 		String jcCode = request.getParameter("jobCategory");
 		if (jcCode != null && !"".equals(jcCode)) {
 			job.setJobCategory(new JobCategory(jcCode));
