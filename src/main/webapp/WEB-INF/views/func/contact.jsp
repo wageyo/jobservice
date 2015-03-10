@@ -44,17 +44,17 @@
 	                   <div class="MainLeftTwo">
 	                       <div class="MainLeftTwoLeft">
 	                          <div id="PublicframeOne11" class="PublicframeOne ">                          
-	                       			<div style="width: 988px; text-align: left; margin: 50px 160px 80px 230px;line-height: 30px; ">
-										<p>地&nbsp;&nbsp;&nbsp;&nbsp;址：黑龙江省哈尔滨市香坊区红旗大街108号七0三科技创业中心（广瀚大厦7楼707室）</p>
-										<p>电&nbsp;&nbsp;&nbsp;&nbsp;话：0451-55664482</p>
-										<p style="margin-left:49px;">0451-55663342</p>
-										<p>传&nbsp;&nbsp;&nbsp;&nbsp;真：0451-55664482-8018</p>
-										<p>网&nbsp;&nbsp;&nbsp;&nbsp;址：www.hrbesd.com</p>
-										<p>邮&nbsp;&nbsp;&nbsp;&nbsp;箱：hrbesd@yahoo.com.cn</p>
-										<p style="margin-left:49px;">esdbgs@163.com</p>
-										<p>市场部资讯电话：0451-55664482-8013/8014</p>
-										<p style="margin-left:96px;">0451-55176366</p>
-										<p>技术部资讯电话：0451-55664482-8004</p>
+	                       			<div style="width: 988px; text-align: left; margin: 30px 160px 80px 230px;line-height: 30px; font-size:13px;">
+	                       				<p style="font-weight: bold;">通信地址: </p>
+										<p>地&nbsp;&nbsp;&nbsp;&nbsp;址：南宁市罗文大道48号广西残疾人事业园</p>
+										<p>邮&nbsp;&nbsp;&nbsp;&nbsp;编：530007</p>
+										<p style="font-weight: bold;">各科室电话: </p>
+										<p>办&nbsp;&nbsp;&nbsp;公&nbsp;&nbsp;&nbsp;室：0771-3186987 3186955（传真）</p>
+										<p>就业科管理: 0771-3186950 3186951（就业科）  0771-5595356（残联政务窗口）</p>
+										<p>职业指导科: 0771-3186952 3186953</p>
+										<p>职业培训科: 0771-3186930 3186931 </p>
+										<p>综&nbsp;&nbsp;&nbsp;合&nbsp;&nbsp;&nbsp;科:0771-3186935、3186932 </p>
+										<p>邮&nbsp;&nbsp;&nbsp;&nbsp;箱：<a href="mailto:gxjyzx@126.com">gxjyzx@126.com</a>或<a href="mailto:jyzx@gxdpf.org.cn">jyzx@gxdpf.org.cn</a></p>
 									</div>                          
 							  </div>
 	                       </div>                     

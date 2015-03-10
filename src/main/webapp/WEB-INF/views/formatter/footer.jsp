@@ -17,7 +17,8 @@
 			<a href="javascript:alert('建设中');" target="_blank" title="站长统计">站长统计</a>&nbsp;|&nbsp;
 			<a href="${contextPath }/loginManage/login" title="登陆管理后台" style="color:rgb(69, 69, 243);">管理后台</a>
 		</p>
-		<p>&copy; 2013 hrbesd.com, Inc. 哈尔滨亿时代数码科技开发有限公司, All rights reserved. 黑ICP备10202513号</p>
+		<p>&copy; 2012 广西壮族自治区残疾人劳动就业指导中心</p>
+		<p>联系电话：3186952/3186953 &nbsp;&nbsp;&nbsp;&nbsp;公司地址：南宁市罗文大道48号广西残疾人事业园 &nbsp;&nbsp;&nbsp;&nbsp;邮政编码：53001</p>
 	</div>
 	<!-- 脚部 end -->
 	

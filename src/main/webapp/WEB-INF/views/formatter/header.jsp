@@ -52,10 +52,10 @@
 					<li><a title="首页" <c:if test="${fn:contains(requestUrl,'index') }">class="SelectStyle"</c:if> href="${contextPath}/index">网站首页</a></li>
 					<li><a title="个人求职" <c:if test="${fn:contains(requestUrl,'emp') }">class="SelectStyle"</c:if> href="${contextPath}/emp">个人求职</a></li>
 					<li><a title="单位招聘" <c:if test="${fn:contains(requestUrl,'work') }">class="SelectStyle"</c:if> href="${contextPath}/work">单位招聘</a></li>
-					<li><a title="服务机构" <c:if test="${fn:contains(requestUrl,'direct') }">class="SelectStyle"</c:if> href="${contextPath}/direct">就业指导</a></li>
-					<li><a title="就业服务" <c:if test="${fn:contains(requestUrl,'news') }">class="SelectStyle"</c:if> href="${contextPath}/news">最新资讯</a></li>
-					<li><a title="职业培训" <c:if test="${fn:contains(requestUrl,'contact') }">class="SelectStyle"</c:if> href="${contextPath}/contact">联系我们</a></li>
-					<li><a title="就业政策" <c:if test="${fn:contains(requestUrl,'about') }">class="SelectStyle"</c:if> href="${contextPath}/about">关于本站</a></li>
+					<li><a title="就业指导" <c:if test="${fn:contains(requestUrl,'direct') }">class="SelectStyle"</c:if> href="${contextPath}/direct">就业指导</a></li>
+					<li><a title="最新资讯" <c:if test="${fn:contains(requestUrl,'news') }">class="SelectStyle"</c:if> href="${contextPath}/news">最新资讯</a></li>
+					<li><a title="联系我们" <c:if test="${fn:contains(requestUrl,'contact') }">class="SelectStyle"</c:if> href="${contextPath}/contact">联系我们</a></li>
+					<li><a title="关于本站" <c:if test="${fn:contains(requestUrl,'about') }">class="SelectStyle"</c:if> href="${contextPath}/about">关于本站</a></li>
 				</ul>
 			</div>
 		</div>
