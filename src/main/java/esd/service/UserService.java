@@ -18,8 +18,9 @@ import esd.dao.UserDao;
 
 /**
  * 用户service类
+ * 
  * @author Administrator
- *
+ * 
  * @param <T>
  */
 @Service
@@ -62,7 +63,7 @@ public class UserService<T> {
 		if (user != null) {
 			// 管理员账号审核状态,默认为OK
 			user.setCheckStatus(Constants.CheckStatus.OK.toString());
-			//管理员权限
+			// 管理员权限
 			user.setIdentity(Constants.Identity.ADMIN.getValue());
 			user.setAuthority(Constants.Authority.ADMIN.getValue());
 			user.setUpdateCheck(dao.getUpdateCheck(user.getId()));
@@ -172,17 +173,6 @@ public class UserService<T> {
 	 */
 	public List<User> getByPageWithOldAreaCode(User user, int startPage,
 			int size) {
-		// if (user != null) {
-		// // 处理传进来的地区code, 变成适用于sql语句使用的格式
-		// if (user.getArea() != null) {
-		// if (user.getArea().getCode() != null) {
-		// user.getArea()
-		// .setCode(
-		// KitService.areaCodeForSql(user.getArea()
-		// .getCode()));
-		// }
-		// }
-		// }
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(Constants.USER, user);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
@@ -203,8 +193,34 @@ public class UserService<T> {
 		if (id == null || id <= 0) {
 			return null;
 		}
-		HashMap<String,Object> resultMap = dao.getHeadImage(id);
+		HashMap<String, Object> resultMap = dao.getHeadImage(id);
 		byte[] headImage = (byte[]) resultMap.get("head_image");
 		return headImage;
+	}
+
+	/**
+	 * 查询对应等级以下的所有账号 分页查询方法,
+	 * 
+	 * @param map中为具体的参数
+	 *            : 1-类对象, 字段的值即为查询条件; 2-start: 起始页数; 3-size: 返回条数
+	 */
+	public List<User> getByPageAuthority(User user, int startPage, int size) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(Constants.USER, user);
+		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
+				* (size <= 0 ? Constants.SIZE : size));
+		map.put("size", size <= 0 ? Constants.SIZE : size);
+		return dao.getByPageAuthority(map);
+	}
+
+	/**
+	 * 查询对应等级以下的所有账号获得数据总条数
+	 * @param user
+	 * @return
+	 */
+	public int getTotalCountAuthority(User user) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put(Constants.USER, user);
+		return dao.getTotalCountAuthority(map);
 	}
 }

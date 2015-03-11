@@ -85,9 +85,9 @@ public class UserManageController {
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
-
-		List<User> resultList = userService.getByPage(paramEntity, page, rows);
-		Integer total = userService.getTotalCount(paramEntity); // 数据总条数
+		paramEntity.setAuthority(Constants.Authority.COMPANY.getValue());
+		List<User> resultList = userService.getByPageAuthority(paramEntity, page, rows);
+		Integer total = userService.getTotalCountAuthority(paramEntity); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
 			log.info("resultList.size()" + resultList.size());

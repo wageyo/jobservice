@@ -264,9 +264,6 @@
 				<if test="user.email != null and user.email != ''">
 					and u.email = #{user.email, jdbcType=VARCHAR}
 				</if>
-				<if test="user.checkStatus != null and user.checkStatus != ''">
-					and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
-				</if>
 				<if test="user.authority != null and user.authority > 0">
 					and u.authority = #{user.authority, jdbcType=INTEGER}
 				</if>
@@ -323,9 +320,6 @@
 				<if test="user.email != null and user.email != ''">
 					and u.email = #{user.email, jdbcType=VARCHAR}
 				</if>
-				<if test="user.checkStatus != null and user.checkStatus != ''">
-					and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
-				</if>
 				<if test="user.authority != null and user.authority > 0">
 					and u.authority = #{user.authority, jdbcType=INTEGER}
 				</if>
@@ -356,6 +350,116 @@
 		</trim>
 	</select>
 
+	<!-- getByPageAuthority -->
+	<select id="getByPageAuthority" parameterType="map" resultMap="ResultUser">
+		select <include refid="base_column" />
+		from user as u, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			u.acode = a.code
+			<if test="user != null">
+				<if test="user.loginName != '' and user.loginName != null">
+					and u.login_name like concat('%', #{user.loginName, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="user.passWord != '' and user.passWord != null">
+					and u.pass_word like concat('%', #{user.passWord, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="user.area != null">
+					<if test="user.area.code != null and user.area.code != ''">
+						and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<if test="user.identity != null and user.identity != ''">
+					and u.identity = #{user.identity, jdbcType=VARCHAR}
+				</if>
+				<if test="user.email != null and user.email != ''">
+					and u.email = #{user.email, jdbcType=VARCHAR}
+				</if>
+				<if test="user.authority != null and user.authority > 0">
+					and u.authority &lt;= #{user.authority, jdbcType=INTEGER}
+				</if>
+				<if test="user.title != null and user.title != ''">
+					and u.title like concat('%', #{user.title, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="user.nickName != null and user.nickName != ''">
+					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
+				</if>
+				<choose>
+					<when test="user.checkStatus != null and user.checkStatus != ''">
+						and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
+					</when>
+					<otherwise>
+						and u.check_status = 'ok'
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="user != null">
+					<if test="user.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and u.check_status = 'ok'
+				</otherwise>
+			</choose>
+		</trim>
+		order by u.create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+
+	<!-- getTotalCountAuthority -->
+	<select id="getTotalCountAuthority" parameterType="map" resultType="int">
+		select count(*)
+		from user as u, area as a
+		<trim prefix="where" prefixOverrides="and|or">
+			u.acode = a.code
+			<if test="user != null">
+				<if test="user.loginName != '' and user.loginName != null">
+					and u.login_name like concat('%', #{user.loginName, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="user.passWord != '' and user.passWord != null">
+					and u.pass_word like concat('%', #{user.passWord, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="user.area != null">
+					<if test="user.area.code != null and user.area.code != ''">
+						and a.code like concat('%',#{user.area.code, jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<if test="user.identity != null and user.identity != ''">
+					and u.identity = #{user.identity, jdbcType=VARCHAR}
+				</if>
+				<if test="user.email != null and user.email != ''">
+					and u.email = #{user.email, jdbcType=VARCHAR}
+				</if>
+				<if test="user.authority != null and user.authority > 0">
+					and u.authority &lt;= #{user.authority, jdbcType=INTEGER}
+				</if>
+				<if test="user.title != null and user.title != ''">
+					and u.title like concat('%', #{user.title, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="user.nickName != null and user.nickName != ''">
+					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
+				</if>
+				<choose>
+					<when test="user.checkStatus != null and user.checkStatus != ''">
+						and u.check_status = #{user.checkStatus, jdbcType=VARCHAR}
+					</when>
+					<otherwise>
+						and u.check_status = 'ok'
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="user != null">
+					<if test="user.checkStatus != null">
+					</if>
+				</when>
+				<otherwise>
+					and u.check_status = 'ok'
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+	
 	<select id="getAdminByPage" parameterType="map" resultMap="ResultUser">
 		select <include refid="base_column" />
 		from user as u, area as a
