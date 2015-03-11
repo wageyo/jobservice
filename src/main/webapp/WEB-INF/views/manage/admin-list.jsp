@@ -42,7 +42,7 @@
 				<div class="container-fluid">
 				
 					<!-- 上方条件查询框  开始 -->
-					<div class="">
+					<div class="" style="margin-bottom: 5px;">
 						<!-- 模糊查询录入框 暂时隐藏 -->
 						<input class="input-medium search-query" value="${targetName }" type="text" name="targetName" id="targetName"/> 
 						<button type="submit" class="btn" onclick="query(null,null);">查找</button>

@@ -99,7 +99,7 @@
 				<div class="container-fluid">
 				
 					<!-- 上方条件查询框  开始 -->
-					<div class="">
+					<div class="" style="margin-bottom: 5px;">
 						<input class="input-medium search-query" value="${targetName }" type="text" name="targetName" id="targetName"/> 
 						<div class="btn-group" >
 							<button class="btn">${checkStatusName }</button> 

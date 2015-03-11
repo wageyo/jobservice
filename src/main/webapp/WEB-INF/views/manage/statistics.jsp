@@ -51,7 +51,7 @@
 						<div class="span12" style="width: 90%;">
 							<table class="table" >
 								<thead>
-									<tr>
+									<tr class="info">
 										<th>
 											地区
 										</th>
