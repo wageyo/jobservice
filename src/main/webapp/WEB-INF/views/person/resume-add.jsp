@@ -137,7 +137,7 @@
                                          <td>
                                          	<select name="year" id="year" class="select_border" style="width:70px;">
 												<option value="0">请选择</option>
-												<c:forEach begin="1953" end="1997" var="i">
+												<c:forEach begin="1955" end="1999" var="i">
 														<option value="${i}">${i }年</option>
 												</c:forEach>
 											</select>
