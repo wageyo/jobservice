@@ -91,7 +91,7 @@ public class SMSService {
 			}
 			msg += "要求: "+canjiyaoqiu+" ,工资:"+job.getSalary() +"\n";	//薪资
 		}
-		msg += "残联就业指导中心电话: 13077731875  13152689506";
+		msg += "残联就业指导中心电话: 0771-3186953 3186952";
 		//处理非法字符
 		msg = dealIllegalContent(msg,illegalFileUrl);
 		Boolean bl = sendOneMessage(phone, msg);
