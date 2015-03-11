@@ -132,9 +132,9 @@
 							<table class="table" id="t1">
 								<thead>
 									<tr>
-									<th >
-									  <input id="Checkbox4" type="checkbox" />  
-									</th>
+										<th >
+										  <input id="Checkbox4" type="checkbox" />  
+										</th>
 										<th>
 											序号
 										</th>
