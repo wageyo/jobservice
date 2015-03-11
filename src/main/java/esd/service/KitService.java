@@ -1030,6 +1030,7 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 		for (Job job : jobList) {
+			
 			// 薪水
 			String salary = "面议";
 			if (job.getSalary() != null && !"".equals(job.getSalary())) {

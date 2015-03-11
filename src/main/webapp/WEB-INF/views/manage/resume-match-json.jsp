@@ -23,14 +23,20 @@
 				<td>
 					序号
 				</td>
-				<td style="width:20%;">
+				<td style="width:15%;">
 					职位名称
 				</td>
-				<td style="width:22%;">
+				<td style="width:15%;">
 					单位名称
 				</td>
 				<td>
 					招聘人数
+				</td>
+				<td>
+					残疾部位
+				</td>
+				<td>
+					残疾等级
 				</td>
 				<td>
 					提供薪资
@@ -68,6 +74,15 @@
 					</td>
 					<td>
 						${entity.hireNumber }
+					</td>
+					<td>
+						<c:if test="${entity.disabilityPart  == null || entity.disabilityPart == ''}">暂无要求</c:if>
+						${entity.disabilityPart }
+						
+					</td>
+					<td>
+						<c:if test="${entity.disabilityLevel  == null || entity.disabilityLevel == ''}">暂无要求</c:if>
+						${entity.disabilityLevel }
 					</td>
 					<td>
 						${entity.salary }

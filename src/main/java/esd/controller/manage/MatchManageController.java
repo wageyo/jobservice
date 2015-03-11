@@ -236,8 +236,14 @@ public class MatchManageController {
 					Resume paramEntity = new Resume();
 					paramEntity.setArea(new Area(acode));
 					paramEntity = getParamEntity(request, tmp);
+					//查询本地区设置的推送显示数量, 如果不存在则使用系统默认的推送数量-5
+					Integer tuisongNumber = Constants.MATCHED_NUMBER_DEFAULT;
+					Parameter pt = parameterService.getOnebyTypeAndAcode(Constants.MATCHED_SHOW_NUMBER, acode);
+					if(pt!=null){
+						tuisongNumber = Integer.parseInt(pt.getValue());
+					}
 					resumeResultList = resumeService.getForListShow(
-							paramEntity, 1, Integer.MAX_VALUE,Boolean.FALSE);
+							paramEntity, 1, tuisongNumber,Boolean.FALSE);
 				tempMap.put("resumeResultList", resumeResultList);
 				log.info("matchedNumber " + resumeResultList.size());
 				if(resumeResultList !=null){

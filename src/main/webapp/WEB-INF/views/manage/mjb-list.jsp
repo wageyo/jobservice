@@ -72,9 +72,6 @@
 											<th style="width:20%;">
 												公司名称
 											</th>
-											<th style="width:15%;">
-												联系部门
-											</th>
 											<th style="width:6%;">
 												联系人
 											</th>
@@ -117,19 +114,16 @@
 													${(row.index + 1 + (currentPage - 1) * 20) }
 												</td>
 												<td>
-													${entity.name }
+													<div class="exceedHidden" style="width:250px;" title="${entity.name }">${entity.name }</div>
 												</td>
 												<td>
-													${entity.contactDept }
+													<div class="exceedHidden" style="width:80px;" title="${entity.contactPerson }">${entity.contactPerson}</div>
 												</td>
 												<td>
-													${entity.contactPerson}
+													<div class="exceedHidden" style="width:130px;" title="${entity.telephone }">${entity.telephone }</div>
 												</td>
 												<td>
-													${entity.telephone }
-												</td>
-												<td>
-													${entity.email }
+													<div class="exceedHidden" style="width:140px;" title="${entity.email }">${entity.email }</div>
 												</td>
 												<td>
 													${entity.nature }

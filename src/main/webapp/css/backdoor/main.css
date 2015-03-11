@@ -96,3 +96,13 @@
 .label:hover{
 	cursor:pointer;
 }
+
+/**
+ * 超出省略号表示样式
+ **/
+.exceedHidden {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-moz-text-overflow: ellipsis;
+	overflow: hidden;
+}

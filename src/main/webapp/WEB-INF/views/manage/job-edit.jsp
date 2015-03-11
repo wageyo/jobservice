@@ -84,12 +84,19 @@
 										<td>
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
-												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'salary' && p.value == obj.salary}">
-														<c:set var="salaryName" value="${p.name }"></c:set>
-														<c:set var="salaryValue" value="${p.value }"></c:set>
-													</c:if>
-												</c:forEach>
+												<c:choose>
+													<c:when test="${obj.salary !=null && obj.salary != ''}">
+														<c:forEach items="${params }" var="p">
+															<c:if test="${p.type == 'salary' && p.value == obj.salary}">
+																<c:set var="salaryName" value="${p.name }"></c:set>
+																<c:set var="salaryValue" value="${p.value }"></c:set>
+															</c:if>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<c:set var="salaryName" value="请选择"></c:set>
+													</c:otherwise>
+												</c:choose>
 												<button class="btn" id="btnSalary">${salaryName }</button> 
 												<input type="hidden" id="salary" name="salary" value="${salaryValue }"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
@@ -110,12 +117,19 @@
 										<td>
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
-												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'education' && p.value == obj.education}">
-														<c:set var="educationName" value="${p.name }"></c:set>
-														<c:set var="educationValue" value="${p.value }"></c:set>
-													</c:if>
-												</c:forEach>
+												<c:choose>
+													<c:when test="${obj.education !=null && obj.education != ''}">
+														<c:forEach items="${params }" var="p">
+															<c:if test="${p.type == 'education' && p.value == obj.education}">
+																<c:set var="educationName" value="${p.name }"></c:set>
+																<c:set var="educationValue" value="${p.value }"></c:set>
+															</c:if>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<c:set var="educationName" value="请选择"></c:set>
+													</c:otherwise>
+												</c:choose>
 												<button class="btn" id="btnEducation">${educationName }</button> 
 												<input type="hidden" id="education" name="education" value="${educationValue }"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
@@ -138,12 +152,19 @@
 										<td>
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
-												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'experience' && p.value == obj.experience}">
-														<c:set var="experienceName" value="${p.name }"></c:set>
-														<c:set var="experienceValue" value="${p.value }"></c:set>
-													</c:if>
-												</c:forEach>
+												<c:choose>
+													<c:when test="${obj.experience !=null && obj.experience != ''}">
+														<c:forEach items="${params }" var="p">
+															<c:if test="${p.type == 'experience' && p.value == obj.experience}">
+																<c:set var="experienceName" value="${p.name }"></c:set>
+																<c:set var="experienceValue" value="${p.value }"></c:set>
+															</c:if>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<c:set var="experienceName" value="请选择"></c:set>
+													</c:otherwise>
+												</c:choose>
 												<button class="btn" id="btnExperience">${experienceName }</button> 
 												<input type="hidden" id="experience" name="experience" value="${experienceValue }"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
@@ -164,12 +185,19 @@
 										<td>
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
-												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'gender' && p.value == obj.gender}">
-														<c:set var="genderName" value="${p.name }"></c:set>
-														<c:set var="genderValue" value="${p.value }"></c:set>
-													</c:if>
-												</c:forEach>
+												<c:choose>
+													<c:when test="${obj.gender !=null && obj.gender != ''}">
+														<c:forEach items="${params }" var="p">
+															<c:if test="${p.type == 'gender' && p.value == obj.gender}">
+																<c:set var="genderName" value="${p.name }"></c:set>
+																<c:set var="genderValue" value="${p.value }"></c:set>
+															</c:if>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<c:set var="genderName" value="请选择"></c:set>
+													</c:otherwise>
+												</c:choose>
 												<button class="btn" id="btnGender">${genderName }</button> 
 												<input type="hidden" id="gender" name="gender" value="${genderValue }"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
@@ -192,12 +220,19 @@
 										<td>
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
-												<c:forEach items="${params }" var="p">
-													<c:if test="${p.type == 'jobNature' && p.value == obj.nature}">
-														<c:set var="natureName" value="${p.name }"></c:set>
-														<c:set var="natureValue" value="${p.value }"></c:set>
-													</c:if>
-												</c:forEach>
+												<c:choose>
+													<c:when test="${obj.nature !=null && obj.nature != ''}">
+														<c:forEach items="${params }" var="p">
+															<c:if test="${p.type == 'jobNature' && p.value == obj.nature}">
+																<c:set var="natureName" value="${p.name }"></c:set>
+																<c:set var="natureValue" value="${p.value }"></c:set>
+															</c:if>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<c:set var="natureName" value="请选择"></c:set>
+													</c:otherwise>
+												</c:choose>
 												<button class="btn" id="btnNature">${natureName }</button> 
 												<input type="hidden" id="nature" name="nature" value="${natureValue }"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
