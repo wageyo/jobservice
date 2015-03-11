@@ -67,10 +67,14 @@
 						${status.index + 1  }
 					</td>
 					<td>
-						<a href="${contextPath }/job/getOneForShow?id=${entity.id}" target="_blank">${entity.name }</a>
+						<div class="exceedHidden" style="width:145px;">
+							<a href="${contextPath }/job/getOneForShow?id=${entity.id}" target="_blank" title="${entity.name }">${entity.name }</a>
+						</div>
 					</td>
 					<td>
-						<a href="${contextPath }/company/getOneForShow?id=${entity.company.id}" target="_blank">${entity.company.name }</a>
+						<div class="exceedHidden" style="width:145px;">
+							<a href="${contextPath }/company/getOneForShow?id=${entity.company.id}" target="_blank" title="${entity.company.name }">${entity.company.name }</a>
+						</div>
 					</td>
 					<td>
 						${entity.hireNumber }
