@@ -116,7 +116,8 @@
 								</div>
 								<div class="clearboth">
 								</div>
-								<div class="TimeShow">您最近的登陆时间：<span></span></div>
+								<!--  -->
+									<div class="TimeShow"><!-- 您最近的登陆时间： --><span></span></div>
 								<div>
 									<!-- 企业用户显示的菜单项目 begin -->
 									<c:if test="${cookie.identity.value == 'company' }">

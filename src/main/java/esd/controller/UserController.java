@@ -111,6 +111,7 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("message", "注册请求已提交, 请等待管理员审核");
 			return "redirect:/index";
 		} else {
+			user = userService.getById(user.getId());
 			CookieHelper.setCookie(response, request, user, null);
 			return "redirect:/user/goCenter";
 		}
@@ -280,6 +281,7 @@ public class UserController {
 		if (userId == null ||"".equals(userId)) {
 			return "redirect:/index";
 		}
+		User user = userService.getById(Integer.parseInt(userId));
 		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
 		//如果为公司用户, 且没有填写基本资料, 则跳转到填写公司基本信息页面上
 		if (identity.equals(Constants.Identity.COMPANY.getValue())) {
@@ -290,6 +292,7 @@ public class UserController {
 				return "redirect:/secure/company/save";
 			}
 		}
+		request.setAttribute("user", user);
 		return "/" +identity + "/index";
 	}
 
