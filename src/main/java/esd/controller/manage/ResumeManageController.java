@@ -52,16 +52,15 @@ public class ResumeManageController {
 
 	@Autowired
 	private ResumeService resumeService;
-	
+
 	@Autowired
 	private ParameterService pService;
 
 	@Autowired
 	private JobCategoryService jcService;
-	
+
 	@Autowired
 	private JobService jobService;
-	
 
 	// 转到简历管理列表页面
 	@RequestMapping(value = "/resume_list", method = RequestMethod.GET)
@@ -84,8 +83,9 @@ public class ResumeManageController {
 		paramEntity.setCheckStatus(checkStatus);
 
 		// 获取地区码
-		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
-		if(userId == null || "".equals(userId)){
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
+		if (userId == null || "".equals(userId)) {
 			return new ModelAndView("redirect:/loginManage/login");
 		}
 		Integer uid = Integer.parseInt(userId);
@@ -94,9 +94,9 @@ public class ResumeManageController {
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
 
-		List<Resume> resultList = resumeService.getListShowForManage(paramEntity,
-				page, rows);
-		Integer total = resumeService.getTotalCount(paramEntity,Boolean.FALSE); // 数据总条数
+		List<Resume> resultList = resumeService.getListShowForManage(
+				paramEntity, page, rows, Boolean.FALSE);
+		Integer total = resumeService.getTotalCount(paramEntity, Boolean.FALSE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
 			log.info("resultList.size()" + resultList.size());
@@ -106,10 +106,10 @@ public class ResumeManageController {
 				tempMap.put("title", tmp.getTitle());// 简历名称
 				tempMap.put("name", tmp.getName());// 姓名
 				tempMap.put("gender", tmp.getGender());// 性别
-				tempMap.put("disabilityCard", tmp.getDisabilityCard());	//残疾证号
-				tempMap.put("disabilityCategory", tmp.getDisabilityCategory());	//残疾类别
-				tempMap.put("disabilityLevel",tmp.getDisabilityLevel());	//残疾等级
-				tempMap.put("phone", tmp.getPhone());	//联系电话
+				tempMap.put("disabilityCard", tmp.getDisabilityCard()); // 残疾证号
+				tempMap.put("disabilityCategory", tmp.getDisabilityCategory()); // 残疾类别
+				tempMap.put("disabilityLevel", tmp.getDisabilityLevel()); // 残疾等级
+				tempMap.put("phone", tmp.getPhone()); // 联系电话
 				list.add(tempMap);
 			}
 			entity.put("total", total);
@@ -172,9 +172,10 @@ public class ResumeManageController {
 	// 提交保存编辑的简历
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> edit_object_post(Resume param, HttpServletRequest request,HttpServletResponse response) {
+	public Map<String, Object> edit_object_post(Resume param,
+			HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(param == null){
+		if (param == null) {
 			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
 			return map;
 		}
@@ -185,9 +186,9 @@ public class ResumeManageController {
 		}
 		return map;
 	}
-	
+
 	// 拒绝简历通过
-	@RequestMapping(value="/refuse/{id}",method=RequestMethod.POST)
+	@RequestMapping(value = "/refuse/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> refuse_object(
 			@PathVariable(value = "id") Integer id) {
@@ -202,16 +203,15 @@ public class ResumeManageController {
 		}
 		return map;
 	}
-	
+
 	// 同意简历通过
-	@RequestMapping(value="/approve/{id}",method=RequestMethod.POST)
+	@RequestMapping(value = "/approve/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> approve_object(
 			@PathVariable(value = "id") Integer id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Resume updateObject = resumeService.getById(id);
-		updateObject
-				.setCheckStatus(Constants.CheckStatus.OK.getValue());
+		updateObject.setCheckStatus(Constants.CheckStatus.OK.getValue());
 		if (resumeService.update(updateObject)) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {
@@ -221,9 +221,10 @@ public class ResumeManageController {
 	}
 
 	// 删除职位
-	@RequestMapping(value="/delete/{id}",method=RequestMethod.POST)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delete_object(@PathVariable(value = "id") Integer id) {
+	public Map<String, Object> delete_object(
+			@PathVariable(value = "id") Integer id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Boolean bl = resumeService.delete(id);
 		if (bl) {
@@ -233,7 +234,7 @@ public class ResumeManageController {
 		}
 		return map;
 	}
-	
+
 	// 转到自动匹配简历管理列表页面
 	@RequestMapping(value = "/matere", method = RequestMethod.GET)
 	public ModelAndView mate_list_get1(HttpServletRequest request) {
@@ -242,17 +243,18 @@ public class ResumeManageController {
 		String pageStr = request.getParameter("page");
 		Integer page = KitService.getInt(pageStr) > 0 ? KitService
 				.getInt(pageStr) : 1;
-//		Integer rows = Constants.SIZE;
-				Integer rows = Constants.SIZE;
+		// Integer rows = Constants.SIZE;
+		Integer rows = Constants.SIZE;
 		List<Parameter> plist = pService.getAll();
 		entity.put("params", plist);
 		Resume paramEntity = new Resume();
 		String resumeMat = request.getParameter("resumeMat");
 		if (resumeMat != null && !"".equals(resumeMat)) {
-			resumeMat=resumeMat+"%";
+			resumeMat = resumeMat + "%";
 		}
 		// 获取地区码
-		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
 		Integer uid = Integer.parseInt(userId);
 		User userObj = userService.getById(uid);
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
@@ -260,8 +262,8 @@ public class ResumeManageController {
 		paramEntity.setArea(new Area(acode));
 
 		List<Resume> resultList = resumeService.getForListShow(paramEntity,
-				page, rows,Boolean.FALSE);
-		Integer total = resumeService.getTotalCount(paramEntity,Boolean.FALSE); // 数据总条数
+				page, rows, Boolean.FALSE);
+		Integer total = resumeService.getTotalCount(paramEntity, Boolean.FALSE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
 			for (Resume tmp : resultList) {
@@ -270,55 +272,57 @@ public class ResumeManageController {
 				tempMap.put("title", tmp.getTitle());// 简历名称
 				tempMap.put("name", tmp.getName());// 姓名
 				tempMap.put("gender", tmp.getGender());// 性别
-				tempMap.put("disabilityCard", tmp.getDisabilityCard());	//残疾证号
-				tempMap.put("disabilityCategory", tmp.getDisabilityCategory());	//残疾类别
-				tempMap.put("disabilityLevel",tmp.getDisabilityLevel());	//残疾等级
-				tempMap.put("phone", tmp.getPhone());	//联系电话
-				List<Job> jobResultList = null ;
+				tempMap.put("disabilityCard", tmp.getDisabilityCard()); // 残疾证号
+				tempMap.put("disabilityCategory", tmp.getDisabilityCategory()); // 残疾类别
+				tempMap.put("disabilityLevel", tmp.getDisabilityLevel()); // 残疾等级
+				tempMap.put("phone", tmp.getPhone()); // 联系电话
+				List<Job> jobResultList = null;
 				String mark = request.getParameter("mark");
-				//判断查询条件是否为空，组成查询条件
-				if(mark != null && !"".equals(mark)){
-				Job jobEntity = new Job();
-				jobEntity.setArea(new Area(acode));
-				String jccode = request.getParameter("jccode");
-				if (jccode != null && !"".equals(jccode)) {
-					jobEntity.setJobCategory(tmp.getDesireJob());
+				// 判断查询条件是否为空，组成查询条件
+				if (mark != null && !"".equals(mark)) {
+					Job jobEntity = new Job();
+					jobEntity.setArea(new Area(acode));
+					String jccode = request.getParameter("jccode");
+					if (jccode != null && !"".equals(jccode)) {
+						jobEntity.setJobCategory(tmp.getDesireJob());
+					}
+					String work_place = request.getParameter("work_place");
+					if (work_place != null && !"".equals(work_place)) {
+						jobEntity.setWorkPlace(tmp.getDesireAddress());
+					}
+
+					String nature = request.getParameter("nature");
+					if (nature != null && !"".equals(nature)) {
+						String JobNature = KitService.getMateNature(tmp
+								.getJobNature());
+						jobEntity.setNature(JobNature);
+					}
+
+					String name = request.getParameter("name");
+					if (name != null && !"".equals(name)) {
+						jobEntity.setName(tmp.getName());
+					}
+					String education = request.getParameter("education");
+					if (education != null && !"".equals(education)) {
+						jobEntity.setEducation(tmp.getEducation());
+					}
+					String experience = request.getParameter("experience");
+					if (experience != null && !"".equals(experience)) {
+						jobEntity.setExperience(tmp.getExperience());
+					}
+					String salary = request.getParameter("salary");
+					if (salary != null && !"".equals(salary)) {
+						jobEntity.setSalary(tmp.getDesireSalary());
+					}
+					String gender = request.getParameter("gender");
+					if (gender != null && !"".equals(gender)) {
+						jobEntity.setGender(tmp.getGender());
+					}
+					jobResultList = jobService.getListForShow(jobEntity, 1,
+							Integer.MAX_VALUE, Boolean.FALSE);
 				}
-				String work_place = request.getParameter("work_place");
-				if (work_place != null && !"".equals(work_place)) {
-					jobEntity.setWorkPlace(tmp.getDesireAddress());
-				}
-					
-				String nature = request.getParameter("nature");
-				if (nature != null && !"".equals(nature)) {
-					String JobNature=KitService.getMateNature(tmp.getJobNature());
-					jobEntity.setNature(JobNature);
-				}
-				
-				String name = request.getParameter("name");
-				if (name != null && !"".equals(name)) {
-					jobEntity.setName(tmp.getName());
-				}
-				String education = request.getParameter("education");
-				if (education != null && !"".equals(education)) {
-					jobEntity.setEducation(tmp.getEducation());
-				}
-				String experience = request.getParameter("experience");
-				if (experience != null && !"".equals(experience)) {
-					jobEntity.setExperience(tmp.getExperience());
-				}
-				String salary = request.getParameter("salary");
-				if (salary != null && !"".equals(salary)) {
-					jobEntity.setSalary(tmp.getDesireSalary());
-				}
-				String gender = request.getParameter("gender");
-				if (gender != null && !"".equals(gender)) {
-					jobEntity.setGender(tmp.getGender());
-				}
-				jobResultList = jobService.getListForShow(jobEntity,1, Integer.MAX_VALUE,Boolean.FALSE);
-				}
-				tempMap.put("jobResultList",jobResultList);
-				
+				tempMap.put("jobResultList", jobResultList);
+
 				list.add(tempMap);
 			}
 			entity.put("total", total);
@@ -328,23 +332,21 @@ public class ResumeManageController {
 			log.error("获取 简历 时发生错误。");
 			e.printStackTrace();
 		}
-		
+
 		// 放入当前页数, 总页数, 简历名, 审核状态
 		entity.put("currentPage", page);
 		entity.put("totalPage", KitService.getTotalPage(total));
-    	entity.put("resumeMatchPerName", resumeMat);
+		entity.put("resumeMatchPerName", resumeMat);
 		return new ModelAndView("manage/resume-mate-list", entity);
 	}
-	
+
 	// 同意简历通过
-	@RequestMapping(value="/yiJiuYe/{id}",method=RequestMethod.POST)
+	@RequestMapping(value = "/yiJiuYe/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> yijiuye(
-			@PathVariable(value = "id") Integer id) {
+	public Map<String, Object> yijiuye(@PathVariable(value = "id") Integer id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Resume updateObject = resumeService.getById(id);
-		updateObject
-				.setCheckStatus(Constants.CheckStatus.YIJIUYE.getValue());
+		updateObject.setCheckStatus(Constants.CheckStatus.YIJIUYE.getValue());
 		if (resumeService.update(updateObject)) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {

@@ -236,10 +236,10 @@ public class JobController {
 		}
 		paramEntity.setName(targetName);
 		paramEntity.setCheckStatus(checkStatus);
-		Integer total = jobService.getTotalCount(paramEntity, Boolean.TRUE);
+		Integer total = jobService.getTotalCount(paramEntity, Boolean.FALSE);
 		Integer page = 1;
 		List<Job> job = jobService.getListForManage(paramEntity, page, total);
-		String url = req.getRealPath("/");
+		String url = req.getSession().getServletContext().getRealPath("/");
 
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");

@@ -31,6 +31,7 @@ import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.Resume;
+import esd.bean.User;
 import esd.common.PoiCreateExcel;
 import esd.service.AreaService;
 import esd.service.CompanyService;
@@ -38,6 +39,7 @@ import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ResumeService;
+import esd.service.UserService;
 
 @Controller
 @RequestMapping("/resume")
@@ -48,6 +50,9 @@ public class ResumeController {
 	//
 	// @Value("${destFileName}")
 	// private String destFileName;
+
+	@Autowired
+	private UserService<User> userService;
 
 	@Autowired
 	private ResumeService resumeService;
@@ -264,7 +269,7 @@ public class ResumeController {
 	// 批量下载信息 --别删
 	@RequestMapping(value = "/resumeExportAll", method = RequestMethod.POST)
 	@ResponseBody
-	public String ExportAll(Resume param, HttpServletRequest req) {
+	public String ExportAll(Resume param, HttpServletRequest request) {
 		boolean b = true;
 		Resume paramEntity = new Resume();
 		String targetName = param.getTargetName();
@@ -274,11 +279,18 @@ public class ResumeController {
 		}
 		paramEntity.setName(targetName);
 		paramEntity.setCheckStatus(checkStatus);
-		Integer total = resumeService.getTotalCount(paramEntity, Boolean.FALSE);
+		// 获取地区码
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
+		// 根据管理员用户所属地区, 查询他下面所属的所有数据
+		String acode = userObj.getArea().getCode();
+		paramEntity.setArea(new Area(acode));
 		Integer page = 1;
 		List<Resume> resume = resumeService.getListShowForManage(paramEntity,
-				page, total);
-		String url = req.getRealPath("/");
+				page, Integer.MAX_VALUE,Boolean.FALSE);
+		String url = request.getSession().getServletContext().getRealPath("/");
 
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");
@@ -298,8 +310,8 @@ public class ResumeController {
 		// 导出文件
 		b = PoiCreateExcel.createResumeExcel(exportPath, resume);
 		if (b) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
-					+ req.getContextPath();
+			String destPath = request.getLocalAddr() + ":"
+					+ request.getLocalPort() + request.getContextPath();
 			FileDownloadPath = "http://" + destPath + "/upload/resume/" + uuid
 					+ ".xls";
 		}

@@ -218,21 +218,25 @@ public class ResumeService {
 	 * @param resume
 	 * @param startPage
 	 * @param size
+	 *            * @param shareScope --是否开启共享范围查询, true-前台查询时使用;
+	 *            false-管理后台查询时使用
 	 * @return
 	 */
 	public List<Resume> getListShowForManage(Resume resume, int startPage,
-			int size) {
+			int size, Boolean shareScope) {
 		if (resume != null) {
-			// 期望工作地 处理成适合sql查询的方式
-			if (resume.getDesireAddress() != null) {
-				if (resume.getDesireAddress().getCode() != null
-						&& !"".equals(resume.getDesireAddress().getCode())) {
-					String sqlDesireAddress = KitService
-							.desireAddressForResumeSql(resume
-									.getDesireAddress().getCode());
-					resume.setDesireAddress(new Area(sqlDesireAddress));
-				}
+			if (shareScope) {
+				// 期望工作地 处理成适合sql查询的方式
+				if (resume.getDesireAddress() != null) {
+					if (resume.getDesireAddress().getCode() != null
+							&& !"".equals(resume.getDesireAddress().getCode())) {
+						String sqlDesireAddress = KitService
+								.desireAddressForResumeSql(resume
+										.getDesireAddress().getCode());
+						resume.setDesireAddress(new Area(sqlDesireAddress));
+					}
 
+				}
 			}
 			// 目标职位 处理成适合sql查询的方式
 			if (resume.getDesireJob() != null) {
@@ -263,14 +267,14 @@ public class ResumeService {
 	 * @param startPage
 	 * @param size
 	 * @param shareScope
-	 *             --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
+	 *            --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
 	 * @return
 	 */
 	public List<Resume> getForListShow(Resume object, int startPage, int size,
 			Boolean shareScope) {
 		if (object != null) {
-			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
 			if (shareScope) {
+				// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
 				if (object.getArea() != null) {
 					if (object.getArea().getCode() != null
 							&& !"".equals(object.getArea().getCode())) {

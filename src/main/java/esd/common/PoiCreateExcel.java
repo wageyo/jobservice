@@ -21,6 +21,7 @@ import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.Resume;
 import esd.common.disability.test;
+import esd.service.KitService;
 
 public class PoiCreateExcel {
 	private static Logger log = Logger.getLogger(PoiCreateExcel.class);
@@ -572,7 +573,9 @@ public class PoiCreateExcel {
 			cell = row.createCell(21);
 			cell.setCellValue(resume.getPoliticalStatus());
 			cell = row.createCell(22);
-			cell.setCellValue(resume.getAge());
+			Integer age = KitService.getAgeByBirth(resume.getBirth());
+			cell.setCellValue(age);
+//			cell.setCellValue(123);
 			cell = row.createCell(23);
 			cell.setCellValue(resume.getHeight());
 			cell = row.createCell(24);

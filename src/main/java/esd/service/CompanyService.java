@@ -103,12 +103,32 @@ public class CompanyService<T> {
 	 * @param company
 	 * @param startPage
 	 * @param size
+	 * @param shareScope
+	 *            --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
 	 * @return
 	 */
-	public List<Company> getListShowForManage(Company company, int startPage,
-			int size) {
+	public List<Company> getListShowForManage(Company object, int startPage,
+			int size, Boolean shareScope) {
+		if (object != null) {
+			if (shareScope) {
+				// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+				if (object.getArea() != null) {
+					if (object.getArea().getCode() != null
+							&& !"".equals(object.getArea().getCode())) {
+						Parameter parameter = parameterDao
+								.getShareScopeByArea(object.getArea().getCode());
+						if (parameter != null) {
+							String areaSql = KitService.getAreaSqlFromShareScope(
+									parameter.getValue(), object.getArea()
+											.getCode());
+							object.setArea(new Area(areaSql));
+						}
+					}
+				}
+			}
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("company", company);
+		map.put("company", object);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
@@ -123,21 +143,25 @@ public class CompanyService<T> {
 	 * @param object
 	 * @param startPage
 	 * @param size
+	 * @param shareScope
+	 *            --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
 	 * @return
 	 */
-	public List<Company> getForListShow(Company object, int startPage, int size) {
+	public List<Company> getForListShow(Company object, int startPage, int size, Boolean shareScope) {
 		if (object != null) {
-			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
-			if (object.getArea() != null) {
-				if (object.getArea().getCode() != null
-						&& !"".equals(object.getArea().getCode())) {
-					Parameter parameter = parameterDao
-							.getShareScopeByArea(object.getArea().getCode());
-					if (parameter != null) {
-						String areaSql = KitService.getAreaSqlFromShareScope(
-								parameter.getValue(), object.getArea()
-										.getCode());
-						object.setArea(new Area(areaSql));
+			if (shareScope) {
+				// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
+				if (object.getArea() != null) {
+					if (object.getArea().getCode() != null
+							&& !"".equals(object.getArea().getCode())) {
+						Parameter parameter = parameterDao
+								.getShareScopeByArea(object.getArea().getCode());
+						if (parameter != null) {
+							String areaSql = KitService.getAreaSqlFromShareScope(
+									parameter.getValue(), object.getArea()
+											.getCode());
+							object.setArea(new Area(areaSql));
+						}
 					}
 				}
 			}

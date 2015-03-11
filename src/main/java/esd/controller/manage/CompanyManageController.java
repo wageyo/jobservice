@@ -95,7 +95,7 @@ public class CompanyManageController {
 		paramEntity.setArea(new Area(acode));
 
 		List<Company> resultList = companyService.getListShowForManage(
-				paramEntity, page, rows);
+				paramEntity, page, rows,Boolean.FALSE);
 		Integer total = companyService.getTotalCount(paramEntity, Boolean.TRUE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();

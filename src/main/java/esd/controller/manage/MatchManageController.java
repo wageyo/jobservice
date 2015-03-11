@@ -169,7 +169,7 @@ public class MatchManageController {
 		paramEntity.setArea(new Area(acode));
 
 		List<Company> resultList = companyService.getListShowForManage(
-				paramEntity, page, rows);
+				paramEntity, page, rows,Boolean.FALSE);
 		Integer total = companyService.getTotalCount(paramEntity, Boolean.TRUE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
@@ -278,7 +278,7 @@ public class MatchManageController {
 		//如果为全部的话
 		//获取选中的id数组, 如果为all的话, 则代表全部推送.
 		if("all".equals(type)){
-			resumeList = resumeService.getListShowForManage(tmp, Constants.START, Integer.MAX_VALUE);
+			resumeList = resumeService.getListShowForManage(tmp, Constants.START, Integer.MAX_VALUE,Boolean.FALSE);
 		}else{
 			String[] idsStr = request.getParameterValues("ids");
 			ids = new Integer[idsStr.length]; 
