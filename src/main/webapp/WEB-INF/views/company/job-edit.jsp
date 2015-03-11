@@ -105,6 +105,48 @@
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
+	                                                  		残疾类别：
+		                                                </td>
+		                                                <td>
+		                                                	<select name="disabilityCategory" id="disabilityCategory" class="length informationEdits needSyncValue NeedValidate" >
+		                                                    	<c:forEach items="${params }" var="p">
+																	<c:if test="${p.type == 'disabilityCategory' }">
+																		<option value="${p.value }"  <c:if test="${job.disabilityCategory == p.value }">selected="selected"</c:if>>${p.name }</option>
+																	</c:if>
+																</c:forEach>
+		                                                    </select>
+		                                                </td>
+		                                            </tr>
+		                                            <tr>
+		                                                <td class="textTop">
+	                                                  		残疾等级：
+		                                                </td>
+		                                                <td>
+		                                                	<select name="disabilityLevel" id="disabilityLevel" class="length informationEdits needSyncValue NeedValidate" >
+		                                                    	<c:forEach items="${params }" var="p">
+																	<c:if test="${p.type == 'disabilityLevel' }">
+																		<option value="${p.value }"  <c:if test="${job.disabilityLevel == p.value }">selected="selected"</c:if>>${p.name }</option>
+																	</c:if>
+																</c:forEach>
+		                                                    </select>
+		                                                </td>
+		                                            </tr>
+		                                            <tr>
+		                                                <td class="textTop">
+	                                                  		残疾部位：
+		                                                </td>
+		                                                <td>
+		                                                	<select name="disabilityPart" id="disabilityPart" class="length informationEdits needSyncValue NeedValidate" >
+		                                                    	<c:forEach items="${params }" var="p">
+																	<c:if test="${p.type == 'disabilityPart' }">
+																		<option value="${p.value }"  <c:if test="${job.disabilityPart == p.value }">selected="selected"</c:if>>${p.name }</option>
+																	</c:if>
+																</c:forEach>
+		                                                    </select>
+		                                                </td>
+		                                            </tr>
+		                                             <tr>
+		                                                <td class="textTop">
 	                                                  		提供薪资：
 		                                                </td>
 		                                                <td>
