@@ -354,7 +354,7 @@ public class IndexController {
 					map.put("name", it.getName());
 					map.put("company", it.getCompany().getName());
 					map.put("companyid", it.getCompany().getId() + "");
-					map.put("area", it.getArea().getName());
+					map.put("area", it.getWorkPlace().getName());
 					map.put("experience", it.getExperience());
 					map.put("date", KitService.dateForShow(it.getUpdateDate()));
 					list.add(map);
