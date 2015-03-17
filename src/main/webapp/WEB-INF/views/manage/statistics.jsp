@@ -88,7 +88,7 @@
 								var chart = new iChart.Column2D({
 									render : 'canvasDiv',//渲染的Dom目标,canvasDiv为Dom的ID
 									data: data,//绑定数据
-									title : area + '残疾人就业数据统计',//设置标题
+									title : area + '残疾人就业统计数据',//设置标题
 									width : 1000,//设置宽度，默认单位为px
 									height : 500,//设置高度，默认单位为px
 									shadow:true,//激活阴影
@@ -111,9 +111,8 @@
 								chart.draw();
 							}
 							 $(function(){
-								 
 								 //绘制图表, 并初始化数据
-								 getDataFromController('10450000');
+								 getDataFromController('${acode}');
 								 
 								 //右边地区栏添加点击事件
 								 $('.div-statistics-area ul li span').click(function(){

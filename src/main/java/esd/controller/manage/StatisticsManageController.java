@@ -78,6 +78,7 @@ public class StatisticsManageController {
 			}
 		}
 		entity.put("areaList", areaList); // 放到数据模型中
+		entity.put("acode", acode);	//当前地区code
 		return new ModelAndView("manage/statistics", entity);
 	}
 
