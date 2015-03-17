@@ -106,3 +106,17 @@
 	-moz-text-overflow: ellipsis;
 	overflow: hidden;
 }
+/**
+ * 统计数据页面用到的样式
+ **/
+.div-statistics-area{
+	float:left;
+}
+.div-statistics-area ul li span{
+	cursor:pointer;
+	padding: 0px 6px;
+}
+.div-statistics-area ul li span:hover{
+	background:rgb(130, 110, 255);
+	color:white
+}
