@@ -12,14 +12,18 @@
 		<result column="i_log_user" property="logUser" jdbcType="VARCHAR"/>
 		<result column="i_image_name" property="imageName" jdbcType="VARCHAR" />
 		<result column="i_image_title" property="imageTitle" jdbcType="VARCHAR" />
-		<result column="i_nid" property="nid" jdbcType="INTEGER" />
+		<result column="i_default_width" property="defaultWidth" jdbcType="VARCHAR" />
+		<result column="i_default_height" property="defaultHeight" jdbcType="VARCHAR" />
+		<result column="i_new_width" property="newWidth" jdbcType="VARCHAR" />
+		<result column="i_new_height" property="newHeight" jdbcType="VARCHAR" />
 		<result column="i_mark" property="mark" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<sql id="base_column">
 		i.id as i_id, i.create_date as i_create_date, i.update_check as i_update_check, 
 			i.update_date as i_update_date, i.log_user as i_log_user, i.image_name as i_image_name,
-			i.image_title as i_image_title, i.nid as i_nid, i.mark as i_mark
+			i.image_title as i_image_title, i.default_width as i_default_width, i.default_height as i_default_height, 
+			i.new_width as i_new_width, i.new_height as i_new_height, i.mark as i_mark
 	</sql>
 	
 	<!-- insert -->
@@ -42,8 +46,17 @@
 			<if test="imageTitle != null and imageTitle != ''">
 				image_title,
 			</if>
-			<if test="nid != null and nid > 0">
-				nid,
+			<if test="defaultWidth != null and defaultWidth != ''">
+				default_width,
+			</if>
+			<if test="defaultHeight != null and defaultHeight != ''">
+				default_height,
+			</if>
+			<if test="newWidth != null and newWidth != ''">
+				new_width,
+			</if>
+			<if test="newHeight != null and newHeight != ''">
+				new_height,
 			</if>
 			<if test="mark != null and mark != ''">
 				mark
@@ -63,8 +76,17 @@
 			<if test="imageTitle != null and imageTitle != ''">
 				#{imageTitle, jdbcType=VARCHAR},
 			</if>
-			<if test="nid != null and nid > 0">
-				#{nid, jdbcType=INTEGER},
+			<if test="defaultWidth != null and defaultWidth != ''">
+				#{defaultWidth, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultHeight != null and defaultHeight != ''">
+				#{defaultHeight, jdbcType=VARCHAR},
+			</if>
+			<if test="newWidth != null and newWidth != ''">
+				#{newWidth, jdbcType=VARCHAR},
+			</if>
+			<if test="newHeight != null and newHeight != ''">
+				#{newHeight, jdbcType=VARCHAR},
 			</if>
 			<if test="mark != null and mark != ''">
 				#{mark, jdbcType=VARCHAR}
@@ -94,8 +116,17 @@
 			<if test="imageTitle != null and imageTitle != ''">
 				image_title = #{imageTitle, jdbcType=VARCHAR},
 			</if>
-			<if test="nid != null and nid > 0">
-				nid = #{nid, jdbcType=INTEGER},
+			<if test="defaultWidth != null and defaultWidth != ''">
+				default_width = #{defaultWidth, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultHeight != null and defaultHeight != ''">
+				default_height = #{defaultHeight, jdbcType=VARCHAR},
+			</if>
+			<if test="newWidth != null and newWidth != ''">
+				new_width = #{newWidth, jdbcType=VARCHAR},
+			</if>
+			<if test="newHeight != null and newHeight != ''">
+				new_height = #{newHeight, jdbcType=VARCHAR},
 			</if>
 			<if test="mark != null and mark != ''">
 				mark = #{mark, jdbcType=VARCHAR}
@@ -141,12 +172,6 @@
 				<if test="image.imageTitle != '' and image.imageTitle != null">
 					and i.image_title like concat('%', #{image.imageTitle, jdbcType=VARCHAR}, '%')
 				</if>
-				<if test="image.nid != null and image.nid > 0">
-					and i.nid = #{image.nid, jdbcType=INTEGER}
-				</if>
-				<if test="image.mark != null and image.mark != ''">
-					and i.mark = #{image.mark, jdbcType=VARCHAR}
-				</if>
 			</if>
 		</trim>
 		order by i.create_date desc 
@@ -164,12 +189,6 @@
 				</if>
 				<if test="image.imageTitle != '' and image.imageTitle != null">
 					and i.image_title like concat('%', #{image.imageTitle, jdbcType=VARCHAR}, '%')
-				</if>
-				<if test="image.nid != null and image.nid > 0">
-					and i.nid = #{image.nid, jdbcType=INTEGER}
-				</if>
-				<if test="image.mark != null and image.mark != ''">
-					and i.mark = #{image.mark, jdbcType=VARCHAR}
 				</if>
 			</if>
 		</trim>

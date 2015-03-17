@@ -52,7 +52,11 @@ public class ImageService {
 		return dao.update(image);
 	}
 
-	// 按id查询一个对象
+	/**
+	 *  按id查询一个对象,不带二进制的图片哦
+	 * @param id
+	 * @return
+	 */
 	public Image getById(int id) {
 		return (Image) dao.getById(id);
 	}
@@ -99,18 +103,4 @@ public class ImageService {
 		return image;
 	}
 
-	/**
-	 * 根据文章id获得对应图片
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public byte[] getImageByNid(Integer nid) {
-		if (nid == null || "".equals(nid)) {
-			return null;
-		}
-		HashMap<String, Object> resultMap = dao.getImageByNid(nid);
-		byte[] image = (byte[]) resultMap.get("image");
-		return image;
-	}
 }

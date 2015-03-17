@@ -18,6 +18,7 @@
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
+	<script src="${contextPath}/js/lib/ckeditor/ckeditor.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/widget.js"></script>
 	<script src="${contextPath}/js/manage/news.js"></script>
@@ -40,10 +41,11 @@
 			
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
+			<!-- 宽高自适应 container-fluid -->
 				<div class="container-fluid">
 					<div class="row-fluid">
 						<div class="span12">
-							<table>
+							<table style="width:100%;">
 								<thead>
 									<tr>
 										<td colspan="4">
@@ -53,34 +55,7 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td>
-											<span style="color:red;">* </span>标题:
-										</td>
-										<td colspan="3">
-											<input name="title" type="text" value="" id="title" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<span style="color:red;">* </span>作者 :
-										</td>
-										<td colspan="3">
-											<input name="author" type="text" value="${user.title }" id="author" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											来源 :
-										</td>
-										<td colspan="3">
-											<input name="source" type="text" value="" id="source" />
-										</td>
-									</tr>
-									<tr>
-										<td>
-											文章类型 :
-										</td>
-										<td colspan="3">
+										<td style="width:150px;">
 											<div class="btn-group" >
 												<!-- 将值转换为对应显示的参数文本 -->
 												<c:forEach items="${pList }" var="p">
@@ -101,20 +76,47 @@
 												</ul>
 											</div>
 										</td>
+										<td style="padding-left: 0px;width: 500px;">
+											<input name="title" type="text" value="" title="文章标题" id="title" />
+										</td>
+										<td style="padding-left: 0px;width:250px;">
+											<input name="author" type="text" value="" title="文章作者" id="author" />
+										</td>
+										<td style="padding-left: 0px;">
+											<input name="source" type="text" value="" title="来源"id="source" />
+										</td>
 									</tr>
 									<tr>
-										<td>
-											<span style="color:red;">* </span>文章内容 :
+										<td colspan="4">
+											<textarea name="content" id="content" style=""></textarea> 
 										</td>
-										<td>
-											<textarea id="content" style="width:650px;height:450px;"></textarea> 
-										</td>
+										<script type="text/javascript">
+											//将textarea初始化为ckeditor文本框
+									    	var editor = CKEDITOR.replace('content',{
+									    	//	uiColor:'green',	//蓝绿色--cute
+									    		resize_enabled  : false,	//是否可调整宽高
+									    		height : 600,	//高度
+									    		toolbarGroups : [
+									    		                 { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+									    		                 { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+									    		                 { name: 'links' },
+									    		                 { name: 'insert' },
+									    		                 { name: 'forms' },
+									    		                 { name: 'tools' },
+									    		                 { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
+									    		                 { name: 'others' },
+									    		                 { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+									    		                 { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
+									    		                 { name: 'styles' },
+									    		                 { name: 'colors' },
+									    		                 { name: 'about' }
+									    		             ],
+									    		language:'zh-cn'	//ui控件显示用语言, 简体中文
+									    	});
+										</script>
 									</tr>
-									<tr>
-										<td>
-											文中图片:
-										</td>
-										<td colspan="3">
+							 		<tr>
+										<td colspan="4">
 											<img id="newsImage" src="" style="height:26px;width:70px;border-width:0px;"/>
 											<input type="button" name="file" value="上传图片" id="picFileImport" />
 											<input type="hidden" id="imageId" name="imageId" value="" />

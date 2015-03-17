@@ -44,7 +44,9 @@
 					<!-- 上方条件查询框  开始 -->
 					<div class="" style="margin-bottom: 5px;">
 						<!-- 模糊查询录入框 暂时隐藏 -->
-						<input class="input-medium search-query" value="${targetName }" type="text" name="targetName" id="targetName"/> 
+						<div style="width:200px;float:left;margin-right:4px;">
+							<input class="input-medium search-query" value="${targetName }" type="text" name="targetName" id="targetName"/>
+						</div> 
 						<div class="btn-group" >
 							<c:forEach items="${pList }" var="p">
 								<c:if test="${p.value == articleType }">

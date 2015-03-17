@@ -1,7 +1,13 @@
 package esd.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,7 +64,7 @@ public class ImageController {
 		Image image = new Image();
 		image.setImage(pic.getBytes());
 		String imageId;
-		//如果存在穿过来的id, 则说明是点了两次以上上传的, 则使用更新, 否则使用新增保存
+		// 如果存在穿过来的id, 则说明是点了两次以上上传的, 则使用更新, 否则使用新增保存
 		if (imageid != null && !"".equals(imageid)) {
 			image.setId(imageid);
 			if (imageService.update(image)) {
@@ -116,6 +122,70 @@ public class ImageController {
 		response.setContentType("image/gif");
 		byte[] entity = imageService.getImageById(id);
 		return entity;
+	}
+
+	/**
+	 * 序列化图片文件夹
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/serializaPicture")
+	@ResponseBody
+	public Map<String, Object> serializePicture(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		// 查询总共有多少图片
+		int totalCount = imageService.getTotalCount(null);
+		int success = 0, failure = 0; // 定义导入成功, 失败的数量
+		// 图片采取分批导入到初始文件夹的方式, 防止数量过多, 内存溢出.
+		int batchSize = 100; // 每批到100张
+		int page = ((totalCount % batchSize) == 0) ? (totalCount / batchSize)
+				: ((totalCount / batchSize) + 1);
+		// 保存文件路径, 为根目录 file/images文件
+		String filePath = request.getSession().getServletContext()
+				.getRealPath("/");
+		filePath += File.separator + "file"+File.separator+"image";
+		File dirFile = new File(filePath);
+		if (!dirFile.exists()) {
+			dirFile.mkdirs();
+		}
+		for (int i = 0; i < page; i++) {
+			Integer start = i * batchSize;
+			List<Image> list = imageService.getByPage(null, start, batchSize);
+			for (int j = 0; j < list.size(); j++) {
+				Image image = list.get(j);
+				String imagePath = filePath + File.separator + image.getId() + "." + image.getImageName();
+				byte[] bs = imageService.getImageById(image.getId());
+				Boolean bl = saveImageToLocalServer(imagePath, bs);
+				if (!bl) {
+					log.error("*************文件序列化本地出错,图片ID: " + image.getId()
+							+ " *************");
+					failure++;
+				} else {
+					success++;
+				}
+			}
+		}
+		String msg = "文件序列化本地完成,总图片数:" + totalCount + ", 成功: " + success
+				+ ", 失败: " + failure;
+		map.put(Constants.NOTICE, msg);
+		log.error("**************" + msg + "*************");
+		return map;
+	}
+
+	private Boolean saveImageToLocalServer(String filePath, byte[] bs) {
+		try {
+			// 输入流
+			OutputStream os = new FileOutputStream(filePath);
+			os.write(bs);
+			os.close();
+			return Boolean.TRUE;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error("************读取字节流到文件出错**************");
+			return Boolean.FALSE;
+		}
 	}
 
 }
