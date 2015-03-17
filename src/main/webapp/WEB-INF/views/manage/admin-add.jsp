@@ -69,7 +69,7 @@
 									</tr>
 									<tr>
 										<td>
-											昵称 :
+											<span style="color:red;">* </span>昵称 :
 										</td>
 										<td colspan="3">
 											<input name="nickName" type="text" value="" id="nickName" />

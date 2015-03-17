@@ -130,9 +130,12 @@ function checkObject(){
 	}
 	param.passWord = passWord;
 	var nickName = $('#nickName').val();
-	if(nickName != null && nickName != ''){
-		param.nickName = nickName;
+	if(nickName == null || nickName == ''){
+		alert('用户昵称不能为空.');
+		$('#nickName').focus();
+		return false;
 	}
+	param.nickName = nickName;
 	var title = $('#title').val();
 	if(title == null || title == ''){
 		$('#title').focus();
