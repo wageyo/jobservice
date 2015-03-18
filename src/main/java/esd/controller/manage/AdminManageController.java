@@ -165,6 +165,7 @@ public class AdminManageController {
 	public Map<String,Object> admin_edit_post(User params, HttpServletRequest request) {
 		log.debug("   更新管理员" + params);
 		Map<String, Object> entity = new HashMap<String, Object>();
+		//更新管理员信息
 		boolean bl = userService.update(params);
 		if(bl){
 			entity.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());

@@ -138,13 +138,6 @@ public class SetupManageController {
 		entity.put(Constants.MATCHED_SEND_NUMBER, matchedSendNumber);
 		return new ModelAndView("manage/setup", entity);
 	}
-	
-	public static void main(String[] args) {
-		String id = UUID.randomUUID().toString();
-		log.info(id);
-		id = UUID.randomUUID().toString();
-		log.info(id);
-	}
 
 	// 更新 开关状态
 	@RequestMapping(value = "/update_switch", method = RequestMethod.POST)

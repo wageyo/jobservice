@@ -130,7 +130,62 @@ public class UserService<T> {
 	// 更新一个对象
 	public boolean update(User user) {
 		user.setUpdateCheck(dao.getUpdateCheck(user.getId()));
-		return dao.update(user);
+		// 检查开关是否存在 --不存在时, 先保存用户, 再插入 该地区的开关
+		boolean bl_admin = false;
+		// 保存用户对象
+		if (user != null) {
+			bl_admin = dao.update(user);
+			// 保存失败时
+			if (!bl_admin) {
+				return false;
+			}
+		}
+		// 检查该地区开关是否存在 --存在时则新增该用户所在地区审核开关
+		Parameter p = new Parameter();
+		p.setArea(user.getArea());
+		p.setType(Constants.SWITCH);
+		List<Parameter> plist = pService.getByParameter(p);
+		if (plist != null && plist.size() != 0) {
+			return true;
+		}
+		// 先查出该账号地区对象,方便下面使用
+		Area area = aDao.getByCode(user.getArea().getCode());
+		p.setArea(area);
+		p.setValue(Constants.SWITCH_OFF);
+		UUID uuid = UUID.randomUUID();
+		String uid = uuid.toString();
+
+		// 开关默认值为关闭状态 "off"
+		// 账号开关
+		p.setId(uid);
+		p.setName(Constants.Switch.USER.toString());
+		p.setMark("是否审核开关--账号--" + p.getArea().getName());
+		boolean bl1 = pDao.save(p);
+		// 企业
+		uuid = UUID.randomUUID();
+		uid = uuid.toString();
+		p.setId(uid);
+		p.setName(Constants.Switch.COMPANY.toString());
+		p.setMark("是否审核开关--企业--" + p.getArea().getName());
+		boolean bl2 = pDao.save(p);
+		// 职位
+		uuid = UUID.randomUUID();
+		uid = uuid.toString();
+		p.setId(uid);
+		p.setName(Constants.Switch.JOB.toString());
+		p.setMark("是否审核开关--职位--" + p.getArea().getName());
+		boolean bl3 = pDao.save(p);
+		// 简历
+		uuid = UUID.randomUUID();
+		uid = uuid.toString();
+		p.setId(uid);
+		p.setName(Constants.Switch.RESUME.toString());
+		p.setMark("是否审核开关--简历--" + p.getArea().getName());
+		boolean bl4 = pDao.save(p);
+		if (bl1 && bl2 && bl3 && bl4) {
+			return true;
+		}
+		return false;
 	}
 
 	// 按id查询一个对象
