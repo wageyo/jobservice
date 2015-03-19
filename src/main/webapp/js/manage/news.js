@@ -3,12 +3,14 @@
  ***********************************************/
 
 $(document).ready(function() {
-	
-	//所有input框字体颜色默认为浅灰色, 并且自动赋上初始值
 	$('input:text').css({'color':'rgb(168, 168, 168)','margin-bottom':'0px','width':'100%'}).each(function(){
+		var newsEditType = $('#newsEditType').val();
 		var val = $(this).attr('title')
 		//控件赋值, focus和blur事件
-		$(this).val(val).focus(function(){
+		if(newsEditType == 'add'){
+			$(this).val(val);
+		}
+		$(this).focus(function(){
 			var currentVal = $(this).val();
 			$(this).css('color','rgb(0, 0, 0)');
 			if(currentVal == val){
@@ -19,8 +21,9 @@ $(document).ready(function() {
 			if(currentVal == val || currentVal == '' || currentVal == null || currentVal == undefined){
 				$(this).val(val).css('color','rgb(168, 168, 168)');
 			}
-		});	
+		});
 	});
+	
 });
 
 //收集参数并进入后台查询方法
@@ -76,7 +79,6 @@ function updateEntity(submitType,objId){
 		if(!param){
 			return false;
 		}
-		alert(param.content);
 		$.ajax({
 			url:server.url + 'manage/news/add',
 			type:'post',

@@ -9,6 +9,7 @@
 		<result column="n_create_date" property="createDate" jdbcType="TIMESTAMP" />
 		<result column="n_update_check" property="updateCheck" jdbcType="VARCHAR"  />
 		<result column="n_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="n_log_user" property="logUser" jdbcType="VARCHAR" />
 		<result column="n_title" property="title" jdbcType="VARCHAR" />
 		<result column="n_content" property="content" jdbcType="VARCHAR" />
 		<result column="n_author" property="author" jdbcType="VARCHAR" />
@@ -26,6 +27,7 @@
 	
 	<sql id="base_column">
 		n.id as n_id, n.create_date as n_create_date, n.update_check as n_update_check, n.update_date as n_update_date, 
+		n.log_user as n_log_user, 
 		n.title as n_title, n.content as n_content, n.author as n_author, n.source as n_source, n.type as n_type, n.image_id as n_image_id, 
 		a.code as a_code, a.name as a_name
 	</sql>

@@ -41,7 +41,7 @@
 			
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
-			<!-- 宽高自适应 container-fluid -->
+				<!-- 宽高自适应 container-fluid -->
 				<div class="container-fluid">
 					<div class="row-fluid">
 						<div class="span12">
@@ -57,6 +57,7 @@
 									<tr>
 										<td style="width:150px;">
 											<div class="btn-group" >
+												<input type="hidden" value="add" id="newsEditType" />
 												<!-- 将值转换为对应显示的参数文本 -->
 												<c:forEach items="${pList }" var="p">
 													<c:if test="${p.value == targetArticleType }">
