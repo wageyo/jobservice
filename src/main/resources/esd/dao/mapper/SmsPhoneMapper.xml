@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.SmsPhoneDao">
+
+	<!-- result map of SmsPhone -->
+	<resultMap id="ResultSmsPhone" type="SmsPhone">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_check" property="updateCheck" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="SmsPhone">
+		insert into sms_phone
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="name != null and name != ''">
+				name,
+			</if>
+			<if test="phone != null and phone != ''">
+				phone,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}, now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null and name != ''">
+				#{name, jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null and phone != ''">
+				#{phone, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark, jdbcType=VARCHAR}
+			</if>
+		</trim>	
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from sms_phone 
+		where id = #{id, jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="SmsPhone">
+		update sms_phone
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null and name != ''">
+				name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null and phone != ''">
+				phone = #{phone, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR}
+			</if>
+		</trim>
+		where id = #{id, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultSmsPhone" parameterType="java.lang.String">
+		select * 
+		from sms_phone 
+		where id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map" resultMap="ResultSmsPhone">
+		select *
+		from sms_phone
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="sms_phone != null">
+				<if test="whiteList.name != null and whiteList.name != ''">
+					name like concat('%',#{whiteList.name, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="whiteList.phone != null and whiteList.phone != ''">
+					and phone like concat('%',#{whiteList.phone, jdbcType=VARCHAR},'%')
+				</if>
+			</if>
+		</trim>
+		order by create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+	
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int" parameterType="map">
+		select count(*)
+		from sms_phone
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="sms_phone != null">
+				<if test="whiteList.name != null and whiteList.name != ''">
+					name like concat('%',#{whiteList.name, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="whiteList.phone != null and whiteList.phone != ''">
+					and phone like concat('%',#{whiteList.phone, jdbcType=VARCHAR},'%')
+				</if>
+			</if>
+		</trim>
+	</select> 
+	
+</mapper>

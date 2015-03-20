@@ -4,9 +4,9 @@ import esd.bean.Company;
 
 /**
  * 公司信息操作Dao接口
- * 
- * @author Administrator
- * 
+ * @author yufu
+ * @email ilxly01@126.com
+ * 2015-3-20
  */
 public interface CompanyDao extends IDao<Company> {
 

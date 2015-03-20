@@ -6,9 +6,9 @@ import esd.bean.EducationBackground;
 
 /**
  * 教育经历
- * 
- * @author Administrator
- * 
+ * @author yufu
+ * @email ilxly01@126.com
+ * 2015-3-20
  */
 public interface EducationBackgroundDao extends IDao<EducationBackground> {
 

@@ -158,10 +158,6 @@ public class WhiteListManageController {
 		return entity;
 	}
 
-	public static void main(String[] args) {
-		String uuid = UUID.randomUUID().toString();
-		log.info(uuid);
-	}
 	// 更新白名单开关值
 	@RequestMapping(value="/update_switch")
 	@ResponseBody

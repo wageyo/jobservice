@@ -4,9 +4,9 @@ import esd.bean.WhiteList;
 
 /**
  * 白名单类操作Dao接口
- * 
- * @author Administrator
- * 
+ * @author yufu
+ * @email ilxly01@126.com
+ * 2015-3-20
  */
 public interface WhiteListDao extends IDao<WhiteList> {
 
