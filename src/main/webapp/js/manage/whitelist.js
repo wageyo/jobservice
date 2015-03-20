@@ -12,6 +12,27 @@ $(document).ready(function(){
 	      , value = data.value;
 	    alert(e + $el + value);
 	});
+	
+	$('input:text').css({'color':'rgb(168, 168, 168)','margin-bottom':'0px','width':'100%'}).each(function(){
+		var newsEditType = $('#newsEditType').val();
+		var val = $(this).attr('title')
+		//控件赋值, focus和blur事件
+		if(newsEditType == 'add'){
+			$(this).val(val);
+		}
+		$(this).focus(function(){
+			var currentVal = $(this).val();
+			$(this).css('color','rgb(0, 0, 0)');
+			if(currentVal == val){
+				$(this).val('');
+			}
+		}).blur(function(){
+			var currentVal = $(this).val();
+			if(currentVal == val || currentVal == '' || currentVal == null || currentVal == undefined){
+				$(this).val(val).css('color','rgb(168, 168, 168)');
+			}
+		});
+	});
 });
 //收集参数并进入后台查询方法
 function query(page,checkStatus){
@@ -52,6 +73,7 @@ function updateEntity(submitType,objId){
 			data:{
 				'title':param.title,
 				'domainName':param.domainName,
+				'ip':param.ip,
 				'remark':param.remark
 			},
 			success:function(data){
@@ -129,6 +151,12 @@ function checkObject(){
 		return false;
 	}
 	param.domainName = domainName;
+	var ip = $('#ip').val();
+	if(ip == null || ip == ''){
+		$('#ip').focus();
+		return false;
+	}
+	param.ip = ip;
 	var remark = $('#remark').val();
 	if(remark != null && remark != ''){
 		param.remark = remark;

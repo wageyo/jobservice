@@ -13,6 +13,7 @@
 		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="domain_name" property="domainName" jdbcType="VARCHAR" />
 		<result column="full_name" property="fullName" jdbcType="VARCHAR" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
 	</resultMap>
 	
@@ -36,6 +37,9 @@
 			<if test="fullName != null and fullName != ''">
 				full_name,
 			</if>
+			<if test="ip != null and ip != ''">
+				ip,
+			</if>
 			<if test="remark != null and remark != ''">
 				remark
 			</if>
@@ -53,6 +57,9 @@
 			</if>
 			<if test="fullName != null and fullName != ''">
 				#{fullName, jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null and ip != ''">
+				#{ip, jdbcType=VARCHAR},
 			</if>
 			<if test="remark != null and remark != ''">
 				#{remark, jdbcType=VARCHAR}
@@ -83,6 +90,9 @@
 			<if test="fullName != null and fullName != ''">
 				full_name = #{fullName, jdbcType=VARCHAR},
 			</if>
+			<if test="ip != null and ip != ''">
+				ip = #{ip, jdbcType=VARCHAR},
+			</if>
 			<if test="remark != null and remark != ''">
 				remark = #{remark, jdbcType=VARCHAR}
 			</if>
@@ -112,6 +122,9 @@
 				<if test="whiteList.fullName != null and whiteList.fullName != ''">
 					and full_name like concat('%', #{whiteList.fullName, jdbcType=VARCHAR}, '%') 
 				</if>
+				<if test="whiteList.ip != null and whiteList.ip != ''">
+					and ip = #{whiteList.ip, jdbcType=VARCHAR}
+				</if>
 			</if>
 		</trim>
 		order by create_date desc 
@@ -133,8 +146,22 @@
 				<if test="whiteList.fullName != null and whiteList.fullName != ''">
 					and full_name like concat('%', #{whiteList.fullName, jdbcType=VARCHAR}, '%') 
 				</if>
+				<if test="whiteList.ip != null and whiteList.ip != ''">
+					and ip = #{whiteList.ip, jdbcType=VARCHAR}
+				</if>
 			</if>
 		</trim>
 	</select> 
 	
+	<select id="getByIdAndServername" resultMap="ResultWhiteList" parameterType="WhiteList">
+		select * from white_list 
+		<where>
+			<if test="ip != null and ip != ''">
+				ip = #{ip, jdbcType=VARCHAR}
+			</if>
+			<if test="domainName != null and domainName != ''">
+				or domain_name = #{domainName, jdbcType=VARCHAR} 
+			</if>
+		</where>
+	</select>
 </mapper>

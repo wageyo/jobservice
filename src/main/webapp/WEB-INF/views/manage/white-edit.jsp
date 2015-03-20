@@ -51,18 +51,31 @@
 								<tbody>
 									<tr>
 										<td style="width:100px;">
+											<input type="hidden" id="newsEditType" value="update" />
 											<span style="color:red;">* </span>域名标题:
 										</td>
-										<td colspan="3">
+										<td style="width:200px;">
 											<input name="title" type="text" value="${obj.title }" id="title" />
+										</td>
+										<td style="width:200px;">
+											&nbsp;
+										</td>
+										<td>
+											&nbsp;
 										</td>
 									</tr>
 									<tr>
 										<td>
-											<span style="color:red;">* </span>域名 :
+											<span style="color:red;">* </span>域名或IP:
 										</td>
-										<td colspan="3">
-											<input name="domainName" type="text" value="${obj.domainName }" id="domainName"/>
+										<td>
+											<input name="domainName" type="text" value="${obj.domainName }" title="域名" id="domainName"/>
+										</td>
+										<td>
+											<input name="ip" type="text" value="${obj.ip }" title="ip" id="ip"/>
+										</td>
+										<td>
+											&nbsp;
 										</td>
 									</tr>
 									<tr>

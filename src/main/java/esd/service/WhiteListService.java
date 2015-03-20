@@ -73,17 +73,15 @@ public class WhiteListService {
 	}
 
 	/**
-	 * 检查传递进来的url是包含白名单中的域名
+	 * 检查传递进来的ip或域名是否存在于白名单中!!!!
 	 * 
 	 * @param url
 	 */
-	public Integer checkWhiteList(String requestUrl) {
-		String url = requestUrl;
-		WhiteList white = new WhiteList();
-		white.setDomainName(url);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("whiteList", white);
-		Integer result = dao.getTotalCount(map);
+	public WhiteList checkWhiteList(String ip,String serverName) {
+		WhiteList whiteList = new WhiteList();
+		whiteList.setIp(ip);
+		whiteList.setDomainName(serverName);
+		WhiteList result = dao.getByIdAndServername(whiteList);
 		return result;
 	}
 }

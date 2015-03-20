@@ -71,6 +71,7 @@ public class WhiteListManageController {
 				tempMap.put("id", tmp.getId());// id
 				tempMap.put("title", tmp.getTitle());// 域名名称
 				tempMap.put("domainName", tmp.getDomainName());// 域名
+				tempMap.put("ip", tmp.getIp());// ip
 				tempMap.put("createDate", tmp.getCreateDate());// 加入时间
 				list.add(tempMap);
 			}

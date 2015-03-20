@@ -14,12 +14,14 @@ public class WhiteList extends PrimaryKey_String {
 	private String title; // 域名名称
 	private String domainName; // 域名
 	private String fullName; // 可能需要的全限定名
+	private String ip; // ip
 	private String remark; // 备注
 
 	@Override
 	public String toString() {
 		return "WhiteList [title=" + title + ", domainName=" + domainName
-				+ ", fullName=" + fullName + ", remark=" + remark + "]";
+				+ ", fullName=" + fullName + ", ip=" + ip + ", remark="
+				+ remark + "]";
 	}
 
 	public String getTitle() {
@@ -44,6 +46,14 @@ public class WhiteList extends PrimaryKey_String {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 	public String getRemark() {

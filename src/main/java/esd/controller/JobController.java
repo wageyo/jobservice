@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -27,12 +26,16 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import esd.bean.Area;
 import esd.bean.Job;
 import esd.bean.JobCategory;
+import esd.bean.Parameter;
+import esd.bean.WhiteList;
 import esd.common.PoiCreateExcel;
 import esd.controller.Constants.Notice;
 import esd.service.AreaService;
 import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
+import esd.service.ParameterService;
+import esd.service.WhiteListService;
 
 @Controller
 @RequestMapping("/job")
@@ -45,6 +48,12 @@ public class JobController {
 	@Autowired
 	private AreaService areaService;
 
+	@Autowired
+	private ParameterService parameterService;
+	
+	@Autowired
+	private WhiteListService whiteListService;
+	
 	// 根据id得到一个职位返回前台显示
 	@RequestMapping("/getOneForShow")
 	public String getOneForShow(HttpServletRequest request,
@@ -93,13 +102,13 @@ public class JobController {
 	// 根据id得到一个职位返回前台数据以供显示
 	@RequestMapping(value = "/getOneForShowData", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getOneForShowData(HttpServletRequest req) {
+	public Map<String, Object> getOneForShowData(HttpServletRequest request) {
 		Job job = null;
 		log.info("--- getOneForShow ---");
-		String idStr = req.getParameter("id");
+		String idStr = request.getParameter("id");
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
-			req.setAttribute("notice", "传递的参数有误!");
+			request.setAttribute("notice", "传递的参数有误!");
 			return null;
 		}
 
@@ -118,11 +127,11 @@ public class JobController {
 	// 根据企业id, 得到该企业所发布的职位
 	@RequestMapping("/getByCompany")
 	@ResponseBody
-	public Map<String, Object> getByCompany(HttpServletRequest req) {
+	public Map<String, Object> getByCompany(HttpServletRequest request) {
 		log.info("--- getByCompany ---");
 		Map<String, Object> json = new HashMap<String, Object>();
 		// 得到当前企业用户
-		String idStr = req.getParameter("companyid");
+		String idStr = request.getParameter("companyid");
 		int id = KitService.getInt(idStr);
 		if (id < 0) {
 			json.put("notice", Notice.ERROR.toString());
@@ -167,17 +176,32 @@ public class JobController {
 	@ResponseBody
 	public JSONPObject searchForOpenCms(
 			@RequestParam(value = "callback") String callback,
-			HttpServletRequest req) {
+			HttpServletRequest request) {
 		log.info("--- searchForOpenCms ---");
+		ModelMap map = new ModelMap();
+		// 检查白名单功能是否开启
+		Parameter whiteList = parameterService
+				.getById(Constants.WHITE_LIST_SWITCH);
+		// 如果白名单功能开启的话, 则检查请求url地址是否正确
+		if (Constants.SWITCH_ON.equals(whiteList.getValue())) {
+			String ip = request.getRemoteAddr();	//ip
+			String domainName = request.getRemoteHost();	//域名
+			WhiteList result = whiteListService.checkWhiteList(ip,domainName);
+			log.info("result:  " + result);
+			// 如果请求的url地址中包含的域名 不在白名单中, 则跳转到提示拒绝访问页面
+			if (result == null) {
+				map.put(Constants.NOTICE, "您不在白名单中, 暂时无权访问数据, 请联系网站管理人员.");
+				new JSONPObject(callback, map);
+			}
+		}
 		// 接收从网站群接收来的地区code, 根据他查找所属地区的职位
-		String acode = req.getParameter("acode");
-		String pageSizeStr = req.getParameter("pageSize");
+		String acode = request.getParameter("acode");
+		String pageSizeStr = request.getParameter("pageSize");
 		// 初始化为10
 		Integer pageSize = 10;
 		if (pageSizeStr != null && !"".equals(pageSizeStr)) {
 			pageSize = Integer.parseInt(pageSizeStr);
 		}
-		ModelMap map = new ModelMap();
 		List<Job> jobList = jobService.getByNew(acode, pageSize);
 		map.put("jobList", jobList);
 		return new JSONPObject(callback, map);
@@ -188,14 +212,14 @@ public class JobController {
 	@ResponseBody
 	public String ExportSelected(
 			@RequestParam(value = "params[]") int params[],
-			HttpServletRequest req) {
+			HttpServletRequest request) {
 		log.info("--------  down_multi ----------" + params.toString());
 		boolean b = true;
 		List<Job> job = new ArrayList<Job>();
 		for (int i = 0; i < params.length; i++) {
 			job.add(jobService.getOneForShow(params[i]));
 		}
-		String url = req.getRealPath("/");
+		String url = request.getRealPath("/");
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");
 		// 导出文件夹
@@ -214,8 +238,8 @@ public class JobController {
 		// 导出文件
 		b = PoiCreateExcel.createJobExcel(exportPath, job);
 		if (b) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
-					+ req.getContextPath();
+			String destPath = request.getLocalAddr() + ":" + request.getLocalPort()
+					+ request.getContextPath();
 			FileDownloadPath = "http://" + destPath + "/upload/job/" + uuid
 					+ ".xls";
 		}
@@ -226,7 +250,7 @@ public class JobController {
 	// 批量导出信息 --不许删
 	@RequestMapping(value = "/jobExportAll", method = RequestMethod.POST)
 	@ResponseBody
-	public String ExportAll(Job param, HttpServletRequest req) {
+	public String ExportAll(Job param, HttpServletRequest request) {
 		boolean b = true;
 		Job paramEntity = new Job();
 		String targetName = param.getTargetName();
@@ -239,7 +263,7 @@ public class JobController {
 		Integer total = jobService.getTotalCount(paramEntity, Boolean.FALSE);
 		Integer page = 1;
 		List<Job> job = jobService.getListForManage(paramEntity, page, total);
-		String url = req.getSession().getServletContext().getRealPath("/");
+		String url = request.getSession().getServletContext().getRealPath("/");
 
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");
@@ -259,12 +283,53 @@ public class JobController {
 		// 导出文件
 		b = PoiCreateExcel.createJobExcel(exportPath, job);
 		if (b) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
-					+ req.getContextPath();
+			String destPath = request.getLocalAddr() + ":" + request.getLocalPort()
+					+ request.getContextPath();
 			FileDownloadPath = "http://" + destPath + "/upload/job/" + uuid
 					+ ".xls";
 		}
 		return FileDownloadPath;
 	}
 
+	@RequestMapping(value = "/1", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> sldkfjsdkj(HttpServletRequest request){
+		log.info("--- searchForOpenCms ---");
+//		log.info("1 request.getRemoteAddr():  " + request.getRemoteAddr());
+//		log.info("2 request.getRemoteHost():  " + request.getRemoteHost());
+//		log.info("3 request.getRemotePort():  " + request.getRemotePort());
+//		log.info("4 request.getRemoteUser():  " + request.getRemoteUser());
+//		log.info("5 request.getRequestURL():  " + request.getRequestURL());
+//		log.info("6 request.getRequestURI():  " + request.getRequestURI());
+//		log.info("7 request.getServerName():  " + request.getServerName());
+		ModelMap map = new ModelMap();
+		// 检查白名单功能是否开启
+		Parameter whiteList = parameterService
+				.getById(Constants.WHITE_LIST_SWITCH);
+		// 如果白名单功能开启的话, 则检查请求url地址是否正确
+		if (Constants.SWITCH_ON.equals(whiteList.getValue())) {
+			String ip = request.getRemoteAddr();	//ip
+			String domainName = request.getRemoteHost();	//域名
+			WhiteList result = whiteListService.checkWhiteList(ip,domainName);
+			log.info("result:  " + result);
+			// 如果请求的url地址中包含的域名 不在白名单中, 则跳转到提示拒绝访问页面
+			if (result == null) {
+				map.put(Constants.NOTICE, "您不在白名单中, 暂时无权访问数据, 请联系网站管理人员.");
+				return map;
+			}
+		}
+		// 接收从网站群接收来的地区code, 根据他查找所属地区的职位
+		String acode = request.getParameter("acode");
+		String pageSizeStr = request.getParameter("pageSize");
+		// 初始化为10
+		Integer pageSize = 10;
+		if (pageSizeStr != null && !"".equals(pageSizeStr)) {
+			pageSize = Integer.parseInt(pageSizeStr);
+		}
+		List<Job> jobList = jobService.getByNew(acode, pageSize);
+		//成功提示符
+		map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		map.put("jobList", jobList);
+		return map;
+	}
 }

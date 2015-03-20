@@ -67,25 +67,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object arg2) {
-//		log.info("1 request.getRemoteAddr():  " + request.getRemoteAddr());
-//		log.info("2 request.getRemoteHost():  " + request.getRemoteHost());
-//		log.info("3 request.getRemotePort():  " + request.getRemotePort());
-//		log.info("4 request.getRemoteUser():  " + request.getRemoteUser());
-//		log.info("5 request.getRequestURL():  " + request.getRequestURL());
-//		log.info("6 request.getRequestURI():  " + request.getRequestURI());
-//		log.info("7 request.getServerName():  " + request.getServerName());
-		// 检查白名单功能是否开启
-		Parameter whiteList = parameterService
-				.getById(Constants.WHITE_LIST_SWITCH);
-		// 如果白名单功能开启的话, 则检查请求url地址是否正确
-		if (Constants.SWITCH_ON.equals(whiteList.getValue())) {
-			Integer result = whiteListService.checkWhiteList(request.getRemoteAddr());
-			log.info("result:  " + result);
-			// 如果请求的url地址中包含的域名 不在白名单中, 则跳转到提示拒绝访问页面
-			if (result == 0) {
-				return false;
-			}
-		}
 		if (request.getRequestURI().indexOf("/secure") != -1) {
 			// 未登录则跳转到登陆页面
 			String username = CookieHelper.getCookieValue(request,

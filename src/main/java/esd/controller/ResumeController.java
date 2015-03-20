@@ -30,16 +30,20 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
+import esd.bean.Parameter;
 import esd.bean.Resume;
 import esd.bean.User;
+import esd.bean.WhiteList;
 import esd.common.PoiCreateExcel;
 import esd.service.AreaService;
 import esd.service.CompanyService;
 import esd.service.CookieHelper;
 import esd.service.JobService;
 import esd.service.KitService;
+import esd.service.ParameterService;
 import esd.service.ResumeService;
 import esd.service.UserService;
+import esd.service.WhiteListService;
 
 @Controller
 @RequestMapping("/resume")
@@ -65,6 +69,12 @@ public class ResumeController {
 
 	@Autowired
 	private AreaService areaService;
+	
+	@Autowired
+	private ParameterService parameterService;
+	
+	@Autowired
+	private WhiteListService whiteListService;
 
 	private static Logger log = Logger.getLogger(ResumeController.class);
 
@@ -145,17 +155,32 @@ public class ResumeController {
 	@ResponseBody
 	public JSONPObject searchForOpenCms(
 			@RequestParam(value = "callback") String callback,
-			HttpServletRequest req) {
+			HttpServletRequest request) {
 		log.info("--- searchForOpenCms ---");
+		ModelMap map = new ModelMap();
+		// 检查白名单功能是否开启
+		Parameter whiteList = parameterService
+				.getById(Constants.WHITE_LIST_SWITCH);
+		// 如果白名单功能开启的话, 则检查请求url地址是否正确
+		if (Constants.SWITCH_ON.equals(whiteList.getValue())) {
+			String ip = request.getRemoteAddr();	//ip
+			String domainName = request.getRemoteHost();	//域名
+			WhiteList result = whiteListService.checkWhiteList(ip,domainName);
+			log.info("result:  " + result);
+			// 如果请求的url地址中包含的域名 不在白名单中, 则跳转到提示拒绝访问页面
+			if (result == null) {
+				map.put(Constants.NOTICE, "您不在白名单中, 暂时无权访问数据, 请联系网站管理人员.");
+				new JSONPObject(callback, map);
+			}
+		}
 		// 接收从网站群接收来的地区code, 根据他查找所属地区的职位
-		String acode = req.getParameter("acode");
-		String pageSizeStr = req.getParameter("pageSize");
+		String acode = request.getParameter("acode");
+		String pageSizeStr = request.getParameter("pageSize");
 		// 初始化为10
 		Integer pageSize = 10;
 		if (pageSizeStr != null && !"".equals(pageSizeStr)) {
 			pageSize = Integer.parseInt(pageSizeStr);
 		}
-		ModelMap map = new ModelMap();
 		// 条件查询得到符合条件的简历
 		List<Resume> resumeList = resumeService.getByNew(acode, pageSize);
 		map.put("resumeList", resumeList);
@@ -165,10 +190,10 @@ public class ResumeController {
 	// 下载简历--返回流, 在IE8下报错
 	@RequestMapping({ "/down/{id}" })
 	public ResponseEntity<byte[]> down(@PathVariable(value = "id") Integer id,
-			HttpServletRequest req) {
+			HttpServletRequest request) {
 		// String url =
-		// req.getLocalAddr()+":"+req.getLocalPort()+req.getContextPath();
-		String url = req.getRealPath("/");
+		// request.getLocalAddr()+":"+request.getLocalPort()+request.getContextPath();
+		String url = request.getSession().getServletContext().getRealPath("/");
 		log.info("****************************");
 		String filePath = resumeService.getBuildResume(id, url);
 		HttpHeaders headers = new HttpHeaders();
@@ -191,8 +216,8 @@ public class ResumeController {
 	// 下载简历备用方案启用--返回简历路径, 正常
 	@RequestMapping({ "/down_back/{id}" })
 	public String down1(@PathVariable(value = "id") Integer id,
-			HttpServletRequest req) {
-		String url = req.getRealPath("/");
+			HttpServletRequest request) {
+		String url = request.getSession().getServletContext().getRealPath("/");
 		log.info("****************************");
 		String filePath = resumeService.getBuildResume(id, url);
 		if (filePath == null) {
@@ -200,8 +225,8 @@ public class ResumeController {
 		}
 		log.info("filePath  " + filePath);
 		if (new File(url + filePath).exists()) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
-					+ req.getContextPath();
+			String destPath = request.getLocalAddr() + ":" + request.getLocalPort()
+					+ request.getContextPath();
 			log.info("redirect:http://" + destPath + "/" + filePath);
 			return "redirect:http://" + destPath + "/" + filePath;
 		}
@@ -210,16 +235,16 @@ public class ResumeController {
 
 	// 批量下载简历 --测试用
 	@RequestMapping({ "/down_multi" })
-	public String down2(HttpServletRequest req) {
+	public String down2(HttpServletRequest request) {
 		log.info("--------  down_multi ----------");
-		String url = req.getRealPath("/");
+		String url = request.getSession().getServletContext().getRealPath("/");
 		log.info("url : " + url);
 		int[] ids = { 152, 153, 154 };
 		String filePath = resumeService.getBuildResume(ids, url);
 		log.info("filePath : " + filePath);
 		if (new File(url + filePath).exists()) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
-					+ req.getContextPath();
+			String destPath = request.getLocalAddr() + ":" + request.getLocalPort()
+					+ request.getContextPath();
 			log.info("destPath : " + destPath);
 			return "redirect:http://" + destPath + "/" + filePath;
 		}
@@ -231,7 +256,7 @@ public class ResumeController {
 	@ResponseBody
 	public String ExportSelected(
 			@RequestParam(value = "params[]") int params[],
-			HttpServletRequest req) {
+			HttpServletRequest request) {
 		log.info("--------  down_multi ----------");
 		boolean b = true;
 		List<Resume> resumes = new ArrayList<Resume>();
@@ -239,7 +264,7 @@ public class ResumeController {
 			resumes.add(resumeService.getOneForShow(params[i]));
 		}
 
-		String url = req.getRealPath("/");
+		String url = request.getSession().getServletContext().getRealPath("/");
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");
 		// 导出文件夹
@@ -258,8 +283,8 @@ public class ResumeController {
 		// 导出文件
 		b = PoiCreateExcel.createResumeExcel(exportPath, resumes);
 		if (b) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
-					+ req.getContextPath();
+			String destPath = request.getLocalAddr() + ":" + request.getLocalPort()
+					+ request.getContextPath();
 			FileDownloadPath = "http://" + destPath + "/upload/resumes/" + uuid
 					+ ".xls";
 		}

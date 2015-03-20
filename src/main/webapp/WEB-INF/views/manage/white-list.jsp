@@ -73,6 +73,9 @@
 											域名
 										</th>
 										<th>
+											ip地址
+										</th>
+										<th>
 											操作
 										</th>
 									</tr>
@@ -100,6 +103,9 @@
 											</td>
 											<td>
 												${entity.domainName }
+											</td>
+											<td>
+												${entity.ip }
 											</td>
 											<td>
 												<a href="${contextPath }/manage/white/edit/${entity.id}">编辑</a> 
