@@ -3,17 +3,35 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="esd.dao.SmsPhoneDao">
 
+	<!-- result map of Area -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" jdbcType="VARCHAR" />
+		<result column="a_name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	
 	<!-- result map of SmsPhone -->
 	<resultMap id="ResultSmsPhone" type="SmsPhone">
-		<id column="id" property="id" jdbcType="VARCHAR" />
-		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-		<result column="update_check" property="updateCheck" jdbcType="INTEGER" />
-		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-		<result column="log_user" property="logUser" jdbcType="VARCHAR" />
-		<result column="name" property="name" jdbcType="VARCHAR" />
-		<result column="phone" property="phone" jdbcType="VARCHAR" />
-		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<id column="sp_id" property="id" jdbcType="VARCHAR" />
+		<result column="sp_create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="sp_update_check" property="updateCheck" jdbcType="INTEGER" />
+		<result column="sp_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="sp_log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="sp_name" property="name" jdbcType="VARCHAR" />
+		<result column="sp_phone" property="phone" jdbcType="VARCHAR" />
+		<result column="sp_remark" property="remark" jdbcType="VARCHAR" />
+		<association property="area" javaType="Area" resultMap="ResultArea" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<sql id="base_column">
+		sp.id as sp_id, sp.create_date as sp_create_date, sp.update_check as sp_update_check, 
+		sp.update_date as sp_update_date, sp.log_user as sp_log_user, sp.name as sp_name,
+		sp.phone as sp_phone, sp.remark as sp_remark ,
+		a.code as a_code, a.name as a_name
+	</sql>
+	
+	<sql id="from_table">
+		sms_phone as sp left join area as a on sp.acode = a.code 
+	</sql>
 	
 	<!-- insert -->
 	<insert id="save" parameterType="SmsPhone">
@@ -33,7 +51,12 @@
 				phone,
 			</if>
 			<if test="remark != null and remark != ''">
-				remark
+				remark,
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode
+				</if>
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -48,7 +71,12 @@
 				#{phone, jdbcType=VARCHAR},
 			</if>
 			<if test="remark != null and remark != ''">
-				#{remark, jdbcType=VARCHAR}
+				#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR}
+				</if>
 			</if>
 		</trim>	
 	</insert>
@@ -74,7 +102,12 @@
 				phone = #{phone, jdbcType=VARCHAR},
 			</if>
 			<if test="remark != null and remark != ''">
-				remark = #{remark, jdbcType=VARCHAR}
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode = #{area.code, jdbcType=VARCHAR}
+				</if>
 			</if>
 		</trim>
 		where id = #{id, jdbcType=VARCHAR}
@@ -82,22 +115,41 @@
 	
 	<!-- get by id -->
 	<select id="getById" resultMap="ResultSmsPhone" parameterType="java.lang.String">
-		select * 
-		from sms_phone 
-		where id = #{id, jdbcType=VARCHAR}
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sp.id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- getByPhone -->
+	<select id="getByPhone" resultMap="ResultSmsPhone" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sp.phone = #{phone, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- getByPhone -->
+	<select id="getByPhoneAndArea" resultMap="ResultSmsPhone" parameterType="map">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sp.phone = #{phone, jdbcType=VARCHAR} and sp.acode = #{acode, jdbcType=VARCHAR}
 	</select>
 	
 	<!-- getByPage -->
 	<select id="getByPage" parameterType="map" resultMap="ResultSmsPhone">
-		select *
-		from sms_phone
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
 		<trim prefix="where" prefixOverrides="and|or">
-			<if test="sms_phone != null">
-				<if test="whiteList.name != null and whiteList.name != ''">
-					name like concat('%',#{whiteList.name, jdbcType=VARCHAR},'%')
+			<if test="smsPhone != null">
+				<if test="smsPhone.name != null and smsPhone.name != ''">
+					name like concat('%',#{smsPhone.name, jdbcType=VARCHAR},'%')
 				</if>
-				<if test="whiteList.phone != null and whiteList.phone != ''">
-					and phone like concat('%',#{whiteList.phone, jdbcType=VARCHAR},'%')
+				<if test="smsPhone.phone != null and smsPhone.phone != ''">
+					and phone like concat('%',#{smsPhone.phone, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsPhone.area != null">
+					<if test="smsPhone.area.code != null and smsPhone.area.code != ''">
+						and acode = #{smsPhone.area.code, jdbcType=VARCHAR}
+					</if>
 				</if>
 			</if>
 		</trim>
@@ -108,14 +160,19 @@
 	<!-- getTotalCount -->
 	<select id="getTotalCount" resultType="int" parameterType="map">
 		select count(*)
-		from sms_phone
+		from <include refid="from_table"/>
 		<trim prefix="where" prefixOverrides="and|or">
-			<if test="sms_phone != null">
-				<if test="whiteList.name != null and whiteList.name != ''">
-					name like concat('%',#{whiteList.name, jdbcType=VARCHAR},'%')
+			<if test="smsPhone != null">
+				<if test="smsPhone.name != null and smsPhone.name != ''">
+					name like concat('%',#{smsPhone.name, jdbcType=VARCHAR},'%')
 				</if>
-				<if test="whiteList.phone != null and whiteList.phone != ''">
-					and phone like concat('%',#{whiteList.phone, jdbcType=VARCHAR},'%')
+				<if test="smsPhone.phone != null and smsPhone.phone != ''">
+					and phone like concat('%',#{smsPhone.phone, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsPhone.area != null">
+					<if test="smsPhone.area.code != null and smsPhone.area.code != ''">
+						and acode = #{smsPhone.area.code, jdbcType=VARCHAR}
+					</if>
 				</if>
 			</if>
 		</trim>

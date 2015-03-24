@@ -38,13 +38,13 @@ public class SMSService {
 	private UserDao userDao;
 
 	/**
-	 * 发送一条消息
+	 * 发送短信
 	 * 
-	 * @param phone
-	 * @param message
+	 * @param phone格式为单个或多个电话, 单个电话时直接传入电话号码即可, 例如 "13812345678"; 多个时中间用","隔开, 例如  "138123445678,13512312312,13112541251", 末尾不用",", 一次最多99个电话.
+	 * @param message 短信内容, 最大不超过340
 	 * @return
 	 */
-	public Boolean sendOneMessage(String phone, String message) {
+	public Boolean sendMessage(String phone, String message) {
 		Sender sender = new Sender(username, password);
 		// 发送短信
 		String result = sender.massSend(phone, message, null, null);
@@ -55,7 +55,7 @@ public class SMSService {
 		String errid = result.substring(result.indexOf("errid") + 6,
 				result.indexOf("errid") + 7);
 		// 如果发送成功, 则返回true
-		if ("1".equals(num) && "0".equals(errid)) {
+		if ((Integer.parseInt(num) >= 1) && "0".equals(errid)) {
 			return Boolean.TRUE;
 		}
 		return Boolean.FALSE;
@@ -113,10 +113,10 @@ public class SMSService {
 					endIndex = total;
 				}
 				String perMsg = "("+i+"/"+page+")" + msg.substring(beginIndex,endIndex);
-				bl = sendOneMessage(phone, perMsg);
+				bl = sendMessage(phone, perMsg);
 			}
 		}else{
-			bl = sendOneMessage(phone, msg);
+			bl = sendMessage(phone, msg);
 		}
 		log.info("推送短信内容：" + msg);
 		log.info("推送短信长度: " + msg.length());

@@ -30,17 +30,12 @@ public class ImageService {
 	 * @param image
 	 * @return 返回保存对象的id
 	 */
-	public String save(Image image) {
+	public String save(Image t) {
 		String uuid = UUID.randomUUID().toString();
-		image.setId(uuid);
-		return dao.save(image) ? uuid : null;
+		t.setId(uuid);
+		return dao.save(t) ? uuid : null;
 	}
 
-	// 删除一个对象
-	public boolean delete(int id) {
-		return dao.delete(id);
-	}
-	
 	// 删除一个对象
 		public boolean deleteId(String id) {
 			return dao.delete(id);

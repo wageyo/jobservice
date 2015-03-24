@@ -1,73 +1,187 @@
 package esd.controller.manage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import esd.bean.Parameter;
-import esd.bean.WhiteList;
+import esd.bean.Area;
+import esd.bean.SmsPhone;
+import esd.bean.User;
 import esd.controller.Constants;
-import esd.service.KitService;
-import esd.service.ParameterService;
-import esd.service.WhiteListService;
+import esd.service.CookieHelper;
+import esd.service.SMSService;
+import esd.service.SmsPhoneService;
+import esd.service.UserService;
 
 /**
- * 短信发送  后台管理控制器
+ * 短信发送 后台管理控制器
+ * 
  * @author yufu
- * @email ilxly01@126.com
- * 2015-3-20
+ * @email ilxly01@126.com 2015-3-20
  */
 @Controller
 @RequestMapping("/manage/sms")
 public class SMSManageController {
-	private static Logger log = Logger
-			.getLogger(SMSManageController.class);
+	private static Logger log = Logger.getLogger(SMSManageController.class);
 
 	@Autowired
-	private WhiteListService whiteListService;
+	private UserService userService;
 
 	@Autowired
-	private ParameterService parameterService;
-	
-	/*
-	 * 转到 白名单列表 页面
-	 */
+	private SmsPhoneService smsPhoneService;
+
+	@Autowired
+	private SMSService smsService;
+
+	// 转到 短信发送页面 页面
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView white_list(HttpServletRequest request) {
 		log.debug("goto：短信发送页面");
 		Map<String, Object> entity = new HashMap<>();
-
+//		// 获取地区码
+//		String userId = CookieHelper.getCookieValue(request,
+//				Constants.ADMINUSERID);
+//		if (userId == null || "".equals(userId)) {
+//			return new ModelAndView("redirect:/loginManage/login");
+//		}
+//		Integer uid = Integer.parseInt(userId);
+//		User userObj = userService.getById(uid);
+//		String acode = userObj.getArea().getCode();
+//		// 根据管理员的地区code, 获得本地区的所有发送过的电话列表(所有的, 不分页!)
+//		SmsPhone paramEntity = new SmsPhone();
+//		paramEntity.setArea(new Area(acode));
+//		List<SmsPhone> smsPhoneList = smsPhoneService.getByPage(paramEntity,
+//				Constants.START, Integer.MAX_VALUE);
+//		entity.put("smsPhoneList", smsPhoneList);
 		return new ModelAndView("manage/sms", entity);
 	}
 
-	// 转到 增加白名单 页面
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView white_add_get(HttpServletRequest request) {
-		log.debug("goto：增加白名单");
-		return new ModelAndView("manage/white-add");
+	// 得到本地区所有的电话号码
+	@RequestMapping(value = "/getPhoneList", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getPhoneList(HttpServletRequest request) {
+		log.debug("goto：post得到本地区所有的电话号码");
+		Map<String, Object> result = new HashMap<String, Object>();
+		// 获取地区码
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
+		if (userId == null || "".equals(userId)) {
+			result.put(Constants.NOTICE, "管理员未登录, 请登陆后重新尝试.");
+			return result;
+		}
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
+		String acode = userObj.getArea().getCode();
+		List<SmsPhone> phoneList = smsPhoneService.getByArea(acode);
+		result.put("phoneList", phoneList);
+		result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		return result;
 	}
 
-	// 提交 增加白名单
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	// 批量发送短信
+	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> white_add_post(WhiteList params,
-			HttpServletRequest request) {
-		log.debug(" 增加白名单" + params);
+	public Map<String, Object> white_add_post(HttpServletRequest request) {
+		log.debug("goto：post批量发送短信");
 		Map<String, Object> result = new HashMap<String, Object>();
-		boolean bl = whiteListService.save(params);
+		String[] phoneList = request.getParameterValues("phoneList"); // 电话号码列表
+		String[] nameList = request.getParameterValues("nameList");// 名字列表
+		String shortMessage = request.getParameter("shortMessage");// 短信内容
+		// // 获取地区码
+		// String userId = CookieHelper.getCookieValue(request,
+		// Constants.ADMINUSERID);
+		// if (userId == null || "".equals(userId)) {
+		// result.put(Constants.NOTICE, "管理员未登录, 请登陆后重新尝试.");
+		// return result;
+		// }
+		// Integer uid = Integer.parseInt(userId);
+		// User userObj = userService.getById(uid);
+		// String acode = userObj.getArea().getCode();
+		// ①先将所有电话和名字保存到数据库中!!:smile:
+		if (phoneList == null || nameList == null) {
+			result.put(Constants.NOTICE, "传递的数据为空, 请重新尝试或联系管理员.");
+			return result;
+		}
+		if (phoneList.length != nameList.length) {
+			result.put(Constants.NOTICE, "传递电话号码和名字数量不一致, 请重新尝试或联系管理员.");
+			return result;
+		}
+		// ②向这些电话发送短信,超过 80个电话号码, 则分次发送
+		// 总字符数
+		int total = phoneList.length;
+		// 每次最多发送人数
+		int size = 80;
+		// 页码数
+		int page = (total % size == 0) ? (total / size) : ((total / size) + 1);
+		Boolean mark = Boolean.TRUE;
+		if (page >= 2) {
+			for (int i = 1; i <= page; i++) {
+				int beginIndex = (i - 1) * size; // 本段起始索引
+				int endIndex = i * size - 1;// 本段结束索引
+				if (endIndex >= total) {
+					endIndex = total;
+				}
+				// 将截取的一段值赋给一个新的数组
+				String[] paramPhoneList = new String[endIndex - beginIndex + 1];
+				for (int k = 0; k < paramPhoneList.length; k++) {
+					paramPhoneList[k] = phoneList[k + beginIndex];
+				}
+				Boolean bl = smsService.sendMessage(
+						getRegularPhoneSentence(paramPhoneList), shortMessage);
+				if (!bl) {
+					mark = Boolean.FALSE;
+				}
+			}
+		} else {
+			Boolean bl = smsService.sendMessage(
+					getRegularPhoneSentence(phoneList), shortMessage);
+			if (!bl) {
+				mark = Boolean.FALSE;
+			}
+		}
+		if (mark) {
+			result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		} else {
+			result.put(Constants.NOTICE, "发送过程中出现错误, 请联系管理员.");
+		}
+		return result;
+	}
+
+	// 删除电话号码
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> delete(HttpServletRequest request) {
+		log.debug("goto：post批量发送短信");
+		Map<String, Object> result = new HashMap<String, Object>();
+		String phone = request.getParameter("phone"); // 电话号码
+		// 获取地区码
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
+		if (userId == null || "".equals(userId)) {
+			result.put(Constants.NOTICE, "管理员未登录, 请登陆后重新尝试.");
+			return result;
+		}
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
+		String acode = userObj.getArea().getCode();
+		// 查询对该电话对象
+		SmsPhone smsPhone = smsPhoneService.getByPhoneAndArea(phone, acode);
+		if (smsPhone == null) {
+			result.put(Constants.NOTICE, "数据库中不存在该号码, 请重新尝试或联系管理员.");
+			return result;
+		}
+		// 删除
+		Boolean bl = smsPhoneService.delete(smsPhone.getId());
 		if (bl) {
 			result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {
@@ -75,5 +189,53 @@ public class SMSManageController {
 		}
 		return result;
 	}
+
+	// 将电话号码拼接成 号码,号码,号码 的格式
+	private String getRegularPhoneSentence(String[] phoneList) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < phoneList.length; i++) {
+			sb.append(phoneList[i]);
+			if (i != (phoneList.length - 1)) {
+				sb.append(",");
+			}
+		}
+		return sb.toString();
+	}
+
+	// 将数组中的电话和名字对应保存起来
+	// private Boolean savePhones(String[] phoneList, String[] nameList,String
+	// acode){
+	// for(int i=0;i<phoneList.length;i++){
+	// //先查询该电话是否存在
+	// String phone = phoneList[i];
+	// String name = nameList[i];
+	// SmsPhone resultSmsPhone = smsPhoneService.getByPhoneAndArea(phone,
+	// acode);
+	// //存在则更新姓名
+	// if(resultSmsPhone != null){
+	// resultSmsPhone.setName(name);
+	// Boolean updateBl = smsPhoneService.update(resultSmsPhone);
+	// if(!updateBl){
+	// return Boolean.FALSE;
+	// }else{
+	// continue;
+	// }
+	// }else{
+	// //不存在则保存此电话号码
+	// resultSmsPhone = new SmsPhone();
+	// resultSmsPhone.setPhone(phoneList[i]);
+	// resultSmsPhone.setName(nameList[i]);
+	// resultSmsPhone.setArea(new Area(acode));
+	// Boolean saveBl = smsPhoneService.save(resultSmsPhone);
+	// if(!saveBl){
+	// return Boolean.FALSE;
+	// }else{
+	// continue;
+	// }
+	// }
+	// }
+	// //能走到这一步... 说明运行正常, 上面该更新的更新, 该保存的保存, 没有问题!
+	// return Boolean.TRUE;
+	// }
 
 }

@@ -73,7 +73,7 @@ verify.checkTel = function(s) {
  * 
  */
 verify.checkMobile = function(s) {
-	var regu = /^[1][3][0-9]{9}$/;
+	var regu = /^[1][3|4|5|7|8][0-9]{9}$/;
 	var re = new RegExp(regu);
 	if (re.test(s)) {
 		return true;
