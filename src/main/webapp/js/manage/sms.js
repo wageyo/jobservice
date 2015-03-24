@@ -31,6 +31,74 @@ $(document).ready(function(){
 			$(this).val($(this).val().substring(0,300));
 		}
 	});
+	
+	//定义绑定上传按钮事件
+	var button = $('#picFileImport');
+/*	$('#picFileImport').mouseover(function(){
+	//	alert(123);
+	//	alert(server.url+'images/backdoor/excelexample.png');
+		$('.example-area').css({'background-image':'url('+server.url+'images/backdoor/excelexample.png)'});
+	}).mouseout(function(){
+		$('.example-area').css({'background-image':'none'});
+	});	*/
+	if(button){
+		/*
+		 * 异步 上传图片方法函数
+		 */
+		new AjaxUpload(button, {
+			action: server.url + 'manage/sms/uploadexcel',
+			name: 'excel',// 更改上传的文件名
+			autoSubmit:true,
+			type:'POST',
+			data: {},
+			onSubmit : function(file , ext){
+				button.val('上传中...');
+				/**
+				 *	①验证上传文件格式
+				 **/
+		//		alert(ext + "  " + (/^(xls|xlsx)$/.test(ext)));
+				if(!(/^(xls|xlsx)$/.test(ext))){
+					alert('您上传的文件格式不对, 或者不是excel文件, 请重新选择.');
+				//	$('#picfileTitle').val('');
+					button.val('上传文件');
+					return false;
+				}
+				/**
+				 *	②设置上传参数
+				 **/
+			/**	this.setData({
+					'imageId':$('#imageId').val()
+				});		*/
+				
+			},
+			onComplete : function(file,response){
+				var result = response.substring(0,7);
+				if(result == 'success'){
+					// 显示总数, 正确数, 错误数
+					var total = response.substring(8,response.indexOf('@'));
+					var right = response.substring(response.indexOf('@')+1,response.indexOf('*'));
+					var wrong = response.substring(response.indexOf('*')+1,response.indexOf('successEnd'));
+					var msg = '操作成功, 总计有电话号码: ' + total + '个, 其中正确并导入: ' + right + '个, 错误号码: ' + wrong +'个.';
+					if(wrong != null && wrong > 0){
+						msg += '点击下载按钮来下载错误列表来查看错误原因.';
+						alert(msg);
+						var downLoadurl = response.substring(response.indexOf('http:'));
+				//		$('#downLoadWrongList').attr('href',downLoadurl).;
+						$('#downLoadWrongList').css({'color':'rgb(30, 24, 255)'}).bind('click',function(){
+							window.open(downLoadurl);
+						});
+					}else{
+						alert(msg);
+					}
+					initPhoneList();
+				}else{
+					alert('上传文件失败, 错误原因:'+response);
+				}
+				button.val('上传号码');
+				this.enable();
+			}
+		});
+	}
 });
 
 //初始化电话簿号码列表
@@ -53,7 +121,8 @@ function initPhoneList(){
 					content  += '</li>';
 				});
 //				alert(content);
-				$('.communicate-div .communicate-ul').append(content); 
+				//先清空, 在添加
+				$('.communicate-div .communicate-ul').empty().append(content); 
 			}else{
 				alert(data.notice);
 			}

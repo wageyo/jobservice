@@ -17,9 +17,12 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
+	<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
+	<script src="${contextPath}/js/manage/upload_file.js"></script>
 	<script src="${contextPath}/js/verify.js"></script>
 	<script src="${contextPath}/js/manage/sms.js"></script>
+	
 	<style type="text/css">
 	
 		/**
@@ -119,6 +122,10 @@
 							<textarea id="shortMessage" style="width: 100%;height: 300px;" title="短信内容不超过300字...">短信内容不超过300字...</textarea>
 							<p id="notice">还可以输入300字...</p>
 							<p id="noticeMsg"></p>
+							<div class="example-area" style="background-image:url(${contextPath}/images/backdoor/excelexample.png);background-repeat: no-repeat;height:160px;padding-top: 160px;color: blue">
+								excel表格格式, 姓名为选填项, 可为空.
+								
+							</div>
 						</div>
 						<!-- 左边短信编辑区 end -->
 					
@@ -137,7 +144,19 @@
 							<div class="middle-move-div">
 								<div class="middle-move-div-content">
 									<input type="button" onclick="addAll();" value="<<全部添加" /><br/><br/>
-									<input type="button" onclick="removeAll();" value="全部移出>>" />
+									<input type="button" onclick="removeAll();" value="全部移出>>" /><br/><br/><br/><br/>
+									<input type="button" name="file" value="上传号码" id="picFileImport" /><br/>
+									<input type="button" id="downLoadWrongList" value="下载错误号码" style="font-size: 12px;
+										height: 20px;
+										width: 85px;
+										line-height: 20px;
+										text-align: center;
+										vertical-align: middle;
+										padding: 0px 3px;
+										margin-top: 10px;
+										color: rgb(116, 116, 116);"/>
+								<!-- 	<a href="#" id="downLoadWrongList" style="">下载错误号码</a>	 -->
+									
 								</div>
 							</div>
 							

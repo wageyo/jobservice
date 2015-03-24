@@ -20,11 +20,18 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.Resume;
-import esd.common.disability.test;
+import esd.bean.SmsPhone;
 import esd.service.KitService;
 
+/**
+ * 将数据导入给定路径的excel表格中
+ * @author yufu
+ * @email ilxly01@126.com
+ * 2015-3-24
+ */
 public class PoiCreateExcel {
 	private static Logger log = Logger.getLogger(PoiCreateExcel.class);
+	
 	/**
 	 * 导出职位信息
 	 * 
@@ -227,7 +234,7 @@ public class PoiCreateExcel {
 	 * @param companyList
 	 * @return
 	 */
-	public static boolean createComapnyExcel(String FilePath,
+	public  static boolean createComapnyExcel(String FilePath,
 			List<Company> companyList) {
 		// 创建Excel的工作书册 Workbook,对应到一个excel文档
 		HSSFWorkbook wb = new HSSFWorkbook();
@@ -709,4 +716,59 @@ public class PoiCreateExcel {
 		return true;
 	}
 
+	/**
+	 * 导出电话号码
+	 * 
+	 * @param FilePath
+	 * @param smsPhoneList
+	 * @return
+	 */
+	public static boolean createSmsPhoneExcel(String FilePath,
+			List<SmsPhone> dataList) {
+		// 创建Excel的工作书册 Workbook,对应到一个excel文档
+		HSSFWorkbook wb = new HSSFWorkbook();
+		// 创建Excel的工作sheet,对应到一个excel文档的tab
+		HSSFSheet sheet = wb.createSheet("sheet1");
+		// 设置excel每列宽度
+		sheet.setColumnWidth(0, 4000);
+		sheet.setColumnWidth(1, 3500);
+
+		// 创建一个头部Excel的单元格
+		HSSFRow headRow = sheet.createRow(0);
+		HSSFCell headell = headRow.createCell(0);
+		// 设置单元格的样式格式
+		headell = headRow.createCell(0);
+		headell.setCellValue("电话号码");
+		headell = headRow.createCell(1);
+		headell.setCellValue("姓名");
+		headell = headRow.createCell(2);
+		headell.setCellValue("错误原因");
+		for (int i = 1; i <= dataList.size(); i++) {
+			SmsPhone data = dataList.get(i - 1);
+			// 创建一个Excel的单元格
+			HSSFRow row = sheet.createRow(i);
+			HSSFCell cell = row.createCell(0);
+			// 设置单元格的样式格式
+			cell = row.createCell(0);
+			cell.setCellValue(data.getPhone());
+			cell = row.createCell(1);
+			cell.setCellValue(data.getName());
+			cell = row.createCell(2);
+			cell.setCellValue(data.getRemark());
+		}
+		try {
+			FileOutputStream os = new FileOutputStream(FilePath);
+			wb.write(os);
+			os.flush();
+			os.close();
+			os = null;
+			wb = null;
+			System.gc();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }

@@ -15,6 +15,7 @@ public class SmsPhone extends PrimaryKey_String {
 	private String phone; // 手机号码
 	private String remark; // 备注
 	private Area area; // 所属地区
+	private Boolean isOk;
 
 	@Override
 	public String toString() {
@@ -52,6 +53,22 @@ public class SmsPhone extends PrimaryKey_String {
 
 	public void setArea(Area area) {
 		this.area = area;
+	}
+
+	/**
+	 * 校验是否通过--不做数据库映射用, 只在上传导入电话号码时使用
+	 * @return
+	 */
+	public Boolean getIsOk() {
+		return isOk;
+	}
+
+	/**
+	 * 校验是否通过--不做数据库映射用, 只在上传导入电话号码时使用
+	 * @param isOk
+	 */
+	public void setIsOk(Boolean isOk) {
+		this.isOk = isOk;
 	}
 
 }

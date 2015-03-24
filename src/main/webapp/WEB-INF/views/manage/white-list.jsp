@@ -48,7 +48,7 @@
 					<div class="">
 						<div class="control-group">
 							<div class="switch" data-on="success" data-off="warning">
-							 	<label for="loginName" style="display:initial;width:60px;margin-right:20px;">白名单功能启用开关:(启用后, 只有下列列表中的域名允许访问就业服务网)</label> 
+							 	<label for="loginName" style="display:initial;width:60px;margin-right:20px;">白名单功能启用开关:(启用后, 只有下列列表中的域名或IP允许读取就业服务网的就业信息接口)</label> 
 								<input type="checkbox" id="whitelistcheck" switchid="${entity.id }" name="switchAudit" <c:if test="${whiteListSwitch.value =='on' }">checked</c:if>>
 								<button type="button" class="btn btn-info" onclick="window.location.href='${contextPath}/manage/white/add';" style="float:right;">新增白名单</button>
 							</div>
