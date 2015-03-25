@@ -14,8 +14,8 @@ public class StatisticsCompany {
 	private Integer numberCompany; // 企业数量
 	private Integer numberJob; // 岗位数
 	private Integer numberHire; // 招聘的总人数
-	private String averageHire; // 平均每家企业招聘人数 ==总招聘人数/企业数
-	private String averageJob; // 平均每家企业拥有职位. 小数点后两位 = 总职位数/企业数
+	private float averageHire; // 平均每家企业招聘人数 ==总招聘人数/企业数
+	private float averageJob; // 平均每家企业拥有职位. 小数点后两位 = 总职位数/企业数
 	private String checkStatus; // 当前所处的审核状态
 
 	private DecimalFormat df2 = new DecimalFormat("0.00");
@@ -61,27 +61,27 @@ public class StatisticsCompany {
 		this.numberHire = numberHire;
 	}
 
-	public String getAverageHire() {
+	public float getAverageHire() {
 		if(this.numberCompany<=0){
-			return "0.00";
+			return 0;
 		}
-		this.averageHire = df2.format(this.numberHire/this.numberCompany);
+		this.averageHire = this.numberHire/this.numberCompany;
 		return this.averageHire;
 	}
 
-	public void setAverageHire(String averageHire) {
+	public void setAverageHire(float averageHire) {
 		this.averageHire = averageHire;
 	}
 
-	public String getAverageJob() {
+	public float getAverageJob() {
 		if(this.numberCompany<=0){
-			return "0.00";
+			return 0;
 		}
-		this.averageJob = df2.format(this.numberJob/this.numberCompany);
+		this.averageJob = this.numberJob/this.numberCompany;
 		return this.averageJob;
 	}
 
-	public void setAverageJob(String averageJob) {
+	public void setAverageJob(float averageJob) {
 		this.averageJob = averageJob;
 	}
 

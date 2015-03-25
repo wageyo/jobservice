@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 前台数据统计显示类--提供给ichart.js控件使用
+ * 前台数据统计显示类--提供给ichart.js控件使用--已废弃！！！--by yufu 2015-03-25
  * 
  * @author yufu
  * @email ilxly01@126.com 2015-3-17
