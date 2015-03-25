@@ -25,7 +25,7 @@
 <body>
 	
 	<!-- 整个页面div  开始 -->
-	<div class="manage-body">
+	<div class="main-body">
 	
 		<!-- 头部 div -->
 		<%@ include file="header.jsp" %>
@@ -39,7 +39,7 @@
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
 			
-				<div class="container-fluid">
+				<div class="container">
 				
 					<!-- 上方条件查询框  开始 -->
 					<div class="" style="margin-bottom: 5px;">
@@ -70,7 +70,7 @@
 					<!-- 上方条件查询框  结束-->
 					
 					<!-- 下方结果显示框  开始 -->
-					<div class="row-fluid">
+					<div class="row">
 						<div class="span12">
 							<table class="table">
 								<thead>

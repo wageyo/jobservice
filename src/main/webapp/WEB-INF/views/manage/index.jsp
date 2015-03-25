@@ -25,7 +25,7 @@
 <body>
 	
 	<!-- 这个页面div -->
-	<div class="manage-body">
+	<div class="main-body">
 	
 		<!-- 头部 div -->
 		<%@ include file="header.jsp" %>

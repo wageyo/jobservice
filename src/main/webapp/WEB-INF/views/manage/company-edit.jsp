@@ -29,7 +29,7 @@
 <body>
 	
 	<!-- 整个页面div  开始 -->
-	<div class="manage-body">
+	<div class="main-body">
 	
 		<!-- 头部 div -->
 		<%@ include file="header.jsp" %>
@@ -42,8 +42,8 @@
 			
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
-				<div class="container-fluid">
-					<div class="row-fluid">
+				<div class="container">
+					<div class="row">
 						<div class="span12">
 							<table>
 								<thead>

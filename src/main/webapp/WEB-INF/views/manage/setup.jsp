@@ -29,7 +29,7 @@
 <body>
 
 	<!-- 整个页面div  开始 -->
-	<div class="manage-body">
+	<div class="main-body">
 
 		<!-- 头部 div -->
 		<%@ include file="header.jsp"%>

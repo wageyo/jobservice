@@ -90,7 +90,7 @@
 <body>
 
 	<!-- 整个页面div  开始 -->
-	<div class="manage-body">
+	<div class="main-body">
 	
 		<!-- 头部 div -->
 		<%@ include file="header.jsp" %>
@@ -111,7 +111,7 @@
 					<div class="send-area-top-txt" style="">0个联系人</div>
 					<div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
 				</div>
-				<!-- 宽高自适应 container-fluid -->
+				<!-- 宽高自适应 container -->
 				
 				<div class="container-fluid">
 				

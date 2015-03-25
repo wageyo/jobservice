@@ -81,7 +81,7 @@
 <body>
 	
 	<!-- 整个页面div  开始 -->
-	<div class="manage-body">
+	<div class="main-body">
 	
 		<!-- 头部 div -->
 		<%@ include file="header.jsp" %>
@@ -95,7 +95,7 @@
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
 			
-				<div class="container-fluid">
+				<div class="container">
 				
 					<!-- 上方条件查询框  开始 -->
 					<div class="" style="margin-bottom: 5px;">
@@ -126,40 +126,40 @@
 					<!-- 上方条件查询框  结束-->
 					
 					<!-- 下方结果显示框  开始 -->
-					<div class="row-fluid">
+					<div class="row">
 						
 						<div class="span12">
 							<table class="table" id="jobt1">
 								<thead>
 									<tr>
-										<th >
+										<th>
 									  		<input id="jobcheckbox" type="checkbox" />  
 										</th>
-										<th>
+										<th style="width: 50px;">
 											序号
 										</th>
-										<th>
+										<th style="width: 200px;">
 											职位名称
 										</th>
-										<th>
+										<th style="width: 50px;">
 											人数
 										</th>
-										<th>
+										<th style="width: 110px;">
 											提供薪资
 										</th>
-										<th>
+										<th style="width: 75px;">
 											岗位性质
 										</th>
-										<th>
+										<th style="width: 90px;">
 											发布日期
 										</th>
-										<th>
+										<th style="width: 90px;">
 											有效期至
 										</th>
-										<th>
+										<th style="width: 90px;">
 											联系人
 										</th>
-										<th>
+										<th style="width: 120px;">
 											联系电话
 										</th>
 										<th>
@@ -186,11 +186,11 @@
 												<input type="hidden" id="jobtotal" name="jobtotal" value="${entity.id }"/>  
                    							 	<input id="Checkbox2" name="checkbox2" type="checkbox" value="${entity.id }"/>  
                								</td>
-											<td>
+											<td style="text-align: center;">
 												${(row.index + 1 + (currentPage - 1) * 20) }
 											</td>
 											<td>
-												${entity.name }
+												<div style="width:200px;" title="${entity.name }">${entity.name }</div>
 											</td>
 											<td>
 												${entity.hireNumber }
@@ -203,28 +203,30 @@
 											</td>
 											<td>
 												<fmt:formatDate value="${entity.createDate }" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" var="createDate"/>
-												${createDate }
+												<div style="width:90px" title="${createDate }">${createDate }</div>
 											</td>
 											<td>
 												<fmt:formatDate value="${entity.effectiveTime }" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" var="effectiveTime"/>
-												${effectiveTime }
+												<div style="width:90px" title="${effectiveTime }">${effectiveTime }</div>
 											</td>
 											<td>
-												${entity.contactPerson }
+												<div style="width:90px;" title="${entity.contactPerson }">${entity.contactPerson }</div>
 											</td>
 											<td>
-												${entity.contactTel }
+												<div style="width:120px;" title="${entity.contactTel }">${entity.contactTel }</div>
 											</td>
 											<td>
-												<a href="${contextPath }/manage/job/view/${entity.id}">查看</a>
-												<a href="${contextPath }/manage/job/edit/${entity.id}">编辑</a> 
-												<c:if test="${checkStatus != 'weiTongGuo' }">
-													<a href="javascript:updateEntity('refuse','${entity.id }');" style="color:red;">拒绝</a>
-												</c:if> 
-												<c:if test="${checkStatus != 'ok' }">
-													<a href="javascript:updateEntity('approve','${entity.id }');">通过</a>
-												</c:if>
-												<a href="javascript:updateEntity('delete','${entity.id }');">删除</a>
+												<div style="width:150px;">
+													<a href="${contextPath }/manage/job/view/${entity.id}">查看</a>
+													<a href="${contextPath }/manage/job/edit/${entity.id}">编辑</a> 
+													<c:if test="${checkStatus != 'weiTongGuo' }">
+														<a href="javascript:updateEntity('refuse','${entity.id }');" style="color:red;">拒绝</a>
+													</c:if> 
+													<c:if test="${checkStatus != 'ok' }">
+														<a href="javascript:updateEntity('approve','${entity.id }');">通过</a>
+													</c:if>
+													<a href="javascript:updateEntity('delete','${entity.id }');">删除</a>
+												</div>
 											</td>
 										</tr>
 									</c:forEach>

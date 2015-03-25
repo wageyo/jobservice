@@ -24,7 +24,7 @@
 <body>
 	
 	<!-- 整个页面div  开始 -->
-	<div class="manage-body">
+	<div class="main-body">
 	
 		<!-- 头部 div -->
 		<%@ include file="header.jsp" %>
@@ -38,10 +38,10 @@
 			<!-- 右侧详细内容div begin -->
 			<div class="manage-body-right">
 			
-				<div class="container-fluid">
+				<div class="container">
 				
 					<!-- 下方结果显示框  开始 -->
-					<div class="row-fluid">
+					<div class="row">
 						
 						<!-- 显示企业招聘信息统计数据 begin -->
 						<div class="span6" style="width: 90%;text-align: center;">

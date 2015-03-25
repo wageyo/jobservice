@@ -22,7 +22,7 @@
 <body>
 	
 	<!-- 这个页面div -->
-	<div class="manage-body">
+	<div class="main-body">
 	
 		<!-- 头部 div -->
 		<div class="manage-header" style="background-color:white;">
