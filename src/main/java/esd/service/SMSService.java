@@ -38,7 +38,7 @@ public class SMSService {
 	private UserDao userDao;
 
 	/**
-	 * 发送短信
+	 * 发送短信--不对短信内容进行非法校验更正
 	 * 
 	 * @param phone格式为单个或多个电话, 单个电话时直接传入电话号码即可, 例如 "13812345678"; 多个时中间用","隔开, 例如  "138123445678,13512312312,13112541251", 末尾不用",", 一次最多99个电话.
 	 * @param message 短信内容, 最大不超过340
@@ -60,12 +60,41 @@ public class SMSService {
 		}
 		return Boolean.FALSE;
 	}
+	
+	/**
+	 * 发送短信--对短信内容进行非法校验更正
+	 * 
+	 * @param phone格式为单个或多个电话, 单个电话时直接传入电话号码即可, 例如 "13812345678"; 多个时中间用","隔开, 例如  "138123445678,13512312312,13112541251", 末尾不用",", 一次最多99个电话.
+	 * @param message 短信内容, 最大不超过340
+	 * @return
+	 */
+	public Boolean sendMessage(String phone, String message,String illegalFileUrl) {
+		
+		//处理非法关键字
+		message = dealIllegalContent(message, illegalFileUrl);
+		
+		Sender sender = new Sender(username, password);
+		// 发送短信
+		String result = sender.massSend(phone, message, null, null);
+		// 截取发送条数num
+		String num = result.substring(result.indexOf("num") + 4,
+				result.indexOf("num") + 5);
+		// 截取errid
+		String errid = result.substring(result.indexOf("errid") + 6,
+				result.indexOf("errid") + 7);
+		// 如果发送成功, 则返回true
+		if ((Integer.parseInt(num) >= 1) && "0".equals(errid)) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
 
 	/**
 	 * 向指定简历发送推送的职位
 	 * 
 	 * @param resume
 	 * @param jobList
+	 * @param illegalFileUrl --路径为项目根路径
 	 */
 	public Boolean sendTuiSongJob(Resume resume, List<Job> jobList,
 			String illegalFileUrl) {

@@ -140,6 +140,8 @@ public class SMSManageController {
 		int size = 80;
 		// 页码数
 		int page = (total % size == 0) ? (total / size) : ((total / size) + 1);
+		//非法字符集文件地址
+		String url = request.getSession().getServletContext().getRealPath("/");
 		Boolean mark = Boolean.TRUE;
 		if (page >= 2) {
 			for (int i = 1; i <= page; i++) {
@@ -154,14 +156,14 @@ public class SMSManageController {
 					paramPhoneList[k] = phoneList[k + beginIndex];
 				}
 				Boolean bl = smsService.sendMessage(
-						getRegularPhoneSentence(paramPhoneList), shortMessage);
+						getRegularPhoneSentence(paramPhoneList), shortMessage,url);
 				if (!bl) {
 					mark = Boolean.FALSE;
 				}
 			}
 		} else {
 			Boolean bl = smsService.sendMessage(
-					getRegularPhoneSentence(phoneList), shortMessage);
+					getRegularPhoneSentence(phoneList), shortMessage,url);
 			if (!bl) {
 				mark = Boolean.FALSE;
 			}
