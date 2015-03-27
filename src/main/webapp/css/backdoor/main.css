@@ -53,7 +53,7 @@
 	float: left;
 	padding-top: 10px;
 	min-width: 840px;
-	width: 83%;
+	width: 84%;
 }
 
 /**
@@ -135,6 +135,27 @@
 .div-statistics-area ul li span:hover{
 	background:rgb(130, 110, 255);
 	color:white
+}
+.div-statistics-table{
+	float:left;
+	width:700px;
+	margin-top:30px;
+}
+.div-statistics-table table{
+	width:100%;
+}
+.div-statistics-table table thead tr th{
+	text-align: center;
+	line-height:30px;
+	height:30px;
+	text-align: center;
+	border: 1px solid gray;
+}
+.div-statistics-table table tbody tr td{
+	text-align: center;
+	line-height:25px;
+	height:25px;
+	border: 1px solid gray;
 }
 
 /**

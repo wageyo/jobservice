@@ -34,13 +34,7 @@ $(document).ready(function(){
 	
 	//定义绑定上传按钮事件
 	var button = $('#picFileImport');
-/*	$('#picFileImport').mouseover(function(){
-	//	alert(123);
-	//	alert(server.url+'images/backdoor/excelexample.png');
-		$('.example-area').css({'background-image':'url('+server.url+'images/backdoor/excelexample.png)'});
-	}).mouseout(function(){
-		$('.example-area').css({'background-image':'none'});
-	});	*/
+
 	if(button){
 		/*
 		 * 异步 上传图片方法函数

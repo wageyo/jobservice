@@ -41,7 +41,7 @@
 				<div class="container-fluid">
 				
 						<!-- 上方条件查询框  开始 -->
-						<div id="searchBar" style="height:32px">
+						<div id="searchBar" style="height:32px;width: 1000px;">
 							匹配度条件: 
 							<span class="label " onclick="selectAllCondition();" id="chooseall">全 选</span>&nbsp;&nbsp;
 							<c:forEach items="${params }" var="perCom">
@@ -59,7 +59,7 @@
 						<div class="row-fluid">
 							
 							<div class="span12">
-								<table class="table" id="t1" style="padding:0;border-spacing:0px; border-style:none; ">
+								<table class="table" id="t1" style="padding:0;border-spacing:0px; border-style:none; width: 1200px;">
 									<%-- 职位列表数据 --%>
 									<thead>
 										<tr style="background:#5599FF ;color:#ffffff">

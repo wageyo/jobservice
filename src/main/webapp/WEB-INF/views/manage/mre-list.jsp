@@ -63,9 +63,9 @@
 					<!-- 上方条件查询框  结束-->
 						
 					<!-- 下方结果显示框  开始 -->
-					<div class="row-fluid" style="width:1241px;">
+					<div class="row-fluid">
 						<div class="span12">
-							<table class="table" id="t1" style="padding:0;border-spacing:0px; border-style:none; ">
+							<table class="table" id="t1" style="padding:0;border-spacing:0px; border-style:none; width: 1200px;">
 								<%--第一个公司表	标题						--%>
 								<thead>
 									<tr style="background:#5599FF ;color:#ffffff">
