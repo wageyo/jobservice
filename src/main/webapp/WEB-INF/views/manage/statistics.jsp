@@ -53,6 +53,27 @@
 						<div class="span12" >
 						<script>
 							 $(function(){
+								 //汉化
+								 Highcharts.setOptions({
+									chart: {
+										style: {
+											fontFamily:'Microsoft YaHei, Arial'
+										}
+									},
+						            lang: {
+						            	//加载中ing 显示的文本 汉化
+						            	loading:'加载中...',
+						            	
+						            	//导出相关文本汉化
+						            	contextButtonTitle:'打印或导出图表',
+										printChart:"打印图表",
+										downloadJPEG: "下载JPEG格式图片" , 
+										downloadPDF: "下载PDF文档"  ,
+										downloadPNG: "下载PNG格式图片"  ,
+										downloadSVG: "下载SVG格式矢量图" , 
+										exportButtonTitle: "导出图片"
+						            }
+						        });
 								 //绘制图表, 并初始化数据
 								 getDataFromController('${acode}');
 								 
@@ -66,54 +87,62 @@
 								// drawChart(data);
 							});
 							 
-							/**
-							 * 异步请求后台数据
-							 **/
-							function getDataFromController(acode){
-								var url = getRootPath() + '/manage/statistics/getStatistics/' + acode;
-								$.ajax({
-									url : url,
-									type : 'POST',
-									dataType : 'json',
-									async : false,
-									success : function(e) {
-										//返回json类型数据
-										drawChart(e.dataList,e.area);
-									}
-								});
-							}
-							
-							/**
-							 * 根据参数数据绘制图表
-							 **/
-							function drawChart(dataList,area){
-								$('#container').highcharts({                   //图表展示容器，与div的id保持一致
-							        chart: {
-							            type: 'column'                         //指定图表的类型，默认是折线图（line）
-							        },
-							        title: {
-							            text: area + '残疾人就业统计数据'      //指定图表标题
-							        },
-							        xAxis: {
-							        	text: 'x轴标题',
-							            categories: ['企业总数', '职位总数', '招聘人数','企业平均职位数','注册残疾人数','创建简历数','已就业人数']   //指定x轴分组
-							        },
-							        yAxis: {
-							            title: {
-							                text: ''                  //指定y轴的标题
-							            }
-							        },
-							        series: [{                                 //指定数据列
-							            name: area,                          //数据列名
-							            data: dataList                      //数据
-							        }]
-							    });
-							}
-							
+								/**
+								 * 异步请求后台数据
+								 **/
+								function getDataFromController(acode){
+									var url = getRootPath() + '/manage/statistics/getStatistics/' + acode;
+									$.ajax({
+										url : url,
+										type : 'POST',
+										dataType : 'json',
+										async : false,
+										success : function(e) {
+											//返回json类型数据, 根据数据绘制图表
+											drawChart(e.dataList,e.area);
+											//根据数据 生成表格
+											var strTd ='<tr>';
+											$.each(e.dataList,function(index,item){
+												strTd += '<td>';
+												strTd += item;
+												strTd += '</td>'
+											});
+											strTd += '</tr>'
+											$('.div-statistics-table tbody').html(strTd);
+										}
+									});
+								}
+								
+								/**
+								 * 根据参数数据绘制图表
+								 **/
+								function drawChart(dataList,area){
+									$('#div-statistics-chart').highcharts({                   //图表展示容器，与div的id保持一致
+								        chart: {
+								            type: 'column'                         //指定图表的类型，默认是折线图（line）
+								        },
+								        title: {
+								            text: area + '残疾人就业统计数据'      //指定图表标题
+								        },
+								        xAxis: {
+								        	text: 'x轴标题',
+								            categories: ['企业总数', '职位总数', '招聘人数','企业平均职位数','注册残疾人数','创建简历数','已就业人数']   //指定x轴分组
+								        },
+								        yAxis: {
+								            title: {
+								                text: ''                  //指定y轴的标题
+								            }
+								        },
+								        series: [{                                 //指定数据列
+								            name: area,                          //数据列名
+								            data: dataList                      //数据
+								        }]
+								    });
+								}
 							
 							</script>
 							<!-- 显示图表数据的div区域 -->
-							<div id='container' style="float:left;width:700px;"></div>
+							<div id='div-statistics-chart' style="float:left;width:700px;"></div>
 							<div class="div-statistics-area">
 								<ul class="unstyled">
 									<c:forEach items="${areaList }" var="area" varStatus="i">
@@ -124,6 +153,38 @@
 										<li>
 									</c:forEach>
 								</ul>
+							</div>
+							
+							<div class="div-statistics-table">
+								<table >
+									<thead>
+										<tr>
+											<th>
+												企业总数
+											</th>
+											<th>
+												职位总数
+											</th>
+											<th>
+												招聘人数
+											</th>
+											<th>
+												企业平均职位数
+											</th>
+											<th>
+												注册残疾人数
+											</th>
+											<th>
+												创建简历数
+											</th>
+											<th>
+												已就业人数
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
 							</div>
 						</div>
 						<!-- 显示企业招聘信息统计数据  end -->
