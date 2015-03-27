@@ -18,7 +18,7 @@
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
 <script src="${contextPath}/js/manage/resumeMate.js"></script>
   </head>
   

@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap-switch-master/bootstrap-switch.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	
-	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+	<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/bootstrap-switch-master/bootstrap-switch.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
@@ -42,13 +42,13 @@
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
 			
-				<div class="container">
+				<div class="container-fluid">
 				
 					<!-- 上方 白名单开关按钮 开始 -->
 					<div class="">
 						<div class="control-group">
 							<div class="switch" data-on="success" data-off="warning">
-							 	<label for="loginName" style="display:initial;width:60px;margin-right:20px;">白名单功能启用开关:(启用后, 只有下列列表中的域名或IP允许读取就业服务网的就业信息接口)</label> 
+							 	<label for="loginName" style="display:initial;margin-right:20px;">白名单功能启用开关:(启用后, 只有下列列表中的域名或IP允许读取就业服务网的就业信息接口)</label> 
 								<input type="checkbox" id="whitelistcheck" switchid="${entity.id }" name="switchAudit" <c:if test="${whiteListSwitch.value =='on' }">checked</c:if>>
 								<button type="button" class="btn btn-info" onclick="window.location.href='${contextPath}/manage/white/add';" style="float:right;">新增白名单</button>
 							</div>
@@ -57,7 +57,7 @@
 					<!-- 上方条件查询框  结束-->
 					
 					<!-- 下方结果显示框  开始 -->
-					<div class="row">
+					<div class="row-fluid">
 						
 						<div class="span12">
 							<table class="table">

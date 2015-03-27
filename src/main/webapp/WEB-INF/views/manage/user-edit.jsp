@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
-	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+	<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
@@ -39,8 +39,8 @@
 			
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
-				<div class="container">
-					<div class="row">
+				<div class="container-fluid">
+					<div class="row-fluid">
 						<div class="span12">
 							<table>
 								<thead>

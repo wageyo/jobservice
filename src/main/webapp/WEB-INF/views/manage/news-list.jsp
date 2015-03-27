@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
-	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+	<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/news.js"></script>
@@ -39,7 +39,7 @@
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
 			
-				<div class="container">
+				<div class="container-fluid">
 				
 					<!-- 上方条件查询框  开始 -->
 					<div class="" style="margin-bottom: 5px;">
@@ -70,7 +70,7 @@
 					<!-- 上方条件查询框  结束-->
 					
 					<!-- 下方结果显示框  开始 -->
-					<div class="row">
+					<div class="row-fluid">
 						<div class="span12">
 							<table class="table">
 								<thead>

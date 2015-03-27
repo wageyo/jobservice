@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
-	<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+	<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/job.js"></script>
@@ -95,7 +95,7 @@
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
 			
-				<div class="container">
+				<div class="container-fluid" >
 				
 					<!-- 上方条件查询框  开始 -->
 					<div class="" style="margin-bottom: 5px;">
@@ -126,7 +126,7 @@
 					<!-- 上方条件查询框  结束-->
 					
 					<!-- 下方结果显示框  开始 -->
-					<div class="row">
+					<div class="row-fluid">
 						
 						<div class="span12">
 							<table class="table" id="jobt1">
@@ -135,34 +135,34 @@
 										<th>
 									  		<input id="jobcheckbox" type="checkbox" />  
 										</th>
-										<th style="width: 50px;">
+										<th style="min-width: 50px;">
 											序号
 										</th>
-										<th style="width: 200px;">
+										<th style="min-width: 200px;">
 											职位名称
 										</th>
-										<th style="width: 50px;">
+										<th style="min-width: 50px;">
 											人数
 										</th>
-										<th style="width: 110px;">
+										<th style="min-width: 110px;">
 											提供薪资
 										</th>
-										<th style="width: 75px;">
+										<th style="min-width: 75px;">
 											岗位性质
 										</th>
-										<th style="width: 90px;">
+										<th style="min-width: 90px;">
 											发布日期
 										</th>
-										<th style="width: 90px;">
+										<th style="min-width: 90px;">
 											有效期至
 										</th>
-										<th style="width: 90px;">
+										<th style="min-width: 90px;">
 											联系人
 										</th>
-										<th style="width: 120px;">
+										<th style="min-width: 120px;">
 											联系电话
 										</th>
-										<th>
+										<th style="min-width:150px;">
 											操作
 										</th>
 									</tr>

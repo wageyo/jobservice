@@ -20,7 +20,7 @@
 	href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="${contextPath}/css/backdoor/main.css" />
-<script src="${contextPath}/js/bootstrap/js/jquery-1.11.1.js"></script>
+<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
 <script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 <script src="${contextPath}/js/manage/common.js"></script>
 <script src="${contextPath}/js/manage/resumeMate.js"></script>
@@ -46,7 +46,7 @@
 			<!-- 右侧详细内容div  -->
 			<div class="manage-body-right">
 
-				<div class="container">
+				<div class="container-fluid">
 					<!-- 上方条件查询框  开始 -->
 					<div id="searchBar" style="height:32px; width:1241px;">
 						匹配度条件: 
@@ -63,7 +63,7 @@
 					<!-- 上方条件查询框  结束-->
 						
 					<!-- 下方结果显示框  开始 -->
-					<div class="row" style="width:1241px;">
+					<div class="row-fluid" style="width:1241px;">
 						<div class="span12">
 							<table class="table" id="t1" style="padding:0;border-spacing:0px; border-style:none; ">
 								<%--第一个公司表	标题						--%>
