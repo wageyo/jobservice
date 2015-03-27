@@ -74,7 +74,7 @@ public class SMSService {
 		message = dealIllegalContent(message, illegalFileUrl);
 		
 		Sender sender = new Sender(username, password);
-		// 发送短信
+		// 发送短信   
 		String result = sender.massSend(phone, message, null, null);
 		// 截取发送条数num
 		String num = result.substring(result.indexOf("num") + 4,
@@ -84,8 +84,17 @@ public class SMSService {
 				result.indexOf("errid") + 7);
 		// 如果发送成功, 则返回true
 		if ((Integer.parseInt(num) >= 1) && "0".equals(errid)) {
+			log.info("************************短信发送失败******************************");
+			log.info("发送条数: "+num);
+			log.info("************************短信发送失败******************************");
 			return Boolean.TRUE;
 		}
+		String err = result.substring(result.indexOf("err")+4,result.indexOf("errid")-1);
+		errid = result.substring(result.indexOf("errid")+6);
+		log.info("************************短信发送失败******************************");
+		log.info("错误原因: "+err);
+		log.info("错误代码: "+errid);
+		log.info("************************短信发送失败******************************");
 		return Boolean.FALSE;
 	}
 
@@ -191,33 +200,37 @@ public class SMSService {
 	}
 
 	public static void main(String[] args) {
-		String msg = "广西壮族自治区残疾人劳动就业指导中心向您推荐的招聘信息招聘信息:"
-				+ "1. 统计员, 广西南宁嘉泰水泥制品有限公司, 广西壮族自治区, 1000-2000元"
-				+ "2. 电销专员, 广西龙星汽车销售有限公司, 广西壮族自治区, 面议"
-				+ "3. 文员, 广西佳利工贸有限公司, 广西壮族自治区, 1000-2000元"
-				+ "4. 仓库保管员, 广西创宁电力工程有限公司, 广西壮族自治区, 1000-2000元"
-				+ "5. 营业员, 广西一心医药有限公司, 广西壮族自治区, 1000-2000元"
-				+ "联,系,人:	职业指导科小何、小易	联,系,电话:	0771-3186952	0771-3186953"
-				+ "联,系,地址:	南宁市罗文大道48号残疾人事业园1楼就业服务大厅	更多招聘信息请登录广西壮族自治区残疾人就业信息网，网址：http://116.11.253.249:9217/jobservice";
-
-		//总字符数
-		int total = msg.length();
-		//每条信息最多字符数
-		int size = 300;
-		//页码数
-		int page = (total%size == 0)?(total/size):((total/size)+1);
-		System.out.println(page);
-		for(int i=1;i<=page;i++){
-			System.out.println("***************************************");
-			int beginIndex = (i-1)*size;
-			int endIndex = i*size;
-			if(endIndex >=total){
-				endIndex = total;
-			}
-			String perMsg = msg.substring(beginIndex,endIndex) + "("+i+"/"+page+")";
-			System.out.println(perMsg);
-		}
+//		String msg = "广西壮族自治区残疾人劳动就业指导中心向您推荐的招聘信息招聘信息:"
+//				+ "1. 统计员, 广西南宁嘉泰水泥制品有限公司, 广西壮族自治区, 1000-2000元"
+//				+ "2. 电销专员, 广西龙星汽车销售有限公司, 广西壮族自治区, 面议"
+//				+ "3. 文员, 广西佳利工贸有限公司, 广西壮族自治区, 1000-2000元"
+//				+ "4. 仓库保管员, 广西创宁电力工程有限公司, 广西壮族自治区, 1000-2000元"
+//				+ "5. 营业员, 广西一心医药有限公司, 广西壮族自治区, 1000-2000元"
+//				+ "联,系,人:	职业指导科小何、小易	联,系,电话:	0771-3186952	0771-3186953"
+//				+ "联,系,地址:	南宁市罗文大道48号残疾人事业园1楼就业服务大厅	更多招聘信息请登录广西壮族自治区残疾人就业信息网，网址：http://116.11.253.249:9217/jobservice";
+//
+//		//总字符数
+//		int total = msg.length();
+//		//每条信息最多字符数
+//		int size = 300;
+//		//页码数
+//		int page = (total%size == 0)?(total/size):((total/size)+1);
+//		System.out.println(page);
+//		for(int i=1;i<=page;i++){
+//			System.out.println("***************************************");
+//			int beginIndex = (i-1)*size;
+//			int endIndex = i*size;
+//			if(endIndex >=total){
+//				endIndex = total;
+//			}
+//			String perMsg = msg.substring(beginIndex,endIndex) + "("+i+"/"+page+")";
+//			System.out.println(perMsg);
+//		}
 		
-		
+		String result = "num=0&success=&faile=13804802181&err=该企业用户余额不足&errid=6013";
+		String err = result.substring(result.indexOf("err")+4,result.indexOf("errid")-1);
+		System.out.println(err);
+		String errid = result.substring(result.indexOf("errid")+6);
+		System.out.println(errid);
 	}
 }
