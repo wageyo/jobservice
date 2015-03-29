@@ -154,6 +154,7 @@ function registerSubmit(){
 		$('#showEmailImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
 		$('#showEmailMsg').css('color','red').html('请输入正确的email格式, 以便在您忘记用户名或密码的时候找回使用.');
 	}else{
+		//校验email是否已经存在
 		$.ajax({
 			url: server.url + 'user/checkEmail',
 			type:'POST',

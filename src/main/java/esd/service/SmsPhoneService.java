@@ -48,6 +48,15 @@ public class SmsPhoneService {
 	public Boolean delete(String id) {
 		return dao.delete(id);
 	}
+	
+	/**
+	 * 根据地区code删除该地区所有电话号码
+	 * @param acode
+	 * @return
+	 */
+	public Boolean deleteByArea(String acode){
+		return dao.deleteByArea(acode);
+	}
 
 	/**
 	 *  更新一个对象

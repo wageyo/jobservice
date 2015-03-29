@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main_list.css" />
 	<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>

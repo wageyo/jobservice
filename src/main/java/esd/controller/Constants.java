@@ -37,6 +37,10 @@ public class Constants {
 	public static final String STATE = "state"; // 目前状态
 	public static final String SWITCH = "switch"; // 目前状态
 	public static final String USER = "user"; // 用户key
+	/**
+	 * 残疾证号是否校验开关
+	 */
+	public static final String DISABLEDCHECKSWITCH = "disabledCheckSwitch"; 
 
 	/****************** 放入cookie中的key值 ********************/
 	public static final String USERID = "userid"; // 用户id

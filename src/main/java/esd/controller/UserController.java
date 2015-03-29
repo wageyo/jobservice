@@ -29,6 +29,7 @@ import com.octo.captcha.service.CaptchaServiceException;
 
 import esd.bean.Area;
 import esd.bean.Company;
+import esd.bean.Parameter;
 import esd.bean.User;
 import esd.common.disability.CheckCardService;
 import esd.controller.Constants.Identity;
@@ -51,11 +52,12 @@ public class UserController {
 	private CompanyService<Company> companyService;
 
 	@Autowired
-	private ParameterService pService;
+	private ParameterService parameterService;
 	
 	@Autowired
 	private CheckCardService checkCardService;
 
+	
 	// 注册
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(HttpServletRequest request, User user, HttpServletResponse response,
@@ -104,7 +106,7 @@ public class UserController {
 			}
 		}
 		// 如果需要审核, 则弹出提示框
-		boolean u_bl = pService.getSwitchStatus(
+		boolean u_bl = parameterService.getSwitchStatus(
 				Constants.Switch.USER.getValue(), user.getArea().getCode());
 		if (u_bl) {
 			redirectAttributes.addFlashAttribute("messageType", "0");
@@ -174,13 +176,13 @@ public class UserController {
 				return "redirect:"+refererUrl;
 			}
 		}else{
-			//如果有该用户判断是否密码正确
+			//如果有该用户判断 登陆身份是否 符合
 			if(!user.getIdentity().equals(userIndex.getIdentity())){
 				ra.addFlashAttribute("messageType", "0");
 				ra.addFlashAttribute("message", "用户名或密码错误!");
 				return "redirect:"+refererUrl;
 			}
-			//如果有该用户判断是否密码正确
+			//如果有该用户判断 密码 是否 正确
 			if(!user.getPassWord().equals(passWord)){
 				ra.addFlashAttribute("messageType", "0");
 				ra.addFlashAttribute("message", "密码错误!");
@@ -457,12 +459,18 @@ public class UserController {
 		//如果没有保存成功, 则将该对象原样返回前台, 同时给出提示文字
 		request.setAttribute("user", user);
 
-		//远程到中残联网站校验 姓名和残疾证号 
-		Boolean bl = checkCardService.check(user.getNickName(), user.getLoginName());
-		if(!bl){
-			request.setAttribute("messageType", "0");
-			request.setAttribute("message", "您的姓名和残疾证号不一致, 请检查后重新输入.");
-			return "person/init-password-set";
+		// 查询  是否远程校验开关, 开关打开才进行校验
+		Parameter parameter = parameterService.getOnebyTypeAndAcode(Constants.DISABLEDCHECKSWITCH, CookieHelper.getLocalArea(request));
+		if(parameter!=null){
+			if(Constants.SWITCH_ON.equals(parameter.getValue())){
+				//远程到中残联网站校验 姓名和残疾证号 
+				Boolean bl = checkCardService.check(user.getNickName(), user.getLoginName());
+				if(!bl){
+					request.setAttribute("messageType", "0");
+					request.setAttribute("message", "您的姓名和残疾证号不一致, 请检查后重新输入.");
+					return "person/init-password-set";
+				}
+			}
 		}
 		
 		Boolean bl2 = userService.save(user);

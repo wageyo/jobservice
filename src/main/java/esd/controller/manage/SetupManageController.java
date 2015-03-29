@@ -136,6 +136,11 @@ public class SetupManageController {
 		Parameter matchedSendNumber= parameterService.getOnebyTypeAndAcode(Constants.MATCHED_SEND_NUMBER,code);
 		entity.put(Constants.MATCHED_SHOW_NUMBER, matchedShowNumber);
 		entity.put(Constants.MATCHED_SEND_NUMBER, matchedSendNumber);
+		
+		//获得 残疾证号是否远程校验 开关
+		Parameter disabledCheckSwitch = parameterService.getOnebyTypeAndAcode(Constants.DISABLEDCHECKSWITCH, code);
+		entity.put(Constants.DISABLEDCHECKSWITCH, disabledCheckSwitch);
+		
 		return new ModelAndView("manage/setup", entity);
 	}
 

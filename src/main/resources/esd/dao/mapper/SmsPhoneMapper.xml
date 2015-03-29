@@ -87,6 +87,12 @@
 		where id = #{id, jdbcType=VARCHAR}
 	</delete>
 	
+	<!-- delete by area-->
+	<delete id="deleteByArea" parameterType="java.lang.String">
+		delete from sms_phone 
+		where acode = #{acode, jdbcType=VARCHAR}
+	</delete>
+	
 	<!-- update -->
 	<update id="update" parameterType="SmsPhone">
 		update sms_phone

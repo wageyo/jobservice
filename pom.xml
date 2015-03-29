@@ -255,6 +255,7 @@
 			<version>1.4.4</version>
 		</dependency>
 		<!-- jmail组件 end -->
+		
 		<!-- 残疾证号校验组件 begin -->
 		<dependency>
 			<groupId>commons-logging</groupId>

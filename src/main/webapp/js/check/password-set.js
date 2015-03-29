@@ -38,3 +38,31 @@ function check(){
 	}
 	return true;
 }
+
+/***
+//验证残疾证号并提交form表单方法
+function checkAndSubmit(){
+	//校验表单内容
+	if(!check()){
+		return;
+	}
+	var nickName = $('#nickName').val();	//真实姓名
+	var loginName = $('#loginName').val();	//登陆名/残疾证号
+	alert('提交啦!');
+	//校验残疾证号和内容是否相符
+	$.ajax({
+		url : server.url + 'person/checkDisabilityCard/' + loginName + '/' + nickName,
+		dataType : 'json',
+		type : 'POST',
+		async : false,
+		success : function(json) {
+			//存在时
+			if(json.notice == 'success'){
+				alert('残疾证号符合, 验证通过！');
+			}else{
+				alert(json.notice);
+			}
+		},
+	});
+}
+**/

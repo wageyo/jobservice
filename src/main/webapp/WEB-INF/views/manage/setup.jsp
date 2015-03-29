@@ -43,7 +43,8 @@
 			<!-- 右侧详细内容div  开始-->
 			<div class="manage-body-right">
 			
-				<div class="span6" style="margin-top: 50px;margin-left:200px;">
+				<div class="span12" style="margin-top: 10px;margin-left:100px;">
+				
 					<!-- 审核开关状态设置 -->
 					<h3>审核开关状态</h3>
 					<c:forEach items="${entityList }" var="entity">
@@ -54,6 +55,15 @@
 							</div>
 						</div>
 					</c:forEach>
+					<br/>
+					<!-- 残疾证号是否远程校验 -->
+					<h3>残疾证号远程校验开关</h3>
+					<div class="control-group">
+						<div class="switch" data-on="success" data-off="warning">
+						 	<label for="disabledCheckSwitch" style="display:initial;width:60px;margin-right:20px;"> ${disabledCheckSwitch.name }</label> 
+							<input type="checkbox" id="${disabledCheckSwitch.id }" switchid="${disabledCheckSwitch.id }" name="switchAudit" <c:if test="${disabledCheckSwitch.value == 'on' }">checked</c:if>>
+						</div>
+					</div>
 					<br/>
 					<!-- 信息分享范围 -->
 					<h3>信息分享范围<span style="font-size:12px;font-weight:normal;">(设定本地区残联就业指导中心网站和就业信息网显示信息的范围)</span></h3>

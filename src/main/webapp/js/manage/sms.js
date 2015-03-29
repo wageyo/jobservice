@@ -107,11 +107,14 @@ function initPhoneList(){
 				var content = '';
 				$.each(data.phoneList,function(index,item){
 					content += '<li phone="' + item.phone + '" name="' + item.name + '" onclick="toTargetDiv(this);">';
+					content += '<span style="width:130px;">';
 					if(item.name != null && item.name != ''){
 						content += item.name;
 					}else{
 						content += item.phone;
 					}
+					content += '</span>'
+					content  += '<span style="">×</span>';
 					content  += '</li>';
 				});
 //				alert(content);

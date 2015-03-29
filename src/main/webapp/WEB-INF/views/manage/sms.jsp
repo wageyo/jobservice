@@ -83,6 +83,10 @@
 			background-color:#CEE3F2;
 			cursor:pointer;
 		}
+		.sms-phone-list ul li span{
+			display:-moz-inline-box;  
+			display:inline-block;  
+		}
 		
 	</style>
 </head>
