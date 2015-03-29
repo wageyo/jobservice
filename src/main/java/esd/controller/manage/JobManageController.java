@@ -136,7 +136,7 @@ public class JobManageController {
 		List<Parameter> plist = pService.getAll();
 		entity.put("params", plist);
 		// 职位类别
-		List<JobCategory> jlist = jcService.getAll();
+		List<JobCategory> jlist = jcService.getJcLv1();
 		entity.put("jcList", jlist);
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
@@ -156,7 +156,7 @@ public class JobManageController {
 		List<Parameter> plist = pService.getAll();
 		entity.put("params", plist);
 		// 职位类别
-		List<JobCategory> jlist = jcService.getAll();
+		List<JobCategory> jlist = jcService.getJcLv1();
 		entity.put("jcList", jlist);
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();

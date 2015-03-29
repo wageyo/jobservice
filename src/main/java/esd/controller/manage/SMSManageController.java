@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -114,17 +115,6 @@ public class SMSManageController {
 		String[] phoneList = request.getParameterValues("phoneList"); // 电话号码列表
 		String[] nameList = request.getParameterValues("nameList");// 名字列表
 		String shortMessage = request.getParameter("shortMessage");// 短信内容
-		// // 获取地区码
-		// String userId = CookieHelper.getCookieValue(request,
-		// Constants.ADMINUSERID);
-		// if (userId == null || "".equals(userId)) {
-		// result.put(Constants.NOTICE, "管理员未登录, 请登陆后重新尝试.");
-		// return result;
-		// }
-		// Integer uid = Integer.parseInt(userId);
-		// User userObj = userService.getById(uid);
-		// String acode = userObj.getArea().getCode();
-		// ①先将所有电话和名字保存到数据库中!!:smile:
 		if (phoneList == null || nameList == null) {
 			result.put(Constants.NOTICE, "传递的数据为空, 请重新尝试或联系管理员.");
 			return result;
@@ -177,24 +167,30 @@ public class SMSManageController {
 	}
 
 	// 删除电话号码
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delete(HttpServletRequest request) {
-		log.debug("goto：post批量发送短信");
+	public Map<String, Object> delete(@PathVariable(value="id") String id,HttpServletRequest request) {
+		log.debug("goto：post 删除电话号码");
 		Map<String, Object> result = new HashMap<String, Object>();
-		String phone = request.getParameter("phone"); // 电话号码
-		// 获取地区码
-		String userId = CookieHelper.getCookieValue(request,
-				Constants.ADMINUSERID);
-		if (userId == null || "".equals(userId)) {
-			result.put(Constants.NOTICE, "管理员未登录, 请登陆后重新尝试.");
+		//如果为all的话则表示删除该地区所有的电话号码
+		if("ALL".equals(id)){
+			// 获取地区码
+			String userId = CookieHelper.getCookieValue(request,
+					Constants.ADMINUSERID);
+			Integer uid = Integer.parseInt(userId);
+			User userObj = userService.getById(uid);
+			String acode = userObj.getArea().getCode();
+			Boolean bl = smsPhoneService.deleteByArea(acode);
+			if(bl){
+				result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+			}else{
+				result.put(Constants.NOTICE, "删除数据发生错误, 请重新尝试或联系管理员.");
+			}
 			return result;
 		}
-		Integer uid = Integer.parseInt(userId);
-		User userObj = userService.getById(uid);
-		String acode = userObj.getArea().getCode();
+		//id不为ALL则只删除对应id的号码
 		// 查询对该电话对象
-		SmsPhone smsPhone = smsPhoneService.getByPhoneAndArea(phone, acode);
+		SmsPhone smsPhone = smsPhoneService.getById(id);
 		if (smsPhone == null) {
 			result.put(Constants.NOTICE, "数据库中不存在该号码, 请重新尝试或联系管理员.");
 			return result;
@@ -221,7 +217,14 @@ public class SMSManageController {
 		return sb.toString();
 	}
 
-	// 导入电话号码excel文件
+	/**
+	 *  导入电话号码excel文件
+	 * @param excel
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/uploadexcel", method = RequestMethod.POST)
 	public void importworker(@RequestParam("excel") CommonsMultipartFile excel,
 			HttpServletRequest request, HttpServletResponse response,
@@ -355,8 +358,6 @@ public class SMSManageController {
 
 	}
 	
-	
-	
 	/**
 	 * 上传图片超出最大值时, 弹出的异常
 	 * 
@@ -395,43 +396,5 @@ public class SMSManageController {
 		return "" + byteFile / mb + "MB";
 	}
 	
-	
-	
-	
-	// 将数组中的电话和名字对应保存起来
-	// private Boolean savePhones(String[] phoneList, String[] nameList,String
-	// acode){
-	// for(int i=0;i<phoneList.length;i++){
-	// //先查询该电话是否存在
-	// String phone = phoneList[i];
-	// String name = nameList[i];
-	// SmsPhone resultSmsPhone = smsPhoneService.getByPhoneAndArea(phone,
-	// acode);
-	// //存在则更新姓名
-	// if(resultSmsPhone != null){
-	// resultSmsPhone.setName(name);
-	// Boolean updateBl = smsPhoneService.update(resultSmsPhone);
-	// if(!updateBl){
-	// return Boolean.FALSE;
-	// }else{
-	// continue;
-	// }
-	// }else{
-	// //不存在则保存此电话号码
-	// resultSmsPhone = new SmsPhone();
-	// resultSmsPhone.setPhone(phoneList[i]);
-	// resultSmsPhone.setName(nameList[i]);
-	// resultSmsPhone.setArea(new Area(acode));
-	// Boolean saveBl = smsPhoneService.save(resultSmsPhone);
-	// if(!saveBl){
-	// return Boolean.FALSE;
-	// }else{
-	// continue;
-	// }
-	// }
-	// }
-	// //能走到这一步... 说明运行正常, 上面该更新的更新, 该保存的保存, 没有问题!
-	// return Boolean.TRUE;
-	// }
 
 }
