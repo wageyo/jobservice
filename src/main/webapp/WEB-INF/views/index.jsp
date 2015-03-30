@@ -213,7 +213,7 @@
 								<form action="${contextPath }/work" id="searchObj">
 									<div class="SearchInputText">
 										<div class="SetFloatLeft InputTextBg">
-											<input id="keyWord" name="keyWord" class="InputTextBlank DefaultText" type="text" value="请输入关键字" title="请输入关键字" style="color: Gray;" />
+											<input id="keyWord" name="keyWord" class="InputTextBlank DefaultText" type="text" value="请输入职位关键字" title="请输入职位关键字" style="color: Gray;" />
 										</div>
 										<div class="SearchBtn SetFloatLeft">
 										<!-- 	<div id="areaBtn" class="SearchDistrictBtn SetFloatLeft" title="选择地区" style="cursor: auto;"> <span>选择地区</span> </div> -->

@@ -166,7 +166,7 @@ $(function () {
 	});
 });
 
-var keyword = '请输入关键字';
+var keyword = '请输入职位关键字';
 /*******  不同种类职位轮换效果   ********/
 function changeShowJob(jobCategory,obj){
 	//异步请求数据
