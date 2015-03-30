@@ -158,7 +158,7 @@ public class SMSService {
 		}
 		log.info("推送短信内容：" + msg);
 		log.info("推送短信长度: " + msg.length());
-		log.info("推送分页页数: " + msg.length());
+		log.info("推送分页页数: " + page);
 		return bl;
 	}
 
