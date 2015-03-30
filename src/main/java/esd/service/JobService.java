@@ -296,6 +296,7 @@ public class JobService {
 	public List<Job> getByCompany(Integer cid, Integer startPage, Integer size) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Job object = new Job();
+		object.setCompany(new Company(cid));
 		map.put("job", object);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
