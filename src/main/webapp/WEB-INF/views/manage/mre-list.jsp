@@ -8,23 +8,20 @@
 <html lang="zh-cn">
 <head>
 
-<title>简历自动匹配</title>
-<meta http-equiv="keywords" content="残疾人,就业,招聘">
-<meta http-equiv="description" content="残疾人就业招聘网站">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css"
-	href="${contextPath}/js/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css"
-	href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="${contextPath}/css/backdoor/main.css" />
+	<title>简历自动匹配</title>
+	<meta http-equiv="keywords" content="残疾人,就业,招聘">
+	<meta http-equiv="description" content="残疾人就业招聘网站">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/js/bootstrap/css/bootstrap-combined.min.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main.css" />
 	<link rel="stylesheet" type="text/css" href="${contextPath}/css/backdoor/main_list.css" />
-<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
-<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
-<script src="${contextPath}/js/manage/common.js"></script>
-<script src="${contextPath}/js/manage/resumeMate.js"></script>
+	<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
+	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
+	<script src="${contextPath}/js/manage/common.js"></script>
+	<script src="${contextPath}/js/manage/resumeMate.js"></script>
 </head>
 
 <body>
@@ -124,7 +121,7 @@
 												${(row.index + 1 + (currentPage - 1) * 20) }
 											</td>
 											<td>
-												${entity.title }
+												<div style="width:150px;" title="${entity.title }">${entity.title }</div>
 											</td>
 											<td>
 												${entity.name }
