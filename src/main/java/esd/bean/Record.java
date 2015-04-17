@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class Record extends PrimaryKey {
+public class Record extends PrimaryKeyInt {
 
 	private Integer rID; // 简历ID
 	private String rTitle; // 简历名

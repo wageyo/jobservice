@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class WorkExperience extends PrimaryKey {
+public class WorkExperience extends PrimaryKeyInt {
 
 	private String companyName; // 企业名称
 	private String jobName; // 职位名称

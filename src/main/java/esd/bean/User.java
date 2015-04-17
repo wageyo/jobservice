@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class User extends PrimaryKey {
+public class User extends PrimaryKeyInt {
 
 	private String loginName; // 账号
 	private String passWord; // 密码

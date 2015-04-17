@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class FamilyMember extends PrimaryKey {
+public class FamilyMember extends PrimaryKeyInt {
 
 	// 家庭情况
 	private String relation; // 关系

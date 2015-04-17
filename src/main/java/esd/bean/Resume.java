@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class Resume extends PrimaryKey {
+public class Resume extends PrimaryKeyInt {
 
 	// 基本信息字段
 	private String title; // 简历名称

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class EducationBackground extends PrimaryKey {
+public class EducationBackground extends PrimaryKeyInt {
 	private String time; // 学习时间
 	private String school; // 毕业院校
 	private String major; // 专业

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class Job extends PrimaryKey {
+public class Job extends PrimaryKeyInt {
 
 	private String name; // 职位名称
 	private Integer hireNumber; // 招聘人数

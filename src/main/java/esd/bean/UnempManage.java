@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class UnempManage extends PrimaryKey {
+public class UnempManage extends PrimaryKeyInt {
 
 	private String time; // 办理持续时间
 	private String content; // 办理情况
