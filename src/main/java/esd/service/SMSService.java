@@ -84,9 +84,9 @@ public class SMSService {
 				result.indexOf("errid") + 7);
 		// 如果发送成功, 则返回true
 		if ((Integer.parseInt(num) >= 1) && "0".equals(errid)) {
-			log.info("************************短信发送失败******************************");
+			log.info("************************短信发送成功******************************");
 			log.info("发送条数: "+num);
-			log.info("************************短信发送失败******************************");
+			log.info("************************短信发送成功******************************");
 			return Boolean.TRUE;
 		}
 		String err = result.substring(result.indexOf("err")+4,result.indexOf("errid")-1);
