@@ -30,6 +30,7 @@
 		<result column="cid" property="cID" jdbcType="INTEGER" />
 		<result column="direction" property="direction" jdbcType="TINYINT" />
 		<result column="comment" property="comment" jdbcType="VARCHAR" />
+		<result column="is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- insert -->
@@ -103,7 +104,10 @@
 				direction,
 			</if>
 			<if test="comment != null and comment != ''">
-				comment
+				comment,
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -169,7 +173,10 @@
 				#{direction, jdbcType=TINYINT},
 			</if>
 			<if test="comment != null and comment != ''">
-				#{comment, jdbcType=VARCHAR}
+				#{comment, jdbcType=VARCHAR},
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>	
 	</insert>
@@ -201,7 +208,22 @@
 				<if test="record.direction != null">
 					and direction = #{record.direction, jdbcType=TINYINT}
 				</if>
+				<choose>
+					<when test="record.isActive != null">
+						and is_active = #{record.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="record != null">
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -228,7 +250,22 @@
 				<if test="record.direction != null">
 					and direction = #{record.direction, jdbcType=TINYINT}
 				</if>
+				<choose>
+					<when test="record.isActive != null">
+						and is_active = #{record.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="record != null">
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select> 
 

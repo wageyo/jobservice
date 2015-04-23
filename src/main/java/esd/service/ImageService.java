@@ -31,7 +31,7 @@ public class ImageService {
 	 * @return 返回保存对象的id
 	 */
 	public String save(Image t) {
-		String uuid = UUID.randomUUID().toString();
+		String uuid = UUID.randomUUID().toString().replace("-", "");
 		t.setId(uuid);
 		return dao.save(t) ? uuid : null;
 	}

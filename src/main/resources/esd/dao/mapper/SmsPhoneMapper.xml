@@ -7,6 +7,7 @@
 	<resultMap id="ResultArea" type="Area">
 		<id column="a_code" property="code" jdbcType="VARCHAR" />
 		<result column="a_name" property="name" jdbcType="VARCHAR" />
+		<result column="a_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- result map of SmsPhone -->
@@ -19,14 +20,15 @@
 		<result column="sp_name" property="name" jdbcType="VARCHAR" />
 		<result column="sp_phone" property="phone" jdbcType="VARCHAR" />
 		<result column="sp_remark" property="remark" jdbcType="VARCHAR" />
+		<result column="sp_is_active" property="isActive" jdbcType="BIT" />
 		<association property="area" javaType="Area" resultMap="ResultArea" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<sql id="base_column">
 		sp.id as sp_id, sp.create_date as sp_create_date, sp.update_check as sp_update_check, 
 		sp.update_date as sp_update_date, sp.log_user as sp_log_user, sp.name as sp_name,
-		sp.phone as sp_phone, sp.remark as sp_remark ,
-		a.code as a_code, a.name as a_name
+		sp.phone as sp_phone, sp.remark as sp_remark ,sp.is_active as sp_is_active, 
+		a.code as a_code, a.name as a_name, a.is_active as a_is_active
 	</sql>
 	
 	<sql id="from_table">
@@ -55,8 +57,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode
+					acode,
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -75,8 +80,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					#{area.code, jdbcType=VARCHAR}
+					#{area.code, jdbcType=VARCHAR},
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>	
 	</insert>
@@ -112,8 +120,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode = #{area.code, jdbcType=VARCHAR}
+					acode = #{area.code, jdbcType=VARCHAR},
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 		where id = #{id, jdbcType=VARCHAR}
@@ -157,7 +168,22 @@
 						and acode = #{smsPhone.area.code, jdbcType=VARCHAR}
 					</if>
 				</if>
+				<choose>
+					<when test="smsPhone.isActive != null">
+						and is_active = #{smsPhone.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="smsPhone != null">
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -180,7 +206,22 @@
 						and acode = #{smsPhone.area.code, jdbcType=VARCHAR}
 					</if>
 				</if>
+				<choose>
+					<when test="smsPhone.isActive != null">
+						and is_active = #{smsPhone.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="smsPhone != null">
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select> 
 	

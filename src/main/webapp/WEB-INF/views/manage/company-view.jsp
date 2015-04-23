@@ -301,7 +301,7 @@
 										<a id='businessLicenseHref' 										
 											<c:choose>
 												<c:when test="${obj.businessLicense != null && obj.businessLicense != '' }" >
-													 href="${contextPath }/image/downloadPic/${obj.businessLicense}.jpg" 
+													 href="${contextPath }/image/downloadFile/${obj.businessLicense}.jpg" 
 												</c:when>
 												<c:otherwise>
 													 href= "" 
@@ -310,7 +310,7 @@
 											<img id="businessLicenseImg" 
 												<c:choose>
 													<c:when test="${obj.businessLicense != null && obj.businessLicense != '' }" >
-														 src="${contextPath }/image/downloadPic/${obj.businessLicense}" 
+														 src="${contextPath }/image/downloadFile/${obj.businessLicense}" 
 													</c:when>
 													<c:otherwise>
 														src= "" 
@@ -326,7 +326,7 @@
 										<td>
 											<a id='institutionalFrameworkHref' <c:choose>
 													<c:when test="${obj.institutionalFramework != null && obj.institutionalFramework != '' }" >
-														 href="${contextPath }/image/downloadPic/${obj.institutionalFramework}.jpg" 
+														 href="${contextPath }/image/downloadFile/${obj.institutionalFramework}.jpg" 
 													</c:when>
 													<c:otherwise>
 														href= "" 
@@ -335,7 +335,7 @@
 											<img id="institutionalFrameworkImg" 
 												<c:choose>
 													<c:when test="${obj.institutionalFramework != null && obj.institutionalFramework != '' }" >
-														 src="${contextPath }/image/downloadPic/${obj.institutionalFramework}" 
+														 src="${contextPath }/image/downloadFile/${obj.institutionalFramework}" 
 													</c:when>
 													<c:otherwise>
 														 src = "" 
@@ -356,7 +356,7 @@
 									<a id='taxRegistrationHref' 
 									<c:choose>
 												<c:when test="${obj.taxRegistration != null && obj.taxRegistration != '' }" >
-									href="${contextPath }/image/downloadPic/${obj.taxRegistration}.jpg" 
+									href="${contextPath }/image/downloadFile/${obj.taxRegistration}.jpg" 
 											</c:when>
 											<c:otherwise>
 												 href= "" 
@@ -365,7 +365,7 @@
 										<img id="taxRegistrationImg" 
 											<c:choose>
 												<c:when test="${obj.taxRegistration != null && obj.taxRegistration != '' }" >
-									src="${contextPath }/image/downloadPic/${obj.taxRegistration}" 
+									src="${contextPath }/image/downloadFile/${obj.taxRegistration}" 
 											</c:when>
 											<c:otherwise>
 												 src = "" 

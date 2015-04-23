@@ -15,7 +15,10 @@
 				name,
 			</if>
 			<if test="mark != null and mark != ''">
-				mark
+				mark,
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -26,7 +29,10 @@
 				#{name, jdbcType=VARCHAR},
 			</if>
 			<if test="mark != null and mark != ''">
-				#{mark, jdbcType=VARCHAR}
+				#{mark, jdbcType=VARCHAR},
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 	</insert>
@@ -45,6 +51,9 @@
 			</if>
 			<if test="mark != null and mark != ''">
 				mark = #{mark, jdbcType=VARCHAR, jdbcType=VARCHAR}
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 		where code = #{code, jdbcType=VARCHAR, jdbcType=VARCHAR}
@@ -72,7 +81,22 @@
 				<if test="jobCategory.mark !=null and jobCategory.mark != ''">
 					and mark = #{jobCategory.mark, jdbcType=VARCHAR}
 				</if>
+				<choose>
+					<when test="jobCategory.isActive != null">
+						and is_active = #{jobCategory.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="jobCategory.isActive != null">
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		limit #{start, jdbcType=VARCHAR}, #{size, jdbcType=VARCHAR}
 	</select>

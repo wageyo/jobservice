@@ -21,7 +21,7 @@ public class User extends PrimaryKeyInt {
 	private String title; // 个性标题名
 	private String nickName; // 用户昵称
 	private String headTitle; // 用户头像图片名
-	private byte[] headImage;// 用户头像图片
+	private String headImage;// 用户头像图片
 	private Area area;// 账号所属地地区外键
 
 	public User() {
@@ -128,11 +128,11 @@ public class User extends PrimaryKeyInt {
 		this.area = area;
 	}
 
-	public byte[] getHeadImage() {
+	public String getHeadImage() {
 		return headImage;
 	}
 
-	public void setHeadImage(byte[] headImage) {
+	public void setHeadImage(String headImage) {
 		this.headImage = headImage;
 	}
 

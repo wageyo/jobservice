@@ -3,7 +3,7 @@ package esd.bean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Area {
+public class Area extends PrimaryKeyString{
 
 	private String code; // 地区代码 - 主键
 	private String name; // 地名

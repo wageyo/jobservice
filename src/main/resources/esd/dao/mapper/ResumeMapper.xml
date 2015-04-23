@@ -61,6 +61,7 @@
 		<result column="r_view_count" property="viewCount" jdbcType="INTEGER" />
 		<result column="r_career_test" property="careerTest" jdbcType="VARCHAR" />
 		<result column="r_process_state" property="processState" jdbcType="VARCHAR" />
+		<result column="r_is_active" property="isActive" jdbcType="BIT" />
 		<association property="user" javaType="User" resultMap="ResultUser" />
 		<association property="area" javaType="Area" resultMap="ResultArea" />
 	</resultMap>
@@ -93,7 +94,7 @@
 			r.desire_salary as r_desire_salary, r.provide_food_and_room as r_provide_food_and_room,  r.provide_room as r_provide_room, 
 			r.provide_food as r_provide_food, r.provide_insurance as r_provide_insurance, r.provide_other as r_provide_other, 
 			r.work_shift as r_work_shift, r.state as r_state, r.is_default as r_is_default, r.check_status as r_check_status, 
-			r.view_count as r_view_count, r.career_test r_career_test, r.process_state as r_process_state,
+			r.view_count as r_view_count, r.career_test r_career_test, r.process_state as r_process_state, r.is_active as r_is_active, 
 		u.id as u_id, u.login_name as u_login_name, u.pass_word as u_pass_word, u.identity as u_identity, 
 		a.code as a_code, a.name as a_name 
 	</sql>
@@ -288,8 +289,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode
+					acode,
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>	
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -466,8 +470,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					#{area.code, jdbcType=VARCHAR}
+					#{area.code, jdbcType=VARCHAR}, 
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>	
 	</insert>
@@ -662,6 +669,9 @@
 					acode = #{area.code, jdbcType=VARCHAR},
 				</if>
 			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
+			</if>
 			update_check = update_check + 1
 		</trim>
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
@@ -689,6 +699,14 @@
 					and r.acode = #{area.code, jdbcType=VARCHAR}
 				</if>
 			</if>
+			<choose>
+				<when test="isActive != null">
+					and is_active = #{isActive, jdbcType=BIT}
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 
@@ -768,14 +786,20 @@
 				<if test="resume.isDefault != null">
 					and r.is_default = #{resume.isDefault, jdbcType=BIT} 
 				</if>
+				<choose>
+					<when test="resume.isActive != null">
+						and r.is_active = #{resume.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and r.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="resume != null">
-					<if test="resume.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and r.check_status = 'ok'
+					and r.check_status = 'ok' and r.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>
@@ -847,14 +871,20 @@
 				<if test="resume.isDefault != null">
 					and r.is_default = #{resume.isDefault, jdbcType=BIT} 
 				</if>
+				<choose>
+					<when test="resume.isActive != null">
+						and r.is_active = #{resume.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and r.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="resume != null">
-					<if test="resume.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and r.check_status = 'ok'
+					and r.check_status = 'ok' and r.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>

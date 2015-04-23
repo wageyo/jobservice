@@ -9,37 +9,27 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class BusinessScope {
+public class BusinessScope extends PrimaryKeyInt {
 
-	private Integer id;
 	private String code; // 专业代码
 	private String name; // 专业名称
 	private String mark; // 标识
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "BusinessScope [ code = " + this.code + ", name = " + this.name
-				+ ", mark = " + this.mark + "]";
+		return "BusinessScope [code=" + code + ", name=" + name + ", mark="
+				+ mark + "]";
 	}
 
 	public BusinessScope() {
 	}
 
 	public BusinessScope(Integer id) {
-		this.id = id;
-	}
-	
-	public BusinessScope(String code){
-		this.id = Integer.parseInt(code);
+		super.setId(id);
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	public BusinessScope(String code) {
+		this.code = code;
 	}
 
 	public String getCode() {

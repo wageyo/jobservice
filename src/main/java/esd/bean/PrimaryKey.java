@@ -14,6 +14,7 @@ public class PrimaryKey {
 	private Integer updateCheck; // 更新验证
 	private Date updateDate; // 更新时间
 	private String logUser; // 记录操作人
+	private Boolean isActive; // 是否激活/使用 状态 默认为true, false为未使用或屏蔽状态
 
 	public Date getCreateDate() {
 		return createDate;
@@ -45,6 +46,14 @@ public class PrimaryKey {
 
 	public void setLogUser(String logUser) {
 		this.logUser = logUser;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

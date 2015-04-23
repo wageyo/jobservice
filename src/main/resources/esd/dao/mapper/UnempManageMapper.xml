@@ -13,12 +13,13 @@
 		<result column="um_time" property="time" jdbcType="VARCHAR"/>
 		<result column="um_content" property="content" jdbcType="VARCHAR"/>
 		<result column="um_rid" property="resume.id" jdbcType="INTEGER" />
+		<result column="um_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<sql id="base_column">
 		um.id as um_id, um.create_date as um_create_date, um.update_check as um_update_check, 
 		um.log_user as um_log_user, um.time as um_time, um.content as um_content,
-		um.rid as um_rid
+		um.rid as um_rid, um.is_active as um_is_active
 	</sql>
 	
 	<!-- insert -->
@@ -42,8 +43,11 @@
 			</if>
 			<if test="resume != null">
 				<if test="resume.id != null and resume.id > 0">
-					rid
+					rid, 
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>	
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -59,8 +63,11 @@
 			</if>
 			<if test="resume != null">
 				<if test="resume.id != null and resume.id > 0">
-					#{resume.id, jdbcType=INTEGER}
+					#{resume.id, jdbcType=INTEGER},
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 	</insert>
@@ -88,6 +95,9 @@
 				<if test="resume.id != null and resume.id > 0">
 					rid = #{resume.id, jdbcType=INTEGER},
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT},
 			</if>
 			update_check = update_check + 1
 		</trim>

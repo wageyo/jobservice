@@ -9,7 +9,7 @@ import java.util.List;
  * @author Administrator
  * 
  */
-public class Menu {
+public class Menu  extends PrimaryKeyString{
 	private String id;
 	private String text;
 	private String state;

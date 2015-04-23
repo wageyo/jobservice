@@ -20,6 +20,8 @@
 		<result column="u_title" property="title" jdbcType="VARCHAR"  />
 		<result column="u_nick_name" property="nickName" jdbcType="VARCHAR"  />
 		<result column="u_head_title" property="headTitle" jdbcType="VARCHAR"  />
+		<result column="u_head_image" property="headImage" jdbcType="VARCHAR"  />
+		<result column="u_is_active" property="isActive" jdbcType="BIT" />
 		<association property="area" javaType="Area" resultMap="ResultArea" />
 	</resultMap>
 
@@ -34,7 +36,8 @@
 			u.update_date as u_update_date, u.log_user as u_log_user, u.login_name as u_login_name,
 			u.pass_word as u_pass_word, u.email as u_email, u.phone as u_phone, u.identity as u_identity,
 			u.check_status as u_check_status, u.authority as u_authority, u.title as u_title, 
-			u.nick_name as u_nick_name,u.head_title as u_head_title,
+			u.nick_name as u_nick_name,u.head_title as u_head_title, u.head_image as u_head_image, 
+			u.is_active as u_is_active, 
 		a.code as a_code, a.name as a_name
 	</sql>
 	
@@ -79,13 +82,19 @@
 			<if test="nickName != null and nickName != ''">
 				nick_name,
 			</if>
+			<if test="headTitle != null and headTitle != ''">
+				head_title,
+			</if>
 			<if test="headImage != null and headImage != ''">
 				head_image,
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode
+					acode,
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -120,13 +129,19 @@
 			<if test="nickName != null and nickName != ''">
 				#{nickName, jdbcType=VARCHAR},
 			</if>
+			<if test="headTitle != null and headTitle != ''">
+				#{headTitle, jdbcType=VARCHAR},
+			</if>
 			<if test="headImage != null and headImage != ''">
-				#{headImage, jdbcType=BLOB},
+				#{headImage, jdbcType=VARCHAR},
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					#{area.code, jdbcType=VARCHAR}
+					#{area.code, jdbcType=VARCHAR}, 
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 	</insert>
@@ -156,28 +171,34 @@
 			<if test="phone != '' and phone != null">
 				phone = #{phone, jdbcType=VARCHAR},
 			</if>
-			<if test="identity != null">
+			<if test="identity != null and identity != ''">
 				identity = #{identity, jdbcType=VARCHAR},
 			</if>
-			<if test="checkStatus != null">
+			<if test="checkStatus != null and checkStatus != ''">
 				check_status = #{checkStatus, jdbcType=VARCHAR},
 			</if>
 			<if test="authority != null and authority > 0">
 				authority = #{authority, jdbcType=INTEGER},
 			</if>
-			<if test="title != null">
+			<if test="title != null and title != ''">
 				title = #{title, jdbcType=VARCHAR},
 			</if>
-			<if test="nickName != null">
+			<if test="nickName != null and nickName != ''">
 				nick_name = #{nickName, jdbcType=VARCHAR},
 			</if>
-			<if test="headImage != null">
-				head_image = #{headImage, jdbcType=BLOB},
+			<if test="headTitle != null and headTitle != ''">
+				head_title = #{headTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="headImage != null and headImage != ''">
+				head_image = #{headImage, jdbcType=VARCHAR},
 			</if>
 			<if test="area !=null">
 				<if test="area.code != null and area.code != ''">
 					acode = #{area.code, jdbcType=VARCHAR},
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT},
 			</if>
 			update_check = update_check + 1 
 		</trim>
@@ -237,6 +258,14 @@
 			<if test="nickName != null">
 				and u.nick_name like concat('%', #{nickName, jdbcType=VARCHAR}, '%')
 			</if>
+			<choose>
+				<when test="isActive != null">
+					and u.is_active = #{isActive, jdbcType=BIT}
+				</when>
+				<otherwise>
+					and u.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 
@@ -281,14 +310,20 @@
 						and u.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="user.isActive != null">
+						and u.is_active = #{user.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and u.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="user != null">
-					<if test="user.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and u.check_status = 'ok'
+					and u.check_status = 'ok' and u.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>
@@ -337,14 +372,20 @@
 						and u.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="user.isActive != null">
+						and u.is_active = #{user.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and u.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="user != null">
-					<if test="user.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and u.check_status = 'ok'
+					and u.check_status = 'ok' and u.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>
@@ -391,14 +432,20 @@
 						and u.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="user.isActive != null">
+						and u.is_active = #{user.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and u.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="user != null">
-					<if test="user.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and u.check_status = 'ok'
+					and u.check_status = 'ok' and u.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>
@@ -447,14 +494,20 @@
 						and u.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="user.isActive != null">
+						and u.is_active = #{user.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and u.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="user != null">
-					<if test="user.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and u.check_status = 'ok'
+					and u.check_status = 'ok' and u.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>
@@ -495,7 +548,22 @@
 				<if test="user.nickName != null and user.nickName != ''">
 					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
 				</if>
+				<choose>
+					<when test="user.isActive != null">
+						and u.is_active = #{user.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and u.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="user != null">
+				</when>
+				<otherwise>
+					u.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by u.create_date
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -537,7 +605,22 @@
 				<if test="user.nickName != null and user.nickName != ''">
 					and u.nick_name like concat('%', #{user.nickName, jdbcType=VARCHAR}, '%')
 				</if>
+				<choose>
+					<when test="user.isActive != null">
+						and u.is_active = #{user.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and u.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="user != null">
+				</when>
+				<otherwise>
+					u.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 </mapper>

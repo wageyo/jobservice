@@ -26,6 +26,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import esd.bean.Image;
 import esd.bean.User;
+import esd.common.util.FileUtil;
 import esd.service.ImageService;
 import esd.service.UserService;
 
@@ -47,22 +48,22 @@ public class ImageController {
 	@Autowired
 	private ImageService imageService;
 
-	// 接收上传的的文章中的图片
-	@RequestMapping(value = "/uploadNewsPic", method = RequestMethod.POST)
-	public void importPic(@RequestParam("pic") CommonsMultipartFile pic,
+	// 接收上传的文件
+	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	public void importPic(@RequestParam("pic") CommonsMultipartFile file,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String imageid = request.getParameter("imageId");
 		// ① response 输出相应内容
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter writer = response.getWriter();
-		if (pic == null) {
+		if (file == null) {
 			writer.write(Constants.NOTICE + ":" + "网络发生错误, 上传照片失败.");
 			return;
 		}
 		// 要更新的对象
 		Image image = new Image();
-		image.setImage(pic.getBytes());
+		image.setImage(file.getBytes());
 		String imageId;
 		// 如果存在穿过来的id, 则说明是点了两次以上上传的, 则使用更新, 否则使用新增保存
 		if (imageid != null && !"".equals(imageid)) {
@@ -74,6 +75,13 @@ public class ImageController {
 			}
 		} else {
 			imageId = imageService.save(image);
+			//保存完图片后, 将对应的图片/二进制文件 id保存到对应的关系表中
+			String userid = request.getParameter("userid");
+			if(userid != null &&!"".equals(userid)){
+				User user = userService.getById(Integer.parseInt(userid));
+				user.setHeadImage(imageId);
+				userService.update(user);
+			}
 		}
 		if (imageId != null) {
 			writer.write(Constants.Notice.SUCCESS.getValue() + imageId);
@@ -113,24 +121,13 @@ public class ImageController {
 		return "" + byteFile / mb + "MB";
 	}
 
-	// 下载头像图片的方法
-	@RequestMapping("/downloadPic/{id}")
-	@ResponseBody
-	public byte[] viewWorkerPicGet(@PathVariable(value = "id") String id,
-			HttpServletResponse response) {
-		// response.addHeader("Content-Type", "image/gif");
-		response.setContentType("image/gif");
-		byte[] entity = imageService.getImageById(id);
-		return entity;
-	}
-
 	/**
-	 * 序列化图片文件夹
+	 * 序列化二进制文件到服务器指定文件夹
 	 * 
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/serializaPicture")
+	@RequestMapping("/serialize")
 	@ResponseBody
 	public Map<String, Object> serializePicture(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -138,17 +135,20 @@ public class ImageController {
 		int totalCount = imageService.getTotalCount(null);
 		int success = 0, failure = 0; // 定义导入成功, 失败的数量
 		// 图片采取分批导入到初始文件夹的方式, 防止数量过多, 内存溢出.
-		int batchSize = 100; // 每批到100张
+		int batchSize = 100; // 每批到100个
 		int page = ((totalCount % batchSize) == 0) ? (totalCount / batchSize)
 				: ((totalCount / batchSize) + 1);
 		// 保存文件路径, 为根目录 file/images文件
 		String filePath = request.getSession().getServletContext()
 				.getRealPath("/");
-		filePath += File.separator + "file"+File.separator+"image";
+		filePath += File.separator + "file";
 		File dirFile = new File(filePath);
+		//如果文件夹中有数据, 则先清空, 再导入
+		new FileUtil().deleteFile(dirFile);
 		if (!dirFile.exists()) {
 			dirFile.mkdirs();
 		}
+		
 		for (int i = 0; i < page; i++) {
 			Integer start = i * batchSize;
 			List<Image> list = imageService.getByPage(null, start, batchSize);
@@ -188,4 +188,14 @@ public class ImageController {
 		}
 	}
 
+	// 下载头像图片的方法
+	@RequestMapping("/downloadFile/{id}")
+	@ResponseBody
+	public byte[] viewWorkerPicGet(@PathVariable(value = "id") String id,
+			HttpServletResponse response) {
+		// response.addHeader("Content-Type", "image/gif");
+		response.setContentType("image/gif");
+		byte[] entity = imageService.getImageById(id);
+		return entity;
+	}
 }

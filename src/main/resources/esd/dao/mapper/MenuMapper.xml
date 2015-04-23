@@ -14,6 +14,7 @@
 		<result column="enable" property="enable" jdbcType="TINYINT" />
 		<result column="type_name" property="typeName" jdbcType="VARCHAR" />
 		<result column="authority" property="authority" jdbcType="INTEGER" />
+		<result column="is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 <!-- 	<sql id="base_column">
@@ -51,7 +52,10 @@
 				type_name,
 			</if>
 			<if test="authority != null">
-				authority
+				authority,
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -80,7 +84,10 @@
 				#{type_name, jdbcType=VARCHAR},
 			</if>
 			<if test="authority != null">
-				#{authority, jdbcType=INTEGER}
+				#{authority, jdbcType=INTEGER},
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 	</insert>
@@ -117,7 +124,10 @@
 				type_name = #{typeName, jdbcType=VARCHAR},
 			</if>
 			<if test="authority != null and authority > 0">
-				authority = #{authority, jdbcType=INTEGER}
+				authority = #{authority, jdbcType=INTEGER},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
 			</if>
 		</set>
 		where id = #{id, jdbcType=VARCHAR}
@@ -151,7 +161,22 @@
 				<if test="menu.authority != null and menu.authority > 0">
 				 	and authority = #{menu.authority, jdbcType=INTEGER}	
 				</if>
+				<choose>
+					<when test="menu.isActive != null">
+						and is_active = #{menu.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="menu != null">
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>

@@ -128,7 +128,7 @@
 											<img id="newsImage" 
 												<c:choose>
 													<c:when test="${obj.imageId != null && obj.imageId != '' }" >
-														 src="${contextPath }/image/downloadPic/${obj.imageId}" 
+														 src="${contextPath }/image/downloadFile/${obj.imageId}" 
 													</c:when>
 													<c:otherwise>
 														 src = "" 

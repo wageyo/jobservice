@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class Image extends PrimaryKey_String {
+public class Image extends PrimaryKeyString {
 
 	private byte[] image;// 图片
 	private String imageName; // 图片文件名

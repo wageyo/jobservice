@@ -290,7 +290,7 @@
 					<div class="photo">
 						<dl id="scrollimg2" class="tagon3">
 							<c:forEach items="${imagesList }" var="n" varStatus="status">
-								<dt class="pic${status.index + 1 }"> <a title="${n.title }"  href="${contextPath }/news/getOneForShow?id=${n.id}"> <img title="${n.title }" alt="${n.title }" style=" width:255px; height:208px; " src="${contextPath }/image/downloadPic/${n.imageId}" /> </a> </dt>
+								<dt class="pic${status.index + 1 }"> <a title="${n.title }"  href="${contextPath }/news/getOneForShow?id=${n.id}"> <img title="${n.title }" alt="${n.title }" style=" width:255px; height:208px; " src="${contextPath }/image/downloadFile/${n.imageId}" /> </a> </dt>
 								<dd class="tag${status.index + 1 }"> <a onfocus="imgScroll(${status.index + 1 })" onmousemove="imgScroll(${status.index + 1 })"  title="${n.title }" href="">${status.index + 1 }</a> </dd>
 							</c:forEach>
 						</dl>

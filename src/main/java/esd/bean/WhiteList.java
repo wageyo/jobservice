@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class WhiteList extends PrimaryKey_String {
+public class WhiteList extends PrimaryKeyString {
 
 	private String title; // 域名名称
 	private String domainName; // 域名

@@ -10,12 +10,14 @@
 		<result column="u_login_name" property="loginName" jdbcType="VARCHAR" />
 		<result column="u_pass_word" property="passWord" jdbcType="VARCHAR" />
 		<result column="u_identity" property="identity" jdbcType="VARCHAR" />
+		<result column="u_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- result map of Area -->
 	<resultMap id="ResultArea" type="Area">
 		<id column="a_code" property="code" jdbcType="VARCHAR"  />
 		<result column="a_name" property="name" jdbcType="VARCHAR"  />
+		<result column="a_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- result map of BusinessScope -->
@@ -23,6 +25,7 @@
 		<id column="b_id" property="id" jdbcType="INTEGER"  />
 		<result column="b_name" property="name" jdbcType="VARCHAR"  />
 		<result column="b_code" property="code" jdbcType="VARCHAR"  />
+		<result column="b_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- result map of Company -->
@@ -56,6 +59,7 @@
 		<result column="c_institutional_framework" property="institutionalFramework" jdbcType="VARCHAR" />
 		<result column="c_tax_registration" property="taxRegistration" jdbcType="VARCHAR" />
 		<result column="c_business_license" property="businessLicense" jdbcType="VARCHAR" />
+		<result column="c_is_active" property="isActive" jdbcType="BIT" />
 		<association property="user" javaType="User" resultMap="ResultUser"/>
 		<association property="area" javaType="Area" resultMap="ResultArea"/>
 		<association property="businessScope" javaType="BusinessScope" resultMap="ResultBusinessScope" />
@@ -71,10 +75,11 @@
 			c.lao_wang_code as c_lao_wang_code, c.scale as c_scale, c.nature as c_nature, c.economy_type as c_economy_type, 
 			c.remark c_remark, c.view_count as c_view_count, c.check_status as c_check_status,			
 			c.institutional_framework as c_institutional_framework,
-			c.tax_registration as c_tax_registration,c.business_license as c_business_license,			
-		u.id as u_id, u.login_name as u_login_name, u.pass_word as u_pass_word, u.identity as u_identity, 
-		a.code as a_code, a.name as a_name,
-		b.id as b_id, b.name as b_name, b.code as b_code
+			c.tax_registration as c_tax_registration,c.business_license as c_business_license,	
+			c.is_active as c_is_active, 		
+		u.id as u_id, u.login_name as u_login_name, u.pass_word as u_pass_word, u.identity as u_identity, u.is_active as u_is_active, 
+		a.code as a_code, a.name as a_name, a.is_active as a_is_active, 
+		b.id as b_id, b.name as b_name, b.code as b_code, b.is_active as b_is_active 
 	</sql>
 	
 	<sql id="from_table">
@@ -164,7 +169,6 @@
 					uid,
 				</if>
 			</if>
-			
 			<if test="businessLicense != null and businessLicense != ''">
 				business_license,
 			</if>
@@ -182,8 +186,11 @@
 			</if>
 			<if test="businessScope != null">
 				<if test="businessScope.id != null and businessScope.id > 0">
-					bid
+					bid,
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -259,7 +266,6 @@
 					#{user.id, jdbcType=INTEGER},
 				</if>
 			</if>
-			
 			<if test="businessLicense != null and businessLicense != ''">
 				#{businessLicense, jdbcType=VARCHAR},
 			</if>
@@ -269,8 +275,6 @@
 			<if test="taxRegistration != null and taxRegistration != ''">
 				#{taxRegistration, jdbcType=VARCHAR},
 			</if>
-			
-			
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
 					#{area.code, jdbcType=VARCHAR},
@@ -278,8 +282,11 @@
 			</if>
 			<if test="businessScope != null">
 				<if test="businessScope.id != null and businessScope.id > 0">
-					#{businessScope.id, jdbcType=INTEGER}
+					#{businessScope.id, jdbcType=INTEGER},
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 	</insert>	
@@ -384,6 +391,9 @@
 					bid = #{businessScope.id, jdbcType=INTEGER},
 				</if>
 			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
+			</if>
 			update_check = update_check + 1 
 		</trim>
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
@@ -429,6 +439,14 @@
 			<if test="checkStatus != null">
 				and c.check_status = #{checkStatus, jdbcType=VARCHAR}
 			</if>
+			<choose>
+				<when test="isActive != null">
+					and is_active = #{isActive, jdbcType=BIT}
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 	
@@ -459,14 +477,20 @@
 						and c.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="company.isActive != null">
+						and c.is_active = #{company.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and c.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="company != null">
-					<if test="company.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and c.check_status = 'ok'
+					and c.check_status = 'ok' and c.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>
@@ -501,14 +525,20 @@
 						and c.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="company.isActive != null">
+						and c.is_active = #{company.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and c.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="company != null">
-					<if test="company.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and c.check_status = 'ok'
+					and c.check_status = 'ok' and c.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>

@@ -51,6 +51,7 @@ public class Constants {
 	public static final String USERNICKNAME = "nickname"; // 用户昵称
 	public static final String USERCOMPANYID = "companyid"; // 企业id
 	public static final String USERREGISTERTIME = "registertime"; // 注册时间
+	public static final String USERHEADIMAGE = "headimage";	//头像图片id
 	public static final String AREACODE = "areacode"; // 地区key
 	public static final String AREANAME = "areaname"; // 地区名称
 	public static final String CURRENT_AREA = "10450000"; // 当前网站地区code--用于首页等地方

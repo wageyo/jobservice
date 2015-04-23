@@ -17,13 +17,14 @@
 		<result column="i_new_width" property="newWidth" jdbcType="VARCHAR" />
 		<result column="i_new_height" property="newHeight" jdbcType="VARCHAR" />
 		<result column="i_mark" property="mark" jdbcType="VARCHAR" />
+		<result column="i_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 
 	<sql id="base_column">
 		i.id as i_id, i.create_date as i_create_date, i.update_check as i_update_check, 
 			i.update_date as i_update_date, i.log_user as i_log_user, i.image_name as i_image_name,
 			i.image_title as i_image_title, i.default_width as i_default_width, i.default_height as i_default_height, 
-			i.new_width as i_new_width, i.new_height as i_new_height, i.mark as i_mark
+			i.new_width as i_new_width, i.new_height as i_new_height, i.mark as i_mark, i.is_active as i_is_active
 	</sql>
 	
 	<!-- insert -->
@@ -59,7 +60,10 @@
 				new_height,
 			</if>
 			<if test="mark != null and mark != ''">
-				mark
+				mark,
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -89,7 +93,10 @@
 				#{newHeight, jdbcType=VARCHAR},
 			</if>
 			<if test="mark != null and mark != ''">
-				#{mark, jdbcType=VARCHAR}
+				#{mark, jdbcType=VARCHAR},
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 	</insert>
@@ -129,7 +136,10 @@
 				new_height = #{newHeight, jdbcType=VARCHAR},
 			</if>
 			<if test="mark != null and mark != ''">
-				mark = #{mark, jdbcType=VARCHAR}
+				mark = #{mark, jdbcType=VARCHAR}, 
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT},
 			</if>
 			update_check = update_check + 1 
 		</trim>
@@ -172,7 +182,22 @@
 				<if test="image.imageTitle != '' and image.imageTitle != null">
 					and i.image_title like concat('%', #{image.imageTitle, jdbcType=VARCHAR}, '%')
 				</if>
+				<choose>
+					<when test="image.isActive != null">
+						and i.is_active = #{image.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and i.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="image != null">
+				</when>
+				<otherwise>
+					and i.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by i.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -190,7 +215,22 @@
 				<if test="image.imageTitle != '' and image.imageTitle != null">
 					and i.image_title like concat('%', #{image.imageTitle, jdbcType=VARCHAR}, '%')
 				</if>
+				<choose>
+					<when test="image.isActive != null">
+						and i.is_active = #{image.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and i.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="image != null">
+				</when>
+				<otherwise>
+					and i.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 

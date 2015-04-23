@@ -10,6 +10,7 @@
 		<result column="a_pyName" property="pyName" />
 		<result column="a_abbr" property="abbr" />
 		<result column="a_mark" property="mark" />
+		<result column="a_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- 查询Parameter 地名 -->
@@ -19,12 +20,13 @@
 		<result column="p_value" property="value" />
 		<result column="p_type" property="type" />
 		<result column="p_mark" property="mark" />
+		<result column="p_is_active" property="isActive" jdbcType="BIT" />
 		<association property="area" javaType="Parameter" resultMap="ResultArea" />
 	</resultMap>
 	
 	<sql id="base_column">
-		p.id as p_id, p.name as p_name, p.value as p_value, p.type as p_type, p.mark as p_mark,
- 		a.code as a_code, a.name as a_name, a.pyname as a_pyName, a.abbr as a_abbr, a.mark as a_mark
+		p.id as p_id, p.name as p_name, p.value as p_value, p.type as p_type, p.mark as p_mark, p.is_active as p_is_active, 
+ 		a.code as a_code, a.name as a_name, a.pyname as a_pyName, a.abbr as a_abbr, a.mark as a_mark, a.is_active as a_is_active 
 	</sql>
 	
 	<!-- insert -->
@@ -48,8 +50,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode
+					acode,
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -70,8 +75,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					#{area.code,jdbcType=VARCHAR}
+					#{area.code,jdbcType=VARCHAR},
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 	</insert>
@@ -99,8 +107,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode = #{area.code, jdbcType=VARCHAR}
+					acode = #{area.code, jdbcType=VARCHAR},
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 		where id= #{id, jdbcType=VARCHAR}
@@ -203,10 +214,25 @@
 				</if>
 				<if test="parameter.area != null">
 					<if test="parameter.area.code != null and parameter.area.code != ''">
-						and acode = #{parameter.area.code, jdbcType=VARCHAR}
+						and p.acode = #{parameter.area.code, jdbcType=VARCHAR}
 					</if>
 				</if>
+				<choose>
+					<when test="parameter.isActive != null">
+						and p.is_active = #{parameter.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and p.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="parameter != null">
+				</when>
+				<otherwise>
+					and p.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by type, id asc;
 	</select>

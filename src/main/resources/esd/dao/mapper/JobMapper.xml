@@ -7,12 +7,14 @@
 	<resultMap id="ResultArea" type="Area">
 		<id column="a_code" property="code" jdbcType="VARCHAR" />
 		<result column="a_name" property="name" jdbcType="VARCHAR" />
+		<result column="a_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- result map of JobCategory -->
 	<resultMap id="ResultJobCategory" type="JobCategory">
 		<id column="jc_code" property="code" jdbcType="VARCHAR" />
 		<result column="jc_name" property="name" jdbcType="VARCHAR" />
+		<result column="jc_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- result map of Job -->
@@ -45,6 +47,7 @@
 		<result column="j_lunch" property="lunch" jdbcType="TINYINT" />
 		<result column="j_check_status" property="checkStatus" jdbcType="VARCHAR" />
 		<result column="j_mark" property="mark" jdbcType="VARCHAR" />
+		<result column="j_is_active" property="isActive" jdbcType="BIT" />
 		<association property="company" javaType="Company" resultMap="ResultCompany" jdbcType="VARCHAR" />
 		<association property="area" javaType="Area" resultMap="ResultArea" jdbcType="VARCHAR" />
 		<association property="jobCategory" javaType="JobCategory" resultMap="ResultJobCategory" jdbcType="VARCHAR" />
@@ -78,6 +81,7 @@
 		<result column="c_remark" property="remark" jdbcType="VARCHAR" />
 		<result column="c_view_count" property="viewCount" jdbcType="INTEGER" />
 		<result column="c_check_status" property="checkStatus" jdbcType="VARCHAR" />
+		<result column="c_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<sql id="base_column">
@@ -88,16 +92,17 @@
 			job.description as j_description, 
 			job.provide_benefit as j_provide_benefit,job.contact_person as j_contact_person, job.contact_tel as j_contact_tel, 
 			job.contact_email as j_contact_email, job.view_count as j_view_count, job.nature as j_nature, job.effective_time as j_effective_time, 
-			job.work_place as j_work_place, job.bed as j_bed, job.lunch as j_lunch, job.check_status as j_check_status, job.mark as j_mark,  
+			job.work_place as j_work_place, job.bed as j_bed, job.lunch as j_lunch, job.check_status as j_check_status, job.mark as j_mark,
+			job.is_active as job_is_active,   
 		c.id as c_id, c.create_date as c_create_date, c.update_check as c_update_check, c.update_date as c_update_date, c.log_user as c_log_user,
 			c.name as c_name, c.corporate_representative as c_corporate_representative, c.contact_person as c_contact_person, 
 			c.telephone as c_telephone, c.contact_dept as c_contact_dept, c.fax as c_fax, c.email as c_email, c.address as c_address, 
 			c.introduction as c_introduction, c.organization_code as c_organization_code, c.commercial_code as c_commercial_code, 
 			c.tax_code as c_tax_code, c.social_security_code as c_social_security_code, c.web_site_id as c_web_site_id, 
 			c.lao_wang_code as c_lao_wang_code, c.scale as c_scale, c.nature as c_nature, c.economy_type as c_economy_type, 
-			c.remark c_remark, c.view_count as c_view_count, c.check_status as c_check_status,
-		a.code as a_code, a.name as a_name,
-		jc.code as jc_code, jc.name as jc_name 
+			c.remark c_remark, c.view_count as c_view_count, c.check_status as c_check_status, c.is_active as c_is_active, 
+		a.code as a_code, a.name as a_name, a.is_active as a_is_active, 
+		jc.code as jc_code, jc.name as jc_name , jc.is_active as jc_is_active 
 	</sql>
 	<sql id="base_column_mate">
 		job.id as j_id,	job.create_date as j_create_date, job.update_check as j_update_check, job.update_date as j_update_date, job.log_user as j_log_user,
@@ -107,7 +112,8 @@
 			job.description as j_description, 
 			job.provide_benefit as j_provide_benefit,job.contact_person as j_contact_person, job.contact_tel as j_contact_tel, 
 			job.contact_email as j_contact_email, job.view_count as j_view_count, job.nature as j_nature, job.effective_time as j_effective_time, 
-			job.work_place as j_work_place, job.bed as j_bed, job.lunch as j_lunch, job.check_status as j_check_status, job.mark as j_mark,  
+			job.work_place as j_work_place, job.bed as j_bed, job.lunch as j_lunch, job.check_status as j_check_status, job.mark as j_mark,
+			job.is_active as job_is_active,    
 		a.code as a_code, a.name as a_name,
 		jc.code as jc_code, jc.name as jc_name 
 	</sql>
@@ -216,8 +222,11 @@
 			</if>
 			<if test="jobCategory != null">
 				<if test="jobCategory.code != null and jobCategory.code != ''">
-					jccode
+					jccode,
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -308,6 +317,9 @@
 				<if test="jobCategory.code != null and jobCategory.code != ''">
 					#{jobCategory.code, jdbcType=VARCHAR}
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 	</insert>
@@ -416,6 +428,9 @@
 					jccode = #{jobCategory.code, jdbcType=VARCHAR},
 				</if>
 			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}, 
+			</if>
 			update_check = update_check + 1 
 		</trim>
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
@@ -456,9 +471,14 @@
 					and a.code like concat('',#{area.code},'')
 				</if>
 			</if>
-<!--			<if test="jobCategory != null and jobCategory.code != null and jobCategory.code != '' and jobCategory.code != '不限'">-->
-<!--				and jc.code like concat('%',#{jobCategory.code},'%') -->
-<!--			</if>-->
+			<choose>
+				<when test="isActive != null">
+					and is_active = #{isActive, jdbcType=BIT}
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by job.createDate desc
 	</select>
@@ -536,14 +556,20 @@
 						and job.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="job.isActive != null">
+						and job.is_active = #{job.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and job.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="job != null">
-					<if test="job.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and job.check_status = 'ok'
+					and job.check_status = 'ok' and job.is_active = 1
 				</otherwise>
 			</choose>
 		</trim>
@@ -623,6 +649,14 @@
 						and job.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="job.isActive != null">
+						and job.is_active = #{job.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and job.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="job != null">
@@ -630,7 +664,7 @@
 					</if>
 				</when>
 				<otherwise>
-					and job.check_status = 'ok'
+					and job.check_status = 'ok' and job.is_active = 1
 				</otherwise>
 			</choose>
 		</trim>
@@ -725,14 +759,20 @@
 						and job.check_status = 'ok'
 					</otherwise>
 				</choose>
+				<choose>
+					<when test="job.isActive != null">
+						and job.is_active = #{job.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and job.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
 			<choose>
 				<when test="job != null">
-					<if test="job.checkStatus != null">
-					</if>
 				</when>
 				<otherwise>
-					and job.check_status = 'ok'
+					and job.check_status = 'ok' and job.is_active  = 1 
 				</otherwise>
 			</choose>
 		</trim>

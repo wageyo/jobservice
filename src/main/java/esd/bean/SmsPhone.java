@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class SmsPhone extends PrimaryKey_String {
+public class SmsPhone extends PrimaryKeyString {
 
 	private String name; // 标题
 	private String phone; // 手机号码

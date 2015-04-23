@@ -6,7 +6,7 @@ package esd.bean;
  * @author yufu
  * @email ilxly01@126.com 2015-4-17
  */
-public class PrimaryKey_String extends PrimaryKey {
+public class PrimaryKeyString extends PrimaryKey {
 
 	private String id; // 主键
 

@@ -177,6 +177,7 @@ public class CookieHelper {
 						String.valueOf(user.getAuthority()));
 				setCookie(response, Constants.USERREGISTERTIME,
 						KitService.dateForShow(user.getCreateDate()));
+				setCookie(response, Constants.USERHEADIMAGE,user.getHeadImage());
 			} else {
 				// 管理员用户存放cookie方式
 				setCookie(response, Constants.ADMINUSERID,
@@ -230,6 +231,7 @@ public class CookieHelper {
 		setCookie(response, Constants.USERIDENTITY, null, 0);
 		setCookie(response, Constants.USERAUTHORITY, null, 0);
 		setCookie(response, Constants.USERREGISTERTIME, null, 0);
+		setCookie(response,Constants.USERHEADIMAGE,null,0);
 		setCookie(response, Constants.USERCOMPANYID, null, 0);
 		if (bl) {
 			setCookie(response, Constants.AREACODE, null, 0);

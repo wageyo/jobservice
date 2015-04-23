@@ -17,12 +17,14 @@
 		<result column="we_leave_reason" property="leaveReason" jdbcType="VARCHAR" />
 		<result column="we_evaluation" property="evaluation" jdbcType="VARCHAR" />
 		<result column="we_rid" property="resume.id" jdbcType="INTEGER" />
+		<result column="we_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<sql id="base_column">
 		we.id as we_id, we.create_date as we_create_date, we.update_check as we_update_check, we.update_date as we_update_date,
 		we.log_user as we_log_user, we.company_name as we_company_name, we.job_name as we_job_name, we.job_content as we_job_content,
-		we.work_time as we_work_time, we.leave_reason as we_leave_reason, we.evaluation as we_evaluation, we.rid as we_rid
+		we.work_time as we_work_time, we.leave_reason as we_leave_reason, we.evaluation as we_evaluation, we.rid as we_rid,
+		we.is_active as we_is_active
 	</sql>
 	
 	<!-- insert -->
@@ -59,8 +61,11 @@
 			</if>
 			<if test="resume != null">
 				<if test="resume.id != null and resume.id > 0">
-					rid
+					rid,
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -88,8 +93,11 @@
 			</if>
 			<if test="resume != null">
 				<if test="resume.id != null and resume.id > 0">
-					#{resume.id, jdbcType=INTEGER}
+					#{resume.id, jdbcType=INTEGER},
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>	
 	</insert>
@@ -130,6 +138,9 @@
 					rid = #{resume.id, jdbcType=INTEGER},
 				</if>
 			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}, 
+			</if>
 			update_check = update_check + 1 
 		</trim>
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
@@ -151,6 +162,6 @@
 	<select id="getByResume" resultMap="ResultWorkExperience" parameterType="java.lang.Integer">
 		select <include refid="base_column"/> 
 		from work_experience as we 
-		where rid= #{rid, jdbcType=INTEGER}
+		where we.rid= #{rid, jdbcType=INTEGER} and we.is_active = 1
 	</select>
 </mapper>

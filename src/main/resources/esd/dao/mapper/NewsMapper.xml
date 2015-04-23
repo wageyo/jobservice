@@ -16,6 +16,7 @@
 		<result column="n_source" property="source" jdbcType="VARCHAR" />
 		<result column="n_type" property="type" jdbcType="VARCHAR" />
 		<result column="n_image_id" property="imageId" jdbcType="VARCHAR" />
+		<result column="n_is_active" property="isActive" jdbcType="BIT" />
 		<association property="area" javaType="Area" resultMap="ResultArea"/>
 	</resultMap>
 
@@ -23,13 +24,14 @@
 	<resultMap id="ResultArea" type="Area">
 		<id column="a_code" property="code" jdbcType="VARCHAR"  />
 		<result column="a_name" property="name" jdbcType="VARCHAR"  />
+		<result column="a_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<sql id="base_column">
 		n.id as n_id, n.create_date as n_create_date, n.update_check as n_update_check, n.update_date as n_update_date, 
-		n.log_user as n_log_user, 
-		n.title as n_title, n.content as n_content, n.author as n_author, n.source as n_source, n.type as n_type, n.image_id as n_image_id, 
-		a.code as a_code, a.name as a_name
+		n.log_user as n_log_user, n.title as n_title, n.content as n_content, n.author as n_author, n.source as n_source, 
+		n.type as n_type, n.image_id as n_image_id,  n.is_active as n_is_active, 
+		a.code as a_code, a.name as a_name, a.is_active as a_is_active
 	</sql>
 	
 	<sql id="from_table">
@@ -67,8 +69,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					acode
+					acode,
 				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -96,8 +101,11 @@
 			</if>
 			<if test="area != null">
 				<if test="area.code != null and area.code != ''">
-					#{area.code, jdbcType=VARCHAR}
+					#{area.code, jdbcType=VARCHAR}, 
 				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>	
 	</insert>
@@ -138,6 +146,9 @@
 					acode = #{area.code, jdbcType=VARCHAR}
 				</if>
 			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
+			</if>
 			update_check = update_check + 1 	
 		</trim>
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
@@ -177,6 +188,14 @@
 					and n.acode = #{area.code, jdbcType=VARCHAR}
 				</if>
 			</if>
+			<choose>
+				<when test="isActive != null">
+					and is_active = #{isActive, jdbcType=BIT}
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 
@@ -204,9 +223,24 @@
 					</if>
 				</if>
 				<if test="news.updateDate != null and news.updateDate != ''">
-				 and n.update_date between #{news.updateDate, jdbcType=TIMESTAMP} and now()
+				 	and n.update_date between #{news.updateDate, jdbcType=TIMESTAMP} and now()
 				</if>
+				<choose>
+					<when test="news.isActive != null">
+						and n.is_active = #{news.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and n.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="news != null">
+				</when>
+				<otherwise>
+					and n.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by n.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -236,9 +270,24 @@
 					</if>
 				</if>
 				<if test="news.updateDate != null and news.updateDate != ''">
-				 and n.update_date between #{news.updateDate, jdbcType=TIMESTAMP} and now()
+				 	and n.update_date between #{news.updateDate, jdbcType=TIMESTAMP} and now()
 				</if>
+				<choose>
+					<when test="news.isActive != null">
+						and n.is_active = #{news.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and n.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="news != null">
+				</when>
+				<otherwise>
+					and n.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select>
 
@@ -265,7 +314,22 @@
 					  and	n.acode like concat('%',#{news.area.code,jdbcType=VARCHAR},'%')
 					</if>
 				</if>
+				<choose>
+					<when test="news.isActive != null">
+						and n.is_active = #{news.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and n.is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="news != null">
+				</when>
+				<otherwise>
+					and n.is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by n.create_date desc
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}

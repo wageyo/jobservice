@@ -62,7 +62,7 @@
 					<div class="news_contain" style="text-align: left;font-size: 13px;width: 690px;  margin:0 auto;color:#000000;text-indent:0px;margin-bottom: 10px;">
 						<!-- 如果存在图片则显示出来 -->
 						<c:if test="${news.imageId != null && news.imageId != '' }">
-							<p style="text-align:center;"><img src="${contextPath }/image/downloadPic/${news.imageId}" style="width:500px;"/></p>
+							<p style="text-align:center;"><img src="${contextPath }/image/downloadFile/${news.imageId}" style="width:500px;"/></p>
 						</c:if>
 						<p>${news.content }</p>
 					</div>

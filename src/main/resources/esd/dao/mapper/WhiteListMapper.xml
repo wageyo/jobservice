@@ -15,6 +15,7 @@
 		<result column="full_name" property="fullName" jdbcType="VARCHAR" />
 		<result column="ip" property="ip" jdbcType="VARCHAR" />
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
 	<!-- insert -->
@@ -41,7 +42,10 @@
 				ip,
 			</if>
 			<if test="remark != null and remark != ''">
-				remark
+				remark,
+			</if>
+			<if test="isActive != null">
+				is_active
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -62,7 +66,10 @@
 				#{ip, jdbcType=VARCHAR},
 			</if>
 			<if test="remark != null and remark != ''">
-				#{remark, jdbcType=VARCHAR}
+				#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
 			</if>
 		</trim>	
 	</insert>
@@ -94,7 +101,10 @@
 				ip = #{ip, jdbcType=VARCHAR},
 			</if>
 			<if test="remark != null and remark != ''">
-				remark = #{remark, jdbcType=VARCHAR}
+				remark = #{remark, jdbcType=VARCHAR}, 
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
 			</if>
 		</trim>
 		where id = #{id, jdbcType=VARCHAR}
@@ -125,7 +135,22 @@
 				<if test="whiteList.ip != null and whiteList.ip != ''">
 					and ip = #{whiteList.ip, jdbcType=VARCHAR}
 				</if>
+				<choose>
+					<when test="whiteList.isActive != null">
+						and is_active = #{whiteList.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="whiteList != null">
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 		order by create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
@@ -149,7 +174,22 @@
 				<if test="whiteList.ip != null and whiteList.ip != ''">
 					and ip = #{whiteList.ip, jdbcType=VARCHAR}
 				</if>
+				<choose>
+					<when test="whiteList.isActive != null">
+						and is_active = #{whiteList.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and is_active = 1 
+					</otherwise>
+				</choose>
 			</if>
+			<choose>
+				<when test="whiteList != null">
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
 		</trim>
 	</select> 
 	

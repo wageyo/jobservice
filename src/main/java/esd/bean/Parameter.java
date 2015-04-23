@@ -6,8 +6,7 @@ package esd.bean;
  * @author Administrator
  * 
  */
-public class Parameter {
-	private String id;
+public class Parameter extends PrimaryKeyString {
 	private String name; // 名字
 	private String value;
 	private String type; // 何种参数,参数类型
@@ -16,16 +15,8 @@ public class Parameter {
 
 	@Override
 	public String toString() {
-		return "Parameter [id=" + id + ", name=" + name + ", value=" + value
-				+ ", type=" + type + ", area=" + area + ", mark=" + mark + "]";
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+		return "Parameter [name=" + name + ", value=" + value + ", type="
+				+ type + ", mark=" + mark + ", area=" + area + "]";
 	}
 
 	public String getName() {
