@@ -15,6 +15,7 @@ public class User extends PrimaryKeyInt {
 	private String passWord; // 密码
 	private String email; // 注册的邮箱
 	private String phone; // 联系电话
+	private String qq; // 联系qq
 	private String identity; // 账号类型:admin-管理员用户,individual-个人用户,company-公司用户,sa-超级管理员账号
 	private String checkStatus; // 审核状态
 	private Integer authority; // 权限： 999为管理员权限
@@ -70,6 +71,14 @@ public class User extends PrimaryKeyInt {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
 	}
 
 	public String getIdentity() {

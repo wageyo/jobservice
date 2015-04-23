@@ -14,6 +14,7 @@
 		<result column="u_pass_word" property="passWord" jdbcType="VARCHAR" />
 		<result column="u_email" property="email" jdbcType="VARCHAR" />
 		<result column="u_phone" property="phone" jdbcType="VARCHAR" />
+		<result column="u_qq" property="qq" jdbcType="VARCHAR" />
 		<result column="u_identity" property="identity" jdbcType="VARCHAR"  />
 		<result column="u_check_status" property="checkStatus" jdbcType="VARCHAR"  />
 		<result column="u_authority" property="authority" jdbcType="INTEGER"  />
@@ -34,7 +35,8 @@
 	<sql id="base_column">
 		u.id as u_id, u.create_date as u_create_date, u.update_check as u_update_check, 
 			u.update_date as u_update_date, u.log_user as u_log_user, u.login_name as u_login_name,
-			u.pass_word as u_pass_word, u.email as u_email, u.phone as u_phone, u.identity as u_identity,
+			u.pass_word as u_pass_word, u.email as u_email, u.phone as u_phone, 
+			u.qq as u_qq, u.identity as u_identity,
 			u.check_status as u_check_status, u.authority as u_authority, u.title as u_title, 
 			u.nick_name as u_nick_name,u.head_title as u_head_title, u.head_image as u_head_image, 
 			u.is_active as u_is_active, 
@@ -66,6 +68,9 @@
 			</if>
 			<if test="phone != null and phone != ''">
 				phone,
+			</if>
+			<if test="qq != null and qq != ''">
+				qq,
 			</if>
 			<if test="identity != null and identity != ''">
 				identity,
@@ -113,6 +118,9 @@
 			</if>
 			<if test="phone != null and phone != ''">
 				#{phone, jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null and qq != ''">
+				#{qq, jdbcType=VARCHAR},
 			</if>
 			<if test="identity != null and identity != ''">
 				#{identity, jdbcType=VARCHAR},
@@ -182,6 +190,9 @@
 			</if>
 			<if test="title != null and title != ''">
 				title = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null and qq != ''">
+				qq = #{qq, jdbcType=VARCHAR},
 			</if>
 			<if test="nickName != null and nickName != ''">
 				nick_name = #{nickName, jdbcType=VARCHAR},

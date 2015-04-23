@@ -97,6 +97,28 @@ $(document).ready(function(){
 		}
 	});
 	
+	//qq号码
+	$('#qq').focus(function(){
+		$('#showQqImg').css('color','black');
+		$('#showQqMsg').html('qq号码.');
+	}).blur(function(){
+		var nickName = $(this).val();
+		if(nickName != null  && nickName != '' && nickName != undefined){
+			if(!verify.isNumber(nickName)){
+				$('#showQqImg').removeClass('CorrectFormtips ErrorFormtips').addClass('ErrorFormtips');
+				$('#showQqMsg').css('color','red').html('qq号码只能为数字');
+			}else{
+				$('#showQqImg').removeClass('CorrectFormtips ErrorFormtips').addClass('CorrectFormtips');
+				$('#showQqMsg').css('color','black').html('校验正确.');
+				$('#email').val($('#qq').val() + '@qq.com');
+			}
+		}else{
+			$('#showQqImg').removeClass('CorrectFormtips ErrorFormtips');
+			$('#showQqMsg').css('color','#606060').html('qq号码.');
+			$('#email').val('');
+		}
+	});
+	
 	//email
 	$('#email').focus(function(){
 		$('#showEmailImg').css('color','black');

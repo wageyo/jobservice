@@ -115,6 +115,18 @@
 		                    <div id="showPhoneMsg" class="SetFloatLeft">请填写联系方式, 方便残疾人就业指导中心联系你及推送招聘信息用.</div>
 		                    </td>
 		                </tr> 
+		                <tr>
+		                    <td class="textAlignRight FontSize">qq：</td>
+		                    <td class="printText">
+		                        <div class="print">
+		                        	<input name="qq" id="qq" class="TextInput" type="text" />
+		                        </div>
+		                    </td>
+		                    <td class="textAlignLeft">
+		                    <div id="showQqImg" class="SetFloatLeft"></div>
+		                    <div id="showQqMsg" class="SetFloatLeft">qq号码</div>
+		                    </td>
+		                </tr> 
 		                <tr class="bgColor">
 		                    <td style="width:100px" class="textAlignRight FontSize"><span class="red">*</span>Email：</td>
 		                    <td style=" width:280px" class="printText">
