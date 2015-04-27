@@ -130,13 +130,13 @@
 													src="${contextPath}/images/Sy_HRsqImage/Square.jpg"
 													style="padding-left: 8px;line-height: 25p;text-align: left;" />
 													<span style="margin-left:0px;">${news.title }</span> </a>
-											</div></td>
+											</div>
+										</td>
 										<td style="width:80px"><c:if
 												test="${news.createDate != null}">
 												<fmt:formatDate value="${news.createDate}" type="both"
 													dateStyle="long" pattern="yyyy-MM-dd" var="createDate" />
-											</c:if> <span style="margin-right:0px;">${createDate }</span>
-										</td>
+											</c:if> <span style="margin-right:0px;">${createDate }</span></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -147,7 +147,6 @@
 			</div>
 		</div>
 	</div>
-
 	<jsp:include page="../formatter/footer.jsp" />
 </body>
 </html>

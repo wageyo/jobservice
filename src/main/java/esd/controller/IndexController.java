@@ -508,83 +508,81 @@ public class IndexController {
 		List<Parameter> plist = parameterService.getAll();
 		// 各种参数
 		mav.addObject("params", plist);
-
-		// 获得简历总数
-		int totalCount = newsService.getTotalCount(null);
-		mav.addObject("totalCount", totalCount);
-		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中;
-		// 有则直接使用传递过来的
-		String acode = request.getParameter("acode");
-		String localCode = CookieHelper.getCookieValue(request,
-				Constants.AREACODE);
-		log.info("acode [" + acode + "]");
-		if (acode != null && !"".equals(acode)) {
-			if (localCode == null || "".equals(localCode)) {
-				CookieHelper.setCookie(response, Constants.AREACODE, acode);
-			}
-		} else {
-			acode = localCode;
-		}
-		Area area = areaService.getByCode(acode);
-		// 读取查询信息
-
-		log.info("--- emp news search ---");
-		News news = new News();
-		news.setArea(area);
-		request.setAttribute("tarArea", area);
-
-		String keyWord = request.getParameter("keyWord");
-		if (keyWord != null && !"".equals(keyWord)) {
-			news.setTitle(keyWord);
-		}
-		request.setAttribute("keyWord", keyWord);
-
-		String releaseDateStr = request.getParameter("releaseDate");
-		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
-			Integer releaseDate = Integer.valueOf(releaseDateStr);
-			Date update_Date = KitService.getreleaseTime(releaseDate
-					.longValue());
-			news.setUpdateDate(update_Date);
-
-		}
-		request.setAttribute("releaseDate", releaseDateStr);
-
-		String pageStr = request.getParameter("page");
-		if (pageStr == null || "".equals(pageStr)) {
-			pageStr = "1";
-		}
-		Integer page = KitService.getInt(pageStr);
-		List<News> newsList = newsService.getForListShow(news, page,
-				Constants.SIZE);
-		Integer records = newsService.getTotalCount(news);
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		if (newsList != null && records != null && records > 0) {
-			try {
-				for (Iterator<News> iterator = newsList.iterator(); iterator
-						.hasNext();) {
-					News it = (News) iterator.next();
-					log.debug(it.toString());
-					Map<String, String> map = new HashMap<String, String>();
-					map.put("id", String.valueOf(it.getId()));
-					map.put("title", it.getTitle());
-					map.put("content", it.getContent());
-					map.put("author", it.getAuthor());
-					map.put("source", it.getSource());
-					map.put("type", it.getType());
-					list.add(map);
-				}
-			} catch (Exception e) {
-				log.error("error in list", e);
-			}
-		}
-		while (list.size() < Constants.SIZE) {
-			Map<String, String> map = new HashMap<String, String>();
-			list.add(map);
-		}
-
-		mav.addObject("list", list);
-		PaginationUtil pagination = new PaginationUtil(page, records);
-		mav.addObject("pagination", pagination.getHandler());
+//
+//		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中;
+//		// 有则直接使用传递过来的
+//		String acode = request.getParameter("acode");
+//		String localCode = CookieHelper.getCookieValue(request,
+//				Constants.AREACODE);
+//		log.info("acode [" + acode + "]");
+//		if (acode != null && !"".equals(acode)) {
+//			if (localCode == null || "".equals(localCode)) {
+//				CookieHelper.setCookie(response, Constants.AREACODE, acode);
+//			}
+//		} else {
+//			acode = localCode;
+//		}
+//		Area area = areaService.getByCode(acode);
+//		// 读取查询信息
+//
+//		log.info("--- news search ---");
+//		News news = new News();
+//		news.setArea(area);
+//		request.setAttribute("tarArea", area);
+//		news.setType(Constants.ARTICLETYPE.NEWS.getValue());	//指定文章类型
+//
+//		String keyWord = request.getParameter("keyWord");
+//		if (keyWord != null && !"".equals(keyWord)) {
+//			news.setTitle(keyWord);
+//		}
+//		request.setAttribute("keyWord", keyWord);
+//
+//		String releaseDateStr = request.getParameter("releaseDate");
+//		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
+//			Integer releaseDate = Integer.valueOf(releaseDateStr);
+//			Date update_Date = KitService.getreleaseTime(releaseDate
+//					.longValue());
+//			news.setUpdateDate(update_Date);
+//
+//		}
+//		request.setAttribute("releaseDate", releaseDateStr);
+//
+//		String pageStr = request.getParameter("page");
+//		if (pageStr == null || "".equals(pageStr)) {
+//			pageStr = "1";
+//		}
+//		Integer page = KitService.getInt(pageStr);
+//		List<News> newsList = newsService.getForListShow(news, page,
+//				Constants.SIZE);
+//		Integer records = newsService.getTotalCount(news);
+//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+//		if (newsList != null && records != null && records > 0) {
+//			try {
+//				for (Iterator<News> iterator = newsList.iterator(); iterator
+//						.hasNext();) {
+//					News it = (News) iterator.next();
+//					log.debug(it.toString());
+//					Map<String, String> map = new HashMap<String, String>();
+//					map.put("id", String.valueOf(it.getId()));
+//					map.put("title", it.getTitle());
+//					map.put("content", it.getContent());
+//					map.put("author", it.getAuthor());
+//					map.put("source", it.getSource());
+//					map.put("type", it.getType());
+//					list.add(map);
+//				}
+//			} catch (Exception e) {
+//				log.error("error in list", e);
+//			}
+//		}
+//		while (list.size() < Constants.SIZE) {
+//			Map<String, String> map = new HashMap<String, String>();
+//			list.add(map);
+//		}
+//
+//		mav.addObject("list", list);
+//		PaginationUtil pagination = new PaginationUtil(page, records);
+//		mav.addObject("pagination", pagination.getHandler());
 		return mav;
 	}
 
@@ -597,86 +595,258 @@ public class IndexController {
 		List<Parameter> plist = parameterService.getAll();
 		// 各种参数
 		mav.addObject("params", plist);
-
-		// 获得简历总数
-		int totalCount = newsService.getTotalCount(null);
-		mav.addObject("totalCount", totalCount);
-		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中;
-		// 有则直接使用传递过来的
-		String acode = request.getParameter("acode");
-		String localCode = CookieHelper.getCookieValue(request,
-				Constants.AREACODE);
-		log.info("acode [" + acode + "]");
-		if (acode != null && !"".equals(acode)) {
-			if (localCode == null || "".equals(localCode)) {
-				CookieHelper.setCookie(response, Constants.AREACODE, acode);
-			}
-		} else {
-			acode = localCode;
-		}
-		Area area = areaService.getByCode(acode);
-		// 读取查询信息
-
-		log.info("--- emp news search ---");
-		News news = new News();
-		news.setArea(area);
-		request.setAttribute("tarArea", area);
-
-		String keyWord = request.getParameter("keyWord");
-		if (keyWord != null && !"".equals(keyWord)) {
-			news.setTitle(keyWord);
-		}
-		request.setAttribute("keyWord", keyWord);
-		String releaseDateStr = request.getParameter("releaseDate");
-
-		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
-			Integer releaseDate = Integer.valueOf(releaseDateStr);
-			Date update_Date = KitService.getreleaseTime(releaseDate
-					.longValue());
-			news.setUpdateDate(update_Date);
-
-		}
-		request.setAttribute("releaseDate", releaseDateStr);
-
-		String pageStr = request.getParameter("page");
-		if (pageStr == null || "".equals(pageStr)) {
-			pageStr = "1";
-		}
-		Integer page = KitService.getInt(pageStr);
-		List<News> newsList = newsService.getForListShow(news, page,
-				Constants.SIZE);
-		Integer records = newsService.getTotalCount(news);
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		if (newsList != null && records != null && records > 0) {
-			try {
-				for (Iterator<News> iterator = newsList.iterator(); iterator
-						.hasNext();) {
-					News it = (News) iterator.next();
-					log.debug(it.toString());
-					Map<String, String> map = new HashMap<String, String>();
-					map.put("id", String.valueOf(it.getId()));
-					map.put("title", it.getTitle());
-					map.put("content", it.getContent());
-					map.put("author", it.getAuthor());
-					map.put("source", it.getSource());
-					map.put("type", it.getType());
-					list.add(map);
-				}
-			} catch (Exception e) {
-				log.error("error in list", e);
-			}
-		}
-		while (list.size() < Constants.SIZE) {
-			Map<String, String> map = new HashMap<String, String>();
-			list.add(map);
-		}
-
-		mav.addObject("list", list);
-		PaginationUtil pagination = new PaginationUtil(page, records);
-		mav.addObject("pagination", pagination.getHandler());
+//
+//		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中;
+//		// 有则直接使用传递过来的
+//		String acode = request.getParameter("acode");
+//		String localCode = CookieHelper.getCookieValue(request,
+//				Constants.AREACODE);
+//		log.info("acode [" + acode + "]");
+//		if (acode != null && !"".equals(acode)) {
+//			if (localCode == null || "".equals(localCode)) {
+//				CookieHelper.setCookie(response, Constants.AREACODE, acode);
+//			}
+//		} else {
+//			acode = localCode;
+//		}
+//		Area area = areaService.getByCode(acode);
+//		// 读取查询信息
+//
+//		log.info("--- direct search ---");
+//		News news = new News();
+//		news.setArea(area);
+//		request.setAttribute("tarArea", area);
+//		news.setType(Constants.ARTICLETYPE.DIRECT.getValue());	//指定文章类型
+//		
+//		String keyWord = request.getParameter("keyWord");
+//		if (keyWord != null && !"".equals(keyWord)) {
+//			news.setTitle(keyWord);
+//		}
+//		request.setAttribute("keyWord", keyWord);
+//		String releaseDateStr = request.getParameter("releaseDate");
+//
+//		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
+//			Integer releaseDate = Integer.valueOf(releaseDateStr);
+//			Date update_Date = KitService.getreleaseTime(releaseDate
+//					.longValue());
+//			news.setUpdateDate(update_Date);
+//
+//		}
+//		request.setAttribute("releaseDate", releaseDateStr);
+//
+//		String pageStr = request.getParameter("page");
+//		if (pageStr == null || "".equals(pageStr)) {
+//			pageStr = "1";
+//		}
+//		Integer page = KitService.getInt(pageStr);
+//		List<News> newsList = newsService.getForListShow(news, page,
+//				Constants.SIZE);
+//		Integer records = newsService.getTotalCount(news);
+//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+//		if (newsList != null && records != null && records > 0) {
+//			try {
+//				for (Iterator<News> iterator = newsList.iterator(); iterator
+//						.hasNext();) {
+//					News it = (News) iterator.next();
+//					log.debug(it.toString());
+//					Map<String, String> map = new HashMap<String, String>();
+//					map.put("id", String.valueOf(it.getId()));
+//					map.put("title", it.getTitle());
+//					map.put("content", it.getContent());
+//					map.put("author", it.getAuthor());
+//					map.put("source", it.getSource());
+//					map.put("type", it.getType());
+//					list.add(map);
+//				}
+//			} catch (Exception e) {
+//				log.error("error in list", e);
+//			}
+//		}
+//		while (list.size() < Constants.SIZE) {
+//			Map<String, String> map = new HashMap<String, String>();
+//			list.add(map);
+//		}
+//
+//		mav.addObject("list", list);
+//		PaginationUtil pagination = new PaginationUtil(page, records);
+//		mav.addObject("pagination", pagination.getHandler());
 		return mav;
 	}
 
+	// 政策法规列表浏览页面
+	@RequestMapping("/politicies")
+	public ModelAndView politicies(HttpServletRequest request,
+			HttpServletResponse response) {
+		log.debug(request.getRequestURI());
+		ModelAndView mav = new ModelAndView("politicies/politicies");
+		List<Parameter> plist = parameterService.getAll();
+		// 各种参数
+		mav.addObject("params", plist);
+//
+//		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中;
+//		// 有则直接使用传递过来的
+//		String acode = request.getParameter("acode");
+//		String localCode = CookieHelper.getCookieValue(request,
+//				Constants.AREACODE);
+//		log.info("acode [" + acode + "]");
+//		if (acode != null && !"".equals(acode)) {
+//			if (localCode == null || "".equals(localCode)) {
+//				CookieHelper.setCookie(response, Constants.AREACODE, acode);
+//			}
+//		} else {
+//			acode = localCode;
+//		}
+//		Area area = areaService.getByCode(acode);
+//		// 读取查询信息
+//
+//		log.info("--- politicies search ---");
+//		News news = new News();
+//		news.setArea(area);
+//		request.setAttribute("tarArea", area);
+//		news.setType(Constants.ARTICLETYPE.POLITICIES.getValue());	//指定文章类型
+//
+//		String keyWord = request.getParameter("keyWord");
+//		if (keyWord != null && !"".equals(keyWord)) {
+//			news.setTitle(keyWord);
+//		}
+//		request.setAttribute("keyWord", keyWord);
+//
+//		String releaseDateStr = request.getParameter("releaseDate");
+//		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
+//			Integer releaseDate = Integer.valueOf(releaseDateStr);
+//			Date update_Date = KitService.getreleaseTime(releaseDate
+//					.longValue());
+//			news.setUpdateDate(update_Date);
+//
+//		}
+//		request.setAttribute("releaseDate", releaseDateStr);
+//
+//		String pageStr = request.getParameter("page");
+//		if (pageStr == null || "".equals(pageStr)) {
+//			pageStr = "1";
+//		}
+//		Integer page = KitService.getInt(pageStr);
+//		List<News> newsList = newsService.getForListShow(news, page,
+//				Constants.SIZE);
+//		Integer records = newsService.getTotalCount(news);
+//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+//		if (newsList != null && records != null && records > 0) {
+//			try {
+//				for (Iterator<News> iterator = newsList.iterator(); iterator
+//						.hasNext();) {
+//					News it = (News) iterator.next();
+//					log.debug(it.toString());
+//					Map<String, String> map = new HashMap<String, String>();
+//					map.put("id", String.valueOf(it.getId()));
+//					map.put("title", it.getTitle());
+//					map.put("content", it.getContent());
+//					map.put("author", it.getAuthor());
+//					map.put("source", it.getSource());
+//					map.put("type", it.getType());
+//					list.add(map);
+//				}
+//			} catch (Exception e) {
+//				log.error("error in list", e);
+//			}
+//		}
+//		while (list.size() < Constants.SIZE) {
+//			Map<String, String> map = new HashMap<String, String>();
+//			list.add(map);
+//		}
+//
+//		mav.addObject("list", list);
+//		PaginationUtil pagination = new PaginationUtil(page, records);
+//		mav.addObject("pagination", pagination.getHandler());
+		return mav;
+	}
+	
+	// 工作流程列表浏览页面
+	@RequestMapping("/workflow")
+	public ModelAndView workflow(HttpServletRequest request,
+			HttpServletResponse response) {
+		log.debug(request.getRequestURI());
+		ModelAndView mav = new ModelAndView("workflow/workflow");
+		List<Parameter> plist = parameterService.getAll();
+		// 各种参数
+		mav.addObject("params", plist);
+
+//		// 如果request中有传过来地区code, 本地cookie没有地区code, 则读取地区码,放入到cookie中;
+//		// 有则直接使用传递过来的
+//		String acode = request.getParameter("acode");
+//		String localCode = CookieHelper.getCookieValue(request,
+//				Constants.AREACODE);
+//		log.info("acode [" + acode + "]");
+//		if (acode != null && !"".equals(acode)) {
+//			if (localCode == null || "".equals(localCode)) {
+//				CookieHelper.setCookie(response, Constants.AREACODE, acode);
+//			}
+//		} else {
+//			acode = localCode;
+//		}
+//		Area area = areaService.getByCode(acode);
+//		// 读取查询信息
+//
+//		log.info("--- workflow search ---");
+//		News news = new News();
+//		news.setArea(area);
+//		request.setAttribute("tarArea", area);
+//		news.setType(Constants.ARTICLETYPE.WORKFLOW.getValue());	//指定文章类型
+//
+//		String keyWord = request.getParameter("keyWord");
+//		if (keyWord != null && !"".equals(keyWord)) {
+//			news.setTitle(keyWord);
+//		}
+//		request.setAttribute("keyWord", keyWord);
+//
+//		String releaseDateStr = request.getParameter("releaseDate");
+//		if (releaseDateStr != null && !"".equals(releaseDateStr)) {
+//			Integer releaseDate = Integer.valueOf(releaseDateStr);
+//			Date update_Date = KitService.getreleaseTime(releaseDate
+//					.longValue());
+//			news.setUpdateDate(update_Date);
+//
+//		}
+//		request.setAttribute("releaseDate", releaseDateStr);
+//
+//		String pageStr = request.getParameter("page");
+//		if (pageStr == null || "".equals(pageStr)) {
+//			pageStr = "1";
+//		}
+//		Integer page = KitService.getInt(pageStr);
+//		List<News> newsList = newsService.getForListShow(news, page,
+//				Constants.SIZE);
+//		Integer records = newsService.getTotalCount(news);
+//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+//		if (newsList != null && records != null && records > 0) {
+//			try {
+//				for (Iterator<News> iterator = newsList.iterator(); iterator
+//						.hasNext();) {
+//					News it = (News) iterator.next();
+//					log.debug(it.toString());
+//					Map<String, String> map = new HashMap<String, String>();
+//					map.put("id", String.valueOf(it.getId()));
+//					map.put("title", it.getTitle());
+//					map.put("content", it.getContent());
+//					map.put("author", it.getAuthor());
+//					map.put("source", it.getSource());
+//					map.put("type", it.getType());
+//					list.add(map);
+//				}
+//			} catch (Exception e) {
+//				log.error("error in list", e);
+//			}
+//		}
+//		while (list.size() < Constants.SIZE) {
+//			Map<String, String> map = new HashMap<String, String>();
+//			list.add(map);
+//		}
+//
+//		mav.addObject("list", list);
+//		PaginationUtil pagination = new PaginationUtil(page, records);
+//		mav.addObject("pagination", pagination.getHandler());
+		return mav;
+	}
+		
 	// 跳转到找回用户名页面
 	@RequestMapping(value = "/getBackUserName", method = RequestMethod.GET)
 	public ModelAndView getBackUserNameGet(HttpServletRequest request) {
