@@ -89,10 +89,10 @@ public class KitService {
 		if (articleType == null || "".equals(articleType)) {
 			return null;
 		}
-		if (Constants.ARTICLE_TYPE_DIRECT.equals(articleType)) {
+		if (Constants.ARTICLETYPE.DIRECT.getValue().equals(articleType)) {
 			return "就业指导";
 		}
-		if (Constants.ARTICLE_TYPE_NEWS.equals(articleType)) {
+		if (Constants.ARTICLETYPE.NEWS.getValue().equals(articleType)) {
 			return "最新资讯";
 		}
 		return "未知类型";

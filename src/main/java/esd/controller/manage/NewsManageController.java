@@ -65,7 +65,7 @@ public class NewsManageController {
 		String articleType = request.getParameter("articleType");
 		// 判断显示类型, 如果传递的参数为空的话, 则默认首先显示就业指导内容
 		if (articleType == null || "".equals(articleType)) {
-			articleType = Constants.ARTICLE_TYPE_DIRECT;
+			articleType = Constants.ARTICLETYPE.DIRECT.getValue();
 		}
 		paramEntity.setType(articleType);
 

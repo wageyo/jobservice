@@ -145,11 +145,11 @@ public class IndexController {
 		mav.addObject("resumeList", resumeList);
 		// 最新的9条就业指导信息
 		List<News> directList = newsService.getByNew(acode, 9,
-				Constants.ARTICLE_TYPE_DIRECT);
+				Constants.ARTICLETYPE.DIRECT.getValue());
 		mav.addObject("directList", directList);
 		// 最新的9条消息
 		List<News> newsList = newsService.getByNew(acode, 9,
-				Constants.ARTICLE_TYPE_NEWS);
+				Constants.ARTICLETYPE.NEWS.getValue());
 		mav.addObject("newsList", newsList);
 		// 得到6个常用的职位种类
 		List<JobCategory> jobCategoryList = jcService

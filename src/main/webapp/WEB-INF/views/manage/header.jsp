@@ -3,47 +3,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <script type="text/javascript">
-	$(document).ready(function(){
-		decodeTitle();
-	});
-
-	//解码title, nickName
-	function decodeTitle(){
-		var adminNickName = decodeURIComponent('${cookie.adminnickname.value}');
-		$('#adminNickName').html(adminNickName);
-		var title = decodeURIComponent('${cookie.admintitle.value}');
-		$('#adminTitle').html(title);
-	}
+	
 </script>
 <div class="manage-header" style="">
-	<table style="width:100%;height:100%;">
+	<table style="width:100%;">
 		<tr>
-			<td style="line-height: 20px;">
-				&nbsp;
+			<td style="line-height: 20px;padding-left:30px;">
+				<span style="font-size:13px;letter-spacing:5px;" id="adminTitle">残疾人就业网管理后台</span>
 			</td>
 			<td style="line-height: 20px;">
 				&nbsp;
 			</td>
 			<td style="text-align:right;line-height: 20px;">
-				<a href="javascript:void(0);" id="adminNickName">${cookie.nickname.value } </a>
+			<!-- 	<a href="javascript:void(0);" class="adminNickName">${cookie.nickname.value } </a>	 -->
 				<span id="currentTime"></span>
 				<span style=""><a href="/jobservice/loginManage/quit">退出</a></span>
-			</td>
-		</tr>
-		<tr>
-			<td style="width:5%;">
-				&nbsp;
-			</td>
-			<td >
-				<span style="font-size:30px;letter-spacing:10px;" id="adminTitle"></span>
-			</td>
-			<td>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td colspan="3" style="line-height: 20px;">
-				<img src="${contextPath }/images/backdoor/break_bg1.png" />
 			</td>
 		</tr>
 	</table>

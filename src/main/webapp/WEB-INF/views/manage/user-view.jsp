@@ -105,7 +105,7 @@
 											头像 :
 										</td>
 										<td colspan="3">
-											<img id="headImage" src="${contextPath }/image/downloadFile/${obj.id}" style="height:90px;width:90px;border-width:0px;" title="90*90格式"/>
+											<img id="headImage" src="${contextPath }/filegags/downloadFile/${obj.id}" style="height:90px;width:90px;border-width:0px;" title="90*90格式"/>
 											<br/>
 										<!-- 	<input type="button" name="file" value="上传图片" id="picFileImport" />	 -->
 										</td>

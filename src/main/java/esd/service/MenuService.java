@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import esd.bean.Attributes;
 import esd.bean.Menu;
 import esd.controller.Constants;
 import esd.dao.MenuDao;
@@ -25,7 +24,7 @@ public class MenuService {
 	}
 
 	// 删
-	public boolean delete(int id) {
+	public boolean delete(Integer id) {
 		return dao.delete(id);
 	}
 
@@ -40,32 +39,41 @@ public class MenuService {
 	}
 
 	// 按管理员级别获得管理员菜单
-	public List<Menu> getByAuthority(int authority) {
+	public List<Menu> getByAuthority(Integer authority) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Menu menu = new Menu();
 		menu.setAuthority(authority);
-		menu.setEnable(true);
+		menu.setIsActive(Boolean.TRUE);
 		map.put("menu", menu);
 		map.put("start", Constants.START);
-		map.put("size", Integer.MAX_VALUE);
-		List<Menu> list = dao.getByPage(map);
-//		List<Menu> destList = new ArrayList<Menu>();
-//		for (Menu m : list) {
-//			if (authority == 999) {
-//				if (m.getUrl().equals("/jobservice/manage/setup")) {
-//					continue; // 暂时拿掉
-//				}
-//			}
-//			Attributes a = new Attributes();
-//			a.setUrl(m.getUrl());
-//			m.setAttributes(a);
-//			destList.add(m);
-//		}
-		return list;
+		map.put("size", 999);
+		List<Menu> resultList = dao.getByPage(map);
+		if (resultList == null) {
+			return null;
+		}
+		// 一级菜单列表
+		List<Menu> topMenuList = new ArrayList<Menu>();
+		for (Menu temp : resultList) {
+			if ("10".equals(temp.getId().subSequence(0, 2))) {
+				topMenuList.add(temp);
+			}
+		}
+		// 将二级菜单添加到一级菜单上
+		if (topMenuList.size() == 0) {
+			return null;
+		}
+		for (Menu topMenu : topMenuList) {
+			String topId = topMenu.getId();
+			for (Menu result : resultList) {
+				String resultId = result.getId();
+				if (result.getId().startsWith("20")
+						&& (resultId.substring(2, 4).equals(topId.subSequence(
+								2, 4)))) {
+					topMenu.getChildren().add(result);
+				}
+			}
+		}
+		return topMenuList;
 	}
 
-	// 获得所有菜单状态
-	public List<Menu> getMenuChecked() {
-		return dao.getMenuChecked();
-	}
 }

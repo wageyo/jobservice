@@ -87,7 +87,7 @@ verify.checkMobile = function(s) {
  * 
  */
 verify.isNumber = function(s) {
-	var regu = "^[0-9]+$";
+	var regu = "^[0-9]+$|";
 	var re = new RegExp(regu);
 	if (s.search(re) != -1) {
 		return true;

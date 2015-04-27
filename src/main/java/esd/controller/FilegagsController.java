@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import esd.bean.Image;
+import esd.bean.Filegags;
 import esd.bean.User;
 import esd.common.util.FileUtil;
-import esd.service.ImageService;
+import esd.service.FilegagsService;
 import esd.service.UserService;
 
 /**
@@ -37,16 +37,16 @@ import esd.service.UserService;
  * @email ilxly01@126.com 2014-12-30
  */
 @Controller
-@RequestMapping("/image")
-public class ImageController {
+@RequestMapping("/filegags")
+public class FilegagsController {
 
-	private static Logger log = Logger.getLogger(ImageController.class);
+	private static Logger log = Logger.getLogger(FilegagsController.class);
 
 	@Autowired
 	private UserService<User> userService;
 
 	@Autowired
-	private ImageService imageService;
+	private FilegagsService imageService;
 
 	// 接收上传的文件
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
@@ -62,19 +62,25 @@ public class ImageController {
 			return;
 		}
 		// 要更新的对象
-		Image image = new Image();
-		image.setImage(file.getBytes());
+		Filegags filegags = new Filegags();
+		//原文件名
+		String oldFileName = file.getFileItem().getName();
+		filegags.setFileName(oldFileName);
+		//原文件后缀
+		String fileSuffix = oldFileName.substring(oldFileName.lastIndexOf(".")+1);
+		filegags.setFileSuffix(fileSuffix);
+		filegags.setFile(file.getBytes());
 		String imageId;
 		// 如果存在穿过来的id, 则说明是点了两次以上上传的, 则使用更新, 否则使用新增保存
 		if (imageid != null && !"".equals(imageid)) {
-			image.setId(imageid);
-			if (imageService.update(image)) {
+			filegags.setId(imageid);
+			if (imageService.update(filegags)) {
 				imageId = imageid;
 			} else {
 				imageId = null;
 			}
 		} else {
-			imageId = imageService.save(image);
+			imageId = imageService.save(filegags);
 			//保存完图片后, 将对应的图片/二进制文件 id保存到对应的关系表中
 			String userid = request.getParameter("userid");
 			if(userid != null &&!"".equals(userid)){
@@ -151,11 +157,11 @@ public class ImageController {
 		
 		for (int i = 0; i < page; i++) {
 			Integer start = i * batchSize;
-			List<Image> list = imageService.getByPage(null, start, batchSize);
+			List<Filegags> list = imageService.getByPage(null, start, batchSize);
 			for (int j = 0; j < list.size(); j++) {
-				Image image = list.get(j);
-				String imagePath = filePath + File.separator + image.getId() + "." + image.getImageName();
-				byte[] bs = imageService.getImageById(image.getId());
+				Filegags image = list.get(j);
+				String imagePath = filePath + File.separator + image.getId() + "." + image.getFileSuffix();
+				byte[] bs = imageService.getFileById(image.getId());
 				Boolean bl = saveImageToLocalServer(imagePath, bs);
 				if (!bl) {
 					log.error("*************文件序列化本地出错,图片ID: " + image.getId()
@@ -195,7 +201,7 @@ public class ImageController {
 			HttpServletResponse response) {
 		// response.addHeader("Content-Type", "image/gif");
 		response.setContentType("image/gif");
-		byte[] entity = imageService.getImageById(id);
+		byte[] entity =  imageService.getFileById(id);
 		return entity;
 	}
 }

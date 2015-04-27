@@ -192,6 +192,8 @@ public class CookieHelper {
 					String nickName = URLEncoder.encode(user.getNickName(),
 							"UTF-8");
 					setCookie(response, Constants.ADMINUSERNICKNAME, nickName);
+					String areaName = URLEncoder.encode(user.getArea().getName(),"UTF-8");
+					setCookie(response,Constants.ADMINUSERAREANAME,areaName);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}

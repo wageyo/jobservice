@@ -59,7 +59,7 @@ public class DirectController {
 	
 		String acode = CookieHelper.getCookieValue(request, Constants.AREACODE);
 		News n = new News();
-		n.setType(Constants.ARTICLE_TYPE_DIRECT);
+		n.setType(Constants.ARTICLETYPE.DIRECT.getValue());
 		n.setArea(new Area(acode));
 		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {
@@ -126,7 +126,7 @@ public class DirectController {
 		String acode = CookieHelper.getCookieValue(req, Constants.AREACODE);
 		Area area = areaService.getByCode(acode);
 		News newsparameter=new News();
-		newsparameter.setType(Constants.ARTICLE_TYPE_DIRECT);
+		newsparameter.setType(Constants.ARTICLETYPE.DIRECT.getValue());
 		newsparameter.setArea(area);
 		
 		// 再取15条信息放入到request中

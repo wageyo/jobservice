@@ -172,7 +172,7 @@ public class NewsService {
 	public List<News> getFiveChangeList(String acode){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("area", acode);
-		map.put("type", Constants.ARTICLE_TYPE_NEWS);
+		map.put("type", Constants.ARTICLETYPE.NEWS.getValue());
 		return dao.getFiveWithImage(map);
 	}
 }

@@ -54,7 +54,7 @@ public class NewsController {
 		//从cookie读取acode
 		String acode = CookieHelper.getCookieValue(request, Constants.AREACODE);
 		News n = new News();
-		n.setType(Constants.ARTICLE_TYPE_NEWS);
+		n.setType(Constants.ARTICLETYPE.NEWS.getValue());
 		n.setArea(new Area(acode));
 		String keyWord = request.getParameter("keyWord");
 		if (keyWord != null && !"".equals(keyWord)) {

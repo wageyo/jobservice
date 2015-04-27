@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.FilegagsDao">
+
+
+	<!-- result map of filegags -->
+	<resultMap id="ResultFilegags" type="Filegags">
+		<id column="f_id" property="id" jdbcType="VARCHAR"/>
+		<result column="f_create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="f_update_check" property="updateCheck" jdbcType="INTEGER"/>
+		<result column="f_update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="f_log_user" property="logUser" jdbcType="VARCHAR"/>
+		<result column="f_file_title" property="fileTitle" jdbcType="VARCHAR" />
+		<result column="f_file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="f_file_suffix" property="fileSuffix" jdbcType="VARCHAR" />
+		<result column="f_default_width" property="defaultWidth" jdbcType="VARCHAR" />
+		<result column="f_default_height" property="defaultHeight" jdbcType="VARCHAR" />
+		<result column="f_new_width" property="newWidth" jdbcType="VARCHAR" />
+		<result column="f_new_height" property="newHeight" jdbcType="VARCHAR" />
+		<result column="f_mark" property="mark" jdbcType="VARCHAR" />
+		<result column="f_is_active" property="isActive" jdbcType="BIT" />
+	</resultMap>
+	
+	<resultMap id="ResultFilegagsWithFile" type="Filegags">
+		<id column="f_id" property="id" jdbcType="VARCHAR"/>
+		<result column="f_create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="f_update_check" property="updateCheck" jdbcType="INTEGER"/>
+		<result column="f_update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="f_log_user" property="logUser" jdbcType="VARCHAR"/>
+		<result column="f_file" property="file" jdbcType="BLOB" />
+		<result column="f_file_title" property="fileTitle" jdbcType="VARCHAR" />
+		<result column="f_file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="f_file_suffix" property="fileSuffix" jdbcType="VARCHAR" />
+		<result column="f_default_width" property="defaultWidth" jdbcType="VARCHAR" />
+		<result column="f_default_height" property="defaultHeight" jdbcType="VARCHAR" />
+		<result column="f_new_width" property="newWidth" jdbcType="VARCHAR" />
+		<result column="f_new_height" property="newHeight" jdbcType="VARCHAR" />
+		<result column="f_mark" property="mark" jdbcType="VARCHAR" />
+		<result column="f_is_active" property="isActive" jdbcType="BIT" />
+	</resultMap>
+
+	<sql id="base_column">
+		f.id as f_id, f.create_date as f_create_date, f.update_check as f_update_check, 
+			f.update_date as f_update_date, f.log_user as f_log_user, f.file_title as f_file_title, 
+			f.file_name as f_file_name, f.file_suffix as f_file_suffix, f.default_width as f_default_width, f.default_height as f_default_height, 
+			f.new_width as f_new_width, f.new_height as f_new_height, f.mark as f_mark, f.is_active as f_is_active
+	</sql>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="Filegags" useGeneratedKeys="true" keyProperty="id">
+		insert into filegags
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="file != null ">
+				file,
+			</if>
+			<if test="fileTitle != null and fileTitle != ''">
+				file_title,
+			</if>
+			<if test="fileName != null and fileName != ''">
+				file_name,
+			</if>
+			<if test="fileSuffix!= null and fileSuffix != ''">
+				file_suffix,
+			</if>
+			<if test="defaultWidth != null and defaultWidth != ''">
+				default_width,
+			</if>
+			<if test="defaultHeight != null and defaultHeight != ''">
+				default_height,
+			</if>
+			<if test="newWidth != null and newWidth != ''">
+				new_width,
+			</if>
+			<if test="newHeight != null and newHeight != ''">
+				new_height,
+			</if>
+			<if test="mark != null and mark != ''">
+				mark,
+			</if>
+			<if test="isActive != null">
+				is_active
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}, now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="file != null ">
+				#{file,jdbcType=BLOB},
+			</if>
+			<if test="fileTitle != null and fileTitle != ''">
+				#{fileTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="fileName != null and fileName != ''">
+				#{fileName, jdbcType=VARCHAR},
+			</if>
+			<if test="fileSuffix != null and fileSuffix != ''">
+				#{fileSuffix, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultWidth != null and defaultWidth != ''">
+				#{defaultWidth, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultHeight != null and defaultHeight != ''">
+				#{defaultHeight, jdbcType=VARCHAR},
+			</if>
+			<if test="newWidth != null and newWidth != ''">
+				#{newWidth, jdbcType=VARCHAR},
+			</if>
+			<if test="newHeight != null and newHeight != ''">
+				#{newHeight, jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null and mark != ''">
+				#{mark, jdbcType=VARCHAR},
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
+			</if>
+		</trim>
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from filegags where id = #{id, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- update -->
+	<update id="update" parameterType="Filegags">
+		update filegags
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="file != null ">
+				file = #{file,jdbcType=BLOB},
+			</if>
+			<if test="fileTitle != null and fileTitle != ''">
+				file_title = #{fileTitle, jdbcType=VARCHAR},
+			</if>
+			<if test="fileName != null and fileName != ''">
+				file_name = #{fileName, jdbcType=VARCHAR},
+			</if>
+			<if test="fileSuffix != null and fileSuffix != ''">
+				file_suffix = #{fileSuffix, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultWidth != null and defaultWidth != ''">
+				default_width = #{defaultWidth, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultHeight != null and defaultHeight != ''">
+				default_height = #{defaultHeight, jdbcType=VARCHAR},
+			</if>
+			<if test="newWidth != null and newWidth != ''">
+				new_width = #{newWidth, jdbcType=VARCHAR},
+			</if>
+			<if test="newHeight != null and newHeight != ''">
+				new_height = #{newHeight, jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null and mark != ''">
+				mark = #{mark, jdbcType=VARCHAR}, 
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT},
+			</if>
+			update_check = update_check + 1 
+		</trim>
+		where id= #{id, jdbcType=VARCHAR} and update_check = #{updateCheck, jdbcType=INTEGER}
+	</update>
+
+	<!-- get update check by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select update_check from filegags where id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getById" resultMap="ResultFilegags" parameterType="java.lang.String">
+		select <include refid="base_column" />
+		from filegags as i
+		where f.id = #{id, jdbcType=VARCHAR}
+	</select>
+
+	<!-- get filegags -->
+	<select id="getFilegagsById" resultType="java.util.HashMap" parameterType="java.lang.String" >
+		select file, file_title, file_name, file_suffix
+		from filegags
+		where id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getFilegagsByIdWithFile" resultMap="ResultFilegagsWithFile" parameterType="java.lang.String" >
+		select <include refid="base_column"/>, f.file as f_file 
+		from filegags as f
+		where f.id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getFilegagsByNid" resultType="java.util.HashMap" parameterType="java.lang.Integer" >
+		select file_title, file
+		from filegags
+		where nid = #{nid, jdbcType=INTEGER}
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map" resultMap="ResultFilegags">
+		select <include refid="base_column" />
+		from filegags as i
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="filegags != null">
+				<if test="filegags.fileName != '' and filegags.fileName != null">
+					and f.file_name like concat('%', #{filegags.fileName, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="filegags.fileTitle != '' and filegags.fileTitle != null">
+					and f.file_title like concat('%', #{filegags.fileTitle, jdbcType=VARCHAR}, '%')
+				</if>
+				<choose>
+					<when test="filegags.isActive != null">
+						and f.is_active = #{filegags.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and f.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="filegags != null">
+				</when>
+				<otherwise>
+					and f.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+		order by f.create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(*)
+		from filegags as i
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="filegags != null">
+				<if test="filegags.fileName != '' and filegags.fileName != null">
+					and f.file_name like concat('%', #{filegags.fileName, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="filegags.fileTitle != '' and filegags.fileTitle != null">
+					and f.file_title like concat('%', #{filegags.fileTitle, jdbcType=VARCHAR}, '%')
+				</if>
+				<choose>
+					<when test="filegags.isActive != null">
+						and f.is_active = #{filegags.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and f.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="filegags != null">
+				</when>
+				<otherwise>
+					and f.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+
+</mapper>

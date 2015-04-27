@@ -252,7 +252,7 @@
 											<img id="businessLicenseImg" 
 												<c:choose>
 													<c:when test="${obj.businessLicense != null && obj.businessLicense != '' }" >
-														 src="${contextPath }/image/downloadFile/${obj.businessLicense}" 
+														 src="${contextPath }/filegags/downloadFile/${obj.businessLicense}" 
 													</c:when>
 													<c:otherwise>
 														 src = "" 
@@ -270,7 +270,7 @@
 											<img id="institutionalFrameworkImg" 
 												<c:choose>
 													<c:when test="${obj.institutionalFramework != null && obj.institutionalFramework != '' }" >
-														 src="${contextPath }/image/downloadFile/${obj.institutionalFramework}" 
+														 src="${contextPath }/filegags/downloadFile/${obj.institutionalFramework}" 
 													</c:when>
 													<c:otherwise>
 														 src = "" 
@@ -292,7 +292,7 @@
 										<img id="taxRegistrationImg" 
 											<c:choose>
 												<c:when test="${obj.taxRegistration != null && obj.taxRegistration != '' }" >
-									src="${contextPath }/image/downloadFile/${obj.taxRegistration}" 
+									src="${contextPath }/filegags/downloadFile/${obj.taxRegistration}" 
 											</c:when>
 											<c:otherwise>
 												 src = "" 

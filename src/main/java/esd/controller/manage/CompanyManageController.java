@@ -27,7 +27,7 @@ import esd.controller.Constants;
 import esd.service.BusinessScopeService;
 import esd.service.CompanyService;
 import esd.service.CookieHelper;
-import esd.service.ImageService;
+import esd.service.FilegagsService;
 import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ParameterService;
@@ -61,7 +61,7 @@ public class CompanyManageController {
 	private BusinessScopeService bsService; 
 
 	@Autowired
-	private ImageService imageService;
+	private FilegagsService imageService;
 
 	// 转到企业信息管理列表页面
 	@RequestMapping(value = "/company_list", method = RequestMethod.GET)

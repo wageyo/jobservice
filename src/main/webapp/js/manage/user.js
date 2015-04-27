@@ -229,7 +229,7 @@ $(document).ready(function(){
 				$('#headImage').attr('src','');
 				//读取被编辑用户的id
 				var userid = $('#objId').val();
-				$('#headImage').attr('src',server.url + 'user/downloadPic/' + userid);
+				$('#headImage').attr('src',server.url + 'filegags/downloadFile/' + userid);
 			}
 			button.val('上传图片');
 			this.enable();

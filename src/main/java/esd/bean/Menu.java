@@ -19,7 +19,6 @@ public class Menu  extends PrimaryKeyString{
 	private boolean enable; // 是否启用
 	private String typeName; // 审核内容标示符
 	private Integer authority; // 权限值 200-普通管理员 999-超级管理员
-	private Attributes attributes;
 
 	// 子项
 	List<Menu> children = new ArrayList<Menu>();
@@ -88,13 +87,6 @@ public class Menu  extends PrimaryKeyString{
 		this.typeName = typeName;
 	}
 
-	public Attributes getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(Attributes attributes) {
-		this.attributes = attributes;
-	}
 
 	public List<Menu> getChildren() {
 		return children;

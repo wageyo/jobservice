@@ -9,7 +9,7 @@ $(document).ready(function() {
 	 * 异步 上传图片方法函数
 	 */
 	new AjaxUpload(button, {
-		action: server.url + 'image/uploadNewsPic',
+		action: server.url + 'filegags/uploadFile',
 		name: 'pic',// 更改上传的文件名
 		autoSubmit:true,
 		type:'POST',
@@ -41,7 +41,7 @@ $(document).ready(function() {
 				//刷新新上传的图片
 				var id = response.substring(7);
 				$('#newsImage').attr('src','');
-				$('#newsImage').attr('src',server.url + 'image/downloadPic/'+id);
+				$('#newsImage').attr('src',server.url + 'filegags/downloadFile/'+id);
 				$('#imageId').val(id);
 			}
 			button.val('上传图片');

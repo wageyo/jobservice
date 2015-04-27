@@ -2,8 +2,6 @@ package esd.controller;
 
 import org.apache.log4j.Logger;
 
-import esd.service.ParameterService;
-
 /**
  * 常用工具常量类
  * 
@@ -63,6 +61,7 @@ public class Constants {
 	public static final String ADMINUSERAUTHORITY = "adminauthority"; // 管理员用户权限值
 	public static final String ADMINUSERTITLE = "admintitle"; // 管理员用户用户标题
 	public static final String ADMINUSERNICKNAME = "adminnickname"; // 管理员用户昵称
+	public static final String ADMINUSERAREANAME = "adminareaname"; // 管理员所属地区名称
 	/****************** 放入cookie中的key值 ********************/
 
 	public static final String AREACOUNTRY = "10000000"; // 全国地区code
@@ -111,14 +110,6 @@ public class Constants {
 	 * 文章类型
 	 */
 	public static final String ARTICLE_TYPE = "article"; // 文章类型
-	/**
-	 * 文章类型： 最新资讯类型
-	 */
-	public static final String ARTICLE_TYPE_NEWS = "news"; // 最新资讯类型
-	/**
-	 * 文章类型： 就业指导类型
-	 */
-	public static final String ARTICLE_TYPE_DIRECT = "direct"; // 就业指导类型
 
 	/***
 	 * 白名单功能开关id
@@ -297,4 +288,34 @@ public class Constants {
 			return this.val;
 		}
 	}
+	
+	/**
+	 * 几种文章类型
+	 * @author yufu
+	 * @email ilxly01@126.com
+	 * 2015-4-24
+	 */
+	public enum ARTICLETYPE {
+		// 利用构造函数传参 级.
+		NEWS("news"), DIRECT("direct"), WORKFLOW("workflow"), POLITICIES(
+				"politicies");
+
+		// 定义私有变量
+		private String val;
+
+		// 构造函数, 枚举类型只能为私有
+		private ARTICLETYPE(String val) {
+			this.val = val;
+		}
+
+		@Override
+		public String toString() {
+			return String.valueOf(val);
+		}
+
+		public String getValue() {
+			return this.val;
+		}
+	}
+	
 }

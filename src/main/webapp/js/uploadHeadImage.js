@@ -5,7 +5,7 @@ $(document).ready(function(){
 		 * 异步 上传图片方法函数
 		 */
 		new AjaxUpload(button, {
-			action: server.url + 'user/uploadPic',
+			action: server.url + 'filegags/uploadFile',
 			name: 'pic',// 更改上传的文件名
 			autoSubmit:true,
 			type:'POST',
@@ -30,12 +30,16 @@ $(document).ready(function(){
 				
 			},
 			onComplete : function(file,response){
-				if(response != 'success'){
+				var notice = response.substring(0,7);
+		//		alert('notice: ' + notice);
+				if(notice != 'success'){
 					alert('上传图片失败,'+response);
 				}else{
 					//刷新新上传的图片
+					var fileid = response.substring(7);
+		//			alert('fileid: ' + fileid);
 					$('#headImage').attr('src','');
-					$('#headImage').attr('src',server.url + 'user/downloadPic/'+$('#userid').val());
+					$('#headImage').attr('src',server.url + 'filegags/downloadFile/'+fileid);
 				}
 				button.val('上传图片');
 				this.enable();

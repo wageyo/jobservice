@@ -152,9 +152,6 @@
 				<if test="menu.checked != null and menu.checked != ''">
 					and checked = #{menu.checked, jdbcType=VARCHAR}
 				</if>
-				<if test="menu.enable != null ">
-					and enable = #{menu.enable, jdbcType=TINYINT}
-				</if>
 				<if test="menu.typeName != null and menu.typeName != null">
 					and typeName = #{menu.typeName, jdbcType=VARCHAR}
 				</if>
@@ -179,12 +176,6 @@
 			</choose>
 		</trim>
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
-	</select>
-	
-	<!--  get menu checked  -->
-	<select id="getMenuChecked" resultMap="ResultMenu" parameterType="java.lang.String">
-		select text,enable
-		from menu
 	</select>
 	
 </mapper>

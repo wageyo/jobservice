@@ -92,7 +92,7 @@
                                     <div id="TableListShow" >
                                     	<div class="TableUserCenter">
 												<div class="TableUserCenterLeft">
-													<img id="headImage" src="${contextPath }/user/downloadPic/${cookie.userid.value }" style="height:90px;width:90px;border-width:0px;" title="90*90格式" />
+													<img id="headImage" src="${contextPath }/filegags/downloadFile/${cookie.headimage.value }" style="height:90px;width:90px;border-width:0px;" title="90*90格式" />
 													<input type="button" name="file" value="上传图片" id="picFileImport" class=" " />
 													<input type="hidden" id="userid" name="userid" value="${cookie.userid.value }" />
 												</div>

@@ -24,55 +24,23 @@
 	<!-- 这个页面div -->
 	<div class="main-body">
 	
-		<!-- 头部 div -->
-		<div class="manage-header" style="background-color:white;">
-			<span style="float:right;"><a href="${contextPath }/index">回到首页</a></span>
-		</div>
-		
 		<!-- 中间主体div 开始-->
-		<div class="manage-body" style="background-image: url('/jobservice/images/backdoor/tishi.png');background-position: center;background-repeat: no-repeat;">
+		<div class="manage-body" style="background-image: url('/jobservice/images/backdoor/tishi.png');background-position: center;background-repeat: no-repeat;height:90%;">
 			<!-- 中间登陆div  -->
-			<form class="form-horizontal" action="${contextPath }/loginManage/login"  method="POST" style="text-align:center;">
+			<span style="float:right;"><a href="${contextPath }/index">回到首页</a></span>
+			<form class="form-horizontal" action="${contextPath }/loginManage/login"  method="POST" style="text-align:center;padding-top: 250px;">
 				<table style="width: 100%;">
 					<tr>
-						<td style="width: 40%;height: 160px;">
+						<td style="width: 35%;">
 						 &nbsp;
 						</td>
-						<td>
-						 &nbsp;
-						</td>
-						<td>
-						 &nbsp;
-						</td>
-						<td style="width: 40%;">
-						 &nbsp;
-						</td>
-					</tr>
-					<tr>
-						<td>
-						 &nbsp;
-						</td>
-						<td>
-							&nbsp;
-						</td>
-						<td>
-							<span>${notice }</span>
-						</td>
-						<td>
-						 &nbsp;
-						</td>
-					</tr>
-					<tr>
-						<td>
-						 &nbsp;
-						</td>
-						<td>
+						<td style="text-align:right;padding-right:10px;">
 							<label for="loginName" style="display:initial;width:60px;">用户名:</label> 
 						</td>
-						<td>
+						<td style="text-align:left;padding-left:10px;">
 							<input id="loginName" name="loginName" value="" type="text" />
 						</td>
-						<td>
+						<td style="width: 35%;">
 						 &nbsp;
 						</td>
 					</tr>
@@ -80,10 +48,10 @@
 						<td>
 						 &nbsp;
 						</td>
-						<td>
+						<td style="text-align:right;padding-right:10px;">
 						 	<label for="passWord" style="display:initial;width:60px;">密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
 						</td>
-						<td>
+						<td style="text-align:left;padding-left:10px;">
 							<input id="passWord" name="passWord" value="" type="password" style=""/>
 						</td>
 						<td>
@@ -101,20 +69,6 @@
 						 &nbsp;
 						</td>
 					</tr>
-					<tr>
-						<td>
-						 &nbsp;
-						</td>
-						<td>
-						 &nbsp;
-						</td>
-						<td>
-						 &nbsp;
-						</td>
-						<td>
-						 &nbsp;
-						</td>
-					</tr>
 				</table>
 			</form>
 			
@@ -123,6 +77,7 @@
 		
 		<!-- 尾部div -->
 		<%@ include file="footer.jsp" %>
+		
 	</div>
 
 
