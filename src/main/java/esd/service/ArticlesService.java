@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import esd.bean.Area;
-import esd.bean.News;
+import esd.bean.Articles;
 import esd.bean.Parameter;
 import esd.controller.Constants;
-import esd.dao.NewsDao;
+import esd.dao.ArticlesDao;
 import esd.dao.ParameterDao;
 
 /**
@@ -21,55 +21,68 @@ import esd.dao.ParameterDao;
  * 
  */
 @Service
-public class NewsService {
+public class ArticlesService {
 
 	@Autowired
-	private NewsDao dao;
+	private ArticlesDao dao;
 
 	@Autowired
 	private KitService kitService;
 	
 	@Autowired
 	private ParameterDao parameterDao;
+	
 	// 保存一个对象
-	public boolean save(News news) {
-		return dao.save(news);
+	public boolean save(Articles articles) {
+		articles.setId(KitService.getUUID());
+		return dao.save(articles);
 	}
 
 	// 删除一个对象
-	public boolean delete(int id) {
+	public boolean delete(String id) {
 		return dao.delete(id);
 	}
 
 	// 更新一个对象
-	public boolean update(News news) {
-		news.setUpdateCheck(dao.getUpdateCheck(news.getId()));
-		return dao.update(news);
+	public boolean update(Articles articles) {
+		return dao.update(articles);
 	}
 
 	// 按id查询一个对象
-	public News getById(int id) {
-		return (News) dao.getById(id);
+	public Articles getById(String id) {
+		return (Articles) dao.getById(id);
 	}
 
 	// 按id查询一个对象,以供前台显示
-	public News getOneForShow(int id) {
-		News news = (News) dao.getById(id);
-		news = kitService.getForShow(news);
-		return news;
+	public Articles getOneForShow(String id) {
+		Articles articles = (Articles) dao.getById(id);
+		articles = kitService.getForShow(articles);
+		return articles;
 	}
 
+	/**
+	 * 获得对应地区的联系我们信息
+	 * @param areaCode
+	 * @return
+	 */
+	public Articles getContact(String acode){
+		if(acode == null || "".equals(acode)){
+			return null;
+		}
+		return dao.getContact(acode);
+	}
+	
 	/**
 	 * 分页查询方法, 其中的数据没有做处理
 	 * 后台/常用--使用
 	 */
-	public List<News> getByPage(News news, int startPage, int size) {
+	public List<Articles> getByPage(Articles articles, int startPage, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("news", news);
+		map.put("articles", articles);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<News> list = dao.getByPage(map);
+		List<Articles> list = dao.getByPage(map);
 		return list;
 	}
 	/**
@@ -80,7 +93,7 @@ public class NewsService {
 	 * @param size
 	 * @return
 	 */
-	public List<News> getForListShow(News object, int startPage, int size) {
+	public List<Articles> getForListShow(Articles object, int startPage, int size) {
 		if (object != null) {
 			// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
 			if (object.getArea() != null) {
@@ -98,11 +111,11 @@ public class NewsService {
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("news", object);
+		map.put("articles", object);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<News> list = dao.getByPage(map);
+		List<Articles> list = dao.getByPage(map);
 		list = kitService.getForShowNews(list);
 		return list;
 	}
@@ -111,51 +124,51 @@ public class NewsService {
 	 * 分页查询方法, 其中数据已被处理成适合前台展示的
 	 * 前台--使用
 	 */
-	public List<News> getListForShow(News news, int startPage, int size) {
+	public List<Articles> getListForShow(Articles articles, int startPage, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("news", news);
+		map.put("articles", articles);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<News> list = dao.getByPage(map);
+		List<Articles> list = dao.getByPage(map);
 		list = kitService.getForShowNews(list);
 		return list;
 	}
 
 	// 得到最新的N个信息
-	public List<News> getByNew(String acode, int size, String type) {
+	public List<Articles> getByNew(String acode, int size, String type) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		News news = new News();
+		Articles articles = new Articles();
 		if(Constants.AREACOUNTRY.equals(acode)){
-			news.setArea(new Area(null));
+			articles.setArea(new Area(null));
 		}else{
-			news.setArea(new Area(acode));
+			articles.setArea(new Area(acode));
 		}
-		news.setType(type);
-		map.put("news", news);
+		articles.setType(type);
+		map.put("articles", articles);
 		map.put("start", Constants.START);
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<News> list = dao.getByPage(map);
+		List<Articles> list = dao.getByPage(map);
 		list = kitService.getForShowNews(list);
 		return list;
 	}
 
 	// 获得数据总条数
-	public int getTotalCount(News news) {
+	public int getTotalCount(Articles articles) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("news", news);
+		map.put("articles", articles);
 		return dao.getTotalCount(map);
 	}
 
 	// 取得不带内容的新闻列表
-	public List<News> getTitleList(News object, int startPage, int size) {
+	public List<Articles> getTitleList(Articles object, int startPage, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("news", object);
+		map.put("articles", object);
 		map.put("start", startPage <= 0 ? Constants.START : (startPage - 1)
 				* (size <= 0 ? Constants.SIZE : size));
 		map.put("size", size <= 0 ? Constants.SIZE : size);
-		List<News> list = dao.getTitleList(map);
-//		for (News n : list) {
+		List<Articles> list = dao.getTitleList(map);
+//		for (Articles n : list) {
 //			if (n.getCreateDate() != null) {
 //				n.setCreateDate(KitService.dateForShow(n.getCreateDate()));
 //			}
@@ -169,7 +182,7 @@ public class NewsService {
 	 * @param acode
 	 * @return
 	 */
-	public List<News> getFiveChangeList(String acode){
+	public List<Articles> getFiveChangeList(String acode){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("area", acode);
 		map.put("type", Constants.ARTICLETYPE.NEWS.getValue());

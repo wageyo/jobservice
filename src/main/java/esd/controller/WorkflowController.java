@@ -19,10 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import esd.bean.Area;
-import esd.bean.News;
+import esd.bean.Articles;
 import esd.service.CookieHelper;
 import esd.service.KitService;
-import esd.service.NewsService;
+import esd.service.ArticlesService;
 
 /**
  * 工作流程controller
@@ -37,7 +37,7 @@ public class WorkflowController {
 	private static Logger log = Logger.getLogger(WorkflowController.class);
 
 	@Autowired
-	private NewsService newsService;
+	private ArticlesService newsService;
 
 	@RequestMapping("/search")
 	public ModelAndView work(HttpServletRequest request) {
@@ -53,7 +53,7 @@ public class WorkflowController {
 		log.info("--- search ---");
 		//从cookie读取acode
 		String acode = CookieHelper.getCookieValue(request, Constants.AREACODE);
-		News n = new News();
+		Articles n = new Articles();
 		n.setType(Constants.ARTICLETYPE.WORKFLOW.getValue());
 		n.setArea(new Area(acode));
 		String keyWord = request.getParameter("keyWord");
@@ -69,15 +69,15 @@ public class WorkflowController {
 			
 		}
 		Map<String, Object> entity = new HashMap<String, Object>();
-		List<News> newsList = newsService.getListForShow(n, page,
+		List<Articles> newsList = newsService.getListForShow(n, page,
 				Constants.SIZE);
 		Integer records = newsService.getTotalCount(n);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (newsList != null && records != null && records > 0) {
 			try {
-				for (Iterator<News> iterator = newsList.iterator(); iterator
+				for (Iterator<Articles> iterator = newsList.iterator(); iterator
 						.hasNext();) {
-					News it = (News) iterator.next();
+					Articles it = (Articles) iterator.next();
 					log.debug(it.toString());
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", String.valueOf(it.getId()));
@@ -109,22 +109,21 @@ public class WorkflowController {
 	@RequestMapping("/getOneForShow")
 	public String getOneForShow(HttpServletRequest req, RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
-		String idStr = req.getParameter("id");
-		int id = KitService.getInt(idStr);
-		if (id < 0) {
+		String id = req.getParameter("id");
+		if (id == null ||"".equals(id)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "传递的参数有误!");
 			return "/error";
 		}
 		// 将news放入到request中
 		String acode = CookieHelper.getCookieValue(req, Constants.AREACODE);
-		News news = newsService.getOneForShow(id);
+		Articles news = newsService.getOneForShow(id);
 		req.setAttribute("news", news);
-		News newsparameter=new News();
+		Articles newsparameter=new Articles();
 		newsparameter.setType(news.getType());
 		newsparameter.setArea(new Area(acode));
 		
-		List<News> list = newsService.getTitleList(newsparameter, 1, 15);
+		List<Articles> list = newsService.getTitleList(newsparameter, 1, 15);
 		req.setAttribute("newsList", list);
 		return "workflow/workflow-detail";
 	}

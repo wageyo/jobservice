@@ -20,11 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import esd.bean.Area;
-import esd.bean.News;
+import esd.bean.Articles;
 import esd.service.AreaService;
 import esd.service.CookieHelper;
 import esd.service.KitService;
-import esd.service.NewsService;
+import esd.service.ArticlesService;
 
 /**
  * 就业指导controller
@@ -39,7 +39,7 @@ public class DirectController {
 	private static Logger log = Logger.getLogger(DirectController.class);
 
 	@Autowired
-	private NewsService newsService;
+	private ArticlesService newsService;
 	@Autowired
 	private AreaService areaService;
 
@@ -56,9 +56,8 @@ public class DirectController {
 		log.info("--- search ---");
 		// 读取地区码
 		// 得到地区code
-	
 		String acode = CookieHelper.getCookieValue(request, Constants.AREACODE);
-		News n = new News();
+		Articles n = new Articles();
 		n.setType(Constants.ARTICLETYPE.DIRECT.getValue());
 		n.setArea(new Area(acode));
 		String keyWord = request.getParameter("keyWord");
@@ -73,15 +72,15 @@ public class DirectController {
 			
 		}
 		Map<String, Object> entity = new HashMap<String, Object>();
-		List<News> newsList = newsService.getListForShow(n, page,
+		List<Articles> newsList = newsService.getListForShow(n, page,
 				Constants.SIZE);
 		Integer records = newsService.getTotalCount(n);
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		if (newsList != null && records != null && records > 0) {
 			try {
-				for (Iterator<News> iterator = newsList.iterator(); iterator
+				for (Iterator<Articles> iterator = newsList.iterator(); iterator
 						.hasNext();) {
-					News it = (News) iterator.next();
+					Articles it = (Articles) iterator.next();
 					log.debug(it.toString());
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", String.valueOf(it.getId()));
@@ -113,24 +112,23 @@ public class DirectController {
 	@RequestMapping("/getOneForShow")
 	public String getOneForShow(HttpServletRequest req, RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
-		String idStr = req.getParameter("id");
-		int id = KitService.getInt(idStr);
-		if (id < 0) {
+		String id = req.getParameter("id");
+		if (id == null ||"".equals(id)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "传递的参数有误!");
 			return "/error";
 		}
 		// 将direct放入到request中
-		News news = newsService.getOneForShow(id);
+		Articles news = newsService.getOneForShow(id);
 		req.setAttribute("news", news);
 		String acode = CookieHelper.getCookieValue(req, Constants.AREACODE);
 		Area area = areaService.getByCode(acode);
-		News newsparameter=new News();
+		Articles newsparameter=new Articles();
 		newsparameter.setType(Constants.ARTICLETYPE.DIRECT.getValue());
 		newsparameter.setArea(area);
 		
 		// 再取15条信息放入到request中
-		List<News> list = newsService.getTitleList(newsparameter,
+		List<Articles> list = newsService.getTitleList(newsparameter,
 				1, 15);
 		req.setAttribute("newsList", list);
 		return "direct/direct-detail";

@@ -26,7 +26,7 @@ import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.JobCategory;
-import esd.bean.News;
+import esd.bean.Articles;
 import esd.bean.Parameter;
 import esd.bean.Resume;
 import esd.bean.User;
@@ -38,7 +38,7 @@ import esd.service.JobCategoryService;
 import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.MailService;
-import esd.service.NewsService;
+import esd.service.ArticlesService;
 import esd.service.ParameterService;
 import esd.service.ResumeService;
 import esd.service.UserService;
@@ -75,7 +75,7 @@ public class IndexController {
 	private AreaService areaService;
 
 	@Autowired
-	private NewsService newsService;
+	private ArticlesService articleService;
 
 	@Autowired
 	private MailService mailService;
@@ -144,11 +144,11 @@ public class IndexController {
 		List<Resume> resumeList = resumeService.getByNew(acode, 10);
 		mav.addObject("resumeList", resumeList);
 		// 最新的9条就业指导信息
-		List<News> directList = newsService.getByNew(acode, 9,
+		List<Articles> directList = articleService.getByNew(acode, 9,
 				Constants.ARTICLETYPE.DIRECT.getValue());
 		mav.addObject("directList", directList);
 		// 最新的9条消息
-		List<News> newsList = newsService.getByNew(acode, 9,
+		List<Articles> newsList = articleService.getByNew(acode, 9,
 				Constants.ARTICLETYPE.NEWS.getValue());
 		mav.addObject("newsList", newsList);
 		// 得到6个常用的职位种类
@@ -172,7 +172,7 @@ public class IndexController {
 		}
 		mav.addObject("jobByCategoryList", jobByCategoryList);
 		// 获取5个存在图片的新闻
-		List<News> imagesList = newsService.getFiveChangeList(acode);
+		List<Articles> imagesList = articleService.getFiveChangeList(acode);
 		mav.addObject("imagesList", imagesList);
 		return mav;
 	}
@@ -181,6 +181,15 @@ public class IndexController {
 	@RequestMapping("/contact")
 	public ModelAndView contact(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("func/contact");
+		// 读取地区码
+		// 得到地区code
+		String acode = CookieHelper.getCookieValue(request, Constants.AREACODE);
+		//根据地区code得到对应的"联系我们"数据
+		Articles contact = articleService.getContact(acode);
+		if(contact == null){
+			contact = articleService.getContact(Constants.AREACOUNTRY);
+		}
+		mav.addObject("contact", contact.getContent());
 		return mav;
 	}
 
@@ -552,9 +561,9 @@ public class IndexController {
 //			pageStr = "1";
 //		}
 //		Integer page = KitService.getInt(pageStr);
-//		List<News> newsList = newsService.getForListShow(news, page,
+//		List<News> newsList = articleService.getForListShow(news, page,
 //				Constants.SIZE);
-//		Integer records = newsService.getTotalCount(news);
+//		Integer records = articleService.getTotalCount(news);
 //		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 //		if (newsList != null && records != null && records > 0) {
 //			try {
@@ -639,9 +648,9 @@ public class IndexController {
 //			pageStr = "1";
 //		}
 //		Integer page = KitService.getInt(pageStr);
-//		List<News> newsList = newsService.getForListShow(news, page,
+//		List<News> newsList = articleService.getForListShow(news, page,
 //				Constants.SIZE);
-//		Integer records = newsService.getTotalCount(news);
+//		Integer records = articleService.getTotalCount(news);
 //		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 //		if (newsList != null && records != null && records > 0) {
 //			try {
@@ -726,9 +735,9 @@ public class IndexController {
 //			pageStr = "1";
 //		}
 //		Integer page = KitService.getInt(pageStr);
-//		List<News> newsList = newsService.getForListShow(news, page,
+//		List<News> newsList = articleService.getForListShow(news, page,
 //				Constants.SIZE);
-//		Integer records = newsService.getTotalCount(news);
+//		Integer records = articleService.getTotalCount(news);
 //		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 //		if (newsList != null && records != null && records > 0) {
 //			try {
@@ -813,9 +822,9 @@ public class IndexController {
 //			pageStr = "1";
 //		}
 //		Integer page = KitService.getInt(pageStr);
-//		List<News> newsList = newsService.getForListShow(news, page,
+//		List<News> newsList = articleService.getForListShow(news, page,
 //				Constants.SIZE);
-//		Integer records = newsService.getTotalCount(news);
+//		Integer records = articleService.getTotalCount(news);
 //		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 //		if (newsList != null && records != null && records > 0) {
 //			try {

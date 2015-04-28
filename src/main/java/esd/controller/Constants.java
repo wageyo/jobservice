@@ -298,7 +298,7 @@ public class Constants {
 	public enum ARTICLETYPE {
 		// 利用构造函数传参 级.
 		NEWS("news"), DIRECT("direct"), WORKFLOW("workflow"), POLITICIES(
-				"politicies");
+				"politicies"),CONTACT("contact");
 
 		// 定义私有变量
 		private String val;

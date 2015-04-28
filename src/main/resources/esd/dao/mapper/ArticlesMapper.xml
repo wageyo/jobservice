@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.ArticlesDao">
+	
+	<!-- result map of Articles -->
+	<resultMap id="ResultArticles" type="Articles">
+		<id column="art_id" property="id" jdbcType="VARCHAR"  />
+		<result column="art_create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="art_update_check" property="updateCheck" jdbcType="VARCHAR"  />
+		<result column="art_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="art_log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="art_title" property="title" jdbcType="VARCHAR" />
+		<result column="art_content" property="content" jdbcType="VARCHAR" />
+		<result column="art_author" property="author" jdbcType="VARCHAR" />
+		<result column="art_source" property="source" jdbcType="VARCHAR" />
+		<result column="art_type" property="type" jdbcType="VARCHAR" />
+		<result column="art_image_id" property="imageId" jdbcType="VARCHAR" />
+		<result column="art_is_active" property="isActive" jdbcType="BIT" />
+		<association property="area" javaType="Area" resultMap="ResultArea"/>
+	</resultMap>
+
+	<!-- result map of Area -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" jdbcType="VARCHAR"  />
+		<result column="a_name" property="name" jdbcType="VARCHAR"  />
+		<result column="a_is_active" property="isActive" jdbcType="BIT" />
+	</resultMap>
+	
+	<sql id="base_column">
+		art.id as art_id, art.create_date as art_create_date, art.update_check as art_update_check, art.update_date as art_update_date, 
+		art.log_user as art_log_user, art.title as art_title, art.content as art_content, art.author as art_author, art.source as art_source, 
+		art.type as art_type, art.image_id as art_image_id,  art.is_active as art_is_active, 
+		a.code as a_code, a.name as a_name, a.is_active as a_is_active
+	</sql>
+	
+	<sql id="from_table">
+		articles as art left join area as a on art.acode = a.code
+	</sql>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="Articles" keyProperty="id">
+		insert into articles
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="title != null and title != ''">
+				title,
+			</if>
+			<if test="content != null and content != ''">
+				content,
+			</if>
+			<if test="author != null and author != ''">
+				author,
+			</if>
+			<if test="source != null and source != ''">
+				source,
+			</if>
+			<if test="type != null and type != ''">
+				type,
+			</if>
+			<if test="imageId != null and imageId != ''">
+				image_id,
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode,
+				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR},now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="title != null and title != ''">
+				#{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null and content != ''">
+				#{content, jdbcType=VARCHAR},
+			</if>
+			<if test="author != null and author != ''">
+				#{author, jdbcType=VARCHAR},
+			</if>
+			<if test="source != null and source != ''">
+				#{source, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null and type != ''">
+				#{type, jdbcType=VARCHAR},
+			</if>
+			<if test="imageId != null and imageId != ''">
+				#{imageId, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR}, 
+				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
+			</if>
+		</trim>	
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from articles where id = #{id, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- update -->
+	<update id="update" parameterType="Articles">
+		update articles
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null and title != ''">
+				title = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null and content != ''">
+				content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="author != null and author != ''">
+				author = #{author, jdbcType=VARCHAR},
+			</if>
+			<if test="source != null and source != ''">
+				source = #{source, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null and type != ''">
+				type = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="imageId != null and imageId != ''">
+				image_id = #{imageId, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode = #{area.code, jdbcType=VARCHAR},
+				</if>
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT},
+			</if>
+			update_check = update_check + 1 	
+		</trim>
+		where id= #{id, jdbcType=VARCHAR}
+	</update>
+
+	<!-- get update check by id -->
+	<select id="getUpdateCheck" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select update_check from articles where id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultArticles" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		where art.acode = a.code and id = #{id, jdbcType=VARCHAR}
+	</select>
+
+	<!-- get by obj -->
+	<select id="getByObj" resultMap="ResultArticles" parameterType="Articles">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="createDate != null and createDate != ''">
+				art.create_date = #{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="title != null and title != ''">
+				and art.title like concat('%',#{title,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="author != null and author != ''">
+				and art.author = #{author, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null and type != ''">
+				and art.type = #{type, jdbcType=VARCHAR}
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != '' ">
+					and art.acode = #{area.code, jdbcType=VARCHAR}
+				</if>
+			</if>
+			<choose>
+				<when test="isActive != null">
+					and is_active = #{isActive, jdbcType=BIT}
+				</when>
+				<otherwise>
+					and is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+
+	<!-- get by page -->
+	<select id="getByPage" resultMap="ResultArticles" parameterType="map">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="articles != null">
+				<if test="articles.createDate != null and articles.createDate != ''">
+					art.create_date = #{articles.createDate, jdbcType=TIMESTAMP}
+				</if>
+				<if test="articles.title != null and articles.title != ''">
+					and art.title like concat('%',#{articles.title,jdbcType=VARCHAR},'%')
+				</if>
+				<if test="articles.author != null and articles.author != ''">
+					and art.author like concat('%',#{articles.author,jdbcType=VARCHAR},'%')
+				</if>
+				<if test="articles.type != null and articles.type != ''">
+					and art.type = #{articles.type,jdbcType=VARCHAR}
+				</if>
+				<if test="articles.area != null">
+					<if test="articles.area.code != null and articles.area.code != '' ">
+						and art.acode like concat('%',#{articles.area.code,jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<if test="articles.updateDate != null and articles.updateDate != ''">
+				 	and art.update_date between #{articles.updateDate, jdbcType=TIMESTAMP} and now()
+				</if>
+				<choose>
+					<when test="articles.isActive != null">
+						and art.is_active = #{articles.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and art.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="articles != null">
+				</when>
+				<otherwise>
+					and art.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+		order by art.create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="map">
+		select count(*)
+		from <include refid="from_table"/> 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="articles != null">
+				<if test="articles.createDate != null and articles.createDate != ''">
+					art.create_date = #{articles.createDate, jdbcType=TIMESTAMP}
+				</if>
+				<if test="articles.title != null and articles.title != ''">
+					and art.title like concat('%',#{articles.title,jdbcType=VARCHAR},'%')
+				</if>
+				<if test="articles.author != null and articles.author != ''">
+					and art.author like concat('%',#{articles.author,jdbcType=VARCHAR},'%')
+				</if>
+				<if test="articles.type != null and articles.type != ''">
+					and art.type = #{articles.type,jdbcType=VARCHAR}
+				</if>
+				<if test="articles.area != null">
+					<if test="articles.area.code != null and articles.area.code != '' ">
+						and art.acode like concat('%',#{articles.area.code,jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<if test="articles.updateDate != null and articles.updateDate != ''">
+				 	and art.update_date between #{articles.updateDate, jdbcType=TIMESTAMP} and now()
+				</if>
+				<choose>
+					<when test="articles.isActive != null">
+						and art.is_active = #{articles.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and art.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="articles != null">
+				</when>
+				<otherwise>
+					and art.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+
+	<!-- get title list -->
+	<select id="getTitleList" resultMap="ResultArticles" parameterType="map">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="articles != null">
+				<if test="articles.createDate != null and articles.createDate != ''">
+					art.create_date = #{articles.createDate, jdbcType=TIMESTAMP} 
+				</if>
+				<if test="articles.title != null and articles.title != ''">
+					and art.title like concat('%',#{articles.title, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="articles.author != null and articles.author != ''">
+					and art.author like concat('%',#{articles.author, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="articles.type != null and articles.type != ''">
+					and art.type = #{articles.type, jdbcType=VARCHAR}
+				</if>
+				<if test="articles.area != null">
+					<if test="articles.area.code != null and articles.area.code != '' ">
+					  and	art.acode like concat('%',#{articles.area.code,jdbcType=VARCHAR},'%')
+					</if>
+				</if>
+				<choose>
+					<when test="articles.isActive != null">
+						and art.is_active = #{articles.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and art.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="articles != null">
+				</when>
+				<otherwise>
+					and art.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+		order by art.create_date desc
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+
+	<!-- get five with image -->
+	<select id="getFiveWithImage" resultMap="ResultArticles" parameterType="map">
+		select art.id as art_id, art.create_date as art_create_date, art.update_check as art_update_check, art.update_date as art_update_date, 
+		art.title as art_title, art.author as art_author, art.source as art_source, art.type as art_type, art.image_id as art_image_id 
+		from <include refid="from_table"/> 
+		where art.image_id &lt;&gt; '' and image_id is not null
+			and acode = #{area, jdbcType=VARCHAR}
+			and type = #{type, jdbcType=VARCHAR}
+		order by art.update_date desc
+		limit 0, 5;
+	</select>
+
+	<!-- getContact -->
+	<select id="getContact" resultMap="ResultArticles" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		where art.acode = a.code and acode = #{acode, jdbcType=VARCHAR} and type = 'contact';
+	</select>
+
+</mapper>

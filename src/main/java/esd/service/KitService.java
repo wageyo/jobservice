@@ -3,6 +3,7 @@ package esd.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import esd.bean.Area;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.JobCategory;
-import esd.bean.News;
+import esd.bean.Articles;
 import esd.bean.Parameter;
 import esd.bean.Record;
 import esd.bean.Resume;
@@ -40,6 +41,15 @@ public class KitService {
 	@Autowired
 	private AreaDao aDao;
 
+	
+	/**
+	 * 生成一个UUID
+	 * @return
+	 */
+	public static String getUUID(){
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		return uuid;
+	}
 	/**
 	 * 将日期转换为yyyy-MM-dd格式
 	 * 
@@ -1510,7 +1520,7 @@ public class KitService {
 	 * @param news
 	 * @return
 	 */
-	public News getForShow(News news) {
+	public Articles getForShow(Articles news) {
 		if (news == null) {
 			return null;
 		}
@@ -1523,7 +1533,7 @@ public class KitService {
 	 * @param newsList
 	 * @return
 	 */
-	public List<News> getForShowNews(List<News> newsList) {
+	public List<Articles> getForShowNews(List<Articles> newsList) {
 		if (newsList == null) {
 			return null;
 		}

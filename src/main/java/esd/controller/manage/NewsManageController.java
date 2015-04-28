@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
-import esd.bean.News;
+import esd.bean.Articles;
 import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.CookieHelper;
 import esd.service.KitService;
-import esd.service.NewsService;
+import esd.service.ArticlesService;
 import esd.service.ParameterService;
 import esd.service.UserService;
 
@@ -43,7 +43,7 @@ public class NewsManageController {
 	private UserService<User> userService;
 	
 	@Autowired
-	private NewsService newsService;
+	private ArticlesService newsService;
 	
 	@Autowired
 	private ParameterService pService;
@@ -57,7 +57,7 @@ public class NewsManageController {
 		Integer page = KitService.getInt(pageStr) > 0 ? KitService
 				.getInt(pageStr) : 1;
 		Integer rows = Constants.SIZE;
-		News paramEntity = new News();
+		Articles paramEntity = new Articles();
 		// 名称模糊查询
 		String targetName = request.getParameter("targetName");
 		paramEntity.setTitle(targetName);
@@ -80,13 +80,13 @@ public class NewsManageController {
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
 
-		List<News> resultList = newsService.getListForShow(paramEntity, page,
+		List<Articles> resultList = newsService.getListForShow(paramEntity, page,
 				rows);
 		Integer total = newsService.getTotalCount(paramEntity); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
 			log.info("resultList.size()" + resultList.size());
-			for (News tmp : resultList) {
+			for (Articles tmp : resultList) {
 				Map<String, Object> tempMap = new HashMap<>();
 				tempMap.put("id", tmp.getId());// id
 				tempMap.put("title", tmp.getTitle());// 标题
@@ -132,7 +132,7 @@ public class NewsManageController {
 	// 提交 增加文章
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> news_add_post(News params, HttpServletRequest request,
+	public Map<String,Object> news_add_post(Articles params, HttpServletRequest request,
 			HttpServletResponse response) {
 		log.debug(" 增加文章" + params);
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -156,7 +156,7 @@ public class NewsManageController {
 	//删除文章
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> delete_news(@PathVariable(value = "id") Integer id,
+	public Map<String,Object> delete_news(@PathVariable(value = "id") String id,
 			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
 		boolean bl = newsService.delete(id);
@@ -170,12 +170,12 @@ public class NewsManageController {
 	
 	// 转到 文章编辑 页面
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public ModelAndView news_edit_get(@PathVariable(value = "id") int id,
+	public ModelAndView news_edit_get(@PathVariable(value = "id") String id,
 			HttpServletRequest request) {
 		log.debug("goto：编辑文章 ");
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
-		News obj = newsService.getById(id);
+		Articles obj = newsService.getById(id);
 		entity.put("obj", obj);
 		// 各种参数
 		List<Parameter> plist = pService.getByType(Constants.ARTICLE_TYPE);
@@ -186,7 +186,7 @@ public class NewsManageController {
 	// 提交文章编辑
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> news_edit_post(News params, HttpServletRequest request,
+	public Map<String,Object> news_edit_post(Articles params, HttpServletRequest request,
 			HttpServletResponse response) {
 		log.debug("   更新文章" + params);
 		Map<String, Object> entity = new HashMap<String, Object>();

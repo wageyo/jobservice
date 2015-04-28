@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class News extends PrimaryKeyInt {
+public class Articles extends PrimaryKeyString {
 
 	private String title; // 标题
 	private String content; // 内容
@@ -29,10 +29,10 @@ public class News extends PrimaryKeyInt {
 				+ source + ", type=" + type + ", area=" + area + "]";
 	}
 
-	public News() {
+	public Articles() {
 	}
 
-	public News(String type) {
+	public Articles(String type) {
 		this.type = type;
 	}
 

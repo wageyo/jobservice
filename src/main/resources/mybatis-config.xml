@@ -11,6 +11,7 @@
 	<!-- 加载mapper映射文件, 注意路径用 / 不是用. -->
 	<mappers>
 		<mapper resource="esd/dao/mapper/AreaMapper.xml" />
+		<mapper resource="esd/dao/mapper/ArticlesMapper.xml" />
 		<mapper resource="esd/dao/mapper/BusinessScopeMapper.xml" />
 		<mapper resource="esd/dao/mapper/CompanyMapper.xml" /> 
 		<mapper resource="esd/dao/mapper/EducationBackgroundMapper.xml" />
@@ -20,7 +21,6 @@
 		<mapper resource="esd/dao/mapper/JobCategoryMapper.xml" />
 	 	<mapper resource="esd/dao/mapper/JobMapper.xml" />
 	 	<mapper resource="esd/dao/mapper/MenuMapper.xml" />
-	 	<mapper resource="esd/dao/mapper/NewsMapper.xml" />	 	
 		<mapper resource="esd/dao/mapper/ParameterMapper.xml" />
 		<mapper resource="esd/dao/mapper/RecordMapper.xml" />
 		<mapper resource="esd/dao/mapper/ResumeMapper.xml" />

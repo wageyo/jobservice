@@ -44,8 +44,9 @@
 	                   <div class="MainLeftTwo">
 	                       <div class="MainLeftTwoLeft">
 	                          <div id="PublicframeOne11" class="PublicframeOne ">                          
-	                       			<div style="width: 988px; text-align: left; margin: 30px 160px 80px 230px;line-height: 30px; font-size:13px;">
-	                       				<p style="font-weight: bold;">通信地址: </p>
+	                       			<div style="margin: 30px 160px 80px 230px;line-height: 30px; font-size:13px;">
+	                       			${contact }
+	                       			<!-- 	<p style="font-weight: bold;">通信地址: </p>
 										<p>地&nbsp;&nbsp;&nbsp;&nbsp;址：南宁市罗文大道48号广西残疾人事业园</p>
 										<p>邮&nbsp;&nbsp;&nbsp;&nbsp;编：530007</p>
 										<p style="font-weight: bold;">各科室电话: </p>
@@ -55,6 +56,7 @@
 										<p>职业培训科: 0771-3186930 3186931 </p>
 										<p>综&nbsp;&nbsp;&nbsp;合&nbsp;&nbsp;&nbsp;科:0771-3186935、3186932 </p>
 										<p>邮&nbsp;&nbsp;&nbsp;&nbsp;箱：<a href="mailto:gxjyzx@126.com">gxjyzx@126.com</a>或<a href="mailto:jyzx@gxdpf.org.cn">jyzx@gxdpf.org.cn</a></p>
+									 -->
 									</div>                          
 							  </div>
 	                       </div>                     

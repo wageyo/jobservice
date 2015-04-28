@@ -31,7 +31,7 @@ public class FilegagsService {
 	 * @return 返回保存对象的id
 	 */
 	public String save(Filegags t) {
-		String uuid = UUID.randomUUID().toString().replace("-", "");
+		String uuid = KitService.getUUID();
 		t.setId(uuid);
 		return dao.save(t) ? uuid : null;
 	}
