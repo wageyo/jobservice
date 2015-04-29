@@ -35,6 +35,7 @@ import esd.common.util.SmsPhoneUtil;
 import esd.controller.Constants;
 import esd.service.CookieHelper;
 import esd.service.SMSService;
+import esd.service.SmsHistoryService;
 import esd.service.SmsPhoneService;
 import esd.service.UserService;
 
@@ -57,7 +58,10 @@ public class SMSManageController {
 
 	@Autowired
 	private SMSService smsService;
-	
+
+	@Autowired
+	private SmsHistoryService smsHistoryService;
+
 	@Autowired
 	private SmsPhoneUtil smsPhoneUtil;
 
@@ -66,21 +70,21 @@ public class SMSManageController {
 	public ModelAndView white_list(HttpServletRequest request) {
 		log.debug("goto：短信发送页面");
 		Map<String, Object> entity = new HashMap<>();
-//		// 获取地区码
-//		String userId = CookieHelper.getCookieValue(request,
-//				Constants.ADMINUSERID);
-//		if (userId == null || "".equals(userId)) {
-//			return new ModelAndView("redirect:/loginManage/login");
-//		}
-//		Integer uid = Integer.parseInt(userId);
-//		User userObj = userService.getById(uid);
-//		String acode = userObj.getArea().getCode();
-//		// 根据管理员的地区code, 获得本地区的所有发送过的电话列表(所有的, 不分页!)
-//		SmsPhone paramEntity = new SmsPhone();
-//		paramEntity.setArea(new Area(acode));
-//		List<SmsPhone> smsPhoneList = smsPhoneService.getByPage(paramEntity,
-//				Constants.START, Integer.MAX_VALUE);
-//		entity.put("smsPhoneList", smsPhoneList);
+		// // 获取地区码
+		// String userId = CookieHelper.getCookieValue(request,
+		// Constants.ADMINUSERID);
+		// if (userId == null || "".equals(userId)) {
+		// return new ModelAndView("redirect:/loginManage/login");
+		// }
+		// Integer uid = Integer.parseInt(userId);
+		// User userObj = userService.getById(uid);
+		// String acode = userObj.getArea().getCode();
+		// // 根据管理员的地区code, 获得本地区的所有发送过的电话列表(所有的, 不分页!)
+		// SmsPhone paramEntity = new SmsPhone();
+		// paramEntity.setArea(new Area(acode));
+		// List<SmsPhone> smsPhoneList = smsPhoneService.getByPage(paramEntity,
+		// Constants.START, Integer.MAX_VALUE);
+		// entity.put("smsPhoneList", smsPhoneList);
 		return new ModelAndView("manage/sms", entity);
 	}
 
@@ -115,6 +119,9 @@ public class SMSManageController {
 		String[] phoneList = request.getParameterValues("phoneList"); // 电话号码列表
 		String[] nameList = request.getParameterValues("nameList");// 名字列表
 		String shortMessage = request.getParameter("shortMessage");// 短信内容
+		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+	 Integer uid = Integer.parseInt(userId);
+	 User userObj = userService.getById(uid);
 		if (phoneList == null || nameList == null) {
 			result.put(Constants.NOTICE, "传递的数据为空, 请重新尝试或联系管理员.");
 			return result;
@@ -130,7 +137,7 @@ public class SMSManageController {
 		int size = 80;
 		// 页码数
 		int page = (total % size == 0) ? (total / size) : ((total / size) + 1);
-		//非法字符集文件地址
+		// 非法字符集文件地址
 		String url = request.getSession().getServletContext().getRealPath("/");
 		Boolean mark = Boolean.TRUE;
 		if (page >= 2) {
@@ -146,14 +153,15 @@ public class SMSManageController {
 					paramPhoneList[k] = phoneList[k + beginIndex];
 				}
 				Boolean bl = smsService.sendMessage(
-						getRegularPhoneSentence(paramPhoneList), shortMessage,url);
+						getRegularPhoneSentence(paramPhoneList), shortMessage,
+						url,userObj.getNickName());
 				if (!bl) {
 					mark = Boolean.FALSE;
 				}
 			}
 		} else {
 			Boolean bl = smsService.sendMessage(
-					getRegularPhoneSentence(phoneList), shortMessage,url);
+					getRegularPhoneSentence(phoneList), shortMessage, url,userObj.getNickName());
 			if (!bl) {
 				mark = Boolean.FALSE;
 			}
@@ -169,11 +177,12 @@ public class SMSManageController {
 	// 删除电话号码
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delete(@PathVariable(value="id") String id,HttpServletRequest request) {
+	public Map<String, Object> delete(@PathVariable(value = "id") String id,
+			HttpServletRequest request) {
 		log.debug("goto：post 删除电话号码");
 		Map<String, Object> result = new HashMap<String, Object>();
-		//如果为all的话则表示删除该地区所有的电话号码
-		if("ALL".equals(id)){
+		// 如果为all的话则表示删除该地区所有的电话号码
+		if ("ALL".equals(id)) {
 			// 获取地区码
 			String userId = CookieHelper.getCookieValue(request,
 					Constants.ADMINUSERID);
@@ -181,14 +190,15 @@ public class SMSManageController {
 			User userObj = userService.getById(uid);
 			String acode = userObj.getArea().getCode();
 			Boolean bl = smsPhoneService.deleteByArea(acode);
-			if(bl){
-				result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
-			}else{
+			if (bl) {
+				result.put(Constants.NOTICE,
+						Constants.Notice.SUCCESS.getValue());
+			} else {
 				result.put(Constants.NOTICE, "删除数据发生错误, 请重新尝试或联系管理员.");
 			}
 			return result;
 		}
-		//id不为ALL则只删除对应id的号码
+		// id不为ALL则只删除对应id的号码
 		// 查询对该电话对象
 		SmsPhone smsPhone = smsPhoneService.getById(id);
 		if (smsPhone == null) {
@@ -218,7 +228,8 @@ public class SMSManageController {
 	}
 
 	/**
-	 *  导入电话号码excel文件
+	 * 导入电话号码excel文件
+	 * 
 	 * @param excel
 	 * @param request
 	 * @param response
@@ -235,9 +246,9 @@ public class SMSManageController {
 		// ① 初始化上传文件目录
 		String url = request.getSession().getServletContext().getRealPath("/");
 		// 上传的excel文件存放的目录
-		String excelPath = url + "upload" +File.separator +"excel";
+		String excelPath = url + "upload" + File.separator + "excel";
 		// 缓存文件目录(比如提供下载的临时生成的excel文件)
-		String tempPath = url + "upload" +File.separator +"temp";
+		String tempPath = url + "upload" + File.separator + "temp";
 		// 如果不存在以上 3个目录的话, 则进行创建
 		File excelFolder = new File(excelPath); // upload下的 excel存放目录
 		File tempFolder = new File(tempPath); // upload下的 生成的excel缓存目录
@@ -262,13 +273,13 @@ public class SMSManageController {
 			excel.transferTo(excelFile);
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			writer.write(Constants.NOTICE + ":"
-					+ "上传并复制excel文件到服务器时发生错误,错误信息:" + e.getMessage());
+			writer.write(Constants.NOTICE + ":" + "上传并复制excel文件到服务器时发生错误,错误信息:"
+					+ e.getMessage());
 			return;
 		} catch (IOException e) {
 			e.printStackTrace();
-			writer.write(Constants.NOTICE + ":"
-					+ "上传并复制excel文件到服务器时发生错误,错误信息:" + e.getMessage());
+			writer.write(Constants.NOTICE + ":" + "上传并复制excel文件到服务器时发生错误,错误信息:"
+					+ e.getMessage());
 			return;
 		}
 
@@ -291,8 +302,7 @@ public class SMSManageController {
 			list = smsPhoneUtil.parse(excelFile, 0);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			writer.write(Constants.NOTICE + ":"
-			+ "解析excel表格式发生错误.");
+			writer.write(Constants.NOTICE + ":" + "解析excel表格式发生错误.");
 			return;
 		}
 		if (list == null || list.size() <= 0) {
@@ -301,23 +311,24 @@ public class SMSManageController {
 					+ "excel文件内部文本信息格式错误,导致解析失败, 请检查文件内嗲话号码是否符合规范.");
 			return;
 		}
-		
+
 		// ③检查list集合中, 验证OK的存在数据库中, 不OK的则放入到错误列表中, 提供给下载.
 		for (int i = 0; i < list.size(); i++) {
 			SmsPhone item = list.get(i);
-			if(item.getIsOk()){
-				//检查该电话在该地区是否存在
-				SmsPhone tmp = smsPhoneService.getByPhoneAndArea(item.getPhone(), acode);
-				if(tmp!=null){
+			if (item.getIsOk()) {
+				// 检查该电话在该地区是否存在
+				SmsPhone tmp = smsPhoneService.getByPhoneAndArea(
+						item.getPhone(), acode);
+				if (tmp != null) {
 					item.setIsOk(Boolean.FALSE);
 					item.setRemark("号码号码重复.");
 					wrongList.add(item);
-				}else{
+				} else {
 					item.setArea(new Area(acode));
 					item.setLogUser(userObj.getNickName());
 					smsPhoneService.save(item);
 				}
-			}else{
+			} else {
 				wrongList.add(item);
 			}
 		}
@@ -329,7 +340,7 @@ public class SMSManageController {
 
 		// ⑤ 校验完毕后, 从缓存表中读取到导入的数据总数, 正确条数, 错误条数
 		Integer totalCount = list.size();
-		Integer rightCount = list.size()-wrongList.size();
+		Integer rightCount = list.size() - wrongList.size();
 		Integer wrongCount = wrongList.size();
 
 		// String notice = "excel文件数据校验成功, 共有残疾证号数据 " + totalCount + " 条,"
@@ -337,14 +348,16 @@ public class SMSManageController {
 		// + "错误数据有 " + wrongCount + " 条."
 		// +"successEnd"
 
-		String notice = totalCount + "@"  + rightCount + "*" + wrongCount +"successEnd";
+		String notice = totalCount + "@" + rightCount + "*" + wrongCount
+				+ "successEnd";
 		writer.write(Constants.Notice.SUCCESS.getValue() + ":" + notice);
 
 		// ⑥ 如果有错误残疾职工信息的话, 则将其保存到缓存目录的excel文件中
 		if (wrongCount != null && wrongCount > 0) {
 			String uuid = UUID.randomUUID().toString().replace("-", ""); // 随机id,
 																			// 防止重复
-			String wrongPath = tempPath + File.separator+ uuid + ".xls"; // 错误错误列表 文件路径
+			String wrongPath = tempPath + File.separator + uuid + ".xls"; // 错误错误列表
+																			// 文件路径
 			if (PoiCreateExcel.createSmsPhoneExcel(wrongPath, wrongList)) {
 				// 项目在服务器上的远程绝对地址
 				String serverAndProjectPath = request.getLocalAddr() + ":"
@@ -357,7 +370,7 @@ public class SMSManageController {
 		}
 
 	}
-	
+
 	/**
 	 * 上传图片超出最大值时, 弹出的异常
 	 * 
@@ -381,7 +394,7 @@ public class SMSManageController {
 		PrintWriter writer = response.getWriter();
 		writer.write(notice);
 	}
-	
+
 	/**
 	 * 字节转为MB 方法
 	 * 
@@ -395,6 +408,5 @@ public class SMSManageController {
 		long mb = 1024 * 1024;
 		return "" + byteFile / mb + "MB";
 	}
-	
 
 }

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.SmsHistoryDao">
+	
+	<!-- result map of SmsHistory -->
+	<resultMap id="ResultSmsHistory" type="SmsHistory">
+		<id column="sh_id" property="id" jdbcType="VARCHAR" />
+		<result column="sh_create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="sh_update_check" property="updateCheck" jdbcType="INTEGER" />
+		<result column="sh_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="sh_log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="sh_phonenumber" property="phonenumber" jdbcType="VARCHAR" />
+		<result column="sh_content" property="content" jdbcType="VARCHAR" />
+		<result column="sh_is_success" property="isSuccess" jdbcType="BIT" />
+		<result column="sh_is_active" property="isActive" jdbcType="BIT" />
+	</resultMap>
+	
+	<sql id="base_column">
+		sh.id as sh_id, sh.create_date as sh_create_date, sh.update_check as sh_update_check, 
+		sh.update_date as sh_update_date, sh.log_user as sh_log_user, sh.name as sh_name,
+		sh.phonenumber as sh_phonenumber, sh.content as sh_content,
+		sh.is_success as sh_is_success, sh.is_active as sh_is_active, 
+	</sql>
+	
+	<sql id="from_table">
+		sms_history as sh 
+	</sql>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="SmsHistory">
+		insert into sms_history
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="phonenumber != null and phonenumber != ''">
+				phonenumber,
+			</if>
+			<if test="content != null and content != ''">
+				content,
+			</if>
+			<if test="isSuccess != null">
+				is_success,
+			</if>
+			<if test="isActive != null">
+				is_active
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}, now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="phonenumber != null and phonenumber != ''">
+				#{phonenumber, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null and content != ''">
+				#{content, jdbcType=VARCHAR},
+			</if>
+			<if test="isSuccess != null ">
+				#{isSuccess, jdbcType=BIT},
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
+			</if>
+		</trim>	
+	</insert>
+
+	<insert id="saveSmsHistoryBatch" parameterType="java.util.List">
+		insert into sms_history
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id, update_date, log_user, phonenumber, content
+		</trim>
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id, jdbcType=VARCHAR}, now(), #{item.logUser, jdbcType=VARCHAR},
+				#{item.phonenumber, jdbcType=VARCHAR}, #{item.content, jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from sms_history 
+		where id = #{id, jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="SmsHistory">
+		update sms_history
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="phonenumber != null and phonenumber != ''">
+				phonenumber = #{phonenumber, jdbcType=VARCHAR},
+			</if>
+			<if test="content != null and content != ''">
+				content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="isSuccess != null">
+				is_success = #{isSuccess, jdbcType=BIT},
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
+			</if>
+		</trim>
+		where id = #{id, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultSmsHistory" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sh.id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- getByPhone -->
+	<select id="getByPhone" resultMap="ResultSmsHistory" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sh.phonenumber = #{phonenumber, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map" resultMap="ResultSmsHistory">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="smsHistory != null">
+				<if test="smsHistory.phonenumber != null and smsHistory.phonenumber != ''">
+					sh.phonenumber = #{smsHistory.phonenumber, jdbcType=VARCHAR} 
+				</if>
+				<if test="smsHistory.content != null and smsHistory.content != ''">
+					and sh.content = #{smsHistory.content, jdbcType=VARCHAR} 
+				</if>
+				<if test="smsHistory.isSuccess != null">
+					and sh.is_success = #{smsHistory.isSuccess, jdbcType=BIT}
+				</if>
+				<choose>
+					<when test="smsHistory.isActive != null">
+						and sh.is_active = #{smsHistory.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and sh.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="smsHistory != null">
+				</when>
+				<otherwise>
+					and sh.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+		order by sh.create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+	
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int" parameterType="map">
+		select count(*)
+		from <include refid="from_table"/>
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="smsHistory != null">
+				<if test="smsHistory.phonenumber != null and smsHistory.phonenumber != ''">
+					sh.phonenumber = #{smsHistory.phonenumber, jdbcType=VARCHAR} 
+				</if>
+				<if test="smsHistory.content != null and smsHistory.content != ''">
+					and sh.content = #{smsHistory.content, jdbcType=VARCHAR} 
+				</if>
+				<if test="smsHistory.isSuccess != null">
+					and sh.is_success = #{smsHistory.isSuccess, jdbcType=BIT}
+				</if>
+				<choose>
+					<when test="smsHistory.isActive != null">
+						and sh.is_active = #{smsHistory.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and sh.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="smsHistory != null">
+				</when>
+				<otherwise>
+					and sh.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+	</select> 
+	
+</mapper>

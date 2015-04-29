@@ -310,7 +310,7 @@ public class MatchManageController {
 				if(sentData.size() <= 0){
 					continue;
 				}
-				Boolean bl = smsService.sendTuiSongJob(resume, sentData,url);
+				Boolean bl = smsService.sendTuiSongJob(resume, sentData,url,userObj.getNickName());
 				if(bl){
 					right ++;
 				}else{

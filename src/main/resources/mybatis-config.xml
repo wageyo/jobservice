@@ -25,6 +25,7 @@
 		<mapper resource="esd/dao/mapper/RecordMapper.xml" />
 		<mapper resource="esd/dao/mapper/ResumeMapper.xml" />
 		<mapper resource="esd/dao/mapper/StatisticsCompanyMapper.xml" />
+		<mapper resource="esd/dao/mapper/SmsHistoryMapper.xml" />
 		<mapper resource="esd/dao/mapper/SmsPhoneMapper.xml" />
 		<mapper resource="esd/dao/mapper/UnempManageMapper.xml" />
 		<mapper resource="esd/dao/mapper/UserMapper.xml" />

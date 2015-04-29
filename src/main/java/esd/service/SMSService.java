@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import esd.bean.Job;
 import esd.bean.Resume;
+import esd.bean.SmsHistory;
 import esd.common.Sender;
+import esd.dao.SmsHistoryDao;
 import esd.dao.UserDao;
 
 /**
@@ -36,15 +39,19 @@ public class SMSService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private SmsHistoryDao smsHistoryDao;
 
 	/**
 	 * 发送短信--不对短信内容进行非法校验更正
 	 * 
 	 * @param phone格式为单个或多个电话, 单个电话时直接传入电话号码即可, 例如 "13812345678"; 多个时中间用","隔开, 例如  "138123445678,13512312312,13112541251", 末尾不用",", 一次最多99个电话.
 	 * @param message 短信内容, 最大不超过340
+	 * @param logUser 发送人
 	 * @return
 	 */
-	public Boolean sendMessage(String phone, String message) {
+	public Boolean sendMessage(String phone, String message,String logUser) {
 		Sender sender = new Sender(username, password);
 		// 发送短信
 		String result = sender.massSend(phone, message, null, null);
@@ -56,6 +63,8 @@ public class SMSService {
 				result.indexOf("errid") + 7);
 		// 如果发送成功, 则返回true
 		if ((Integer.parseInt(num) >= 1) && "0".equals(errid)) {
+			log.info("************************保存发送记录******************************");
+			saveSentHistory(phone,message,logUser);
 			return Boolean.TRUE;
 		}
 		return Boolean.FALSE;
@@ -68,7 +77,7 @@ public class SMSService {
 	 * @param message 短信内容, 最大不超过340
 	 * @return
 	 */
-	public Boolean sendMessage(String phone, String message,String illegalFileUrl) {
+	public Boolean sendMessage(String phone, String message,String illegalFileUrl, String logUser) {
 		
 		//处理非法关键字
 		message = dealIllegalContent(message, illegalFileUrl);
@@ -87,6 +96,8 @@ public class SMSService {
 			log.info("************************短信发送成功******************************");
 			log.info("发送条数: "+num);
 			log.info("************************短信发送成功******************************");
+			log.info("************************保存发送记录******************************");
+			saveSentHistory(phone,message,logUser);
 			return Boolean.TRUE;
 		}
 		String err = result.substring(result.indexOf("err")+4,result.indexOf("errid")-1);
@@ -104,9 +115,10 @@ public class SMSService {
 	 * @param resume
 	 * @param jobList
 	 * @param illegalFileUrl --路径为项目根路径
+	 * @param logUser 操作人
 	 */
 	public Boolean sendTuiSongJob(Resume resume, List<Job> jobList,
-			String illegalFileUrl) {
+			String illegalFileUrl,String logUser) {
 		String phone = resume.getPhone(); // 电话号码
 		// 校验电话规则, 不符合规则 则返回false; 不存在则使用其账号表中的电话, 如仍不存在则返回false;
 		if (phone == null || "".equals(phone)) {
@@ -151,10 +163,10 @@ public class SMSService {
 					endIndex = total;
 				}
 				String perMsg = "("+i+"/"+page+")" + msg.substring(beginIndex,endIndex);
-				bl = sendMessage(phone, perMsg);
+				bl = sendMessage(phone, perMsg,logUser);
 			}
 		}else{
-			bl = sendMessage(phone, msg);
+			bl = sendMessage(phone, msg,logUser);
 		}
 		log.info("推送短信内容：" + msg);
 		log.info("推送短信长度: " + msg.length());
@@ -199,6 +211,32 @@ public class SMSService {
 		return content;
 	}
 
+	/**
+	 * 将发送记录保存到历史记录表中
+	 * @param phone
+	 * @param shortMessage
+	 * @param logUser
+	 */
+	private void saveSentHistory(String phone,String shortMessage,String logUser){
+		String[] phonenumberList;
+		if(phone.length()>11){
+			phonenumberList = phone.split(",");
+		}else{
+			phonenumberList = new String[1];
+			phonenumberList[0]=phone;
+		}
+		List<SmsHistory> list = new ArrayList<SmsHistory>();
+		for (String phonenumber : phonenumberList) {
+			SmsHistory sh = new SmsHistory();
+			sh.setId(KitService.getUUID());
+			sh.setLogUser(logUser);
+			sh.setPhonenumber(phonenumber);
+			sh.setContent(shortMessage);
+			list.add(sh);
+		}
+		smsHistoryDao.saveSmsHistoryBatch(list);
+	}
+	
 	public static void main(String[] args) {
 //		String msg = "广西壮族自治区残疾人劳动就业指导中心向您推荐的招聘信息招聘信息:"
 //				+ "1. 统计员, 广西南宁嘉泰水泥制品有限公司, 广西壮族自治区, 1000-2000元"
@@ -227,10 +265,15 @@ public class SMSService {
 //			System.out.println(perMsg);
 //		}
 		
-		String result = "num=0&success=&faile=13804802181&err=该企业用户余额不足&errid=6013";
-		String err = result.substring(result.indexOf("err")+4,result.indexOf("errid")-1);
-		System.out.println(err);
-		String errid = result.substring(result.indexOf("errid")+6);
-		System.out.println(errid);
+//		String result = "num=0&success=&faile=13804802181&err=该企业用户余额不足&errid=6013";
+//		String err = result.substring(result.indexOf("err")+4,result.indexOf("errid")-1);
+//		System.out.println(err);
+//		String errid = result.substring(result.indexOf("errid")+6);
+//		System.out.println(errid);
+		String str = "138321231,231321321,321321321,231231321,231231321";
+		String[] ss = str.split(",");
+		for(String s:ss){
+			System.out.println(s);
+		}
 	}
 }

@@ -158,22 +158,22 @@
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="smsPhone != null">
 				<if test="smsPhone.name != null and smsPhone.name != ''">
-					name like concat('%',#{smsPhone.name, jdbcType=VARCHAR},'%')
+					sp.name like concat('%',#{smsPhone.name, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="smsPhone.phone != null and smsPhone.phone != ''">
-					and phone like concat('%',#{smsPhone.phone, jdbcType=VARCHAR},'%')
+					and sp.phone like concat('%',#{smsPhone.phone, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="smsPhone.area != null">
 					<if test="smsPhone.area.code != null and smsPhone.area.code != ''">
-						and acode = #{smsPhone.area.code, jdbcType=VARCHAR}
+						and sp.acode = #{smsPhone.area.code, jdbcType=VARCHAR}
 					</if>
 				</if>
 				<choose>
 					<when test="smsPhone.isActive != null">
-						and is_active = #{smsPhone.isActive, jdbcType=BIT}
+						and sp.is_active = #{smsPhone.isActive, jdbcType=BIT}
 					</when>
 					<otherwise>
-						and is_active = 1 
+						and sp.is_active = 1 
 					</otherwise>
 				</choose>
 			</if>
@@ -181,11 +181,11 @@
 				<when test="smsPhone != null">
 				</when>
 				<otherwise>
-					and is_active = 1 
+					and sp.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>
-		order by create_date desc 
+		order by sp.create_date desc 
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>
 	
@@ -196,22 +196,22 @@
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="smsPhone != null">
 				<if test="smsPhone.name != null and smsPhone.name != ''">
-					name like concat('%',#{smsPhone.name, jdbcType=VARCHAR},'%')
+					sp.name like concat('%',#{smsPhone.name, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="smsPhone.phone != null and smsPhone.phone != ''">
-					and phone like concat('%',#{smsPhone.phone, jdbcType=VARCHAR},'%')
+					and sp.phone like concat('%',#{smsPhone.phone, jdbcType=VARCHAR},'%')
 				</if>
 				<if test="smsPhone.area != null">
 					<if test="smsPhone.area.code != null and smsPhone.area.code != ''">
-						and acode = #{smsPhone.area.code, jdbcType=VARCHAR}
+						and sp.acode = #{smsPhone.area.code, jdbcType=VARCHAR}
 					</if>
 				</if>
 				<choose>
 					<when test="smsPhone.isActive != null">
-						and is_active = #{smsPhone.isActive, jdbcType=BIT}
+						and sp.is_active = #{smsPhone.isActive, jdbcType=BIT}
 					</when>
 					<otherwise>
-						and is_active = 1 
+						and sp.is_active = 1 
 					</otherwise>
 				</choose>
 			</if>
@@ -219,7 +219,7 @@
 				<when test="smsPhone != null">
 				</when>
 				<otherwise>
-					and is_active = 1 
+					and sp.is_active = 1 
 				</otherwise>
 			</choose>
 		</trim>
