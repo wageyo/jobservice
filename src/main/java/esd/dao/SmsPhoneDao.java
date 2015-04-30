@@ -21,6 +21,12 @@ public interface SmsPhoneDao extends IDao<SmsPhone> {
 	Boolean deleteByArea(String acode);
 	
 	/**
+	 * 删除一个电话号码
+	 * @param phone
+	 * @return
+	 */
+	Boolean deleteByPhone(String phone);
+	/**
 	 * 根据电话号码查询电话是否已经存在, 返回该对象
 	 * @param phone
 	 * @return

@@ -95,6 +95,12 @@
 		where id = #{id, jdbcType=VARCHAR}
 	</delete>
 	
+	<!-- getByPhone -->
+	<delete id="deleteByPhone" parameterType="java.lang.String">
+		delete from sms_phone 
+		where phone = #{phone, jdbcType=VARCHAR}
+	</delete>
+	
 	<!-- delete by area-->
 	<delete id="deleteByArea" parameterType="java.lang.String">
 		delete from sms_phone 

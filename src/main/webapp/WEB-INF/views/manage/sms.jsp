@@ -23,8 +23,6 @@
 	<script src="${contextPath}/js/verify.js"></script>
 	<script src="${contextPath}/js/manage/sms.js"></script>
 	
-	<style type="text/css">
-	</style>
 </head>
 
 <body>
@@ -59,17 +57,16 @@
 					
 						<!-- 左边短信编辑区 begin -->
 						<div class="span4">
-							<textarea id="shortMessage" style="width: 100%;height: 300px;" title="短信内容不超过300字...">短信内容不超过300字...</textarea>
+							<textarea id="shortMessage" title="短信内容不超过300字...">短信内容不超过300字...</textarea>
 							<p id="notice">还可以输入300字...</p>
 							<p id="noticeMsg"></p>
 							<div class="example-area" style="background-image:url(${contextPath}/images/backdoor/excelexample.png);background-repeat: no-repeat;height:160px;padding-top: 160px;color: blue">
 								excel表格格式, 姓名为选填项, 可为空.
-								
 							</div>
 						</div>
 						<!-- 左边短信编辑区 end -->
 					
-						<!-- 中间号码录入区 begin -->
+						<!-- 右边号码录入区 begin -->
 						<div class="span8">
 							<div class="sms-phone-list">
 								<div class="sms-phone-title">
@@ -95,31 +92,21 @@
 										padding: 0px 3px;
 										margin-top: 10px;
 										color: rgb(116, 116, 116);"/>
-								<!-- 	<a href="#" id="downLoadWrongList" style="">下载错误号码</a>	 -->
-									
 								</div>
 							</div>
 							
 							<div class="sms-phone-list">
 								<div class="sms-phone-title">
-									通讯录号码
+									通讯录号码<span style="float: right;color: rgb(255, 0, 0);font-size: 10px;vertical-align: bottom;cursor: pointer;" onclick="deletePhone('all',null)" >删除全部</span>
 								</div>
 								<div class="communicate-div">
 									<ul class="communicate-ul">
-									<!-- 	<c:forEach items="${smsPhoneList }" var="smsPhone">
-											<li phone="${smsPhone.phone }" name="${smsPhone.name }" onclick="toTargetDiv(this);">
-												<c:choose>
-													<c:when test="${smsPhone.name == null || smsPhone.name == '' }"> ${smsPhone.phone }</c:when>
-													<c:otherwise>${smsPhone.name }</c:otherwise>
-												</c:choose>
-											</li>
-										</c:forEach> -->
 									</ul>
 								</div>
 							</div>
 							
 						</div>
-						<!-- 中间号码录入区 end -->
+						<!-- 右边号码录入区 end -->
 						
 						<!-- 遮罩窗体  开始--><a>&nbsp;</a>
 						<div id="modal-container-236826" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">

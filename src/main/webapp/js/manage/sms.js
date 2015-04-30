@@ -106,15 +106,15 @@ function initPhoneList(){
 			if(data.notice == 'success'){
 				var content = '';
 				$.each(data.phoneList,function(index,item){
-					content += '<li phone="' + item.phone + '" name="' + item.name + '" onclick="toTargetDiv(this);">';
-					content += '<span style="width:130px;">';
+					content += '<li>';
+					content += '<span phone="' + item.phone + '" name="' + item.name + '" style="width:110px;"  onclick="toTargetDiv(this);">';
 					if(item.name != null && item.name != ''){
 						content += item.name;
 					}else{
 						content += item.phone;
 					}
 					content += '</span>'
-					content  += '<span style="">×</span>';
+					content  += '<span style="width:20px;text-align: center;font-size: 16px;color: rgb(166, 166, 166);" onmouseover="mouseoverPhone(this);" onmouseout="mouseoutPhone(this)" onclick="deletePhone(\'' + item.phone + '\',this)">×</span>';
 					content  += '</li>';
 				});
 //				alert(content);
@@ -126,21 +126,69 @@ function initPhoneList(){
 		}
 	});
 }
-//右边通讯录单个li 鼠标移入,移出, 点击事件
+
+//通讯录删除按钮 鼠标 悬浮事件
+function mouseoverPhone(obj){
+	$(obj).css({'font-weight':'bold','font-size':'18px','color': 'rgb(0, 0, 0)'});
+}
+//通讯录删除按钮 鼠标 离开事件
+function mouseoutPhone(obj){
+	$(obj).css({'font-weight':'normal','font-size':'16px','color': 'rgb(166, 166, 166)'});
+}
+//异步删除通讯录中的电话, obj为当前点击的对象xxxxxxxxxx
+function deletePhone(phone,obj){
+	if(phone == null || phone == ''){
+		alert('没有选中任何号码, 请刷新页面后重新尝试或联系管理员.');
+		return;
+	}
+/*	if(!window.confirm('确实要删除号码: ' + phone + ' 吗?')){
+		return;
+	}	*/
+	$.ajax({
+		url:server.url + 'manage/sms/delete/' + phone,
+		type:'post',
+		dataType:'json',
+		traditional: true,	//加上该属性后, 后台可以正常的取得数组的值
+		success:function(data){
+			// 删除成功, 则将对应的li剔除掉
+			if(data.notice == 'success'){
+				if(obj != null && obj != undefined){
+					$(obj).parent().remove();
+				}else{
+					//此时则为全部删除的情况, 清空通讯录里的电话号码
+					$('.communicate-div .communicate-ul').html('');
+				}
+			}else{
+				alert(data.notice);
+			}
+		}
+	});
+}
+
+//右边通讯录单个li  点击事件
 function toTargetDiv(obj){
 	var content = '<li phone="'+$(obj).attr('phone')+'" name="'+$(obj).attr('name')+'" onclick="toCommunication(this);">';
 	content += $(obj).html();
 	content  += '</li>';
 	$('.target-div .target-ul').append(content); 
-	$(obj).remove();
+	$(obj).parent().remove();
 	//更新上面的计数
 	sendNumbers();
 }
 
-//左边通讯录单个li 鼠标移入,移出, 点击事件
+//左边通讯录单个li  点击事件
 function toCommunication(obj){
-	var content = '<li phone="'+$(obj).attr('phone')+'" name="'+$(obj).attr('name')+'" onclick="toTargetDiv(this);">';
-	content += $(obj).html();
+	var name = $(obj).attr('name');
+	var phone = $(obj).attr('phone');
+	var content = '<li >';
+	content += '<span phone="'+phone+'" name="'+ name +'" onclick="toTargetDiv(this);" style="width:110px;"  onclick="toTargetDiv(this);">';
+	if(name != null && name != ''){
+		content += name;
+	}else{
+		content += phone;
+	}
+	content += '</span>'
+	content  += '<span style="width:20px;text-align: center;font-size: 16px;color: rgb(166, 166, 166);" onmouseover="mouseoverPhone(this);" onmouseout="mouseoutPhone(this)" onclick="deletePhone(\'' + phone + '\',this)">×</span>';
 	content  += '</li>';
 	$('.communicate-div .communicate-ul').append(content); 
 	$(obj).remove();
@@ -233,7 +281,7 @@ function send(){
 	});
 }
 
-//全部添加addAll
+//全部添加到目标号码中
 function addAll(){
 	var content = '';
 	$('.communicate-div .communicate-ul li').each(function(){
@@ -247,7 +295,7 @@ function addAll(){
 	sendNumbers();
 }
 
-//移出全部
+//全部移动到电话簿中
 function removeAll(){
 	var content = '';
 	$('.target-div .target-ul li').each(function(){
@@ -262,30 +310,3 @@ function removeAll(){
 
 
 
-// 异步删除通讯录中的电话, obj为当前点击的对象xxxxxxxxxx
-function deleteSmsPhone(phone,obj){
-	if(phone == null || phone == ''){
-		alert('没有选中任何号码, 请刷新页面后重新尝试或联系管理员.');
-		return;
-	}
-	if(!window.confirm('确实要删除号码: ' + phone + ' 吗?')){
-		return;
-	}
-	$.ajax({
-		url:server.url + 'manage/sms/delete',
-		type:'post',
-		dataType:'json',
-		data:{
-			'phone':phone
-		},
-		traditional: true,	//加上该属性后, 后台可以正常的取得数组的值
-		success:function(data){
-			// 删除成功, 则将对应的li隐藏
-			if(data.notice == 'success'){
-				
-			}else{
-				alert(data.notice);
-			}
-		}
-	});
-}

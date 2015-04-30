@@ -3,7 +3,6 @@ package esd.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,8 @@ public class SmsPhoneService {
 	private SmsPhoneDao dao;
 
 	/**
-	 *  保存一个对象
+	 * 保存一个对象
+	 * 
 	 * @param t
 	 * @return
 	 */
@@ -35,13 +35,13 @@ public class SmsPhoneService {
 		if (t == null) {
 			return Boolean.FALSE;
 		}
-		String uuid = UUID.randomUUID().toString();
-		t.setId(uuid);
+		t.setId(KitService.getUUID());
 		return dao.save(t);
 	}
 
 	/**
-	 *  删除一个对象
+	 * 删除一个对象
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -50,16 +50,27 @@ public class SmsPhoneService {
 	}
 	
 	/**
+	 * 删除已个电话号码
+	 * @param phone
+	 * @return
+	 */
+	public Boolean deleteByPhone(String phone) {
+		return dao.deleteByPhone(phone);
+	}
+
+	/**
 	 * 根据地区code删除该地区所有电话号码
+	 * 
 	 * @param acode
 	 * @return
 	 */
-	public Boolean deleteByArea(String acode){
+	public Boolean deleteByArea(String acode) {
 		return dao.deleteByArea(acode);
 	}
 
 	/**
-	 *  更新一个对象
+	 * 更新一个对象
+	 * 
 	 * @param t
 	 * @return
 	 */
@@ -71,31 +82,34 @@ public class SmsPhoneService {
 	}
 
 	/**
-	 *  按id查询一个对象
+	 * 按id查询一个对象
+	 * 
 	 * @param id
 	 * @return
 	 */
 	public SmsPhone getById(String id) {
 		return dao.getById(id);
 	}
-	
+
 	/**
 	 * 根据电话号码来查询一个电话是否已经存在
+	 * 
 	 * @param id
 	 * @return
 	 */
 	public SmsPhone getByPhone(String phone) {
 		return dao.getByPhone(phone);
 	}
-	
+
 	/**
 	 * 根据电话号码,地区code来查询一个电话是否已经存在
+	 * 
 	 * @param phone
 	 * @param acode
 	 * @return
 	 */
-	public SmsPhone getByPhoneAndArea(String phone,String acode) {
-		Map<String,Object> map = new HashMap<String,Object>();
+	public SmsPhone getByPhoneAndArea(String phone, String acode) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("phone", phone);
 		map.put("acode", acode);
 		return dao.getByPhoneAndArea(map);
@@ -118,7 +132,8 @@ public class SmsPhoneService {
 	}
 
 	/**
-	 *  获得数据总条数
+	 * 获得数据总条数
+	 * 
 	 * @param smsPhone
 	 * @return
 	 */
@@ -127,7 +142,7 @@ public class SmsPhoneService {
 		map.put("smsPhone", smsPhone);
 		return dao.getTotalCount(map);
 	}
-	
+
 	/**
 	 * 分页查询方法,
 	 */

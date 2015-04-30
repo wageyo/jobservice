@@ -182,7 +182,7 @@ public class SMSManageController {
 		log.debug("goto：post 删除电话号码");
 		Map<String, Object> result = new HashMap<String, Object>();
 		// 如果为all的话则表示删除该地区所有的电话号码
-		if ("ALL".equals(id)) {
+		if ("all".equals(id)) {
 			// 获取地区码
 			String userId = CookieHelper.getCookieValue(request,
 					Constants.ADMINUSERID);
@@ -198,15 +198,9 @@ public class SMSManageController {
 			}
 			return result;
 		}
-		// id不为ALL则只删除对应id的号码
-		// 查询对该电话对象
-		SmsPhone smsPhone = smsPhoneService.getById(id);
-		if (smsPhone == null) {
-			result.put(Constants.NOTICE, "数据库中不存在该号码, 请重新尝试或联系管理员.");
-			return result;
-		}
+		// id不为ALL则只删除对应号码
 		// 删除
-		Boolean bl = smsPhoneService.delete(smsPhone.getId());
+		Boolean bl = smsPhoneService.deleteByPhone(id);
 		if (bl) {
 			result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {
