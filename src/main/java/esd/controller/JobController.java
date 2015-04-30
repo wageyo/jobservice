@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,10 @@ import esd.service.WhiteListService;
 public class JobController {
 
 	private static Logger log = Logger.getLogger(JobController.class);
+	
+	@Value("${deployAreaCode}")
+	private String deployAreaCode;
+	
 	@Autowired
 	private JobService jobService;
 
@@ -74,13 +79,13 @@ public class JobController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.AREACOUNTRY;
+				cookieAreaCode = deployAreaCode;
 			}
 			acode = cookieAreaCode;
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);
-		CookieHelper.setCookie(response, request, null, area);
+		CookieHelper.setCookie(response, request, null, area,deployAreaCode);
 
 		String idStr = request.getParameter("id");
 		int id = KitService.getInt(idStr);

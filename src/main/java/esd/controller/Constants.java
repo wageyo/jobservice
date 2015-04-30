@@ -9,9 +9,9 @@ import org.apache.log4j.Logger;
  * 
  */
 public class Constants {
-	
+
 	private static Logger log = Logger.getLogger(Constants.class);
-	
+
 	public static final Integer START = 0;
 	public static final Integer SIZE = 20;
 
@@ -38,7 +38,7 @@ public class Constants {
 	/**
 	 * 残疾证号是否校验开关
 	 */
-	public static final String DISABLEDCHECKSWITCH = "disabledCheckSwitch"; 
+	public static final String DISABLEDCHECKSWITCH = "disabledCheckSwitch";
 
 	/****************** 放入cookie中的key值 ********************/
 	public static final String USERID = "userid"; // 用户id
@@ -49,10 +49,9 @@ public class Constants {
 	public static final String USERNICKNAME = "nickname"; // 用户昵称
 	public static final String USERCOMPANYID = "companyid"; // 企业id
 	public static final String USERREGISTERTIME = "registertime"; // 注册时间
-	public static final String USERHEADIMAGE = "headimage";	//头像图片id
+	public static final String USERHEADIMAGE = "headimage"; // 头像图片id
 	public static final String AREACODE = "areacode"; // 地区key
 	public static final String AREANAME = "areaname"; // 地区名称
-	public static final String CURRENT_AREA = "10450000"; // 当前网站地区code--用于首页等地方
 
 	// 管理员专用的cookie key值
 	public static final String ADMINUSERID = "adminuserid"; // 管理员用户id
@@ -80,32 +79,32 @@ public class Constants {
 
 	public static final String JOB_CATEGORY_MAIN = "main"; // 职位种类--主页显示
 	public static final String JOB_CATEGORY_HOT = "hot"; // 职位种类--主页显示
-	
+
 	/**
 	 * 匹配数量type关键字
 	 */
 	public static final String MATCHED_SHOW = "matchedShow";
-	
+
 	/**
 	 * 不同地区显示的匹配上的职位/简历数量
 	 */
 	public static final String MATCHED_SHOW_NUMBER = "matchedShowNumber";
-	
+
 	/**
 	 * 不同地区显示的匹配上的职位/简历数量--默认数量5
 	 */
 	public static final Integer MATCHED_NUMBER_DEFAULT = 5;
-	
+
 	/**
 	 * 不同地区推送的匹配上的职位/简历数量
 	 */
 	public static final String MATCHED_SEND_NUMBER = "matchedSendNumber";
-	
+
 	/**
 	 * 匹配条件参数 类型关键字
 	 */
 	public static final String RESUME_MATCH_PER = "resumeMatchPer";
-	
+
 	/**
 	 * 文章类型
 	 */
@@ -185,7 +184,8 @@ public class Constants {
 	 */
 	public enum CheckStatus {
 		// 利用构造函数传参 级.
-		DAISHEN("daiShen"), WEITONGGUO("weiTongGuo"), OK("ok"),YIJIUYE("yiJiuYe");
+		DAISHEN("daiShen"), WEITONGGUO("weiTongGuo"), OK("ok"), YIJIUYE(
+				"yiJiuYe");
 
 		// 定义私有变量
 		private String val;
@@ -288,17 +288,17 @@ public class Constants {
 			return this.val;
 		}
 	}
-	
+
 	/**
 	 * 几种文章类型
+	 * 
 	 * @author yufu
-	 * @email ilxly01@126.com
-	 * 2015-4-24
+	 * @email ilxly01@126.com 2015-4-24
 	 */
 	public enum ARTICLETYPE {
 		// 利用构造函数传参 级.
 		NEWS("news"), DIRECT("direct"), WORKFLOW("workflow"), POLITICIES(
-				"politicies"),CONTACT("contact");
+				"politicies"), CONTACT("contact");
 
 		// 定义私有变量
 		private String val;
@@ -317,5 +317,5 @@ public class Constants {
 			return this.val;
 		}
 	}
-	
+
 }

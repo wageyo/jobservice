@@ -7,6 +7,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import esd.bean.Area;
 import esd.bean.User;
 import esd.controller.Constants;
@@ -28,6 +30,12 @@ public class CookieHelper {
 	 */
 	private final static int COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
 
+	/**
+	 * 当前网站所属的地区code
+	 */
+	@Value("${currentArea}")
+	private String currentArea;
+	
 	/**
 	 * 
 	 * @desc 删除指定Cookie
@@ -155,15 +163,15 @@ public class CookieHelper {
 	}
 
 	/**
-	 * 
-	 * @desc 添加新的Cookie信息
+	 * 设置cookie
 	 * @param response
-	 * @param name
-	 * @param value
-	 * @param maxAge
+	 * @param request
+	 * @param user 用户对象 普通或管理员
+	 * @param area 访问网页的地区code
+	 * @param deployAreaCode 网站部署所在的地区code, 和area同步, 为空则都为空, 非空则都非空
 	 */
 	public static void setCookie(HttpServletResponse response,
-			HttpServletRequest request, User user, Area area) {
+			HttpServletRequest request, User user, Area area,String deployAreaCode) {
 		// user不为空, 则将user信息放入到cookie中
 		if (user != null) {
 			if (Constants.Authority.ADMIN.getValue() > user.getAuthority()) {
@@ -205,6 +213,9 @@ public class CookieHelper {
 			setCookie(response, Constants.AREACODE, area.getCode(),
 					Integer.MAX_VALUE);
 			request.setAttribute(Constants.AREACODE, area.getCode());
+			//网站部署所在 地区code, 即本网站最顶层的地区code
+			setCookie(response,"deployAreaCode",deployAreaCode,Integer.MAX_VALUE);
+			request.setAttribute("deployAreaCode", deployAreaCode);
 			// 地区名称不为空时, 才将其encode后放入到cookie中
 			if (area.getName() != null) {
 				try {

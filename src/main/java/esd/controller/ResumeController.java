@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,11 +50,8 @@ import esd.service.WhiteListService;
 @RequestMapping("/resume")
 public class ResumeController {
 
-	// @Value("${templateFile}")
-	// private String templateFile;
-	//
-	// @Value("${destFileName}")
-	// private String destFileName;
+	@Value("${deployAreaCode}")
+	private String deployAreaCode;
 
 	@Autowired
 	private UserService<User> userService;
@@ -69,10 +67,10 @@ public class ResumeController {
 
 	@Autowired
 	private AreaService areaService;
-	
+
 	@Autowired
 	private ParameterService parameterService;
-	
+
 	@Autowired
 	private WhiteListService whiteListService;
 
@@ -97,13 +95,13 @@ public class ResumeController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.AREACOUNTRY;
+				cookieAreaCode = deployAreaCode;
 			}
 			acode = cookieAreaCode;
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);
-		CookieHelper.setCookie(response, request, null, area);
+		CookieHelper.setCookie(response, request, null, area,deployAreaCode);
 
 		String idStr = request.getParameter("id");
 		log.info("idStr = " + idStr);
@@ -163,9 +161,9 @@ public class ResumeController {
 				.getById(Constants.WHITE_LIST_SWITCH);
 		// 如果白名单功能开启的话, 则检查请求url地址是否正确
 		if (Constants.SWITCH_ON.equals(whiteList.getValue())) {
-			String ip = request.getRemoteAddr();	//ip
-			String domainName = request.getRemoteHost();	//域名
-			WhiteList result = whiteListService.checkWhiteList(ip,domainName);
+			String ip = request.getRemoteAddr(); // ip
+			String domainName = request.getRemoteHost(); // 域名
+			WhiteList result = whiteListService.checkWhiteList(ip, domainName);
 			log.info("result:  " + result);
 			// 如果请求的url地址中包含的域名 不在白名单中, 则跳转到提示拒绝访问页面
 			if (result == null) {
@@ -225,8 +223,8 @@ public class ResumeController {
 		}
 		log.info("filePath  " + filePath);
 		if (new File(url + filePath).exists()) {
-			String destPath = request.getLocalAddr() + ":" + request.getLocalPort()
-					+ request.getContextPath();
+			String destPath = request.getLocalAddr() + ":"
+					+ request.getLocalPort() + request.getContextPath();
 			log.info("redirect:http://" + destPath + "/" + filePath);
 			return "redirect:http://" + destPath + "/" + filePath;
 		}
@@ -243,8 +241,8 @@ public class ResumeController {
 		String filePath = resumeService.getBuildResume(ids, url);
 		log.info("filePath : " + filePath);
 		if (new File(url + filePath).exists()) {
-			String destPath = request.getLocalAddr() + ":" + request.getLocalPort()
-					+ request.getContextPath();
+			String destPath = request.getLocalAddr() + ":"
+					+ request.getLocalPort() + request.getContextPath();
 			log.info("destPath : " + destPath);
 			return "redirect:http://" + destPath + "/" + filePath;
 		}
@@ -283,8 +281,8 @@ public class ResumeController {
 		// 导出文件
 		b = PoiCreateExcel.createResumeExcel(exportPath, resumes);
 		if (b) {
-			String destPath = request.getLocalAddr() + ":" + request.getLocalPort()
-					+ request.getContextPath();
+			String destPath = request.getLocalAddr() + ":"
+					+ request.getLocalPort() + request.getContextPath();
 			FileDownloadPath = "http://" + destPath + "/upload/resumes/" + uuid
 					+ ".xls";
 		}
@@ -314,7 +312,7 @@ public class ResumeController {
 		paramEntity.setArea(new Area(acode));
 		Integer page = 1;
 		List<Resume> resume = resumeService.getListShowForManage(paramEntity,
-				page, Integer.MAX_VALUE,Boolean.FALSE);
+				page, Integer.MAX_VALUE, Boolean.FALSE);
 		String url = request.getSession().getServletContext().getRealPath("/");
 
 		// 创建导出文件夹

@@ -1,7 +1,6 @@
 package esd.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,22 +23,22 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import esd.bean.Area;
+import esd.bean.Articles;
 import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.JobCategory;
-import esd.bean.Articles;
 import esd.bean.Parameter;
 import esd.bean.Resume;
 import esd.bean.User;
 import esd.controller.Constants.Identity;
 import esd.service.AreaService;
+import esd.service.ArticlesService;
 import esd.service.CompanyService;
 import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.MailService;
-import esd.service.ArticlesService;
 import esd.service.ParameterService;
 import esd.service.ResumeService;
 import esd.service.UserService;
@@ -53,6 +53,9 @@ import esd.service.UserService;
 public class IndexController {
 	private static Logger log = Logger.getLogger(IndexController.class);
 
+	@Value("${deployAreaCode}")
+	private String deployAreaCode;	//当前网站所属的地区code
+	
 	@Autowired
 	private UserService<User> userService;
 
@@ -101,7 +104,7 @@ public class IndexController {
 				}
 			}
 			log.debug("login: " + user);
-			CookieHelper.setCookie(response, request, user, null);
+			CookieHelper.setCookie(response, request, user, null,null);
 		}
 		/**
 		 * 处理地区code和如何存放到cookie中的问题
@@ -117,13 +120,13 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.CURRENT_AREA;
+				cookieAreaCode = deployAreaCode;
 			}
 			acode = cookieAreaCode;
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);
-		CookieHelper.setCookie(response, request, null, area);
+		CookieHelper.setCookie(response, request, null, area,deployAreaCode);
 
 		ModelAndView mav = new ModelAndView("index");
 		// 根据地区code 得到本地区下属的 省或市或县区
@@ -231,13 +234,13 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.CURRENT_AREA;
+				cookieAreaCode = deployAreaCode;
 			}
 			acode = cookieAreaCode;
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);
-		CookieHelper.setCookie(response, request, null, area);
+		CookieHelper.setCookie(response, request, null, area,deployAreaCode);
 		ModelAndView mav = new ModelAndView("register/reg-c");
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
@@ -262,13 +265,13 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.CURRENT_AREA;
+				cookieAreaCode = deployAreaCode;
 			}
 			acode = cookieAreaCode;
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);
-		CookieHelper.setCookie(response, request, null, area);
+		CookieHelper.setCookie(response, request, null, area,deployAreaCode);
 		ModelAndView mav = new ModelAndView("register/reg-p");
 		// 工作地区
 		List<Area> alist = areaService.getProvinceList();
@@ -309,13 +312,13 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.CURRENT_AREA;
+				cookieAreaCode = deployAreaCode;
 			}
 			acode = cookieAreaCode;
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);
-		CookieHelper.setCookie(response, request, null, area);
+		CookieHelper.setCookie(response, request, null, area,deployAreaCode);
 
 		// 读取职位查询信息
 		log.info("--- work job search ---");
@@ -411,13 +414,13 @@ public class IndexController {
 			String cookieAreaCode = CookieHelper.getCookieValue(request,
 					Constants.AREACODE);
 			if (cookieAreaCode == null || "".equals(cookieAreaCode)) {
-				cookieAreaCode = Constants.CURRENT_AREA;
+				cookieAreaCode = deployAreaCode;
 			}
 			acode = cookieAreaCode;
 		}
 		// ④得到地区信息对象, 将地区名称放入到cookie中
 		Area area = areaService.getByCode(acode);
-		CookieHelper.setCookie(response, request, null, area);
+		CookieHelper.setCookie(response, request, null, area,deployAreaCode);
 
 		// 读取简历查询信息
 		log.info("--- emp resume search ---");

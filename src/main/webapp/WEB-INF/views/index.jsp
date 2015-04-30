@@ -225,9 +225,18 @@
 							</div>
 							<div style="*padding-left:6px;">
 								<div style=" height:20px;">
-									<div class="SetFloatLeft">下辖地区：</div>
+									<div class="SetFloatLeft">${'10450000' > '20450200'}下辖地区：</div>
 									<div>
-										<!-- 根据当前地区code, 得到上级地区code -->
+										<!-- 当前网站部署所在地区code -->
+										<c:choose>
+											<c:when test="${deployAreaCode != null && deployAreaCode != '' }">
+												<c:set var="deployAreaCode">${deployAreaCode }</c:set>
+											</c:when>
+											<c:otherwise>
+												<c:set var="deployAreaCode">${cookie.deployAreaCode.value }></c:set>
+											</c:otherwise>
+										</c:choose>
+										<!-- 当前地区code -->
 										<c:choose>
 											<c:when test="${areaname != null && areaname != '' }">
 												<c:set var="currentlocation">${areacode}</c:set>
@@ -265,7 +274,7 @@
 												</c:if>
 											</c:forEach>
 											<!-- *************************  广西地区限定, 不可以上到上级全国.   *************************** -->
-											<c:if test="${uplevellocation == '10450000' || fn:startsWith(uplevellocation,'20')}">
+											<c:if test="${uplevellocation >= deployAreaCode }">
 												<li class="LiEven">|</li>
 												<li> <a title="返回上级地区" href="${contextPath }/index?acode=${uplevellocation}" style="color: rgb(18, 0, 223);">返回上级地区</a> </li>
 											</c:if>

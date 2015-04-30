@@ -114,7 +114,7 @@ public class UserController {
 			return "redirect:/index";
 		} else {
 			user = userService.getById(user.getId());
-			CookieHelper.setCookie(response, request, user, null);
+			CookieHelper.setCookie(response, request, user, null,null);
 			return "redirect:/user/goCenter";
 		}
 	}
@@ -214,7 +214,7 @@ public class UserController {
 			}
 		}
 		log.debug("login: " + user);
-    	CookieHelper.setCookie(response, request, user, null);
+    	CookieHelper.setCookie(response, request, user, null,null);
 		return "redirect:/index";
 	}
 
@@ -385,7 +385,7 @@ public class UserController {
 		userSql.setLoginName(userNamesString);
 		User userCookie=new User();
 		userCookie = userService.check(userSql);
-		CookieHelper.setCookie(response, request, userCookie, null);
+		CookieHelper.setCookie(response, request, userCookie, null,null);
 		ra.addFlashAttribute("messageType", "1");
 		ra.addFlashAttribute("message", "操作成功!");
 		return "redirect:/user/goCenter";
@@ -427,7 +427,7 @@ public class UserController {
 		
 		Boolean bl2 = userService.save(user);
 		if(bl2){
-			CookieHelper.setCookie(response, request, user, null);
+			CookieHelper.setCookie(response, request, user, null,null);
 			return "redirect:/user/goCenter";
 		}
 		redirectAttributes.addFlashAttribute("messageType", "0");

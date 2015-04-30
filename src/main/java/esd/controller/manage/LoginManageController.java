@@ -73,7 +73,7 @@ public class LoginManageController {
 						return "redirect:/loginManage/login";
 					}
 				}
-				CookieHelper.setCookie(response, request, user, null);
+				CookieHelper.setCookie(response, request, user, null,null);
 
 				log.debug("管理用户登陆成功:" + user);
 				return "redirect:/manage/index";
