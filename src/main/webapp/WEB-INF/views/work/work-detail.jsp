@@ -219,7 +219,7 @@
 	                          <div id="PublicframeOne11" class="PublicframeOne ">
 	                          	<div id="main" class="maincontent">
 	                          		<c:choose>
-	                          			<c:when test="${cookie.username == null || cookie.username == ''}">
+	                          			<c:when test="${(cookie.username.value == null || cookie.username.value == '' )&& ( cookie.adminuserid.value  == null || cookie.adminuserid.value == '')}">
 	                          				个人会员请 <a href="${contextPath}/loginP" style="color:blue;">登录</a> 查看联系方式！如果您不是个人会员，请先 <a href="${contextPath }/regP" style="color:blue;">免费注册</a> 成为个人会员！
 	                          			</c:when>
 	                          			<c:otherwise>

@@ -36,8 +36,8 @@
  * 中间主体--左面菜单项样式
  **/
 .manage-body-left {
-	width: 10%;
-	min-width: 160px;
+	width: 12%;
+/*	min-width: 160px;	*/
 	min-height: 600px;
 	float: left;
 	background-color: rgb(245, 245, 255);
@@ -52,8 +52,8 @@
 	min-height: 600px;
 	float: left;
 	padding-top: 10px;
-	min-width: 840px;
-	width: 84%;
+/*	min-width: 840px;	*/
+	width: 88%;
 }
 
 /**
@@ -71,7 +71,7 @@
  * manage-body-left 中间主体 左边菜单项样式
  **/
 .manage-body-left .head-title{
-	
+	width:170px;
 }
 /**
  *头像样式
@@ -86,7 +86,7 @@
 }
 .manage-body-left .head-title .head-content{
 	float:left;
-	margin-top:20px;
+	margin-top:10px;
 	width: 71px;
 	text-align: center;
 }

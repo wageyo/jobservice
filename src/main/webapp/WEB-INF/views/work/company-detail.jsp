@@ -52,7 +52,16 @@
 	                          		<a href="${contextPath }/company/getOneForShow?id=${company.id}" style="font-size: 15px;color: rgb(95, 95, 255);font-weight: bold;">${company.name }</a>
 									<p>企业性质：${company.nature }</p>
 									<p>公司地址：${company.address }</p>
-									<p>联系人：${company.contactPerson }</p>
+									<c:choose>
+	                          			<c:when test="${(cookie.username.value == null || cookie.username.value == '' )&& ( cookie.adminuserid.value  == null || cookie.adminuserid.value == '')}">
+	                          				<p>个人会员请 <a href="${contextPath}/loginP" style="color:blue;">登录</a> 查看联系方式！如果您不是个人会员，请先 <a href="${contextPath }/regP" style="color:blue;">免费注册</a> 成为个人会员！</p>
+	                          			</c:when>
+	                          			<c:otherwise>
+											<p>电话: ${company.telephone }</p>
+											<p>联系部门: ${company.contactDept }</p>
+											<p>联系人: ${company.contactPerson }</p>
+	                          			</c:otherwise>
+	                          		</c:choose>
 	                          	</div>
 							  </div>
 	                       </div>
