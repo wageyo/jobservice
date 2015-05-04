@@ -199,16 +199,10 @@
 		where f.id = #{id, jdbcType=VARCHAR}
 	</select>
 	
-	<select id="getFilegagsByNid" resultType="java.util.HashMap" parameterType="java.lang.Integer" >
-		select file_title, file
-		from filegags
-		where nid = #{nid, jdbcType=INTEGER}
-	</select>
-	
 	<!-- getByPage -->
 	<select id="getByPage" parameterType="map" resultMap="ResultFilegags">
 		select <include refid="base_column" />
-		from filegags as i
+		from filegags as f
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="filegags != null">
 				<if test="filegags.fileName != '' and filegags.fileName != null">
@@ -241,7 +235,7 @@
 	<!-- getTotalCount -->
 	<select id="getTotalCount" parameterType="map" resultType="int">
 		select count(*)
-		from filegags as i
+		from filegags as f
 		<trim prefix="where" prefixOverrides="and|or">
 			<if test="filegags != null">
 				<if test="filegags.fileName != '' and filegags.fileName != null">

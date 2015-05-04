@@ -14,14 +14,6 @@ public interface FilegagsDao extends IDao<Filegags> {
 	HashMap<String,Object> getFilegagsById(String id);
 	
 	/**
-	 * 根据新闻id, 获得图片
-	 * @param id
-	 * @return
-	 */
-	HashMap<String,Object> getFilegagsByNid(Integer nid);
-	
-	
-	/**
 	 * 根据id获得整个文件对象, 带图片的哦.
 	 * @param id
 	 * @return

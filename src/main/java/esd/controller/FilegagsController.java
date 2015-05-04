@@ -27,6 +27,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import esd.bean.Filegags;
 import esd.bean.User;
 import esd.common.util.FileUtil;
+import esd.service.CookieHelper;
 import esd.service.FilegagsService;
 import esd.service.UserService;
 
@@ -46,7 +47,7 @@ public class FilegagsController {
 	private UserService<User> userService;
 
 	@Autowired
-	private FilegagsService imageService;
+	private FilegagsService filegagsService;
 
 	// 接收上传的文件
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
@@ -63,27 +64,28 @@ public class FilegagsController {
 		}
 		// 要更新的对象
 		Filegags filegags = new Filegags();
-		//原文件名
+		// 原文件名
 		String oldFileName = file.getFileItem().getName();
 		filegags.setFileName(oldFileName);
-		//原文件后缀
-		String fileSuffix = oldFileName.substring(oldFileName.lastIndexOf(".")+1);
+		// 原文件后缀
+		String fileSuffix = oldFileName
+				.substring(oldFileName.lastIndexOf(".") + 1);
 		filegags.setFileSuffix(fileSuffix);
 		filegags.setFile(file.getBytes());
 		String imageId;
-		// 如果存在穿过来的id, 则说明是点了两次以上上传的, 则使用更新, 否则使用新增保存
+		// 如果存在传过来的id, 则说明是点了两次以上上传的, 则使用更新, 否则使用新增保存
 		if (imageid != null && !"".equals(imageid)) {
 			filegags.setId(imageid);
-			if (imageService.update(filegags)) {
+			if (filegagsService.update(filegags)) {
 				imageId = imageid;
 			} else {
 				imageId = null;
 			}
 		} else {
-			imageId = imageService.save(filegags);
-			//保存完图片后, 将对应的图片/二进制文件 id保存到对应的关系表中
+			imageId = filegagsService.save(filegags);
+			// 保存完图片后, 将对应的图片/二进制文件 id保存到对应的关系表中
 			String userid = request.getParameter("userid");
-			if(userid != null &&!"".equals(userid)){
+			if (userid != null && !"".equals(userid)) {
 				User user = userService.getById(Integer.parseInt(userid));
 				user.setHeadImage(imageId);
 				userService.update(user);
@@ -91,6 +93,60 @@ public class FilegagsController {
 		}
 		if (imageId != null) {
 			writer.write(Constants.Notice.SUCCESS.getValue() + imageId);
+		} else {
+			writer.write(Constants.NOTICE + ":" + "上传图片失败");
+		}
+	}
+
+	// 接收上传的文章中的图片等信息
+	@RequestMapping(value = "/uploadArticlesImage", method = RequestMethod.POST)
+	public void uploadArticlesImage(
+			@RequestParam("upload") CommonsMultipartFile file,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		String CKEditor = request.getParameter("CKEditor");
+		String callback = request.getParameter("CKEditorFuncNum");
+		System.out.println(CKEditor + " : " + callback);
+		// ① response 输出相应内容
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter writer = response.getWriter();
+		if (file == null) {
+			writer.write(Constants.NOTICE + ":" + "网络发生错误, 上传照片失败.");
+			return;
+		}
+		// 要更新的对象
+		Filegags filegags = new Filegags();
+		// 原文件名
+		String oldFileName = file.getFileItem().getName();
+		filegags.setFileName(oldFileName);
+		// 原文件后缀
+		String fileSuffix = oldFileName
+				.substring(oldFileName.lastIndexOf(".") + 1);
+		filegags.setFileSuffix(fileSuffix);
+		filegags.setFile(file.getBytes());
+		// 获取当前管理员所在地区code
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
+		Integer uid = Integer.parseInt(userId);
+		User user = userService.getById(uid);
+		filegags.setLogUser(user.getNickName());
+		// 文件同时保存到服务器和数据库中
+		// ①保存到数据库中
+		String imageId = filegagsService.save(filegags);
+		// ②保存到服务器upload文件夹中
+		String basePath = request.getSession().getServletContext()
+				.getRealPath("/");
+		basePath += "uploadfile" + File.separator + imageId + "." + fileSuffix;
+		File uploadfile = new File(basePath);
+		if (!uploadfile.exists()) {
+			uploadfile.mkdirs();
+		}
+		file.transferTo(uploadfile);
+		if (imageId != null) {
+			writer.write("<script>window.parent.CKEDITOR.tools.callFunction("
+					+ callback + ",'" + "/jobservice/uploadfile/" + imageId
+					+ "." + fileSuffix + "','')"); // 相对路径用于显示图片
+			writer.write("</script>");
 		} else {
 			writer.write(Constants.NOTICE + ":" + "上传图片失败");
 		}
@@ -137,31 +193,34 @@ public class FilegagsController {
 	@ResponseBody
 	public Map<String, Object> serializePicture(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		// 两种方法序列化，第一种采用controller中写的方法
 		// 查询总共有多少图片
-		int totalCount = imageService.getTotalCount(null);
+		int totalCount = filegagsService.getTotalCount(null);
 		int success = 0, failure = 0; // 定义导入成功, 失败的数量
 		// 图片采取分批导入到初始文件夹的方式, 防止数量过多, 内存溢出.
 		int batchSize = 100; // 每批到100个
 		int page = ((totalCount % batchSize) == 0) ? (totalCount / batchSize)
 				: ((totalCount / batchSize) + 1);
-		// 保存文件路径, 为根目录 file/images文件
+		// 保存文件路径, 为根目录/uploadfile/文件夹下
 		String filePath = request.getSession().getServletContext()
 				.getRealPath("/");
-		filePath += File.separator + "file";
+		filePath += File.separator + "uploadfile";
 		File dirFile = new File(filePath);
-		//如果文件夹中有数据, 则先清空, 再导入
+		// 如果文件夹中有数据, 则先清空, 再导入
 		new FileUtil().deleteFile(dirFile);
 		if (!dirFile.exists()) {
 			dirFile.mkdirs();
 		}
-		
+
 		for (int i = 0; i < page; i++) {
 			Integer start = i * batchSize;
-			List<Filegags> list = imageService.getByPage(null, start, batchSize);
+			List<Filegags> list = filegagsService.getByPage(null, start,
+					batchSize);
 			for (int j = 0; j < list.size(); j++) {
 				Filegags image = list.get(j);
-				String imagePath = filePath + File.separator + image.getId() + "." + image.getFileSuffix();
-				byte[] bs = imageService.getFileById(image.getId());
+				String imagePath = filePath + File.separator + image.getId()
+						+ "." + image.getFileSuffix();
+				byte[] bs = filegagsService.getFileById(image.getId());
 				Boolean bl = saveImageToLocalServer(imagePath, bs);
 				if (!bl) {
 					log.error("*************文件序列化本地出错,图片ID: " + image.getId()
@@ -176,6 +235,18 @@ public class FilegagsController {
 				+ ", 失败: " + failure;
 		map.put(Constants.NOTICE, msg);
 		log.error("**************" + msg + "*************");
+		// //第二种调用service层的方法
+		// String basePath = request.getSession().getServletContext()
+		// .getRealPath("/");
+		// String result = filegagsService.serialize(basePath);
+		// String totalCount = result.substring(0,result.indexOf(":"));
+		// String success =
+		// result.substring(result.indexOf(":"),result.lastIndexOf(":"));
+		// String failure = result.substring(result.lastIndexOf(":"));
+		// String msg = "文件序列化本地完成,总图片数:" + totalCount + ", 成功: " + success
+		// + ", 失败: " + failure;
+		// map.put(Constants.NOTICE, msg);
+		// log.error("**************" + msg + "*************");
 		return map;
 	}
 
@@ -187,7 +258,6 @@ public class FilegagsController {
 			os.close();
 			return Boolean.TRUE;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			log.error("************读取字节流到文件出错**************");
 			return Boolean.FALSE;
@@ -201,7 +271,7 @@ public class FilegagsController {
 			HttpServletResponse response) {
 		// response.addHeader("Content-Type", "image/gif");
 		response.setContentType("image/gif");
-		byte[] entity =  imageService.getFileById(id);
+		byte[] entity = filegagsService.getFileById(id);
 		return entity;
 	}
 }

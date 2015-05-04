@@ -42,7 +42,7 @@
 								src="${contextPath}/images/ArticleReadImage/article_2.jpg"
 								alt="图片" /> </a>
 						</div>
-						<div style="width: 710px;">
+						<div>
 							<div class="news_title">
 								<div
 									style=" text-align:center; font-size:18px; line-height:36px; font-weight:bold; "

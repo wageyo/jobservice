@@ -21,8 +21,7 @@
 	<script src="${contextPath}/js/lib/ckeditor/ckeditor.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
 	<script src="${contextPath}/js/manage/widget.js"></script>
-	<script src="${contextPath}/js/manage/news.js"></script>
-	<script src="${contextPath}/js/manage/upload.js"></script>
+	<script src="${contextPath}/js/manage/articles.js"></script>
 </head>
 
 <body>
@@ -94,34 +93,8 @@
 										<script type="text/javascript">
 											//将textarea初始化为ckeditor文本框
 									    	var editor = CKEDITOR.replace('content',{
-									    	//	uiColor:'green',	//蓝绿色--cute
-									    		resize_enabled  : false,	//是否可调整宽高
-									    		height : 600,	//高度
-									    		toolbarGroups : [
-									    		                 { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-									    		                 { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-									    		                 { name: 'links' },
-									    		                 { name: 'insert' },
-									    		                 { name: 'forms' },
-									    		                 { name: 'tools' },
-									    		                 { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
-									    		                 { name: 'others' },
-									    		                 { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-									    		                 { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align' ] },
-									    		                 { name: 'styles' },
-									    		                 { name: 'colors' },
-									    		                 { name: 'about' }
-									    		             ],
-									    		language:'zh-cn'	//ui控件显示用语言, 简体中文
 									    	});
 										</script>
-									</tr>
-							 		<tr>
-										<td colspan="4">
-											<img id="newsImage" src="" style="height:26px;width:70px;border-width:0px;"/>
-											<input type="button" name="file" value="上传图片" id="picFileImport" />
-											<input type="hidden" id="imageId" name="imageId" value="" />
-										</td>
 									</tr>
 									<tr>
 										<td colspan="4" style="text-align:center;">

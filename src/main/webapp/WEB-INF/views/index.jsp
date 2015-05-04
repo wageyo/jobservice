@@ -225,7 +225,7 @@
 							</div>
 							<div style="*padding-left:6px;">
 								<div style=" height:20px;">
-									<div class="SetFloatLeft">${'10450000' > '20450200'}下辖地区：</div>
+									<div class="SetFloatLeft">下辖地区：</div>
 									<div>
 										<!-- 当前网站部署所在地区code -->
 										<c:choose>

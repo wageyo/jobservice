@@ -318,4 +318,31 @@ public class Constants {
 		}
 	}
 
+	/**
+	 * 保存的几种二进制文件类型
+	 * @author yufu
+	 * @email ilxly01@126.com
+	 * 2015-5-4
+	 */
+	public enum FilegagsType {
+		// 利用构造函数传参 级.
+		ARTICLES("articles"), HEADIMAGE("headimage");
+
+		// 定义私有变量
+		private String val;
+
+		// 构造函数, 枚举类型只能为私有
+		private FilegagsType(String val) {
+			this.val = val;
+		}
+
+		@Override
+		public String toString() {
+			return String.valueOf(val);
+		}
+
+		public String getValue() {
+			return this.val;
+		}
+	}
 }

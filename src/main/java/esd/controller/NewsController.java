@@ -109,7 +109,6 @@ public class NewsController {
 	@RequestMapping("/getOneForShow")
 	public String getOneForShow(HttpServletRequest req, RedirectAttributes ra) {
 		log.info("--- getOneForShow ---");
-		String idStr = req.getParameter("id");
 		String id = req.getParameter("id");
 		if (id == null ||"".equals(id)) {
 			ra.addFlashAttribute("messageType", "0");

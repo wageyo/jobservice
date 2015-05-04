@@ -19,7 +19,7 @@
 	<script src="${contextPath}/js/lib/jquery-1.11.1.js"></script>
 	<script src="${contextPath}/js/bootstrap/js/bootstrap.js"></script>
 	<script src="${contextPath}/js/manage/common.js"></script>
-	<script src="${contextPath}/js/manage/news.js"></script>
+	<script src="${contextPath}/js/manage/articles.js"></script>
 	
 </head>
 
@@ -133,7 +133,7 @@
 												${entity.area.name }
 											</td>
 											<td>
-												<a href="${contextPath }/manage/news/edit/${entity.id}">编辑</a> 
+												<a href="${contextPath }/manage/articles/edit/${entity.id}">编辑</a> 
 												<a href="javascript:updateEntity('delete','${entity.id }')" style="color:red;">删除</a> 
 											</td>
 										</tr>

@@ -35,21 +35,21 @@ import esd.service.UserService;
  * @email ilxly01@126.com 2014-11-5
  */
 @Controller
-@RequestMapping("/manage/news")
-public class NewsManageController {
-	private static Logger log = Logger.getLogger(NewsManageController.class);
+@RequestMapping("/manage/articles")
+public class ArticlesManageController {
+	private static Logger log = Logger.getLogger(ArticlesManageController.class);
 
 	@Autowired
 	private UserService<User> userService;
 	
 	@Autowired
-	private ArticlesService newsService;
+	private ArticlesService articlesService;
 	
 	@Autowired
 	private ParameterService pService;
 
 	// 转到职位管理列表页面
-	@RequestMapping(value = "/news_list", method = RequestMethod.GET)
+	@RequestMapping(value = "/articles_list", method = RequestMethod.GET)
 	public ModelAndView list_get(HttpServletRequest request) {
 		log.debug("goto：文章(就业指导/最新资讯)管理");
 		Map<String, Object> entity = new HashMap<>();
@@ -80,9 +80,9 @@ public class NewsManageController {
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
 
-		List<Articles> resultList = newsService.getListForShow(paramEntity, page,
+		List<Articles> resultList = articlesService.getListForShow(paramEntity, page,
 				rows);
-		Integer total = newsService.getTotalCount(paramEntity); // 数据总条数
+		Integer total = articlesService.getTotalCount(paramEntity); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
 			log.info("resultList.size()" + resultList.size());
@@ -113,12 +113,12 @@ public class NewsManageController {
 		//获取 文章类型 列表
 		List<Parameter> pList = pService.getByType(Constants.ARTICLE_TYPE);
 		entity.put("pList", pList);
-		return new ModelAndView("manage/news-list", entity);
+		return new ModelAndView("manage/articles-list", entity);
 	}
 
 	// 转到 增加文章 页面
 	@RequestMapping(value = "/add/{articleType}", method = RequestMethod.GET)
-	public ModelAndView news_add_get(@PathVariable(value="articleType") String articleType, HttpServletRequest request) {
+	public ModelAndView articles_add_get(@PathVariable(value="articleType") String articleType, HttpServletRequest request) {
 		log.debug("goto：增加文章");
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 各种参数
@@ -126,13 +126,13 @@ public class NewsManageController {
 		entity.put("pList", plist);
 		//新增 文章类型
 		entity.put("targetArticleType", articleType);
-		return new ModelAndView("manage/news-add",entity);
+		return new ModelAndView("manage/articles-add",entity);
 	}
 
 	// 提交 增加文章
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> news_add_post(Articles params, HttpServletRequest request,
+	public Map<String,Object> articles_add_post(Articles params, HttpServletRequest request,
 			HttpServletResponse response) {
 		log.debug(" 增加文章" + params);
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -145,7 +145,7 @@ public class NewsManageController {
 		Integer uid = Integer.parseInt(userId);
 		User userObj = userService.getById(uid);
 		params.setArea(userObj.getArea());
-		if(newsService.save(params)){
+		if(articlesService.save(params)){
 			result.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		}else{
 			result.put(Constants.NOTICE, Constants.Notice.FAILURE.getValue());
@@ -156,10 +156,10 @@ public class NewsManageController {
 	//删除文章
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> delete_news(@PathVariable(value = "id") String id,
+	public Map<String,Object> delete_articles(@PathVariable(value = "id") String id,
 			HttpServletRequest request) {
 		Map<String, Object> entity = new HashMap<String, Object>();
-		boolean bl = newsService.delete(id);
+		boolean bl = articlesService.delete(id);
 		if(bl){
 			entity.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		}else{
@@ -170,27 +170,27 @@ public class NewsManageController {
 	
 	// 转到 文章编辑 页面
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public ModelAndView news_edit_get(@PathVariable(value = "id") String id,
+	public ModelAndView articles_edit_get(@PathVariable(value = "id") String id,
 			HttpServletRequest request) {
 		log.debug("goto：编辑文章 ");
 		Map<String, Object> entity = new HashMap<String, Object>();
 		// 根据id查询对应的数据
-		Articles obj = newsService.getById(id);
+		Articles obj = articlesService.getById(id);
 		entity.put("obj", obj);
 		// 各种参数
 		List<Parameter> plist = pService.getByType(Constants.ARTICLE_TYPE);
 		entity.put("pList", plist);
-		return new ModelAndView("manage/news-edit",entity);
+		return new ModelAndView("manage/articles-edit",entity);
 	}
 	
 	// 提交文章编辑
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> news_edit_post(Articles params, HttpServletRequest request,
+	public Map<String,Object> articles_edit_post(Articles params, HttpServletRequest request,
 			HttpServletResponse response) {
 		log.debug("   更新文章" + params);
 		Map<String, Object> entity = new HashMap<String, Object>();
-		boolean bl = newsService.update(params);
+		boolean bl = articlesService.update(params);
 		if(bl){
 			entity.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		}else{

@@ -48,7 +48,7 @@ function query(page,articleType){
 		paramStr += '&articleType=' + articleType; 
 	}
 	// 跳转提交
-	window.location.href = getRootPath() + '/manage/news/news_list?' + paramStr;
+	window.location.href = getRootPath() + '/manage/articles/articles_list?' + paramStr;
 }
 
 //参数下拉框点击事件
@@ -62,7 +62,7 @@ function selectButton(valueButton, nameButton, value, name){
 //跳转到新增文章页面
 function addEntityGet(){
 	var articleType = $('#articleType').val();
-	window.location.href = getRootPath() + '/manage/news/add/' + articleType;
+	window.location.href = getRootPath() + '/manage/articles/add/' + articleType;
 }
 
 // 新增, 修改, 返回  综合方法
@@ -80,7 +80,7 @@ function updateEntity(submitType,objId){
 			return false;
 		}
 		$.ajax({
-			url:server.url + 'manage/news/add',
+			url:server.url + 'manage/articles/add',
 			type:'post',
 			dataType:'json',
 			data:{
@@ -97,7 +97,7 @@ function updateEntity(submitType,objId){
 					if(result){
 						window.location.reload();
 					}else{
-						window.location.href = server.url + 'manage/news/news_list';
+						window.location.href = server.url + 'manage/articles/articles_list';
 					}
 				}else{
 					alert(data.notice);
@@ -112,7 +112,7 @@ function updateEntity(submitType,objId){
 			return;
 		}
 		$.ajax({
-			url:server.url + 'manage/news/delete/' + objId,
+			url:server.url + 'manage/articles/delete/' + objId,
 			type:'post',
 			dataType:'json',
 			data:{},
@@ -133,7 +133,7 @@ function updateEntity(submitType,objId){
 			return false;
 		}
 		$.ajax({
-			url:server.url + 'manage/news/edit',
+			url:server.url + 'manage/articles/edit',
 			type:'post',
 			dataType:'json',
 			data:{
@@ -150,7 +150,7 @@ function updateEntity(submitType,objId){
 					var result = window.confirm('更新成功, 要继续修改文章吗?');
 					if(result){
 					}else{
-						window.location.href = server.url + 'manage/news/news_list';
+						window.location.href = server.url + 'manage/articles/articles_list';
 					}
 				}else{
 					alert(data.notice);
