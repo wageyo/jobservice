@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +21,7 @@ import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.Parameter;
 import esd.bean.Resume;
+import esd.bean.SmsAccount;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.CompanyService;
@@ -29,6 +31,7 @@ import esd.service.KitService;
 import esd.service.ParameterService;
 import esd.service.ResumeService;
 import esd.service.SMSService;
+import esd.service.SmsAccountService;
 import esd.service.UserService;
 
 /**
@@ -62,6 +65,10 @@ public class MatchManageController {
 
 	@Autowired
 	private SMSService smsService;
+
+	@Autowired
+	private SmsAccountService smsAccountService;
+	
 
 	// 转到 根据简历匹配职位 显示简历页面
 	@RequestMapping(value = "/mre", method = RequestMethod.GET)
@@ -280,6 +287,14 @@ public class MatchManageController {
 		String acode = userObj.getArea().getCode();
 		tmp.setArea(new Area(acode));
 		tmp.setIsDefault(Boolean.TRUE); // 是默认选中的, 防止重复发送
+		
+		//检查本地区是否有名商通的账号, 没有的话则对前台进行提示
+		SmsAccount smsAccount = smsAccountService.getByArea(acode);
+		if(smsAccount == null){
+			map.put(Constants.NOTICE, "您还没有名商通用户账号, 请在名商通官网(http://www.139000.net/)申请账号并充值后, 将账号密码在设置页面添加后使用短信功能.");
+			return map;
+		}
+		
 		// 所有需要推送就业信息的简历
 		List<Resume> resumeList = null;
 		// ②获取要推送的简历列表
@@ -297,10 +312,10 @@ public class MatchManageController {
 			}
 			resumeList = resumeService.getByIds(ids);
 		}
-		// 查询本地区设置的推送显示数量, 如果不存在则使用系统默认的推送数量-5
+		// 查询本地区设置的推送数量, 如果不存在则使用系统默认的推送数量-5
 		Integer tuisongNumber = Constants.MATCHED_NUMBER_DEFAULT;
 		Parameter pt = parameterService.getOnebyTypeAndAcode(
-				Constants.MATCHED_SHOW_NUMBER, acode);
+				Constants.MATCHED_SEND_NUMBER, acode);
 		if (pt != null) {
 			tuisongNumber = Integer.parseInt(pt.getValue());
 		}
@@ -318,7 +333,7 @@ public class MatchManageController {
 					continue;
 				}
 				Boolean bl = smsService.sendTuiSongJob(resume, sentData, url,
-						userObj.getNickName(),acode);
+						userObj.getNickName(),acode,smsAccount);
 				if (bl) {
 					right++;
 				} else {
@@ -326,6 +341,7 @@ public class MatchManageController {
 				}
 			}
 		}
+		map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		map.put("right", right);
 		map.put("wrong", wrong);
 		log.info("共发送： " + (right + wrong) + "  条推送信息, 其中发送成功: " + right
@@ -462,5 +478,9 @@ public class MatchManageController {
 			paramEntity.setTitle(tmp.getName());
 		}
 		return paramEntity;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(UUID.randomUUID().toString().replace("-", ""));
 	}
 }

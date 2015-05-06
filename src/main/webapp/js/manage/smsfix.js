@@ -7,6 +7,26 @@ $(document).ready(function(){
 	
 });
 
+function savesmsaccount(acode){
+	var username = $('#smsusername').val();
+	var password = $('#smspassword').val();
+	$.ajax({
+		url:'/jobservice/manage/prefix/updatesmsaccount',
+		type:'post',
+		data:{'area.code':acode,'username':username,'password':password},
+		dataType:'json',
+		success:function(data){
+			if(data.notice == 'success'){
+				alert('设置成功!');
+				//给对应控件 赋name值
+			}else{
+				alert(data.notice);
+			}
+		}
+	});
+}
+
+
 //预览 方法
 function preview(switchid,switchStatus){
 	var prefix = $('#prefix').val();
@@ -44,3 +64,4 @@ function savesmsfix(acode){
 		}
 	});
 }
+

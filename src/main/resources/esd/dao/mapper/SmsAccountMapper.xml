@@ -32,12 +32,12 @@
 	</sql>
 	
 	<sql id="from_table">
-		sms_fix as sa left join area as a on sa.acode = a.code 
+		sms_account as sa left join area as a on sa.acode = a.code 
 	</sql>
 	
 	<!-- insert -->
 	<insert id="save" parameterType="SmsAccount">
-		insert into sms_fix
+		insert into sms_account
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			id,
 			create_date,
@@ -91,13 +91,13 @@
 
 	<!-- delete -->
 	<delete id="delete" parameterType="java.lang.String">
-		delete from sms_fix 
+		delete from sms_account 
 		where id = #{id, jdbcType=VARCHAR}
 	</delete>
 	
 	<!-- update -->
 	<update id="update" parameterType="SmsAccount">
-		update sms_fix
+		update sms_account
 		<trim prefix="set" suffixOverrides=",">
 			update_date = now(),
 			<if test="logUser != null and logUser != ''">

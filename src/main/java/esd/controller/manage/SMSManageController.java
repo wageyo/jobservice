@@ -28,6 +28,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
+import esd.bean.SmsAccount;
 import esd.bean.SmsPhone;
 import esd.bean.User;
 import esd.common.PoiCreateExcel;
@@ -35,6 +36,7 @@ import esd.common.util.SmsPhoneUtil;
 import esd.controller.Constants;
 import esd.service.CookieHelper;
 import esd.service.SMSService;
+import esd.service.SmsAccountService;
 import esd.service.SmsPhoneService;
 import esd.service.UserService;
 
@@ -61,6 +63,9 @@ public class SMSManageController {
 	@Autowired
 	private SmsPhoneUtil smsPhoneUtil;
 
+	@Autowired
+	private SmsAccountService smsAccountService;
+	
 	// 转到 短信发送页面 页面
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView white_list(HttpServletRequest request) {
@@ -112,13 +117,24 @@ public class SMSManageController {
 	public Map<String, Object> white_add_post(HttpServletRequest request) {
 		log.debug("goto：post批量发送短信");
 		Map<String, Object> result = new HashMap<String, Object>();
-		String[] phoneList = request.getParameterValues("phoneList"); // 电话号码列表
-		String[] nameList = request.getParameterValues("nameList");// 名字列表
-		String shortMessage = request.getParameter("shortMessage");// 短信内容
+		// 获取地区码
 		String userId = CookieHelper.getCookieValue(request,
 				Constants.ADMINUSERID);
 		Integer uid = Integer.parseInt(userId);
 		User userObj = userService.getById(uid);
+		// 根据管理员用户所属地区, 查询他下面所属的所有数据
+		String acode = userObj.getArea().getCode();
+		
+		//检查本地区是否有名商通的账号, 没有的话则对前台进行提示
+		SmsAccount smsAccount = smsAccountService.getByArea(acode);
+		if(smsAccount == null){
+			result.put(Constants.NOTICE, "您还没有名商通用户账号, 请在名商通官网(http://www.139000.net/)申请账号并充值后, 将账号密码在设置页面添加后使用短信功能.");
+			return result;
+		}
+		
+		String[] phoneList = request.getParameterValues("phoneList"); // 电话号码列表
+		String[] nameList = request.getParameterValues("nameList");// 名字列表
+		String shortMessage = request.getParameter("shortMessage");// 短信内容
 		if (phoneList == null || nameList == null) {
 			result.put(Constants.NOTICE, "传递的数据为空, 请重新尝试或联系管理员.");
 			return result;
@@ -151,7 +167,7 @@ public class SMSManageController {
 				}
 				Boolean bl = smsService.sendMessage(
 						getRegularPhoneSentence(paramPhoneList), shortMessage,
-						url, userObj.getNickName());
+						url, userObj.getNickName(),smsAccount);
 				if (!bl) {
 					mark = Boolean.FALSE;
 				}
@@ -159,7 +175,7 @@ public class SMSManageController {
 		} else {
 			Boolean bl = smsService.sendMessage(
 					getRegularPhoneSentence(phoneList), shortMessage, url,
-					userObj.getNickName());
+					userObj.getNickName(),smsAccount);
 			if (!bl) {
 				mark = Boolean.FALSE;
 			}

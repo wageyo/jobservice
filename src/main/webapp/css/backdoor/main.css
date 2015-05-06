@@ -263,8 +263,8 @@
  ************************************ 推送短信上下文页面用到的样式  begin ************************************
  **/ 
 .smsfix{
- margin-top: 50px;
- margin-left:100px;
+ margin-top: 30px;
+ margin-left: 80px;
 }
 .smsfix .smsfix-edit, .smsfix .smsfix-example{
 	width:300px;
@@ -294,7 +294,12 @@
 	padding: 0px 5px;
 	color: rgb(116, 116, 116);
 }
- 
+.smsfix table tr td{
+	padding-left:0px;
+}
+.smsfix table tr td input{
+	margin-bottom: 0px;
+}
  /**
  ************************************ 推送短信上下文页面用到的样式  end ************************************
  **/ 

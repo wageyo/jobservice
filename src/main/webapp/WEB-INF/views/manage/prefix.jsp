@@ -44,7 +44,19 @@
 			<div class="manage-body-right">
 			
 				<div class="smsfix">
-					
+					<div><h3>名商通账号密码设置:</h3></div>
+					<div>
+						<table>
+							<tr>
+								<td>账号:</td>
+								<td><input type="text" id="smsusername" value="${smsAccount.username }"/></td>
+								<td>密码:</td>
+								<td><input type="password" id="smspassword" value="${smsAccount.password }"/></td>
+								<td><input type="button" id="btnsmssave" value="保  存" onclick="savesmsaccount('${smsAccount.area.code}');"/></td>
+							</tr>
+						</table>
+					</div>
+					<div><h3>推送短信上下文设置:</h3></div>
 					<div class="smsfix-edit">
 						<span class="smsfix-contenttip">上文：</span><textarea id="prefix">${smsfix.prefix }</textarea>
 						推送职位范例：<p id="middlecontent">1. 应收管理岗, 顺丰速运（集团）有限公司广西分公司, 广西壮族自治区, 2001-4000元 2. 出纳岗, 顺丰速运（集团）有限公司广西分公司, 广西壮族自治区, 2001-4000元 3. IQC/OQC检测员, 广西威利方舟科技有限公司, 广西壮族自治区, 2001-4000元 </p>

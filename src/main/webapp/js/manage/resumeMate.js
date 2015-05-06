@@ -118,11 +118,13 @@ function sendTuiSong(type){
 		dataType : 'json',
 		traditional: true,
 		success : function(data) {
-			var msg = '共计发送'+(data.right + data.wrong) + '条推送短信, 其中成功'+data.right+'条, '+ '失败'+data.wrong+'条.';
-		/*	if(data.wrong > 0){
-				msg += ''
-			}	*/
-			alert(msg);
+			//如果返回提示符为 success 则为成功, 进行提示. 
+			if(data.notice == 'success'){
+				var msg = '共计发送'+(data.right + data.wrong) + '条推送短信, 其中成功'+data.right+'条, '+ '失败'+data.wrong+'条.';
+				alert(msg);
+			}else{
+				alert(data.notice);
+			}
 		},
 		async : false
 	});
