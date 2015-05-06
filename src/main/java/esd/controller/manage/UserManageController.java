@@ -41,13 +41,13 @@ public class UserManageController {
 	private static Logger log = Logger.getLogger(UserManageController.class);
 
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 
 	@Autowired
 	private ResumeService resumeService;
 
 	@Autowired
-	private CompanyService<Company> companyService;
+	private CompanyService companyService;
 
 	@Autowired
 	private JobService jobService;

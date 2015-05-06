@@ -224,7 +224,7 @@ public class JobController {
 		for (int i = 0; i < params.length; i++) {
 			job.add(jobService.getOneForShow(params[i]));
 		}
-		String url = request.getRealPath("/");
+		String url = request.getSession().getServletContext().getRealPath("/");
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");
 		// 导出文件夹

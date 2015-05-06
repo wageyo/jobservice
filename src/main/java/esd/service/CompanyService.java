@@ -35,7 +35,7 @@ import esd.dao.ParameterDao;
 import esd.dao.RecordDao;
 
 @Service
-public class CompanyService<T> {
+public class CompanyService {
 
 	private static Logger log = Logger.getLogger(SecureResumeController.class);
 
@@ -118,8 +118,9 @@ public class CompanyService<T> {
 						Parameter parameter = parameterDao
 								.getShareScopeByArea(object.getArea().getCode());
 						if (parameter != null) {
-							String areaSql = KitService.getAreaSqlFromShareScope(
-									parameter.getValue(), object.getArea()
+							String areaSql = KitService
+									.getAreaSqlFromShareScope(parameter
+											.getValue(), object.getArea()
 											.getCode());
 							object.setArea(new Area(areaSql));
 						}
@@ -147,7 +148,8 @@ public class CompanyService<T> {
 	 *            --是否开启共享范围查询, true-前台查询时使用; false-管理后台查询时使用
 	 * @return
 	 */
-	public List<Company> getForListShow(Company object, int startPage, int size, Boolean shareScope) {
+	public List<Company> getForListShow(Company object, int startPage,
+			int size, Boolean shareScope) {
 		if (object != null) {
 			if (shareScope) {
 				// 将地区code转化为适合sql语句的形式, 其中包括先查询一下该地区的就业信息共享范围
@@ -157,8 +159,9 @@ public class CompanyService<T> {
 						Parameter parameter = parameterDao
 								.getShareScopeByArea(object.getArea().getCode());
 						if (parameter != null) {
-							String areaSql = KitService.getAreaSqlFromShareScope(
-									parameter.getValue(), object.getArea()
+							String areaSql = KitService
+									.getAreaSqlFromShareScope(parameter
+											.getValue(), object.getArea()
 											.getCode());
 							object.setArea(new Area(areaSql));
 						}
@@ -225,7 +228,7 @@ public class CompanyService<T> {
 				String areaSql = KitService.getAreaSqlFromShareScope(
 						parameter.getValue(), acode);
 				company.setArea(new Area(areaSql));
-			}else{
+			} else {
 				company.setArea(new Area(acode));
 			}
 		}

@@ -40,7 +40,7 @@ public class StatisticsManageController {
 			.getLogger(StatisticsManageController.class);
 
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 
 	@Autowired
 	private ResumeService resumeService;
@@ -240,58 +240,54 @@ public class StatisticsManageController {
 	// return entity;
 	// }
 
-	/**
-	 * 根据传进去的值返回封装成的Map对象
-	 * 
-	 * @param name
-	 * @param value
-	 * @param color
-	 * @return
-	 */
-	private Map<String, Object> getMapByData(String name, String value,
-			String color) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name", name);
-		map.put("value", value);
-		map.put("color", color);
-		return map;
-	}
-
-	/**
-	 * 从企业数, 职位数, 雇用人数, 注册残疾人数和发布的简历数中找出最大值并向上取整, 来给前台ichart控件设定最大值--已废弃！！！--by yufu 2015-03-25
-	 * 
-	 * @param numberCompany
-	 * @param numberJob
-	 * @param numberHire
-	 * @param SNumberUser
-	 * @param SNumberResume
-	 * @return
-	 */
-	private int maxScale(String numberCompany, String numberJob,
-			String numberHire, String SNumberUser, String SNumberResume) {
-		int nc = Integer.parseInt(numberCompany);
-		int nj = Integer.parseInt(numberJob);
-		int nh = Integer.parseInt(numberHire);
-		int su = Integer.parseInt(SNumberUser);
-		int sr = Integer.parseInt(SNumberResume);
-		int a[] = { nc, nj, nh, su, sr };
-		double max = 0;
-		for (int i = 1; i < a.length; i++) {
-			if (a[i] > max)
-				max = a[i];
-		}
-		// 最大数字扩大1/4, 同时向上取整, 取向上最接近的整数百位
-		if (max > 0) {
-			max = Math.ceil(max * 1.2 / 100) * 100;
-		} else {
-			max = 100;
-		}
-		return (int) max;
-	}
-
-//	public static void main(String[] args) {
-//		StatisticsManageController sm = new StatisticsManageController();
-//		int max = sm.maxScale("19", "32", "193", "402", "390");
-//		System.out.println(max);
+//	/**
+//	 * 根据传进去的值返回封装成的Map对象
+//	 * 
+//	 * @param name
+//	 * @param value
+//	 * @param color
+//	 * @return
+//	 */
+//	private Map<String, Object> getMapByData(String name, String value,
+//			String color) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("name", name);
+//		map.put("value", value);
+//		map.put("color", color);
+//		return map;
 //	}
+//
+//	/**
+//	 * 从企业数, 职位数, 雇用人数, 注册残疾人数和发布的简历数中找出最大值并向上取整, 来给前台ichart控件设定最大值--已废弃！！！--by
+//	 * yufu 2015-03-25
+//	 * 
+//	 * @param numberCompany
+//	 * @param numberJob
+//	 * @param numberHire
+//	 * @param SNumberUser
+//	 * @param SNumberResume
+//	 * @return
+//	 */
+//	private int maxScale(String numberCompany, String numberJob,
+//			String numberHire, String SNumberUser, String SNumberResume) {
+//		int nc = Integer.parseInt(numberCompany);
+//		int nj = Integer.parseInt(numberJob);
+//		int nh = Integer.parseInt(numberHire);
+//		int su = Integer.parseInt(SNumberUser);
+//		int sr = Integer.parseInt(SNumberResume);
+//		int a[] = { nc, nj, nh, su, sr };
+//		double max = 0;
+//		for (int i = 1; i < a.length; i++) {
+//			if (a[i] > max)
+//				max = a[i];
+//		}
+//		// 最大数字扩大1/4, 同时向上取整, 取向上最接近的整数百位
+//		if (max > 0) {
+//			max = Math.ceil(max * 1.2 / 100) * 100;
+//		} else {
+//			max = 100;
+//		}
+//		return (int) max;
+//	}
+
 }

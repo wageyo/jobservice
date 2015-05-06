@@ -13,7 +13,6 @@ import esd.bean.Area;
 import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
-import esd.controller.manage.JobManageController;
 import esd.dao.AreaDao;
 import esd.dao.ParameterDao;
 import esd.dao.UserDao;
@@ -26,10 +25,10 @@ import esd.dao.UserDao;
  * @param <T>
  */
 @Service
-public class UserService<T> {
-	
+public class UserService {
+
 	private static Logger log = Logger.getLogger(UserService.class);
-	
+
 	@Autowired
 	private UserDao dao;
 
@@ -91,16 +90,16 @@ public class UserService<T> {
 			p.setArea(area);
 			p.setValue(Constants.SWITCH_OFF);
 			String uid = uuid.toString();
-			
+
 			// 开关默认值为关闭状态 "off"
 			// 账号开关
 			p.setId(uid);
 			p.setName(Constants.Switch.USER.toString());
 			p.setMark("是否审核开关--账号--" + p.getArea().getName());
 			boolean bl1 = pDao.save(p);
-			if(!bl1){
+			if (!bl1) {
 				log.info("保存是否审核开关--账号--时 出错!!");
-				return Boolean.FALSE; 
+				return Boolean.FALSE;
 			}
 			// 企业
 			uuid = UUID.randomUUID();
@@ -109,9 +108,9 @@ public class UserService<T> {
 			p.setName(Constants.Switch.COMPANY.toString());
 			p.setMark("是否审核开关--企业--" + p.getArea().getName());
 			boolean bl2 = pDao.save(p);
-			if(!bl2){
+			if (!bl2) {
 				log.info("保存是否审核开关--企业--时 出错!!");
-				return Boolean.FALSE; 
+				return Boolean.FALSE;
 			}
 			// 职位
 			uuid = UUID.randomUUID();
@@ -120,9 +119,9 @@ public class UserService<T> {
 			p.setName(Constants.Switch.JOB.toString());
 			p.setMark("是否审核开关--职位--" + p.getArea().getName());
 			boolean bl3 = pDao.save(p);
-			if(!bl3){
+			if (!bl3) {
 				log.info("保存是否审核开关--职位--时 出错!!");
-				return Boolean.FALSE; 
+				return Boolean.FALSE;
 			}
 			// 简历
 			uuid = UUID.randomUUID();
@@ -131,19 +130,19 @@ public class UserService<T> {
 			p.setName(Constants.Switch.RESUME.toString());
 			p.setMark("是否审核开关--简历--" + p.getArea().getName());
 			boolean bl4 = pDao.save(p);
-			if(!bl4){
+			if (!bl4) {
 				log.info("保存是否审核开关--简历--时 出错!!");
-				return Boolean.FALSE; 
+				return Boolean.FALSE;
 			}
 		}
-		
-		// ③保存该用户所在地区  验证残疾人卡号和姓名 开关打开
+
+		// ③保存该用户所在地区 验证残疾人卡号和姓名 开关打开
 		// 检查该地区 验证残疾人卡号和姓名 开关是否打开 --存在时
 		Parameter dcp = new Parameter();
 		dcp.setArea(user.getArea());
 		dcp.setType(Constants.DISABLEDCHECKSWITCH);
 		List<Parameter> dcplist = pService.getByParameter(dcp);
-		if (dcplist == null || dcplist.size() ==0) {
+		if (dcplist == null || dcplist.size() == 0) {
 			uuid = UUID.randomUUID();
 			String uid = uuid.toString();
 			dcp.setId(uid);
@@ -190,16 +189,16 @@ public class UserService<T> {
 			p.setArea(area);
 			p.setValue(Constants.SWITCH_OFF);
 			String uid = uuid.toString();
-			
+
 			// 开关默认值为关闭状态 "off"
 			// 账号开关
 			p.setId(uid);
 			p.setName(Constants.Switch.USER.toString());
 			p.setMark("是否审核开关--账号--" + p.getArea().getName());
 			boolean bl1 = pDao.save(p);
-			if(!bl1){
+			if (!bl1) {
 				log.info("保存是否审核开关--账号--时 出错!!");
-				return Boolean.FALSE; 
+				return Boolean.FALSE;
 			}
 			// 企业
 			uuid = UUID.randomUUID();
@@ -208,9 +207,9 @@ public class UserService<T> {
 			p.setName(Constants.Switch.COMPANY.toString());
 			p.setMark("是否审核开关--企业--" + p.getArea().getName());
 			boolean bl2 = pDao.save(p);
-			if(!bl2){
+			if (!bl2) {
 				log.info("保存是否审核开关--企业--时 出错!!");
-				return Boolean.FALSE; 
+				return Boolean.FALSE;
 			}
 			// 职位
 			uuid = UUID.randomUUID();
@@ -219,9 +218,9 @@ public class UserService<T> {
 			p.setName(Constants.Switch.JOB.toString());
 			p.setMark("是否审核开关--职位--" + p.getArea().getName());
 			boolean bl3 = pDao.save(p);
-			if(!bl3){
+			if (!bl3) {
 				log.info("保存是否审核开关--职位--时 出错!!");
-				return Boolean.FALSE; 
+				return Boolean.FALSE;
 			}
 			// 简历
 			uuid = UUID.randomUUID();
@@ -230,19 +229,19 @@ public class UserService<T> {
 			p.setName(Constants.Switch.RESUME.toString());
 			p.setMark("是否审核开关--简历--" + p.getArea().getName());
 			boolean bl4 = pDao.save(p);
-			if(!bl4){
+			if (!bl4) {
 				log.info("保存是否审核开关--简历--时 出错!!");
-				return Boolean.FALSE; 
+				return Boolean.FALSE;
 			}
 		}
-		
-		// ③保存该用户所在地区  验证残疾人卡号和姓名 开关打开
+
+		// ③保存该用户所在地区 验证残疾人卡号和姓名 开关打开
 		// 检查该地区 验证残疾人卡号和姓名 开关是否打开 --存在时
 		Parameter dcp = new Parameter();
 		dcp.setArea(user.getArea());
 		dcp.setType(Constants.DISABLEDCHECKSWITCH);
 		List<Parameter> dcplist = pService.getByParameter(dcp);
-		if (dcplist == null || dcplist.size() ==0) {
+		if (dcplist == null || dcplist.size() == 0) {
 			uuid = UUID.randomUUID();
 			String uid = uuid.toString();
 			dcp.setId(uid);
@@ -340,6 +339,7 @@ public class UserService<T> {
 
 	/**
 	 * 查询对应等级以下的所有账号获得数据总条数
+	 * 
 	 * @param user
 	 * @return
 	 */

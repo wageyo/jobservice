@@ -258,3 +258,44 @@
 /**
  ************************************ 短信发送页面用到的样式  end ************************************
  **/
+ 
+/**
+ ************************************ 推送短信上下文页面用到的样式  begin ************************************
+ **/ 
+.smsfix{
+ margin-top: 50px;
+ margin-left:100px;
+}
+.smsfix .smsfix-edit, .smsfix .smsfix-example{
+	width:300px;
+	height:450px;
+	float:left;
+	padding:5px;
+	border: 2px solid rgb(187, 187, 255);
+	border-radius: 5px;
+}
+.smsfix .smsfix-contenttip{
+	color:green;
+}
+.smsfix .sms-middle{
+	float:left;
+	height:420px;
+	padding-top:160px;
+}
+.smsfix .sms-middle input{
+	margin:10px;
+}
+.smsfix .smsfix-edit textarea{
+	width:244px;
+	height:136px;
+}
+.smsfix .smsfix-edit p{
+	font-size: 13px;
+	padding: 0px 5px;
+	color: rgb(116, 116, 116);
+}
+ 
+ /**
+ ************************************ 推送短信上下文页面用到的样式  end ************************************
+ **/ 
+ 

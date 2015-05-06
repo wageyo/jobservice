@@ -38,7 +38,7 @@ public class AdminManageController {
 	// private String destFileName;
 	
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 	
 	@Autowired
 	private AreaService areaService;

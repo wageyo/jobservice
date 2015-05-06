@@ -1,7 +1,5 @@
 package esd.bean;
 
-import java.text.DecimalFormat;
-
 /**
  * 企业统计数据--仅供前台显示用的bean类, 不做mapper映射, 没有实体表对应
  * 
@@ -18,8 +16,7 @@ public class StatisticsCompany {
 	private float averageJob; // 平均每家企业拥有职位. 小数点后两位 = 总职位数/企业数
 	private String checkStatus; // 当前所处的审核状态
 
-	private DecimalFormat df2 = new DecimalFormat("0.00");
-
+	// private DecimalFormat df2 = new DecimalFormat("0.00");
 
 	@Override
 	public String toString() {
@@ -62,10 +59,10 @@ public class StatisticsCompany {
 	}
 
 	public float getAverageHire() {
-		if(this.numberCompany<=0){
+		if (this.numberCompany <= 0) {
 			return 0;
 		}
-		this.averageHire = this.numberHire/this.numberCompany;
+		this.averageHire = this.numberHire / this.numberCompany;
 		return this.averageHire;
 	}
 
@@ -74,10 +71,10 @@ public class StatisticsCompany {
 	}
 
 	public float getAverageJob() {
-		if(this.numberCompany<=0){
+		if (this.numberCompany <= 0) {
 			return 0;
 		}
-		this.averageJob = this.numberJob/this.numberCompany;
+		this.averageJob = this.numberJob / this.numberCompany;
 		return this.averageJob;
 	}
 

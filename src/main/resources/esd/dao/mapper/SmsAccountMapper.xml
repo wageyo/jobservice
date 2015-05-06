@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.SmsAccountDao">
+
+	<!-- result map of Area -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" jdbcType="VARCHAR" />
+		<result column="a_name" property="name" jdbcType="VARCHAR" />
+		<result column="a_is_active" property="isActive" jdbcType="BIT" />
+	</resultMap>
+	
+	<!-- result map of SmsAccount -->
+	<resultMap id="ResultSmsAccount" type="SmsAccount">
+		<id column="sa_id" property="id" jdbcType="VARCHAR" />
+		<result column="sa_create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="sa_update_check" property="updateCheck" jdbcType="INTEGER" />
+		<result column="sa_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="sa_log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="sa_username" property="username" jdbcType="VARCHAR" />
+		<result column="sa_password" property="password" jdbcType="VARCHAR" />
+		<result column="sa_remark" property="remark" jdbcType="VARCHAR" />
+		<result column="sa_is_active" property="isActive" jdbcType="BIT" />
+		<association property="area" javaType="Area" resultMap="ResultArea" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="base_column">
+		sa.id as sa_id, sa.create_date as sa_create_date, sa.update_check as sa_update_check, 
+		sa.update_date as sa_update_date, sa.log_user as sa_log_user, sa.username as sa_username,
+		sa.password as sa_password, sa.remark as sa_remark ,sa.is_active as sa_is_active, 
+		a.code as a_code, a.name as a_name, a.is_active as a_is_active
+	</sql>
+	
+	<sql id="from_table">
+		sms_fix as sa left join area as a on sa.acode = a.code 
+	</sql>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="SmsAccount">
+		insert into sms_fix
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="username != null and username != ''">
+				username,
+			</if>
+			<if test="password != null and password != ''">
+				password,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark,
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode,
+				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}, now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="username != null and username != ''">
+				#{username, jdbcType=VARCHAR},
+			</if>
+			<if test="password != null and password != ''">
+				#{password, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR},
+				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
+			</if>
+		</trim>	
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from sms_fix 
+		where id = #{id, jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="SmsAccount">
+		update sms_fix
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="username != null and username != ''">
+				username = #{username, jdbcType=VARCHAR},
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode = #{area.code, jdbcType=VARCHAR},
+				</if>
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
+			</if>
+		</trim>
+		where id = #{id, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultSmsAccount" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sa.id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- get by id -->
+	<select id="getByArea" resultMap="ResultSmsAccount" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sa.acode = #{acode, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map" resultMap="ResultSmsAccount">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="smsAccount != null">
+				<if test="smsAccount.username != null and smsAccount.username != ''">
+					sa.username like concat('%',#{smsAccount.username, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsAccount.password != null and smsAccount.password != ''">
+					and sa.password like concat('%',#{smsAccount.password, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsAccount.area != null">
+					<if test="smsAccount.area.code != null and smsAccount.area.code != ''">
+						and sa.acode = #{smsAccount.area.code, jdbcType=VARCHAR}
+					</if>
+				</if>
+				<choose>
+					<when test="smsAccount.isActive != null">
+						and sa.is_active = #{smsAccount.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and sa.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="smsAccount != null">
+				</when>
+				<otherwise>
+					and sa.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+		order by sa.create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+	
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int" parameterType="map">
+		select count(*)
+		from <include refid="from_table"/>
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="smsAccount != null">
+				<if test="smsAccount.username != null and smsAccount.username != ''">
+					sa.username like concat('%',#{smsAccount.username, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsAccount.password != null and smsAccount.password != ''">
+					and sa.password like concat('%',#{smsAccount.password, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsAccount.area != null">
+					<if test="smsAccount.area.code != null and smsAccount.area.code != ''">
+						and sa.acode = #{smsAccount.area.code, jdbcType=VARCHAR}
+					</if>
+				</if>
+				<choose>
+					<when test="smsAccount.isActive != null">
+						and sa.is_active = #{smsAccount.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and sa.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="smsAccount != null">
+				</when>
+				<otherwise>
+					and sa.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+	</select> 
+	
+</mapper>

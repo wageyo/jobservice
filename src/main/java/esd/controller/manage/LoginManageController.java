@@ -1,8 +1,5 @@
 package esd.controller.manage;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +15,6 @@ import esd.bean.User;
 import esd.controller.Constants;
 import esd.controller.Constants.Authority;
 import esd.service.CookieHelper;
-import esd.service.KitService;
 import esd.service.UserService;
 
 /**
@@ -44,9 +40,10 @@ public class LoginManageController {
 
 	// 转到管理 登陆页面
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes ra) {
-		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+	public String login(HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra) {
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
 		// 判断是否登录
 		if (userId == null || "".equals(userId)) {
 			log.debug("进入到后台管理登录页面。");
@@ -73,7 +70,7 @@ public class LoginManageController {
 						return "redirect:/loginManage/login";
 					}
 				}
-				CookieHelper.setCookie(response, request, user, null,null);
+				CookieHelper.setCookie(response, request, user, null, null);
 
 				log.debug("管理用户登陆成功:" + user);
 				return "redirect:/manage/index";
@@ -95,7 +92,8 @@ public class LoginManageController {
 	@RequestMapping(value = "/password_edit", method = RequestMethod.POST)
 	public String password_edit_post(HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes ra) {
-		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
 		String return_password_edit = "redirect:/loginManage/password_edit";
 		User user = userService.getById(Integer.parseInt(userId));
 		String oldPassWord = request.getParameter("oldPassWord");
@@ -119,7 +117,7 @@ public class LoginManageController {
 	 */
 	@RequestMapping(value = "/quit", method = RequestMethod.GET)
 	public String quit(HttpServletRequest request, HttpServletResponse response) {
-		//杀死所有cookie除地区code外的所有
+		// 杀死所有cookie除地区code外的所有
 		CookieHelper.killAdminCookie(response, false);
 		log.error("管理员用户退出");
 		return "redirect:/loginManage/login";

@@ -19,6 +19,7 @@
 		<result column="f_new_width" property="newWidth" jdbcType="VARCHAR" />
 		<result column="f_new_height" property="newHeight" jdbcType="VARCHAR" />
 		<result column="f_mark" property="mark" jdbcType="VARCHAR" />
+		<result column="f_type" property="type" jdbcType="VARCHAR" />
 		<result column="f_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 	
@@ -37,6 +38,7 @@
 		<result column="f_new_width" property="newWidth" jdbcType="VARCHAR" />
 		<result column="f_new_height" property="newHeight" jdbcType="VARCHAR" />
 		<result column="f_mark" property="mark" jdbcType="VARCHAR" />
+		<result column="f_type" property="type" jdbcType="VARCHAR" />
 		<result column="f_is_active" property="isActive" jdbcType="BIT" />
 	</resultMap>
 
@@ -44,7 +46,8 @@
 		f.id as f_id, f.create_date as f_create_date, f.update_check as f_update_check, 
 			f.update_date as f_update_date, f.log_user as f_log_user, f.file_title as f_file_title, 
 			f.file_name as f_file_name, f.file_suffix as f_file_suffix, f.default_width as f_default_width, f.default_height as f_default_height, 
-			f.new_width as f_new_width, f.new_height as f_new_height, f.mark as f_mark, f.is_active as f_is_active
+			f.new_width as f_new_width, f.new_height as f_new_height, f.mark as f_mark, f.type as f_type, 
+			f.is_active as f_is_active
 	</sql>
 	
 	<!-- insert -->
@@ -85,6 +88,9 @@
 			<if test="mark != null and mark != ''">
 				mark,
 			</if>
+			<if test="type != null and type != ''">
+				type,
+			</if>
 			<if test="isActive != null">
 				is_active
 			</if>
@@ -120,6 +126,9 @@
 			</if>
 			<if test="mark != null and mark != ''">
 				#{mark, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null and type != ''">
+				#{type, jdbcType=VARCHAR},
 			</if>
 			<if test="isActive != null">
 				#{isActive, jdbcType=BIT}
@@ -167,6 +176,9 @@
 			<if test="mark != null and mark != ''">
 				mark = #{mark, jdbcType=VARCHAR}, 
 			</if>
+			<if test="type != null and type != ''">
+				type = #{type, jdbcType=VARCHAR}, 
+			</if>
 			<if test="isActive != null">
 				is_active = #{isActive, jdbcType=BIT},
 			</if>
@@ -211,6 +223,9 @@
 				<if test="filegags.fileTitle != '' and filegags.fileTitle != null">
 					and f.file_title like concat('%', #{filegags.fileTitle, jdbcType=VARCHAR}, '%')
 				</if>
+				<if test="filegags.type != '' and filegags.type != null">
+					and f.file_type like concat('%', #{filegags.type, jdbcType=VARCHAR}, '%')
+				</if>
 				<choose>
 					<when test="filegags.isActive != null">
 						and f.is_active = #{filegags.isActive, jdbcType=BIT}
@@ -243,6 +258,9 @@
 				</if>
 				<if test="filegags.fileTitle != '' and filegags.fileTitle != null">
 					and f.file_title like concat('%', #{filegags.fileTitle, jdbcType=VARCHAR}, '%')
+				</if>
+				<if test="filegags.type != '' and filegags.type != null">
+					and f.file_type like concat('%', #{filegags.type, jdbcType=VARCHAR}, '%')
 				</if>
 				<choose>
 					<when test="filegags.isActive != null">

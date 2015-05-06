@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="esd.dao.SmsFixDao">
+
+	<!-- result map of Area -->
+	<resultMap id="ResultArea" type="Area">
+		<id column="a_code" property="code" jdbcType="VARCHAR" />
+		<result column="a_name" property="name" jdbcType="VARCHAR" />
+		<result column="a_is_active" property="isActive" jdbcType="BIT" />
+	</resultMap>
+	
+	<!-- result map of SmsFix -->
+	<resultMap id="ResultSmsFix" type="SmsFix">
+		<id column="sf_id" property="id" jdbcType="VARCHAR" />
+		<result column="sf_create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="sf_update_check" property="updateCheck" jdbcType="INTEGER" />
+		<result column="sf_update_date" property="updateDate" jdbcType="TIMESTAMP" />
+		<result column="sf_log_user" property="logUser" jdbcType="VARCHAR" />
+		<result column="sf_prefix" property="prefix" jdbcType="VARCHAR" />
+		<result column="sf_suffix" property="suffix" jdbcType="VARCHAR" />
+		<result column="sf_remark" property="remark" jdbcType="VARCHAR" />
+		<result column="sf_is_active" property="isActive" jdbcType="BIT" />
+		<association property="area" javaType="Area" resultMap="ResultArea" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="base_column">
+		sf.id as sf_id, sf.create_date as sf_create_date, sf.update_check as sf_update_check, 
+		sf.update_date as sf_update_date, sf.log_user as sf_log_user, sf.prefix as sf_prefix,
+		sf.suffix as sf_suffix, sf.remark as sf_remark ,sf.is_active as sf_is_active, 
+		a.code as a_code, a.name as a_name, a.is_active as a_is_active
+	</sql>
+	
+	<sql id="from_table">
+		sms_fix as sf left join area as a on sf.acode = a.code 
+	</sql>
+	
+	<!-- insert -->
+	<insert id="save" parameterType="SmsFix">
+		insert into sms_fix
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			create_date,
+			update_check,
+			update_date,
+			<if test="logUser != null and logUser != ''">
+				log_user,
+			</if>
+			<if test="prefix != null and prefix != ''">
+				prefix,
+			</if>
+			<if test="suffix != null and suffix != ''">
+				suffix,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark,
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode,
+				</if>
+			</if>
+			<if test="isActive != null">
+				is_active
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}, now(), default, now(),
+			<if test="logUser != null and logUser != ''">
+				#{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="prefix != null and prefix != ''">
+				#{prefix, jdbcType=VARCHAR},
+			</if>
+			<if test="suffix != null and suffix != ''">
+				#{suffix, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					#{area.code, jdbcType=VARCHAR},
+				</if>
+			</if>
+			<if test="isActive != null">
+				#{isActive, jdbcType=BIT}
+			</if>
+		</trim>	
+	</insert>
+
+	<!-- delete -->
+	<delete id="delete" parameterType="java.lang.String">
+		delete from sms_fix 
+		where id = #{id, jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- update -->
+	<update id="update" parameterType="SmsFix">
+		update sms_fix
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="logUser != null and logUser != ''">
+				log_user = #{logUser, jdbcType=VARCHAR},
+			</if>
+			<if test="prefix != null and prefix != ''">
+				prefix = #{prefix, jdbcType=VARCHAR},
+			</if>
+			<if test="suffix != null and suffix != ''">
+				suffix = #{suffix, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark, jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				<if test="area.code != null and area.code != ''">
+					acode = #{area.code, jdbcType=VARCHAR},
+				</if>
+			</if>
+			<if test="isActive != null">
+				is_active = #{isActive, jdbcType=BIT}
+			</if>
+		</trim>
+		where id = #{id, jdbcType=VARCHAR}
+	</update>
+	
+	<!-- get by id -->
+	<select id="getById" resultMap="ResultSmsFix" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sf.id = #{id, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- get by id -->
+	<select id="getByArea" resultMap="ResultSmsFix" parameterType="java.lang.String">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/>
+		where sf.acode = #{acode, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- getByPage -->
+	<select id="getByPage" parameterType="map" resultMap="ResultSmsFix">
+		select <include refid="base_column"/> 
+		from <include refid="from_table"/> 
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="smsFix != null">
+				<if test="smsFix.prefix != null and smsFix.prefix != ''">
+					sf.prefix like concat('%',#{smsFix.prefix, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsFix.suffix != null and smsFix.suffix != ''">
+					and sf.suffix like concat('%',#{smsFix.suffix, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsFix.area != null">
+					<if test="smsFix.area.code != null and smsFix.area.code != ''">
+						and sf.acode = #{smsFix.area.code, jdbcType=VARCHAR}
+					</if>
+				</if>
+				<choose>
+					<when test="smsFix.isActive != null">
+						and sf.is_active = #{smsFix.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and sf.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="smsFix != null">
+				</when>
+				<otherwise>
+					and sf.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+		order by sf.create_date desc 
+		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
+	</select>
+	
+	<!-- getTotalCount -->
+	<select id="getTotalCount" resultType="int" parameterType="map">
+		select count(*)
+		from <include refid="from_table"/>
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="smsFix != null">
+				<if test="smsFix.prefix != null and smsFix.prefix != ''">
+					sf.prefix like concat('%',#{smsFix.prefix, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsFix.suffix != null and smsFix.suffix != ''">
+					and sf.suffix like concat('%',#{smsFix.suffix, jdbcType=VARCHAR},'%')
+				</if>
+				<if test="smsFix.area != null">
+					<if test="smsFix.area.code != null and smsFix.area.code != ''">
+						and sf.acode = #{smsFix.area.code, jdbcType=VARCHAR}
+					</if>
+				</if>
+				<choose>
+					<when test="smsFix.isActive != null">
+						and sf.is_active = #{smsFix.isActive, jdbcType=BIT}
+					</when>
+					<otherwise>
+						and sf.is_active = 1 
+					</otherwise>
+				</choose>
+			</if>
+			<choose>
+				<when test="smsFix != null">
+				</when>
+				<otherwise>
+					and sf.is_active = 1 
+				</otherwise>
+			</choose>
+		</trim>
+	</select> 
+	
+</mapper>

@@ -43,7 +43,7 @@ public class JobManageController {
 	private static Logger log = Logger.getLogger(JobManageController.class);
 
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 	
 	@Autowired
 	private AreaService areaService;

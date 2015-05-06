@@ -47,14 +47,14 @@
 				
 					<!-- 审核开关状态设置 -->
 					<h3>审核开关状态</h3>
-					<c:forEach items="${entityList }" var="entity">
-						<div class="control-group">
-							<div class="switch" data-on="success" data-off="warning">
-							 	<label for="loginName" style="display:initial;width:60px;margin-right:20px;"> ${entity.switchName }</label> 
-								<input type="checkbox" id="${entity.id }" switchid="${entity.id }" name="switchAudit" <c:if test="${entity.switchValue == 'on' }">checked</c:if>>
-							</div>
-						</div>
-					</c:forEach>
+					<div class="control-group">
+						<c:forEach items="${entityList }" var="entity">
+								<div class="switch" data-on="success" data-off="warning">
+								 	<label for="loginName" style="display:initial;width:60px;margin-right:20px;"> ${entity.switchName }</label> 
+									<input type="checkbox" id="${entity.id }" switchid="${entity.id }" name="switchAudit" <c:if test="${entity.switchValue == 'on' }">checked</c:if>>
+								</div>
+						</c:forEach>
+					</div>
 					<br/>
 					<!-- 残疾证号是否远程校验 -->
 					<h3>残疾证号远程校验开关</h3>

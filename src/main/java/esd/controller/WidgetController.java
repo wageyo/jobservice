@@ -186,7 +186,7 @@ public class WidgetController {
 		@ResponseBody
 		public Map<String, Object> getJobCagetegoryList1(HttpServletRequest request) {
 			Map<String, Object> json = new HashMap<String, Object>();
-			json.put("addr", request.getRealPath("/"));
+			json.put("addr", request.getSession().getServletContext().getRealPath("/"));
 			return json;
 		}
 }

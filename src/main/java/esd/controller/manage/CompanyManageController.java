@@ -19,9 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import esd.bean.Area;
 import esd.bean.BusinessScope;
 import esd.bean.Company;
-import esd.bean.Job;
 import esd.bean.Parameter;
-import esd.bean.Resume;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.BusinessScopeService;
@@ -31,7 +29,6 @@ import esd.service.FilegagsService;
 import esd.service.JobService;
 import esd.service.KitService;
 import esd.service.ParameterService;
-import esd.service.ResumeService;
 import esd.service.UserService;
 
 /**
@@ -46,19 +43,19 @@ public class CompanyManageController {
 	private static Logger log = Logger.getLogger(CompanyManageController.class);
 
 	@Autowired
-	private UserService<User> userService;
-	
+	private UserService userService;
+
 	@Autowired
-	private CompanyService<Company> companyService;
+	private CompanyService companyService;
 
 	@Autowired
 	private JobService jobService;
-	
+
 	@Autowired
 	private ParameterService pService;
-	
+
 	@Autowired
-	private BusinessScopeService bsService; 
+	private BusinessScopeService bsService;
 
 	@Autowired
 	private FilegagsService imageService;
@@ -84,8 +81,9 @@ public class CompanyManageController {
 		paramEntity.setCheckStatus(checkStatus);
 
 		// 获取地区码
-		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
-		if(userId == null || "".equals(userId)){
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
+		if (userId == null || "".equals(userId)) {
 			return new ModelAndView("redirect:/loginManage/login");
 		}
 		Integer uid = Integer.parseInt(userId);
@@ -95,7 +93,7 @@ public class CompanyManageController {
 		paramEntity.setArea(new Area(acode));
 
 		List<Company> resultList = companyService.getListShowForManage(
-				paramEntity, page, rows,Boolean.FALSE);
+				paramEntity, page, rows, Boolean.FALSE);
 		Integer total = companyService.getTotalCount(paramEntity, Boolean.TRUE); // 数据总条数
 		try {
 			List<Map<String, Object>> list = new ArrayList<>();
@@ -178,7 +176,7 @@ public class CompanyManageController {
 		}
 		return map;
 	}
-	
+
 	// 拒绝企业通过
 	@RequestMapping(value = "/refuse/{id}", method = RequestMethod.POST)
 	@ResponseBody
@@ -213,29 +211,31 @@ public class CompanyManageController {
 	}
 
 	// 删除公司
-	@RequestMapping(value="/delete/{id}",method=RequestMethod.POST)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> delete_object(@PathVariable(value = "id") Integer id) {
+	public Map<String, Object> delete_object(
+			@PathVariable(value = "id") Integer id) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		//删除对应的图片
-		//第一步查询图片ID；
+		// 删除对应的图片
+		// 第一步查询图片ID；
 		Company company = companyService.getById(id);
-		
+
 		Boolean bl = companyService.delete(id);
 		Boolean bl2 = jobService.deleteByCompany(id);
 
-		if (bl&&bl2) {
-		    String businessLicense = company.getBusinessLicense();
-		    if (businessLicense != null && !"".equals(businessLicense)) {
-		    	imageService.deleteId(businessLicense);
+		if (bl && bl2) {
+			String businessLicense = company.getBusinessLicense();
+			if (businessLicense != null && !"".equals(businessLicense)) {
+				imageService.deleteId(businessLicense);
 			}
-		    String institutionalFramework = company.getInstitutionalFramework();
-		    if (institutionalFramework != null && !"".equals(institutionalFramework)) {
-		    	imageService.deleteId(institutionalFramework);
+			String institutionalFramework = company.getInstitutionalFramework();
+			if (institutionalFramework != null
+					&& !"".equals(institutionalFramework)) {
+				imageService.deleteId(institutionalFramework);
 			}
-		    String taxRegistration = company.getTaxRegistration();
-		    if (taxRegistration != null && !"".equals(taxRegistration)) {
-		    	imageService.deleteId(taxRegistration);
+			String taxRegistration = company.getTaxRegistration();
+			if (taxRegistration != null && !"".equals(taxRegistration)) {
+				imageService.deleteId(taxRegistration);
 			}
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {
@@ -243,5 +243,5 @@ public class CompanyManageController {
 		}
 		return map;
 	}
-	
+
 }

@@ -35,7 +35,6 @@ import esd.common.util.SmsPhoneUtil;
 import esd.controller.Constants;
 import esd.service.CookieHelper;
 import esd.service.SMSService;
-import esd.service.SmsHistoryService;
 import esd.service.SmsPhoneService;
 import esd.service.UserService;
 
@@ -58,9 +57,6 @@ public class SMSManageController {
 
 	@Autowired
 	private SMSService smsService;
-
-	@Autowired
-	private SmsHistoryService smsHistoryService;
 
 	@Autowired
 	private SmsPhoneUtil smsPhoneUtil;
@@ -119,9 +115,10 @@ public class SMSManageController {
 		String[] phoneList = request.getParameterValues("phoneList"); // 电话号码列表
 		String[] nameList = request.getParameterValues("nameList");// 名字列表
 		String shortMessage = request.getParameter("shortMessage");// 短信内容
-		String userId = CookieHelper.getCookieValue(request, Constants.ADMINUSERID);
-	 Integer uid = Integer.parseInt(userId);
-	 User userObj = userService.getById(uid);
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
 		if (phoneList == null || nameList == null) {
 			result.put(Constants.NOTICE, "传递的数据为空, 请重新尝试或联系管理员.");
 			return result;
@@ -154,14 +151,15 @@ public class SMSManageController {
 				}
 				Boolean bl = smsService.sendMessage(
 						getRegularPhoneSentence(paramPhoneList), shortMessage,
-						url,userObj.getNickName());
+						url, userObj.getNickName());
 				if (!bl) {
 					mark = Boolean.FALSE;
 				}
 			}
 		} else {
 			Boolean bl = smsService.sendMessage(
-					getRegularPhoneSentence(phoneList), shortMessage, url,userObj.getNickName());
+					getRegularPhoneSentence(phoneList), shortMessage, url,
+					userObj.getNickName());
 			if (!bl) {
 				mark = Boolean.FALSE;
 			}
@@ -295,7 +293,6 @@ public class SMSManageController {
 		try {
 			list = smsPhoneUtil.parse(excelFile, 0);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			writer.write(Constants.NOTICE + ":" + "解析excel表格式发生错误.");
 			return;
 		}

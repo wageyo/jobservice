@@ -54,7 +54,7 @@ public class ResumeController {
 	private String deployAreaCode;
 
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 
 	@Autowired
 	private ResumeService resumeService;

@@ -13,7 +13,7 @@ import esd.controller.Constants;
 import esd.dao.SmsPhoneDao;
 
 /**
- * 电话簿
+ * 电话簿  service类
  * 
  * @author yufu
  * @email ilxly01@126.com 2015-3-22

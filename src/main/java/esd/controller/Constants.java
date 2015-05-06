@@ -63,6 +63,9 @@ public class Constants {
 	public static final String ADMINUSERAREANAME = "adminareaname"; // 管理员所属地区名称
 	/****************** 放入cookie中的key值 ********************/
 
+	/**
+	 * 全国地区code
+	 */
 	public static final String AREACOUNTRY = "10000000"; // 全国地区code
 
 	public static final String WORKABILITY = "workAbility"; // 有无劳动能力
@@ -326,7 +329,7 @@ public class Constants {
 	 */
 	public enum FilegagsType {
 		// 利用构造函数传参 级.
-		ARTICLES("articles"), HEADIMAGE("headimage");
+		ARTICLES("articles"), HEADIMAGE("headimage"),RESUME("resume");
 
 		// 定义私有变量
 		private String val;

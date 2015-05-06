@@ -1,7 +1,5 @@
 package esd.dao;
 
-import java.util.List;
-
 import esd.bean.Menu;
 
 /**
@@ -14,6 +12,5 @@ public interface MenuDao extends IDao<Menu> {
 
 	// 按id查询一个对象
 	public Menu getById(String id);
-	
 
 }

@@ -16,8 +16,11 @@ import org.springframework.stereotype.Service;
 
 import esd.bean.Job;
 import esd.bean.Resume;
+import esd.bean.SmsFix;
 import esd.bean.SmsHistory;
 import esd.common.Sender;
+import esd.controller.Constants;
+import esd.dao.SmsFixDao;
 import esd.dao.SmsHistoryDao;
 import esd.dao.UserDao;
 
@@ -42,6 +45,9 @@ public class SMSService {
 	
 	@Autowired
 	private SmsHistoryDao smsHistoryDao;
+	
+	@Autowired
+	private SmsFixDao smsFixDao;
 
 	/**
 	 * 发送短信--不对短信内容进行非法校验更正
@@ -116,9 +122,10 @@ public class SMSService {
 	 * @param jobList
 	 * @param illegalFileUrl --路径为项目根路径
 	 * @param logUser 操作人
+	 * @param acode 操作地区code
 	 */
 	public Boolean sendTuiSongJob(Resume resume, List<Job> jobList,
-			String illegalFileUrl,String logUser) {
+			String illegalFileUrl,String logUser,String acode) {
 		String phone = resume.getPhone(); // 电话号码
 		// 校验电话规则, 不符合规则 则返回false; 不存在则使用其账号表中的电话, 如仍不存在则返回false;
 		if (phone == null || "".equals(phone)) {
@@ -128,7 +135,16 @@ public class SMSService {
 		if (phone == null || "".equals(phone)) {
 			return false;
 		}
-		String msg = "广西壮族自治区残疾人劳动就业指导中心向您推荐的招聘信息:\n";
+		//获取该地区的短信推送上下文.
+		SmsFix smsFix = smsFixDao.getByArea(acode);
+		//如果该地区没有自定义上下文, 则默认使用全国的啊
+		if(smsFix == null){
+			smsFix = smsFixDao.getByArea(Constants.AREACOUNTRY);
+		}
+		//定义发送短信
+		String msg = "";
+		//添加上上文
+		msg += smsFix.getPrefix() + "\n";
 		for (int i = 0; i < jobList.size(); i++) {
 			Job job = jobList.get(i);
 			msg += (i + 1) + ". " + job.getName() + ", "; // 职位名称
@@ -144,7 +160,9 @@ public class SMSService {
 			// }
 			msg += job.getSalary() + "\n"; // 薪资
 		}
-		msg += "联系人:\t职业指导科小何、小易\t联系电话:\t0771-3186952\t0771-3186953\n联系地址:\t南宁市罗文大道48号(残疾人事业园1楼就业服务大厅)\t更多招聘信息请登录广西壮族自治区残疾人就业信息网，网址：http://116.11.253.249:9217/jobservice";
+		msg += smsFix.getSuffix();
+		
+	//	msg += "联系人:\t职业指导科小何、小易\t联系电话:\t0771-3186952\t0771-3186953\n联系地址:\t南宁市罗文大道48号(残疾人事业园1楼就业服务大厅)\t更多招聘信息请登录广西壮族自治区残疾人就业信息网，网址：http://116.11.253.249:9217/jobservice";
 		// 处理非法字符
 		msg = dealIllegalContent(msg, illegalFileUrl);
 		

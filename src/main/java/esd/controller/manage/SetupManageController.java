@@ -38,7 +38,7 @@ public class SetupManageController {
 	private static Logger log = Logger.getLogger(SetupManageController.class);
 	
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 	
 	@Autowired
 	private ParameterService parameterService;

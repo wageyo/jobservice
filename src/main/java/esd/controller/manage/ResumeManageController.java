@@ -45,7 +45,7 @@ public class ResumeManageController {
 	private static Logger log = Logger.getLogger(ResumeManageController.class);
 
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 
 	@Autowired
 	private AreaService areaService;

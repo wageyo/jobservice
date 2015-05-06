@@ -7,8 +7,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import esd.bean.Area;
 import esd.bean.User;
 import esd.controller.Constants;
@@ -30,12 +28,6 @@ public class CookieHelper {
 	 */
 	private final static int COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
 
-	/**
-	 * 当前网站所属的地区code
-	 */
-	@Value("${currentArea}")
-	private String currentArea;
-	
 	/**
 	 * 
 	 * @desc 删除指定Cookie
@@ -164,14 +156,19 @@ public class CookieHelper {
 
 	/**
 	 * 设置cookie
+	 * 
 	 * @param response
 	 * @param request
-	 * @param user 用户对象 普通或管理员
-	 * @param area 访问网页的地区code
-	 * @param deployAreaCode 网站部署所在的地区code, 和area同步, 为空则都为空, 非空则都非空
+	 * @param user
+	 *            用户对象 普通或管理员
+	 * @param area
+	 *            访问网页的地区code
+	 * @param deployAreaCode
+	 *            网站部署所在的地区code, 和area同步, 为空则都为空, 非空则都非空
 	 */
 	public static void setCookie(HttpServletResponse response,
-			HttpServletRequest request, User user, Area area,String deployAreaCode) {
+			HttpServletRequest request, User user, Area area,
+			String deployAreaCode) {
 		// user不为空, 则将user信息放入到cookie中
 		if (user != null) {
 			if (Constants.Authority.ADMIN.getValue() > user.getAuthority()) {
@@ -185,13 +182,16 @@ public class CookieHelper {
 						String.valueOf(user.getAuthority()));
 				setCookie(response, Constants.USERREGISTERTIME,
 						KitService.dateForShow(user.getCreateDate()));
-				setCookie(response, Constants.USERHEADIMAGE,user.getHeadImage());
+				setCookie(response, Constants.USERHEADIMAGE,
+						user.getHeadImage());
 			} else {
 				// 管理员用户存放cookie方式
 				setCookie(response, Constants.ADMINUSERID,
 						String.valueOf(user.getId()));
-				setCookie(response, Constants.ADMINUSERNAME, user.getLoginName());
-				setCookie(response, Constants.ADMINUSERIDENTITY, user.getIdentity());
+				setCookie(response, Constants.ADMINUSERNAME,
+						user.getLoginName());
+				setCookie(response, Constants.ADMINUSERIDENTITY,
+						user.getIdentity());
 				setCookie(response, Constants.ADMINUSERAUTHORITY,
 						String.valueOf(user.getAuthority()));
 				try {
@@ -200,8 +200,9 @@ public class CookieHelper {
 					String nickName = URLEncoder.encode(user.getNickName(),
 							"UTF-8");
 					setCookie(response, Constants.ADMINUSERNICKNAME, nickName);
-					String areaName = URLEncoder.encode(user.getArea().getName(),"UTF-8");
-					setCookie(response,Constants.ADMINUSERAREANAME,areaName);
+					String areaName = URLEncoder.encode(user.getArea()
+							.getName(), "UTF-8");
+					setCookie(response, Constants.ADMINUSERAREANAME, areaName);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
@@ -213,8 +214,9 @@ public class CookieHelper {
 			setCookie(response, Constants.AREACODE, area.getCode(),
 					Integer.MAX_VALUE);
 			request.setAttribute(Constants.AREACODE, area.getCode());
-			//网站部署所在 地区code, 即本网站最顶层的地区code
-			setCookie(response,"deployAreaCode",deployAreaCode,Integer.MAX_VALUE);
+			// 网站部署所在 地区code, 即本网站最顶层的地区code
+			setCookie(response, "deployAreaCode", deployAreaCode,
+					Integer.MAX_VALUE);
 			request.setAttribute("deployAreaCode", deployAreaCode);
 			// 地区名称不为空时, 才将其encode后放入到cookie中
 			if (area.getName() != null) {
@@ -244,7 +246,7 @@ public class CookieHelper {
 		setCookie(response, Constants.USERIDENTITY, null, 0);
 		setCookie(response, Constants.USERAUTHORITY, null, 0);
 		setCookie(response, Constants.USERREGISTERTIME, null, 0);
-		setCookie(response,Constants.USERHEADIMAGE,null,0);
+		setCookie(response, Constants.USERHEADIMAGE, null, 0);
 		setCookie(response, Constants.USERCOMPANYID, null, 0);
 		if (bl) {
 			setCookie(response, Constants.AREACODE, null, 0);

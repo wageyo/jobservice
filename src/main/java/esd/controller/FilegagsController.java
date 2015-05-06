@@ -44,14 +44,14 @@ public class FilegagsController {
 	private static Logger log = Logger.getLogger(FilegagsController.class);
 
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 
 	@Autowired
 	private FilegagsService filegagsService;
 
 	// 接收上传的文件
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	public void importPic(@RequestParam("pic") CommonsMultipartFile file,
+	public void importPic(@RequestParam("upload") CommonsMultipartFile file,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String imageid = request.getParameter("imageId");

@@ -706,4 +706,8 @@ public class ResumeService {
 	// String d = sdf.format(new Date(System.currentTimeMillis()));
 	// log.info(d);
 	// }
+	
+	public static void main(String[] args) {
+		System.out.println(UUID.randomUUID().toString().replace("-", ""));
+	}
 }

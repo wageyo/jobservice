@@ -44,7 +44,7 @@ public class SecureCompanyController {
 	private UserService userService;
 	
 	@Autowired
-	private CompanyService<Company> companyService;
+	private CompanyService companyService;
 
 	@Autowired
 	private ParameterService parameterService;

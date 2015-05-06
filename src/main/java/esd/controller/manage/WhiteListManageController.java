@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,7 +40,7 @@ public class WhiteListManageController {
 
 	@Autowired
 	private ParameterService parameterService;
-	
+
 	/*
 	 * 转到 白名单列表 页面
 	 */
@@ -85,8 +84,9 @@ public class WhiteListManageController {
 		entity.put("currentPage", page);
 		entity.put("totalPage", KitService.getTotalPage(total));
 		entity.put("targetName", targetName);
-		//白名单功能是否打开开关
-		Parameter parameter = parameterService.getById(Constants.WHITE_LIST_SWITCH);
+		// 白名单功能是否打开开关
+		Parameter parameter = parameterService
+				.getById(Constants.WHITE_LIST_SWITCH);
 		entity.put("whiteListSwitch", parameter);
 		log.debug("转到 白名单列表 页面");
 		return new ModelAndView("manage/white-list", entity);
@@ -159,18 +159,18 @@ public class WhiteListManageController {
 	}
 
 	// 更新白名单开关值
-	@RequestMapping(value="/update_switch")
+	@RequestMapping(value = "/update_switch")
 	@ResponseBody
-	public Map<String,Object> updateWhiteListSwitch(HttpServletRequest request){
-		Map<String,Object> map = new HashMap<String,Object>();
+	public Map<String, Object> updateWhiteListSwitch(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		String value = request.getParameter("value");
 		Parameter parameter = new Parameter();
 		parameter.setId(Constants.WHITE_LIST_SWITCH);
 		parameter.setValue(value);
 		Boolean bl = parameterService.update(parameter);
-		if(bl){
+		if (bl) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
-		}else{
+		} else {
 			map.put(Constants.NOTICE, Constants.Notice.FAILURE.getValue());
 		}
 		return map;

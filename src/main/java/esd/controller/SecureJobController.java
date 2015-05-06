@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.bean.Parameter;
 import esd.bean.Resume;
-import esd.bean.User;
 import esd.controller.Constants.Identity;
 import esd.controller.Constants.Notice;
 import esd.service.AreaService;
@@ -47,7 +45,7 @@ public class SecureJobController {
 	private PersonService personService;
 
 	@Autowired
-	private CompanyService<Company> companyService;
+	private CompanyService companyService;
 
 	@Autowired
 	private ParameterService pService;
@@ -63,19 +61,20 @@ public class SecureJobController {
 
 	// 保存职位
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(Job job,HttpServletRequest request,  HttpServletResponse response,
-			RedirectAttributes ra) {
+	public String save(Job job, HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- save post ---");
 		log.info("************************************"
 				+ request.getParameter("workPlace.code"));
 		// 是否为企业用户
-		String companyId = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		String companyId = CookieHelper.getCookieValue(request,
+				Constants.USERCOMPANYID);
 		if (companyId == null || "".equals(companyId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "请先完善公司信息");
 			return "/secure/company/save";
 		}
-		//企业信息
+		// 企业信息
 		Integer cid = Integer.parseInt(companyId);
 		Company company = companyService.getById(cid);
 		log.info("job : " + job);
@@ -105,17 +104,18 @@ public class SecureJobController {
 
 	// 跳转到保存职位
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
-	public String gotoResumeAdd(HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes ra) {
+	public String gotoResumeAdd(HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- save get---");
 		// 先查看是否添加了企业信息, 没有添加的话则提示
-		String companyId  = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		String companyId = CookieHelper.getCookieValue(request,
+				Constants.USERCOMPANYID);
 		if (companyId == null || "".equals(companyId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "填写完公司信息后才可以发布招聘信息");
 			return "redirect:/secure/company/save";
 		}
-		//企业信息
+		// 企业信息
 		Integer cid = Integer.parseInt(companyId);
 		Company company = companyService.getById(cid);
 		request.setAttribute("company", company);
@@ -128,12 +128,12 @@ public class SecureJobController {
 		// 工作地区
 		List<Area> provinceList = areaService.getProvinceList();
 		request.setAttribute("provinceList", provinceList);
-		
+
 		String acode = company.getArea().getCode();
-		
+
 		// 查看企业信息审核开关是否打开
-		boolean bl = pService.getSwitchStatus(Constants.Switch.COMPANY
-				.toString(), acode);
+		boolean bl = pService.getSwitchStatus(
+				Constants.Switch.COMPANY.toString(), acode);
 		// 如果company审核开关打开的话,验证企业用户信息是否通过了审核
 		if (bl) {
 			if (company.getCheckStatus() != null) {
@@ -251,17 +251,18 @@ public class SecureJobController {
 
 	// 得到当前企业用户的所有职位列表
 	@RequestMapping("/getManage")
-	public String getManage(HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes ra) {
+	public String getManage(HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- getManage ---");
 		// 先查看是否添加了企业信息, 没有添加的话则提示
-		String companyId  = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		String companyId = CookieHelper.getCookieValue(request,
+				Constants.USERCOMPANYID);
 		if (companyId == null || "".equals(companyId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "填写完公司信息后才可以发布招聘信息");
 			return "redirect:/secure/company/save";
 		}
-		//企业信息
+		// 企业信息
 		Integer cid = Integer.parseInt(companyId);
 		Company company = companyService.getById(cid);
 
@@ -281,22 +282,22 @@ public class SecureJobController {
 		return "/company/job-manage";
 	}
 
-//	// 获得职位总个数
-//	@RequestMapping("/getTotalCount")
-//	@ResponseBody
-//	public Map<String, Object> getTotalCount(HttpServletRequest request) {
-//		log.info("--- getTotalCount ---");
-//		String areaCode = request.getParameter("areaCode");
-//		if (areaCode == null) {
-//			areaCode = "10000000";
-//		}
-//		Map<String, Object> json = new HashMap<String, Object>();
-//		Job job = new Job();
-//		job.setArea(new Area(areaCode));
-//		int total = jobService.getTotalCount(job,Boolean.TRUE);
-//		json.put("totalCount", total);
-//		return json;
-//	}
+	// // 获得职位总个数
+	// @RequestMapping("/getTotalCount")
+	// @ResponseBody
+	// public Map<String, Object> getTotalCount(HttpServletRequest request) {
+	// log.info("--- getTotalCount ---");
+	// String areaCode = request.getParameter("areaCode");
+	// if (areaCode == null) {
+	// areaCode = "10000000";
+	// }
+	// Map<String, Object> json = new HashMap<String, Object>();
+	// Job job = new Job();
+	// job.setArea(new Area(areaCode));
+	// int total = jobService.getTotalCount(job,Boolean.TRUE);
+	// json.put("totalCount", total);
+	// return json;
+	// }
 
 	// 向一个职位投递自己的默认的简历
 	@RequestMapping("/sendResume")
@@ -311,7 +312,8 @@ public class SecureJobController {
 			json.put("notice", "请登录后操作");
 			return json;
 		}
-		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		String identity = CookieHelper.getCookieValue(request,
+				Constants.USERIDENTITY);
 		if (!Identity.PERSON.getValue().equals(identity)) {
 			log.info("对不起, 你不是个人用户, 不能投递简历!");
 			json.put("notice", "对不起, 你不是个人用户, 不能投递简历!");
@@ -333,8 +335,8 @@ public class SecureJobController {
 			return json;
 		}
 		// 检查7天内是否投递过, 如果投递过则不可重复投递
-		int isSend = recordService.checkSentInSomeDays(uid, jid, null,
-				null, Boolean.TRUE);
+		int isSend = recordService.checkSentInSomeDays(uid, jid, null, null,
+				Boolean.TRUE);
 		if (isSend > 0) {
 			json.put("notice", "7天内只能向同一职位投递一次简历, 请稍后操作.");
 			return json;

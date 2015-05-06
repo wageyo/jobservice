@@ -25,7 +25,7 @@ import esd.service.UserService;
 public class SecureUserController {
 	private static Logger log = Logger.getLogger(SecureUserController.class);
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 
 	// 修改账号
 	@RequestMapping("/edit")

@@ -17,13 +17,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.CookieHelper;
-import esd.service.ParameterService;
 import esd.service.UserService;
-import esd.service.WhiteListService;
 
 /**
  * 用户登陆过滤器
@@ -43,17 +40,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Value("${password.set}")
 	private String setPassWordUrl;
 
-	@Value("${forbid.url}")
-	private String forbidUrl;
-
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private ParameterService parameterService;
-
-	@Autowired
-	private WhiteListService whiteListService;
 
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object arg2, Exception arg3)
@@ -163,6 +151,4 @@ public class LoginInterceptor implements HandlerInterceptor {
 		return true;
 	}
 
-	//获取远程访问的ip
-	
 }

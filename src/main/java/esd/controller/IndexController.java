@@ -57,10 +57,10 @@ public class IndexController {
 	private String deployAreaCode;	//当前网站所属的地区code
 	
 	@Autowired
-	private UserService<User> userService;
+	private UserService userService;
 
 	@Autowired
-	private CompanyService<Company> companyService;
+	private CompanyService companyService;
 
 	@Autowired
 	private JobService jobService;

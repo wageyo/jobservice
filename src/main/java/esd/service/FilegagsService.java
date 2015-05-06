@@ -30,16 +30,18 @@ public class FilegagsService {
 	private FilegagsDao dao;
 
 	/**
-	 * 保存一个对象
-	 * 
-	 * @param image
-	 * @return 返回保存对象的id
+	 * 保存二进制文件
+	 * @param t
+	 * @return
 	 */
 	public String save(Filegags t) {
 		String uuid = KitService.getUUID();
 		t.setId(uuid);
 		return dao.save(t) ? uuid : null;
 	}
+	
+	
+	
 
 	// 删除一个对象
 	public boolean deleteId(String id) {

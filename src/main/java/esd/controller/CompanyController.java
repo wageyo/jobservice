@@ -46,17 +46,17 @@ public class CompanyController {
 	private static Logger log = Logger.getLogger(CompanyController.class);
 
 	@Autowired
-	private UserService<User> userService;
-	
+	private UserService userService;
+
 	@Autowired
-	private CompanyService<Company> companyService;
+	private CompanyService companyService;
 
 	@Autowired
 	private RecordService recordService;
 
 	@Autowired
 	private JobService jobService;
-	
+
 	@Autowired
 	private ResumeService resumeService;
 
@@ -80,15 +80,17 @@ public class CompanyController {
 
 	// 根据企业id, 得到当前企业用户自身对象
 	@RequestMapping("/getOne")
-	public String getOne(HttpServletRequest request, HttpServletResponse response) {
+	public String getOne(HttpServletRequest request,
+			HttpServletResponse response) {
 		log.info("--- getOne ---");
-		String companyId  = CookieHelper.getCookieValue(request, Constants.USERCOMPANYID);
+		String companyId = CookieHelper.getCookieValue(request,
+				Constants.USERCOMPANYID);
 		if (companyId == null || "".equals(companyId)) {
 			request.setAttribute("notice", "请先登录!");
 			return "redirect:/index";
 		}
 		Integer cid = Integer.parseInt(companyId);
-		//企业信息
+		// 企业信息
 		Company company = companyService.getById(cid);
 		request.setAttribute("company", company);
 		return "/company/infoEdit";
@@ -97,8 +99,8 @@ public class CompanyController {
 	// 下载公司招聘信息--返回公司word文件路径, 正常
 	@RequestMapping({ "/down_back/{id}" })
 	public String down1(@PathVariable(value = "id") Integer id,
-			HttpServletRequest req) {
-		String url = req.getRealPath("/");
+			HttpServletRequest request) {
+		String url = request.getSession().getServletContext().getRealPath("/");
 		log.info("****************************");
 		String filePath = companyService.getBuildCompany(id, url);
 		if (filePath == null) {
@@ -106,8 +108,8 @@ public class CompanyController {
 		}
 		log.info("filePath  " + filePath);
 		if (new File(url + filePath).exists()) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
-					+ req.getContextPath();
+			String destPath = request.getLocalAddr() + ":"
+					+ request.getLocalPort() + request.getContextPath();
 			log.info("redirect:http://" + destPath + "/" + filePath);
 			return "redirect:http://" + destPath + "/" + filePath;
 		}
@@ -116,16 +118,16 @@ public class CompanyController {
 
 	// 批量下载公司 --测试用
 	@RequestMapping({ "/down_multi" })
-	public String down2(HttpServletRequest req) {
+	public String down2(HttpServletRequest request) {
 		log.info("--------  down_multi ----------");
-		String url = req.getRealPath("/");
+		String url = request.getSession().getServletContext().getRealPath("/");
 		log.info("url : " + url);
 		int[] ids = { 40, 41, 52 };
 		String filePath = companyService.getBuildCompany(ids, url);
 		log.info("filePath : " + filePath);
 		if (new File(url + filePath).exists()) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort()
-					+ req.getContextPath();
+			String destPath = request.getLocalAddr() + ":"
+					+ request.getLocalPort() + request.getContextPath();
 			log.info("destPath : " + destPath);
 			return "redirect:http://" + destPath + "/" + filePath;
 		}
@@ -135,7 +137,8 @@ public class CompanyController {
 	// 公司向某职位发送简历邀请
 	@ResponseBody
 	@RequestMapping(value = "/sendInvite", method = RequestMethod.POST)
-	public Map<String, Object> sendInvite(HttpServletRequest request,HttpServletResponse response) {
+	public Map<String, Object> sendInvite(HttpServletRequest request,
+			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int rid = Integer.parseInt(request.getParameter("rid"));
 		int jid = Integer.parseInt(request.getParameter("jid"));
@@ -143,14 +146,16 @@ public class CompanyController {
 		// 将数据保存在关系表中
 		Resume resume = resumeService.getById(rid);
 		Job job = jobService.getById(jid);
-		job.setMark(comment);	//使用备注字段 将要发送的话带进到record的comment字段中.
-		//检查企业用户1天内是否发送过邀请
-		int sentInvite = recordService.checkSentInSomeDays(null, null, rid, job.getCompany().getId(), Boolean.FALSE);
-		if(sentInvite > 0){
+		job.setMark(comment); // 使用备注字段 将要发送的话带进到record的comment字段中.
+		// 检查企业用户1天内是否发送过邀请
+		int sentInvite = recordService.checkSentInSomeDays(null, null, rid, job
+				.getCompany().getId(), Boolean.FALSE);
+		if (sentInvite > 0) {
 			map.put(Constants.NOTICE, "三天内只能向同一份简历发送一份邀请, 不要重复操作!");
 			return map;
 		}
-		boolean bl = recordService.sendResumeOrInvite(resume, job, Boolean.FALSE);
+		boolean bl = recordService.sendResumeOrInvite(resume, job,
+				Boolean.FALSE);
 		if (bl) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.toString());
 		} else {
@@ -160,18 +165,18 @@ public class CompanyController {
 	}
 
 	// 导出所选公司信息 --不许删
-	@RequestMapping(value = "/companyExportSelected", method = RequestMethod.POST  )
+	@RequestMapping(value = "/companyExportSelected", method = RequestMethod.POST)
 	@ResponseBody
 	public String ExportSelected(
 			@RequestParam(value = "params[]") int params[],
-			HttpServletRequest req) {
-		log.info("--------  down_multi ----------"+params.toString());
+			HttpServletRequest request) {
+		log.info("--------  down_multi ----------" + params.toString());
 		boolean b = true;
 		List<Company> company = new ArrayList<Company>();
 		for (int i = 0; i < params.length; i++) {
 			company.add(companyService.getOneForShow(params[i]));
 		}
-		String url = req.getRealPath("/");
+		String url = request.getSession().getServletContext().getRealPath("/");
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");
 		// 导出文件夹
@@ -190,17 +195,19 @@ public class CompanyController {
 		// 导出文件
 		b = PoiCreateExcel.createComapnyExcel(exportPath, company);
 		if (b) {
-			String destPath = req.getLocalAddr() + ":" + req.getLocalPort() + req.getContextPath();
-			FileDownloadPath = "http://" + destPath + "/upload/company/" + uuid + ".xls";
+			String destPath = request.getLocalAddr() + ":"
+					+ request.getLocalPort() + request.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/company/" + uuid
+					+ ".xls";
 		}
 		return FileDownloadPath;
-		
+
 	}
-	//批量导出公司信息 --不许删
-	@RequestMapping(value = "/companyExportAll", method = RequestMethod.POST  )
+
+	// 批量导出公司信息 --不许删
+	@RequestMapping(value = "/companyExportAll", method = RequestMethod.POST)
 	@ResponseBody
-	public String ExportAll(Company param,
-			HttpServletRequest request) {
+	public String ExportAll(Company param, HttpServletRequest request) {
 		boolean b = true;
 		Company paramEntity = new Company();
 		String targetName = param.getTargetName();
@@ -218,11 +225,11 @@ public class CompanyController {
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
 		String acode = userObj.getArea().getCode();
 		paramEntity.setArea(new Area(acode));
-		Integer page=1;
+		Integer page = 1;
 		List<Company> company = companyService.getListShowForManage(
-				paramEntity, page, Integer.MAX_VALUE,Boolean.FALSE);
+				paramEntity, page, Integer.MAX_VALUE, Boolean.FALSE);
 		String url = request.getSession().getServletContext().getRealPath("/");
-	
+
 		// 创建导出文件夹
 		File uploadPath = new File(url + "upload");
 		// 导出文件夹
@@ -241,8 +248,10 @@ public class CompanyController {
 		// 导出文件
 		b = PoiCreateExcel.createComapnyExcel(exportPath, company);
 		if (b) {
-			String destPath = request.getLocalAddr() + ":" + request.getLocalPort() + request.getContextPath();
-			FileDownloadPath = "http://" + destPath + "/upload/company/" + uuid + ".xls";
+			String destPath = request.getLocalAddr() + ":"
+					+ request.getLocalPort() + request.getContextPath();
+			FileDownloadPath = "http://" + destPath + "/upload/company/" + uuid
+					+ ".xls";
 		}
 		return FileDownloadPath;
 	}
