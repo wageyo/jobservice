@@ -30,7 +30,7 @@ function savesmsfix(acode){
 	var prefix = $('#prefix').val();
 	var suffix = $('#suffix').val();
 	$.ajax({
-		url:'/jobservice/manage/smsfix/update',
+		url:'/jobservice/manage/prefix/update',
 		type:'post',
 		data:{'area.code':acode,'prefix':prefix,'suffix':suffix},
 		dataType:'json',
