@@ -81,6 +81,12 @@ public class JobService {
 		return dao.update(job);
 	}
 
+	public Boolean updateCheckStatusByCompany(Integer companyId, String checkStatus){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("companyId", companyId);
+		map.put("checkStatus", checkStatus);
+		return dao.updateCheckStatusByCompany(map);
+	}
 	// 按id查询一个对象,用作编辑处理
 	public Job getById(int id) {
 		log.info("id in service = " + id);

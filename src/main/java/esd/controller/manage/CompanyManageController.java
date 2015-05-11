@@ -186,7 +186,10 @@ public class CompanyManageController {
 		Company refuseEntity = companyService.getById(id);
 		refuseEntity
 				.setCheckStatus(Constants.CheckStatus.WEITONGGUO.getValue());
-		if (companyService.update(refuseEntity)) {
+		//同时将该公司发布的所有职位信息 设置为  "未通过"
+		Boolean bl1 = companyService.update(refuseEntity);
+		Boolean bl2 = jobService.updateCheckStatusByCompany(id, Constants.CheckStatus.WEITONGGUO.getValue());
+		if (bl1&&bl2) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {
 			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");

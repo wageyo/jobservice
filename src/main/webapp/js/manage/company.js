@@ -43,6 +43,9 @@ function updateEntity(submitType,objId){
 	}
 	//拒绝
 	if(submitType == 'refuse'){
+		if(!window.confirm('拒绝后, 该单位发布的职位也将处于未审核状态, 确定要继续么?')){
+			return;
+		}
 		$.ajax({
 			url:server.url + 'manage/company/refuse/'+objId,
 			type:'post',

@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import esd.bean.Area;
+import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.JobCategory;
 import esd.bean.Parameter;
 import esd.bean.User;
 import esd.controller.Constants;
 import esd.service.AreaService;
+import esd.service.CompanyService;
 import esd.service.CookieHelper;
 import esd.service.JobCategoryService;
 import esd.service.JobService;
@@ -48,6 +50,9 @@ public class JobManageController {
 	@Autowired
 	private AreaService areaService;
 
+	@Autowired
+	private CompanyService companyService;
+	
 	@Autowired
 	private JobService jobService;
 
@@ -205,7 +210,13 @@ public class JobManageController {
 		Job refuseEntity = jobService.getById(id);
 		refuseEntity
 				.setCheckStatus(Constants.CheckStatus.OK.getValue());
-		if (jobService.update(refuseEntity)) {
+		Boolean bl1 = jobService.update(refuseEntity);
+		Company company = new Company();
+		company.setId(refuseEntity.getId());
+		company.setCheckStatus(Constants.CheckStatus.OK.getValue());
+		//更新企业审核状态为 ok --暂时不加入到下面的判断中, 因为可能会有 原来状态已经为ok 导致更新失败的可能性。
+		companyService.update(company);
+		if (bl1) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {
 			map.put(Constants.NOTICE, "操作失败, 请联系管理员或网站开发人员");

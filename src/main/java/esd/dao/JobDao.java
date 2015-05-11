@@ -38,4 +38,11 @@ public interface JobDao extends IDao<Job>{
 	 * @return
 	 */
 	public List<Job> getJobMate(Map<String,Object> map);
+	
+	/**
+	 * 根据companyId来更新职位的checkStatus状态
+	 * @param map--内放入 companyId, checkStatus
+	 * @return
+	 */
+	public Boolean updateCheckStatusByCompany(Map<String,Object> map);
 }

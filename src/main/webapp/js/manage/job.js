@@ -62,6 +62,9 @@ function updateEntity(submitType,objId){
 	}
 	//通过
 	if(submitType == 'approve'){
+		if(!window.confirm('审核通过该职位的同时, 发布该职位的公司也将审核通过, 确定继续吗?')){
+			return;
+		}
 		$.ajax({
 			url:server.url + 'manage/job/approve/'+objId,
 			type:'post',

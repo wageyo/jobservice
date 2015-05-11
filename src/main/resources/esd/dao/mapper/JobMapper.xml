@@ -436,6 +436,9 @@
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 
+	<update id="updateCheckStatusByCompany" parameterType="java.lang.Integer">
+		update job set check_status = #{checkStatus, jdbcType=VARCHAR} where cid = #{companyId, jdbcType=INTEGER}
+	</update>
 	<!-- get by id -->
 	<select id="getById" resultMap="ResultJob" parameterType="java.lang.Integer">
 		select <include refid="base_column"/>

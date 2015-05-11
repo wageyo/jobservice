@@ -392,7 +392,7 @@
 				</if>
 			</if>
 			<if test="isActive != null">
-				is_active = #{isActive, jdbcType=BIT}
+				is_active = #{isActive, jdbcType=BIT},
 			</if>
 			update_check = update_check + 1 
 		</trim>
