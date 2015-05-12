@@ -59,7 +59,7 @@
 		<div class="content">
 			<!-- 基本信息 begin -->
 			<div class="lockinfofirst">
-				<div class="lockinfofirsttitle" id="divUserName">${resume.name } ${resume.disabilityCategory } ${resume.disabilityLevel }</div>
+				<div class="lockinfofirsttitle" id="divUserName">${resume.title } ${resume.disabilityCategory } ${resume.disabilityLevel }</div>
 			<div class="lockinfolist">
 				<div class="lockinfolistone">
 					<input type="hidden" id="resumeid" value="${resume.id }" />
@@ -75,20 +75,24 @@
 					
 					<div class="lockinfolisttwo" id="contact">
 						<ul>
-							<c:choose>
-								<c:when test="${cookie.identity.value == 'admin' || cookie.userid.value  == resume.user.id || cookie.identity.value == 'company'}">
-									<li><div class="listcontent">户口状况: ${resume.hukouStatus }; 婚姻状况: ${resume.marriage }. </div>
+						<!-- 	<c:choose>
+								<c:when test="${cookie.identity.value == 'admin' || cookie.userid.value  == resume.user.id || cookie.identity.value == 'company'}">	 -->
+									<li><div class="listcontent">户口状况: ${resume.hukouStatus };&nbsp;&nbsp;&nbsp;&nbsp;婚姻状况: ${resume.marriage }. </div>
+									</li>
+									<li><div class="listcontent">户籍地址: ${resume.hukouAddress }</div>
 									</li>
 									<li><div class="listcontent">现居住地: ${resume.address }</div>
 									</li>
 									<li><div class="listcontent">手机：${resume.phone } | QQ: ${resume.qq } | 邮箱: ${resume.email }</div>
 									</li>
-								</c:when>
+									<li><div class="listcontent">残疾部位：${resume.disabilityPart } | 残疾证号: ${resume.disabilityCard }</div>
+									</li>
+						<!-- 		</c:when>
 								<c:otherwise>
 									<li><div class="listcontent" style="line-height: 100px;">想了解此人, 请联系当地残联就业指导中心.</div>
 									</li>
 								</c:otherwise>
-							</c:choose>
+							</c:choose> -->
 						</ul>
 					</div>
 					<div class="clearboth"></div>
@@ -119,6 +123,9 @@
 							<td colspan="3">特长: ${resume.experts }</td>
 						</tr>
 						<tr>
+							<td colspan="3">培训情况或需求: ${resume.training }</td>
+						</tr>
+						<tr>
 							<td colspan="3">自我评价: ${resume.selfEvaluation }</td>
 						</tr>
 					</tbody>
@@ -132,6 +139,10 @@
 					<tbody>
 						<tr>
 							<th colspan="2">求职意向</th>
+						</tr>
+						<tr>
+							<td style="width:110px;">失业登记证号：</td>
+							<td id="divDuty">${resume.shiYeHao }</td>
 						</tr>
 						<tr>
 							<td style="width:80px;">到岗时间：</td>
@@ -153,6 +164,10 @@
 							<td>目标工作：</td>
 							<td id="divPosition">${resume.desireJob.name }</td>
 						</tr>
+						<tr>
+							<td>其他要求：</td>
+							<td id="divPosition">${resume.provideOther }</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -164,6 +179,17 @@
 					<tbody>
 						<tr>
 							<th colspan="4">工作经验 <span style="color:#606060;font-size:12px;"> 工作年数：${resume.experience }</span></th>
+						</tr>
+						<tr>
+							<td colspan="2">职业测评情况：</td>
+							<td class="">${resume.careerTest }</td>
+						</tr>
+						<tr>
+							<td colspan="2">办理情况：</td>
+							<td class="">${resume.processState }</td>
+						</tr>
+						<tr>
+							<td colspan="2">工作经历：</td>
 						</tr>
 						<c:forEach items="${resume.workExperienceList }" var="we" varStatus="status">
 							<tr>
