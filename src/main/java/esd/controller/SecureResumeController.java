@@ -62,10 +62,11 @@ public class SecureResumeController {
 
 	// 保存简历
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(Resume resume,HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	public String save(Resume resume, HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		log.info("--- save post---");
 		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
-		if(userId == null || "".equals(userId)){
+		if (userId == null || "".equals(userId)) {
 			redirectAttributes.addFlashAttribute("messageType", "0");
 			redirectAttributes.addFlashAttribute("message", "请刷新页面重新尝试!");
 			return "redirect:/index";
@@ -195,11 +196,11 @@ public class SecureResumeController {
 		String[] jobContents = req.getParameterValues("jobContent");
 		String[] leaveReasons = req.getParameterValues("leaveReason");
 		String[] updateChecks = req.getParameterValues("wUpdateCheck");
-//		log.info("wids : " + workTimes);
-//		log.info("workTimes : " + workTimes);
-//		log.info("companyNames : " + companyNames);
-//		log.info("jobNames : " + jobNames);
-//		log.info("jobContents : " + jobContents);
+		// log.info("wids : " + workTimes);
+		// log.info("workTimes : " + workTimes);
+		// log.info("companyNames : " + companyNames);
+		// log.info("jobNames : " + jobNames);
+		// log.info("jobContents : " + jobContents);
 		WorkExperience we = null;
 		if (wids != null) {
 			for (int i = 0; i < wids.length; i++) {
@@ -248,11 +249,12 @@ public class SecureResumeController {
 
 	// 得到当前个人用户的所有简历
 	@RequestMapping("/getManage")
-	public String getManage(HttpServletRequest request, HttpServletResponse response,RedirectAttributes ra) {
+	public String getManage(HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra) {
 		log.info("--- getManage ---");
 		// 得到当前用户
 		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
-		if(userId == null || "".equals(userId)){
+		if (userId == null || "".equals(userId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "请刷新页面重新尝试!");
 			return "/user/goCenter";
@@ -309,17 +311,19 @@ public class SecureResumeController {
 
 	// 得到投递过的职位列表
 	@RequestMapping(value = "/getSentJob/{page}", method = RequestMethod.GET)
-	public String getSentJob(HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes ra, @PathVariable(value = "page") Integer page) {
+	public String getSentJob(HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra,
+			@PathVariable(value = "page") Integer page) {
 		log.info("----- getSentJob -----");
 		// 得到当前用户
 		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
-		if(userId == null || "".equals(userId)){
+		if (userId == null || "".equals(userId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "请刷新页面重新尝试!");
 			return "/user/goCenter";
 		}
-		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		String identity = CookieHelper.getCookieValue(request,
+				Constants.USERIDENTITY);
 		if (!(Identity.PERSON.getValue()).equals(identity)) {
 			ra.addFlashAttribute("message", "权限不足!");
 			ra.addFlashAttribute("messageType", "0");
@@ -342,18 +346,20 @@ public class SecureResumeController {
 
 	// 得到 收到的面试邀请
 	@RequestMapping(value = "/getReceivedInvite/{page}", method = RequestMethod.GET)
-	public String getReceivedInvite(HttpServletRequest request,HttpServletResponse response, RedirectAttributes ra,
+	public String getReceivedInvite(HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes ra,
 			@PathVariable(value = "page") Integer page) {
 		log.info("----- getSentJob -----");
-		
+
 		// 得到当前用户
 		String userId = CookieHelper.getCookieValue(request, Constants.USERID);
-		if(userId == null || "".equals(userId)){
+		if (userId == null || "".equals(userId)) {
 			ra.addFlashAttribute("messageType", "0");
 			ra.addFlashAttribute("message", "请刷新页面重新尝试!");
 			return "/user/goCenter";
 		}
-		String identity = CookieHelper.getCookieValue(request, Constants.USERIDENTITY);
+		String identity = CookieHelper.getCookieValue(request,
+				Constants.USERIDENTITY);
 		if (!(Identity.PERSON.getValue()).equals(identity)) {
 			ra.addFlashAttribute("message", "权限不足!");
 			ra.addFlashAttribute("messageType", "0");
@@ -490,224 +496,27 @@ public class SecureResumeController {
 		return json;
 	}
 
-	// // 保存教育背景
-	// @RequestMapping("/saveEducation")
-	// @ResponseBody
-	// public Map<String, Object> saveEducation(HttpServletRequest req) {
-	// log.info("--- saveEducation ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// // 得到当前用户
-	// EducationBackground eb = getEducation(req);
-	// boolean bl = resumeService.save(eb);
-	// if (!bl) {
-	// json.put("notice", Notice.FAILURE);
-	// return json;
-	// }
-	// json.put("notice", Notice.SUCCESS);
-	// return json;
-	// }
-	//
-	// // 删除教育背景
-	// @RequestMapping("/deleteEducation")
-	// @ResponseBody
-	// public Map<String, Object> deleteEducation(HttpServletRequest req) {
-	// log.info("--- deleteEducation ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// String idStr = req.getParameter("id");
-	// int id = KitService.getInt(idStr);
-	// if (id < 0) {
-	// json.put("notice", Notice.ERROR);
-	// return json;
-	// }
-	// boolean bl = resumeService.deleteEducationBackground(id);
-	// if (!bl) {
-	// json.put("notice", Notice.FAILURE);
-	// return json;
-	// }
-	// json.put("notice", Notice.SUCCESS);
-	// return json;
-	// }
-	//
-	// // 更改教育背景
-	// @RequestMapping("/updateEducation")
-	// @ResponseBody
-	// public Map<String, Object> updateEducation(HttpServletRequest req) {
-	// log.info("--- updateEducation ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// String idStr = req.getParameter("id");
-	// int id = KitService.getInt(idStr);
-	// if (id < 0) {
-	// json.put("notice", Notice.ERROR);
-	// return json;
-	// }
-	// EducationBackground eb = getEducation(req);
-	// eb.setId(id);
-	// boolean bl = resumeService.update(eb);
-	// if (!bl) {
-	// json.put("notice", Notice.FAILURE);
-	// return json;
-	// }
-	// json.put("notice", Notice.SUCCESS);
-	// return json;
-	// }
-	//
-	// // 得到教育信息
-	// private EducationBackground getEducation(HttpServletRequest req) {
-	// String time = req.getParameter("time");
-	// String school = req.getParameter("school");
-	// String major = req.getParameter("major");
-	// String education = req.getParameter("education");
-	// String certificate = req.getParameter("certificate");
-	// String ridStr = req.getParameter("rid");
-	// int id = KitService.getInt(ridStr);
-	// if (id < 0) {
-	// return null;
-	// }
-	// EducationBackground eb = new EducationBackground();
-	// eb.setTime(time);
-	// eb.setSchool(school);
-	// eb.setMajor(major);
-	// eb.setEducation(education);
-	// eb.setCertificate(certificate);
-	// eb.setResume(new Resume(id));
-	// return eb;
-	// }
-	//
-	// // 保存家庭成员
-	// @RequestMapping("/saveFamily")
-	// @ResponseBody
-	// public Map<String, Object> saveFamily(HttpServletRequest req) {
-	// log.info("--- saveFamily ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// // 得到当前用户
-	// FamilyMember fm = getFamily(req);
-	// boolean bl = resumeService.save(fm);
-	// if (!bl) {
-	// json.put("notice", Notice.FAILURE);
-	// return json;
-	// }
-	// json.put("notice", Notice.SUCCESS);
-	// return json;
-	// }
-	//
-	// // 删除家庭成员
-	// @RequestMapping("/deleteFamily")
-	// @ResponseBody
-	// public Map<String, Object> deleteFamily(HttpServletRequest req) {
-	// log.info("--- deleteFamily ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// String idStr = req.getParameter("id");
-	// int id = KitService.getInt(idStr);
-	// if (id < 0) {
-	// json.put("notice", Notice.ERROR);
-	// return json;
-	// }
-	// boolean bl = resumeService.deleteFamilyMember(id);
-	// if (!bl) {
-	// json.put("notice", Notice.FAILURE);
-	// return json;
-	// }
-	// json.put("notice", Notice.SUCCESS);
-	// return json;
-	// }
-	//
-	// // 更改家庭成员
-	// @RequestMapping("/updateFamily")
-	// @ResponseBody
-	// public Map<String, Object> updateFamily(HttpServletRequest req) {
-	// log.info("--- updateFamily ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// String idStr = req.getParameter("id");
-	// int id = KitService.getInt(idStr);
-	// if (id < 0) {
-	// json.put("notice", Notice.ERROR);
-	// return json;
-	// }
-	// FamilyMember eb = getFamily(req);
-	// eb.setId(id);
-	// boolean bl = resumeService.update(eb);
-	// if (!bl) {
-	// json.put("notice", Notice.FAILURE);
-	// return json;
-	// }
-	// json.put("notice", Notice.SUCCESS);
-	// return json;
-	// }
-	//
-	// // 获得家庭成员信息
-	// private FamilyMember getFamily(HttpServletRequest req) {
-	// String relation = req.getParameter("relation");
-	// String name = req.getParameter("name");
-	// String ageStr = req.getParameter("age");
-	// int age = KitService.getInt(ageStr);
-	// if (age < 0) {
-	// return null;
-	// }
-	// String unit = req.getParameter("unit");
-	// String position = req.getParameter("position");
-	// String phone = req.getParameter("phone");
-	// String ridStr = req.getParameter("rid");
-	// int id = KitService.getInt(ridStr);
-	// if (id < 0) {
-	// return null;
-	// }
-	// FamilyMember fm = new FamilyMember();
-	// fm.setRelation(relation);
-	// fm.setName(name);
-	// fm.setAge(age);
-	// fm.setUnit(unit);
-	// fm.setPosition(position);
-	// fm.setPhone(phone);
-	// fm.setResume(new Resume(id));
-	// return fm;
-	//
-	// }
-	//
-
-	//
-	// // 更改工作经历
-	// @RequestMapping("/updateExperience")
-	// @ResponseBody
-	// public Map<String, Object> updateExperience(HttpServletRequest req) {
-	// log.info("--- updateExperience ---");
-	// Map<String, Object> json = new HashMap<String, Object>();
-	// String idStr = req.getParameter("id");
-	// int id = KitService.getInt(idStr);
-	// if (id < 0) {
-	// json.put("notice", Notice.ERROR);
-	// return json;
-	// }
-	// WorkExperience we = getExperience(req);
-	// we.setId(id);
-	// boolean bl = resumeService.update(we);
-	// if (!bl) {
-	// json.put("notice", Notice.FAILURE);
-	// return json;
-	// }
-	// json.put("notice", Notice.SUCCESS);
-	// return json;
-	// }
-	//
-	// // 获得工作经历
-	// private WorkExperience getExperience(HttpServletRequest req) {
-	// String companyName = req.getParameter("companyName");
-	// String jobName = req.getParameter("jobName");
-	// String jobContent = req.getParameter("jobContent");
-	// String workTime = req.getParameter("workTime");
-	// String evaluation = req.getParameter("evaluation");
-	// String ridStr = req.getParameter("rid");
-	// int id = KitService.getInt(ridStr);
-	// if (id < 0) {
-	// return null;
-	// }
-	// WorkExperience we = new WorkExperience();
-	// we.setCompanyName(companyName);
-	// we.setJobName(jobName);
-	// we.setJobContent(jobContent);
-	// we.setWorkTime(workTime);
-	// we.setEvaluation(evaluation);
-	// we.setResume(new Resume(id));
-	// return we;
-	// }
-
+	// 更新测评办理情况
+	@RequestMapping(value = "/setDefaultSelected/{userId}/{resumeId}", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> setDefaultSelected(
+			@PathVariable(value = "userId") Integer userId,
+			@PathVariable(value = "resumeId") Integer resumeId) {
+		log.info("--- setDefaultSelected ---");
+		Map<String, Object> json = new HashMap<String, Object>();
+		// ①将该用户的简历都设置为 非默认选中
+		Boolean bl1 = resumeService.cancelAllDefault(userId);
+		// ②将对应的简历设置为默认选中
+		Resume paramResume = new Resume();
+		paramResume.setId(resumeId);
+		paramResume.setIsDefault(Boolean.TRUE);
+		Boolean bl2 = resumeService.update(paramResume);
+		// 更新
+		if (bl1 && bl2) {
+			json.put("notice", Notice.SUCCESS.toString());
+		} else {
+			json.put("notice", Notice.FAILURE.toString());
+		}
+		return json;
+	}
 }

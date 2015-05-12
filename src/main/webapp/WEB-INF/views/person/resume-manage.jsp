@@ -24,13 +24,38 @@
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			//设置默认简历
+			$('.setDefault').click(function(){
+				var resumeid = $(this).attr('resumeid');
+				var userid = '${cookie.userid.value}';
+				$('.setDefault').css({'color':'silver'});
+				$(this).css({'color':'#0095ff'});
+				$.ajax({
+					url:server.url + 'secure/resume/setDefaultSelected/'+userid + '/' + resumeid,
+					type:'post',
+					dataType:'json',
+					success:function(data){
+						//更新成功才改变样式哦
+						if(data.notice == 'success'){
+						}else{
+							alert(data.notice);
+						}
+					}
+				});
+			});
+			
+		});
+		
+		//删除单个简历
 		function deleteresume(id,title){
 			var bl = window.confirm('确实要删除 '+title+' 这份简历吗?');
 			if(bl){
 				location.href = '${contextPath }/secure/resume/delete?id=' + id;
 			}
-			
 		}
+		
 	</script>
 </head>
 <body>
@@ -112,7 +137,7 @@
 													<tr>
 														<td><input type="checkbox" /></td>
 														<td>${i.index + 1 }</td>
-														<td><a href="${contextPath }/resume/getOneForShow?id=${resume.id}">${resume.name }</a>
+														<td><a href="${contextPath }/resume/getOneForShow?id=${resume.id}">${resume.title }</a>
 														</td>
 														<c:if test="${resume.createDate!=null}">
 															<fmt:formatDate value="${resume.createDate}" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm" var="createDate" />
@@ -125,6 +150,7 @@
 														<td>${resume.checkStatus }</td>
 														<td>
 															<a href="${contextPath }/secure/resume/update?id=${resume.id}">修改</a>&nbsp;&nbsp; <a href="javascript:void(0);" onclick="deleteresume('${resume.id}','${resume.title }')">删除</a>
+															&nbsp;&nbsp; <a href="javascript:void(0);" class="setDefault" <c:if test="${resume.isDefault == false }"> style="color:silver;"</c:if> resumeid="${resume.id }">默认投递</a>
 														</td>
 													</tr>
 												</c:forEach>

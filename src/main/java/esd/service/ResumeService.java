@@ -134,6 +134,14 @@ public class ResumeService {
 		return dao.update(resume);
 	}
 
+	/**
+	 * 根据用户id, 取消该用户的所有简历的默认选中状态
+	 * @param userid
+	 * @return
+	 */
+	public Boolean cancelAllDefault(Integer userid){
+		return dao.updateCancelAllDefault(userid);
+	}
 	// 按id查询一个对象,用作编辑处理
 	public Resume getById(int id) {
 		Resume resume = (Resume) dao.getById(id);
@@ -622,92 +630,5 @@ public class ResumeService {
 		return umDao.update(um);
 	}
 
-	// // 保存教育背景
-	// public boolean save(EducationBackground eb) {
-	// return eDao.save(eb);
-	// }
-	//
-	// // 删除教育背景
-	// public boolean deleteEducationBackground(int ebid) {
-	// return eDao.delete(ebid);
-	// }
-	//
-	// // 更改教育背景
-	// public boolean update(EducationBackground eb) {
-	// return eDao.update(eb);
-	// }
-	//
-	// // 保存家庭成员
-	// public boolean save(FamilyMember fm) {
-	// return fDao.save(fm);
-	// }
-	//
-	// // 删除家庭成员
-	// public boolean deleteFamilyMember(int fmid) {
-	// return fDao.delete(fmid);
-	// }
-	//
-	// // 更改家庭成员
-	// public boolean update(FamilyMember fm) {
-	// return fDao.update(fm);
-	// }
-	//
-	//
-	// // 录入员--根据id得到一个简历对象
-	// public Resume getByIdForRe(int id) {
-	// return dao.getByIdForRecorder(id);
-	// }
-	//
-	// // 录入员--根据录入员id, 得到他所管理的所有简历
-	// public List<Resume> getByRecorder(int arid, int startPage, int size) {
-	// if (startPage <= 0) {
-	// startPage = 1;
-	// }
-	// if (size <= 0) {
-	// size = 1;
-	// }
-	// Map map = new HashMap();
-	// map.put("arid", arid);
-	// map.put("start", (startPage - 1) * size);
-	// map.put("size", size);
-	// return dao.getByRecorder(map);
-	// }
-	//
-	// // 根据录入员id, 得到他所管理的所有简历的个数
-	// public int getCountByRecorder(int arid) {
-	// return dao.getCountByRecorder(arid);
-	// }
-	//
-	// // 根据地区id, 得到一个地区的所有被录入员管理的残疾人列表
-	// public List<Resume> getByArea(int aid) {
-	// return dao.getByArea(aid);
-	// }
-	//
-	// // 根据地区code, 得到他所管理的所有简历的个数
-	// public int getCountByArea(String code) {
-	// if (code == null || "".equals(code)) {
-	// return 0;
-	// }
-	// code = KitService.areaCodeForSql(code);
-	// return dao.getCountByAreaCode(code);
-	// }
-	//
-	// // 根据地区code, 得到一个地区的所有被录入员管理的残疾人列表
-	// public List<Resume> getByArea(String code) {
-	// if (code == null || "".equals(code)) {
-	// return null;
-	// }
-	// code = KitService.areaCodeForSql(code);
-	// return dao.getByAreaCode(code);
-	// }
-
-	// public static void main(String[] args) {
-	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-	// String d = sdf.format(new Date(System.currentTimeMillis()));
-	// log.info(d);
-	// }
 	
-	public static void main(String[] args) {
-		System.out.println(UUID.randomUUID().toString().replace("-", ""));
-	}
 }

@@ -1,296 +1,487 @@
 /*单位中心-发布职位*/
-.contraction_middle
-{
-  margin-top:10px;
- #margin-top:0px;
-  _margin-top:6px; 
-  _height:90px;
-    }
+.contraction_middle {
+	margin-top: 10px; #
+	margin-top: 0px;
+	_margin-top: 6px;
+	_height: 90px;
+}
 
-
-.content .positionbottom
-{
+.content .positionbottom {
 	width: 990px;
-	height:478px;
-	#height:auto;
-	
+	height: 478px; #
+	height: auto;
 }
 
 /* 主体框架区*/
-        .contraction .contractioncontenttext
-    {
-        width:780px;
-        margin-top :10px;
-        height :100%;
-        
-    }
-    .contraction .contractioncontenttext .contractioncontentright
-    {
-        width:700px;
-        height:100%;
-        float:left;
-        margin-left :10px;
-    }
-    .contraction .contractioncontenttext .contractioncontentleft
-    {
-        height:100%;
-        width:50px;
-        float:right;
-        margin-right :10px;
-    }
-    .contraction .contractioncontenttext .contractioncontentleft .uqdateclick
-    {  cursor:pointer;
-        margin-top :5px;
-        width:45px;
-        height :17px;
-        background :url(../../Image/PublicImage/PublicframeFourImage/update.jpg) no-repeat;
-    }
-    .contraction .contractioncontenttext .contractioncontentleft .saveclick
-    {  cursor:pointer;
-        margin-top :10px;
-        width:45px;
-        height:17px;
-        background :url(../../Image/PublicImage/PublicframeFourImage/minsave.jpg) no-repeat;
-    }
-    
-  /*列表内容区*/
-  .contractioncontenttext .contractioncontentright .fbzwone
-  {
-      width:700px;
-      text-align:left;
-     
-        
-  }
-  
-  .contractioncontenttext .contractioncontentright .fbzwone .nameone
-  {
-      float :left;
-      
-  }
- .contraction .contractioncontent
-{
+.contraction .contractioncontenttext {
+	width: 780px;
+	margin-top: 10px;
+	height: 100%;
+}
+
+.contraction .contractioncontenttext .contractioncontentright {
+	width: 700px;
+	height: 100%;
+	float: left;
+	margin-left: 10px;
+}
+
+.contraction .contractioncontenttext .contractioncontentleft {
+	height: 100%;
+	width: 50px;
+	float: right;
+	margin-right: 10px;
+}
+
+.contraction .contractioncontenttext .contractioncontentleft .uqdateclick
+	{
+	cursor: pointer;
+	margin-top: 5px;
+	width: 45px;
+	height: 17px;
+	background: url(../../Image/PublicImage/PublicframeFourImage/update.jpg)
+		no-repeat;
+}
+
+.contraction .contractioncontenttext .contractioncontentleft .saveclick
+	{
+	cursor: pointer;
+	margin-top: 10px;
+	width: 45px;
+	height: 17px;
+	background:
+		url(../../Image/PublicImage/PublicframeFourImage/minsave.jpg)
+		no-repeat;
+}
+
+/*列表内容区*/
+.contractioncontenttext .contractioncontentright .fbzwone {
+	width: 700px;
+	text-align: left;
+}
+
+.contractioncontenttext .contractioncontentright .fbzwone .nameone {
+	float: left;
+}
+
+.contraction .contractioncontent {
 	margin-top: 0px;
-	
-
-}
-#tb_content
-{
-    width:100%;
-	border-collapse:collapse;
-	border:1px solid #d4dee7
 }
 
-  #tb_content td.celltd{ height:31px; border:1px solid #d4dee7; text-align:left;  padding-left:15px;}
-  #tb_content td.Noborder{border:0px;}
-  #tb_content td.text{ width:80px; background-color:#f3f7fa; text-align:right; padding-left:0;padding-right:5px; }
-  #tb_content td.text span{ color:Red; margin-left:0px;}
-  #tb_content td.text1{ width:80px; background-color:#f3f7fa; text-align:right; padding-left:0; }
-  #tb_content td.text1 span{ color:Red; margin-left:3px; margin-right:4px;}
-  #tb_content td.select1{ padding-left:6px; }
-  #tb_content td.tian{ text-align:left; padding-left:15px;}
-  #tb_content td.a1{  text-align:left;}
-  #tb_content td a{ color:Blue;}
-  #tb_content td a:hover{ text-decoration:underline; }
-  #tb_content td select{width:186px; height:23px; line-height:23px;}
-  #tb_content td .zwmc{ border:0px; width:186px; height:23px; line-height:23px; background-image:url(../../Image/Qy_fbzwImage/input_bg.gif) }
-  #tb_content td .yxqx{ text-align:center; width:59px; height:23px;border:0px;line-height:23px;   background-image:url(../../Image/Qy_fbzwImage/yxqx.jpg); margin-right:6px;}
-  #tb_content td.jpzw{ text-align:left;}
-  #tb_content td.jpzw li{float:left;  }
-  #tb_content td.jpzw li input{ margin-right:4px;  vertical-align:middle; _margin-top:0px; }
-  #tb_content td.jpzw li a{ margin-right:4px; vertical-align:middle; _vertical-align:bottom;}
-   #tb_content td.rdo{vertical-align:middle;}
-  #tb_content td.rdo span{ margin-right:0px;_margin-right:3px;}
-  #tb_content td.rdo span input{ width:18px;}
-  #tb_content td.gzms{ height:115px;}
-  #tb_content td.tian textarea{ margin-top:4px;}
-  #tb_content td p{ margin-top:2px;}
-  #tb_content td select.yx{width:100px; height:23px; margin-left:18px;  } 
-  #tb_content td.hb{ padding-left:8px;}
-  #tb_content td.ch{ padding-left:18px;}
-   #tb_content td.select_yx{text-align:left;}
- .fbzwone .tb_midder
- {
-     text-align:center; 
-	 width:100%;
-	 border-collapse:collapse;
-	 border:1px solid #d4dee7; 
-     }
-  #tb_midder td.Noborder{border:0px;}
- .fbzwone .tb_midder td{ height:31px; border:1px solid #d4dee7; text-align:left; padding-left:15px; }
- .fbzwone .tb_midder td.text{ width:80px; background-color:#f3f7fa; text-align:right; padding-left:0; padding-right:5px; }
- .fbzwone  .tb_midder td.select1{  text-align:left; padding-left:17px; }
- .fbzwone .tb_midder td select{ width:150px;line-height:20px;}
- .fbzwone  .tb_midder td.left{ text-align:left;}
- .fbzwone .tb_bottom
- { text-align:center; 
-    width:100%;
-    border:1px solid #d4dee7; 
-    border-collapse:collapse;
- 
-     }
-     
- .fbzwone .tb_bottom td{ height:31px; text-align:left;border:1px solid #d4dee7; padding-left:15px; }
- .fbzwone td.Noborder{border:0px;}
- .fbzwone .tb_bottom td.text1 span{ color:Red; margin-right:4px;}
- .fbzwone .tb_bottom td.text1{width:80px; background-color:#f3f7fa; text-align:right;padding-left:0;  padding-right:5px; }
- .fbzwone .tb_bottom td.select1{  width:216px;  }
- .fbzwone .tb_bottom  td .zwmc{ border:0px; width:186px; height:23px; line-height:23px; background-image:url(../../Image/Qy_fbzwImage/input_bg.gif) }
- .fbzwone .tb_bottom  td.lx li input{ margin-right:4px; vertical-align:middle; _margin-top:0px; }
- .fbzwone .tb_bottom  td.lx{ text-align:left; width:22px;}
- .fbzwone .tb_bottom  td.jl{ text-align:left; padding-top:4px; #padding-top:5px;} 
- .fbzwone .tb_bottom  td.text{  width:80px; background-color:#f3f7fa; text-align:right;padding-left:0;}
- .fbzwone .tb_bottom td.jljs{ text-align:left; padding-left:15px; _padding-left:12px;}
- .fbzwone .tb_bottom td.jljs input{ margin-right:5px;}
- .fbzwone .tb_bottom td.jljs span a{ margin-left:5px; text-decoration:underline}
-.positionmiddletext .btn_bottom
-{
-     height:50px;
-    margin-top:25px;
-    }
-.positionmiddletext .btn_bottom input
-{
-    margin-right:8px;
-    }
-
-
-    /*职位管理*/
-.PublicTableOne  .TableMain
-{
-	width:100%;
-    margin-top:5px;
+#tb_content {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #d4dee7
 }
-      
-.contraction_gl
-{
-    width:96%;
-    margin:0 auto;
-    height:100%;
-    }
-    
-.TableMain .b_left
-{
-     border-left:1px solid #bad5eb;
-    }
-    
-.TableMain .b_right
-{border-right:1px solid #bad5eb;
- 
-    }
-       .PublicTableOne  .DownBar .Left
-        {
-            height:27px;
-            padding-top:2px;
-            margin-left:12px;
-            #margin-left:9px;
-			_margin-left:6px;
-            float:left;
 
-        }    
-.PublicTableOne .UpBar .Left .SortDateBtn
-{
+#tb_content td.celltd {
+	height: 31px;
+	border: 1px solid #d4dee7;
+	text-align: left;
+	padding-left: 15px;
+}
+
+#tb_content td.Noborder {
+	border: 0px;
+}
+
+#tb_content td.text {
+	width: 80px;
+	background-color: #f3f7fa;
+	text-align: right;
+	padding-left: 0;
+	padding-right: 5px;
+}
+
+#tb_content td.text span {
+	color: Red;
+	margin-left: 0px;
+}
+
+#tb_content td.text1 {
+	width: 80px;
+	background-color: #f3f7fa;
+	text-align: right;
+	padding-left: 0;
+}
+
+#tb_content td.text1 span {
+	color: Red;
+	margin-left: 3px;
+	margin-right: 4px;
+}
+
+#tb_content td.select1 {
+	padding-left: 6px;
+}
+
+#tb_content td.tian {
+	text-align: left;
+	padding-left: 15px;
+}
+
+#tb_content td.a1 {
+	text-align: left;
+}
+
+#tb_content td a {
+	color: Blue;
+}
+
+#tb_content td a:hover {
+	text-decoration: underline;
+}
+
+#tb_content td select {
+	width: 186px;
+	height: 23px;
+	line-height: 23px;
+}
+
+#tb_content td .zwmc {
+	border: 0px;
+	width: 186px;
+	height: 23px;
+	line-height: 23px;
+	background-image: url(../../Image/Qy_fbzwImage/input_bg.gif)
+}
+
+#tb_content td .yxqx {
+	text-align: center;
+	width: 59px;
+	height: 23px;
+	border: 0px;
+	line-height: 23px;
+	background-image: url(../../Image/Qy_fbzwImage/yxqx.jpg);
+	margin-right: 6px;
+}
+
+#tb_content td.jpzw {
+	text-align: left;
+}
+
+#tb_content td.jpzw li {
+	float: left;
+}
+
+#tb_content td.jpzw li input {
+	margin-right: 4px;
+	vertical-align: middle;
+	_margin-top: 0px;
+}
+
+#tb_content td.jpzw li a {
+	margin-right: 4px;
+	vertical-align: middle;
+	_vertical-align: bottom;
+}
+
+#tb_content td.rdo {
+	vertical-align: middle;
+}
+
+#tb_content td.rdo span {
+	margin-right: 0px;
+	_margin-right: 3px;
+}
+
+#tb_content td.rdo span input {
+	width: 18px;
+}
+
+#tb_content td.gzms {
+	height: 115px;
+}
+
+#tb_content td.tian textarea {
+	margin-top: 4px;
+}
+
+#tb_content td p {
+	margin-top: 2px;
+}
+
+#tb_content td select.yx {
+	width: 100px;
+	height: 23px;
+	margin-left: 18px;
+}
+
+#tb_content td.hb {
+	padding-left: 8px;
+}
+
+#tb_content td.ch {
+	padding-left: 18px;
+}
+
+#tb_content td.select_yx {
+	text-align: left;
+}
+
+.fbzwone .tb_midder {
+	text-align: center;
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #d4dee7;
+}
+
+#tb_midder td.Noborder {
+	border: 0px;
+}
+
+.fbzwone .tb_midder td {
+	height: 31px;
+	border: 1px solid #d4dee7;
+	text-align: left;
+	padding-left: 15px;
+}
+
+.fbzwone .tb_midder td.text {
+	width: 80px;
+	background-color: #f3f7fa;
+	text-align: right;
+	padding-left: 0;
+	padding-right: 5px;
+}
+
+.fbzwone  .tb_midder td.select1 {
+	text-align: left;
+	padding-left: 17px;
+}
+
+.fbzwone .tb_midder td select {
+	width: 150px;
+	line-height: 20px;
+}
+
+.fbzwone  .tb_midder td.left {
+	text-align: left;
+}
+
+.fbzwone .tb_bottom {
+	text-align: center;
+	width: 100%;
+	border: 1px solid #d4dee7;
+	border-collapse: collapse;
+}
+
+.fbzwone .tb_bottom td {
+	height: 31px;
+	text-align: left;
+	border: 1px solid #d4dee7;
+	padding-left: 15px;
+}
+
+.fbzwone td.Noborder {
+	border: 0px;
+}
+
+.fbzwone .tb_bottom td.text1 span {
+	color: Red;
+	margin-right: 4px;
+}
+
+.fbzwone .tb_bottom td.text1 {
+	width: 80px;
+	background-color: #f3f7fa;
+	text-align: right;
+	padding-left: 0;
+	padding-right: 5px;
+}
+
+.fbzwone .tb_bottom td.select1 {
+	width: 216px;
+}
+
+.fbzwone .tb_bottom  td .zwmc {
+	border: 0px;
+	width: 186px;
+	height: 23px;
+	line-height: 23px;
+	background-image: url(../../Image/Qy_fbzwImage/input_bg.gif)
+}
+
+.fbzwone .tb_bottom  td.lx li input {
+	margin-right: 4px;
+	vertical-align: middle;
+	_margin-top: 0px;
+}
+
+.fbzwone .tb_bottom  td.lx {
+	text-align: left;
+	width: 22px;
+}
+
+.fbzwone .tb_bottom  td.jl {
+	text-align: left;
+	padding-top: 4px; #
+	padding-top: 5px;
+}
+
+.fbzwone .tb_bottom  td.text {
+	width: 80px;
+	background-color: #f3f7fa;
+	text-align: right;
+	padding-left: 0;
+}
+
+.fbzwone .tb_bottom td.jljs {
+	text-align: left;
+	padding-left: 15px;
+	_padding-left: 12px;
+}
+
+.fbzwone .tb_bottom td.jljs input {
+	margin-right: 5px;
+}
+
+.fbzwone .tb_bottom td.jljs span a {
+	margin-left: 5px;
+	text-decoration: underline
+}
+
+.positionmiddletext .btn_bottom {
+	height: 50px;
+	margin-top: 25px;
+}
+
+.positionmiddletext .btn_bottom input {
+	margin-right: 8px;
+}
+
+/*职位管理*/
+.PublicTableOne  .TableMain {
+	width: 100%;
+	margin-top: 5px;
+}
+
+.contraction_gl {
+	width: 96%;
+	margin: 0 auto;
+	height: 100%;
+}
+
+.TableMain .b_left {
+	border-left: 1px solid #bad5eb;
+}
+
+.TableMain .b_right {
+	border-right: 1px solid #bad5eb;
+}
+
+.PublicTableOne  .DownBar .Left {
+	height: 27px;
+	padding-top: 2px;
+	margin-left: 12px; #
+	margin-left: 9px;
+	_margin-left: 6px;
+	float: left;
+}
+
+.PublicTableOne .UpBar .Left .SortDateBtn {
 	background: url('../images/ZwglImage/fbrq.gif') no-repeat;
 	width: 79px;
 	height: 22px;
-
 }
 
-.UpBar .Left .x
-{
-     margin-top:-1px;
-    }
-.positionmiddletext .btn_bottom
-{
-    clear:both;
-    text-align:left;
-    margin-left:6px;
-    margin-top:35px;
-    #margin-top:10px;
-    _margin-left:10px;
-    _margin-top:10px;
-    height:40px;
- 
-    }
-   .positionmiddletext .fbbtn_bottom
-{
-    clear:both;
-    text-align:left;
-    text-align:center;
-    margin-top:20px;
-    #margin-top:15px;
-    _margin-top:15px;
-    height:40px;
- 
-    }
- .positionmiddletext .btn_bottom input
- {
-     margin-right:8px;
-     
-     }   
-.positionmiddletext  .description
-{
-   
-    text-align:left;
-    margin-left:6px; 
-    _margin-left:12px; 
-     line-height:22px;
-    }
-    
-#hr1{color:#e6e6e6;height:1px;border-top:1px solid #e6e6e6;margin:0px;padding:0px;overflow:hidden;}
-.TableMain .b_right span
-{text-align:right;  
-   width:45px; 
-  display:block;  
-  height:17px;
-  float:left;
-  margin-left:10px;
-  _margin-left:8px;
-    }
-.TableMain .b_right span.s1
-{
-    background: url('../images/ZwglImage/update_btn.gif') no-repeat;
-    cursor:pointer;
-   
-    }
- .TableMain .b_right span.s11
-{
-    background: url('../images/ZwglImage/update_btn.gif') no-repeat;
-    margin-left:32px; 
-    _margin-left:15px; 
-    }
-.TableMain .b_right span.s2
-{
-    background: url('../images/ZwglImage/cope_btn.gif') no-repeat;
-    cursor:pointer;
-    }
- .TableMain .b_right span.s3
-{
-    background: url('../images/ZwglImage/delete_btn.gif') no-repeat;
-  
-    }
-  .TableMain .b_right span.s33
-{
-    background: url('../images/ZwglImage/delete_btn.gif') no-repeat;
-  
-    }
-    /*公共表*/
-  .PublicTableOne  .DownBar .Left li
-        {
-            float:left;
-            white-space:nowrap; 
-            height:24px;
-             padding:0 2px;
-            _padding:0 0px;
-            line-height:20px;
-            #line-height:24px;
-            _line-height:24px;
-        }
- .PublicTableOne  .DownBar .Left .CheckAll
- {
-   width:14px;
-   #width:18px;
-   _width:25px;        
- } 
-.CursorPointer
-{
- cursor:pointer;	
+.UpBar .Left .x {
+	margin-top: -1px;
 }
+
+.positionmiddletext .btn_bottom {
+	clear: both;
+	text-align: left;
+	margin-left: 6px;
+	margin-top: 35px; #
+	margin-top: 10px;
+	_margin-left: 10px;
+	_margin-top: 10px;
+	height: 40px;
+}
+
+.positionmiddletext .fbbtn_bottom {
+	clear: both;
+	text-align: left;
+	text-align: center;
+	margin-top: 20px; #
+	margin-top: 15px;
+	_margin-top: 15px;
+	height: 40px;
+}
+
+.positionmiddletext .btn_bottom input {
+	margin-right: 8px;
+}
+
+.positionmiddletext  .description {
+	text-align: left;
+	margin-left: 6px;
+	_margin-left: 12px;
+	line-height: 22px;
+}
+
+#hr1 {
+	color: #e6e6e6;
+	height: 1px;
+	border-top: 1px solid #e6e6e6;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+.TableMain .b_right span {
+	text-align: right;
+	width: 45px;
+	display: block;
+	height: 17px;
+	float: left;
+	margin-left: 10px;
+	_margin-left: 8px;
+}
+
+.TableMain .b_right span.s1 {
+	background: url('../images/ZwglImage/update_btn.gif') no-repeat;
+	cursor: pointer;
+}
+
+.TableMain .b_right span.s11 {
+	background: url('../images/ZwglImage/update_btn.gif') no-repeat;
+	margin-left: 32px;
+	_margin-left: 15px;
+}
+
+.TableMain .b_right span.s2 {
+	background: url('../images/ZwglImage/cope_btn.gif') no-repeat;
+	cursor: pointer;
+}
+
+.TableMain .b_right span.s3 {
+	background: url('../images/ZwglImage/delete_btn.gif') no-repeat;
+}
+
+.TableMain .b_right span.s33 {
+	background: url('../images/ZwglImage/delete_btn.gif') no-repeat;
+}
+/*公共表*/
+.PublicTableOne  .DownBar .Left li {
+	float: left;
+	white-space: nowrap;
+	height: 24px;
+	padding: 0 2px;
+	_padding: 0 0px;
+	line-height: 20px; #
+	line-height: 24px;
+	_line-height: 24px;
+}
+
+.PublicTableOne  .DownBar .Left .CheckAll {
+	width: 14px;
+	width: 18px;
+	_width: 25px;
+}
+
+.CursorPointer {
+	cursor: pointer;
+}
+

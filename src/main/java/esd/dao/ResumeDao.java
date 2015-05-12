@@ -17,6 +17,13 @@ public interface ResumeDao extends IDao<Resume> {
 	//根据账号, 删除对应的简历
 	Integer deleteByUser(Integer cid);
 	
+	/**
+	 * 根据用户id, 取消该用户的所有简历的默认选中状态
+	 * @param userid
+	 * @return
+	 */
+	public Boolean updateCancelAllDefault(Integer userid);
+	
 	// 根据用户id, 得到此人简历
 	public List<Resume> getByUser(int id);
 
@@ -47,4 +54,6 @@ public interface ResumeDao extends IDao<Resume> {
 	
 	//根据地区code, 得到一个地区的所有被录入员管理的残疾人列表
 	public List<Resume> getByAreaCode(String code);
+	
+	
 }

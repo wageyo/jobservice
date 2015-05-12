@@ -677,6 +677,11 @@
 		where id= #{id, jdbcType=INTEGER} and update_check = #{updateCheck, jdbcType=INTEGER}
 	</update>
 	
+	<!-- update -->
+	<update id="updateCancelAllDefault" parameterType="Resume">
+		update resume set is_default = 0 where uid = #{userid, jdbcType=INTEGER}
+	</update>
+	
 	<!-- get by obj -->
 	<select id="getByObj" resultMap="ResultResume" parameterType="Resume">
 		select <include refid="base_column" />
