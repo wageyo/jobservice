@@ -44,15 +44,17 @@ public class KitService {
 
 	@Autowired
 	private FilegagsService filegagsService;
-	
+
 	/**
 	 * 生成一个UUID
+	 * 
 	 * @return
 	 */
-	public static String getUUID(){
+	public static String getUUID() {
 		String uuid = UUID.randomUUID().toString().replace("-", "");
 		return uuid;
 	}
+
 	/**
 	 * 将日期转换为yyyy-MM-dd格式
 	 * 
@@ -161,7 +163,7 @@ public class KitService {
 		}
 		return new Date(today.getTime() + effectiveDays * 24 * 60 * 60 * 1000);
 	}
-	
+
 	/**
 	 * 得到近几天发布时间
 	 * 
@@ -261,7 +263,7 @@ public class KitService {
 		}
 		return sqlCode;
 	}
-	
+
 	/**
 	 * 处理传进来的目标工作地code, 变成适用于jobMapper中sql语句使用的格式
 	 * 
@@ -318,27 +320,27 @@ public class KitService {
 		return sqlCode;
 	}
 
-//	 public static String jobCategoryCodeForJobSql(String code) {
-//	 String sqlCode = "";
-//	 if (code == null || "".equals(code)) {
-//	 return null;
-//	 }
-//	 String mid;
-//	 if ("10000000".equals(code)) {
-//	 sqlCode = null;
-//	 } else if (code.startsWith("10")) {
-//	 mid = code.substring(2, 4);
-//	 sqlCode = "( job.jccode like '__" + mid + "____' )";
-//	 } else if (code.startsWith("20")) {
-//	 mid = code.substring(2, 6);
-//	 sqlCode = "( job.jccode like '__" + mid + "__')";
-//	 } else if (code.startsWith("30")) {
-//	 sqlCode = "( job.jccode = '" + code + "')";
-//	 } else {
-//	 sqlCode = null;
-//	 }
-//	 return sqlCode;
-//	 }
+	// public static String jobCategoryCodeForJobSql(String code) {
+	// String sqlCode = "";
+	// if (code == null || "".equals(code)) {
+	// return null;
+	// }
+	// String mid;
+	// if ("10000000".equals(code)) {
+	// sqlCode = null;
+	// } else if (code.startsWith("10")) {
+	// mid = code.substring(2, 4);
+	// sqlCode = "( job.jccode like '__" + mid + "____' )";
+	// } else if (code.startsWith("20")) {
+	// mid = code.substring(2, 6);
+	// sqlCode = "( job.jccode like '__" + mid + "__')";
+	// } else if (code.startsWith("30")) {
+	// sqlCode = "( job.jccode = '" + code + "')";
+	// } else {
+	// sqlCode = null;
+	// }
+	// return sqlCode;
+	// }
 
 	/**
 	 * 处理传进来的职位种类code, 变成适用于resumeMapper中sql语句使用的格式
@@ -386,7 +388,7 @@ public class KitService {
 		int age = Integer.parseInt(curYear) - Integer.parseInt(bornYear);
 		return age;
 	}
-	
+
 	/**
 	 * 根据传进来的年龄, 返回出生日期字符串
 	 * 
@@ -399,13 +401,13 @@ public class KitService {
 		}
 		// 当前时间
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		//今天
+		// 今天
 		String today = sdf.format(new Date(System.currentTimeMillis()));
-		//今年
-		Integer thisYear = Integer.parseInt(today.substring(0,4));
-		//出生年份
+		// 今年
+		Integer thisYear = Integer.parseInt(today.substring(0, 4));
+		// 出生年份
 		Integer borthYear = thisYear - age;
-		//组装回出生日期
+		// 组装回出生日期
 		String birth = borthYear + today.substring(4);
 		return birth;
 	}
@@ -629,11 +631,13 @@ public class KitService {
 			}
 			resume.setCheckStatus(p.getName());
 		}
-		
-		//附件文件名处理, 加上后缀, 方便前台下载
-		if(resume.getAttachment()!=null &&  !"".equals(resume.getAttachment())){
+
+		// 附件文件名处理, 加上后缀, 方便前台下载
+		if (resume.getAttachment() != null
+				&& !"".equals(resume.getAttachment())) {
 			Filegags filegags = filegagsService.getById(resume.getAttachment());
-			resume.setAttachment(resume.getAttachment()+"."+filegags.getFileSuffix());
+			resume.setAttachment(resume.getAttachment() + "."
+					+ filegags.getFileSuffix());
 		}
 		return resume;
 	}
@@ -852,6 +856,18 @@ public class KitService {
 		return resumeList;
 	}
 
+	public static void main(String[] args) {
+		String cate = "hearing,speak,intelligence,limbs,mind";
+		String k = "speak";
+		if (cate.indexOf(k) > 0) {
+			System.out.println("字符串中存在 ：" + k);
+			cate = cate.replaceAll(k, "言语障碍");
+			System.out.println("替换后的cate: " + cate);
+		} else {
+			System.out.println("字符串中不存在 ：" + k);
+		}
+	}
+
 	/**
 	 * 将job处理成为适合前台显示用的对象
 	 * 
@@ -961,46 +977,43 @@ public class KitService {
 			}
 		}
 		// 残疾类型
-		if (job.getDisabilityCategory() != null && !"".equals(job.getDisabilityCategory())) {
-			Parameter p = new Parameter();
-			p.setType(Constants.DISABILITYCATEGORY);
-			p.setValue(job.getDisabilityCategory());
+		if (job.getDisabilityCategory() != null
+				&& !"".equals(job.getDisabilityCategory())) {
+			String targetStr = job.getDisabilityCategory();
 			for (Parameter pa : plist) {
-				if (pa.getType().equals(p.getType())
-						&& pa.getValue().equals(p.getValue())) {
-					p = pa;
-					break;
+				if (Constants.DISABILITYCATEGORY.equals(pa.getType())
+						&& pa.getValue() != null && !"".equals(pa.getValue())
+						&& targetStr.indexOf(pa.getValue()) >= 0) {
+					targetStr = targetStr.replace(pa.getValue(), pa.getName());
 				}
 			}
-			job.setDisabilityCategory(p.getName());
+			job.setDisabilityCategory(targetStr);
 		}
 		// 残疾等级
-		if (job.getDisabilityLevel() != null && !"".equals(job.getDisabilityLevel())) {
-			Parameter p = new Parameter();
-			p.setType(Constants.DISABILITYLEVEL);
-			p.setValue(job.getDisabilityLevel());
+		if (job.getDisabilityLevel() != null
+				&& !"".equals(job.getDisabilityLevel())) {
+			String targetStr = job.getDisabilityLevel();
 			for (Parameter pa : plist) {
-				if (pa.getType().equals(p.getType())
-						&& pa.getValue().equals(p.getValue())) {
-					p = pa;
-					break;
+				if (Constants.DISABILITYLEVEL.equals(pa.getType())
+						&& pa.getValue() != null && !"".equals(pa.getValue())
+						&& targetStr.indexOf(pa.getValue()) >= 0) {
+					targetStr = targetStr.replace(pa.getValue(), pa.getName());
 				}
 			}
-			job.setDisabilityLevel(p.getName());
+			job.setDisabilityLevel(targetStr);
 		}
 		// 残疾部位
-		if (job.getDisabilityPart() != null && !"".equals(job.getDisabilityPart())) {
-			Parameter p = new Parameter();
-			p.setType(Constants.DISABILITYPART);
-			p.setValue(job.getDisabilityPart());
+		if (job.getDisabilityPart() != null
+				&& !"".equals(job.getDisabilityPart())) {
+			String targetStr = job.getDisabilityPart();
 			for (Parameter pa : plist) {
-				if (pa.getType().equals(p.getType())
-						&& pa.getValue().equals(p.getValue())) {
-					p = pa;
-					break;
+				if (Constants.DISABILITYPART.equals(pa.getType())
+						&& pa.getValue() != null && !"".equals(pa.getValue())
+						&& targetStr.indexOf(pa.getValue()) >= 0) {
+					targetStr = targetStr.replace(pa.getValue(), pa.getName());
 				}
 			}
-			job.setDisabilityPart(p.getName());
+			job.setDisabilityPart(targetStr);
 		}
 		// 审核状态
 		if (job.getCheckStatus() != null && !"".equals(job.getCheckStatus())) {
@@ -1049,7 +1062,7 @@ public class KitService {
 		// 获得所有参数
 		List<Parameter> plist = pDao.getByPage(null);
 		for (Job job : jobList) {
-			
+
 			// 薪水
 			String salary = "面议";
 			if (job.getSalary() != null && !"".equals(job.getSalary())) {
@@ -1148,7 +1161,8 @@ public class KitService {
 				}
 			}
 			// 残疾类型
-			if (job.getDisabilityCategory() != null && !"".equals(job.getDisabilityCategory())) {
+			if (job.getDisabilityCategory() != null
+					&& !"".equals(job.getDisabilityCategory())) {
 				Parameter p = new Parameter();
 				p.setType(Constants.DISABILITYCATEGORY);
 				p.setValue(job.getDisabilityCategory());
@@ -1162,7 +1176,8 @@ public class KitService {
 				job.setDisabilityCategory(p.getName());
 			}
 			// 残疾等级
-			if (job.getDisabilityLevel() != null && !"".equals(job.getDisabilityLevel())) {
+			if (job.getDisabilityLevel() != null
+					&& !"".equals(job.getDisabilityLevel())) {
 				Parameter p = new Parameter();
 				p.setType(Constants.DISABILITYLEVEL);
 				p.setValue(job.getDisabilityLevel());
@@ -1176,7 +1191,8 @@ public class KitService {
 				job.setDisabilityLevel(p.getName());
 			}
 			// 残疾部位
-			if (job.getDisabilityPart() != null && !"".equals(job.getDisabilityPart())) {
+			if (job.getDisabilityPart() != null
+					&& !"".equals(job.getDisabilityPart())) {
 				Parameter p = new Parameter();
 				p.setType(Constants.DISABILITYPART);
 				p.setValue(job.getDisabilityPart());
@@ -1548,7 +1564,7 @@ public class KitService {
 		}
 		return newsList;
 	}
-	
+
 	/**
 	 * 根据对应的值
 	 * 
@@ -1570,5 +1586,5 @@ public class KitService {
 		}
 		return null;
 	}
-	
+
 }

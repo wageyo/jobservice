@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -108,13 +109,19 @@
 	                                                  		残疾类别：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="disabilityCategory" id="disabilityCategory" class="length informationEdits needSyncValue NeedValidate" >
+		                                                	<c:forEach items="${params }" var="p">
+																<c:if test="${p.type == 'disabilityCategory' && p.value != null && p.value != ''}">
+																	<input type="checkbox" name="disabilityCategory" title="${p.name }" value="${p.value }" <c:if test="${fn:contains(job.disabilityCategory, p.value) }">checked="checked"</c:if> />${p.name }&nbsp;
+																</c:if>
+															</c:forEach>
+															
+		                                            <!--     	<select name="disabilityCategory" id="disabilityCategory" class="length informationEdits needSyncValue NeedValidate" >
 		                                                    	<c:forEach items="${params }" var="p">
 																	<c:if test="${p.type == 'disabilityCategory' }">
 																		<option value="${p.value }"  <c:if test="${job.disabilityCategory == p.value }">selected="selected"</c:if>>${p.name }</option>
 																	</c:if>
 																</c:forEach>
-		                                                    </select>
+		                                                    </select> -->
 		                                                </td>
 		                                            </tr>
 		                                            <tr>
@@ -122,13 +129,18 @@
 	                                                  		残疾等级：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="disabilityLevel" id="disabilityLevel" class="length informationEdits needSyncValue NeedValidate" >
+		                                                	<c:forEach items="${params }" var="p">
+																<c:if test="${p.type == 'disabilityLevel' && p.value != null && p.value != '' }">
+																	<input type="checkbox" name="disabilityLevel" title="${p.name }" value="${p.value }" <c:if test="${fn:contains(job.disabilityLevel, p.value) }">checked="checked"</c:if> />${p.name }&nbsp;
+																</c:if>
+															</c:forEach>
+		                                                <!-- 	<select name="disabilityLevel" id="disabilityLevel" class="length informationEdits needSyncValue NeedValidate" >
 		                                                    	<c:forEach items="${params }" var="p">
 																	<c:if test="${p.type == 'disabilityLevel' }">
 																		<option value="${p.value }"  <c:if test="${job.disabilityLevel == p.value }">selected="selected"</c:if>>${p.name }</option>
 																	</c:if>
 																</c:forEach>
-		                                                    </select>
+		                                                    </select> -->
 		                                                </td>
 		                                            </tr>
 		                                            <tr>
@@ -136,13 +148,18 @@
 	                                                  		残疾部位：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="disabilityPart" id="disabilityPart" class="length informationEdits needSyncValue NeedValidate" >
+															<c:forEach items="${params }" var="p">
+																<c:if test="${p.type == 'disabilityPart' && p.value != null && p.value != '' }">
+																	<input type="checkbox" name="disabilityPart" title="${p.name }" value="${p.value }" <c:if test="${fn:contains(job.disabilityPart, p.value) }">checked="checked"</c:if> />${p.name }&nbsp;
+																</c:if>
+															</c:forEach>
+		                                                <!--	<select name="disabilityPart" id="disabilityPart" class="length informationEdits needSyncValue NeedValidate" >
 		                                                    	<c:forEach items="${params }" var="p">
 																	<c:if test="${p.type == 'disabilityPart' }">
 																		<option value="${p.value }"  <c:if test="${job.disabilityPart == p.value }">selected="selected"</c:if>>${p.name }</option>
 																	</c:if>
 																</c:forEach>
-		                                                    </select>
+		                                                    </select> -->
 		                                                </td>
 		                                            </tr>
 		                                             <tr>

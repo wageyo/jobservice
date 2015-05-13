@@ -199,7 +199,7 @@ public class SecureJobController {
 		return "redirect:/secure/job/update";
 	}
 
-	// 跳转到修改职位页面
+	// 跳转到编辑职位页面
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String getOne(HttpServletRequest request) {
 		log.info("--- update get ---");

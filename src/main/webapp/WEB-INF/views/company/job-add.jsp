@@ -107,13 +107,19 @@
 	                                                  		残疾类别：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="disabilityCategory" id="disabilityCategory" class="length informationEdits needSyncValue NeedValidate" >
+		                                                	<c:forEach items="${params }" var="p">
+																<c:if test="${p.type == 'disabilityCategory' && p.value != null && p.value != ''}">
+																	<input type="checkbox" name="disabilityCategory" title="${p.name }" value="${p.value }"/>${p.name }&nbsp;
+																</c:if>
+															</c:forEach>
+		                                                <!-- 	<select name="disabilityCategory" id="disabilityCategory" class="length informationEdits needSyncValue NeedValidate" >
 		                                                    	<c:forEach items="${params }" var="p">
 																	<c:if test="${p.type == 'disabilityCategory' }">
 																		<option value="${p.value }">${p.name }</option>
 																	</c:if>
 																</c:forEach>
 		                                                    </select>
+		                                                     -->
 		                                                </td>
 		                                            </tr>
 		                                            <tr>
@@ -121,13 +127,18 @@
 	                                                  		残疾等级：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="disabilityLevel" id="disabilityLevel" class="length informationEdits needSyncValue NeedValidate" >
+		                                                	<c:forEach items="${params }" var="p">
+																<c:if test="${p.type == 'disabilityLevel' && p.value != null && p.value != '' }">
+																	<input type="checkbox" name="disabilityLevel" title="${p.name }" value="${p.value }"/>${p.name }&nbsp;
+																</c:if>
+															</c:forEach>
+		                                              <!--   	<select name="disabilityLevel" id="disabilityLevel" class="length informationEdits needSyncValue NeedValidate" >
 		                                                    	<c:forEach items="${params }" var="p">
 																	<c:if test="${p.type == 'disabilityLevel' }">
 																		<option value="${p.value }">${p.name }</option>
 																	</c:if>
 																</c:forEach>
-		                                                    </select>
+		                                                    </select> -->
 		                                                </td>
 		                                            </tr>
 		                                            <tr>
@@ -135,13 +146,18 @@
 	                                                  		残疾部位：
 		                                                </td>
 		                                                <td>
-		                                                	<select name="disabilityPart" id="disabilityPart" class="length informationEdits needSyncValue NeedValidate" >
+		                                                	<c:forEach items="${params }" var="p">
+																<c:if test="${p.type == 'disabilityPart' && p.value != null && p.value != '' }">
+																	<input type="checkbox" name="disabilityPart" title="${p.name }" value="${p.value }"/>${p.name }&nbsp;
+																</c:if>
+															</c:forEach>
+		                                                <!-- 	<select name="disabilityPart" id="disabilityPart" class="length informationEdits needSyncValue NeedValidate" >
 		                                                    	<c:forEach items="${params }" var="p">
 																	<c:if test="${p.type == 'disabilityPart' }">
 																		<option value="${p.value }">${p.name }</option>
 																	</c:if>
 																</c:forEach>
-		                                                    </select>
+		                                                    </select> -->
 		                                                </td>
 		                                            </tr>
 		                                            <tr>

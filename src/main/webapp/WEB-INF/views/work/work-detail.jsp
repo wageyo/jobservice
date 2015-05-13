@@ -146,6 +146,18 @@
 												<td>薪资待遇：</td>
 												<td>${job.salary }</td>
 											</tr>
+											<tr>
+												<td>残疾类别：</td>
+												<td colspan="3">${job.disabilityCategory }</td>
+											</tr>
+											<tr>
+												<td>等级：</td>
+												<td colspan="3">${job.disabilityLevel }</td>
+											</tr>
+											<tr>
+												<td>残疾部位：</td>
+												<td colspan="3">${job.disabilityPart }</td>
+											</tr>
 											<!-- 仅有个人用户登陆时才可见的投递简历按钮 -->
 											<c:if test="${cookie.identity.value == 'person' }">
 												<tr>

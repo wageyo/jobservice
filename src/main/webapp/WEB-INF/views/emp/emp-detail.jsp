@@ -223,7 +223,7 @@
 							<td colspan="4">
 							<c:choose>
 								<c:when test="${resume.attachment != null && resume.attachment != '' }">
-									<a href="${contextPath }/uploadfile/${resume.attachment}" target="_blank">下载附件附件</a>
+									<a href="${contextPath }/uploadfile/${resume.attachment}" target="_blank">下载附件简历</a>
 								</c:when>
 								<c:otherwise>
 									暂无附件简历

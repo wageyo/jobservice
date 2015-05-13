@@ -87,6 +87,7 @@ public class JobService {
 		map.put("checkStatus", checkStatus);
 		return dao.updateCheckStatusByCompany(map);
 	}
+	
 	// 按id查询一个对象,用作编辑处理
 	public Job getById(int id) {
 		log.info("id in service = " + id);
