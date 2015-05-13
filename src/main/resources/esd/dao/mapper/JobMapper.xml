@@ -746,13 +746,13 @@
 					</if>
 				</if>
 				<if test="job.disabilityCategory != null and job.disabilityCategory != ''">
-					 and job.disability_category = #{job.disabilityCategory, jdbcType=VARCHAR}
+					 and job.disability_category like concat('%', #{job.disabilityCategory, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="job.disabilityLevel != null and job.disabilityLevel != ''">
-					and job.disability_level = #{job.disabilityLevel, jdbcType=VARCHAR}
+					and job.disability_level like concat('%', #{job.disabilityLevel, jdbcType=VARCHAR}, '%')
 				</if>
 				<if test="job.disabilityPart != null and job.disabilityPart != ''">
-					and job.disability_part = #{job.disabilityPart, jdbcType=VARCHAR}
+					and job.disability_part like concat('%', #{job.disabilityPart, jdbcType=VARCHAR}, '%')
 				</if>
  				<choose>
 					<when test="job.checkStatus != null and job.checkStatus != ''">
