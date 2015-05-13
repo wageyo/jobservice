@@ -547,7 +547,7 @@
                                  <div class="contractionright">
                                  </div>
                                  <div class="contractionclickone" style="padding-top:5px;">
-									<a href="javascript:add_tr();"><span style="color:blue;">新增</span></a>
+									<a href="javascript:add_tr();"><span style="color: white;background-color: blue;letter-spacing: 2px;padding: 1px 5px;border-radius: 5px;">新增</span></a>
                                  </div>
                              </div>
                             <div class="contractioncontent">
@@ -583,6 +583,18 @@
 	                                             </select>
 	                                         </td>
 	                                     </tr>
+	                                     
+	                                     <!-- 工作经历样板 begin -->
+	                                     <tr>
+	                                     	<td class="textTop" style="text-align:center;">工作经历：<br/><span style="color:red;font-size:18px;">样板</span></td>
+	                                     	<td colspan="3">
+	                                     		<p>所在公司：<input style="color: gray;" name="example_companyName" type="text" value="哈尔滨达达科技有限公司" readonly="readonly"/>在职时间：<input style="color: gray;" name="example_workTime" type="text" value="2013.1.2~~2014.8.4" readonly="readonly"/></p>
+	                                     		<p>所在职位：<input style="color: gray;" name="example_jobName" type="text" value="财务总监" readonly="readonly"/>离职原因：<input style="color: gray;" name="example_leaveReason" type="text" value="家庭有所变动, 需要到其他城市去." readonly="readonly"/></p>
+	                                     		<p><span>自我评价：</span><textarea rows="4" cols="100" name="example_jobContent" style="color:gray;width:522px;" readonly="readonly">自我评价,所负责的事物等等.</textarea></p>
+                                     		</td>
+                                     	</tr>
+	                                     
+	                                     <!-- 工作经历样板 end -->
 	                                 </tbody>
                                  </table>
                              </div>
