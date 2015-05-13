@@ -29,6 +29,7 @@ import esd.bean.User;
 import esd.common.util.FileUtil;
 import esd.service.CookieHelper;
 import esd.service.FilegagsService;
+import esd.service.ResumeService;
 import esd.service.UserService;
 
 /**
@@ -49,12 +50,16 @@ public class FilegagsController {
 	@Autowired
 	private FilegagsService filegagsService;
 
+	@Autowired
+	private ResumeService resumeService;
+
 	// 接收上传的文件
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public void importPic(@RequestParam("upload") CommonsMultipartFile file,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		String imageid = request.getParameter("imageId");
+		String preFileId = request.getParameter("preFileId");
+		String type = request.getParameter("type"); // 保存的文件类型
 		// ① response 输出相应内容
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter writer = response.getWriter();
@@ -72,27 +77,49 @@ public class FilegagsController {
 				.substring(oldFileName.lastIndexOf(".") + 1);
 		filegags.setFileSuffix(fileSuffix);
 		filegags.setFile(file.getBytes());
-		String imageId;
+		filegags.setType(type);
+		String fileId;
 		// 如果存在传过来的id, 则说明是点了两次以上上传的, 则使用更新, 否则使用新增保存
-		if (imageid != null && !"".equals(imageid)) {
-			filegags.setId(imageid);
+		if (preFileId != null && !"".equals(preFileId)) {
+			filegags.setId(preFileId);
 			if (filegagsService.update(filegags)) {
-				imageId = imageid;
+				fileId = preFileId;
 			} else {
-				imageId = null;
+				fileId = null;
 			}
 		} else {
-			imageId = filegagsService.save(filegags);
+			fileId = filegagsService.save(filegags);
 			// 保存完图片后, 将对应的图片/二进制文件 id保存到对应的关系表中
+		}
+		// ①按照type类型 将对应的图片/二进制文件 id保存到对应的关系表中
+		if (Constants.FilegagsType.HEADIMAGE.getValue().equals(type)) {
 			String userid = request.getParameter("userid");
 			if (userid != null && !"".equals(userid)) {
 				User user = userService.getById(Integer.parseInt(userid));
-				user.setHeadImage(imageId);
+				user.setHeadImage(fileId);
 				userService.update(user);
 			}
 		}
-		if (imageId != null) {
-			writer.write(Constants.Notice.SUCCESS.getValue() + imageId);
+		// else if(Constants.FilegagsType.RESUME.getValue().equals(type)){
+		// String resumeid = request.getParameter("resumeid");
+		// Resume paramResume = new Resume();
+		// paramResume.setId(KitService.getInt(resumeid));
+		// paramResume.setAttachment(fileId);
+		// resumeService.update(paramResume);
+		// }
+
+		// ②保存到服务器upload文件夹中
+		String basePath = request.getSession().getServletContext()
+				.getRealPath("/");
+		basePath += "uploadfile" + File.separator + fileId + "." + fileSuffix;
+		File uploadfile = new File(basePath);
+		if (!uploadfile.exists()) {
+			uploadfile.mkdirs();
+		}
+		file.transferTo(uploadfile);
+
+		if (fileId != null) {
+			writer.write(Constants.Notice.SUCCESS.getValue() + fileId);
 		} else {
 			writer.write(Constants.NOTICE + ":" + "上传图片失败");
 		}
@@ -130,6 +157,7 @@ public class FilegagsController {
 		Integer uid = Integer.parseInt(userId);
 		User user = userService.getById(uid);
 		filegags.setLogUser(user.getNickName());
+		filegags.setType(Constants.FilegagsType.ARTICLES.getValue());
 		// 文件同时保存到服务器和数据库中
 		// ①保存到数据库中
 		String imageId = filegagsService.save(filegags);
@@ -267,11 +295,12 @@ public class FilegagsController {
 	// 下载头像图片的方法
 	@RequestMapping("/downloadFile/{id}")
 	@ResponseBody
-	public byte[] viewWorkerPicGet(@PathVariable(value = "id") String id,
+	public byte[] downloadFile(@PathVariable(value = "id") String id,
 			HttpServletResponse response) {
 		// response.addHeader("Content-Type", "image/gif");
 		response.setContentType("image/gif");
 		byte[] entity = filegagsService.getFileById(id);
 		return entity;
 	}
+
 }

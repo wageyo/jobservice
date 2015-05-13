@@ -91,21 +91,22 @@
                                     <!--TableMain-->
                                     <div id="TableListShow" >
                                     	<div class="TableUserCenter">
-												<div class="TableUserCenterLeft">
-													<img id="headImage" src="${contextPath }/filegags/downloadFile/${cookie.headimage.value }" style="height:90px;width:90px;border-width:0px;" title="90*90格式" />
-													<input type="button" name="file" value="上传图片" id="picFileImport" class=" " />
-													<input type="hidden" id="userid" name="userid" value="${cookie.userid.value }" />
-												</div>
-							
-												<ul class="TableUserCenterRight">
-													<li >您好：<span>${cookie.username.value }</span>，欢迎您！</li>
-													<li >您的用户等级：<span> 企业用户  </span></li>
-													<li >
-														注册时间：<span>${cookie.registertime.value }</span>
-													</li>
-													<li >邮箱：<span>${user.email }</span></li>
-												</ul>
+											<div class="TableUserCenterLeft">
+												<img id="headImage" src="${contextPath }/filegags/downloadFile/${cookie.headimage.value }" style="height:90px;width:90px;border-width:0px;" title="90*90格式" />
+												<input type="button" name="file" value="上传文件" id="picFileImport" class="" />
+												<input type="hidden" id="userid" name="userid" value="${cookie.userid.value }" />
+												<input type="hidden" id="imageid" name="imageid" value="${cookie.headimage.value }" />
 											</div>
+						
+											<ul class="TableUserCenterRight">
+												<li >您好：<span>${cookie.username.value }</span>，欢迎您！</li>
+												<li >您的用户等级：<span> 企业用户  </span></li>
+												<li >
+													注册时间：<span>${cookie.registertime.value }</span>
+												</li>
+												<li >邮箱：<span>${user.email }</span></li>
+											</ul>
+										</div>
                                     </div>
                                     <!--DownBar-->
                                     <div class="DownBar">

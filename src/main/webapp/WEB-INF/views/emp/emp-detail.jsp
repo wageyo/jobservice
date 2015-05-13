@@ -214,6 +214,29 @@
 				</table>
 			</div>
 			<!-- 工作经历 end -->
+			
+			<!-- 下载可能的附件 begin -->
+			<div class="workExperience">
+				<table cellpadding="0" cellspacing="0">
+					<tbody>
+						<tr>
+							<td colspan="4">
+							<c:choose>
+								<c:when test="${resume.attachment != null && resume.attachment != '' }">
+									<a href="${contextPath }/uploadfile/${resume.attachment}" target="_blank">下载附件附件</a>
+								</c:when>
+								<c:otherwise>
+									暂无附件简历
+								</c:otherwise>
+							</c:choose>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- 下载可能的附件 end -->
+			
+			
 		</div>
 		
 				

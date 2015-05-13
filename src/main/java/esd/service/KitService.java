@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import esd.bean.Area;
+import esd.bean.Articles;
 import esd.bean.Company;
+import esd.bean.Filegags;
 import esd.bean.Job;
 import esd.bean.JobCategory;
-import esd.bean.Articles;
 import esd.bean.Parameter;
 import esd.bean.Record;
 import esd.bean.Resume;
@@ -41,6 +42,8 @@ public class KitService {
 	@Autowired
 	private AreaDao aDao;
 
+	@Autowired
+	private FilegagsService filegagsService;
 	
 	/**
 	 * 生成一个UUID
@@ -625,6 +628,12 @@ public class KitService {
 				}
 			}
 			resume.setCheckStatus(p.getName());
+		}
+		
+		//附件文件名处理, 加上后缀, 方便前台下载
+		if(resume.getAttachment()!=null &&  !"".equals(resume.getAttachment())){
+			Filegags filegags = filegagsService.getById(resume.getAttachment());
+			resume.setAttachment(resume.getAttachment()+"."+filegags.getFileSuffix());
 		}
 		return resume;
 	}

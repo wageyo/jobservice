@@ -23,11 +23,11 @@
 	<link href="${contextPath}/css/comp_info_edit.css" rel="stylesheet" type="text/css" />
 	
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/widget.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/check/resume-check.js"></script>
-	<script type="text/javascript">
-	</script>
+	<script type="text/javascript" src="${contextPath}/js/uploadAttachment.js"></script>
 </head>
 <body>
 	<div id="container" class="container">
@@ -98,6 +98,8 @@
                                          </td>
                                          <td>
                                          	<input id="title" name="title" type="text" value="" type="text" />
+                                         	<input id="attachment" name="attachment" type="hidden" value="" />
+                                         	<input type="button" name="file" value="上传附件" id="picFileImport" />
                                          </td>
                                      </tr>
                                      <tr>

@@ -45,6 +45,7 @@
 		<result column="r_experience" property="experience" jdbcType="VARCHAR" />
 		<result column="r_work_experience" property="workExperience" jdbcType="VARCHAR" />
 		<result column="r_self_evaluation" property="selfEvaluation" jdbcType="VARCHAR" />
+		<result column="r_attachment" property="attachment" jdbcType="VARCHAR" />
 		<result column="r_job_nature" property="jobNature" jdbcType="VARCHAR" />
 		<result column="r_desire_job" property="desireJob.code" jdbcType="VARCHAR" />
 		<result column="r_desire_address" property="desireAddress.code" jdbcType="VARCHAR" />
@@ -90,7 +91,7 @@
 			r.home_town as r_home_town, r.political_status as r_political_status, r.age as r_age, r.height as r_height, r.weight as r_weight, 
 			r.education as r_education, r.major as r_major, r.school as r_school, r.zhi_cheng as r_zhi_cheng, r.shi_ye_hao as r_shi_ye_hao, 
 			r.experts as r_experts, r.training as r_training, r.experience as r_experience, r.work_experience as r_work_experience, 
-			r.self_evaluation as r_self_evaluation, r.job_nature as r_job_nature, r.desire_job as r_desire_job, r.desire_address r_desire_address, 
+			r.self_evaluation as r_self_evaluation, r.attachment as r_attachment, r.job_nature as r_job_nature, r.desire_job as r_desire_job, r.desire_address r_desire_address, 
 			r.desire_salary as r_desire_salary, r.provide_food_and_room as r_provide_food_and_room,  r.provide_room as r_provide_room, 
 			r.provide_food as r_provide_food, r.provide_insurance as r_provide_insurance, r.provide_other as r_provide_other, 
 			r.work_shift as r_work_shift, r.state as r_state, r.is_default as r_is_default, r.check_status as r_check_status, 

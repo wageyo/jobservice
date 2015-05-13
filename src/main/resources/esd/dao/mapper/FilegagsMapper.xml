@@ -194,7 +194,7 @@
 	
 	<select id="getById" resultMap="ResultFilegags" parameterType="java.lang.String">
 		select <include refid="base_column" />
-		from filegags as i
+		from filegags as f
 		where f.id = #{id, jdbcType=VARCHAR}
 	</select>
 

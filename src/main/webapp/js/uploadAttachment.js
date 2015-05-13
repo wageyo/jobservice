@@ -25,9 +25,9 @@ $(document).ready(function(){
 				 *	②设置上传参数
 				 **/
 				this.setData({
-					'userid':$('#userid').val(),
-					'preFileId':$('#imageid').val(),
-					'type':'headimage'
+					'resume':$('#userid').val(),
+					'preFileId':$('#attachment').val(),
+					'type':'resume'
 				});
 				
 			},
@@ -38,11 +38,9 @@ $(document).ready(function(){
 				}else{
 					//刷新新上传的图片
 					var fileid = response.substring(7);
-					$('#headImage').attr('src','');
-				//	alert(fileid + new Date());
-					$('#headImage').attr('src',server.url + 'filegags/downloadFile/'+fileid + '?time='+ new Date());
+					$('#attachment').val(fileid);
+					button.val('附件上传成功, 点击按钮可重新上传');
 				}
-				button.val('上传文件');
 				this.enable();
 			}
 		});

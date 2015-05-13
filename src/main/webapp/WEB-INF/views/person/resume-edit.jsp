@@ -24,9 +24,11 @@
 	<link href="${contextPath}/css/comp_info_edit.css" rel="stylesheet" type="text/css" />
 	
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/widget.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/check/resume-check.js"></script>
+	<script type="text/javascript" src="${contextPath}/js/uploadAttachment.js"></script>
 	<script type="text/javascript">
 	</script>
 </head>
@@ -100,7 +102,9 @@
                                          <td>
                                          	<input id="title" name="title" type="text" value="${resume.title }" type="text" />
                                          	<input type="hidden" name="id" id="rid" value="${resume.id }" />
+                                         	<input id="attachment" name="attachment" type="hidden" value="${resume.attachment }" />
 											<input type="hidden" name="updateCheck" id="updateCheck" value="${resume.updateCheck }" />
+											<input type="button" name="file" value="更新附件" id="picFileImport" />
                                          </td>
                                      </tr>
                                      <tr>
