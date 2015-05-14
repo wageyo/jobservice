@@ -410,6 +410,16 @@
 		from <include refid="from_table" />
 		where c.id = #{id, jdbcType=INTEGER}
 	</select>
+	
+	<!-- get by ids -->
+	<select id="getByIds" resultMap="ResultCompany" parameterType="list">
+		select <include refid="base_column" />
+		from <include refid="from_table" />
+		where c.id in 
+			<foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+	</select>
 
 	<!-- get by user id -->
 	<select id="getByAccount" resultMap="ResultCompany" parameterType="java.lang.Integer">

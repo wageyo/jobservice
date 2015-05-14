@@ -586,5 +586,15 @@ public class Resume extends PrimaryKeyInt {
 		this.targetName = targetName;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Resume resume = (Resume)obj;
+		if(this.getId() == resume.getId()){
+			return Boolean.TRUE;
+		}else{
+			return Boolean.FALSE;
+		}
+	}
+
 	
 }

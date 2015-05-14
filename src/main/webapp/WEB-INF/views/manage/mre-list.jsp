@@ -46,7 +46,7 @@
 
 				<div class="container-fluid">
 					<!-- 上方条件查询框  开始 -->
-					<div id="searchBar" style="height:32px; width:1241px;">
+					<div id="searchBar" style="height:32px; width:1200px;">
 						匹配度条件: 
 						<span class="label " onclick="selectAllCondition();" id="chooseall">全 选</span>&nbsp;&nbsp;
 						<c:forEach items="${params }" var="perCom">

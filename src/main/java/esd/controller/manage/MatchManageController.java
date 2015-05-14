@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,7 +67,6 @@ public class MatchManageController {
 
 	@Autowired
 	private SmsAccountService smsAccountService;
-	
 
 	// 转到 根据简历匹配职位 显示简历页面
 	@RequestMapping(value = "/mre", method = RequestMethod.GET)
@@ -81,10 +79,10 @@ public class MatchManageController {
 		Integer rows = Constants.SIZE;
 		List<Parameter> plist = pService.getByType(Constants.RESUME_MATCH_PER);
 		entity.put("params", plist);
-
 		Resume paramEntity = new Resume();
-		// 只查找默认投递简历, 多余的不查
+		// 只查找默认投递的, 通过审核的 多余的不查
 		paramEntity.setIsDefault(Boolean.TRUE);
+		paramEntity.setCheckStatus(Constants.CheckStatus.OK.getValue());
 		// 获取地区码
 		String userId = CookieHelper.getCookieValue(request,
 				Constants.ADMINUSERID);
@@ -166,7 +164,8 @@ public class MatchManageController {
 		entity.put("params", plist);
 
 		Company paramEntity = new Company();
-
+		// 只查找 通过审核的 多余的不查
+		paramEntity.setCheckStatus(Constants.CheckStatus.OK.getValue());
 		// 获取地区码
 		String userId = CookieHelper.getCookieValue(request,
 				Constants.ADMINUSERID);
@@ -286,15 +285,17 @@ public class MatchManageController {
 		// 根据管理员用户所属地区, 查询他下面所属的所有数据
 		String acode = userObj.getArea().getCode();
 		tmp.setArea(new Area(acode));
-		tmp.setIsDefault(Boolean.TRUE); // 是默认选中的, 防止重复发送
-		
-		//检查本地区是否有名商通的账号, 没有的话则对前台进行提示
+		// 是默认选中的, 切审核通过的! 防止重复发送
+		tmp.setIsDefault(Boolean.TRUE);
+		tmp.setCheckStatus(Constants.CheckStatus.OK.getValue());
+		// 检查本地区是否有名商通的账号, 没有的话则对前台进行提示
 		SmsAccount smsAccount = smsAccountService.getByArea(acode);
-		if(smsAccount == null){
-			map.put(Constants.NOTICE, "您还没有名商通用户账号, 请在名商通官网(http://www.139000.net/)申请账号并充值后, 将账号密码在设置页面添加后使用短信功能.");
+		if (smsAccount == null) {
+			map.put(Constants.NOTICE,
+					"您还没有名商通用户账号, 请在名商通官网(http://www.139000.net/)申请账号并充值后, 将账号密码在设置页面添加后使用短信功能.");
 			return map;
 		}
-		
+
 		// 所有需要推送就业信息的简历
 		List<Resume> resumeList = null;
 		// ②获取要推送的简历列表
@@ -333,7 +334,7 @@ public class MatchManageController {
 					continue;
 				}
 				Boolean bl = smsService.sendTuiSongJob(resume, sentData, url,
-						userObj.getNickName(),acode,smsAccount);
+						userObj.getNickName(), acode, smsAccount);
 				if (bl) {
 					right++;
 				} else {
@@ -345,6 +346,123 @@ public class MatchManageController {
 		map.put("right", right);
 		map.put("wrong", wrong);
 		log.info("共发送： " + (right + wrong) + "  条推送信息, 其中发送成功: " + right
+				+ " 条,  失败: " + wrong + " 条.");
+		return map;
+	}
+
+	// 向企业 发送推送的 能够匹配上职位招聘要求 的简历***参数分别为：matchRate-匹配度 mark-推送范围标示符,all为全部，
+	// ids-传递的id数组
+	@RequestMapping(value = "/sendResume", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> sendResume(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		// ①获取地区码
+		String userId = CookieHelper.getCookieValue(request,
+				Constants.ADMINUSERID);
+		Integer uid = Integer.parseInt(userId);
+		User userObj = userService.getById(uid);
+		// 根据管理员用户所属地区, 查询他下面所属的所有数据
+		String acode = userObj.getArea().getCode();
+		// ②检查本地区是否有名商通的账号, 没有的话则对前台进行提示
+		SmsAccount smsAccount = smsAccountService.getByArea(acode);
+		if (smsAccount == null) {
+			map.put(Constants.NOTICE,
+					"您还没有名商通用户账号, 请在名商通官网(http://www.139000.net/)申请账号并充值后, 将账号密码在设置页面添加后使用短信功能.");
+			return map;
+		}
+
+		// ③整理前台传进来的参数, 并判断是全部推送还是选中推送
+		// 组装起company查询参数, 管理员地区, 激活的, 审核通过的单位~~
+		Company tmp = new Company();
+		tmp.setArea(new Area(acode));
+		tmp.setIsActive(Boolean.TRUE);
+		tmp.setCheckStatus(Constants.CheckStatus.OK.getValue());
+
+		Integer[] ids = null;
+		// 所有需要推送简历信息的企业
+		List<Company> companyList = null;
+		// ②获取要推送简历的公司
+		String type = request.getParameter("type"); // 类型-- all--全部; half--选中的
+		// 如果为全部的话
+		// 获取选中的id数组, 如果为all的话, 则代表全部推送.
+		if ("all".equals(type)) {
+			companyList = companyService.getListShowForManage(tmp,
+					Constants.START, Integer.MAX_VALUE, Boolean.FALSE);
+		} else {
+			String[] idsStr = request.getParameterValues("ids");
+			ids = new Integer[idsStr.length];
+			for (int i = 0; i < idsStr.length; i++) {
+				ids[i] = Integer.parseInt(idsStr[i]);
+			}
+			companyList = companyService.getByIds(ids);
+		}
+		if (companyList == null || companyList.size() == 0) {
+			map.put(Constants.NOTICE, "本地区没有可推送求职信息的企业.");
+			return map;
+		}
+		int total = companyList.size(); // 总公司数
+		// ③验证公司信息的电话号码是否为手机号, 如果号码不是手机号则不予以发送.
+		int wrongphone = 0; // 号码不满足发送规则的
+		for (int i = 0; i < companyList.size(); i++) {
+			Company c = companyList.get(i);
+			// 不符合规则剔除出去
+			if (!KitService.checkPhone(c.getTelephone())) {
+				wrongphone++;
+				companyList.remove(i);
+			}
+		}
+		// 如果没有剩下公司, 即所有公司的号码都没有通过验证, 则返回前台进行提示.
+		if (companyList == null || companyList.size() == 0) {
+			map.put(Constants.NOTICE, "没有可发送短信的手机号码, 请修正企业联系电话后再尝试.");
+			return map;
+		}
+		// ④循环剩下的公司, 查找他们发布的职位
+		// 查询本地区设置的推送显示数量, 如果不存在则使用系统默认的推送数量-5
+		Integer tuisongNumber = Constants.MATCHED_NUMBER_DEFAULT; // 本地设置的推送数量
+		Parameter pt = parameterService.getOnebyTypeAndAcode(
+				Constants.MATCHED_SHOW_NUMBER, acode);
+		if (pt != null) {
+			tuisongNumber = Integer.parseInt(pt.getValue());
+		}
+		int right = 0, wrong = 0; // 发送成功数, 失败数
+		for (Company company : companyList) {
+			// 根据id查出公司所发布的职位
+			List<Job> jobList = jobService.getByCompanyMate(company.getId(), 1,
+					Constants.SIZE);
+			// ⑤查询出所有可以匹配上该公司职位的简历
+			// 定义向该公司推送的所有简历~~~
+			List<Resume> sendResumeList = new ArrayList<Resume>();
+			for (Job jobTmp : jobList) {
+				// 判断查询条件是否为空，组成查询条件:本地, 激活的.
+				Resume paramEntity = new Resume();
+				paramEntity.setArea(new Area(acode));
+				paramEntity.setIsActive(Boolean.TRUE);
+				paramEntity = getParamEntity(request, jobTmp);
+				List<Resume> resumeResultList = resumeService.getForListShow(
+						paramEntity, 1, tuisongNumber, Boolean.FALSE);
+				// ⑥处理简历结果, 剔除掉重复的, 并且总数量不大于定义的tuisongNumber
+				// 如果有匹配上的简历, id不同的 则添加到sendResumeList集合中
+				sendResumeList = addNotDuplicateResume(resumeResultList,
+						sendResumeList, tuisongNumber);
+			}
+			// ⑦将简历发送到该公司的手机号码上
+			// 非法字符集文件地址
+			String url = request.getSession().getServletContext()
+					.getRealPath("/");
+			Boolean bl = smsService.sendTuiSongJob(company, sendResumeList,
+					url, userObj.getNickName(), acode, smsAccount);
+			if (bl) {
+				right++;
+			} else {
+				wrong++;
+			}
+		}
+		map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
+		map.put("total", total);
+		map.put("wrongphone", wrongphone);
+		map.put("right", right);
+		map.put("wrong", wrong);
+		log.info("总企业数: "+total+ ", 号码不正确导致不能发送的企业数: "+wrongphone +". 总计发送： " + (right + wrong) + "  条推送信息, 其中发送成功: " + right
 				+ " 条,  失败: " + wrong + " 条.");
 		return map;
 	}
@@ -454,8 +572,10 @@ public class MatchManageController {
 		}
 		String age = request.getParameter("age");
 		if (age != null && !"".equals(age)) {
-			paramEntity.setBirth(KitService.getBirthByAge(Integer.parseInt(tmp
-					.getAge())));
+			if(tmp.getAge()!=null && tmp.getAge()!=""){
+				paramEntity.setBirth(KitService.getBirthByAge(Integer.parseInt(tmp
+						.getAge())));
+			}
 		}
 		String gender = request.getParameter("gender");
 		if (gender != null && !"".equals(gender)) {
@@ -480,13 +600,31 @@ public class MatchManageController {
 		return paramEntity;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * 查看sendResumeList中是否有resumeList中id相同的项, id不同的项添到sendResumeList中, 相同的跳过
+	 * 
+	 * @param resumeList
+	 * @return
+	 */
+	private List<Resume> addNotDuplicateResume(List<Resume> resumeList,
+			List<Resume> sendResumeList, Integer tuisongNumber) {
+		if (resumeList == null || resumeList.size() == 0) {
+			return sendResumeList;
+		}
+		// 如果已有的简历数大于指定的推送数, 则返回
+		if (sendResumeList.size() >= tuisongNumber) {
+			return sendResumeList;
+		}
+		for (Resume resume : resumeList) {
+			if (!sendResumeList.contains(resume)) {
+				sendResumeList.add(resume);
+				// 如果已有的简历数大于指定的推送数, 则返回
+				if (sendResumeList.size() >= tuisongNumber) {
+					return sendResumeList;
+				}
+			}
+		}
+		return sendResumeList;
+	}
+
 }

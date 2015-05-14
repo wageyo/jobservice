@@ -1,5 +1,7 @@
 package esd.dao;
 
+import java.util.List;
+
 import esd.bean.Company;
 
 /**
@@ -10,8 +12,17 @@ import esd.bean.Company;
  */
 public interface CompanyDao extends IDao<Company> {
 
-	// 根据 账号id 得到对应公司对象
+	/**
+	 *  根据 账号id 得到对应公司对象
+	 * @param uid
+	 * @return
+	 */
 	public Company getByAccount(int uid);
 
-	//
+	/**
+	 * 根据多个id获得一列公司
+	 * @param ids
+	 * @return
+	 */
+	public List<Company> getByIds(Integer[] ids);
 }

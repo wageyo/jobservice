@@ -42,17 +42,17 @@
 				<div class="container-fluid">
 				
 						<!-- 上方条件查询框  开始 -->
-						<div id="searchBar" style="height:32px;width: 1000px;">
+						<div id="searchBar" style="height:32px;width: 1200px;">
 							匹配度条件: 
 							<span class="label " onclick="selectAllCondition();" id="chooseall">全 选</span>&nbsp;&nbsp;
 							<c:forEach items="${params }" var="perCom">
 								<span name="mateCondition" class="label" value="${perCom.value }" onclick="conditionClick(this);">${perCom.name }</span>&nbsp;&nbsp;
 							</c:forEach>
 							<span class="label badge-inverse" onclick="resetCondition();">重置查询条件</span> 
-					<!-- 		<div style="float:right;">
-								<button type="button" class="btn btn-info" onclick="sendTuiSong('half');">向选中简历推送招聘信息</button>
-								<button type="button" class="btn btn-info" onclick="sendTuiSong('all');">向全部简历推送招聘信息</button>
-							</div> -->
+					 		<div style="float:right;">
+								<button type="button" class="btn btn-info" onclick="sendTuiSong('half');">向选中推送</button>
+								<button type="button" class="btn btn-info" onclick="sendTuiSong('all');">向全部推送</button>
+							</div>
 						</div>
 						<!-- 上方条件查询框  结束-->
 						

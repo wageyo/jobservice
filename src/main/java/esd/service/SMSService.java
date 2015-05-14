@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import esd.bean.Company;
 import esd.bean.Job;
 import esd.bean.Resume;
 import esd.bean.SmsAccount;
@@ -169,22 +170,12 @@ public class SMSService {
 		for (int i = 0; i < jobList.size(); i++) {
 			Job job = jobList.get(i);
 			msg += (i + 1) + ". " + job.getName() + ", "; // 职位名称
-			msg += job.getCompany().getName() + ", "; // 企业名称名称
+			msg += job.getCompany().getName() + ", "; // 企业名称
 			msg += job.getWorkPlace().getName() + ", "; // 工作地点
-			// String canjiyaoqiu = ""; //残疾要求
-			// if(job.getDisabilityPart() == null && job.getDisabilityLevel() ==
-			// null){
-			// canjiyaoqiu = "暂无";
-			// }else{
-			// canjiyaoqiu =
-			// job.getDisabilityPart()+" "+job.getDisabilityLevel();
-			// }
 			msg += job.getSalary() + "\n"; // 薪资
 		}
 		msg += smsFix.getSuffix();
 
-		// msg +=
-		// "联系人:\t职业指导科小何、小易\t联系电话:\t0771-3186952\t0771-3186953\n联系地址:\t南宁市罗文大道48号(残疾人事业园1楼就业服务大厅)\t更多招聘信息请登录广西壮族自治区残疾人就业信息网，网址：http://116.11.253.249:9217/jobservice";
 		// 处理非法字符
 		msg = dealIllegalContent(msg, illegalFileUrl);
 
@@ -215,6 +206,72 @@ public class SMSService {
 		return bl;
 	}
 
+	/**
+	 * 向指定公司发送推送的简历
+	 * 
+	 * @param company
+	 * @param resumeList
+	 * @param illegalFileUrl
+	 *            --路径为项目根路径
+	 * @param logUser
+	 *            操作人
+	 * @param acode
+	 *            操作地区code
+	 */
+	public Boolean sendTuiSongJob(Company company, List<Resume> resumeList,
+			String illegalFileUrl, String logUser, String acode,
+			SmsAccount smsAccount) {
+		String phone = company.getTelephone(); // 电话号码
+		// 获取该地区的短信推送上下文.
+		SmsFix smsFix = smsFixDao.getByArea(acode);
+		// 如果该地区没有自定义上下文, 则默认使用全国的啊
+		if (smsFix == null) {
+			smsFix = smsFixDao.getByArea(Constants.AREACOUNTRY);
+		}
+		// 定义发送短信
+		String msg = "";
+		// 添加上上文
+		msg += smsFix.getPrefix() + "\n";
+		for (int i = 0; i < resumeList.size(); i++) {
+			Resume resume = resumeList.get(i);
+			msg += (i + 1) + ". " + resume.getName() + ", "; // 姓名
+			msg += resume.getGender() + ", "; // 性别
+			msg += resume.getDisabilityCategory() + ", "; // 残疾类别
+			msg += resume.getDisabilityLevel() + ", "; // 残疾等级
+//			msg += resume.getSalary() + "\n"; // 薪资
+		}
+		msg += smsFix.getSuffix();
+
+		// 处理非法字符
+		msg = dealIllegalContent(msg, illegalFileUrl);
+
+		// 总字符数
+		int total = msg.length();
+		// 每条信息最多字符数
+		int size = 300;
+		// 页码数
+		int page = (total % size == 0) ? (total / size) : ((total / size) + 1);
+		Boolean bl = false;
+		if (page >= 2) {
+			for (int i = 1; i <= page; i++) {
+				int beginIndex = (i - 1) * size;
+				int endIndex = i * size;
+				if (endIndex >= total) {
+					endIndex = total;
+				}
+				String perMsg = "(" + i + "/" + page + ")"
+						+ msg.substring(beginIndex, endIndex);
+				bl = sendMessage(phone, perMsg, logUser, smsAccount);
+			}
+		} else {
+			bl = sendMessage(phone, msg, logUser, smsAccount);
+		}
+		log.info("推送短信内容：" + msg);
+		log.info("推送短信长度: " + msg.length());
+		log.info("推送分页页数: " + page);
+		return bl;
+	}
+	
 	/**
 	 * 处理短信中可能存在的非法字符, 暂时统一加上 ,
 	 * 

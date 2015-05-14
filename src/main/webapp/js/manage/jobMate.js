@@ -114,3 +114,49 @@ function selectAllCondition(){
 	}
 	count++;
 }
+
+//发送推送招聘信息
+function sendTuiSong(type){
+	//匹配条件
+	var choosen = $('#searchBar .badge-info[name="mateCondition"]');
+	if(choosen == null || choosen == undefined || choosen.length == 0){
+		alert("请选择至少一项匹配条件.");
+		return;
+	}
+	//请求路径
+	var url = getRootPath() + '/manage/sendResume?type=' + type;
+	//逐个不为空的属性拼接起来
+	$(choosen).each(function(){
+		var val = $(this).attr('value');
+		url += '&'+ val + '=' + val;
+	});
+	//选中的简历
+	var arrChk = [];
+	if(type != 'all'){
+		var checkedsub = $("input[name='items']:checked");
+		if(checkedsub.length == 0){
+			alert('你还没有选中任何需要推送招聘信息的简历.');
+			return;
+		}
+		$($("input[name='items']:checked")).each(function(){
+			arrChk.push($(this).val()); 
+		});
+	}
+	$.ajax({
+		url : url,
+		type : 'POST',
+		data : {'ids':arrChk},
+		dataType : 'json',
+		traditional: true,
+		success : function(data) {
+			//如果返回提示符为 success 则为成功, 进行提示. 
+			if(data.notice == 'success'){
+				var msg = '总企业数: '+data.total+ ', 号码不正确导致不能发送的企业数: '+data.wrongphone +'. 总计发送'+(data.right + data.wrong) + '条推送短信, 其中成功'+data.right+'条, '+ '失败'+data.wrong+'条.';
+				alert(msg);
+			}else{
+				alert(data.notice);
+			}
+		},
+		async : false
+	});
+}

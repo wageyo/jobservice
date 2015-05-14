@@ -300,6 +300,14 @@ public class Company extends PrimaryKeyInt {
 	public void setTaxRegistration(String taxRegistration) {
 		this.taxRegistration = taxRegistration;
 	}
-
+	@Override
+	public boolean equals(Object obj) {
+		Company company = (Company)obj;
+		if(this.getId() == company.getId()){
+			return Boolean.TRUE;
+		}else{
+			return Boolean.FALSE;
+		}
+	}
 	
 }

@@ -689,7 +689,7 @@
 		select
 			<include refid="base_column"/>
 		from <include refid="from_table"/>
-		where job.cid = #{cid, jdbcType=INTEGER} and job.check_status = 'ok' 
+		where job.cid = #{cid, jdbcType=INTEGER} and job.check_status = 'ok' and job.is_active = 1
 		order by job.update_date desc
 		limit #{start, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
 	</select>

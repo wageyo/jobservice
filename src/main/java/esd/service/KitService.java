@@ -1,9 +1,12 @@
 package esd.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -319,28 +322,6 @@ public class KitService {
 		}
 		return sqlCode;
 	}
-
-	// public static String jobCategoryCodeForJobSql(String code) {
-	// String sqlCode = "";
-	// if (code == null || "".equals(code)) {
-	// return null;
-	// }
-	// String mid;
-	// if ("10000000".equals(code)) {
-	// sqlCode = null;
-	// } else if (code.startsWith("10")) {
-	// mid = code.substring(2, 4);
-	// sqlCode = "( job.jccode like '__" + mid + "____' )";
-	// } else if (code.startsWith("20")) {
-	// mid = code.substring(2, 6);
-	// sqlCode = "( job.jccode like '__" + mid + "__')";
-	// } else if (code.startsWith("30")) {
-	// sqlCode = "( job.jccode = '" + code + "')";
-	// } else {
-	// sqlCode = null;
-	// }
-	// return sqlCode;
-	// }
 
 	/**
 	 * 处理传进来的职位种类code, 变成适用于resumeMapper中sql语句使用的格式
@@ -854,18 +835,6 @@ public class KitService {
 			}
 		}
 		return resumeList;
-	}
-
-	public static void main(String[] args) {
-		String cate = "hearing,speak,intelligence,limbs,mind";
-		String k = "speak";
-		if (cate.indexOf(k) > 0) {
-			System.out.println("字符串中存在 ：" + k);
-			cate = cate.replaceAll(k, "言语障碍");
-			System.out.println("替换后的cate: " + cate);
-		} else {
-			System.out.println("字符串中不存在 ：" + k);
-		}
 	}
 
 	/**
@@ -1587,4 +1556,73 @@ public class KitService {
 		return null;
 	}
 
+	/**
+	 * 检查传递进来的号码是否为手机号
+	 * 
+	 * @param phone
+	 * @return
+	 */
+	public static Boolean checkPhone(String phone) {
+		String regExp = "^1[3,4,5,8]\\d{9}$";
+		Pattern pattern = Pattern.compile(regExp);
+		Matcher matcher = pattern.matcher(phone);
+		return matcher.find();
+	}
+
+	public static void main(String[] args) {
+//		String cate = "hearing,speak,intelligence,limbs,mind";
+//		String k = "speak";
+//		if (cate.indexOf(k) > 0) {
+//			System.out.println("字符串中存在 ：" + k);
+//			cate = cate.replaceAll(k, "言语障碍");
+//			System.out.println("替换后的cate: " + cate);
+//		} else {
+//			System.out.println("字符串中不存在 ：" + k);
+//		}
+		
+//		System.out.println(KitService.checkPhone("17812345622"));
+		
+		List<Company> list = new ArrayList<Company>();
+		list.add(new Company(1));
+		list.add(new Company(2));
+		list.add(new Company(3));
+		list.add(new Company(4));
+		list.add(new Company(5));
+		list.add(new Company(1));
+		
+		System.out.println(list.size());
+//		for(int i=0;i<list.size();i++){
+//			if(i==2){
+//				list.remove(i);
+//			}
+//			if(i==3){
+//				list.remove(i);
+//			}
+//		}
+//		System.out.println(list.size());
+		System.out.println(list.contains(new Company(3)));
+		
+	}
+
+	// public static String jobCategoryCodeForJobSql(String code) {
+	// String sqlCode = "";
+	// if (code == null || "".equals(code)) {
+	// return null;
+	// }
+	// String mid;
+	// if ("10000000".equals(code)) {
+	// sqlCode = null;
+	// } else if (code.startsWith("10")) {
+	// mid = code.substring(2, 4);
+	// sqlCode = "( job.jccode like '__" + mid + "____' )";
+	// } else if (code.startsWith("20")) {
+	// mid = code.substring(2, 6);
+	// sqlCode = "( job.jccode like '__" + mid + "__')";
+	// } else if (code.startsWith("30")) {
+	// sqlCode = "( job.jccode = '" + code + "')";
+	// } else {
+	// sqlCode = null;
+	// }
+	// return sqlCode;
+	// }
 }

@@ -98,6 +98,15 @@ public class CompanyService {
 	}
 
 	/**
+	 * 根据多个id获得一组企业列表(没有处理成适合前台显示的~~~)
+	 * @param ids
+	 * @return
+	 */
+	public List<Company> getByIds(Integer[] ids){
+		return dao.getByIds(ids);
+	}
+	
+	/**
 	 * 分页查询方法, 其中的数据没有做处理 管理后台/常用情况--使用
 	 * 
 	 * @param company
@@ -242,12 +251,22 @@ public class CompanyService {
 		return list;
 	}
 
-	// 根据账号id, 得到公司对象
+	/**
+	 * 根据账号id, 得到公司对象
+	 * @param uid
+	 * @return
+	 */
 	public Company getByAccount(int uid) {
 		return dao.getByAccount(uid);
 	}
 
-	// 查询投递到一家公司的所有简历列表
+	/**
+	 *  查询投递到一家公司的所有简历列表
+	 * @param companyid
+	 * @param startPage
+	 * @param size
+	 * @return
+	 */
 	public List<Record> getAllGotResume(int companyid, int startPage, int size) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Record r = new Record();
@@ -263,7 +282,11 @@ public class CompanyService {
 
 	}
 
-	// 查询投递到一家公司的所有简历总数
+	/**
+	 *  查询投递到一家公司的所有简历总数
+	 * @param companyid
+	 * @return
+	 */
 	public int getAllGotResumeCount(int companyid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Record r = new Record();
@@ -291,7 +314,12 @@ public class CompanyService {
 		return recordDao.getByPage(map);
 	}
 
-	// 根据公司id, 导出该公司和他的招聘信息,返回下载文件的路径
+	/**
+	 *  根据公司id, 导出该公司和他的招聘信息,返回下载文件的路径
+	 * @param cid
+	 * @param url
+	 * @return
+	 */
 	public String getBuildCompany(int cid, String url) {
 		// ①得到数据model
 		// 得到公司对象
@@ -333,7 +361,12 @@ public class CompanyService {
 		}
 	}
 
-	// 根据公司多个公司的id, 返回该公司及其招聘信息的xls文件的路径
+	/**
+	 *  根据公司多个公司的id, 返回该公司及其招聘信息的xls文件的路径
+	 * @param ids
+	 * @param url
+	 * @return
+	 */
 	public String getBuildCompany(int[] ids, String url) {
 		if (ids == null || ids.length == 0) {
 			return null;
@@ -423,7 +456,12 @@ public class CompanyService {
 		return destPath;
 	}
 
-	// 根据地区code, 返回他所使用的模板路径
+	/**
+	 *  根据地区code, 返回他所使用的模板路径
+	 * @param acode
+	 * @param url
+	 * @return
+	 */
 	private String getTemplatePath(String acode, String url) {
 		// 第一次尝试路径
 		String filePath = url + "templates" + File.separator + acode
