@@ -630,7 +630,6 @@
 							if(c!=0){ 
 								o.style.top = o.offsetTop + Math.ceil(Math.abs(c)/10)*(c<0?-1:1) + 'px'; 
 							}
-							alert(123);
 							w.onresize = w.onscroll = function(){ 
 								clearInterval(timer); 
 								timer = setInterval(function(){ 
