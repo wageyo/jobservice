@@ -9,7 +9,7 @@
 	//解码
 	function decodeareaname(){
 		var areaname = decodeURIComponent('${cookie.areaname.value}');
-		$('#logospanname').html(areaname + '残疾人就业信息网');
+		$('#logospanname').html(areaname + '残疾人就业创业服务网');
 	}
 </script>
 <jsp:useBean id="date" class="java.util.Date" />
@@ -22,12 +22,12 @@
 					<!-- 如果能显示对应省市的则显示对应省份的logo, 否则显示全国的log -->
 					<c:choose>
 						<c:when test="${areacode != null && areacode != '' }">
-							<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/logo.png?timestamp1=${now}" class="logoimage" /> 
-							<span class="logospan" >${areaname }残疾人就业信息网</span>
+							<img alt="残疾人就业创业服务网" src="${contextPath}/images/logoProvince/logo.png?timestamp1=${now}" class="logoimage" /> 
+							<span class="logospan" >${areaname }残疾人就业创业服务网</span>
 						</c:when>
 						<c:otherwise>
 							<c:if test="${cookie.areacode.value != null && cookie.areacode.value != '' }">
-								<img alt="残疾人就业信息网" src="${contextPath}/images/logoProvince/logo.png?timestamp2=${now}" class="logoimage" /> 
+								<img alt="残疾人就业创业服务网" src="${contextPath}/images/logoProvince/logo.png?timestamp2=${now}" class="logoimage" /> 
 								<span class="logospan" id="logospanname"></span>
 								<script type="text/javascript">
 									decodeareaname();
