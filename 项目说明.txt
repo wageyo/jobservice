@@ -5,3 +5,4 @@
 	100---个人用户权限 
 2-部署在不同地区网站服务器时, 只需要修改 application.properties中currentArea, 将其改为对应的地区code即可
 	 
+1
