@@ -79,38 +79,38 @@ function check(){
 		return false;
 	}
 	//法人代表
-	var corporateRepresentative = $('#corporateRepresentative').val();
-	if(corporateRepresentative == null || corporateRepresentative == ''){
-		alert('法人代表不能为空!');
-		$('#corporateRepresentative').focus();
-		return false;
-	}
+//	var corporateRepresentative = $('#corporateRepresentative').val();
+//	if(corporateRepresentative == null || corporateRepresentative == ''){
+//		alert('法人代表不能为空!');
+//		$('#corporateRepresentative').focus();
+//		return false;
+//	}
 	// 组织机构代码
-	var organizationCode = $('#organizationCode').val();
-	if(organizationCode == null || organizationCode == ''){
-		alert('组织机构代码不能为空!');
-		$('#organizationCode').focus();
-		return false;
-	}	
+//	var organizationCode = $('#organizationCode').val();
+//	if(organizationCode == null || organizationCode == ''){
+//		alert('组织机构代码不能为空!');
+//		$('#organizationCode').focus();
+//		return false;
+//	}	
 	//税务编码
-	var taxCode = $('#taxCode').val();
-	if(taxCode == null || taxCode == ''){
-		alert('税务编码不能为空!');
-		$('#taxCode').focus();
-		return false;
-	}	
-	//电话/手机
-	var telephone = $('#telephone').val();
-	if(telephone == null || telephone == ''){
-        alert('电话/手机号码不能为空!');
-		$('#telephone').focus();
-		return false;
-	}
+//	var taxCode = $('#taxCode').val();
+//	if(taxCode == null || taxCode == ''){
+//		alert('税务编码不能为空!');
+//		$('#taxCode').focus();
+//		return false;
+//	}	
 	//联系人
 	var contactPerson = $('#contactPerson').val();
 	if(contactPerson == null || contactPerson == ''){
 		alert('请填写联系人!');
 		$('#contactPerson').focus();
+		return false;
+	}
+	//电话/手机
+	var telephone = $('#telephone').val();
+	if(telephone == null || telephone == ''){
+		alert('电话/手机号码不能为空!');
+		$('#telephone').focus();
 		return false;
 	}
 	return true;

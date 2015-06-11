@@ -168,6 +168,19 @@ public class KitService {
 	}
 
 	/**
+	 * 计算有效期
+	 * @param date
+	 * @param effectiveDays
+	 * @return
+	 */
+	public static Date getEffectiveTime(Date date, Long effectiveDays) {
+		if (effectiveDays <= 0) {
+			return date;
+		}
+		return new Date(date.getTime() + effectiveDays * 24 * 60 * 60 * 1000);
+	}
+	
+	/**
 	 * 得到近几天发布时间
 	 * 
 	 * @param effectiveDays

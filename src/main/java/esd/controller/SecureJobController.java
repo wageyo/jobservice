@@ -187,6 +187,7 @@ public class SecureJobController {
 			ra.addFlashAttribute("message", "传递数据出错!");
 			return "redirect:/secure/job/update";
 		}
+		job.setEffectiveTime(KitService.getEffectiveTime(job.getEffectiveTime(), job.getEffectiveDays().longValue()));
 		boolean bl = jobService.update(job);
 		log.info("jobEditSave bl = " + bl);
 		if (!bl) {

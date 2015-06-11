@@ -95,3 +95,68 @@ function check(type){
 	}	*/
 	return true;
 }
+
+function addEffectiveTime(obj) {
+	$("#effectiveDays").val(obj.val());
+	if (obj.val() == null || obj.val() == "") {
+		$("#effectiveDays").val(0);
+	}
+	var effectiveTime = $("#effectiveTime2").val();
+	var date = new Date(effectiveTime);
+	var fomdate = date.format("yyyy-MM-dd hh:mm:ss");
+	$("#effectiveTime").val(dateOperator(effectiveTime, obj.val(), "+"));
+}
+
+function dateOperator(date, days, operator) {
+	date = date.replace(/-/g, "/"); //更改日期格式
+	var nd = new Date(date);
+	nd = nd.valueOf();
+	if (operator == "+") {
+		nd = nd + days * 24 * 60 * 60 * 1000;
+	} else if (operator == "-") {
+		nd = nd - days * 24 * 60 * 60 * 1000;
+	} else {
+		return false;
+	}
+	nd = new Date(nd);
+	var y = nd.getFullYear();
+	var m = nd.getMonth() + 1;
+	var d = nd.getDate();
+	var h = nd.getHours();
+	var min = nd.getMinutes();
+	var s = nd.getSeconds();
+	if (m <= 9)
+		m = "0" + m;
+	if (d <= 9)
+		d = "0" + d;
+	if (h <= 9)
+		h = "0" + h;
+	var cdate = y + "-" + m + "-" + d + " " + h + ":" + min + ":" + s;
+	return cdate;
+}
+
+Date.prototype.format = function(format) {
+	var o = {
+		"y+" : this.getFullYear(), //year
+		"M+" : this.getMonth() + 1, //month 
+		"d+" : this.getDate(), //day 
+		"h+" : this.getHours(), //hour 
+		"m+" : this.getMinutes(), //minute 
+		"s+" : this.getSeconds(), //second 
+		"q+" : Math.floor((this.getMonth() + 3) / 3), //quarter 
+		"S" : this.getMilliseconds()
+	//millisecond 
+	}
+	if (/(y+)/.test(format)) {
+		format = format.replace(RegExp.$1, (this.getFullYear() + "")
+				.substr(4 - RegExp.$1.length));
+	}
+
+	for ( var k in o) {
+		if (new RegExp("(" + k + ")").test(format)) {
+			format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]
+					: ("00" + o[k]).substr(("" + o[k]).length));
+		}
+	}
+	return format;
+}

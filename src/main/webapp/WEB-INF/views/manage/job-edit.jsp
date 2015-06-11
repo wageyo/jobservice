@@ -253,7 +253,7 @@
 										<td>
 											<div class="btn-group" >
 												<button class="btn" id="btnEffectiveTime">请选择</button> 
-												<input type="hidden" id="effectiveTime " name="effectiveTime" value=""/>
+												<input type="hidden" id="effectiveTime" name="effectiveTime" value="0"/>
 												<button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
 												<ul class="dropdown-menu">
 													<c:forEach items="${params }" var="p">
@@ -266,7 +266,9 @@
 												</ul>
 											</div>
 											<fmt:formatDate value="${obj.effectiveTime }" pattern="yyyy年MM月dd日 hh:mm:ss" var="effectiveTime"/>
-											(目前有效期至:${effectiveTime })
+											<fmt:formatDate value="${obj.effectiveTime }" pattern="yyyy-MM-dd hh:mm:ss" var="effectiveTime2"/>
+											(目前有效期至:<span id="effectiveTime3">${effectiveTime}</span>)
+											<input id="effectiveTime2" type="hidden" value="${effectiveTime2}">
 										</td>
 									</tr>
 									<tr>

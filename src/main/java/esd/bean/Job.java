@@ -33,7 +33,7 @@ public class Job extends PrimaryKeyInt {
 	private String nature; // 职位性质
 	private Integer effectiveDays; // 有效天数--提供给前台传递后台 数据使用,返回前台时, 则表示剩余天数
 	private Boolean isActiveEffectiveTime; // 是否查询 超过有效期--查询使用, 表示是否开启有效天数 使用
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
 	private Date effectiveTime; // 岗位有效日期截至
 
 	private Area workPlace; // 工作地
