@@ -25,7 +25,7 @@
 	<script type="text/javascript" src="${contextPath}/js/jquery.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/common.js"></script>
 	<script type="text/javascript" src="${contextPath}/js/check/company-check.js"></script>
-		<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
+	<script src="${contextPath}/js/lib/ajaxupload.3.6.js"></script>
 	
 	<script type="text/javascript">
 	</script>
@@ -97,7 +97,8 @@
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		 <em style="display: inline;">* </em>法人代表：
+<%--	                                                  		 <em style="display: inline;">* </em>--%>
+	                                                  		 法人代表：
 		                                                </td>
 		                                                <td>
 		                                                	<input id="corporateRepresentative" name="corporateRepresentative" type="text" value="" type="text" />
@@ -105,7 +106,8 @@
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		<em style="display: inline;">* </em> 组织机构代码：
+<%--	                                                  		<em style="display: inline;">* </em> --%>
+	                                                  		组织机构代码：
 		                                                </td>
 		                                                <td>
 		                                                	<input id="organizationCode" name="organizationCode" type="text" value="" type="text" />
@@ -121,7 +123,8 @@
 		                                            </tr>
 		                                             <tr>
 		                                                <td class="textTop">
-	                                                  		<em style="display: inline;">* </em>税务编码：
+<%--	                                                  		<em style="display: inline;">* </em>--%>
+	                                                  		税务编码：
 		                                                </td>
 		                                                <td>
 		                                                	<input id="taxCode" name="taxCode" type="text" value="" type="text" />
@@ -207,7 +210,8 @@
 		                                            </tr>		                                            
 		                                            <tr>
 										                <td class="textTop">
-											                <em style="display: inline;">* </em>营业执照副本图片：
+<%--											                <em style="display: inline;">* </em>--%>
+											                营业执照副本图片：
 										                </td>
 										<td colspan="3">
 											<img id="businessLicenseImg" src="" style="height:26px;width:70px;border-width:0px;"/>
@@ -218,7 +222,8 @@
 		                                                      
 		                               <tr>
 										<td class="textTop">
-											<em style="display: inline;">* </em>组织机构代码图片：
+<%--											<em style="display: inline;">* </em>--%>
+											组织机构代码图片：
 										</td>
 										<td colspan="3">
 											<img id="institutionalFrameworkImg" src="" style="height:26px;width:70px;border-width:0px;"/>
@@ -229,7 +234,8 @@
 		                                                         
 		                               <tr>
 										<td class="textTop">
-											 <em style="display: inline;">* </em>税务登记证图片：
+<%--											 <em style="display: inline;">* </em>--%>
+											 税务登记证图片：
 										</td>
 										<td colspan="3">
 											<img id="taxRegistrationImg" src="" style="height:26px;width:70px;border-width:0px;"/>
@@ -245,7 +251,8 @@
 		                                            
 		                                            <tr>
 		                                                <td class="textTop">
-		                                                    <em></em><em style="display: inline;">* </em>单位介绍：
+<%--		                                                    <em></em><em style="display: inline;">* </em>--%>
+		                                                    单位介绍：
 		                                                </td>
 		                                                <td>
 		                                                    <textarea name="introduction" rows="2" cols="20" style="height:80px;width:619px;font-size: 12px; padding: 6px;"></textarea>
@@ -315,7 +322,8 @@
 		                                            </tr>
 		                                            <tr>
 		                                                <td class="textTop">
-		                                                    <em style="display: inline;">* </em>邮箱：
+<%--		                                                    <em style="display: inline;">* </em>--%>
+		                                                    邮箱：
 		                                                </td>
 		                                                <td style="border-right:0 none;">
 		                                                	<input name="email" type="text" value="" id="email" />

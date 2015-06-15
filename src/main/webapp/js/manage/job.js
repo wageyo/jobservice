@@ -30,9 +30,17 @@ function query(page,checkStatus){
 //  参数下拉框点击事件
 function selectButton(valueButton, nameButton, value, name){
 	//给对应控件 赋value值
+	if (value == 0 || value == "")
+		value = 0;
 	$('#'+valueButton).val(value);
 	//给对应控件 赋name值
 	$('#'+nameButton).text(name);
+	var effectiveTime = $("#effectiveTime2").val();
+	var date = new Date(effectiveTime);
+	var fomdate = date.format("yyyy-MM-dd hh:mm:ss");
+	$("#effectiveTime3").html(dateOperator(effectiveTime, value, "+"));	
+	
+	
 }
 
 //保存, 通过, 拒绝, 返回  综合方法
@@ -87,6 +95,7 @@ function updateEntity(submitType,objId){
 		if(!param){
 			return false;
 		}
+		param.effectiveDays = new Date(param.effectiveDays);
 		$.ajax({
 			url:server.url + 'manage/job/edit',
 			type:'post',
@@ -105,7 +114,9 @@ function updateEntity(submitType,objId){
 				description:param.description,
 				contactPerson:param.contactPerson,
 				contactTel:param.contactTel,
-				contactEmail:param.contactEmail
+				contactEmail:param.contactEmail,
+				effectiveDays:param.effectiveTime,
+				effectiveTime:param.effectiveDays
 			},
 			success:function(data){
 				if(data.notice == 'success'){
@@ -115,7 +126,6 @@ function updateEntity(submitType,objId){
 				}
 			}
 		});
-		
 	}
 	//删除
 	if(submitType == 'delete'){
@@ -243,5 +253,72 @@ function checkObject(){
 	if(contactEmail != null || contactEmail != ''){
 		param.contactEmail = contactEmail;
 	}
+	var effectiveTime = $('#effectiveTime').val();
+	if(effectiveTime != null || effectiveTime != ''){
+		param.effectiveTime = effectiveTime;
+	}
+	var effectiveDays = $('#effectiveTime2').val();
+	if(effectiveDays != null || effectiveDays != ''){
+		param.effectiveDays = effectiveDays;
+	}
 	return param;
+}
+
+function dateOperator(date, days, operator) {
+	date = date.replace(/-/g, "/"); //更改日期格式
+	var nd = new Date(date);
+	nd = nd.valueOf();
+	if (operator == "+") {
+		nd = nd + days * 24 * 60 * 60 * 1000;
+	} else if (operator == "-") {
+		nd = nd - days * 24 * 60 * 60 * 1000;
+	} else {
+		return false;
+	}
+	nd = new Date(nd);
+	var y = nd.getFullYear();
+	var m = nd.getMonth() + 1;
+	var d = nd.getDate();
+	var h = nd.getHours();
+	var min = nd.getMinutes();
+	var s = nd.getSeconds();
+	if (m <= 9)
+		m = "0" + m;
+	if (d <= 9)
+		d = "0" + d;
+	if (h <= 9)
+		h = "0" + h;
+	if (min <= 9)
+		min = "0" + min;
+	if (s <= 9)
+		s = "0" + s;
+	var cdate = y + "年" + m + "月" + d + "日 " + h + ":" + min + ":" + s;
+	return cdate;
+}
+
+Date.prototype.format = function(format) {
+	var o = {
+		"y+" : this.getFullYear(), //year
+		"M+" : this.getMonth() + 1, //month 
+		"d+" : this.getDate(), //day 
+		"h+" : this.getHours(), //hour 
+		"m+" : this.getMinutes(), //minute 
+		"s+" : this.getSeconds(), //second 
+		"q+" : Math.floor((this.getMonth() + 3) / 3), //quarter 
+		"S" : this.getMilliseconds()
+	//millisecond 
+	}
+
+	if (/(y+)/.test(format)) {
+		format = format.replace(RegExp.$1, (this.getFullYear() + "")
+				.substr(4 - RegExp.$1.length));
+	}
+
+	for ( var k in o) {
+		if (new RegExp("(" + k + ")").test(format)) {
+			format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]
+					: ("00" + o[k]).substr(("" + o[k]).length));
+		}
+	}
+	return format;
 }

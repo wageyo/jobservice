@@ -178,6 +178,8 @@ public class JobManageController {
 			map.put(Constants.NOTICE, "传递的参数为空, 请刷新后重新尝试或联系网站开发人员.");
 			return map;
 		}
+		//增加有效期
+		param.setEffectiveTime(KitService.getEffectiveTime(param.getEffectiveTime(), param.getEffectiveDays().longValue()));
 		if (jobService.update(param)) {
 			map.put(Constants.NOTICE, Constants.Notice.SUCCESS.getValue());
 		} else {

@@ -238,10 +238,20 @@
 		                                                </td>
 		                                                <td>
 		                                                	<c:if test="${job.effectiveTime!= null }">
-																<fmt:formatDate value="${job.effectiveTime }" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="effectiveTime" />
+																<fmt:formatDate value="${job.effectiveTime}" type="both" dateStyle="long" pattern="yyyy-MM-dd hh:mm:ss" var="effectiveTime" />
 															</c:if>
-															<input id="effectiveTime" type="text" value="${effectiveTime }" type="text" readonly="readonly"/>
-		                                                <!-- 	<select name="effectiveDays" id="effectiveDays" class="length informationEdits needSyncValue NeedValidate" >
+															<input id="effectiveTime" type="text" value="${effectiveTime}" readonly="readonly"/>
+															<input name="effectiveTime" id="effectiveTime2" type="hidden" value="${effectiveTime}" readonly="readonly"/>
+		                                              		  &nbsp;添加有效期:
+		                                                	<select class="length informationEdits needSyncValue NeedValidate" onchange="addEffectiveTime($(this))">
+		                                                    	<c:forEach items="${params}" var="p">
+																	<c:if test="${p.type == 'effectiveTime' }">
+																		<option value="${p.value }">${p.name }</option>
+																	</c:if>
+																</c:forEach>
+		                                                    </select>
+		                                                    <input id="effectiveDays" type="hidden" name="effectiveDays" value="0" readonly="readonly"/>
+ <!-- 	<select name="effectiveDays" id="effectiveDays" class="length informationEdits needSyncValue NeedValidate" >
 		                                                    	<c:forEach items="${params }" var="p">
 																	<c:if test="${p.type == 'effectiveTime' }">
 																		<option value="${p.value }">${p.name }</option>

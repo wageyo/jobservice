@@ -417,10 +417,17 @@
 						<div class="PublicframeTwoContent listpub" style="width:275px; height:307px;">
 							<div>
 								<ul>
-									<li class="Square"> <a  title="密切注意职场成长中的10个主要障碍" href="">密切注意职场成长中的10个主要障碍</a> </li>
-									<li class="Square"> <a  title="传说中最好的文章：如何择业、跳槽、成..." href="">传说中最好的文章：如何择业、跳槽、成...</a> </li>
-									<li class="Square"> <a  title="职业规划：人生一堂必修课" href="">职业规划：人生一堂必修课</a> </li>
-									<li class="Square"> <a  title="职场规划为了什么" href="">职场规划为了什么</a> </li>
+									<c:forEach items="${directList }" var="direct">
+										<li class="Square" > 
+											<div class="exceedHidden" style="width:230px;">
+											<a  title="最新职业能力测评" href="${contextPath }/news/getOneForShow?id=${direct.id}" title="${direct.title }">${direct.title }</a>
+											</div> 
+										</li>
+									</c:forEach>								
+<%--									<li class="Square"> <a  title="密切注意职场成长中的10个主要障碍" href="">密切注意职场成长中的10个主要障碍</a> </li>--%>
+<%--									<li class="Square"> <a  title="传说中最好的文章：如何择业、跳槽、成..." href="">传说中最好的文章：如何择业、跳槽、成...</a> </li>--%>
+<%--									<li class="Square"> <a  title="职业规划：人生一堂必修课" href="">职业规划：人生一堂必修课</a> </li>--%>
+<%--									<li class="Square"> <a  title="职场规划为了什么" href="">职场规划为了什么</a> </li>--%>
 								</ul>
 								<!-- 
 								<a href="" >
@@ -429,9 +436,9 @@
 								 -->
 							</div>
 							<div style="padding-top:30px;">
-								<a href="${contextPath }/loginP" >
-									<div id="btn_Link1" class="LinkButton1"></div>
-								</a>
+<%--								<a href="${contextPath }/loginP" >--%>
+<%--									<div id="btn_Link1" class="LinkButton1"></div>--%>
+<%--								</a>--%>
 							</div>
 							<div class="clearboth"></div>
 						</div>
