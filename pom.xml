@@ -317,6 +317,13 @@
         </dependency>
 		<!-- 上传解析excel组件 end -->
 		
+		<!-- html解析jar包 -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.1</version>
+		</dependency>
+		
 	</dependencies>
 
 	<repositories>

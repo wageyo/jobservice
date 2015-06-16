@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="org.jsoup.*" %>
+<%@page import="org.jsoup.nodes.*" %>
+<%@page import="org.jsoup.select.*" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -317,18 +320,30 @@
 				</div>
 				<div class="PublicframeOne SetMarginTop hp_fwxx" style=" width:274px; height:255px; float:left; margin-left:5px;">
 					<div style=" width:274px" class="PublicframeOneHeaderBar">
-						<div class="PublicframeOneHeaderBarLeft">就业指导</div>
-						<div class="PublicframeOneHeaderBarRight"> <a  href="${contextPath}/direct">更多</a> </div>
+						<div class="PublicframeOneHeaderBarLeft">工作动态</div>
+						<div class="PublicframeOneHeaderBarRight"> <a  href="http://www.gxdpf.org.cn/channels/277.html">更多</a> </div>
 					</div>
 					<div >
 						<ul>
-							<c:forEach items="${directList }" var="direct">
+<%--							<c:forEach items="${directList }" var="direct">--%>
+							<%
+							Document doc = Jsoup.connect("http://www.gxdpf.org.cn").get();
+							Elements items = doc.select(".gzdt_ul");
+							for (Element item : items) {
+								Elements lis = item.select("li");
+								for (Element li : lis) {
+								%>
 								<li class="Square" > 
 									<div class="exceedHidden" style="width:230px;">
-										<a  title="最新职业能力测评" href="${contextPath }/news/getOneForShow?id=${direct.id}" title="${direct.title }">${direct.title }</a>
+										<a title="<%=li.select("a").html() %>" href="http://www.gxdpf.org.cn<%=li.select("a").attr("href")%>"><%=li.select("a").html() %></a>
 									</div> 
-								</li>
-							</c:forEach>
+								</li>	
+								<%
+								}
+							}								
+							%>
+<%--								<a  title="最新职业能力测评" href="${contextPath }/news/getOneForShow?id=${direct.id}" title="${direct.title }">${direct.title }</a>--%>
+<%--							</c:forEach>--%>
 						</ul>
 						<div class="clearboth"></div>
 					</div>
@@ -410,7 +425,7 @@
 					<div class="PublicframeTwo SetPositionOne SetMarginLeft" style="width:277px;margin-left:5px;">
 						<div class="PublicframeTwoHeadBar" style="width:277px;">
 							<div class="PublicframeTwoHeadBarLeft"></div>
-							<div class="PublicframeTwoHeadBarTittle"> <span class="PublicframeTwoHeadBarTittleSpan" title="职业培训">职业培训</span> </div>
+							<div class="PublicframeTwoHeadBarTittle"> <span class="PublicframeTwoHeadBarTittleSpan" title="就业指导">就业指导</span> </div>
 							<div class="PublicframeTwoHeadBarRight"></div>
 							<div class="PublicframeTwoHeadBarMore"></div>
 						</div>

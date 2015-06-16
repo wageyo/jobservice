@@ -66,6 +66,9 @@
 	background: rgb(219, 219, 255);
 	border-top: 1px solid rgb(188, 184, 255);
 	border-bottom: 1px solid rgb(188, 184, 255);
+	bottom:0px;
+	position:absolute;
+	
 }
 /**
  * manage-body-left 中间主体 左边菜单项样式
